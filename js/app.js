@@ -1,4 +1,9 @@
-// app.js — Main app orchestrator (with stage selection: Prelims/Mains/Interview)
+// app.js — Main orchestrator
+// Flow: Login → Home (all exams) → Exam Dashboard → Stage Dashboard → Subjects → Quiz
+//                                                                  → PYQ → Quiz
+//                                                                  → Mock → Quiz
+//                                                                  → Bookmarks → Quiz
+
 import { watchAuth, loginWithGoogle, logout } from './auth.js';
 import {
   fetchQuestions,
@@ -13,12 +18,9 @@ import * as Quiz from './quiz.js';
 import {
   EXAMS,
   getExamById,
-  getSelectedExam,
-  setSelectedExam,
   getStagesForExam,
   getStageFromExam,
   getSubjectsForStage,
-  getSubjectFromStage,
   findSubjectInExam
 } from './exams.js';
 
@@ -27,7 +29,8 @@ let currentUser = null;
 let currentExam = null;
 let currentStage = null;
 let allBookmarkedQuestions = [];
-let bookmarksFilter = 'this';
+let bookmarksFilter = 'this'; // 'this' = current stage, 'all' = all exams
+let quizSource = null;        // tracks where quiz was launched from (for back nav)
 
 // ========== DOM helpers ==========
 const $ = (id) => document.getElementById(id);
@@ -44,6 +47,17 @@ function toast(msg, ms = 2000) {
   setTimeout(() => t.classList.remove('show'), ms);
 }
 
+// ========== Persistence (last exam) ==========
+const LAST_EXAM_KEY = 'lastSelectedExam';
+
+function rememberLastExam(examId) {
+  localStorage.setItem(LAST_EXAM_KEY, examId);
+}
+
+function getLastExamId() {
+  return localStorage.getItem(LAST_EXAM_KEY);
+}
+
 // ========== Auth ==========
 watchAuth(
   async (user) => {
@@ -52,13 +66,15 @@ watchAuth(
     if (user.photo) $('userAvatar').src = user.photo;
     await saveUserProfile(user);
 
-    const savedExam = getSelectedExam();
-    if (savedExam) {
-      currentExam = savedExam;
-      enterApp();
+    // Try to land on last exam's dashboard
+    const lastId = getLastExamId();
+    const lastExam = lastId ? getExamById(lastId) : null;
+    if (lastExam) {
+      currentExam = lastExam;
+      openExamDashboard();
     } else {
-      renderExamSelector();
-      showScreen('examScreen');
+      renderHomeExams();
+      showScreen('homeScreen');
     }
   },
   () => {
@@ -79,104 +95,71 @@ $('logoutBtn').addEventListener('click', async () => {
   toast('Logged out');
 });
 
-// ========== Exam selector ==========
-function renderExamSelector() {
+// ========== HOME SCREEN: All exams list ==========
+function renderHomeExams() {
   const container = $('examList');
   container.innerHTML = '';
+
   EXAMS.forEach(exam => {
-    const btn = document.createElement('button');
-    btn.className = 'exam-card';
-    // Count subjects across all stages
     let totalSubjects = 0;
     (exam.stages || []).forEach(s => totalSubjects += (s.subjects || []).length);
-    const info = totalSubjects > 0 ? `${totalSubjects} subjects` : 'Coming soon';
+    const status = totalSubjects > 0 ? `${totalSubjects} subjects` : 'Coming soon';
+
+    const btn = document.createElement('button');
+    btn.className = 'exam-card';
     btn.innerHTML = `
       <div class="exam-icon">${exam.icon}</div>
       <div class="exam-info">
         <div class="exam-name">${exam.name}</div>
-        <div class="exam-state">${exam.state} · ${info}</div>
+        <div class="exam-state">${exam.state} · ${status}</div>
       </div>
       <div class="exam-arrow">›</div>
     `;
-    btn.addEventListener('click', () => selectExam(exam.id));
+    btn.addEventListener('click', () => {
+      currentExam = exam;
+      rememberLastExam(exam.id);
+      openExamDashboard();
+    });
     container.appendChild(btn);
   });
 }
 
-function selectExam(examId) {
-  const exam = getExamById(examId);
-  if (!exam) { toast('Invalid exam'); return; }
-  setSelectedExam(examId);
-  currentExam = exam;
-  enterApp();
-}
+// ========== EXAM DASHBOARD: Stage cards ==========
+function openExamDashboard() {
+  $('dashExamName').textContent = currentExam.name;
+  $('dashExamSub').textContent = currentExam.description;
 
-function enterApp() {
-  $('headerExamName').textContent = currentExam.name;
-  $('headerExamSub').textContent = currentExam.description;
-  showScreen('homeScreen');
-  loadHomeData();
-}
-
-$('switchExamBtn').addEventListener('click', () => {
-  renderExamSelector();
-  showScreen('examScreen');
-});
-
-// ========== Home screen ==========
-async function loadHomeData() {
-  const questions = await fetchQuestions({ exam: currentExam.id, maxCount: 200 });
-  $('qCount').textContent = questions.length || '0';
-
-  // Total subjects across all stages
+  // Check if exam has any subjects across any stage
   let totalSubjects = 0;
   (currentExam.stages || []).forEach(s => totalSubjects += (s.subjects || []).length);
-  $('subjectCount').textContent = totalSubjects;
-}
 
-document.querySelectorAll('.feature-card').forEach(card => {
-  card.addEventListener('click', () => handleRoute(card.dataset.route));
-});
+  const stagesList = $('stagesList');
+  const comingSoon = $('examComingSoon');
 
-async function handleRoute(route) {
-  if (route === 'subjects') {
-    // NEW: show stage selector first
-    renderStagesList();
-    showScreen('stagesScreen');
-  } else if (route === 'pyq' || route === 'mock') {
-    const questions = await fetchQuestions({ exam: currentExam.id, maxCount: 100 });
-    if (questions.length === 0) {
-      toast(`No questions in ${currentExam.name} yet`);
-      return;
-    }
-    Quiz.startQuiz(questions);
-    showScreen('quizScreen');
-    renderQuiz();
-  } else if (route === 'bookmarks') {
-    bookmarksFilter = 'this';
-    await loadBookmarks();
-    showScreen('bookmarksScreen');
+  if (totalSubjects === 0) {
+    // Show "coming soon" for exams without any content
+    stagesList.classList.add('hidden');
+    comingSoon.classList.remove('hidden');
+    $('comingSoonExamName').textContent = currentExam.name;
   } else {
-    toast('Coming soon');
+    stagesList.classList.remove('hidden');
+    comingSoon.classList.add('hidden');
+    renderStagesGrid();
   }
+
+  showScreen('examDashboardScreen');
 }
 
-// ========== Stages screen (NEW) ==========
-function renderStagesList() {
+function renderStagesGrid() {
   const container = $('stagesList');
   container.innerHTML = '';
-
-  $('stagesExamLabel').textContent = currentExam.name;
-
   const stages = getStagesForExam(currentExam.id);
 
   stages.forEach(stage => {
     const subjectCount = (stage.subjects || []).length;
+    const status = subjectCount > 0 ? `${subjectCount} subjects` : 'Coming soon';
     const card = document.createElement('button');
     card.className = 'stage-card';
-    const status = subjectCount > 0
-      ? `${subjectCount} subjects`
-      : 'Coming soon';
     card.innerHTML = `
       <div class="stage-icon">${stage.icon}</div>
       <div class="stage-info">
@@ -186,24 +169,70 @@ function renderStagesList() {
       </div>
       <div class="stage-arrow">›</div>
     `;
-    card.addEventListener('click', () => openStage(stage.id));
+    card.addEventListener('click', () => openStageDashboard(stage.id));
     container.appendChild(card);
   });
 }
 
-function openStage(stageId) {
-  const stage = getStageFromExam(currentExam.id, stageId);
-  if (!stage) { toast('Invalid stage'); return; }
-  currentStage = stage;
-  renderSubjectsList();
-  showScreen('subjectsScreen');
-}
-
-$('stagesBackBtn').addEventListener('click', () => {
+$('examDashBackBtn').addEventListener('click', () => {
+  renderHomeExams();
   showScreen('homeScreen');
 });
 
-// ========== Subjects screen ==========
+// ========== STAGE DASHBOARD: Section cards (Subjects/PYQ/Mock/Bookmarks) ==========
+function openStageDashboard(stageId) {
+  const stage = getStageFromExam(currentExam.id, stageId);
+  if (!stage) { toast('Invalid stage'); return; }
+  currentStage = stage;
+
+  $('stageDashName').textContent = stage.name;
+  $('stageDashExamLabel').textContent = currentExam.name;
+  $('stageNameLabel').textContent = stage.name;
+  $('stageSubjectCount').textContent = (stage.subjects || []).length;
+
+  showScreen('stageDashboardScreen');
+}
+
+document.querySelectorAll('[data-stage-route]').forEach(card => {
+  card.addEventListener('click', () => {
+    const route = card.dataset.stageRoute;
+    handleStageRoute(route);
+  });
+});
+
+async function handleStageRoute(route) {
+  if (!currentStage) { toast('Pick a stage first'); return; }
+
+  if (route === 'subjects') {
+    renderSubjectsList();
+    showScreen('subjectsScreen');
+  } else if (route === 'pyq') {
+    // For now: load all questions for this exam (later: filter by stage + year)
+    const questions = await fetchQuestions({ exam: currentExam.id, maxCount: 100 });
+    if (questions.length === 0) {
+      toast(`No PYQ available yet for ${currentStage.name}`);
+      return;
+    }
+    quizSource = 'pyq';
+    Quiz.startQuiz(questions);
+    showScreen('quizScreen');
+    renderQuiz();
+  } else if (route === 'mock') {
+    toast('Mock tests coming soon');
+  } else if (route === 'bookmarks') {
+    bookmarksFilter = 'this';
+    await loadBookmarks();
+    showScreen('bookmarksScreen');
+  } else {
+    toast('Coming soon');
+  }
+}
+
+$('stageDashBackBtn').addEventListener('click', () => {
+  showScreen('examDashboardScreen');
+});
+
+// ========== SUBJECTS LIST ==========
 function renderSubjectsList() {
   const container = $('subjectsList');
   const emptyState = $('subjectsEmpty');
@@ -243,7 +272,6 @@ function renderSubjectsList() {
 
 async function openSubject(subjectId) {
   toast('Loading questions...');
-  // Note: questions are fetched by exam + subject (not stage in DB query — stage is metadata)
   const questions = await fetchQuestions({
     exam: currentExam.id,
     subject: subjectId,
@@ -251,25 +279,27 @@ async function openSubject(subjectId) {
   });
 
   if (questions.length === 0) {
-    const subj = getSubjectFromStage(currentExam.id, currentStage.id, subjectId);
+    const subj = currentStage.subjects.find(s => s.id === subjectId);
     toast(`No questions in ${subj?.name || 'this subject'} yet`);
     return;
   }
 
+  quizSource = 'subject';
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
   renderQuiz();
 }
 
 $('subjectsBackBtn').addEventListener('click', () => {
-  showScreen('stagesScreen');
+  showScreen('stageDashboardScreen');
 });
 
-// ========== Bookmarks screen ==========
+// ========== BOOKMARKS SCREEN ==========
 async function loadBookmarks() {
   if (!currentUser) return;
   toast('Loading bookmarks...');
   allBookmarkedQuestions = await fetchBookmarkedQuestions(currentUser.uid);
+  $('bookmarksContextLabel').textContent = `${currentExam.name} · ${currentStage.name}`;
   renderBookmarksList();
 }
 
@@ -277,19 +307,25 @@ function renderBookmarksList() {
   const container = $('bookmarksList');
   const empty = $('bookmarksEmpty');
   const practiceBtn = $('practiceBookmarksBtn');
-  const tabThis = $('tabThisExam');
+  const tabThis = $('tabThisStage');
   const tabAll = $('tabAllExams');
 
+  // Filter: 'this' means current exam + current stage
   let visible;
   if (bookmarksFilter === 'this') {
-    visible = allBookmarkedQuestions.filter(q => q.examId === currentExam.id);
+    visible = allBookmarkedQuestions.filter(q =>
+      q.examId === currentExam.id && q.stage === currentStage.id
+    );
   } else {
     visible = allBookmarkedQuestions;
   }
 
-  const thisCount = allBookmarkedQuestions.filter(q => q.examId === currentExam.id).length;
+  // Counts
+  const thisCount = allBookmarkedQuestions.filter(q =>
+    q.examId === currentExam.id && q.stage === currentStage.id
+  ).length;
   const allCount = allBookmarkedQuestions.length;
-  tabThis.textContent = `This Exam (${thisCount})`;
+  tabThis.textContent = `This Stage (${thisCount})`;
   tabAll.textContent = `All Exams (${allCount})`;
   tabThis.classList.toggle('active', bookmarksFilter === 'this');
   tabAll.classList.toggle('active', bookmarksFilter === 'all');
@@ -321,7 +357,7 @@ function renderBookmarksList() {
   });
 }
 
-$('tabThisExam').addEventListener('click', () => {
+$('tabThisStage').addEventListener('click', () => {
   bookmarksFilter = 'this';
   renderBookmarksList();
 });
@@ -334,17 +370,21 @@ $('tabAllExams').addEventListener('click', () => {
 $('practiceBookmarksBtn').addEventListener('click', () => {
   let visible;
   if (bookmarksFilter === 'this') {
-    visible = allBookmarkedQuestions.filter(q => q.examId === currentExam.id);
+    visible = allBookmarkedQuestions.filter(q =>
+      q.examId === currentExam.id && q.stage === currentStage.id
+    );
   } else {
     visible = allBookmarkedQuestions;
   }
   if (visible.length === 0) { toast('No bookmarks to practice'); return; }
+  quizSource = 'bookmarks';
   Quiz.startQuiz(visible);
   showScreen('quizScreen');
   renderQuiz();
-});
+}); 
 
 function openBookmarkedQuestion(index, list) {
+  quizSource = 'bookmarks';
   Quiz.startQuiz(list);
   while (Quiz.getProgress().current - 1 < index) {
     if (!Quiz.next()) break;
@@ -354,15 +394,15 @@ function openBookmarkedQuestion(index, list) {
 }
 
 $('bookmarksBackBtn').addEventListener('click', () => {
-  showScreen('homeScreen');
+  showScreen('stageDashboardScreen');
 });
 
-// ========== Quiz screen ==========
+// ========== QUIZ SCREEN ==========
 async function renderQuiz() {
   const q = Quiz.getCurrent();
   if (!q) {
     toast('No question to show');
-    showScreen('homeScreen');
+    showScreen('stageDashboardScreen');
     return;
   }
 
@@ -384,7 +424,7 @@ async function renderQuiz() {
     const btn = document.createElement('button');
     btn.className = 'quiz-option';
     btn.innerHTML = `<span class="opt-letter">${letters[i]}.</span><span>${escapeHtml(opt)}</span>`;
-    btn.addEventListener('click', () => onOptionClick(i, btn));
+    btn.addEventListener('click', () => onOptionClick(i));
     optsContainer.appendChild(btn);
   });
 
@@ -402,7 +442,7 @@ async function updateBookmarkButton(q) {
   $('quizBookmarkBtn').dataset.marked = isMarked ? '1' : '0';
 }
 
-function onOptionClick(index, btnEl) {
+function onOptionClick(index) {
   const result = Quiz.selectOption(index);
   if (!result) return;
 
@@ -431,7 +471,7 @@ $('quizNextBtn').addEventListener('click', () => {
     renderQuiz();
   } else {
     toast('Quiz complete! 🎉');
-    setTimeout(() => showScreen('homeScreen'), 800);
+    setTimeout(() => returnToQuizSource(), 800);
   }
 });
 
@@ -439,15 +479,19 @@ $('quizPrevBtn').addEventListener('click', () => {
   if (Quiz.prev()) renderQuiz();
 });
 
-$('quizBackBtn').addEventListener('click', () => {
-  // If quiz came from bookmarks, return there; else subjects screen
-  const fromBookmarks = Quiz.getCurrent()?.savedAt;
-  if (fromBookmarks) {
+$('quizBackBtn').addEventListener('click', () => returnToQuizSource());
+
+function returnToQuizSource() {
+  if (quizSource === 'bookmarks') {
     showScreen('bookmarksScreen');
-  } else {
+  } else if (quizSource === 'subject') {
     showScreen('subjectsScreen');
+  } else if (quizSource === 'pyq' || quizSource === 'mock') {
+    showScreen('stageDashboardScreen');
+  } else {
+    showScreen('stageDashboardScreen');
   }
-});
+}
 
 $('quizBookmarkBtn').addEventListener('click', async () => {
   const q = Quiz.getCurrent();

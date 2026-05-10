@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <!-- LOGIN SCREEN -->
+  <!-- ===== LOGIN SCREEN ===== -->
   <div id="loginScreen" class="screen active">
     <div class="login-card">
       <div class="logo">📘</div>
@@ -32,30 +32,14 @@
     </div>
   </div>
 
-  <!-- EXAM SELECTOR SCREEN -->
-  <div id="examScreen" class="screen">
-    <header class="app-header">
-      <div class="header-left">
-        <h2>Choose Your Exam</h2>
-        <span class="header-sub">Select to begin preparation</span>
-      </div>
-    </header>
-    <main class="exams-main">
-      <p class="hint-text">Pick the exam you're preparing for. You can switch anytime.</p>
-      <div id="examList" class="exams-list"></div>
-      <p class="footer-note" style="margin-top: 24px; padding: 0 4px;">More exams coming soon.</p>
-    </main>
-  </div>
-
-  <!-- HOME SCREEN -->
+  <!-- ===== HOME SCREEN = ALL EXAMS ===== -->
   <div id="homeScreen" class="screen">
     <header class="app-header">
       <div class="header-left">
-        <h2 id="headerExamName">UPPSC AE</h2>
-        <span class="header-sub" id="headerExamSub">Civil Engineering preparation</span>
+        <h2>🏠 All Exams</h2>
+        <span class="header-sub">Pick to start preparation</span>
       </div>
       <div class="header-right">
-        <button id="switchExamBtn" class="btn-icon" title="Switch Exam">⇄</button>
         <img id="userAvatar" class="avatar" alt="" />
         <button id="logoutBtn" class="btn-icon" title="Logout">⏻</button>
       </div>
@@ -65,25 +49,64 @@
       <p>Welcome, <span id="userName">student</span> 👋</p>
     </div>
 
-    <main class="home-main">
-      <h3>Choose a section</h3>
+    <main class="exams-main">
+      <div id="examList" class="exams-list"></div>
+      <p class="footer-note" style="margin-top: 24px; padding: 0 4px;">More exams coming soon.</p>
+    </main>
+  </div>
+
+  <!-- ===== EXAM DASHBOARD = STAGES ===== -->
+  <div id="examDashboardScreen" class="screen">
+    <header class="app-header">
+      <button id="examDashBackBtn" class="btn-icon">←</button>
+      <div class="header-left" style="flex: 1; margin-left: 8px;">
+        <h2 id="dashExamName">UPPSC AE</h2>
+        <span class="header-sub" id="dashExamSub">Civil Engineering preparation</span>
+      </div>
+    </header>
+
+    <main class="dashboard-main">
+      <h3 class="section-title">Exam Stages</h3>
+      <div id="stagesList" class="stages-grid"></div>
+
+      <!-- Coming soon empty state -->
+      <div id="examComingSoon" class="empty-state hidden">
+        <div class="empty-icon">🚧</div>
+        <h3><span id="comingSoonExamName">This exam</span> is coming soon</h3>
+        <p>Content for this exam is being prepared.</p>
+        <p class="hint-small">Check back later for Prelims, Mains, and Interview prep.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== STAGE DASHBOARD = SECTIONS ===== -->
+  <div id="stageDashboardScreen" class="screen">
+    <header class="app-header">
+      <button id="stageDashBackBtn" class="btn-icon">←</button>
+      <div class="header-left" style="flex: 1; margin-left: 8px;">
+        <h2 id="stageDashName">Mains</h2>
+        <span class="header-sub"><span id="stageDashExamLabel">UPPSC AE</span> · Choose a section</span>
+      </div>
+    </header>
+
+    <main class="dashboard-main">
       <div class="card-grid">
-        <button class="feature-card" data-route="subjects">
+        <button class="feature-card" data-stage-route="subjects">
           <div class="card-icon">📚</div>
           <div class="card-title">Subjects</div>
           <div class="card-desc">Topic-wise practice</div>
         </button>
-        <button class="feature-card" data-route="pyq">
+        <button class="feature-card" data-stage-route="pyq">
           <div class="card-icon">📝</div>
           <div class="card-title">Previous Year Papers</div>
           <div class="card-desc">Past papers</div>
         </button>
-        <button class="feature-card" data-route="mock">
+        <button class="feature-card" data-stage-route="mock">
           <div class="card-icon">⏱️</div>
           <div class="card-title">Mock Tests</div>
           <div class="card-desc">Full-length tests</div>
         </button>
-        <button class="feature-card" data-route="bookmarks">
+        <button class="feature-card" data-stage-route="bookmarks">
           <div class="card-icon">⭐</div>
           <div class="card-title">Bookmarks</div>
           <div class="card-desc">Saved questions</div>
@@ -93,36 +116,21 @@
       <div class="status-card">
         <div class="status-row">
           <span class="status-label">Subjects</span>
-          <span class="status-value" id="subjectCount">—</span>
+          <span class="status-value" id="stageSubjectCount">—</span>
         </div>
         <div class="status-row">
-          <span class="status-label">Questions loaded</span>
-          <span class="status-value" id="qCount">—</span>
+          <span class="status-label">Stage</span>
+          <span class="status-value" id="stageNameLabel">Mains</span>
         </div>
         <div class="status-row">
           <span class="status-label">Plan</span>
-          <span class="status-value" id="planLabel">Free</span>
+          <span class="status-value">Free</span>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- STAGES SCREEN (NEW) -->
-  <div id="stagesScreen" class="screen">
-    <header class="app-header">
-      <button id="stagesBackBtn" class="btn-icon">←</button>
-      <div class="header-left" style="flex: 1; margin-left: 8px;">
-        <h2>Choose a Stage</h2>
-        <span class="header-sub"><span id="stagesExamLabel">UPPSC AE</span></span>
-      </div>
-    </header>
-    <main class="stages-main">
-      <p class="hint-text">Select the exam stage you want to prepare for.</p>
-      <div id="stagesList" class="stages-list"></div>
-    </main>
-  </div>
-
-  <!-- SUBJECTS LIST SCREEN -->
+  <!-- ===== SUBJECTS LIST ===== -->
   <div id="subjectsScreen" class="screen">
     <header class="app-header">
       <button id="subjectsBackBtn" class="btn-icon">←</button>
@@ -142,17 +150,17 @@
     </main>
   </div>
 
-  <!-- BOOKMARKS SCREEN -->
+  <!-- ===== BOOKMARKS SCREEN (per-stage) ===== -->
   <div id="bookmarksScreen" class="screen">
     <header class="app-header">
       <button id="bookmarksBackBtn" class="btn-icon">←</button>
       <div class="header-left" style="flex: 1; margin-left: 8px;">
         <h2>⭐ Bookmarks</h2>
-        <span class="header-sub">Saved questions for revision</span>
+        <span class="header-sub" id="bookmarksContextLabel">UPPSC AE · Mains</span>
       </div>
     </header>
     <div class="tabs-bar">
-      <button id="tabThisExam" class="tab-btn active">This Exam (0)</button>
+      <button id="tabThisStage" class="tab-btn active">This Stage (0)</button>
       <button id="tabAllExams" class="tab-btn">All Exams (0)</button>
     </div>
     <main class="bookmarks-main">
@@ -166,7 +174,7 @@
     </main>
   </div>
 
-  <!-- QUIZ SCREEN -->
+  <!-- ===== QUIZ SCREEN ===== -->
   <div id="quizScreen" class="screen">
     <header class="quiz-header">
       <button id="quizBackBtn" class="btn-icon">←</button>
@@ -204,8 +212,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-          .catch(err => console.log('SW registration failed:', err));
+        navigator.serviceWorker.register('service-worker.js').catch(()=>{});
       });
     }
   </script>

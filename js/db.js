@@ -1,4 +1,4 @@
-// db.js — Firestore data access layer (exam-scoped + cross-exam bookmarks)
+// db.js — Firestore data access layer (exam-scoped + cross-exam bookmarks with stage info)
 import { db } from './firebase-config.js';
 import {
   collection,
@@ -20,13 +20,13 @@ const cache = {
 
 // ========== Questions ==========
 export async function fetchQuestions(opts = {}) {
-  const { exam, subject = null, maxCount = 100, force = false } = opts;
+  const { exam, subject = null, stage = null, maxCount = 100, force = false } = opts;
   if (!exam) {
     console.error('fetchQuestions: exam is required');
     return [];
   }
 
-  const cacheKey = `${exam}:${subject || 'all'}`;
+  const cacheKey = `${exam}:${stage || '*'}:${subject || 'all'}`;
   const now = Date.now();
 
   if (!force && cache.questions[cacheKey] && (now - (cache.cachedAt[cacheKey] || 0)) < cache.TTL) {
@@ -47,6 +47,7 @@ export async function fetchQuestions(opts = {}) {
     snap.forEach(docSnap => {
       const data = docSnap.data();
       if (isValidQuestion(data)) {
+        if (stage && data.stage && data.stage !== stage) return;
         questions.push({ id: docSnap.id, ...data });
       } else {
         console.warn(`Skipping malformed question ${docSnap.id}`);
@@ -62,7 +63,6 @@ export async function fetchQuestions(opts = {}) {
   }
 }
 
-// Fetch a SINGLE question by exam + question ID (for cross-exam bookmark viewing)
 export async function fetchQuestionById(examId, questionId) {
   try {
     const qRef = doc(db, 'exams', examId, 'questions', questionId);
@@ -122,16 +122,20 @@ export async function saveAttempt(userId, examId, questionId, selectedIndex, isC
   }
 }
 
-// ========== Bookmarks (cross-exam) ==========
-
-// Add a bookmark
+// ========== Bookmarks (with stage info for per-stage filtering) ==========
 export async function addBookmark(userId, examId, questionId) {
   try {
     const bookmarkId = `${examId}_${questionId}`;
     const ref = doc(db, 'users', userId, 'bookmarks', bookmarkId);
+
+    // Get the question to grab its stage
+    const qData = await fetchQuestionById(examId, questionId);
+    const stage = qData?.stage || null;
+
     await setDoc(ref, {
       examId,
       questionId,
+      stage,
       savedAt: new Date().toISOString()
     });
     return true;
@@ -141,7 +145,6 @@ export async function addBookmark(userId, examId, questionId) {
   }
 }
 
-// Remove a bookmark
 export async function removeBookmark(userId, examId, questionId) {
   try {
     const bookmarkId = `${examId}_${questionId}`;
@@ -154,7 +157,6 @@ export async function removeBookmark(userId, examId, questionId) {
   }
 }
 
-// Check if a question is bookmarked
 export async function isQuestionBookmarked(userId, examId, questionId) {
   try {
     const bookmarkId = `${examId}_${questionId}`;
@@ -167,8 +169,6 @@ export async function isQuestionBookmarked(userId, examId, questionId) {
   }
 }
 
-// Fetch ALL bookmarks for a user (across all exams)
-// Returns array of { examId, questionId, savedAt }
 export async function fetchAllBookmarks(userId) {
   try {
     const ref = collection(db, 'users', userId, 'bookmarks');
@@ -177,7 +177,6 @@ export async function fetchAllBookmarks(userId) {
     snap.forEach(docSnap => {
       bookmarks.push({ id: docSnap.id, ...docSnap.data() });
     });
-    // Sort newest first
     bookmarks.sort((a, b) => (b.savedAt || '').localeCompare(a.savedAt || ''));
     return bookmarks;
   } catch (err) {
@@ -186,8 +185,6 @@ export async function fetchAllBookmarks(userId) {
   }
 }
 
-// Fetch full question data for a list of bookmarks
-// Returns array of { examId, questionId, savedAt, question, options, answer, ... }
 export async function fetchBookmarkedQuestions(userId) {
   const bookmarks = await fetchAllBookmarks(userId);
   if (bookmarks.length === 0) return [];
@@ -199,10 +196,10 @@ export async function fetchBookmarkedQuestions(userId) {
       results.push({
         ...q,
         examId: bm.examId,
+        stage: q.stage || bm.stage,
         savedAt: bm.savedAt
       });
     }
-    // If question doesn't exist anymore (deleted by admin), skip silently
   }
   return results;
 }
