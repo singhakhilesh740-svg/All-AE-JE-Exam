@@ -94,7 +94,7 @@
       border-radius: 8px;
       border: 1px solid #334155;
       font-size: 12px;
-      max-height: 220px;
+      max-height: 280px;
       overflow-y: auto;
     }
     .ref-row {
@@ -110,16 +110,23 @@
       font-weight: 600;
     }
     .ref-name { color: #94a3b8; }
-    .empty-msg { color: #94a3b8; font-style: italic; padding: 12px; text-align: center; }
+    .empty-msg { color: #94a3b8; font-style: italic; padding: 8px; text-align: center; font-size: 11px; }
     label { font-size: 13px; color: #94a3b8; display: block; margin-bottom: 6px; }
     .exam-block { margin-bottom: 16px; }
     .exam-block-title {
       color: #f59e0b;
       font-weight: 700;
       font-size: 13px;
-      padding: 8px 0;
+      padding: 8px 0 4px;
       border-bottom: 1px solid #334155;
       margin-bottom: 6px;
+    }
+    .stage-block-title {
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 4px 0 2px 12px;
+      margin-top: 4px;
     }
     .warn-box {
       background: rgba(245, 158, 11, 0.1);
@@ -130,6 +137,7 @@
       color: #f59e0b;
       margin-bottom: 12px;
     }
+    .form-row { margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -145,24 +153,31 @@
     <div id="mainPanel" class="hidden">
 
       <div class="panel">
-        <h3>🎯 Default Exam</h3>
-        <label>Questions without an "exam" field will go to this exam:</label>
-        <select id="examSelect"></select>
+        <h3>🎯 Default Exam & Stage</h3>
+        <p class="subtitle" style="margin-bottom:12px;">Questions without "exam" or "stage" fields will use these defaults.</p>
+        <div class="form-row">
+          <label>Default Exam:</label>
+          <select id="examSelect"></select>
+        </div>
+        <div class="form-row">
+          <label>Default Stage:</label>
+          <select id="stageSelect"></select>
+        </div>
         <div id="examWarning" class="warn-box hidden">
-          ⚠️ This exam has no subjects defined. Add subjects in <code>js/exams.js</code> before uploading.
+          ⚠️ This stage has no subjects defined. Add subjects in <code>js/exams.js</code> before uploading.
         </div>
       </div>
 
       <div class="panel">
-        <h3>📚 Reference: Exams & Their Subjects</h3>
-        <p class="subtitle" style="margin-bottom:8px;">When uploading, use these IDs in your JSON. Subject IDs are scoped to each exam.</p>
-        <div class="ref-table" id="examsSubjectsRef"></div>
+        <h3>📚 Reference: Exams → Stages → Subjects</h3>
+        <p class="subtitle" style="margin-bottom:8px;">Use these IDs in your JSON. Subjects are scoped per stage.</p>
+        <div class="ref-table" id="examsRef"></div>
       </div>
 
       <div class="panel">
         <h3>1. Paste Questions JSON</h3>
-        <p class="subtitle">Each question must have a "subject" field matching a subject in the chosen exam. Optional "exam" field overrides the dropdown above.</p>
-        <textarea id="jsonInput" placeholder='[{"question":"...", "options":["A","B","C","D"], "answer":0, "explanation":"...", "subject":"YOUR_SUBJECT_ID", "exam":"uppsc-ae", "year":2024, "tier":"free"}]'></textarea>
+        <p class="subtitle">Each question must have a "subject" field. Optional: "exam" and "stage" fields override defaults above.</p>
+        <textarea id="jsonInput" placeholder='[{"question":"...", "options":["A","B","C","D"], "answer":0, "explanation":"...", "subject":"YOUR_SUBJECT_ID", "stage":"mains", "exam":"uppsc-ae", "year":2024, "tier":"free"}]'></textarea>
         <button id="loadTemplateBtn" class="secondary">Load Template</button>
         <button id="validateBtn" class="secondary">Validate Only</button>
         <button id="uploadBtn">Upload to Firestore</button>
@@ -191,9 +206,10 @@
     import {
       EXAMS,
       getValidExamIds,
-      getValidSubjectIdsForExam,
-      getSubjectsForExam,
-      getExamById
+      getExamById,
+      getStagesForExam,
+      getStageFromExam,
+      getSubjectsForStage
     } from '../js/exams.js';
     import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { doc, setDoc, writeBatch, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -209,41 +225,56 @@
       el.scrollTop = el.scrollHeight;
     };
 
-    // Render exams + their nested subjects as reference
-    function renderExamsSubjectsRef() {
-      const container = $('examsSubjectsRef');
+    // Render reference: exams → stages → subjects
+    function renderExamsRef() {
+      const container = $('examsRef');
       container.innerHTML = EXAMS.map(exam => {
-        const subjs = exam.subjects || [];
-        const subjRows = subjs.length > 0
-          ? subjs.map(s =>
-              `<div class="ref-row" style="padding-left: 16px;">
-                <span class="ref-id">${s.id}</span>
-                <span class="ref-name">${s.icon || '📖'} ${s.name}</span>
-              </div>`
-            ).join('')
-          : `<div class="empty-msg">No subjects defined yet</div>`;
+        const stages = exam.stages || [];
+        const stageBlocks = stages.map(stage => {
+          const subjs = stage.subjects || [];
+          const subjRows = subjs.length > 0
+            ? subjs.map(s =>
+                `<div class="ref-row" style="padding-left: 24px;">
+                  <span class="ref-id">${s.id}</span>
+                  <span class="ref-name">${s.icon || '📖'} ${s.name}</span>
+                </div>`
+              ).join('')
+            : `<div class="empty-msg" style="padding-left:24px;">No subjects</div>`;
+          return `
+            <div class="stage-block-title">${stage.icon} ${stage.name} <span style="color:#94a3b8; font-weight:normal; font-size:11px;">(${stage.id})</span></div>
+            ${subjRows}
+          `;
+        }).join('');
+
         return `
           <div class="exam-block">
             <div class="exam-block-title">${exam.icon} ${exam.name} <span style="color:#94a3b8; font-weight:normal;">(${exam.id})</span></div>
-            ${subjRows}
+            ${stageBlocks}
           </div>
         `;
       }).join('');
     }
 
     function renderExamSelect() {
-      $('examSelect').innerHTML = EXAMS.map(e => {
-        const count = (e.subjects || []).length;
-        const subjLabel = count > 0 ? `${count} subjects` : 'NO SUBJECTS YET';
-        return `<option value="${e.id}">${e.icon} ${e.name} — ${subjLabel}</option>`;
-      }).join('');
-      checkExamWarning();
+      $('examSelect').innerHTML = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name}</option>`).join('');
+      renderStageSelect();
     }
 
-    function checkExamWarning() {
+    function renderStageSelect() {
       const examId = $('examSelect').value;
-      const exam = getExamById(examId);
-      const subjects = exam?.subjects || [];
+      const stages = getStagesForExam(examId);
+      $('stageSelect').innerHTML = stages.map(s => {
+        const count = (s.subjects || []).length;
+        const label = count > 0 ? `${count} subjects` : 'NO SUBJECTS';
+        return `<option value="${s.id}">${s.icon} ${s.name} — ${label}</option>`;
+      }).join('');
+      checkWarning();
+    }
+
+    function checkWarning() {
+      const examId = $('examSelect').value;
+      const stageId = $('stageSelect').value;
+      const subjects = getSubjectsForStage(examId, stageId);
       if (subjects.length === 0) {
         $('examWarning').classList.remove('hidden');
       } else {
@@ -251,13 +282,14 @@
       }
     }
 
-    $('examSelect').addEventListener('change', checkExamWarning);
+    $('examSelect').addEventListener('change', renderStageSelect);
+    $('stageSelect').addEventListener('change', checkWarning);
 
     onAuthStateChanged(auth, user => {
       if (user && ADMIN_EMAILS.includes(user.email)) {
         $('loginPanel').classList.add('hidden');
         $('mainPanel').classList.remove('hidden');
-        renderExamsSubjectsRef();
+        renderExamsRef();
         renderExamSelect();
         log(`Logged in as ${user.email}`, 'ok');
       } else if (user) {
@@ -273,11 +305,11 @@
     $('logoutBtn').onclick = () => signOut(auth);
 
     $('loadTemplateBtn').onclick = () => {
-      // Try to use first available subject from default exam
       const examId = $('examSelect').value;
-      const subjects = getSubjectsForExam(examId);
+      const stageId = $('stageSelect').value;
+      const subjects = getSubjectsForStage(examId, stageId);
       if (subjects.length === 0) {
-        log(`Cannot load template: ${examId} has no subjects yet. Add subjects first.`, 'err');
+        log(`Cannot load template: ${examId}/${stageId} has no subjects.`, 'err');
         return;
       }
       const sampleSubjId = subjects[0].id;
@@ -303,10 +335,10 @@
           tier: "free"
         }
       ], null, 2);
-      log(`Template loaded with subject "${sampleSubjId}". Replace with real questions.`);
+      log(`Template loaded with subject "${sampleSubjId}" for ${examId}/${stageId}.`);
     };
 
-    function validateQuestion(q, defaultExam) {
+    function validateQuestion(q, defaultExam, defaultStage) {
       const errs = [];
       if (!q.question || typeof q.question !== 'string') errs.push('missing question');
       if (!Array.isArray(q.options) || q.options.length < 2) errs.push('options must be array of 2+');
@@ -314,16 +346,23 @@
       if (q.tier && !['free', 'premium'].includes(q.tier)) errs.push('tier must be free or premium');
 
       const examId = q.exam || defaultExam;
-      if (!examId) errs.push('exam not specified and no default selected');
+      if (!examId) errs.push('exam not specified');
       else if (!VALID_EXAMS.includes(examId)) errs.push(`unknown exam "${examId}"`);
 
-      if (!q.subject) errs.push('subject is required');
+      const stageId = q.stage || defaultStage;
+      if (!stageId) errs.push('stage not specified');
       else if (examId && VALID_EXAMS.includes(examId)) {
-        const validSubjects = getValidSubjectIdsForExam(examId);
-        if (validSubjects.length === 0) {
-          errs.push(`exam "${examId}" has no subjects defined`);
-        } else if (!validSubjects.includes(q.subject)) {
-          errs.push(`subject "${q.subject}" not valid for exam "${examId}"`);
+        const stage = getStageFromExam(examId, stageId);
+        if (!stage) errs.push(`unknown stage "${stageId}" for exam "${examId}"`);
+      }
+
+      if (!q.subject) errs.push('subject is required');
+      else if (examId && stageId) {
+        const subjects = getSubjectsForStage(examId, stageId);
+        if (subjects.length === 0) {
+          errs.push(`no subjects defined for ${examId}/${stageId}`);
+        } else if (!subjects.some(s => s.id === q.subject)) {
+          errs.push(`subject "${q.subject}" not valid for ${examId}/${stageId}`);
         }
       }
 
@@ -335,15 +374,16 @@
         const arr = JSON.parse($('jsonInput').value);
         if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
         const defaultExam = $('examSelect').value;
+        const defaultStage = $('stageSelect').value;
         let valid = 0, invalid = 0;
         arr.forEach((q, i) => {
-          const errs = validateQuestion(q, defaultExam);
+          const errs = validateQuestion(q, defaultExam, defaultStage);
           if (errs.length) { log(`Q${i+1}: ${errs.join(', ')}`, 'err'); invalid++; }
           else valid++;
         });
         $('statValid').textContent = valid;
         $('statInvalid').textContent = invalid;
-        log(`Validation: ${valid} valid, ${invalid} invalid. Default exam: ${defaultExam}`, valid > 0 ? 'ok' : 'err');
+        log(`Validation: ${valid} valid, ${invalid} invalid. Defaults: ${defaultExam}/${defaultStage}`, valid > 0 ? 'ok' : 'err');
       } catch (e) {
         log('JSON parse error: ' + e.message, 'err');
       }
@@ -354,12 +394,13 @@
         const arr = JSON.parse($('jsonInput').value);
         if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
         const defaultExam = $('examSelect').value;
+        const defaultStage = $('stageSelect').value;
 
         let valid = [], invalid = 0;
         arr.forEach((q, i) => {
-          const errs = validateQuestion(q, defaultExam);
+          const errs = validateQuestion(q, defaultExam, defaultStage);
           if (errs.length) { log(`Q${i+1} skipped: ${errs.join(', ')}`, 'err'); invalid++; }
-          else valid.push({ ...q, exam: q.exam || defaultExam });
+          else valid.push({ ...q, exam: q.exam || defaultExam, stage: q.stage || defaultStage });
         });
 
         $('statValid').textContent = valid.length;

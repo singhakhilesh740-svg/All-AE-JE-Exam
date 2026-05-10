@@ -107,28 +107,42 @@
     </main>
   </div>
 
+  <!-- STAGES SCREEN (NEW) -->
+  <div id="stagesScreen" class="screen">
+    <header class="app-header">
+      <button id="stagesBackBtn" class="btn-icon">←</button>
+      <div class="header-left" style="flex: 1; margin-left: 8px;">
+        <h2>Choose a Stage</h2>
+        <span class="header-sub"><span id="stagesExamLabel">UPPSC AE</span></span>
+      </div>
+    </header>
+    <main class="stages-main">
+      <p class="hint-text">Select the exam stage you want to prepare for.</p>
+      <div id="stagesList" class="stages-list"></div>
+    </main>
+  </div>
+
   <!-- SUBJECTS LIST SCREEN -->
   <div id="subjectsScreen" class="screen">
     <header class="app-header">
       <button id="subjectsBackBtn" class="btn-icon">←</button>
       <div class="header-left" style="flex: 1; margin-left: 8px;">
-        <h2>Subjects</h2>
+        <h2><span id="subjectsStageLabel">Mains</span> Subjects</h2>
         <span class="header-sub"><span id="subjectsExamLabel">UPPSC AE</span> · Choose to practice</span>
       </div>
     </header>
-
     <main class="subjects-main">
       <div id="subjectsList" class="subjects-list"></div>
       <div id="subjectsEmpty" class="empty-state hidden">
         <div class="empty-icon">📚</div>
-        <h3>No subjects yet for <span id="emptyExamName">this exam</span></h3>
-        <p>Subjects are being added. Check back soon!</p>
-        <p class="hint-small">Admin: Add subjects in <code>js/exams.js</code> file.</p>
+        <h3>No subjects yet for <span id="emptyStageName">this stage</span></h3>
+        <p>Subjects for <span id="emptyExamName">this exam</span> are being added.</p>
+        <p class="hint-small">Admin: Edit <code>js/exams.js</code> to add subjects.</p>
       </div>
     </main>
   </div>
 
-  <!-- BOOKMARKS SCREEN (NEW) -->
+  <!-- BOOKMARKS SCREEN -->
   <div id="bookmarksScreen" class="screen">
     <header class="app-header">
       <button id="bookmarksBackBtn" class="btn-icon">←</button>
@@ -137,18 +151,13 @@
         <span class="header-sub">Saved questions for revision</span>
       </div>
     </header>
-
-    <!-- Tabs -->
     <div class="tabs-bar">
       <button id="tabThisExam" class="tab-btn active">This Exam (0)</button>
       <button id="tabAllExams" class="tab-btn">All Exams (0)</button>
     </div>
-
     <main class="bookmarks-main">
       <button id="practiceBookmarksBtn" class="practice-all-btn hidden">Practice all</button>
-
       <div id="bookmarksList" class="bookmarks-list"></div>
-
       <div id="bookmarksEmpty" class="empty-state hidden">
         <div class="empty-icon">⭐</div>
         <h3>No bookmarks yet</h3>
@@ -164,7 +173,6 @@
       <div class="quiz-progress"><span id="quizProgress">0 / 0</span></div>
       <button id="quizBookmarkBtn" class="btn-icon" title="Bookmark" data-marked="0">☆</button>
     </header>
-
     <main class="quiz-main">
       <div class="quiz-meta">
         <span id="quizSubject">—</span>
@@ -177,7 +185,6 @@
         <p id="quizExplanationText"></p>
       </div>
     </main>
-
     <footer class="quiz-footer">
       <button id="quizPrevBtn" class="btn-secondary">Previous</button>
       <button id="quizNextBtn" class="btn-primary">Next</button>

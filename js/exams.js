@@ -1,21 +1,21 @@
-// exams.js — Master list of exams AND their subjects (single source of truth)
+// exams.js — Master list of exams + their stages + each stage's subjects
 //
-// 🎯 HOW TO ADD A NEW EXAM:
-// 1. Copy any existing exam block below
-// 2. Paste in the EXAMS array, change id/name/icon/state/description
-// 3. Add subjects inside its "subjects" array (or leave empty [])
-// 4. Save, push to GitHub. Done.
+// 🎯 STRUCTURE:
+//   Exam → Stages (Prelims/Mains/Interview) → Subjects → Questions
 //
-// 🎯 HOW TO ADD/EDIT SUBJECTS FOR AN EXAM:
-// 1. Find the exam block (e.g. uppsc-ae)
-// 2. Edit its "subjects" array
-// 3. Each subject needs: id, name, icon, description
-// 4. Save, push to GitHub. Done.
+// 🎯 HOW TO ADD A SUBJECT:
+//   1. Find the exam (e.g., uppsc-ae)
+//   2. Find the stage (e.g., 'mains')
+//   3. Add a subject object inside that stage's "subjects" array
+//
+// 🎯 HOW TO ADD A NEW STAGE:
+//   Some exams may have only 2 stages, or different stages.
+//   Just modify the "stages" array for that exam.
 //
 // ⚠️ RULES:
-// - Subject "id" must be unique within an exam (lowercase, hyphens only, no spaces)
-// - Same subject id can be reused across different exams (e.g. "fluid-mechanics" in UPPSC AE and BPSC AE)
-// - When you upload questions, use both "exam" and "subject" fields matching IDs here
+//   - Subject "id" must be unique within a stage (lowercase, hyphens, no spaces)
+//   - When uploading questions, JSON needs: exam, stage, subject (all required)
+//   - Once a subject id is used in uploaded questions, DON'T change it (orphans data)
 
 export const EXAMS = [
   {
@@ -25,14 +25,110 @@ export const EXAMS = [
     icon: '🏛️',
     state: 'Uttar Pradesh',
     description: 'Civil Engineering preparation',
-    subjects: [
-      // Add UPPSC AE subjects here. Example:
-      // {
-      //   id: 'fluid-mechanics',
-      //   name: 'Fluid Mechanics & Hydraulics',
-      //   icon: '💧',
-      //   description: 'Bernoulli, pipes, channels, pumps'
-      // },
+    stages: [
+      {
+        id: 'prelims',
+        name: 'Prelims',
+        icon: '🎯',
+        description: 'Objective screening test',
+        subjects: []
+      },
+      {
+        id: 'mains',
+        name: 'Mains',
+        icon: '📚',
+        description: 'Descriptive technical exam',
+        subjects: [
+          // ===== Paper-I =====
+          {
+            id: 'engg-mechanics',
+            name: 'Engineering Mechanics',
+            icon: '⚙️',
+            description: 'Forces, equilibrium, kinematics, kinetics'
+          },
+          {
+            id: 'strength-of-materials',
+            name: 'Strength of Materials',
+            icon: '💪',
+            description: 'Stress, strain, beams, columns, springs'
+          },
+          {
+            id: 'structural-analysis',
+            name: 'Structural Analysis',
+            icon: '🏛️',
+            description: 'Indeterminate structures, plastic analysis, arches'
+          },
+          {
+            id: 'steel-design',
+            name: 'Steel Design',
+            icon: '🔩',
+            description: 'Joints, plate girders, columns, bridges'
+          },
+          {
+            id: 'concrete-design',
+            name: 'Concrete & Masonry Design',
+            icon: '🏢',
+            description: 'RCC, slabs, prestressed, water tanks, masonry'
+          },
+          {
+            id: 'building-materials',
+            name: 'Building Materials',
+            icon: '🧱',
+            description: 'Cement, concrete, timber, special concretes'
+          },
+          {
+            id: 'construction-tech',
+            name: 'Construction Technology',
+            icon: '🏗️',
+            description: 'Estimation, CPM/PERT, project planning'
+          },
+          {
+            id: 'geotech-foundation',
+            name: 'Geotech & Foundation',
+            icon: '⛰️',
+            description: 'Soil mechanics, bearing capacity, piles, rafts'
+          },
+
+          // ===== Paper-II =====
+          {
+            id: 'fluid-mechanics',
+            name: 'Fluid Mechanics',
+            icon: '💧',
+            description: 'Pipe flow, turbines, pumps, hydropower'
+          },
+          {
+            id: 'hydrology',
+            name: 'Hydrology & Water Resources',
+            icon: '🌊',
+            description: 'Hydrology, irrigation, dams, river training'
+          },
+          {
+            id: 'transportation',
+            name: 'Transportation Engineering',
+            icon: '🛣️',
+            description: 'Highway, railway, airport engineering'
+          },
+          {
+            id: 'environmental',
+            name: 'Environmental Engineering',
+            icon: '🌱',
+            description: 'Water supply, sewerage, solid waste, pollution'
+          },
+          {
+            id: 'surveying-geology',
+            name: 'Surveying & Geology',
+            icon: '📐',
+            description: 'Survey methods, GIS, engineering geology'
+          }
+        ]
+      },
+      {
+        id: 'interview',
+        name: 'Interview',
+        icon: '🎤',
+        description: 'Personality test',
+        subjects: []
+      }
     ]
   },
   {
@@ -42,7 +138,11 @@ export const EXAMS = [
     icon: '🎓',
     state: 'Uttar Pradesh',
     description: 'Lecturer recruitment',
-    subjects: []
+    stages: [
+      { id: 'prelims', name: 'Prelims', icon: '🎯', description: 'Screening test', subjects: [] },
+      { id: 'mains', name: 'Mains', icon: '📚', description: 'Main exam', subjects: [] },
+      { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
+    ]
   },
   {
     id: 'bpsc-ae',
@@ -51,7 +151,11 @@ export const EXAMS = [
     icon: '🏢',
     state: 'Bihar',
     description: 'Civil Engineering preparation',
-    subjects: []
+    stages: [
+      { id: 'prelims', name: 'Prelims', icon: '🎯', description: 'Screening test', subjects: [] },
+      { id: 'mains', name: 'Mains', icon: '📚', description: 'Main exam', subjects: [] },
+      { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
+    ]
   },
   {
     id: 'cgpsc-ae',
@@ -60,7 +164,11 @@ export const EXAMS = [
     icon: '🏗️',
     state: 'Chhattisgarh',
     description: 'Civil Engineering preparation',
-    subjects: []
+    stages: [
+      { id: 'prelims', name: 'Prelims', icon: '🎯', description: 'Screening test', subjects: [] },
+      { id: 'mains', name: 'Mains', icon: '📚', description: 'Main exam', subjects: [] },
+      { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
+    ]
   },
   {
     id: 'tspsc-ae',
@@ -69,7 +177,11 @@ export const EXAMS = [
     icon: '🏘️',
     state: 'Telangana',
     description: 'Civil Engineering preparation',
-    subjects: []
+    stages: [
+      { id: 'prelims', name: 'Prelims', icon: '🎯', description: 'Screening test', subjects: [] },
+      { id: 'mains', name: 'Mains', icon: '📚', description: 'Main exam', subjects: [] },
+      { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
+    ]
   },
   {
     id: 'gpsc-ae',
@@ -78,7 +190,11 @@ export const EXAMS = [
     icon: '🏬',
     state: 'Gujarat',
     description: 'Civil Engineering preparation',
-    subjects: []
+    stages: [
+      { id: 'prelims', name: 'Prelims', icon: '🎯', description: 'Screening test', subjects: [] },
+      { id: 'mains', name: 'Mains', icon: '📚', description: 'Main exam', subjects: [] },
+      { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
+    ]
   }
 ];
 
@@ -92,18 +208,36 @@ export function getValidExamIds() {
   return EXAMS.map(e => e.id);
 }
 
-export function getSubjectsForExam(examId) {
+export function getStagesForExam(examId) {
   const exam = getExamById(examId);
-  return exam ? exam.subjects : [];
+  return exam?.stages || [];
 }
 
-export function getSubjectFromExam(examId, subjectId) {
-  const subjects = getSubjectsForExam(examId);
+export function getStageFromExam(examId, stageId) {
+  const stages = getStagesForExam(examId);
+  return stages.find(s => s.id === stageId) || null;
+}
+
+export function getSubjectsForStage(examId, stageId) {
+  const stage = getStageFromExam(examId, stageId);
+  return stage?.subjects || [];
+}
+
+export function getSubjectFromStage(examId, stageId, subjectId) {
+  const subjects = getSubjectsForStage(examId, stageId);
   return subjects.find(s => s.id === subjectId) || null;
 }
 
-export function getValidSubjectIdsForExam(examId) {
-  return getSubjectsForExam(examId).map(s => s.id);
+// Convenience: search a subject across all stages of an exam
+// Useful when fetching a bookmarked question and we don't know its stage
+export function findSubjectInExam(examId, subjectId) {
+  const exam = getExamById(examId);
+  if (!exam) return null;
+  for (const stage of exam.stages || []) {
+    const subj = (stage.subjects || []).find(s => s.id === subjectId);
+    if (subj) return { ...subj, stageId: stage.id };
+  }
+  return null;
 }
 
 // Selected exam persistence

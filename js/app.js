@@ -1,4 +1,4 @@
-// app.js — Main app orchestrator (with full bookmarks support)
+// app.js — Main app orchestrator (with stage selection: Prelims/Mains/Interview)
 import { watchAuth, loginWithGoogle, logout } from './auth.js';
 import {
   fetchQuestions,
@@ -15,15 +15,19 @@ import {
   getExamById,
   getSelectedExam,
   setSelectedExam,
-  getSubjectsForExam,
-  getSubjectFromExam
+  getStagesForExam,
+  getStageFromExam,
+  getSubjectsForStage,
+  getSubjectFromStage,
+  findSubjectInExam
 } from './exams.js';
 
 // ========== State ==========
 let currentUser = null;
 let currentExam = null;
-let allBookmarkedQuestions = []; // cached for bookmark screen
-let bookmarksFilter = 'this'; // 'this' = current exam only, 'all' = everything
+let currentStage = null;
+let allBookmarkedQuestions = [];
+let bookmarksFilter = 'this';
 
 // ========== DOM helpers ==========
 const $ = (id) => document.getElementById(id);
@@ -40,7 +44,7 @@ function toast(msg, ms = 2000) {
   setTimeout(() => t.classList.remove('show'), ms);
 }
 
-// ========== Auth flow ==========
+// ========== Auth ==========
 watchAuth(
   async (user) => {
     currentUser = user;
@@ -60,16 +64,14 @@ watchAuth(
   () => {
     currentUser = null;
     currentExam = null;
+    currentStage = null;
     showScreen('loginScreen');
   }
 );
 
 $('googleLoginBtn').addEventListener('click', async () => {
-  try {
-    await loginWithGoogle();
-  } catch (err) {
-    toast('Login failed. Try again.');
-  }
+  try { await loginWithGoogle(); }
+  catch (err) { toast('Login failed. Try again.'); }
 });
 
 $('logoutBtn').addEventListener('click', async () => {
@@ -77,23 +79,22 @@ $('logoutBtn').addEventListener('click', async () => {
   toast('Logged out');
 });
 
-// ========== Exam selection screen ==========
+// ========== Exam selector ==========
 function renderExamSelector() {
   const container = $('examList');
   container.innerHTML = '';
-
   EXAMS.forEach(exam => {
     const btn = document.createElement('button');
     btn.className = 'exam-card';
-    const subjectCount = exam.subjects ? exam.subjects.length : 0;
-    const subjectInfo = subjectCount > 0
-      ? `${subjectCount} subjects`
-      : 'Coming soon';
+    // Count subjects across all stages
+    let totalSubjects = 0;
+    (exam.stages || []).forEach(s => totalSubjects += (s.subjects || []).length);
+    const info = totalSubjects > 0 ? `${totalSubjects} subjects` : 'Coming soon';
     btn.innerHTML = `
       <div class="exam-icon">${exam.icon}</div>
       <div class="exam-info">
         <div class="exam-name">${exam.name}</div>
-        <div class="exam-state">${exam.state} · ${subjectInfo}</div>
+        <div class="exam-state">${exam.state} · ${info}</div>
       </div>
       <div class="exam-arrow">›</div>
     `;
@@ -104,10 +105,7 @@ function renderExamSelector() {
 
 function selectExam(examId) {
   const exam = getExamById(examId);
-  if (!exam) {
-    toast('Invalid exam');
-    return;
-  }
+  if (!exam) { toast('Invalid exam'); return; }
   setSelectedExam(examId);
   currentExam = exam;
   enterApp();
@@ -130,21 +128,21 @@ async function loadHomeData() {
   const questions = await fetchQuestions({ exam: currentExam.id, maxCount: 200 });
   $('qCount').textContent = questions.length || '0';
 
-  const subjectCount = (currentExam.subjects || []).length;
-  $('subjectCount').textContent = subjectCount;
+  // Total subjects across all stages
+  let totalSubjects = 0;
+  (currentExam.stages || []).forEach(s => totalSubjects += (s.subjects || []).length);
+  $('subjectCount').textContent = totalSubjects;
 }
 
 document.querySelectorAll('.feature-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const route = card.dataset.route;
-    handleRoute(route);
-  });
+  card.addEventListener('click', () => handleRoute(card.dataset.route));
 });
 
 async function handleRoute(route) {
   if (route === 'subjects') {
-    renderSubjectsList();
-    showScreen('subjectsScreen');
+    // NEW: show stage selector first
+    renderStagesList();
+    showScreen('stagesScreen');
   } else if (route === 'pyq' || route === 'mock') {
     const questions = await fetchQuestions({ exam: currentExam.id, maxCount: 100 });
     if (questions.length === 0) {
@@ -155,13 +153,55 @@ async function handleRoute(route) {
     showScreen('quizScreen');
     renderQuiz();
   } else if (route === 'bookmarks') {
-    bookmarksFilter = 'this'; // reset to current exam tab
+    bookmarksFilter = 'this';
     await loadBookmarks();
     showScreen('bookmarksScreen');
   } else {
     toast('Coming soon');
   }
 }
+
+// ========== Stages screen (NEW) ==========
+function renderStagesList() {
+  const container = $('stagesList');
+  container.innerHTML = '';
+
+  $('stagesExamLabel').textContent = currentExam.name;
+
+  const stages = getStagesForExam(currentExam.id);
+
+  stages.forEach(stage => {
+    const subjectCount = (stage.subjects || []).length;
+    const card = document.createElement('button');
+    card.className = 'stage-card';
+    const status = subjectCount > 0
+      ? `${subjectCount} subjects`
+      : 'Coming soon';
+    card.innerHTML = `
+      <div class="stage-icon">${stage.icon}</div>
+      <div class="stage-info">
+        <div class="stage-name">${stage.name}</div>
+        <div class="stage-desc">${stage.description}</div>
+        <div class="stage-status">${status}</div>
+      </div>
+      <div class="stage-arrow">›</div>
+    `;
+    card.addEventListener('click', () => openStage(stage.id));
+    container.appendChild(card);
+  });
+}
+
+function openStage(stageId) {
+  const stage = getStageFromExam(currentExam.id, stageId);
+  if (!stage) { toast('Invalid stage'); return; }
+  currentStage = stage;
+  renderSubjectsList();
+  showScreen('subjectsScreen');
+}
+
+$('stagesBackBtn').addEventListener('click', () => {
+  showScreen('homeScreen');
+});
 
 // ========== Subjects screen ==========
 function renderSubjectsList() {
@@ -170,12 +210,14 @@ function renderSubjectsList() {
   container.innerHTML = '';
 
   $('subjectsExamLabel').textContent = currentExam.name;
+  $('subjectsStageLabel').textContent = currentStage.name;
 
-  const subjects = getSubjectsForExam(currentExam.id);
+  const subjects = currentStage.subjects || [];
 
   if (subjects.length === 0) {
     container.classList.add('hidden');
     emptyState.classList.remove('hidden');
+    $('emptyStageName').textContent = currentStage.name;
     $('emptyExamName').textContent = currentExam.name;
     return;
   }
@@ -201,6 +243,7 @@ function renderSubjectsList() {
 
 async function openSubject(subjectId) {
   toast('Loading questions...');
+  // Note: questions are fetched by exam + subject (not stage in DB query — stage is metadata)
   const questions = await fetchQuestions({
     exam: currentExam.id,
     subject: subjectId,
@@ -208,7 +251,7 @@ async function openSubject(subjectId) {
   });
 
   if (questions.length === 0) {
-    const subj = getSubjectFromExam(currentExam.id, subjectId);
+    const subj = getSubjectFromStage(currentExam.id, currentStage.id, subjectId);
     toast(`No questions in ${subj?.name || 'this subject'} yet`);
     return;
   }
@@ -219,7 +262,7 @@ async function openSubject(subjectId) {
 }
 
 $('subjectsBackBtn').addEventListener('click', () => {
-  showScreen('homeScreen');
+  showScreen('stagesScreen');
 });
 
 // ========== Bookmarks screen ==========
@@ -237,7 +280,6 @@ function renderBookmarksList() {
   const tabThis = $('tabThisExam');
   const tabAll = $('tabAllExams');
 
-  // Filter based on tab
   let visible;
   if (bookmarksFilter === 'this') {
     visible = allBookmarkedQuestions.filter(q => q.examId === currentExam.id);
@@ -245,17 +287,13 @@ function renderBookmarksList() {
     visible = allBookmarkedQuestions;
   }
 
-  // Update tab counts
   const thisCount = allBookmarkedQuestions.filter(q => q.examId === currentExam.id).length;
   const allCount = allBookmarkedQuestions.length;
   tabThis.textContent = `This Exam (${thisCount})`;
   tabAll.textContent = `All Exams (${allCount})`;
-
-  // Active tab styling
   tabThis.classList.toggle('active', bookmarksFilter === 'this');
   tabAll.classList.toggle('active', bookmarksFilter === 'all');
 
-  // Empty state
   if (visible.length === 0) {
     container.classList.add('hidden');
     empty.classList.remove('hidden');
@@ -268,19 +306,14 @@ function renderBookmarksList() {
   practiceBtn.classList.remove('hidden');
   practiceBtn.textContent = `Practice all (${visible.length})`;
 
-  // Render the list
   container.innerHTML = '';
   visible.forEach((q, idx) => {
     const card = document.createElement('button');
     card.className = 'bookmark-card';
-    const preview = q.question.length > 100
-      ? q.question.substring(0, 100) + '...'
-      : q.question;
+    const preview = q.question.length > 100 ? q.question.substring(0, 100) + '...' : q.question;
     card.innerHTML = `
       <div class="bookmark-num">${idx + 1}</div>
-      <div class="bookmark-content">
-        <div class="bookmark-text">${escapeHtml(preview)}</div>
-      </div>
+      <div class="bookmark-content"><div class="bookmark-text">${escapeHtml(preview)}</div></div>
       <div class="bookmark-arrow">›</div>
     `;
     card.addEventListener('click', () => openBookmarkedQuestion(idx, visible));
@@ -288,7 +321,6 @@ function renderBookmarksList() {
   });
 }
 
-// Tab switching
 $('tabThisExam').addEventListener('click', () => {
   bookmarksFilter = 'this';
   renderBookmarksList();
@@ -299,7 +331,6 @@ $('tabAllExams').addEventListener('click', () => {
   renderBookmarksList();
 });
 
-// "Practice all" button — start a quiz with all visible bookmarks
 $('practiceBookmarksBtn').addEventListener('click', () => {
   let visible;
   if (bookmarksFilter === 'this') {
@@ -307,19 +338,14 @@ $('practiceBookmarksBtn').addEventListener('click', () => {
   } else {
     visible = allBookmarkedQuestions;
   }
-  if (visible.length === 0) {
-    toast('No bookmarks to practice');
-    return;
-  }
+  if (visible.length === 0) { toast('No bookmarks to practice'); return; }
   Quiz.startQuiz(visible);
   showScreen('quizScreen');
   renderQuiz();
 });
 
-// Open single bookmark in review mode
 function openBookmarkedQuestion(index, list) {
   Quiz.startQuiz(list);
-  // Jump to specific index
   while (Quiz.getProgress().current - 1 < index) {
     if (!Quiz.next()) break;
   }
@@ -343,9 +369,9 @@ async function renderQuiz() {
   const { current, total } = Quiz.getProgress();
   $('quizProgress').textContent = `${current} / ${total}`;
 
-  // Look up subject within current exam (or question's exam if from bookmark)
+  // Find subject across all stages of the question's exam
   const examIdForLookup = q.examId || currentExam.id;
-  const subjData = getSubjectFromExam(examIdForLookup, q.subject);
+  const subjData = findSubjectInExam(examIdForLookup, q.subject);
   $('quizSubject').textContent = subjData ? subjData.name : (q.subject || 'General');
   $('quizYear').textContent = q.year ? `Year ${q.year}` : '—';
   $('quizQuestion').textContent = q.question;
@@ -362,7 +388,6 @@ async function renderQuiz() {
     optsContainer.appendChild(btn);
   });
 
-  // Bookmark icon — check Firebase to set correct state
   await updateBookmarkButton(q);
 }
 
@@ -415,16 +440,15 @@ $('quizPrevBtn').addEventListener('click', () => {
 });
 
 $('quizBackBtn').addEventListener('click', () => {
-  // Smart back: if quiz was from bookmarks, go to bookmarks; else subjects
-  const bm = allBookmarkedQuestions.length > 0 && Quiz.getCurrent()?.savedAt;
-  if (bm) {
+  // If quiz came from bookmarks, return there; else subjects screen
+  const fromBookmarks = Quiz.getCurrent()?.savedAt;
+  if (fromBookmarks) {
     showScreen('bookmarksScreen');
   } else {
     showScreen('subjectsScreen');
   }
 });
 
-// Bookmark toggle (now properly toggles save/unsave)
 $('quizBookmarkBtn').addEventListener('click', async () => {
   const q = Quiz.getCurrent();
   if (!q || !currentUser) return;
