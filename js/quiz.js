@@ -1,4 +1,4 @@
-// quiz.js — Quiz engine. Pure logic, no DOM dependencies on auth/db.
+// quiz.js — Quiz engine. Pure logic.
 let state = {
   questions: [],
   currentIndex: 0,
@@ -12,7 +12,6 @@ export function startQuiz(questions) {
   state.currentIndex = 0;
   state.selectedIndex = null;
   state.answered = false;
-  renderCurrent();
 }
 
 export function getCurrent() {
@@ -68,9 +67,4 @@ export function toggleBookmark(qId) {
   }
   state.bookmarked.add(qId);
   return true;
-}
-
-// Render is wired up by app.js
-function renderCurrent() {
-  // hook intentionally left for app.js to handle
 }

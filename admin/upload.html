@@ -36,6 +36,16 @@
       font-size: 13px;
       resize: vertical;
     }
+    select {
+      width: 100%;
+      background: #0f172a;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
     button {
       background: #f59e0b;
       color: #1f2937;
@@ -78,28 +88,48 @@
     }
     .stat-num { font-size: 22px; font-weight: 700; color: #f59e0b; }
     .stat-lbl { font-size: 11px; color: #94a3b8; text-transform: uppercase; }
-    .subjects-ref {
+    .ref-table {
       background: #0f172a;
       padding: 12px;
       border-radius: 8px;
       border: 1px solid #334155;
       font-size: 12px;
-      max-height: 200px;
+      max-height: 220px;
       overflow-y: auto;
     }
-    .subj-row {
+    .ref-row {
       display: flex;
       justify-content: space-between;
       padding: 4px 0;
       border-bottom: 1px solid #1e293b;
     }
-    .subj-row:last-child { border-bottom: none; }
-    .subj-id {
+    .ref-row:last-child { border-bottom: none; }
+    .ref-id {
       color: #f59e0b;
       font-family: 'Courier New', monospace;
       font-weight: 600;
     }
-    .subj-name { color: #94a3b8; }
+    .ref-name { color: #94a3b8; }
+    .empty-msg { color: #94a3b8; font-style: italic; padding: 12px; text-align: center; }
+    label { font-size: 13px; color: #94a3b8; display: block; margin-bottom: 6px; }
+    .exam-block { margin-bottom: 16px; }
+    .exam-block-title {
+      color: #f59e0b;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px solid #334155;
+      margin-bottom: 6px;
+    }
+    .warn-box {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid #f59e0b;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #f59e0b;
+      margin-bottom: 12px;
+    }
   </style>
 </head>
 <body>
@@ -107,26 +137,32 @@
     <h1>📋 Admin Panel <span class="badge">Question Upload</span></h1>
     <p class="subtitle">Bulk-upload questions to Firestore. Validates before saving.</p>
 
-    <!-- Login required -->
     <div id="loginPanel" class="panel login-section">
       <p style="margin-bottom:16px;">You must be logged in as the admin to upload questions.</p>
       <button id="loginBtn">Login with Google</button>
     </div>
 
-    <!-- Main panel (after login) -->
     <div id="mainPanel" class="hidden">
 
-      <!-- Subject reference -->
       <div class="panel">
-        <h3>📚 Valid Subject IDs (use these in JSON)</h3>
-        <p class="subtitle" style="margin-bottom:8px;">Use the exact ID (left column) in your JSON's "subject" field.</p>
-        <div class="subjects-ref" id="subjectsRef"></div>
+        <h3>🎯 Default Exam</h3>
+        <label>Questions without an "exam" field will go to this exam:</label>
+        <select id="examSelect"></select>
+        <div id="examWarning" class="warn-box hidden">
+          ⚠️ This exam has no subjects defined. Add subjects in <code>js/exams.js</code> before uploading.
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>📚 Reference: Exams & Their Subjects</h3>
+        <p class="subtitle" style="margin-bottom:8px;">When uploading, use these IDs in your JSON. Subject IDs are scoped to each exam.</p>
+        <div class="ref-table" id="examsSubjectsRef"></div>
       </div>
 
       <div class="panel">
         <h3>1. Paste Questions JSON</h3>
-        <p class="subtitle">Format: array of question objects. See template below.</p>
-        <textarea id="jsonInput" placeholder='[{"question":"...", "options":["A","B","C","D"], "answer":0, "explanation":"...", "subject":"fluid-mechanics", "year":2024, "tier":"free"}]'></textarea>
+        <p class="subtitle">Each question must have a "subject" field matching a subject in the chosen exam. Optional "exam" field overrides the dropdown above.</p>
+        <textarea id="jsonInput" placeholder='[{"question":"...", "options":["A","B","C","D"], "answer":0, "explanation":"...", "subject":"YOUR_SUBJECT_ID", "exam":"uppsc-ae", "year":2024, "tier":"free"}]'></textarea>
         <button id="loadTemplateBtn" class="secondary">Load Template</button>
         <button id="validateBtn" class="secondary">Validate Only</button>
         <button id="uploadBtn">Upload to Firestore</button>
@@ -152,12 +188,18 @@
 
   <script type="module">
     import { auth, db, googleProvider } from '../js/firebase-config.js';
-    import { SUBJECTS, getValidSubjectIds } from '../js/subjects.js';
+    import {
+      EXAMS,
+      getValidExamIds,
+      getValidSubjectIdsForExam,
+      getSubjectsForExam,
+      getExamById
+    } from '../js/exams.js';
     import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { doc, setDoc, writeBatch, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const ADMIN_EMAILS = ['112ce0489@gmail.com'];
-    const VALID_SUBJECTS = getValidSubjectIds();
+    const VALID_EXAMS = getValidExamIds();
 
     const $ = id => document.getElementById(id);
     const log = (msg, type = 'info') => {
@@ -167,22 +209,59 @@
       el.scrollTop = el.scrollHeight;
     };
 
-    // Render subject reference table
-    function renderSubjectsRef() {
-      const ref = $('subjectsRef');
-      ref.innerHTML = SUBJECTS.map(s =>
-        `<div class="subj-row"><span class="subj-id">${s.id}</span><span class="subj-name">${s.icon} ${s.name}</span></div>`
-      ).join('');
+    // Render exams + their nested subjects as reference
+    function renderExamsSubjectsRef() {
+      const container = $('examsSubjectsRef');
+      container.innerHTML = EXAMS.map(exam => {
+        const subjs = exam.subjects || [];
+        const subjRows = subjs.length > 0
+          ? subjs.map(s =>
+              `<div class="ref-row" style="padding-left: 16px;">
+                <span class="ref-id">${s.id}</span>
+                <span class="ref-name">${s.icon || '📖'} ${s.name}</span>
+              </div>`
+            ).join('')
+          : `<div class="empty-msg">No subjects defined yet</div>`;
+        return `
+          <div class="exam-block">
+            <div class="exam-block-title">${exam.icon} ${exam.name} <span style="color:#94a3b8; font-weight:normal;">(${exam.id})</span></div>
+            ${subjRows}
+          </div>
+        `;
+      }).join('');
     }
+
+    function renderExamSelect() {
+      $('examSelect').innerHTML = EXAMS.map(e => {
+        const count = (e.subjects || []).length;
+        const subjLabel = count > 0 ? `${count} subjects` : 'NO SUBJECTS YET';
+        return `<option value="${e.id}">${e.icon} ${e.name} — ${subjLabel}</option>`;
+      }).join('');
+      checkExamWarning();
+    }
+
+    function checkExamWarning() {
+      const examId = $('examSelect').value;
+      const exam = getExamById(examId);
+      const subjects = exam?.subjects || [];
+      if (subjects.length === 0) {
+        $('examWarning').classList.remove('hidden');
+      } else {
+        $('examWarning').classList.add('hidden');
+      }
+    }
+
+    $('examSelect').addEventListener('change', checkExamWarning);
 
     onAuthStateChanged(auth, user => {
       if (user && ADMIN_EMAILS.includes(user.email)) {
         $('loginPanel').classList.add('hidden');
         $('mainPanel').classList.remove('hidden');
-        renderSubjectsRef();
+        renderExamsSubjectsRef();
+        renderExamSelect();
         log(`Logged in as ${user.email}`, 'ok');
       } else if (user) {
-        log(`Access denied for ${user.email}. Not an admin.`, 'err');
+        log(`Access denied for ${user.email}`, 'err');
         signOut(auth);
       } else {
         $('loginPanel').classList.remove('hidden');
@@ -194,74 +273,60 @@
     $('logoutBtn').onclick = () => signOut(auth);
 
     $('loadTemplateBtn').onclick = () => {
+      // Try to use first available subject from default exam
+      const examId = $('examSelect').value;
+      const subjects = getSubjectsForExam(examId);
+      if (subjects.length === 0) {
+        log(`Cannot load template: ${examId} has no subjects yet. Add subjects first.`, 'err');
+        return;
+      }
+      const sampleSubjId = subjects[0].id;
+
       $('jsonInput').value = JSON.stringify([
         {
-          question: "What is the unit of dynamic viscosity?",
-          options: ["Pa·s", "N/m²", "kg/m³", "m²/s"],
+          question: "Sample question 1 — replace with real content?",
+          options: ["Option A", "Option B", "Option C", "Option D"],
           answer: 0,
-          explanation: "Dynamic viscosity is measured in Pascal-seconds (Pa·s).",
-          subject: "fluid-mechanics",
+          explanation: "Why option A is correct.",
+          subject: sampleSubjId,
           year: 2024,
-          exam: "uppsc-ae",
           tier: "free",
           difficulty: "easy"
         },
         {
-          question: "Bernoulli's equation is based on conservation of?",
-          options: ["Mass", "Momentum", "Energy", "Force"],
-          answer: 2,
-          explanation: "Bernoulli's equation is derived from the principle of conservation of energy.",
-          subject: "fluid-mechanics",
+          question: "Sample question 2?",
+          options: ["A", "B", "C", "D"],
+          answer: 1,
+          explanation: "Brief explanation.",
+          subject: sampleSubjId,
           year: 2022,
-          exam: "uppsc-ae",
-          tier: "free",
-          difficulty: "easy"
-        },
-        {
-          question: "The slump test is used to measure:",
-          options: ["Strength", "Workability", "Durability", "Density"],
-          answer: 1,
-          explanation: "Slump test measures the workability of fresh concrete.",
-          subject: "building-materials",
-          year: 2024,
-          exam: "uppsc-ae",
-          tier: "free",
-          difficulty: "easy"
-        },
-        {
-          question: "For a simply supported beam of span L with UDL w/m, max bending moment is:",
-          options: ["wL/8", "wL²/8", "wL²/4", "wL²/2"],
-          answer: 1,
-          explanation: "Max BM at center of simply supported beam with UDL = wL²/8.",
-          subject: "strength-of-materials",
-          year: 2020,
-          exam: "uppsc-ae",
-          tier: "free",
-          difficulty: "medium"
-        },
-        {
-          question: "The angle of internal friction for cohesionless soil is determined by:",
-          options: ["Vane shear test", "Direct shear test", "Compression test", "Permeability test"],
-          answer: 1,
-          explanation: "Direct shear test is commonly used for sand/cohesionless soils.",
-          subject: "geotechnical",
-          year: 2022,
-          exam: "uppsc-ae",
-          tier: "free",
-          difficulty: "medium"
+          tier: "free"
         }
       ], null, 2);
-      log('Template loaded with 5 sample questions across 4 subjects.');
+      log(`Template loaded with subject "${sampleSubjId}". Replace with real questions.`);
     };
 
-    function validateQuestion(q, idx) {
+    function validateQuestion(q, defaultExam) {
       const errs = [];
       if (!q.question || typeof q.question !== 'string') errs.push('missing question');
       if (!Array.isArray(q.options) || q.options.length < 2) errs.push('options must be array of 2+');
       if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= (q.options || []).length) errs.push('invalid answer index');
       if (q.tier && !['free', 'premium'].includes(q.tier)) errs.push('tier must be free or premium');
+
+      const examId = q.exam || defaultExam;
+      if (!examId) errs.push('exam not specified and no default selected');
+      else if (!VALID_EXAMS.includes(examId)) errs.push(`unknown exam "${examId}"`);
+
       if (!q.subject) errs.push('subject is required');
-      else if (!VALID_SUBJECTS.includes(q.subject)) errs.push(`unknown subject "${q.subject}" (see valid IDs above)`);
+      else if (examId && VALID_EXAMS.includes(examId)) {
+        const validSubjects = getValidSubjectIdsForExam(examId);
+        if (validSubjects.length === 0) {
+          errs.push(`exam "${examId}" has no subjects defined`);
+        } else if (!validSubjects.includes(q.subject)) {
+          errs.push(`subject "${q.subject}" not valid for exam "${examId}"`);
+        }
+      }
+
       return errs;
     }
 
@@ -269,15 +334,16 @@
       try {
         const arr = JSON.parse($('jsonInput').value);
         if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
+        const defaultExam = $('examSelect').value;
         let valid = 0, invalid = 0;
         arr.forEach((q, i) => {
-          const errs = validateQuestion(q, i);
+          const errs = validateQuestion(q, defaultExam);
           if (errs.length) { log(`Q${i+1}: ${errs.join(', ')}`, 'err'); invalid++; }
           else valid++;
         });
         $('statValid').textContent = valid;
         $('statInvalid').textContent = invalid;
-        log(`Validation: ${valid} valid, ${invalid} invalid.`, valid > 0 ? 'ok' : 'err');
+        log(`Validation: ${valid} valid, ${invalid} invalid. Default exam: ${defaultExam}`, valid > 0 ? 'ok' : 'err');
       } catch (e) {
         log('JSON parse error: ' + e.message, 'err');
       }
@@ -287,12 +353,13 @@
       try {
         const arr = JSON.parse($('jsonInput').value);
         if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
+        const defaultExam = $('examSelect').value;
 
         let valid = [], invalid = 0;
         arr.forEach((q, i) => {
-          const errs = validateQuestion(q, i);
+          const errs = validateQuestion(q, defaultExam);
           if (errs.length) { log(`Q${i+1} skipped: ${errs.join(', ')}`, 'err'); invalid++; }
-          else valid.push(q);
+          else valid.push({ ...q, exam: q.exam || defaultExam });
         });
 
         $('statValid').textContent = valid.length;
@@ -300,7 +367,7 @@
 
         if (valid.length === 0) { log('Nothing to upload.', 'err'); return; }
 
-        log(`Uploading ${valid.length} questions in batches...`);
+        log(`Uploading ${valid.length} questions...`);
         let uploaded = 0;
 
         const BATCH_SIZE = 400;
@@ -308,8 +375,7 @@
           const batch = writeBatch(db);
           const slice = valid.slice(i, i + BATCH_SIZE);
           slice.forEach(q => {
-            const exam = q.exam || 'uppsc-ae';
-            const ref = doc(collection(db, 'exams', exam, 'questions'));
+            const ref = doc(collection(db, 'exams', q.exam, 'questions'));
             batch.set(ref, {
               ...q,
               tier: q.tier || 'free',

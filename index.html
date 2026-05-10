@@ -18,7 +18,7 @@
       <div class="logo">📘</div>
       <h1>All AE/JE Exams</h1>
       <p class="tagline">Civil Engineering</p>
-      <p class="subtitle">UPPSC AE Preparation Hub</p>
+      <p class="subtitle">Multi-state AE preparation hub</p>
       <button id="googleLoginBtn" class="btn-google">
         <svg width="18" height="18" viewBox="0 0 18 18">
           <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
@@ -32,14 +32,30 @@
     </div>
   </div>
 
+  <!-- EXAM SELECTOR SCREEN -->
+  <div id="examScreen" class="screen">
+    <header class="app-header">
+      <div class="header-left">
+        <h2>Choose Your Exam</h2>
+        <span class="header-sub">Select to begin preparation</span>
+      </div>
+    </header>
+    <main class="exams-main">
+      <p class="hint-text">Pick the exam you're preparing for. You can switch anytime.</p>
+      <div id="examList" class="exams-list"></div>
+      <p class="footer-note" style="margin-top: 24px; padding: 0 4px;">More exams coming soon.</p>
+    </main>
+  </div>
+
   <!-- HOME SCREEN -->
   <div id="homeScreen" class="screen">
     <header class="app-header">
       <div class="header-left">
-        <h2>UPPSC AE</h2>
-        <span class="header-sub">Civil Engineering</span>
+        <h2 id="headerExamName">UPPSC AE</h2>
+        <span class="header-sub" id="headerExamSub">Civil Engineering preparation</span>
       </div>
       <div class="header-right">
+        <button id="switchExamBtn" class="btn-icon" title="Switch Exam">⇄</button>
         <img id="userAvatar" class="avatar" alt="" />
         <button id="logoutBtn" class="btn-icon" title="Logout">⏻</button>
       </div>
@@ -60,7 +76,7 @@
         <button class="feature-card" data-route="pyq">
           <div class="card-icon">📝</div>
           <div class="card-title">Previous Year Papers</div>
-          <div class="card-desc">2020, 2022, 2024</div>
+          <div class="card-desc">Past papers</div>
         </button>
         <button class="feature-card" data-route="mock">
           <div class="card-icon">⏱️</div>
@@ -74,7 +90,11 @@
         </button>
       </div>
 
-      <div class="status-card" id="statusCard">
+      <div class="status-card">
+        <div class="status-row">
+          <span class="status-label">Subjects</span>
+          <span class="status-value" id="subjectCount">—</span>
+        </div>
         <div class="status-row">
           <span class="status-label">Questions loaded</span>
           <span class="status-value" id="qCount">—</span>
@@ -87,19 +107,52 @@
     </main>
   </div>
 
-  <!-- SUBJECTS LIST SCREEN (NEW) -->
+  <!-- SUBJECTS LIST SCREEN -->
   <div id="subjectsScreen" class="screen">
     <header class="app-header">
       <button id="subjectsBackBtn" class="btn-icon">←</button>
       <div class="header-left" style="flex: 1; margin-left: 8px;">
         <h2>Subjects</h2>
-        <span class="header-sub">Choose to practice</span>
+        <span class="header-sub"><span id="subjectsExamLabel">UPPSC AE</span> · Choose to practice</span>
       </div>
     </header>
 
     <main class="subjects-main">
-      <div id="subjectsList" class="subjects-list">
-        <!-- Subjects rendered here by app.js -->
+      <div id="subjectsList" class="subjects-list"></div>
+      <div id="subjectsEmpty" class="empty-state hidden">
+        <div class="empty-icon">📚</div>
+        <h3>No subjects yet for <span id="emptyExamName">this exam</span></h3>
+        <p>Subjects are being added. Check back soon!</p>
+        <p class="hint-small">Admin: Add subjects in <code>js/exams.js</code> file.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- BOOKMARKS SCREEN (NEW) -->
+  <div id="bookmarksScreen" class="screen">
+    <header class="app-header">
+      <button id="bookmarksBackBtn" class="btn-icon">←</button>
+      <div class="header-left" style="flex: 1; margin-left: 8px;">
+        <h2>⭐ Bookmarks</h2>
+        <span class="header-sub">Saved questions for revision</span>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button id="tabThisExam" class="tab-btn active">This Exam (0)</button>
+      <button id="tabAllExams" class="tab-btn">All Exams (0)</button>
+    </div>
+
+    <main class="bookmarks-main">
+      <button id="practiceBookmarksBtn" class="practice-all-btn hidden">Practice all</button>
+
+      <div id="bookmarksList" class="bookmarks-list"></div>
+
+      <div id="bookmarksEmpty" class="empty-state hidden">
+        <div class="empty-icon">⭐</div>
+        <h3>No bookmarks yet</h3>
+        <p>Tap the ☆ icon during a quiz to save questions here for revision.</p>
       </div>
     </main>
   </div>
@@ -108,10 +161,8 @@
   <div id="quizScreen" class="screen">
     <header class="quiz-header">
       <button id="quizBackBtn" class="btn-icon">←</button>
-      <div class="quiz-progress">
-        <span id="quizProgress">0 / 0</span>
-      </div>
-      <button id="quizBookmarkBtn" class="btn-icon" title="Bookmark">☆</button>
+      <div class="quiz-progress"><span id="quizProgress">0 / 0</span></div>
+      <button id="quizBookmarkBtn" class="btn-icon" title="Bookmark" data-marked="0">☆</button>
     </header>
 
     <main class="quiz-main">
@@ -136,15 +187,13 @@
   <!-- TOAST -->
   <div id="toast" class="toast"></div>
 
-  <!-- Firebase + App scripts -->
   <script type="module" src="js/firebase-config.js"></script>
   <script type="module" src="js/auth.js"></script>
   <script type="module" src="js/db.js"></script>
   <script type="module" src="js/quiz.js"></script>
-  <script type="module" src="js/subjects.js"></script>
+  <script type="module" src="js/exams.js"></script>
   <script type="module" src="js/app.js"></script>
 
-  <!-- Service worker for PWA -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {

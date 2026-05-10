@@ -8,9 +8,7 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// Listen for auth state changes
 export function watchAuth(onLoggedIn, onLoggedOut) {
-  // Handle redirect result (mobile flow)
   getRedirectResult(auth).catch(err => {
     console.error('Redirect login error:', err);
   });
@@ -29,10 +27,8 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
   });
 }
 
-// Trigger Google login
 export async function loginWithGoogle() {
   try {
-    // Use popup on desktop, redirect on mobile (popups often blocked)
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
     if (isMobile) {
       await signInWithRedirect(auth, googleProvider);
@@ -45,7 +41,6 @@ export async function loginWithGoogle() {
   }
 }
 
-// Logout
 export async function logout() {
   try {
     await signOut(auth);
