@@ -13,31 +13,41 @@ import {
 
 // In-memory cache to reduce Firestore reads (saves cost)
 const cache = {
-  questions: null,
-  cachedAt: 0,
-  TTL: 1000 * 60 * 30 // 30 min
+  questions: {},        // keyed by "exam:subject" or "exam:all"
+  cachedAt: {},
+  TTL: 1000 * 60 * 30   // 30 min
 };
 
-// Fetch questions for UPPSC AE
-// Bad data in one doc won't break the rest — we filter invalid ones out
+// Fetch questions, optionally filtered by subject
 export async function fetchQuestions(opts = {}) {
-  const { exam = 'uppsc-ae', maxCount = 50, force = false } = opts;
+  const {
+    exam = 'uppsc-ae',
+    subject = null,         // if null, fetch all subjects
+    maxCount = 100,
+    force = false
+  } = opts;
+
+  const cacheKey = `${exam}:${subject || 'all'}`;
+  const now = Date.now();
 
   // Return cached if fresh
-  const now = Date.now();
-  if (!force && cache.questions && (now - cache.cachedAt) < cache.TTL) {
-    return cache.questions;
+  if (!force && cache.questions[cacheKey] && (now - (cache.cachedAt[cacheKey] || 0)) < cache.TTL) {
+    return cache.questions[cacheKey];
   }
 
   try {
     const qRef = collection(db, 'exams', exam, 'questions');
-    const q = query(qRef, limit(maxCount));
-    const snap = await getDocs(q);
+    let q;
+    if (subject) {
+      q = query(qRef, where('subject', '==', subject), limit(maxCount));
+    } else {
+      q = query(qRef, limit(maxCount));
+    }
 
+    const snap = await getDocs(q);
     const questions = [];
     snap.forEach(docSnap => {
       const data = docSnap.data();
-      // Validate: skip malformed questions instead of crashing
       if (isValidQuestion(data)) {
         questions.push({ id: docSnap.id, ...data });
       } else {
@@ -45,16 +55,33 @@ export async function fetchQuestions(opts = {}) {
       }
     });
 
-    cache.questions = questions;
-    cache.cachedAt = now;
+    cache.questions[cacheKey] = questions;
+    cache.cachedAt[cacheKey] = now;
     return questions;
   } catch (err) {
     console.error('Error fetching questions:', err);
-    return []; // Return empty instead of throwing — app keeps running
+    return [];
   }
 }
 
-// Validate that a question has all required fields
+// Get question count per subject (for the subjects screen)
+export async function fetchSubjectCounts(exam = 'uppsc-ae') {
+  try {
+    const qRef = collection(db, 'exams', exam, 'questions');
+    const snap = await getDocs(qRef);
+    const counts = {};
+    snap.forEach(docSnap => {
+      const data = docSnap.data();
+      const subj = data.subject || 'uncategorized';
+      counts[subj] = (counts[subj] || 0) + 1;
+    });
+    return counts;
+  } catch (err) {
+    console.error('Error fetching subject counts:', err);
+    return {};
+  }
+}
+
 function isValidQuestion(q) {
   return q
     && typeof q.question === 'string'
@@ -65,7 +92,6 @@ function isValidQuestion(q) {
     && q.answer < q.options.length;
 }
 
-// Save user profile on first login
 export async function saveUserProfile(user) {
   try {
     const userRef = doc(db, 'users', user.uid);
@@ -83,7 +109,6 @@ export async function saveUserProfile(user) {
   }
 }
 
-// Save attempt (which question, which answer, correct or not)
 export async function saveAttempt(userId, questionId, selectedIndex, isCorrect) {
   try {
     const attemptRef = doc(db, 'users', userId, 'attempts', questionId);
@@ -94,24 +119,25 @@ export async function saveAttempt(userId, questionId, selectedIndex, isCorrect) 
     }, { merge: true });
   } catch (err) {
     console.error('Error saving attempt:', err);
-    // Don't crash the app if save fails
   }
 }
 
-// Toggle bookmark
 export async function toggleBookmark(userId, questionId, isBookmarked) {
   try {
     const bookmarkRef = doc(db, 'users', userId, 'bookmarks', questionId);
     if (isBookmarked) {
       await setDoc(bookmarkRef, { savedAt: new Date().toISOString() });
     }
-    // Note: deletion is handled separately to keep things simple
   } catch (err) {
     console.error('Error saving bookmark:', err);
   }
 }
 
-// Get question count (for status card)
 export function getCachedQuestionCount() {
-  return cache.questions ? cache.questions.length : 0;
+  // Sum across all cache keys
+  let total = 0;
+  for (const key in cache.questions) {
+    total += cache.questions[key].length;
+  }
+  return total;
 }

@@ -62,6 +62,7 @@
     }
     .log-ok { color: #10b981; }
     .log-err { color: #ef4444; }
+    .log-warn { color: #f59e0b; }
     .log-info { color: #94a3b8; }
     .badge { background: #334155; color: #f59e0b; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 6px; }
     .login-section { text-align: center; padding: 40px; }
@@ -77,6 +78,28 @@
     }
     .stat-num { font-size: 22px; font-weight: 700; color: #f59e0b; }
     .stat-lbl { font-size: 11px; color: #94a3b8; text-transform: uppercase; }
+    .subjects-ref {
+      background: #0f172a;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .subj-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px solid #1e293b;
+    }
+    .subj-row:last-child { border-bottom: none; }
+    .subj-id {
+      color: #f59e0b;
+      font-family: 'Courier New', monospace;
+      font-weight: 600;
+    }
+    .subj-name { color: #94a3b8; }
   </style>
 </head>
 <body>
@@ -92,9 +115,17 @@
 
     <!-- Main panel (after login) -->
     <div id="mainPanel" class="hidden">
+
+      <!-- Subject reference -->
+      <div class="panel">
+        <h3>📚 Valid Subject IDs (use these in JSON)</h3>
+        <p class="subtitle" style="margin-bottom:8px;">Use the exact ID (left column) in your JSON's "subject" field.</p>
+        <div class="subjects-ref" id="subjectsRef"></div>
+      </div>
+
       <div class="panel">
         <h3>1. Paste Questions JSON</h3>
-        <p class="subtitle">Format: array of question objects. See template button below.</p>
+        <p class="subtitle">Format: array of question objects. See template below.</p>
         <textarea id="jsonInput" placeholder='[{"question":"...", "options":["A","B","C","D"], "answer":0, "explanation":"...", "subject":"fluid-mechanics", "year":2024, "tier":"free"}]'></textarea>
         <button id="loadTemplateBtn" class="secondary">Load Template</button>
         <button id="validateBtn" class="secondary">Validate Only</button>
@@ -121,24 +152,34 @@
 
   <script type="module">
     import { auth, db, googleProvider } from '../js/firebase-config.js';
+    import { SUBJECTS, getValidSubjectIds } from '../js/subjects.js';
     import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { doc, setDoc, writeBatch, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // Admin email - only this account can upload questions
     const ADMIN_EMAILS = ['112ce0489@gmail.com'];
+    const VALID_SUBJECTS = getValidSubjectIds();
 
     const $ = id => document.getElementById(id);
     const log = (msg, type = 'info') => {
       const el = $('log');
-      const cls = type === 'ok' ? 'log-ok' : type === 'err' ? 'log-err' : 'log-info';
+      const cls = type === 'ok' ? 'log-ok' : type === 'err' ? 'log-err' : type === 'warn' ? 'log-warn' : 'log-info';
       el.innerHTML += `<div class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</div>`;
       el.scrollTop = el.scrollHeight;
     };
+
+    // Render subject reference table
+    function renderSubjectsRef() {
+      const ref = $('subjectsRef');
+      ref.innerHTML = SUBJECTS.map(s =>
+        `<div class="subj-row"><span class="subj-id">${s.id}</span><span class="subj-name">${s.icon} ${s.name}</span></div>`
+      ).join('');
+    }
 
     onAuthStateChanged(auth, user => {
       if (user && ADMIN_EMAILS.includes(user.email)) {
         $('loginPanel').classList.add('hidden');
         $('mainPanel').classList.remove('hidden');
+        renderSubjectsRef();
         log(`Logged in as ${user.email}`, 'ok');
       } else if (user) {
         log(`Access denied for ${user.email}. Not an admin.`, 'err');
@@ -175,9 +216,42 @@
           exam: "uppsc-ae",
           tier: "free",
           difficulty: "easy"
+        },
+        {
+          question: "The slump test is used to measure:",
+          options: ["Strength", "Workability", "Durability", "Density"],
+          answer: 1,
+          explanation: "Slump test measures the workability of fresh concrete.",
+          subject: "building-materials",
+          year: 2024,
+          exam: "uppsc-ae",
+          tier: "free",
+          difficulty: "easy"
+        },
+        {
+          question: "For a simply supported beam of span L with UDL w/m, max bending moment is:",
+          options: ["wL/8", "wL²/8", "wL²/4", "wL²/2"],
+          answer: 1,
+          explanation: "Max BM at center of simply supported beam with UDL = wL²/8.",
+          subject: "strength-of-materials",
+          year: 2020,
+          exam: "uppsc-ae",
+          tier: "free",
+          difficulty: "medium"
+        },
+        {
+          question: "The angle of internal friction for cohesionless soil is determined by:",
+          options: ["Vane shear test", "Direct shear test", "Compression test", "Permeability test"],
+          answer: 1,
+          explanation: "Direct shear test is commonly used for sand/cohesionless soils.",
+          subject: "geotechnical",
+          year: 2022,
+          exam: "uppsc-ae",
+          tier: "free",
+          difficulty: "medium"
         }
       ], null, 2);
-      log('Template loaded.');
+      log('Template loaded with 5 sample questions across 4 subjects.');
     };
 
     function validateQuestion(q, idx) {
@@ -186,6 +260,8 @@
       if (!Array.isArray(q.options) || q.options.length < 2) errs.push('options must be array of 2+');
       if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= (q.options || []).length) errs.push('invalid answer index');
       if (q.tier && !['free', 'premium'].includes(q.tier)) errs.push('tier must be free or premium');
+      if (!q.subject) errs.push('subject is required');
+      else if (!VALID_SUBJECTS.includes(q.subject)) errs.push(`unknown subject "${q.subject}" (see valid IDs above)`);
       return errs;
     }
 

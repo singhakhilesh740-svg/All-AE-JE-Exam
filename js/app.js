@@ -2,6 +2,7 @@
 import { watchAuth, loginWithGoogle, logout } from './auth.js';
 import { fetchQuestions, saveUserProfile, saveAttempt, toggleBookmark as dbToggleBookmark } from './db.js';
 import * as Quiz from './quiz.js';
+import { SUBJECTS, getSubjectById } from './subjects.js';
 
 // ========== State ==========
 let currentUser = null;
@@ -52,11 +53,9 @@ $('logoutBtn').addEventListener('click', async () => {
 
 // ========== Home screen ==========
 async function loadHomeData() {
-  const questions = await fetchQuestions({ maxCount: 50 });
+  // Just pre-warm the cache, but show count of all available
+  const questions = await fetchQuestions({ maxCount: 200 });
   $('qCount').textContent = questions.length || '0';
-  if (questions.length === 0) {
-    toast('No questions yet — upload some via admin tool');
-  }
 }
 
 document.querySelectorAll('.feature-card').forEach(card => {
@@ -67,8 +66,12 @@ document.querySelectorAll('.feature-card').forEach(card => {
 });
 
 async function handleRoute(route) {
-  if (route === 'subjects' || route === 'pyq' || route === 'mock') {
-    const questions = await fetchQuestions({ maxCount: 50 });
+  if (route === 'subjects') {
+    renderSubjectsList();
+    showScreen('subjectsScreen');
+  } else if (route === 'pyq' || route === 'mock') {
+    // For now, fetch all questions for these
+    const questions = await fetchQuestions({ maxCount: 100 });
     if (questions.length === 0) {
       toast('No questions available yet');
       return;
@@ -81,6 +84,46 @@ async function handleRoute(route) {
   }
 }
 
+// ========== Subjects screen ==========
+function renderSubjectsList() {
+  const container = $('subjectsList');
+  container.innerHTML = '';
+
+  SUBJECTS.forEach(subject => {
+    const btn = document.createElement('button');
+    btn.className = 'subject-card';
+    btn.innerHTML = `
+      <div class="subject-icon">${subject.icon}</div>
+      <div class="subject-info">
+        <div class="subject-name">${subject.name}</div>
+        <div class="subject-desc">${subject.description}</div>
+      </div>
+      <div class="subject-arrow">›</div>
+    `;
+    btn.addEventListener('click', () => openSubject(subject.id));
+    container.appendChild(btn);
+  });
+}
+
+async function openSubject(subjectId) {
+  toast('Loading questions...');
+  const questions = await fetchQuestions({ subject: subjectId, maxCount: 100 });
+
+  if (questions.length === 0) {
+    const subj = getSubjectById(subjectId);
+    toast(`No questions in ${subj?.name || 'this subject'} yet`);
+    return;
+  }
+
+  Quiz.startQuiz(questions);
+  showScreen('quizScreen');
+  renderQuiz();
+}
+
+$('subjectsBackBtn').addEventListener('click', () => {
+  showScreen('homeScreen');
+});
+
 // ========== Quiz screen ==========
 function renderQuiz() {
   const q = Quiz.getCurrent();
@@ -92,7 +135,10 @@ function renderQuiz() {
 
   const { current, total } = Quiz.getProgress();
   $('quizProgress').textContent = `${current} / ${total}`;
-  $('quizSubject').textContent = q.subject || 'General';
+
+  // Show subject name (look up friendly name)
+  const subjData = getSubjectById(q.subject);
+  $('quizSubject').textContent = subjData ? subjData.name : (q.subject || 'General');
   $('quizYear').textContent = q.year ? `Year ${q.year}` : '—';
   $('quizQuestion').textContent = q.question;
   $('quizExplanation').classList.add('hidden');
@@ -108,31 +154,27 @@ function renderQuiz() {
     optsContainer.appendChild(btn);
   });
 
-  // Bookmark icon state
   $('quizBookmarkBtn').textContent = Quiz.isBookmarked(q.id) ? '★' : '☆';
 }
 
 function onOptionClick(index, btnEl) {
   const result = Quiz.selectOption(index);
-  if (!result) return; // already answered
+  if (!result) return;
 
   const q = Quiz.getCurrent();
   const allBtns = document.querySelectorAll('.quiz-option');
 
-  // Disable all buttons
   allBtns.forEach((b, i) => {
     b.disabled = true;
     if (i === result.correctIndex) b.classList.add('correct');
     if (i === index && !result.isCorrect) b.classList.add('wrong');
   });
 
-  // Show explanation if available
   if (q.explanation) {
     $('quizExplanationText').textContent = q.explanation;
     $('quizExplanation').classList.remove('hidden');
   }
 
-  // Save attempt to Firestore (non-blocking)
   if (currentUser) {
     saveAttempt(currentUser.uid, q.id, index, result.isCorrect);
   }
@@ -152,7 +194,8 @@ $('quizPrevBtn').addEventListener('click', () => {
 });
 
 $('quizBackBtn').addEventListener('click', () => {
-  showScreen('homeScreen');
+  // Go back to subjects list (smarter than home)
+  showScreen('subjectsScreen');
 });
 
 $('quizBookmarkBtn').addEventListener('click', () => {

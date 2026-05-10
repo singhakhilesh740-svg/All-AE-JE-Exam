@@ -241,6 +241,77 @@ button {
   font-size: 13px;
 }
 
+/* ===== Subjects List Screen (NEW) ===== */
+.subjects-main {
+  flex: 1;
+  padding: 14px 18px;
+  overflow-y: auto;
+}
+
+.subjects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subject-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  padding: 16px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  text-align: left;
+  width: 100%;
+  transition: all 0.15s;
+}
+
+.subject-card:active {
+  transform: scale(0.98);
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+.subject-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+}
+
+.subject-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.subject-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.subject-desc {
+  font-size: 12px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subject-arrow {
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 300;
+  flex-shrink: 0;
+}
+
 /* ===== Quiz Screen ===== */
 .quiz-header {
   display: flex;
@@ -266,6 +337,7 @@ button {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
+  flex-wrap: wrap;
 }
 
 .quiz-meta span {
