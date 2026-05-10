@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Upload Questions</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #f1f5f9;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 { color: #f59e0b; margin-bottom: 8px; }
+    .subtitle { color: #94a3b8; margin-bottom: 24px; font-size: 14px; }
+    .panel {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #334155;
+    }
+    .panel h3 { font-size: 14px; color: #f59e0b; margin-bottom: 12px; text-transform: uppercase; }
+    textarea {
+      width: 100%;
+      min-height: 240px;
+      background: #0f172a;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      resize: vertical;
+    }
+    button {
+      background: #f59e0b;
+      color: #1f2937;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+      margin-right: 8px;
+    }
+    button:hover { background: #d97706; }
+    button.secondary { background: #334155; color: #f1f5f9; }
+    .log {
+      background: #0f172a;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      max-height: 240px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    .log-ok { color: #10b981; }
+    .log-err { color: #ef4444; }
+    .log-info { color: #94a3b8; }
+    .badge { background: #334155; color: #f59e0b; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 6px; }
+    .login-section { text-align: center; padding: 40px; }
+    .hidden { display: none; }
+    .stats { display: flex; gap: 12px; margin-top: 12px; }
+    .stat {
+      flex: 1;
+      background: #0f172a;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #334155;
+    }
+    .stat-num { font-size: 22px; font-weight: 700; color: #f59e0b; }
+    .stat-lbl { font-size: 11px; color: #94a3b8; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📋 Admin Panel <span class="badge">Question Upload</span></h1>
+    <p class="subtitle">Bulk-upload questions to Firestore. Validates before saving.</p>
+
+    <!-- Login required -->
+    <div id="loginPanel" class="panel login-section">
+      <p style="margin-bottom:16px;">You must be logged in as the admin to upload questions.</p>
+      <button id="loginBtn">Login with Google</button>
+    </div>
+
+    <!-- Main panel (after login) -->
+    <div id="mainPanel" class="hidden">
+      <div class="panel">
+        <h3>1. Paste Questions JSON</h3>
+        <p class="subtitle">Format: array of question objects. See template button below.</p>
+        <textarea id="jsonInput" placeholder='[{"question":"...", "options":["A","B","C","D"], "answer":0, "explanation":"...", "subject":"fluid-mechanics", "year":2024, "tier":"free"}]'></textarea>
+        <button id="loadTemplateBtn" class="secondary">Load Template</button>
+        <button id="validateBtn" class="secondary">Validate Only</button>
+        <button id="uploadBtn">Upload to Firestore</button>
+      </div>
+
+      <div class="panel">
+        <h3>2. Status</h3>
+        <div class="stats">
+          <div class="stat"><div class="stat-num" id="statValid">0</div><div class="stat-lbl">Valid</div></div>
+          <div class="stat"><div class="stat-num" id="statInvalid">0</div><div class="stat-lbl">Invalid</div></div>
+          <div class="stat"><div class="stat-num" id="statUploaded">0</div><div class="stat-lbl">Uploaded</div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>3. Log</h3>
+        <div class="log" id="log">Ready.</div>
+      </div>
+
+      <button id="logoutBtn" class="secondary">Logout</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { auth, db, googleProvider } from '../js/firebase-config.js';
+    import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { doc, setDoc, writeBatch, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Admin email - only this account can upload questions
+    const ADMIN_EMAILS = ['112ce0489@gmail.com'];
+
+    const $ = id => document.getElementById(id);
+    const log = (msg, type = 'info') => {
+      const el = $('log');
+      const cls = type === 'ok' ? 'log-ok' : type === 'err' ? 'log-err' : 'log-info';
+      el.innerHTML += `<div class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</div>`;
+      el.scrollTop = el.scrollHeight;
+    };
+
+    onAuthStateChanged(auth, user => {
+      if (user && ADMIN_EMAILS.includes(user.email)) {
+        $('loginPanel').classList.add('hidden');
+        $('mainPanel').classList.remove('hidden');
+        log(`Logged in as ${user.email}`, 'ok');
+      } else if (user) {
+        log(`Access denied for ${user.email}. Not an admin.`, 'err');
+        signOut(auth);
+      } else {
+        $('loginPanel').classList.remove('hidden');
+        $('mainPanel').classList.add('hidden');
+      }
+    });
+
+    $('loginBtn').onclick = () => signInWithPopup(auth, googleProvider).catch(e => log(e.message, 'err'));
+    $('logoutBtn').onclick = () => signOut(auth);
+
+    $('loadTemplateBtn').onclick = () => {
+      $('jsonInput').value = JSON.stringify([
+        {
+          question: "What is the unit of dynamic viscosity?",
+          options: ["Pa·s", "N/m²", "kg/m³", "m²/s"],
+          answer: 0,
+          explanation: "Dynamic viscosity is measured in Pascal-seconds (Pa·s).",
+          subject: "fluid-mechanics",
+          year: 2024,
+          exam: "uppsc-ae",
+          tier: "free",
+          difficulty: "easy"
+        },
+        {
+          question: "Bernoulli's equation is based on conservation of?",
+          options: ["Mass", "Momentum", "Energy", "Force"],
+          answer: 2,
+          explanation: "Bernoulli's equation is derived from the principle of conservation of energy.",
+          subject: "fluid-mechanics",
+          year: 2022,
+          exam: "uppsc-ae",
+          tier: "free",
+          difficulty: "easy"
+        }
+      ], null, 2);
+      log('Template loaded.');
+    };
+
+    function validateQuestion(q, idx) {
+      const errs = [];
+      if (!q.question || typeof q.question !== 'string') errs.push('missing question');
+      if (!Array.isArray(q.options) || q.options.length < 2) errs.push('options must be array of 2+');
+      if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= (q.options || []).length) errs.push('invalid answer index');
+      if (q.tier && !['free', 'premium'].includes(q.tier)) errs.push('tier must be free or premium');
+      return errs;
+    }
+
+    $('validateBtn').onclick = () => {
+      try {
+        const arr = JSON.parse($('jsonInput').value);
+        if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
+        let valid = 0, invalid = 0;
+        arr.forEach((q, i) => {
+          const errs = validateQuestion(q, i);
+          if (errs.length) { log(`Q${i+1}: ${errs.join(', ')}`, 'err'); invalid++; }
+          else valid++;
+        });
+        $('statValid').textContent = valid;
+        $('statInvalid').textContent = invalid;
+        log(`Validation: ${valid} valid, ${invalid} invalid.`, valid > 0 ? 'ok' : 'err');
+      } catch (e) {
+        log('JSON parse error: ' + e.message, 'err');
+      }
+    };
+
+    $('uploadBtn').onclick = async () => {
+      try {
+        const arr = JSON.parse($('jsonInput').value);
+        if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
+
+        let valid = [], invalid = 0;
+        arr.forEach((q, i) => {
+          const errs = validateQuestion(q, i);
+          if (errs.length) { log(`Q${i+1} skipped: ${errs.join(', ')}`, 'err'); invalid++; }
+          else valid.push(q);
+        });
+
+        $('statValid').textContent = valid.length;
+        $('statInvalid').textContent = invalid;
+
+        if (valid.length === 0) { log('Nothing to upload.', 'err'); return; }
+
+        log(`Uploading ${valid.length} questions in batches...`);
+        let uploaded = 0;
+
+        const BATCH_SIZE = 400;
+        for (let i = 0; i < valid.length; i += BATCH_SIZE) {
+          const batch = writeBatch(db);
+          const slice = valid.slice(i, i + BATCH_SIZE);
+          slice.forEach(q => {
+            const exam = q.exam || 'uppsc-ae';
+            const ref = doc(collection(db, 'exams', exam, 'questions'));
+            batch.set(ref, {
+              ...q,
+              tier: q.tier || 'free',
+              createdAt: new Date().toISOString()
+            });
+          });
+          await batch.commit();
+          uploaded += slice.length;
+          $('statUploaded').textContent = uploaded;
+          log(`Batch uploaded: ${uploaded}/${valid.length}`, 'ok');
+        }
+
+        log(`✅ Done. ${uploaded} questions uploaded.`, 'ok');
+      } catch (e) {
+        log('Upload error: ' + e.message, 'err');
+      }
+    };
+  </script>
+</body>
+</html>
