@@ -193,7 +193,25 @@
       </div>
 
       <div class="panel">
-        <h3>3. Log</h3>
+        <h3>3. Firestore Question Stats</h3>
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+          <button id="loadStatsBtn" style="background:#1e3a5f;border:1px solid #3b82f6;color:#93c5fd;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;">Load Stats from Firestore</button>
+          <select id="statsExamSel" style="background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:6px 10px;border-radius:6px;font-size:13px;"></select>
+        </div>
+        <div class="stats" style="margin-bottom:12px;">
+          <div class="stat"><div class="stat-num" id="fsTotal">—</div><div class="stat-lbl">Total Questions</div></div>
+          <div class="stat"><div class="stat-num" id="fsPyq">—</div><div class="stat-lbl">PYQ</div></div>
+          <div class="stat"><div class="stat-num" id="fsPractice">—</div><div class="stat-lbl">Practice</div></div>
+        </div>
+        <div id="subjectBreakdown" style="display:none;">
+          <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Subject-wise distribution</div>
+          <div id="subjectTable" style="display:grid;gap:4px;"></div>
+        </div>
+        <div id="statsMsg" style="font-size:13px;color:#94a3b8;"></div>
+      </div>
+
+      <div class="panel">
+        <h3>4. Log</h3>
         <div class="log" id="log">Ready.</div>
       </div>
 
@@ -212,7 +230,7 @@
       getSubjectsForStage
     } from '../js/exams.js';
     import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { doc, setDoc, writeBatch, collection } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { doc, setDoc, writeBatch, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const ADMIN_EMAILS = ['112ce0489@gmail.com'];
     const VALID_EXAMS = getValidExamIds();
@@ -434,6 +452,70 @@
         log('Upload error: ' + e.message, 'err');
       }
     };
+
+    // ===== Firestore Stats =====
+    // Populate exam selector
+    function initStatsExamSel() {
+      const sel = $('statsExamSel');
+      sel.innerHTML = getValidExamIds().map(id => `<option value="${id}">${id}</option>`).join('');
+    }
+    initStatsExamSel();
+
+    $('loadStatsBtn').addEventListener('click', async () => {
+      const examId = $('statsExamSel').value;
+      $('statsMsg').textContent = 'Loading...';
+      $('fsTotal').textContent = '…';
+      $('fsPyq').textContent = '…';
+      $('fsPractice').textContent = '…';
+      $('subjectBreakdown').style.display = 'none';
+      try {
+        const col = collection(db, 'exams', examId, 'questions');
+        const snap = await getDocs(col);
+        const docs = snap.docs.map(d => d.data());
+
+        const total    = docs.length;
+        const pyq      = docs.filter(d => d.type === 'pyq').length;
+        const practice = docs.filter(d => d.type === 'practice').length;
+
+        $('fsTotal').textContent    = total;
+        $('fsPyq').textContent      = pyq;
+        $('fsPractice').textContent = practice;
+
+        // Subject breakdown
+        const bySubject = {};
+        docs.forEach(d => {
+          const s = d.subject || 'unknown';
+          bySubject[s] = (bySubject[s] || 0) + 1;
+        });
+
+        const sorted = Object.entries(bySubject).sort((a,b) => b[1]-a[1]);
+        const maxCount = sorted[0]?.[1] || 1;
+
+        $('subjectTable').innerHTML = sorted.map(([subj, count]) => {
+          const pct = Math.round(count / maxCount * 100);
+          const pyqCount = docs.filter(d => d.subject === subj && d.type === 'pyq').length;
+          const prcCount = docs.filter(d => d.subject === subj && d.type === 'practice').length;
+          return `
+            <div style="background:#0f172a;border-radius:6px;padding:8px 10px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="font-size:13px;color:#e2e8f0;font-weight:500;">${subj}</span>
+                <span style="font-size:13px;color:#f59e0b;font-weight:700;">${count}</span>
+              </div>
+              <div style="background:#1e293b;border-radius:4px;height:6px;margin-bottom:4px;">
+                <div style="background:#f59e0b;height:6px;border-radius:4px;width:${pct}%;transition:width 0.3s;"></div>
+              </div>
+              <div style="font-size:11px;color:#64748b;">PYQ: ${pyqCount} &nbsp;|&nbsp; Practice: ${prcCount}</div>
+            </div>`;
+        }).join('');
+
+        $('subjectBreakdown').style.display = 'block';
+        $('statsMsg').textContent = `Fetched ${total} questions from Firestore (${examId})`;
+      } catch(e) {
+        $('statsMsg').textContent = 'Error: ' + e.message;
+        console.error(e);
+      }
+    });
+
   </script>
 </body>
 </html>

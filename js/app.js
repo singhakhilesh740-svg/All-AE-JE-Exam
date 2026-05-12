@@ -34,6 +34,7 @@ let currentTopic   = 'all';     // active topic filter ('all' or topic id)
 let allBookmarkedQuestions = [];
 let bookmarksFilter = 'this'; // 'this' = current stage, 'all' = all exams
 let quizSource = null;        // tracks where quiz was launched from (for back nav)
+let quizRoute  = null;        // 'pyq' | 'practice' | 'bookmarks' — for topic re-filter
 
 // ========== DOM helpers ==========
 const $ = (id) => document.getElementById(id);
@@ -365,22 +366,38 @@ function renderQuizTopicBar(containerId, subjectId) {
   `).join('');
 
   container.querySelectorAll('.topic-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
+    chip.addEventListener('click', async () => {
       const topicId = chip.dataset.topic;
       currentTopic = topicId;
-      // Sync all topic bars
+      // Sync active state on all chip bars
       document.querySelectorAll('.topic-chip').forEach(c => {
         c.classList.toggle('active', c.dataset.topic === topicId);
       });
-      // Re-filter the current quiz list
-      if (Quiz.getActiveSession) {
-        const session = Quiz.getActiveSession();
-        if (session) {
-          const filtered = applyTopicFilter(session.allQuestions);
-          Quiz.setFilteredQuestions(filtered);
-          renderQuiz();
-        }
+      // Re-fetch and filter questions for the active route
+      if (!currentSubject || !quizRoute) return;
+      const subjId = currentSubject.id;
+      const tf = topicId === 'all' ? null : topicId;
+      if (quizRoute === 'pyq' || quizRoute === 'practice') {
+        let qs = await fetchQuestions({
+          exam: currentExam.id, subject: subjId,
+          type: quizRoute === 'pyq' ? 'pyq' : 'practice', maxCount: 500
+        });
+        if (tf) qs = qs.filter(q => q.topic === tf);
+        if (qs.length === 0) { toast('No questions for this topic yet'); return; }
+        if (quizRoute === 'pyq') qs.sort((a, b) => (b.year||0)-(a.year||0) || (a.q_num||0)-(b.q_num||0));
+        Quiz.resetToQuestions(qs);
+        renderQuiz();
+      } else if (quizRoute === 'bookmarks') {
+        let bms = allBookmarkedQuestions.filter(q =>
+          q.examId === currentExam.id && q.subject === subjId
+        );
+        if (tf) bms = bms.filter(q => q.topic === tf);
+        if (bms.length === 0) { toast('No bookmarks for this topic yet'); return; }
+        Quiz.resetToQuestions(bms);
+        renderQuiz();
       }
+      // Also update subject dashboard counts if visible
+      if (currentSubject) updateSubjectCounts();
     });
   });
 }
@@ -409,6 +426,7 @@ async function handleSubjectRoute(route) {
     if (topicFilter) questions = questions.filter(q => q.topic === topicFilter);
     if (questions.length === 0) { toast(`No practice questions for "${topicLabel}" yet`); return; }
     quizSource = 'subjectDash';
+    quizRoute  = 'practice';
     Quiz.startQuiz(questions);
     showScreen('quizScreen');
     renderQuizTopicBar('quizTopicBar', subjId);
@@ -422,6 +440,7 @@ async function handleSubjectRoute(route) {
     if (questions.length === 0) { toast(`No PYQ for "${topicLabel}" yet`); return; }
     questions.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
     quizSource = 'subjectDash';
+    quizRoute  = 'pyq';
     Quiz.startQuiz(questions);
     showScreen('quizScreen');
     renderQuizTopicBar('quizTopicBar', subjId);
@@ -445,6 +464,7 @@ async function handleSubjectRoute(route) {
     if (topicFilter) subjBookmarks = subjBookmarks.filter(q => q.topic === topicFilter);
     if (subjBookmarks.length === 0) { toast(`No bookmarks for "${topicLabel}" yet`); return; }
     quizSource = 'subjectDash';
+    quizRoute  = 'bookmarks';
     Quiz.startQuiz(subjBookmarks);
     showScreen('quizScreen');
     renderQuizTopicBar('quizTopicBar', subjId);

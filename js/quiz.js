@@ -68,3 +68,15 @@ export function toggleBookmark(qId) {
   state.bookmarked.add(qId);
   return true;
 }
+
+// Replace the active question set (used by topic filter chip inside quiz)
+export function resetToQuestions(questions) {
+  state.questions = questions;
+  state.currentIndex = 0;
+  state.selectedIndex = null;
+  state.answered = false;
+}
+
+export function getAllQuestions() {
+  return state.questions;
+}
