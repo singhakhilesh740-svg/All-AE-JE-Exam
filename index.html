@@ -155,6 +155,11 @@
       </div>
     </header>
 
+    <!-- Topic filter bar (shared across all 4 sections) -->
+    <div id="subjTopicBar" class="topic-bar-wrap">
+      <!-- chips injected by app.js -->
+    </div>
+
     <main class="dashboard-main">
       <div class="card-grid">
         <button class="feature-card" data-subj-route="practice">
@@ -191,6 +196,8 @@
       </div>
     </header>
     <main class="subjects-main">
+      <!-- Topic filter chips -->
+      <div id="notesTopicBar" class="quiz-topic-bar" style="padding: 0 0 8px;"></div>
       <div class="empty-state">
         <div class="empty-icon">📝</div>
         <h3>Notes coming soon</h3>
@@ -232,6 +239,8 @@
       <button id="quizBookmarkBtn" class="btn-icon" title="Bookmark" data-marked="0">☆</button>
     </header>
     <main class="quiz-main">
+      <!-- Topic filter chips (same topic as selected on subject dashboard) -->
+      <div id="quizTopicBar" class="quiz-topic-bar"></div>
       <div class="quiz-meta">
         <span id="quizSubject">—</span>
         <span id="quizYear">—</span>

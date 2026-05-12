@@ -23,12 +23,14 @@ import {
   getSubjectsForStage,
   findSubjectInExam
 } from './exams.js';
+import { getTopicsFor } from './subjects.js';
 
 // ========== State ==========
 let currentUser = null;
 let currentExam = null;
 let currentStage = null;
-let currentSubject = null;       // NEW: current subject for subject dashboard
+let currentSubject = null;       // current subject for subject dashboard
+let currentTopic   = 'all';     // active topic filter ('all' or topic id)
 let allBookmarkedQuestions = [];
 let bookmarksFilter = 'this'; // 'this' = current stage, 'all' = all exams
 let quizSource = null;        // tracks where quiz was launched from (for back nav)
@@ -271,9 +273,18 @@ async function openSubject(subjectId) {
 async function openSubjectDashboard() {
   if (!currentSubject) { toast('Pick a subject first'); return; }
 
+  currentTopic = 'all'; // reset topic filter on new subject
+
   $('subjDashName').textContent = currentSubject.name;
   $('subjDashExamLabel').textContent = currentExam.name;
   $('subjDashStageLabel').textContent = currentStage.name;
+
+  // Render topic chips
+  renderTopicBar('subjTopicBar', currentSubject.id, (topicId) => {
+    currentTopic = topicId;
+    // Update counts when topic changes
+    updateSubjectCounts();
+  });
 
   // Reset counters
   $('subjCntPractice').textContent = '…';
@@ -282,27 +293,96 @@ async function openSubjectDashboard() {
 
   showScreen('subjectDashboardScreen');
 
-  // Lazy-load counts in parallel
+  updateSubjectCounts();
+}
+
+function updateSubjectCounts() {
+  const topicFilter = currentTopic === 'all' ? null : currentTopic;
+
   fetchQuestions({ exam: currentExam.id, subject: currentSubject.id, type: 'practice' })
-    .then(qs => { $('subjCntPractice').textContent = qs.length; })
+    .then(qs => {
+      const filtered = topicFilter ? qs.filter(q => q.topic === topicFilter) : qs;
+      $('subjCntPractice').textContent = filtered.length;
+    })
     .catch(() => { $('subjCntPractice').textContent = '0'; });
 
   fetchQuestions({ exam: currentExam.id, subject: currentSubject.id, type: 'pyq' })
-    .then(qs => { $('subjCntPyq').textContent = qs.length; })
+    .then(qs => {
+      const filtered = topicFilter ? qs.filter(q => q.topic === topicFilter) : qs;
+      $('subjCntPyq').textContent = filtered.length;
+    })
     .catch(() => { $('subjCntPyq').textContent = '0'; });
 
-  // Bookmarks count for this subject (uses cached list if available)
+  // Bookmarks count
   if (currentUser) {
-    try {
-      if (allBookmarkedQuestions.length === 0) {
-        allBookmarkedQuestions = await fetchBookmarkedQuestions(currentUser.uid);
-      }
-      const bmCount = allBookmarkedQuestions.filter(q =>
-        q.examId === currentExam.id && q.subject === currentSubject.id
-      ).length;
-      $('subjCntBm').textContent = bmCount;
-    } catch (e) { /* ignore */ }
+    (async () => {
+      try {
+        if (allBookmarkedQuestions.length === 0) {
+          allBookmarkedQuestions = await fetchBookmarkedQuestions(currentUser.uid);
+        }
+        let bmList = allBookmarkedQuestions.filter(q =>
+          q.examId === currentExam.id && q.subject === currentSubject.id
+        );
+        if (topicFilter) bmList = bmList.filter(q => q.topic === topicFilter);
+        $('subjCntBm').textContent = bmList.length;
+      } catch (e) { /* ignore */ }
+    })();
   }
+}
+
+// ===== Topic bar renderer =====
+// Renders scrollable chip row into a container element by id.
+// onSelect(topicId) is called when user picks a chip.
+function renderTopicBar(containerId, subjectId, onSelect) {
+  const container = $(containerId);
+  if (!container) return;
+  const topics = getTopicsFor(subjectId); // always starts with {id:'all', label:'All'}
+
+  container.innerHTML = topics.map(t => `
+    <button class="topic-chip${t.id === currentTopic ? ' active' : ''}"
+            data-topic="${t.id}">${escapeHtml(t.label)}</button>
+  `).join('');
+
+  container.querySelectorAll('.topic-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const topicId = chip.dataset.topic;
+      // Toggle active chip
+      container.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      if (onSelect) onSelect(topicId);
+    });
+  });
+}
+
+// Sync topic chip state in the quiz/notes topic bars (read-only, same topic)
+function renderQuizTopicBar(containerId, subjectId) {
+  const container = $(containerId);
+  if (!container) return;
+  const topics = getTopicsFor(subjectId);
+  container.innerHTML = topics.map(t => `
+    <button class="topic-chip${t.id === currentTopic ? ' active' : ''}"
+            data-topic="${t.id}">${escapeHtml(t.label)}</button>
+  `).join('');
+
+  container.querySelectorAll('.topic-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const topicId = chip.dataset.topic;
+      currentTopic = topicId;
+      // Sync all topic bars
+      document.querySelectorAll('.topic-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.topic === topicId);
+      });
+      // Re-filter the current quiz list
+      if (Quiz.getActiveSession) {
+        const session = Quiz.getActiveSession();
+        if (session) {
+          const filtered = applyTopicFilter(session.allQuestions);
+          Quiz.setFilteredQuestions(filtered);
+          renderQuiz();
+        }
+      }
+    });
+  });
 }
 
 // Subject-dashboard route handlers (Practice / Notes / PYQ / Bookmarks)
@@ -317,27 +397,34 @@ async function handleSubjectRoute(route) {
   if (!currentSubject) { toast('Pick a subject first'); return; }
   const subjId = currentSubject.id;
   const subjName = currentSubject.name;
+  const topicFilter = currentTopic === 'all' ? null : currentTopic;
+  const topicLabel = topicFilter
+    ? (getTopicsFor(subjId).find(t => t.id === topicFilter)?.label || topicFilter)
+    : 'All Topics';
 
   if (route === 'practice') {
-    const questions = await fetchQuestions({
+    let questions = await fetchQuestions({
       exam: currentExam.id, subject: subjId, type: 'practice', maxCount: 500
     });
-    if (questions.length === 0) { toast(`No practice questions in ${subjName} yet`); return; }
+    if (topicFilter) questions = questions.filter(q => q.topic === topicFilter);
+    if (questions.length === 0) { toast(`No practice questions for "${topicLabel}" yet`); return; }
     quizSource = 'subjectDash';
     Quiz.startQuiz(questions);
     showScreen('quizScreen');
+    renderQuizTopicBar('quizTopicBar', subjId);
     renderQuiz();
 
   } else if (route === 'pyq') {
-    const questions = await fetchQuestions({
+    let questions = await fetchQuestions({
       exam: currentExam.id, subject: subjId, type: 'pyq', maxCount: 500
     });
-    if (questions.length === 0) { toast(`No PYQ in ${subjName} yet`); return; }
-    // Sort by year DESC then q_num ASC
+    if (topicFilter) questions = questions.filter(q => q.topic === topicFilter);
+    if (questions.length === 0) { toast(`No PYQ for "${topicLabel}" yet`); return; }
     questions.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
     quizSource = 'subjectDash';
     Quiz.startQuiz(questions);
     showScreen('quizScreen');
+    renderQuizTopicBar('quizTopicBar', subjId);
     renderQuiz();
 
   } else if (route === 'notes') {
@@ -345,19 +432,22 @@ async function handleSubjectRoute(route) {
     $('notesContextLabel').textContent = `${currentExam.name} · ${currentStage.name}`;
     $('notesSubjectName').textContent = subjName;
     showScreen('notesScreen');
+    renderQuizTopicBar('notesTopicBar', subjId);
 
   } else if (route === 'bookmarks') {
     if (!currentUser) { toast('Sign in to view bookmarks'); return; }
     if (allBookmarkedQuestions.length === 0) {
       allBookmarkedQuestions = await fetchBookmarkedQuestions(currentUser.uid);
     }
-    const subjBookmarks = allBookmarkedQuestions.filter(q =>
+    let subjBookmarks = allBookmarkedQuestions.filter(q =>
       q.examId === currentExam.id && q.subject === subjId
     );
-    if (subjBookmarks.length === 0) { toast(`No bookmarks in ${subjName} yet`); return; }
+    if (topicFilter) subjBookmarks = subjBookmarks.filter(q => q.topic === topicFilter);
+    if (subjBookmarks.length === 0) { toast(`No bookmarks for "${topicLabel}" yet`); return; }
     quizSource = 'subjectDash';
     Quiz.startQuiz(subjBookmarks);
     showScreen('quizScreen');
+    renderQuizTopicBar('quizTopicBar', subjId);
     renderQuiz();
   }
 }
