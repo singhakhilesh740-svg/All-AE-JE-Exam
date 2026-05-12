@@ -3,7 +3,7 @@
 
 export const SUBJECTS_UPPSC_MAINS = [
   {
-    id: 'engineering-mechanics', icon: '⚙️', name: 'Engineering Mechanics',
+    id: 'engg-mechanics', icon: '⚙️', name: 'Engineering Mechanics',
     topics: [
       { id: 'statics',       label: 'Statics & Equilibrium' },
       { id: 'friction',      label: 'Friction' },
