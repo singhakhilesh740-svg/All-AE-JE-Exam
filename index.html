@@ -94,12 +94,7 @@
         <button class="feature-card" data-stage-route="subjects">
           <div class="card-icon">📚</div>
           <div class="card-title">Subjects</div>
-          <div class="card-desc">Topic-wise practice</div>
-        </button>
-        <button class="feature-card" data-stage-route="pyq">
-          <div class="card-icon">📝</div>
-          <div class="card-title">Previous Year Papers</div>
-          <div class="card-desc">Past papers</div>
+          <div class="card-desc">Practice, notes &amp; PYQ</div>
         </button>
         <button class="feature-card" data-stage-route="mock">
           <div class="card-icon">⏱️</div>
@@ -146,6 +141,61 @@
         <h3>No subjects yet for <span id="emptyStageName">this stage</span></h3>
         <p>Subjects for <span id="emptyExamName">this exam</span> are being added.</p>
         <p class="hint-small">Admin: Edit <code>js/exams.js</code> to add subjects.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== SUBJECT DASHBOARD = 4 cards (Practice / Notes / PYQ / Bookmarks) ===== -->
+  <div id="subjectDashboardScreen" class="screen">
+    <header class="app-header">
+      <button id="subjDashBackBtn" class="btn-icon">←</button>
+      <div class="header-left" style="flex: 1; margin-left: 8px;">
+        <h2 id="subjDashName">Subject</h2>
+        <span class="header-sub"><span id="subjDashExamLabel">UPPSC AE</span> · <span id="subjDashStageLabel">Mains</span></span>
+      </div>
+    </header>
+
+    <main class="dashboard-main">
+      <div class="card-grid">
+        <button class="feature-card" data-subj-route="practice">
+          <div class="card-icon">✏️</div>
+          <div class="card-title">Important Practice</div>
+          <div class="card-desc"><span id="subjCntPractice">…</span> questions</div>
+        </button>
+        <button class="feature-card" data-subj-route="notes">
+          <div class="card-icon">📝</div>
+          <div class="card-title">Notes</div>
+          <div class="card-desc">Topic-wise study material</div>
+        </button>
+        <button class="feature-card" data-subj-route="pyq">
+          <div class="card-icon">📜</div>
+          <div class="card-title">PYQ</div>
+          <div class="card-desc"><span id="subjCntPyq">…</span> questions</div>
+        </button>
+        <button class="feature-card" data-subj-route="bookmarks">
+          <div class="card-icon">⭐</div>
+          <div class="card-title">Bookmarks</div>
+          <div class="card-desc"><span id="subjCntBm">0</span> saved</div>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== NOTES SCREEN (placeholder until notes content is uploaded) ===== -->
+  <div id="notesScreen" class="screen">
+    <header class="app-header">
+      <button id="notesBackBtn" class="btn-icon">←</button>
+      <div class="header-left" style="flex: 1; margin-left: 8px;">
+        <h2 id="notesTitle">Notes</h2>
+        <span class="header-sub" id="notesContextLabel">UPPSC AE · Mains</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>Notes coming soon</h3>
+        <p>Notes for <span id="notesSubjectName">this subject</span> will be added here.</p>
+        <p class="hint-small">Admin: notes can be uploaded to <code>notes/{exam}/{subject}</code> in Firestore.</p>
       </div>
     </main>
   </div>

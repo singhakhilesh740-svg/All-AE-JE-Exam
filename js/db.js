@@ -20,13 +20,13 @@ const cache = {
 
 // ========== Questions ==========
 export async function fetchQuestions(opts = {}) {
-  const { exam, subject = null, stage = null, maxCount = 100, force = false } = opts;
+  const { exam, subject = null, stage = null, type = null, maxCount = 500, force = false } = opts;
   if (!exam) {
     console.error('fetchQuestions: exam is required');
     return [];
   }
 
-  const cacheKey = `${exam}:${stage || '*'}:${subject || 'all'}`;
+  const cacheKey = `${exam}:${stage || '*'}:${subject || 'all'}:${type || 'all'}`;
   const now = Date.now();
 
   if (!force && cache.questions[cacheKey] && (now - (cache.cachedAt[cacheKey] || 0)) < cache.TTL) {
@@ -48,6 +48,7 @@ export async function fetchQuestions(opts = {}) {
       const data = docSnap.data();
       if (isValidQuestion(data)) {
         if (stage && data.stage && data.stage !== stage) return;
+        if (type && data.type && data.type !== type) return;
         questions.push({ id: docSnap.id, ...data });
       } else {
         console.warn(`Skipping malformed question ${docSnap.id}`);

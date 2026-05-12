@@ -28,6 +28,7 @@ import {
 let currentUser = null;
 let currentExam = null;
 let currentStage = null;
+let currentSubject = null;       // NEW: current subject for subject dashboard
 let allBookmarkedQuestions = [];
 let bookmarksFilter = 'this'; // 'this' = current stage, 'all' = all exams
 let quizSource = null;        // tracks where quiz was launched from (for back nav)
@@ -206,17 +207,6 @@ async function handleStageRoute(route) {
   if (route === 'subjects') {
     renderSubjectsList();
     showScreen('subjectsScreen');
-  } else if (route === 'pyq') {
-    // For now: load all questions for this exam (later: filter by stage + year)
-    const questions = await fetchQuestions({ exam: currentExam.id, maxCount: 100 });
-    if (questions.length === 0) {
-      toast(`No PYQ available yet for ${currentStage.name}`);
-      return;
-    }
-    quizSource = 'pyq';
-    Quiz.startQuiz(questions);
-    showScreen('quizScreen');
-    renderQuiz();
   } else if (route === 'mock') {
     toast('Mock tests coming soon');
   } else if (route === 'bookmarks') {
@@ -271,24 +261,114 @@ function renderSubjectsList() {
 }
 
 async function openSubject(subjectId) {
-  toast('Loading questions...');
-  const questions = await fetchQuestions({
-    exam: currentExam.id,
-    subject: subjectId,
-    maxCount: 100
-  });
-
-  if (questions.length === 0) {
-    const subj = currentStage.subjects.find(s => s.id === subjectId);
-    toast(`No questions in ${subj?.name || 'this subject'} yet`);
-    return;
-  }
-
-  quizSource = 'subject';
-  Quiz.startQuiz(questions);
-  showScreen('quizScreen');
-  renderQuiz();
+  const subj = currentStage.subjects.find(s => s.id === subjectId);
+  if (!subj) { toast('Invalid subject'); return; }
+  currentSubject = subj;
+  openSubjectDashboard();
 }
+
+// ========== SUBJECT DASHBOARD: 4 cards (Practice / Notes / PYQ / Bookmarks) ==========
+async function openSubjectDashboard() {
+  if (!currentSubject) { toast('Pick a subject first'); return; }
+
+  $('subjDashName').textContent = currentSubject.name;
+  $('subjDashExamLabel').textContent = currentExam.name;
+  $('subjDashStageLabel').textContent = currentStage.name;
+
+  // Reset counters
+  $('subjCntPractice').textContent = '…';
+  $('subjCntPyq').textContent = '…';
+  $('subjCntBm').textContent = '0';
+
+  showScreen('subjectDashboardScreen');
+
+  // Lazy-load counts in parallel
+  fetchQuestions({ exam: currentExam.id, subject: currentSubject.id, type: 'practice' })
+    .then(qs => { $('subjCntPractice').textContent = qs.length; })
+    .catch(() => { $('subjCntPractice').textContent = '0'; });
+
+  fetchQuestions({ exam: currentExam.id, subject: currentSubject.id, type: 'pyq' })
+    .then(qs => { $('subjCntPyq').textContent = qs.length; })
+    .catch(() => { $('subjCntPyq').textContent = '0'; });
+
+  // Bookmarks count for this subject (uses cached list if available)
+  if (currentUser) {
+    try {
+      if (allBookmarkedQuestions.length === 0) {
+        allBookmarkedQuestions = await fetchBookmarkedQuestions(currentUser.uid);
+      }
+      const bmCount = allBookmarkedQuestions.filter(q =>
+        q.examId === currentExam.id && q.subject === currentSubject.id
+      ).length;
+      $('subjCntBm').textContent = bmCount;
+    } catch (e) { /* ignore */ }
+  }
+}
+
+// Subject-dashboard route handlers (Practice / Notes / PYQ / Bookmarks)
+document.querySelectorAll('[data-subj-route]').forEach(card => {
+  card.addEventListener('click', () => {
+    const route = card.dataset.subjRoute;
+    handleSubjectRoute(route);
+  });
+});
+
+async function handleSubjectRoute(route) {
+  if (!currentSubject) { toast('Pick a subject first'); return; }
+  const subjId = currentSubject.id;
+  const subjName = currentSubject.name;
+
+  if (route === 'practice') {
+    const questions = await fetchQuestions({
+      exam: currentExam.id, subject: subjId, type: 'practice', maxCount: 500
+    });
+    if (questions.length === 0) { toast(`No practice questions in ${subjName} yet`); return; }
+    quizSource = 'subjectDash';
+    Quiz.startQuiz(questions);
+    showScreen('quizScreen');
+    renderQuiz();
+
+  } else if (route === 'pyq') {
+    const questions = await fetchQuestions({
+      exam: currentExam.id, subject: subjId, type: 'pyq', maxCount: 500
+    });
+    if (questions.length === 0) { toast(`No PYQ in ${subjName} yet`); return; }
+    // Sort by year DESC then q_num ASC
+    questions.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
+    quizSource = 'subjectDash';
+    Quiz.startQuiz(questions);
+    showScreen('quizScreen');
+    renderQuiz();
+
+  } else if (route === 'notes') {
+    $('notesTitle').textContent = subjName + ' — Notes';
+    $('notesContextLabel').textContent = `${currentExam.name} · ${currentStage.name}`;
+    $('notesSubjectName').textContent = subjName;
+    showScreen('notesScreen');
+
+  } else if (route === 'bookmarks') {
+    if (!currentUser) { toast('Sign in to view bookmarks'); return; }
+    if (allBookmarkedQuestions.length === 0) {
+      allBookmarkedQuestions = await fetchBookmarkedQuestions(currentUser.uid);
+    }
+    const subjBookmarks = allBookmarkedQuestions.filter(q =>
+      q.examId === currentExam.id && q.subject === subjId
+    );
+    if (subjBookmarks.length === 0) { toast(`No bookmarks in ${subjName} yet`); return; }
+    quizSource = 'subjectDash';
+    Quiz.startQuiz(subjBookmarks);
+    showScreen('quizScreen');
+    renderQuiz();
+  }
+}
+
+$('subjDashBackBtn').addEventListener('click', () => {
+  showScreen('subjectsScreen');
+});
+
+$('notesBackBtn').addEventListener('click', () => {
+  showScreen('subjectDashboardScreen');
+});
 
 $('subjectsBackBtn').addEventListener('click', () => {
   showScreen('stageDashboardScreen');
@@ -484,10 +564,10 @@ $('quizBackBtn').addEventListener('click', () => returnToQuizSource());
 function returnToQuizSource() {
   if (quizSource === 'bookmarks') {
     showScreen('bookmarksScreen');
+  } else if (quizSource === 'subjectDash') {
+    showScreen('subjectDashboardScreen');
   } else if (quizSource === 'subject') {
     showScreen('subjectsScreen');
-  } else if (quizSource === 'pyq' || quizSource === 'mock') {
-    showScreen('stageDashboardScreen');
   } else {
     showScreen('stageDashboardScreen');
   }
