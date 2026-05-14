@@ -561,3 +561,243 @@ button {
   margin: 0;
 }
 .topic-bar-wrap::-webkit-scrollbar { display: none; }
+
+/* ===== NOTES SCREEN STYLING ===== */
+
+.notes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+}
+
+.notes-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notes-topic-header {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+  padding: 0 4px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--accent);
+}
+
+/* ===== NOTES CARDS ===== */
+
+.notes-card {
+  background: var(--surface);
+  border-left: 4px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.notes-card:active { transform: scale(0.99); }
+
+/* Color-coded heading variants */
+.notes-card-purple { border-left-color: #a855f7; }
+.notes-card-blue { border-left-color: #3b82f6; }
+.notes-card-green { border-left-color: #10b981; }
+.notes-card-orange { border-left-color: #f97316; }
+
+.notes-card-heading {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===== FORMULAS & CODE ===== */
+
+.notes-formula {
+  margin-bottom: 14px;
+  padding: 0;
+}
+
+.notes-formula-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.notes-formula-text {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  color: var(--text-dim);
+  line-height: 1.5;
+  overflow-x: auto;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ===== BULLET POINTS ===== */
+
+.notes-points {
+  list-style: none;
+  padding-left: 0;
+  margin: 12px 0;
+}
+
+.notes-points li {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.notes-points li:before {
+  content: '•';
+  position: absolute;
+  left: 4px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ===== TABLES ===== */
+
+.notes-table-wrapper {
+  overflow-x: auto;
+  margin: 12px 0;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+.notes-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.notes-table thead {
+  background: var(--bg-elev);
+  border-bottom: 2px solid var(--border);
+}
+
+.notes-table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.notes-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+.notes-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.notes-table tbody tr:hover {
+  background: var(--bg-elev);
+}
+
+/* ===== ALERT BOXES ===== */
+
+.notes-alert {
+  background: rgba(239, 68, 68, 0.08);
+  border-left: 3px solid #ef4444;
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ===== IMAGES ===== */
+
+.notes-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-top: 12px;
+  border: 1px solid var(--border);
+}
+
+/* ===== EMPTY STATE ===== */
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-dim);
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.empty-state p {
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.hint-small {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 12px;
+}
+
+.hint-small code {
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 600px) {
+  .notes-card {
+    padding: 14px;
+  }
+  
+  .notes-formula-text {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  
+  .notes-table {
+    font-size: 11px;
+  }
+  
+  .notes-table th,
+  .notes-table td {
+    padding: 8px 10px;
+  }
+}

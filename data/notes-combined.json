@@ -1,0 +1,4135 @@
+{
+  "building-materials": {
+    "exam": "uppsc-ae",
+    "stage": "mains",
+    "subject": "building-materials",
+    "subject_name": "Building Materials",
+    "topics": [
+      {
+        "id": 0,
+        "name": "Cement",
+        "desc": "OPC grades \u00b7 Bogue compounds \u00b7 Hydration \u00b7 Setting time \u00b7 Vicat \u00b7 Soundness \u00b7 IS 269"
+      },
+      {
+        "id": 1,
+        "name": "Stones, Aggregates & Tests",
+        "desc": "Classification \u00b7 Specific gravity \u00b7 Crushing value \u00b7 Impact \u00b7 Abrasion \u00b7 IS 2386"
+      },
+      {
+        "id": 2,
+        "name": "Bricks, Mortar & Masonry",
+        "desc": "Brick classification \u00b7 Tests \u00b7 IS 3495 \u00b7 Bonds \u00b7 Mortar designations IS 2250"
+      },
+      {
+        "id": 3,
+        "name": "Timber & Wood Products",
+        "desc": "Classification \u00b7 Seasoning \u00b7 Defects \u00b7 Preservation \u00b7 Ply \u00b7 IS 399"
+      },
+      {
+        "id": 4,
+        "name": "Metals, Paints & Miscellaneous",
+        "desc": "Iron types \u00b7 Steel \u00b7 Corrosion \u00b7 Paint constituents \u00b7 Varnish \u00b7 IS 875 loads"
+      },
+      {
+        "id": 5,
+        "name": "Damp Proofing, Bitumen & Flooring",
+        "desc": "DPC materials \u00b7 Bitumen tests \u00b7 Flooring types \u00b7 Cavity walls"
+      },
+      {
+        "id": 6,
+        "name": "Building Components \u2014 Stairs, Roofs & Foundations",
+        "desc": "Stair terminology \u00b7 Riser/tread \u00b7 Roof types \u00b7 Foundation depth \u00b7 IS codes"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": 0,
+        "topic_name": "Cement",
+        "cards": [
+          {
+            "heading": "OPC COMPOUNDS (Bogue's)",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "BOGUE COMPOUNDS (Decreasing %)",
+                "text": "C\u2083S (Alite) \u2248 45% \u2014 Early strength, high heat\nC\u2082S (Belite) \u2248 25% \u2014 Late strength, low heat\nC\u2083A (Aluminate) \u2248 11% \u2014 Very fast, causes sulphate attack\nC\u2084AF (Ferrite) \u2248 8% \u2014 Least heat; colour of cement\nGypsum \u2248 3\u20134% \u2014 Controls setting time (retards C\u2083A)"
+              }
+            ],
+            "points": [
+              "Strength order: C\u2083S > C\u2082S > C\u2083A > C\u2084AF (for 28-day strength)",
+              "Heat order: C\u2083A > C\u2083S > C\u2084AF > C\u2082S",
+              "Slow setting: Higher C\u2082S; High early: Higher C\u2083S; Low heat: Low C\u2083A + C\u2083S"
+            ]
+          },
+          {
+            "heading": "OPC GRADES & TESTS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "OPC GRADES (IS 269, IS 8112, IS 12269)",
+                "text": "33 Grade: Min 28-day strength = 33 N/mm\u00b2\n43 Grade: Min 28-day strength = 43 N/mm\u00b2\n53 Grade: Min 28-day strength = 53 N/mm\u00b2\nStandard weight of cement bag = 50 kg"
+              },
+              {
+                "label": "VICAT APPARATUS TESTS",
+                "text": "Normal consistency: Plunger 10 mm from bottom\nInitial setting time: Penetration 5\u20137 mm from bottom; Min = 30 min\nFinal setting time: Annular needle no impression; Max = 600 min (10 hr)"
+              }
+            ],
+            "alert": "\u26a0 Soundness test (Le Chatelier / Autoclave) checks for free CaO and MgO \u2014 causes expansion and cracking after setting. Max expansion = 10 mm (Le Chatelier)."
+          },
+          {
+            "heading": "SPECIAL CEMENTS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "TYPES & KEY FEATURE",
+                "text": "Rapid Hardening Cement: Higher C\u2083S, finer grinding; 3-day strength = 28-day OPC\nLow Heat Cement: Low C\u2083A + C\u2083S; used in mass concrete/dams\nSulphate Resistant Cement: Very low C\u2083A (<5%); for marine/aggressive soil\nWhite Cement: Low C\u2084AF; uses pure limestone + china clay\nQuick Setting Cement: Al\u2082SO\u2084 added; sets in 5 min; used underwater"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 1,
+        "topic_name": "Stones, Aggregates & Tests",
+        "cards": [
+          {
+            "heading": "AGGREGATE TESTS (IS 2386)",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "KEY AGGREGATE TESTS",
+                "text": "Crushing value: %wear under 400kN load; Roads \u226430%, Concrete \u226445%\nImpact value: Resistance to sudden load (hammer); Roads \u226430%\nAbrasion (Los Angeles): Resistance to wear; Roads \u226430\u201340%\nSpecific gravity of aggregates: 2.6\u20132.7 (most stones)"
+              },
+              {
+                "label": "STONE TESTS",
+                "text": "Acid test: 1% HCl for 7 days \u2014 calcareous stones effervesce\nSmith's test: Water turns brown \u2014 clay/soluble material present\nCrystallisation: Na\u2082SO\u2084 solution (5 cycles) \u2014 durability test"
+              }
+            ],
+            "points": [
+              "Igneous rocks: Granite, Basalt, Trap \u2014 strongest, fire resistant",
+              "Sedimentary rocks: Limestone, Sandstone, Shale \u2014 stratified; Slate for roofing",
+              "Metamorphic: Marble (from limestone), Quartzite (from sandstone), Slate (from shale) \u2014 hard and durable",
+              "For fire-resistant masonry: Granite preferred; limestone avoided (CaCO\u2083 decomposes at 900\u00b0C)",
+              "Water absorption of good building stone: should NOT exceed 5%",
+              "Flakiness index: % particles with least dimension < 0.6 \u00d7 mean sieve size; max 25% for bituminous",
+              "Well-graded aggregate minimises voids \u2192 reduces cement paste needed"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 2,
+        "topic_name": "Bricks, Mortar & Masonry",
+        "cards": [
+          {
+            "heading": "BRICKS \u2014 TESTS & STANDARDS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "BRICK CLASSIFICATION (IS 1077)",
+                "text": "Class I (1st class): Compressive strength \u2265 10.5 N/mm\u00b2; absorption \u2264 20%\nClass II (2nd class): \u2265 7.0 N/mm\u00b2; absorption \u2264 22%\nClass III (3rd class): \u2265 3.5 N/mm\u00b2; used for non-structural\nAAC Blocks: Autoclaved Aerated Concrete; lightweight; good insulation"
+              },
+              {
+                "label": "BRICK TESTS (IS 3495)",
+                "text": "Compressive strength: Wet brick tested; 1st class \u2265 10.5 N/mm\u00b2\nWater absorption: Immerse 24 hr; \u2264 20% (1st class), \u2264 22% (2nd)\nEfflorescence: Caused by soluble sulphates (Na, K, Mg, Ca); Rating: Nil/Slight/Moderate/Heavy/Serious"
+              }
+            ],
+            "points": [
+              "Unit weight of burnt clay bricks: 18\u201320 kN/m\u00b3",
+              "Standard metric brick size: 190 \u00d7 90 \u00d7 90 mm (with 10 mm mortar joint = 200 \u00d7 100 \u00d7 100 mm nominal)",
+              "Acid test of bricks: detects reactive lime nodules (CaCO\u2083 inclusions) which cause 'lime blowing'"
+            ]
+          },
+          {
+            "heading": "MORTAR DESIGNATIONS (IS 2250) & MASONRY BONDS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "MORTAR TYPES \u2014 INCREASING STRENGTH",
+                "text": "H3 < H2 < H1 < M3 < M2 < M1 < L3 < L2 < L1\nH = Hydraulic lime; M = Mixed/Gauged; L = Cement mortar\nGauging = adding cement to lime mortar to improve quality"
+              },
+              {
+                "label": "MASONRY BONDS",
+                "text": "English bond: Alternating courses of headers + stretchers \u2014 STRONGEST\nFlemish bond: Alternating header-stretcher in same course \u2014 better appearance\nStretcher bond: All stretchers \u2014 for \u00bd brick partitions only\nMin wall for double Flemish bond = 1.5 brick (340 mm)"
+              }
+            ],
+            "points": [
+              "Queen closer: placed next to quoin header in English bond to maintain staggered joints",
+              "Pozzolana reacts with Ca(OH)\u2082 released during cement hydration \u2192 forms C-S-H gel",
+              "Hollow blocks: reduce self-weight 20\u201340%, good thermal insulation, for non-load-bearing walls",
+              "Mortar volume in typical brick wall \u2248 20\u201325% of total wall volume"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 3,
+        "topic_name": "Timber & Wood Products",
+        "cards": [
+          {
+            "heading": "TIMBER CLASSIFICATION & PROPERTIES",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "TREE TYPES",
+                "text": "Exogenous: Growth by outer rings; has heartwood + sapwood + cambium; most structural timber\n\u2192 Conifers (Deodar, Chir) \u2014 softwood; Deciduous (Teak, Sal) \u2014 hardwood\nEndogenous: Growth inward (bamboo, cane, palm) \u2014 no rings"
+              },
+              {
+                "label": "TIMBER STRENGTH",
+                "text": "Strength is maximum along grain direction\nStrength is minimum perpendicular to grain\nIS 399: timber weight specified at 12% moisture content"
+              }
+            ],
+            "points": [
+              "Seasoning methods: Natural (air drying \u2014 slow); Artificial (kiln \u2014 fast, controlled); Water (immersion \u2014 removes sap)",
+              "Defects: Knot (branch inclusion), Shakes (separation along grain), Warping (cupping, bowing, twisting)",
+              "Heart shake: radial crack from centre outward; Cup/Wind shake: separation of annual rings due to wind",
+              "Preservation: Creosote oil (pressure impregnation/Bethell process), ASCU, Coal tar",
+              "Boucherie process: uses hydraulic pressure to replace sap in green timber with preservative (CuSO\u2084)",
+              "Heartwood: darker, harder, more durable (dead cells with extractives); Sapwood: lighter, less durable",
+              "Teak (Tectona grandis): deciduous hardwood, self-preserving (high oil), best Indian structural timber",
+              "Plywood: odd number of veneers bonded with grain at 90\u00b0 (cross-banding) for balanced stress",
+              "Moisture content (%) = (Wet weight \u2212 Oven dry weight) / Oven dry weight \u00d7 100",
+              "Fibre Saturation Point (FSP) \u2248 25\u201330% MC \u2014 below FSP, shrinkage occurs as MC decreases"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 4,
+        "topic_name": "Metals, Paints & Miscellaneous",
+        "cards": [
+          {
+            "heading": "IRON & STEEL",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "TYPES OF IRON (by Carbon %)",
+                "text": "Pig iron: 3\u20134% C \u2014 brittle, not used structurally; base product\nCast iron: 2\u20134% C \u2014 strong in compression, brittle in tension\nWrought iron: <0.15% C \u2014 malleable, tough, weldable, rust resistant\nMild steel: 0.15\u20130.3% C \u2014 most common structural steel"
+              }
+            ],
+            "points": [
+              "Galvanising: coating steel with ZINC (hot-dip at 450\u00b0C) for corrosion protection",
+              "Zinc provides cathodic (sacrificial) protection even if scratched"
+            ]
+          },
+          {
+            "heading": "PAINT CONSTITUENTS & VARNISH",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "PAINT CONSTITUENTS",
+                "text": "Base: White lead, red lead, zinc oxide \u2014 forms film\nVehicle (Carrier): Linseed oil, tung oil \u2014 binds base\nDrier: Lead, manganese, cobalt compounds \u2014 accelerates drying\nSolvent/Thinner: Turpentine \u2014 reduces viscosity\nPigment: Colour addition"
+              }
+            ],
+            "points": [
+              "Drier is lead acetate / cobalt naphthenate \u2014 NOT lime or calcium carbonate",
+              "Distemper: water-based paint, for interior walls ONLY (not weather-resistant)",
+              "Varnish: transparent, contains resin + oil/spirit, NO opaque pigment \u2014 shows natural grain",
+              "Shellac varnish: uses methylated spirit (alcohol) as solvent; dries by evaporation",
+              "Copal varnish: uses linseed oil as solvent \u2014 'oil varnish'",
+              "Fire-resistant paint: contains antimony oxide / chlorinated rubber (intumescent \u2014 swells under heat)"
+            ]
+          },
+          {
+            "heading": "IS 875 LOADS & GLASS TYPES",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "IS 875 PARTS",
+                "text": "Part 1: Dead loads | Part 2: Imposed (Live) loads\nPart 3: Wind loads | Part 4: Snow loads | Part 5: Special loads\nSpecific weight of concrete: 24 kN/m\u00b3 (RCC: 25 kN/m\u00b3)"
+              },
+              {
+                "label": "GLASS TYPES",
+                "text": "Crown glass: Common window glass (soda-lime)\nPlate glass: Ground and polished \u2014 better clarity\nWired glass: Fire resistant \u2014 wire mesh embedded\nTempered glass: Heat treated \u2014 4\u20135\u00d7 stronger; breaks into granules (safe)\nBorosilicate (Pyrex): Contains B\u2082O\u2083, high temperature resistance"
+              }
+            ],
+            "points": [
+              "For air-conditioned buildings: double-glazed or reflective (tinted/heat-absorbing) glass recommended",
+              "Low-E glass: silver coating reflects infrared heat; reduces cooling load"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 5,
+        "topic_name": "Damp Proofing, Bitumen & Flooring",
+        "cards": [
+          {
+            "heading": "DAMP PROOF COURSE (DPC)",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "DPC MATERIALS & APPLICATION",
+                "text": "Flexible: Bitumen felt (most common), lead sheets, copper sheets\nSemi-rigid: Mastic asphalt (applied at min 160\u00b0C)\nRigid: Dense concrete, slate (natural DPC stone)\nPosition: Usually at plinth level, around door/window openings"
+              }
+            ],
+            "points": [
+              "Weep holes: in retaining/breast walls \u2014 to drain accumulated water from behind wall (75\u00d775 mm or 100 mm dia pipes @ 1.5\u20133 m spacing)",
+              "Cavity wall: double wall with air gap for heat + sound insulation + moisture resistance",
+              "Efflorescence: white crystalline deposits on brick/stone \u2014 due to soluble sulphates (Na\u2082SO\u2084, K\u2082SO\u2084, MgSO\u2084)",
+              "Hot bitumen for DPC must be applied at minimum 160\u00b0C for proper flow"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 6,
+        "topic_name": "Building Components \u2014 Stairs, Roofs & Foundations",
+        "cards": [
+          {
+            "heading": "STAIRS \u2014 TERMINOLOGY & RULES",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "STAIR PROPORTIONING RULES",
+                "text": "2R + T = 60\u201365 cm (Blondel's formula)\nR + T = 40\u201345 cm\nR \u00d7 T = 400\u2013450 cm\u00b2\nRiser (R): 15\u201318 cm; Tread (T): 25\u201330 cm\nMax steps per flight: 12\u201316 (NBC: not more than 16)"
+              },
+              {
+                "label": "STAIR PARTS",
+                "text": "Riser: Vertical face of step\nTread (Going): Horizontal surface of step\nNosing: Front edge of tread (projecting beyond riser)\nScotia: Moulding below nosing (for aesthetics + grip)\nBaluster: Vertical member supporting handrail\nNewel post: Large post at start/end of handrail\nSoffit: Underside of staircase slab\nWaist: Minimum thickness of stair slab"
+              }
+            ],
+            "points": [
+              "NBC maximum ramp slope = 1 in 12 (8.33%) for wheelchair access",
+              "Minimum staircase width for residential building = 1.0 m"
+            ]
+          },
+          {
+            "heading": "FOUNDATION & PLINTH",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "KEY DEPTHS",
+                "text": "Minimum foundation depth for residential buildings: 0.90 m below ground\nMinimum plinth height: 0.45 m from centre of road\nRankine's formula: d_min = (q/\u03b3) \u00d7 [(1\u2212sin\u03c6)/(1+sin\u03c6)]\u00b2"
+              }
+            ],
+            "points": [
+              "Footing: lowest structural element that transmits building loads to underlying soil",
+              "Types: Isolated (individual column), Combined, Strip/Continuous (wall), Raft/Mat, Pile (deep)",
+              "Lintel: horizontal structural member spanning over openings to support masonry above",
+              "Minimum lintel bearing on each side = 150 mm (spans < 1.5 m) to 200 mm (spans > 1.5 m)",
+              "Eaves: lower edges of sloping roof that overhang beyond the wall face (protect from rain)",
+              "Cleats: angular brackets on rafters to prevent purlins from sliding down the slope",
+              "Louvred door: slanted slats allowing air circulation while maintaining privacy"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "concrete-design": {
+    "exam": "uppsc-ae",
+    "stage": "mains",
+    "subject": "concrete-design",
+    "subject_name": "RCC Structures",
+    "topics": [
+      {
+        "id": 0,
+        "name": "Working Stress Method (WSM)",
+        "desc": "Permissible stresses \u00b7 Modular ratio \u00b7 Neutral axis \u00b7 Balanced/Under/Over-reinforced"
+      },
+      {
+        "id": 1,
+        "name": "Limit State Method (LSM)",
+        "desc": "IS 456:2000 \u00b7 Partial safety factors \u00b7 Stress block \u00b7 Xu,max"
+      },
+      {
+        "id": 2,
+        "name": "Beams \u2014 T-Beam & Doubly Reinforced",
+        "desc": "Effective depth \u00b7 Ast \u00b7 Doubly reinforced \u00b7 Flange width of T-beam"
+      },
+      {
+        "id": 3,
+        "name": "Shear, Bond & Torsion",
+        "desc": "Nominal shear stress \u00b7 Stirrups \u00b7 Development length Ld \u00b7 Torsion"
+      },
+      {
+        "id": 4,
+        "name": "Slabs & Deflection Control",
+        "desc": "One-way \u00b7 Two-way \u00b7 Flat slab \u00b7 l/d ratio \u00b7 IS 456 Cl.23"
+      },
+      {
+        "id": 5,
+        "name": "Columns & Footings",
+        "desc": "Short/Long column \u00b7 Effective length \u00b7 Ties \u00b7 Helical \u00b7 Isolated footing"
+      },
+      {
+        "id": 6,
+        "name": "Prestressed Concrete",
+        "desc": "Pre-tensioning \u00b7 Post-tensioning \u00b7 Losses \u00b7 Load balancing \u00b7 Kern"
+      },
+      {
+        "id": 7,
+        "name": "Concrete Technology",
+        "desc": "Mix design \u00b7 w/c ratio \u00b7 Workability tests \u00b7 Cover \u00b7 Curing \u00b7 SCC \u00b7 FRC"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": 0,
+        "topic_name": "Working Stress Method (WSM)",
+        "cards": [
+          {
+            "heading": "WSM FUNDAMENTALS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "MODULAR RATIO",
+                "text": "m = 280/(3\u03c3_cbc)  |  M20: m = 13.33  |  M25: m \u2248 11"
+              },
+              {
+                "label": "CRITICAL NA DEPTH",
+                "text": "x_c/d = m\u00b7\u03c3_cbc / (m\u00b7\u03c3_cbc + \u03c3_st)  |  M20+Fe415: x_c/d = 0.289"
+              },
+              {
+                "label": "ACTUAL NA DEPTH",
+                "text": "b\u00b7x_a\u00b2/2 = m\u00b7Ast\u00b7(d \u2212 x_a)  (equate moments of area about NA)"
+              }
+            ],
+            "points": [
+              "Assumptions: Plane sections remain plane; concrete takes NO tension; linear stress-strain; perfect bond",
+              "Balanced: x_a = x_c (steel & concrete reach limits simultaneously)",
+              "Under-reinforced: x_a < x_c (steel governs \u2014 DUCTILE, preferred)",
+              "Over-reinforced: x_a > x_c (concrete governs \u2014 BRITTLE, avoided)"
+            ]
+          },
+          {
+            "heading": "IS 456 PERMISSIBLE VALUES (WSM)",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "MOMENT OF RESISTANCE (Balanced)",
+                "text": "M_r = b\u00b7x_c\u00b7(\u03c3_cbc/2)\u00b7(d \u2212 x_c/3) = Ast\u00b7\u03c3_st\u00b7(d \u2212 x_c/3)"
+              },
+              {
+                "label": "LEVER ARM FACTOR",
+                "text": "j = 1 \u2212 k/3  where k = x_c/d"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Grade",
+                "\u03c3_cbc (N/mm\u00b2)",
+                "m"
+              ],
+              "rows": [
+                [
+                  "M15",
+                  "5.0",
+                  "18.67"
+                ],
+                [
+                  "M20",
+                  "7.0",
+                  "13.33"
+                ],
+                [
+                  "M25",
+                  "8.5",
+                  "10.98"
+                ],
+                [
+                  "M30",
+                  "10.0",
+                  "9.33"
+                ]
+              ]
+            },
+            "points": [
+              "Fe250 (MS): \u03c3_st = 140 N/mm\u00b2 (tension), 130 N/mm\u00b2 (compression)",
+              "Fe415 (HYSD): \u03c3_st = 230 N/mm\u00b2 (tension), 190 N/mm\u00b2 (compression)",
+              "For M20+Fe415: k = 0.289, j = 0.904, R = 0.914 N/mm\u00b2"
+            ],
+            "alert": "\u26a0 Actual neutral axis found by: b\u00b7x_a\u00b2/2 = m\u00b7Ast\u00b7(d \u2212 x_a). Compare with x_c to classify as under/over/balanced."
+          }
+        ]
+      },
+      {
+        "topic_id": 1,
+        "topic_name": "Limit State Method (LSM)",
+        "cards": [
+          {
+            "heading": "LSM KEY VALUES (Memorise)",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "PARTIAL SAFETY FACTORS",
+                "text": "\u03b3_c (concrete) = 1.5  |  \u03b3_s (steel) = 1.15"
+              },
+              {
+                "label": "DESIGN STRESS",
+                "text": "Concrete: 0.446f_ck  |  Steel: 0.87f_y"
+              },
+              {
+                "label": "Xu,max/d FORMULA",
+                "text": "Xu,max/d = 700/(1100 + 0.87f_y)"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Steel Grade",
+                "Xu,max/d"
+              ],
+              "rows": [
+                [
+                  "Fe250",
+                  "0.531"
+                ],
+                [
+                  "Fe415",
+                  "0.479"
+                ],
+                [
+                  "Fe500",
+                  "0.456"
+                ]
+              ]
+            },
+            "points": [
+              "Factored loads: DL\u00d71.5 + LL\u00d71.5 (most common); 0.9DL + 1.5WL (uplift)",
+              "Stress block: Parabolic (0 to 3\u03b5_c/7) + Rectangular (3\u03b5_c/7 to \u03b5_cu); max strain \u03b5_cu = 0.0035",
+              "Strain in steel at failure: \u03b5_s \u2265 0.002 + 0.87f_y/E_s (ensures ductile failure)"
+            ]
+          },
+          {
+            "heading": "Mu,lim FORMULA & TENSION STEEL",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "LIMITING MOMENT OF RESISTANCE",
+                "text": "Mu,lim = 0.36\u00b7f_ck\u00b7b\u00b7Xu,max\u00b7(d \u2212 0.416\u00b7Xu,max)"
+              },
+              {
+                "label": "FOR M20+Fe415",
+                "text": "Mu,lim = 2.76 bd\u00b2  (N/mm units)"
+              },
+              {
+                "label": "Ast EQUATION",
+                "text": "0.87\u00b7f_y\u00b7Ast\u00b7d\u00b7(1 \u2212 Ast\u00b7f_y/(b\u00b7d\u00b7f_ck)) = Mu"
+              },
+              {
+                "label": "MINIMUM Ast",
+                "text": "Ast_min = 0.85bd/f_y  (IS 456 Cl.26.5.1.1)"
+              }
+            ],
+            "alert": "\u26a0 Max Ast in beam = 0.04bD (IS 456). Max Asc in column = 0.06Ag."
+          }
+        ]
+      },
+      {
+        "topic_id": 2,
+        "topic_name": "Beams \u2014 T-Beam & Doubly Reinforced",
+        "cards": [
+          {
+            "heading": "SINGLY & DOUBLY REINFORCED BEAMS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "T-BEAM FLANGE WIDTH (IS 456)",
+                "text": "Interior: b_f = l\u2080/6 + b_w + 6D_f  |  Edge (L-beam): b_f = l\u2080/12 + b_w + 3D_f"
+              },
+              {
+                "label": "DOUBLY REINFORCED \u2014 EXTRA MOMENT",
+                "text": "M\u2082 = Mu \u2212 Mu,lim  (carried by compression steel)"
+              }
+            ],
+            "points": [
+              "Doubly reinforced: used when depth is restricted AND M > Mu,lim, or moment reversal (earthquake)",
+              "Compression steel reduces long-term creep deflection significantly",
+              "If Xu < D_f (NA within flange): T-beam behaves as rectangular beam of width b_f",
+              "Effective cover: clear cover + \u00bd bar dia; typically 25\u201350 mm",
+              "Minimum tension steel: 0.85bd/f_y (prevents sudden brittle failure)"
+            ]
+          },
+          {
+            "heading": "DETAILING RULES",
+            "color": "blue",
+            "points": [
+              "Maximum tension/compression steel in beam: 4% of bD (IS 456 Cl.26.5.1.1)",
+              "Bar must extend beyond theoretical cut-off point by: 12\u03c6 or d (whichever greater)",
+              "In continuous beams: \u2265 1/3 of midspan positive steel must extend into support",
+              "Side face reinforcement for beams depth > 750mm: 0.1% of web area on each face",
+              "Effective span of SS beam: min of (clear span + d) and (c/c of supports)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 3,
+        "topic_name": "Shear, Bond & Torsion",
+        "cards": [
+          {
+            "heading": "SHEAR IN RCC BEAMS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "NOMINAL SHEAR STRESS",
+                "text": "\u03c4_v = Vu/(b\u00b7d)"
+              },
+              {
+                "label": "STIRRUP SPACING",
+                "text": "Sv = 0.87\u00b7f_y\u00b7Asv\u00b7d / Vus  |  Max spacing: 0.75d or 300mm (whichever less)"
+              },
+              {
+                "label": "MIN SHEAR REINFORCEMENT",
+                "text": "Asv/(b\u00b7sv) \u2265 0.4/(0.87f_y)"
+              },
+              {
+                "label": "SHEAR RESISTED BY STIRRUPS",
+                "text": "Vus = Vu \u2212 \u03c4_c\u00b7b\u00b7d  (concrete takes \u03c4_c\u00b7b\u00b7d)"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Concrete Grade",
+                "\u03c4_c,max (N/mm\u00b2)"
+              ],
+              "rows": [
+                [
+                  "M15",
+                  "2.5"
+                ],
+                [
+                  "M20",
+                  "2.8"
+                ],
+                [
+                  "M25",
+                  "3.1"
+                ],
+                [
+                  "M30",
+                  "3.5"
+                ],
+                [
+                  "M40",
+                  "4.0"
+                ]
+              ]
+            },
+            "alert": "\u26a0 \u03c4_v shall NOT exceed \u03c4_c,max \u2014 else redesign section. \u03c4_c depends on BOTH concrete grade AND % tension steel."
+          },
+          {
+            "heading": "DEVELOPMENT LENGTH & BOND",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "DEVELOPMENT LENGTH (IS 456)",
+                "text": "Ld = \u03c6\u00b7\u03c3_st/(4\u00b7\u03c4_bd)  |  For Fe415 in M20 (LSM): Ld \u2248 47\u03c6"
+              },
+              {
+                "label": "DEFORMED BAR BOND INCREASE",
+                "text": "Tension: 60% increase over plain bars  |  Compression: 25% increase"
+              }
+            ],
+            "points": [
+              "Hook allowance = 16\u03c6 (standard 180\u00b0 hook) \u2014 mandatory for plain bars",
+              "Internal bend radius: Fe250 = 2\u03c6; Fe415/Fe500 = 4\u03c6"
+            ]
+          },
+          {
+            "heading": "TORSION (IS 456 Cl.41)",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "EQUIVALENT BM",
+                "text": "Me1 = Mu + Mt  where  Mt = Tu(1 + D/b)/1.7"
+              },
+              {
+                "label": "Me2",
+                "text": "Me2 = Mt \u2212 Mu  (if positive, add compression steel)"
+              }
+            ],
+            "points": [
+              "Compatibility torsion: arises from deformation compatibility with adjacent members (can be reduced by 25%)",
+              "Equilibrium torsion: must be fully designed for (stability depends on it)",
+              "Cranked (bent-up) bars at 45\u00b0: resist both shear and negative moment at supports"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 4,
+        "topic_name": "Slabs & Deflection Control",
+        "cards": [
+          {
+            "heading": "SLAB TYPES & CLASSIFICATION",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "ONE-WAY vs TWO-WAY",
+                "text": "ly/lx \u2264 2 \u2192 Two-way slab  |  ly/lx > 2 \u2192 One-way slab"
+              },
+              {
+                "label": "EFFECTIVE SPAN",
+                "text": "Min of: (clear span + d) and (c/c of supports)"
+              }
+            ],
+            "points": [
+              "Distribution steel in one-way slab: 0.12% of bD (HYSD), 0.15% (MS)",
+              "Flat slab: no beams, column head with drop panel",
+              "Drop panel: each side \u2265 L/3 of panel span; depth below slab \u2265 D/4",
+              "Column head diameter in flat slab \u2265 0.25 \u00d7 smaller span"
+            ]
+          },
+          {
+            "heading": "DEFLECTION CONTROL \u2014 l/d RATIO",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Support Condition",
+                "Basic l/d Ratio"
+              ],
+              "rows": [
+                [
+                  "Cantilever",
+                  "7"
+                ],
+                [
+                  "Simply supported",
+                  "20"
+                ],
+                [
+                  "Continuous",
+                  "26"
+                ]
+              ]
+            },
+            "points": [
+              "For spans > 10 m: multiply basic l/d by 10/span",
+              "Modification factors apply for steel stress and compression steel",
+              "Deflection limit: span/250 total; span/350 or 20mm after construction",
+              "Shear reinforcement in slabs usually NOT required (large width \u2192 low \u03c4_v)"
+            ],
+            "alert": "\u26a0 l/d check is for span/250 deflection limit. Actual deflection: span/350 or 20 mm max."
+          },
+          {
+            "heading": "FLAT SLAB & PUNCHING SHEAR",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "PUNCHING SHEAR CRITICAL SECTION",
+                "text": "Perimeter at d/2 from column face"
+              },
+              {
+                "label": "PERMISSIBLE PUNCHING STRESS",
+                "text": "\u03c4_p = 0.25\u221af_ck  (N/mm\u00b2)"
+              }
+            ],
+            "points": [
+              "One-way shear critical section: at d from face of support",
+              "Two-way (punching) shear: at d/2 from column face",
+              "Minimum 3 panels in each direction required for flat slab system",
+              "Two-way slab: shorter span carries more load (stiffer); yield line at 45\u00b0 from corners"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 5,
+        "topic_name": "Columns & Footings",
+        "cards": [
+          {
+            "heading": "COLUMNS \u2014 IS 456 KEY VALUES",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "SHORT vs LONG",
+                "text": "Short: leff/D \u2264 12 AND leff/b \u2264 12  |  Long: leff/D > 12 (additional moment)"
+              },
+              {
+                "label": "LOAD CAPACITY (IS 456 Cl.39.3)",
+                "text": "Pu = 0.4\u00b7f_ck\u00b7Ac + 0.67\u00b7f_y\u00b7Asc  (tied column)"
+              },
+              {
+                "label": "HELICAL COLUMN",
+                "text": "Pu = 1.05 \u00d7 (tied column capacity)"
+              },
+              {
+                "label": "MIN ECCENTRICITY",
+                "text": "e_min = L/500 + D/30 or 20 mm (whichever greater)"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Parameter",
+                "IS 456 Value"
+              ],
+              "rows": [
+                [
+                  "Min Asc",
+                  "0.8% of Ag"
+                ],
+                [
+                  "Max Asc (general)",
+                  "6% of Ag"
+                ],
+                [
+                  "Max Asc (at laps)",
+                  "4% of Ag"
+                ],
+                [
+                  "Min bar dia",
+                  "12 mm"
+                ],
+                [
+                  "Min bars: rectangular",
+                  "4"
+                ],
+                [
+                  "Min bars: circular",
+                  "6"
+                ],
+                [
+                  "Tie spacing",
+                  "min(D_least, 16\u03c6_long, 300mm)"
+                ],
+                [
+                  "L_e (both ends fixed)",
+                  "0.5L"
+                ],
+                [
+                  "L_e (cantilever)",
+                  "2.0L"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "FOOTINGS \u2014 PUNCHING SHEAR & COVER",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "CRITICAL FOR BM",
+                "text": "At face of column"
+              },
+              {
+                "label": "CRITICAL FOR ONE-WAY SHEAR",
+                "text": "At d from face of column"
+              },
+              {
+                "label": "CRITICAL FOR PUNCHING SHEAR",
+                "text": "Perimeter at d/2 from column face  |  \u03c4_p = 0.25\u221af_ck"
+              }
+            ],
+            "points": [
+              "Minimum cover in footings: 50 mm ALWAYS (IS 456 Cl.26.4.2.2)",
+              "Braced column: lateral loads resisted by shear walls, not column itself",
+              "Volume of helix reinforcement \u2265 0.36(Ag/Ac \u2212 1)(f_ck/f_y)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 6,
+        "topic_name": "Prestressed Concrete",
+        "cards": [
+          {
+            "heading": "PRESTRESS SYSTEMS & LOSSES",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "PRE-TENSIONING",
+                "text": "Tendons stressed BEFORE concreting (factory; bond transfer)"
+              },
+              {
+                "label": "POST-TENSIONING",
+                "text": "Tendons stressed AFTER concreting (in-situ; anchorage transfer)"
+              },
+              {
+                "label": "STRESS AT FIBRE",
+                "text": "\u03c3 = P/A \u00b1 Pe\u00b7y/I \u00b1 M\u00b7y/I"
+              }
+            ],
+            "points": [
+              "Friction loss and anchorage slip: occur ONLY in post-tensioned members",
+              "Elastic shortening: higher in pre-tensioned (all tendons lose simultaneously)",
+              "For single-tendon post-tensioned: no elastic shortening loss",
+              "Total prestress losses \u2248 15\u201320% of initial prestress",
+              "Kern (core): region where load must fall to avoid tension anywhere \u2192 rectangle: \u00b1d/6 from centroid"
+            ],
+            "table": {
+              "headers": [
+                "Loss Type",
+                "Pre-tensioned",
+                "Post-tensioned"
+              ],
+              "rows": [
+                [
+                  "Elastic shortening",
+                  "Full loss",
+                  "Partial / zero (single tendon)"
+                ],
+                [
+                  "Shrinkage",
+                  "Yes",
+                  "Yes"
+                ],
+                [
+                  "Creep",
+                  "Yes",
+                  "Yes"
+                ],
+                [
+                  "Relaxation",
+                  "Yes",
+                  "Yes"
+                ],
+                [
+                  "Friction",
+                  "No",
+                  "Yes"
+                ],
+                [
+                  "Anchorage slip",
+                  "No",
+                  "Yes"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "LOAD BALANCING & MINIMUM GRADES",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "LOAD BALANCING",
+                "text": "Parabolic cable generates upward w_e = 8Pe/L\u00b2  (balances self-weight)"
+              },
+              {
+                "label": "MODULUS OF RUPTURE",
+                "text": "f_cr = 0.7\u221af_ck  (IS 456)"
+              }
+            ],
+            "points": [
+              "Minimum concrete grade: Pre-tensioned = M40; Post-tensioned = M30",
+              "Prestressing wire UTS: 1500\u20132000 N/mm\u00b2 (vs Fe415 \u2248 485 N/mm\u00b2)",
+              "Relaxation: time-dependent decrease in stress at constant strain (steel property)",
+              "Freyssinet system (conical wedge anchorage): widely used in India for post-tensioning"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 7,
+        "topic_name": "Concrete Technology",
+        "cards": [
+          {
+            "heading": "WORKABILITY TESTS",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "MODULUS OF ELASTICITY",
+                "text": "E_c = 5000\u221af_ck  (N/mm\u00b2)  |  M25: 25,000 N/mm\u00b2"
+              },
+              {
+                "label": "TARGET MEAN STRENGTH",
+                "text": "f_target = f_ck + 1.65s  (IS 10262; s = standard deviation)"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Test",
+                "Range",
+                "Best For"
+              ],
+              "rows": [
+                [
+                  "Slump test",
+                  "0\u2013125 mm",
+                  "Most common; not for very dry/very wet"
+                ],
+                [
+                  "Compacting factor",
+                  "0.75\u20130.95",
+                  "Medium workability"
+                ],
+                [
+                  "Vee-Bee",
+                  "1\u201310 sec",
+                  "Very dry/stiff mixes"
+                ],
+                [
+                  "Flow table",
+                  "34\u201360%",
+                  "Flowing concrete"
+                ]
+              ]
+            },
+            "points": [
+              "Abram's w/c ratio law: Higher w/c \u2192 lower strength",
+              "SCC (Self Compacting Concrete): high fluidity, no segregation; uses superplasticizer + VMA",
+              "FRC (Fibre Reinforced Concrete): improves toughness and crack resistance (steel/polypropylene fibres)"
+            ]
+          },
+          {
+            "heading": "COVER, CURING & DURABILITY (IS 456)",
+            "color": "green",
+            "table": {
+              "headers": [
+                "Exposure",
+                "Min Cover (mm)",
+                "Min Grade",
+                "Max w/c",
+                "Min Cement (kg/m\u00b3)"
+              ],
+              "rows": [
+                [
+                  "Mild",
+                  "20",
+                  "M20",
+                  "0.55",
+                  "220"
+                ],
+                [
+                  "Moderate",
+                  "30",
+                  "M25",
+                  "0.50",
+                  "300"
+                ],
+                [
+                  "Severe",
+                  "45",
+                  "M30",
+                  "0.45",
+                  "320"
+                ],
+                [
+                  "Very severe",
+                  "50",
+                  "M35",
+                  "0.45",
+                  "340"
+                ],
+                [
+                  "Extreme",
+                  "75",
+                  "M40",
+                  "0.40",
+                  "360"
+                ]
+              ]
+            },
+            "points": [
+              "Footings cover: ALWAYS 50 mm minimum",
+              "Curing period: OPC min 7 days; blended (slag/pozzolanic) min 14 days",
+              "Max chloride content: RCC = 0.4% by mass of cement; PSC = 0.1%",
+              "Sampling: 1 sample/5m\u00b3 or per floor; each sample = 3 cubes at 28 days"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "engineering-mechanics": {
+    "exam": "uppsc-ae",
+    "stage": "mains",
+    "subject": "engineering-mechanics",
+    "subject_name": "Engineering Mechanics",
+    "topics": [
+      {
+        "id": 0,
+        "name": "Force Systems & Resultants",
+        "desc": "Concurrent, Coplanar, Parallel Forces \u00b7 Resultant \u00b7 Couples \u00b7 Lami's Theorem"
+      },
+      {
+        "id": 1,
+        "name": "Equilibrium of Rigid Bodies",
+        "desc": "Equations of Equilibrium, Support Reactions, Beams, Frames"
+      },
+      {
+        "id": 2,
+        "name": "Trusses",
+        "desc": "Method of Joints, Method of Sections, Zero-force members"
+      },
+      {
+        "id": 3,
+        "name": "Centroid & Moment of Inertia",
+        "desc": "Centroid \u00b7 MoI of standard sections \u00b7 Parallel & Perpendicular Axis Theorems"
+      },
+      {
+        "id": 4,
+        "name": "Friction",
+        "desc": "Static & Kinetic Friction \u00b7 Wedge \u00b7 Belt \u00b7 Ladder \u00b7 Inclined Plane"
+      },
+      {
+        "id": 5,
+        "name": "Virtual Work & Energy Methods",
+        "desc": "Principle of Virtual Work \u00b7 Potential Energy \u00b7 Stability of Equilibrium"
+      },
+      {
+        "id": 6,
+        "name": "Kinematics of Particles",
+        "desc": "Rectilinear \u00b7 Curvilinear \u00b7 Projectile \u00b7 Relative Motion"
+      },
+      {
+        "id": 7,
+        "name": "Kinematics of Rigid Bodies",
+        "desc": "Translation \u00b7 Rotation \u00b7 General Plane Motion \u00b7 ICR"
+      },
+      {
+        "id": 8,
+        "name": "Kinetics",
+        "desc": "Newton's 2nd Law \u00b7 Work-Energy \u00b7 Impulse-Momentum \u00b7 Collisions"
+      },
+      {
+        "id": 9,
+        "name": "SHM & Rotational Dynamics",
+        "desc": "Simple Harmonic Motion \u00b7 Rotational Inertia \u00b7 Angular Momentum"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": 0,
+        "topic_name": "Force Systems & Resultants",
+        "cards": [
+          {
+            "heading": "FORCE & RESULTANT FUNDAMENTALS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "RESULTANT OF TWO FORCES",
+                "text": "R = \u221a(P\u00b2 + Q\u00b2 + 2PQ\u00b7cos \u03b8)  |  tan \u03b1 = (Q\u00b7sin \u03b8)/(P + Q\u00b7cos \u03b8)"
+              },
+              {
+                "label": "SPECIAL CASES",
+                "text": "\u03b8 = 0\u00b0: R = P+Q (max) | \u03b8 = 90\u00b0: R = \u221a(P\u00b2+Q\u00b2) | \u03b8 = 180\u00b0: R = |P\u2212Q| (min)"
+              }
+            ],
+            "points": [
+              "Concurrent forces: all pass through a single point",
+              "Coplanar forces: all lie in one plane",
+              "Collinear forces: all act along the same line",
+              "Resultant by resolution: R = \u221a(\u03a3Fx\u00b2 + \u03a3Fy\u00b2), tan \u03b8 = \u03a3Fy/\u03a3Fx"
+            ]
+          },
+          {
+            "heading": "COUPLE, MOMENT & LAMI'S THEOREM",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "MOMENT OF FORCE",
+                "text": "M = F \u00d7 d  (perpendicular distance to point)  Units: N\u00b7m or kN\u00b7m"
+              },
+              {
+                "label": "COUPLE",
+                "text": "Two equal, opposite, parallel (non-collinear) forces. Couple moment = F \u00d7 d (same about any point)"
+              },
+              {
+                "label": "LAMI'S THEOREM",
+                "text": "For 3 concurrent coplanar forces in equilibrium: P/sin \u03b1 = Q/sin \u03b2 = R/sin \u03b3  (\u03b1, \u03b2, \u03b3 are angles between the OTHER two forces)"
+              }
+            ],
+            "alert": "\u26a0 Lami's theorem ONLY for THREE concurrent forces in equilibrium. Doesn't work for 4+ forces."
+          },
+          {
+            "heading": "VARIGNON'S THEOREM & PARALLEL FORCES",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "VARIGNON'S THEOREM (Principle of Moments)",
+                "text": "Moment of resultant = Algebraic sum of moments of components. M_R = \u03a3M_i (about same point)"
+              },
+              {
+                "label": "RESULTANT OF PARALLEL FORCES",
+                "text": "R = \u03a3F (algebraic sum). Position: x\u0304 = \u03a3M_o / R (about reference O)"
+              }
+            ],
+            "points": [
+              "Free Body Diagram (FBD): shows all external forces and reactions on the isolated body",
+              "Wrench: Force + parallel couple \u2014 minimum force-couple system in 3D",
+              "For distributed loads (UDL/UVL): replace with equivalent point load at centroid"
+            ],
+            "tip": "For distributed loads (UDL/UVL): replace with equivalent point load = total area, applied at centroid."
+          }
+        ]
+      },
+      {
+        "topic_id": 1,
+        "topic_name": "Equilibrium of Rigid Bodies",
+        "cards": [
+          {
+            "heading": "EQUILIBRIUM EQUATIONS",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "2D EQUILIBRIUM (3 EQUATIONS)",
+                "text": "\u03a3Fx = 0  |  \u03a3Fy = 0  |  \u03a3Mz = 0 (about any point)"
+              },
+              {
+                "label": "3D EQUILIBRIUM (6 EQUATIONS)",
+                "text": "\u03a3Fx = \u03a3Fy = \u03a3Fz = 0  |  \u03a3Mx = \u03a3My = \u03a3Mz = 0"
+              }
+            ],
+            "alert": "For 2D: 3 equations \u2192 can solve max 3 unknowns. For 3D: 6 equations \u2192 max 6 unknowns."
+          },
+          {
+            "heading": "SUPPORT REACTIONS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Support Type",
+                "Reactions Provided",
+                "DOF Restrained"
+              ],
+              "rows": [
+                [
+                  "Roller",
+                  "1 (normal to surface)",
+                  "1 translation"
+                ],
+                [
+                  "Pin / Hinge",
+                  "2 (H and V)",
+                  "2 translations"
+                ],
+                [
+                  "Fixed / Built-in",
+                  "3 (H, V, Moment)",
+                  "2 translations + 1 rotation"
+                ],
+                [
+                  "Link / Rod",
+                  "1 (along link)",
+                  "1 translation along link"
+                ]
+              ]
+            },
+            "tip": "SS beam = pin + roller (1+2 = 3 reactions = 3 equations \u2192 DETERMINATE)"
+          },
+          {
+            "heading": "STATIC INDETERMINACY & STABILITY",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "DEGREE OF STATIC INDETERMINACY (DSI)",
+                "text": "DSI = (no. of unknown reactions) \u2212 (no. of equations available). For 2D beams: DSI = R \u2212 3"
+              },
+              {
+                "label": "2D TRUSS DSI",
+                "text": "DSI = (m + r) \u2212 2j  (m = members, r = reactions, j = joints)"
+              }
+            ],
+            "points": [
+              "DSI = 0: Statically determinate",
+              "DSI > 0: Statically indeterminate",
+              "DSI < 0: Mechanism (unstable)",
+              "SS beam: DSI = 3\u22123 = 0 (Determinate)",
+              "Fixed beam: DSI = 6\u22123 = 3 (Indeterminate to 3rd degree)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 2,
+        "topic_name": "Trusses",
+        "cards": [
+          {
+            "heading": "TRUSS BASICS & ASSUMPTIONS",
+            "color": "purple",
+            "points": [
+              "Frictionless pin connections at all joints",
+              "Loads applied at joints only (no loads between joints)",
+              "Members carry only AXIAL forces (tension or compression) \u2014 no bending/shear",
+              "Simple truss: built up from basic triangle by adding 2 members + 1 joint at a time",
+              "For determinate plane truss: m + r = 2j"
+            ],
+            "tip": "In FBD of joint: tension pulls AWAY from joint; compression pushes TOWARD joint."
+          },
+          {
+            "heading": "METHODS OF ANALYSIS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "METHOD OF JOINTS",
+                "text": "Apply \u03a3Fx = 0 and \u03a3Fy = 0 at each joint. Start at joint with \u2264 2 unknowns; work systematically."
+              },
+              {
+                "label": "METHOD OF SECTIONS",
+                "text": "Cut the truss through \u2264 3 unknown members. Apply \u03a3Fx = 0, \u03a3Fy = 0, \u03a3M = 0 to either part."
+              }
+            ],
+            "points": [
+              "Method of Joints: good for finding forces in all members",
+              "Method of Sections: best to find force in a SPECIFIC member quickly",
+              "Choose \u03a3M at a point where two unknowns intersect to solve directly for the third"
+            ]
+          },
+          {
+            "heading": "ZERO-FORCE MEMBERS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "ZERO-FORCE RULE 1",
+                "text": "At a joint where only TWO non-collinear members meet AND no external load \u2192 BOTH members are zero-force"
+              },
+              {
+                "label": "ZERO-FORCE RULE 2",
+                "text": "At a joint where THREE members meet (two collinear + one inclined) AND no external load \u2192 the INCLINED member is zero-force"
+              }
+            ],
+            "points": [
+              "Zero-force members don't carry load under the given loading but are needed for stability under other load cases",
+              "Removing zero-force members simplifies analysis",
+              "Always check for zero-force members at start of analysis"
+            ],
+            "alert": "\u26a0 Even if m + r = 2j, the truss can still be unstable due to geometric arrangement."
+          }
+        ]
+      },
+      {
+        "topic_id": 3,
+        "topic_name": "Centroid & Moment of Inertia",
+        "cards": [
+          {
+            "heading": "CENTROID OF STANDARD SHAPES",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Shape",
+                "Centroid (from base/reference)"
+              ],
+              "rows": [
+                [
+                  "Rectangle (b \u00d7 h)",
+                  "h/2 from base, b/2 from side"
+                ],
+                [
+                  "Triangle (base b, height h)",
+                  "h/3 from base, b/3 from one side"
+                ],
+                [
+                  "Semicircle (radius r)",
+                  "4r/3\u03c0 from diameter"
+                ],
+                [
+                  "Quarter circle (radius r)",
+                  "4r/3\u03c0 from each straight edge"
+                ],
+                [
+                  "Trapezoid (a top, b base, h height)",
+                  "h(2a+b)/[3(a+b)] from base"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "CENTROID OF AREA",
+                "text": "x\u0304 = \u03a3A_i\u00b7x_i / \u03a3A_i  |  \u0233 = \u03a3A_i\u00b7y_i / \u03a3A_i"
+              }
+            ],
+            "tip": "For composite shapes: subdivide \u2192 use weighted average. Hollow areas treated as negative."
+          },
+          {
+            "heading": "MOMENT OF INERTIA \u2014 STANDARD SECTIONS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Section",
+                "I about centroidal axis"
+              ],
+              "rows": [
+                [
+                  "Rectangle (b \u00d7 h)",
+                  "I_xx = bh\u00b3/12 (parallel to b)  |  I_yy = hb\u00b3/12 (parallel to h)"
+                ],
+                [
+                  "Circle (diameter d)",
+                  "I = \u03c0d\u2074/64 (about diameter)  |  J = \u03c0d\u2074/32 (polar)"
+                ],
+                [
+                  "Triangle (base b, height h)",
+                  "I_CG = bh\u00b3/36 (about CG parallel to base)  |  I_base = bh\u00b3/12"
+                ],
+                [
+                  "Hollow circle (D, d)",
+                  "I = \u03c0(D\u2074\u2212d\u2074)/64  |  J = \u03c0(D\u2074\u2212d\u2074)/32"
+                ]
+              ]
+            },
+            "alert": "\u26a0 Triangle: bh\u00b3/36 about CG axis (parallel to base, through centroid). bh\u00b3/12 about the BASE itself."
+          },
+          {
+            "heading": "PARALLEL & PERPENDICULAR AXIS THEOREMS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "PARALLEL AXIS THEOREM",
+                "text": "I_AB = I_CG + A\u00b7d\u00b2  (d = perpendicular distance between parallel axes)"
+              },
+              {
+                "label": "PERPENDICULAR AXIS THEOREM (PLANAR)",
+                "text": "J = I_xx + I_yy  (only for planar/lamina; J is polar MoI)"
+              }
+            ],
+            "points": [
+              "Parallel axis theorem: I_CG is always MINIMUM for a given axis direction",
+              "Perpendicular axis theorem is valid ONLY for planar (2D) bodies",
+              "Radius of gyration: r = \u221a(I/A)  (used in column buckling)"
+            ],
+            "tip": "Memorize Circle: I = \u03c0d\u2074/64 (about diameter). J (polar) = \u03c0d\u2074/32 = 2 \u00d7 I (perpendicular axis theorem)."
+          }
+        ]
+      },
+      {
+        "topic_id": 4,
+        "topic_name": "Friction",
+        "cards": [
+          {
+            "heading": "FRICTION FUNDAMENTALS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "LAWS OF FRICTION (COULOMB)",
+                "text": "F \u2264 \u03bc\u00b7N (limiting friction)  |  F_kinetic = \u03bc_k\u00b7N (constant during sliding)"
+              },
+              {
+                "label": "ANGLE OF FRICTION (\u03c6) & ANGLE OF REPOSE (\u03b1)",
+                "text": "tan \u03c6 = \u03bc  |  Angle of repose \u03b1 = \u03c6  (body just begins to slide on incline)"
+              }
+            ],
+            "points": [
+              "Static friction \u2265 kinetic friction (\u03bc_s > \u03bc_k)",
+              "Friction force opposes relative motion (actual or impending)",
+              "Friction force is independent of contact area (Coulomb's law)"
+            ]
+          },
+          {
+            "heading": "BLOCK ON INCLINE & PULLED FORCE",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "BODY ON INCLINE (angle \u03b8, weight W)",
+                "text": "To prevent sliding (P along incline up): P = W(sin \u03b8 \u2212 \u03bc cos \u03b8)  |  To push UP: P = W(sin \u03b8 + \u03bc cos \u03b8)"
+              },
+              {
+                "label": "MINIMUM FORCE TO PULL ON HORIZONTAL",
+                "text": "P_min = W\u00b7sin \u03c6  (applied at angle \u03c6 = angle of friction above horizontal)"
+              }
+            ],
+            "points": [
+              "For just sliding down: \u03bc = tan \u03b8 \u2192 \u03b8 = angle of repose",
+              "Minimum pulling force occurs when force is applied at the angle of friction"
+            ]
+          },
+          {
+            "heading": "BELT FRICTION & WEDGE",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "BELT FRICTION (Capstan/Euler equation)",
+                "text": "T\u2081/T\u2082 = e^(\u03bc\u03b8)  (T\u2081 = tight-side, T\u2082 = slack-side, \u03b8 = angle of contact in RADIANS)"
+              }
+            ],
+            "points": [
+              "Wedge: used to lift loads with small effort",
+              "Self-locking condition: wedge angle < 2\u03c6 (angle of friction)",
+              "Screw jack: similar to wedge; self-locking when lead angle < friction angle",
+              "Ladder against smooth wall: take \u03a3Fx, \u03a3Fy, \u03a3M at base"
+            ],
+            "tip": "LADDER: For a ladder leaning against smooth wall + rough floor \u2014 analyze \u03a3Fx, \u03a3Fy, \u03a3M at base. Safe if friction force \u2264 \u03bcN at floor."
+          }
+        ]
+      },
+      {
+        "topic_id": 5,
+        "topic_name": "Virtual Work & Energy Methods",
+        "cards": [
+          {
+            "heading": "PRINCIPLE OF VIRTUAL WORK",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "PRINCIPLE OF VIRTUAL WORK (PVW)",
+                "text": "\u03b4W = \u03a3F_i \u00b7 \u03b4r_i = 0  (for equilibrium \u2014 total virtual work by all forces = 0)"
+              }
+            ],
+            "points": [
+              "Virtual displacement: imaginary, infinitesimal, consistent with constraints",
+              "Constraint forces (smooth reactions, inextensible strings) do NO virtual work",
+              "PVW is equivalent to equilibrium equations but often simpler for connected systems",
+              "Advantage: does not need to show internal forces at connections"
+            ]
+          },
+          {
+            "heading": "POTENTIAL ENERGY & STABILITY",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "EQUILIBRIUM CONDITION",
+                "text": "dV/dq = 0  (potential energy V is stationary)"
+              },
+              {
+                "label": "STABILITY CONDITIONS",
+                "text": "Stable: d\u00b2V/dq\u00b2 > 0 (V is minimum). Unstable: d\u00b2V/dq\u00b2 < 0 (V is maximum). Neutral: d\u00b2V/dq\u00b2 = 0"
+              }
+            ],
+            "points": [
+              "Spring potential energy: V = \u00bdkx\u00b2",
+              "Gravitational PE: V = Wh (weight \u00d7 height of CG)",
+              "Stable equilibrium: body returns to equilibrium after small disturbance",
+              "Unstable equilibrium: body moves away from equilibrium after small disturbance",
+              "Pendulum at bottom \u2192 stable (V minimum); Pendulum at top \u2192 unstable (V maximum)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 6,
+        "topic_name": "Kinematics of Particles",
+        "cards": [
+          {
+            "heading": "RECTILINEAR MOTION (1D)",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "EQUATIONS OF MOTION (constant acceleration)",
+                "text": "v = u + at  |  s = ut + \u00bdat\u00b2  |  v\u00b2 = u\u00b2 + 2as  |  s_n = u + \u00bda(2n\u22121) (in nth second)"
+              }
+            ],
+            "points": [
+              "Position x, velocity v = dx/dt, acceleration a = dv/dt = d\u00b2x/dt\u00b2",
+              "Non-uniform acceleration: use calculus or v-t graph",
+              "Area under v-t graph = displacement; Slope of v-t graph = acceleration",
+              "Area under a-t graph = change in velocity"
+            ]
+          },
+          {
+            "heading": "PROJECTILE MOTION",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "TIME OF FLIGHT",
+                "text": "T = 2u\u00b7sin \u03b8/g"
+              },
+              {
+                "label": "HORIZONTAL RANGE",
+                "text": "R = u\u00b2\u00b7sin 2\u03b8/g  (max range at \u03b8 = 45\u00b0)"
+              },
+              {
+                "label": "MAXIMUM HEIGHT",
+                "text": "H = u\u00b2\u00b7sin\u00b2\u03b8/(2g)"
+              }
+            ],
+            "points": [
+              "Horizontal velocity u\u00b7cos \u03b8 remains constant throughout",
+              "Vertical velocity: v_y = u\u00b7sin \u03b8 \u2212 gt",
+              "At max height: v_y = 0; speed = u\u00b7cos \u03b8",
+              "30\u00b0 and 60\u00b0 give same range (since sin 2\u00d730\u00b0 = sin 2\u00d760\u00b0)"
+            ]
+          },
+          {
+            "heading": "CIRCULAR MOTION & RELATIVE MOTION",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "CIRCULAR MOTION",
+                "text": "v = \u03c9r  |  Centripetal acceleration: a_n = v\u00b2/r = \u03c9\u00b2r (toward centre)"
+              },
+              {
+                "label": "RELATIVE VELOCITY",
+                "text": "v_BA = v_B \u2212 v_A (velocity of B relative to A)"
+              }
+            ],
+            "points": [
+              "Tangential acceleration: a_t = \u03b1r  (if angular acceleration \u03b1 \u2260 0)",
+              "Total acceleration: a = \u221a(a_n\u00b2 + a_t\u00b2)",
+              "For uniform circular motion: a_t = 0, only a_n exists"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 7,
+        "topic_name": "Kinematics of Rigid Bodies",
+        "cards": [
+          {
+            "heading": "TYPES OF RIGID BODY MOTION",
+            "color": "purple",
+            "table": {
+              "headers": [
+                "Type",
+                "Characteristics"
+              ],
+              "rows": [
+                [
+                  "Pure Translation",
+                  "All points have same velocity and acceleration at any instant"
+                ],
+                [
+                  "Pure Rotation",
+                  "All points rotate about fixed axis; v = \u03c9r from axis"
+                ],
+                [
+                  "General Plane Motion",
+                  "Translation of reference point + Rotation about that point"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "VELOCITY OF ANY POINT P",
+                "text": "v_P = v_A + \u03c9 \u00d7 r_{AP}  (translation + rotation)"
+              }
+            ]
+          },
+          {
+            "heading": "ROLLING MOTION & ICR",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "ROLLING WITHOUT SLIPPING",
+                "text": "v_centre = \u03c9r  |  Contact point velocity = 0  |  Top point velocity = 2v_centre"
+              },
+              {
+                "label": "INSTANTANEOUS CENTRE (ICR)",
+                "text": "Point with zero velocity at the instant; v_P = \u03c9 \u00d7 (distance from ICR)"
+              }
+            ],
+            "points": [
+              "ICR: unique point where velocity is zero at that instant",
+              "For rolling wheel: ICR is at contact point with ground",
+              "ICR concept useful for finding velocities of any point quickly"
+            ],
+            "alert": "ICR is a kinematic concept (zero velocity), NOT zero acceleration. Useful only for instantaneous velocity analysis."
+          },
+          {
+            "heading": "ANGULAR MOTION EQUATIONS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "EQUATIONS (constant angular acceleration \u03b1)",
+                "text": "\u03c9 = \u03c9\u2080 + \u03b1t  |  \u03b8 = \u03c9\u2080t + \u00bd\u03b1t\u00b2  |  \u03c9\u00b2 = \u03c9\u2080\u00b2 + 2\u03b1\u03b8"
+              }
+            ],
+            "points": [
+              "Coriolis acceleration: 2\u03c9 \u00d7 v_rel \u2014 occurs when a particle moves along a rotating path",
+              "For slider-crank and similar mechanisms, use ICR or relative velocity approach",
+              "\u03c9 in rad/s = 2\u03c0N/60  (N in rpm)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 8,
+        "topic_name": "Kinetics",
+        "cards": [
+          {
+            "heading": "NEWTON'S 2ND LAW",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "NEWTON'S 2ND LAW",
+                "text": "\u03a3F = ma (translation)  |  \u03a3M = I\u03b1 (rotation about fixed axis)"
+              },
+              {
+                "label": "D'ALEMBERT'S PRINCIPLE",
+                "text": "\u03a3F \u2212 ma = 0 (add \u2212ma as inertia force \u2192 static problem)"
+              }
+            ],
+            "points": [
+              "Work-Energy Theorem: Net work done = Change in kinetic energy = \u00bdmv\u2082\u00b2 \u2212 \u00bdmv\u2081\u00b2",
+              "Impulse-Momentum: F\u00b7t = \u0394(mv) = m(v\u2082 \u2212 v\u2081)",
+              "Conservation of momentum: applies to all collisions (no external force)"
+            ]
+          },
+          {
+            "heading": "COLLISIONS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "COEFFICIENT OF RESTITUTION e",
+                "text": "e = (relative velocity of separation)/(relative velocity of approach)"
+              },
+              {
+                "label": "PERFECTLY ELASTIC (e=1)",
+                "text": "KE conserved; both momentum and KE conserved"
+              },
+              {
+                "label": "PERFECTLY INELASTIC (e=0)",
+                "text": "Bodies stick together; only momentum conserved"
+              }
+            ],
+            "points": [
+              "0 \u2264 e \u2264 1 for real-world collisions",
+              "Momentum is ALWAYS conserved in collisions",
+              "KE is conserved ONLY for elastic collisions (e = 1)"
+            ],
+            "tip": "Momentum is ALWAYS conserved in collisions (no external force during collision). KE is conserved only for e = 1."
+          },
+          {
+            "heading": "CIRCULAR MOTION DYNAMICS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "CENTRIPETAL FORCE",
+                "text": "F_c = mv\u00b2/r = m\u03c9\u00b2r  (directed toward centre)"
+              },
+              {
+                "label": "POWER",
+                "text": "P = F\u00b7v (dot product)  |  P = T\u00b7\u03c9 (for rotation)"
+              }
+            ],
+            "points": [
+              "Centripetal force provided by: tension (string), friction (car turning), gravity (satellite)",
+              "Banking of roads: tan \u03b8 = v\u00b2/(Rg) for no friction condition",
+              "Banking provides centripetal force without relying on friction"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 9,
+        "topic_name": "SHM & Rotational Dynamics",
+        "cards": [
+          {
+            "heading": "SIMPLE HARMONIC MOTION (SHM)",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "SHM EQUATIONS",
+                "text": "x = A\u00b7sin(\u03c9t + \u03c6)  |  v = A\u03c9\u00b7cos(\u03c9t + \u03c6)  |  a = \u2212A\u03c9\u00b2\u00b7sin(\u03c9t + \u03c6) = \u2212\u03c9\u00b2x"
+              },
+              {
+                "label": "SPRING-MASS SYSTEM",
+                "text": "\u03c9 = \u221a(k/m)  |  T = 2\u03c0\u221a(m/k)  |  f = \u03c9/2\u03c0"
+              },
+              {
+                "label": "SIMPLE PENDULUM",
+                "text": "T = 2\u03c0\u221a(L/g)  (independent of mass and amplitude for small angles)"
+              }
+            ],
+            "points": [
+              "At maximum displacement (amplitude A): v = 0, a = maximum = A\u03c9\u00b2",
+              "At equilibrium (x = 0): v = maximum = A\u03c9, a = 0",
+              "Total energy = \u00bdkA\u00b2 = constant (undamped SHM)"
+            ]
+          },
+          {
+            "heading": "MASS MOMENT OF INERTIA",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Body",
+                "Axis",
+                "Mass MoI"
+              ],
+              "rows": [
+                [
+                  "Thin rod (length L)",
+                  "Through centre, perpendicular",
+                  "mL\u00b2/12"
+                ],
+                [
+                  "Thin rod (length L)",
+                  "Through one end, perpendicular",
+                  "mL\u00b2/3"
+                ],
+                [
+                  "Solid cylinder/disk (radius R)",
+                  "Geometric axis",
+                  "mR\u00b2/2"
+                ],
+                [
+                  "Solid sphere (radius R)",
+                  "Any diameter",
+                  "2mR\u00b2/5"
+                ],
+                [
+                  "Hollow sphere (radius R)",
+                  "Any diameter",
+                  "2mR\u00b2/3"
+                ],
+                [
+                  "Thin ring (radius R)",
+                  "Geometric axis",
+                  "mR\u00b2"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "ROTATIONAL DYNAMICS & ANGULAR MOMENTUM",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "ROTATIONAL KE",
+                "text": "KE_rot = \u00bdI\u03c9\u00b2"
+              },
+              {
+                "label": "ROLLING BODY TOTAL KE",
+                "text": "KE_total = \u00bdmv\u00b2 + \u00bdI\u03c9\u00b2 = \u00bdmv\u00b2(1 + I/mr\u00b2)"
+              },
+              {
+                "label": "ANGULAR MOMENTUM",
+                "text": "L = I\u03c9  (conserved when net external torque = 0)"
+              }
+            ],
+            "points": [
+              "Conservation of angular momentum: L = I\u03c9 = constant when \u03a3M_ext = 0",
+              "Spinning skater: pulls arms in \u2192 I decreases \u2192 \u03c9 increases",
+              "Rolling without slipping: a_centre = \u03b1r  |  v_centre = \u03c9r",
+              "Body with smaller I rolls down incline faster (solid sphere > solid cylinder > hollow sphere)"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "strength-of-materials": {
+    "exam": "uppsc-ae",
+    "stage": "mains",
+    "subject": "strength-of-materials",
+    "subject_name": "Strength of Materials",
+    "topics": [
+      {
+        "id": 0,
+        "name": "Stress & Strain",
+        "desc": "Simple Stress, Strain, Hooke's Law, Elastic Constants & Mohr's Circle"
+      },
+      {
+        "id": 1,
+        "name": "Shear Force & Bending Moment",
+        "desc": "SFD, BMD, Point of contraflexure, Relations between Load, SF, BM"
+      },
+      {
+        "id": 2,
+        "name": "Bending Stress",
+        "desc": "Theory of Simple Bending, Section Modulus, Beam of Uniform Strength"
+      },
+      {
+        "id": 3,
+        "name": "Shear Stress in Beams",
+        "desc": "Transverse Shear Stress, Distribution across various sections"
+      },
+      {
+        "id": 4,
+        "name": "Torsion of Shafts",
+        "desc": "Pure torsion of circular shafts, Polar Section Modulus, Power transmission"
+      },
+      {
+        "id": 5,
+        "name": "Deflection of Beams",
+        "desc": "Macaulay's, Moment Area, Conjugate Beam, Standard formulas"
+      },
+      {
+        "id": 6,
+        "name": "Columns & Struts",
+        "desc": "Euler buckling, Slenderness ratio, Rankine's formula, End conditions"
+      },
+      {
+        "id": 7,
+        "name": "Strain Energy",
+        "desc": "Strain energy in axial, bending, torsion, shear; Resilience"
+      },
+      {
+        "id": 8,
+        "name": "Combined Loading",
+        "desc": "Bending + Axial, Bending + Torsion, Theories of failure"
+      },
+      {
+        "id": 9,
+        "name": "Thin & Thick Cylinders",
+        "desc": "Hoop, Longitudinal stress, Lame's equations, Spherical shells"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": 0,
+        "topic_name": "Stress & Strain",
+        "cards": [
+          {
+            "heading": "STRESS & STRAIN FUNDAMENTALS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "NORMAL STRESS",
+                "text": "\u03c3 = P/A  (axial force / cross-sectional area)"
+              },
+              {
+                "label": "NORMAL STRAIN",
+                "text": "\u03b5 = \u03b4L/L  (change in length / original length)"
+              },
+              {
+                "label": "HOOKE'S LAW",
+                "text": "\u03c3 = E\u00b7\u03b5  (within elastic limit)"
+              }
+            ],
+            "points": [
+              "Shear stress: \u03c4 = V/A; Shear strain: \u03b3 = \u03c4/G",
+              "Poisson's ratio: \u03bc = \u2212(lateral strain)/(axial strain)",
+              "For composite/stepped bars: total \u03b4 = \u03a3(PL/AE) for each section"
+            ],
+            "alert": "For composite/stepped bars: total \u03b4 = \u03a3(PL/AE) for each section"
+          },
+          {
+            "heading": "ELASTIC CONSTANTS & RELATIONS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "FOUR ELASTIC CONSTANTS",
+                "text": "E (Young's), G/C (Shear/Rigidity), K (Bulk), \u03bc/\u03bd (Poisson's ratio)"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Relation",
+                "Formula"
+              ],
+              "rows": [
+                [
+                  "E and G",
+                  "E = 2G(1 + \u03bc)"
+                ],
+                [
+                  "E and K",
+                  "E = 3K(1 \u2212 2\u03bc)"
+                ],
+                [
+                  "E, G and K",
+                  "E = 9GK/(3K + G)"
+                ],
+                [
+                  "Limits of \u03bc",
+                  "\u22121 \u2264 \u03bc \u2264 0.5 (incompressible: \u03bc = 0.5)"
+                ]
+              ]
+            },
+            "tip": "Memorize: G = E/[2(1+\u03bc)] and K = E/[3(1\u22122\u03bc)]"
+          },
+          {
+            "heading": "THERMAL STRESS & STRESS-STRAIN CURVE",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "THERMAL STRESS (FREE EXPANSION RESTRAINED)",
+                "text": "\u03c3_th = \u03b1E\u0394T  |  \u03b5_th = \u03b1\u0394T  |  Force = \u03b1EA\u0394T"
+              },
+              {
+                "label": "\u03b1 values",
+                "text": "Steel: 12\u00d710\u207b\u2076/\u00b0C, Concrete: 10\u201312\u00d710\u207b\u2076/\u00b0C, Aluminium: 23\u00d710\u207b\u2076/\u00b0C"
+              }
+            ],
+            "points": [
+              "Key points on stress-strain curve: Proportional limit \u2192 Elastic limit \u2192 Upper yield point \u2192 Lower yield point \u2192 Ultimate stress \u2192 Breaking stress",
+              "Strain hardening occurs between lower yield point and ultimate stress",
+              "Necking occurs after ultimate stress before fracture"
+            ],
+            "alert": "Thermal stress only develops if expansion is RESTRAINED. Free expansion produces strain but no stress."
+          }
+        ]
+      },
+      {
+        "topic_id": 1,
+        "topic_name": "Shear Force & Bending Moment",
+        "cards": [
+          {
+            "heading": "SF & BM FUNDAMENTAL RELATIONS",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "DIFFERENTIAL RELATIONS",
+                "text": "w = \u2212dV/dx  |  V = dM/dx  |  w = \u2212d\u00b2M/dx\u00b2"
+              }
+            ],
+            "points": [
+              "Point load \u2192 step change in SFD; no change in BMD shape",
+              "UDL \u2192 linear change in SFD; parabolic change in BMD",
+              "Point moment \u2192 step change in BMD; no change in SFD",
+              "Max BM occurs where SF = 0 or changes sign",
+              "Point of contraflexure: where BM = 0 (changes sign)"
+            ],
+            "alert": "\u26a0 Sign convention: Sagging is positive in most Indian textbooks (Khurmi, Punmia)"
+          },
+          {
+            "heading": "STANDARD CASES \u2014 MAX BM & SF",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Beam Type",
+                "Max SF",
+                "Max BM"
+              ],
+              "rows": [
+                [
+                  "SS beam, central load W",
+                  "W/2",
+                  "WL/4 at centre"
+                ],
+                [
+                  "SS beam, UDL w",
+                  "wL/2",
+                  "wL\u00b2/8 at centre"
+                ],
+                [
+                  "SS beam, UVL (0 to w)",
+                  "wL/3 (at w end)",
+                  "wL\u00b2/9\u221a3 \u2248 0.064wL\u00b2 at L/\u221a3"
+                ],
+                [
+                  "Cantilever, point load W at free end",
+                  "W (at fixed end)",
+                  "WL (at fixed end)"
+                ],
+                [
+                  "Cantilever, UDL w",
+                  "wL (at fixed end)",
+                  "wL\u00b2/2 (at fixed end)"
+                ],
+                [
+                  "Fixed beam, central load W",
+                  "W/2",
+                  "WL/8 at centre; WL/8 at ends"
+                ],
+                [
+                  "Fixed beam, UDL w",
+                  "wL/2",
+                  "wL\u00b2/12 at ends; wL\u00b2/24 at centre"
+                ]
+              ]
+            },
+            "tip": "For SS UVL: max BM at x = L/\u221a3 from lighter end"
+          },
+          {
+            "heading": "OVERHANGING BEAM & ECCENTRIC LOAD",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "SS BEAM WITH ECCENTRIC POINT LOAD",
+                "text": "P at distance 'a' from A (b = L\u2212a): R_A = Pb/L, R_B = Pa/L. Max BM under load = Pab/L"
+              }
+            ],
+            "points": [
+              "Overhanging beam: hogging BM at support; possible sagging in span \u2192 point of contraflexure exists",
+              "Concentrated couple M\u2080: causes sudden jump of M\u2080 in BMD; SFD unchanged"
+            ],
+            "tip": "For SS beam with two equal loads P at L/3 each: max BM = PL/3 between loads (constant region)"
+          }
+        ]
+      },
+      {
+        "topic_id": 2,
+        "topic_name": "Bending Stress",
+        "cards": [
+          {
+            "heading": "EULER-BERNOULLI BENDING EQUATION",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "FUNDAMENTAL EQUATION",
+                "text": "M/I = \u03c3/y = E/R"
+              },
+              {
+                "label": "MAX BENDING STRESS",
+                "text": "\u03c3_max = M\u00b7y_max/I = M/Z  (Z = I/y_max = Section modulus)"
+              }
+            ],
+            "points": [
+              "Assumptions: Plane sections remain plane; material is homogeneous, isotropic, follows Hooke's law",
+              "Bending stress varies linearly from NA (zero) to extreme fibre (maximum)",
+              "Tension on one side, compression on other side"
+            ],
+            "alert": "Assumptions: Plane sections remain plane; material is homogeneous, isotropic, follows Hooke's law; small deflection; pure bending."
+          },
+          {
+            "heading": "SECTION MODULUS \u2014 STANDARD SECTIONS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Section",
+                "I",
+                "Z (= I/y_max)"
+              ],
+              "rows": [
+                [
+                  "Rectangle (b \u00d7 d)",
+                  "bd\u00b3/12",
+                  "bd\u00b2/6"
+                ],
+                [
+                  "Hollow rectangle (B\u00d7D outside, b\u00d7d inside)",
+                  "(BD\u00b3 \u2212 bd\u00b3)/12",
+                  "(BD\u00b3 \u2212 bd\u00b3)/(6D)"
+                ],
+                [
+                  "Circle (diameter d)",
+                  "\u03c0d\u2074/64",
+                  "\u03c0d\u00b3/32"
+                ],
+                [
+                  "Hollow circle (D outside, d inside)",
+                  "\u03c0(D\u2074\u2212d\u2074)/64",
+                  "\u03c0(D\u2074\u2212d\u2074)/(32D)"
+                ],
+                [
+                  "Triangle (base b, height h)",
+                  "bh\u00b3/36",
+                  "bh\u00b2/24"
+                ]
+              ]
+            },
+            "points": [
+              "For same area: Hollow circle has more Z than solid (more efficient in bending)",
+              "Efficiency comparison (same depth, same area): I-section > T-section > Rectangle > Circle"
+            ],
+            "alert": "For asymmetric sections (like T): two Z values, use smaller for safety."
+          },
+          {
+            "heading": "BEAM OF UNIFORM STRENGTH & FLITCHED BEAM",
+            "color": "green",
+            "points": [
+              "Beam of uniform strength: section varies so that \u03c3_max = M(x)/Z(x) = constant throughout",
+              "Cantilever with UDL: depth varies parabolically for uniform strength",
+              "Flitched beam: composite material beam (e.g., timber + steel)",
+              "Equate strain at common interface: \u03b5\u2081 = \u03b5\u2082 \u2192 \u03c3\u2081/E\u2081 = \u03c3\u2082/E\u2082",
+              "Use modular ratio m = E_steel/E_wood for transformed section"
+            ],
+            "tip": "For flitched beam: M = M\u2081 + M\u2082 where moments are shared based on EI ratio"
+          }
+        ]
+      },
+      {
+        "topic_id": 3,
+        "topic_name": "Shear Stress in Beams",
+        "cards": [
+          {
+            "heading": "SHEAR STRESS FORMULA",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "TRANSVERSE SHEAR STRESS",
+                "text": "\u03c4 = VQ/(Ib) = V\u00b7A\u0233/(Ib)"
+              }
+            ],
+            "points": [
+              "V = shear force at section, Q = first moment of area above point about NA, I = second moment of area, b = width at point",
+              "Shear stress distribution is parabolic for rectangular section",
+              "Shear stress is ZERO at extreme fibres (top/bottom)",
+              "Shear stress is MAXIMUM at the neutral axis (for solid sections)"
+            ],
+            "alert": "Shear stress is ZERO at extreme fibres and MAXIMUM at the neutral axis for solid sections."
+          },
+          {
+            "heading": "MAX SHEAR STRESS / AVG RATIOS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Section",
+                "\u03c4_max / \u03c4_avg",
+                "\u03c4_max value"
+              ],
+              "rows": [
+                [
+                  "Rectangle (b \u00d7 d)",
+                  "1.5",
+                  "1.5 \u00d7 V/(bd)"
+                ],
+                [
+                  "Solid Circle (diameter d)",
+                  "4/3",
+                  "(4/3) \u00d7 V/(\u03c0d\u00b2/4)"
+                ],
+                [
+                  "Hollow Circle (thin-walled)",
+                  "2.0",
+                  "2 \u00d7 V/(\u03c0Dt)"
+                ],
+                [
+                  "Triangle (base b, height h)",
+                  "1.5",
+                  "1.5 \u00d7 V/(bh/2)  at mid-height"
+                ],
+                [
+                  "Diamond (rotated square)",
+                  "9/8 = 1.125",
+                  "at d/8 from NA"
+                ]
+              ]
+            },
+            "tip": "For I-section: most shear is carried by the WEB (~95%), most BM by FLANGES"
+          },
+          {
+            "heading": "SHEAR FLOW & DISTRIBUTION",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "SHEAR FLOW q",
+                "text": "q = \u03c4 \u00d7 b = VQ/I  (force per unit length)"
+              }
+            ],
+            "points": [
+              "Shear flow is useful for designing connections (rivets, bolts, nails) in built-up sections",
+              "In I-section: sudden jump in shear stress at flange-web junction due to width change",
+              "For triangular section: Max \u03c4 at mid-height (NOT at NA which is at h/3 from base)",
+              "For thin-walled tubes: \u03c4 varies inversely with thickness t; q = \u03c4\u00b7t = constant for constant V"
+            ],
+            "alert": "For thin-walled tubes: q = \u03c4\u00b7t = constant for constant V (shear flow is uniform)."
+          }
+        ]
+      },
+      {
+        "topic_id": 4,
+        "topic_name": "Torsion of Shafts",
+        "cards": [
+          {
+            "heading": "TORSION FUNDAMENTAL EQUATION",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "TORSION EQUATION",
+                "text": "T/J = \u03c4/r = G\u03b8/L"
+              },
+              {
+                "label": "MAX SHEAR STRESS (at outer surface)",
+                "text": "\u03c4_max = Tr_max/J = T/Z_p  (Z_p = J/r_max = polar section modulus)"
+              },
+              {
+                "label": "TWIST ANGLE",
+                "text": "\u03b8 = TL/(GJ)  (radians)"
+              }
+            ],
+            "points": [
+              "T = applied torque, J = polar moment of inertia, G = modulus of rigidity",
+              "Shear stress varies linearly from zero at centre to maximum at outer surface",
+              "Assumptions: Circular shaft, plane sections remain plane (NO warping), small twist, linear elastic"
+            ],
+            "alert": "For non-circular sections (square, rectangle): plane sections WARP \u2192 torsion equation doesn't apply directly. Use St. Venant's theory."
+          },
+          {
+            "heading": "POLAR MOMENT & POLAR SECTION MODULUS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Section",
+                "J (polar)",
+                "Z_p"
+              ],
+              "rows": [
+                [
+                  "Solid circle (dia d)",
+                  "\u03c0d\u2074/32",
+                  "\u03c0d\u00b3/16"
+                ],
+                [
+                  "Hollow circle (D outer, d inner)",
+                  "\u03c0(D\u2074\u2212d\u2074)/32",
+                  "\u03c0(D\u2074\u2212d\u2074)/(16D)"
+                ],
+                [
+                  "Recall: I_xx for circle",
+                  "\u03c0d\u2074/64",
+                  "J = 2 \u00d7 I_xx"
+                ]
+              ]
+            },
+            "tip": "Hollow shaft has higher J/weight than solid \u2192 more efficient for torsion. For same outer diameter, J reduces by factor (1\u2212k\u2074) where k = d/D."
+          },
+          {
+            "heading": "POWER TRANSMISSION & APPLICATIONS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "POWER TRANSMITTED",
+                "text": "P = T\u00b7\u03c9 = T \u00d7 2\u03c0N/60  (T in N\u00b7m, N in rpm, P in Watts)"
+              },
+              {
+                "label": "In kW",
+                "text": "P = 2\u03c0NT/60000"
+              }
+            ],
+            "points": [
+              "Series shafts: same torque T; total twist = sum of individual twists",
+              "Parallel shafts: same twist angle; torques distributed inversely as torsional stiffness (GJ/L)",
+              "Combined bending + torsion: shafts subjected to both bending moment M and torque T"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 5,
+        "topic_name": "Deflection of Beams",
+        "cards": [
+          {
+            "heading": "BEAM DEFLECTION FUNDAMENTALS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "DIFFERENTIAL EQUATION",
+                "text": "EI\u00b7d\u00b2y/dx\u00b2 = M(x)  |  EI\u00b7dy/dx = \u222bM dx + C\u2081  |  EI\u00b7y = \u222b\u222bM dx\u00b2 + C\u2081x + C\u2082"
+              }
+            ],
+            "points": [
+              "BCs for simply supported beam: y = 0 at both supports",
+              "BCs for fixed end: y = 0 AND dy/dx = 0",
+              "BCs for free end: M = 0 AND V = 0",
+              "Macaulay's method: handles multiple discontinuous loads using step functions [x\u2212a]\u207f"
+            ],
+            "tip": "For maximum deflection, use dy/dx = 0 (slope = zero point). Max deflection \u2260 centre unless loading is symmetric."
+          },
+          {
+            "heading": "STANDARD DEFLECTION FORMULAS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Beam, Loading",
+                "Max Slope (\u03b8)",
+                "Max Deflection (\u03b4)"
+              ],
+              "rows": [
+                [
+                  "SS beam, central point load W",
+                  "WL\u00b2/16EI at supports",
+                  "WL\u00b3/48EI at centre"
+                ],
+                [
+                  "SS beam, UDL w",
+                  "wL\u00b3/24EI at supports",
+                  "5wL\u2074/384EI at centre"
+                ],
+                [
+                  "SS beam, end moment M\u2080",
+                  "M\u2080L/3EI (at M end)",
+                  "M\u2080L\u00b2/9\u221a3 EI"
+                ],
+                [
+                  "Cantilever, point load W at free end",
+                  "WL\u00b2/2EI at free end",
+                  "WL\u00b3/3EI at free end"
+                ],
+                [
+                  "Cantilever, UDL w",
+                  "wL\u00b3/6EI at free end",
+                  "wL\u2074/8EI at free end"
+                ],
+                [
+                  "Fixed beam, central load W",
+                  "0 at all sections of fixed ends",
+                  "WL\u00b3/192EI at centre"
+                ],
+                [
+                  "Fixed beam, UDL w",
+                  "0 at fixed ends",
+                  "wL\u2074/384EI at centre"
+                ]
+              ]
+            },
+            "tip": "Memorize: SS UDL = 5wL\u2074/(384EI), Fixed UDL = wL\u2074/(384EI) \u2014 fixed beam deflects 5\u00d7 less!"
+          },
+          {
+            "heading": "MOHR'S THEOREMS & CONJUGATE BEAM",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "MOHR'S THEOREM I (CHANGE IN SLOPE)",
+                "text": "\u03b8_B \u2212 \u03b8_A = (1/EI) \u00d7 Area of BMD between A and B"
+              },
+              {
+                "label": "MOHR'S THEOREM II (DEFLECTION)",
+                "text": "Distance of B from tangent at A = (1/EI) \u00d7 Moment of BMD area between A and B about B"
+              }
+            ],
+            "points": [
+              "Conjugate beam method: load conjugate beam with M/EI diagram",
+              "In conjugate beam: SF = slope in real beam; BM = deflection in real beam",
+              "Support transformations: fixed \u2192 free; free \u2192 fixed; pin \u2192 pin; roller \u2192 roller"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 6,
+        "topic_name": "Columns & Struts",
+        "cards": [
+          {
+            "heading": "EULER BUCKLING THEORY",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "EULER CRITICAL LOAD (BUCKLING LOAD)",
+                "text": "P_E = \u03c0\u00b2EI/L_e\u00b2"
+              },
+              {
+                "label": "SLENDERNESS RATIO",
+                "text": "\u03bb = L_e/r_min  (r_min = \u221a(I_min/A) = min radius of gyration)"
+              }
+            ],
+            "points": [
+              "Euler's formula valid ONLY for long columns (high \u03bb) where \u03c3_E < \u03c3_yield",
+              "Column buckles about axis of MINIMUM moment of inertia",
+              "Short column (\u03bb < 32 for steel): fails by crushing",
+              "Long column (\u03bb > 120 for steel): fails by buckling",
+              "Intermediate (32\u2013120): both effects \u2192 use Rankine"
+            ],
+            "alert": "\u26a0 Euler's formula is valid only for LONG columns. For short/intermediate columns, use Rankine."
+          },
+          {
+            "heading": "EFFECTIVE LENGTH FOR DIFFERENT END CONDITIONS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "End Conditions",
+                "L_e",
+                "P_E (relative to pin-pin)"
+              ],
+              "rows": [
+                [
+                  "Both ends pinned (standard)",
+                  "L",
+                  "1.0 \u00d7 P_pin"
+                ],
+                [
+                  "One end fixed, one end free (cantilever)",
+                  "2L",
+                  "0.25 \u00d7 P_pin"
+                ],
+                [
+                  "Both ends fixed",
+                  "L/2",
+                  "4.0 \u00d7 P_pin"
+                ],
+                [
+                  "One end fixed, one end pinned",
+                  "L/\u221a2 \u2248 0.707L",
+                  "2.0 \u00d7 P_pin"
+                ]
+              ]
+            },
+            "tip": "Memorize P_E ratio for the four cases: 1/4 : 1 : 2 : 4 (free-pin, pin-pin, fix-pin, fix-fix)"
+          },
+          {
+            "heading": "RANKINE'S FORMULA & ECCENTRIC LOADING",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "RANKINE'S FORMULA (intermediate columns)",
+                "text": "P_R = (\u03c3_C \u00d7 A) / [1 + a(L_e/r)\u00b2]  where a = \u03c3_C/(\u03c0\u00b2E) = Rankine's constant"
+              },
+              {
+                "label": "ECCENTRIC AXIAL LOAD",
+                "text": "\u03c3 = P/A \u00b1 Pe\u00b7y/I = P/A (1 \u00b1 ey/r\u00b2)"
+              },
+              {
+                "label": "KERN (for NO TENSION)",
+                "text": "Rectangle: e \u2264 d/6 (middle third). Circle: e \u2264 d/8 (middle quarter)"
+              }
+            ],
+            "tip": "'Middle third rule' \u2014 crucial for masonry/concrete design where tension is undesirable"
+          }
+        ]
+      },
+      {
+        "topic_id": 7,
+        "topic_name": "Strain Energy",
+        "cards": [
+          {
+            "heading": "STRAIN ENERGY FORMULAS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "GENERAL STRAIN ENERGY",
+                "text": "U = (1/2) \u00d7 \u03c3\u00b2/E \u00d7 Volume  or  U = (1/2) \u00d7 Force \u00d7 Deflection (gradually applied load)"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Loading Type",
+                "Strain Energy U"
+              ],
+              "rows": [
+                [
+                  "Axial (bar of length L, area A, load P)",
+                  "P\u00b2L/(2AE)"
+                ],
+                [
+                  "Bending",
+                  "\u222bM\u00b2dx/(2EI)  over length"
+                ],
+                [
+                  "Torsion (shaft, torque T)",
+                  "T\u00b2L/(2GJ)"
+                ],
+                [
+                  "Shear",
+                  "\u222bV\u00b2dx/(2GA) \u2014 usually neglected"
+                ],
+                [
+                  "Gradually applied load",
+                  "(1/2)P\u03b4 = (1/2)k\u03b4\u00b2"
+                ]
+              ]
+            },
+            "tip": "SI unit of strain energy: Joule (N\u00b7m). Density: J/m\u00b3."
+          },
+          {
+            "heading": "RESILIENCE & TOUGHNESS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "PROOF RESILIENCE",
+                "text": "U_proof = \u03c3_e\u00b2/(2E) \u00d7 Volume  (where \u03c3_e = elastic limit stress)"
+              },
+              {
+                "label": "MODULUS OF RESILIENCE",
+                "text": "Proof resilience per unit volume = \u03c3_e\u00b2/(2E)"
+              }
+            ],
+            "points": [
+              "Toughness = total area under stress-strain curve up to fracture point",
+              "High resilience \u2192 good for springs, energy-absorbing members",
+              "High toughness \u2192 good for impact-resistant members",
+              "Brittle materials have low toughness despite high strength"
+            ],
+            "alert": "High strength + high ductility = high toughness. Brittle materials have low toughness despite high strength."
+          },
+          {
+            "heading": "IMPACT/SUDDEN LOADING",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "SUDDENLY APPLIED LOAD (no impact)",
+                "text": "\u03c3 = 2P/A (twice gradual stress)  |  \u03b4 = 2\u03b4_static"
+              },
+              {
+                "label": "IMPACT LOAD (falling weight P from height h)",
+                "text": "\u03c3_i = (P/A) \u00d7 [1 + \u221a(1 + 2hAE/(PL))]"
+              }
+            ],
+            "points": [
+              "Gradually applied load: \u03c3 = P/A, \u03b4 = PL/(AE)",
+              "Suddenly applied load (h = 0): \u03c3 = 2P/A, \u03b4 = 2\u03b4_static",
+              "Impact load (h > 0): even higher stress; depends on h and \u03b4_static",
+              "To reduce impact stress: increase volume of absorbing region"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 8,
+        "topic_name": "Combined Loading",
+        "cards": [
+          {
+            "heading": "BENDING + AXIAL (DIRECT) STRESS",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "RESULTANT STRESS",
+                "text": "\u03c3 = P/A \u00b1 M\u00b7y/I = (Direct) \u00b1 (Bending)"
+              },
+              {
+                "label": "KERN BOUNDARIES (for no tension)",
+                "text": "Rectangle b\u00d7d: e \u2264 d/6 along d-direction. Circle d: e \u2264 d/8 (radial)"
+              }
+            ],
+            "points": [
+              "Critical for masonry, concrete columns, foundations under inclined loads, retaining walls",
+              "Eccentrically loaded column: same as axial + bending case"
+            ],
+            "alert": "Critical for masonry, concrete columns, foundations \u2014 ensure no tension develops if material is weak in tension."
+          },
+          {
+            "heading": "BENDING + TORSION (SHAFTS)",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "EQUIVALENT BENDING MOMENT",
+                "text": "M_e = (1/2)[M + \u221a(M\u00b2 + T\u00b2)]  (max normal stress theory)"
+              },
+              {
+                "label": "EQUIVALENT TWISTING MOMENT",
+                "text": "T_e = \u221a(M\u00b2 + T\u00b2)  (max shear stress theory)"
+              },
+              {
+                "label": "PRINCIPAL STRESSES",
+                "text": "\u03c3\u2081,\u2082 = \u03c3/2 \u00b1 \u221a[(\u03c3/2)\u00b2 + \u03c4\u00b2]  where \u03c3 = 32M/(\u03c0d\u00b3), \u03c4 = 16T/(\u03c0d\u00b3)"
+              }
+            ]
+          },
+          {
+            "heading": "THEORIES OF FAILURE",
+            "color": "green",
+            "table": {
+              "headers": [
+                "Theory",
+                "Failure Criterion",
+                "Best For"
+              ],
+              "rows": [
+                [
+                  "Max Normal Stress (Rankine)",
+                  "\u03c3\u2081 = \u03c3_yield",
+                  "Brittle materials"
+                ],
+                [
+                  "Max Shear Stress (Tresca/Guest)",
+                  "\u03c4_max = \u03c3_yield/2  OR  \u03c3\u2081\u2212\u03c3\u2083 = \u03c3_yield",
+                  "Ductile (conservative)"
+                ],
+                [
+                  "Distortion Energy (Von Mises)",
+                  "\u03c3_VM = \u221a(\u03c3\u2081\u00b2\u2212\u03c3\u2081\u03c3\u2082+\u03c3\u2082\u00b2) = \u03c3_yield",
+                  "Ductile (accurate)"
+                ],
+                [
+                  "Max Strain (Saint Venant)",
+                  "\u03b5_max = \u03c3_yield/E",
+                  "Rarely used"
+                ],
+                [
+                  "Strain Energy (Haigh)",
+                  "U = \u03c3_yield\u00b2/(2E) per unit vol",
+                  "Rarely used"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "VON MISES STRESS (2D)",
+                "text": "\u03c3_VM = \u221a(\u03c3\u2081\u00b2 \u2212 \u03c3\u2081\u03c3\u2082 + \u03c3\u2082\u00b2)  |  For bending+torsion: \u03c3_VM = \u221a(\u03c3\u00b2 + 3\u03c4\u00b2)"
+              }
+            ],
+            "tip": "In design: Use Tresca for safe (conservative) design; von Mises for economical (accurate) design."
+          }
+        ]
+      },
+      {
+        "topic_id": 9,
+        "topic_name": "Thin & Thick Cylinders",
+        "cards": [
+          {
+            "heading": "THIN CYLINDER (t < d/20)",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "HOOP / CIRCUMFERENTIAL STRESS",
+                "text": "\u03c3_h = pd/(2t)  (acts along circumference)"
+              },
+              {
+                "label": "LONGITUDINAL / AXIAL STRESS",
+                "text": "\u03c3_L = pd/(4t)  (acts along axis)"
+              }
+            ],
+            "points": [
+              "\u03c3_h = 2 \u00d7 \u03c3_L (hoop stress is twice longitudinal)",
+              "Cylinder fails along longitudinal seam (hoop stress governs)",
+              "Hoop stress resisted by longitudinal joints; Longitudinal stress by circumferential joints"
+            ],
+            "table": {
+              "headers": [
+                "Dimensional Change",
+                "Formula"
+              ],
+              "rows": [
+                [
+                  "Change in diameter \u03b4d/d",
+                  "(pd/4tE)(2\u2212\u03bc)"
+                ],
+                [
+                  "Change in length \u03b4L/L",
+                  "(pd/4tE)(1\u22122\u03bc)"
+                ],
+                [
+                  "Change in volume \u03b4V/V",
+                  "(pd/4tE)(5\u22124\u03bc)"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "THIN SPHERICAL SHELL",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "SPHERICAL SHELL STRESSES",
+                "text": "\u03c3 = pd/(4t)  (same in all directions; no shear in any plane)"
+              },
+              {
+                "label": "CHANGE IN DIAMETER",
+                "text": "\u03b4d/d = pd(1\u2212\u03bc)/(4tE)"
+              },
+              {
+                "label": "CHANGE IN VOLUME",
+                "text": "\u03b4V/V = 3pd(1\u2212\u03bc)/(4tE)"
+              }
+            ],
+            "points": [
+              "Sphere is most efficient pressure vessel shape",
+              "Hemispherical ends on cylinders: reduces stress at ends from pd/2t to pd/4t"
+            ],
+            "tip": "Why hemispherical ends on cylinders? Reduces stress at ends from pd/2t to pd/4t \u2014 ends are safe with thinner material."
+          },
+          {
+            "heading": "THICK CYLINDER (LAME'S EQUATIONS)",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "LAME'S EQUATIONS",
+                "text": "\u03c3_radial = a \u2212 b/r\u00b2  |  \u03c3_hoop = a + b/r\u00b2"
+              }
+            ],
+            "points": [
+              "Constants a and b determined from boundary conditions (pressure at inner and outer radii)",
+              "Hoop stress varies from MAX at inner radius to MIN at outer radius",
+              "Radial stress varies from \u2212p_i at inner to 0 at outer (for internal pressure only)",
+              "Compound cylinder: two thick cylinders shrunk fit \u2014 reduces max hoop stress at inner surface",
+              "Used for gun barrels, high-pressure vessels"
+            ],
+            "alert": "For thick cylinders (t > d/20): cannot assume uniform stress. Must use Lame's equations. Hoop stress varies from max at inner to min at outer."
+          }
+        ]
+      }
+    ]
+  },
+  "structural-analysis": {
+    "exam": "uppsc-ae",
+    "stage": "mains",
+    "subject": "structural-analysis",
+    "subject_name": "Structural Analysis",
+    "topics": [
+      {
+        "id": 0,
+        "name": "Castigliano's Theorems",
+        "desc": "Energy Methods, Unit Load Method & Virtual Work"
+      },
+      {
+        "id": 1,
+        "name": "Slope Deflection Method",
+        "desc": "Fixed End Moments, Slope-Deflection Equations & Analysis"
+      },
+      {
+        "id": 2,
+        "name": "Moment Distribution Method",
+        "desc": "Carry-Over, Stiffness, Distribution Factors & Sway"
+      },
+      {
+        "id": 3,
+        "name": "Kani's Method",
+        "desc": "Rotation Contributions & Column Analogy"
+      },
+      {
+        "id": 4,
+        "name": "Influence Lines",
+        "desc": "Muller-Breslau's Principle, Rolling Loads & Absolute Max BM"
+      },
+      {
+        "id": 5,
+        "name": "Arches",
+        "desc": "Three-Hinged, Two-Hinged & Fixed Arches"
+      },
+      {
+        "id": 6,
+        "name": "Matrix Methods of Analysis",
+        "desc": "Stiffness Method, Flexibility Method & Matrix Formulation"
+      },
+      {
+        "id": 7,
+        "name": "Plastic Analysis",
+        "desc": "Plastic Hinge, Load Factor, Shape Factor & Collapse Mechanisms"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": 0,
+        "topic_name": "Castigliano's Theorems",
+        "cards": [
+          {
+            "heading": "CASTIGLIANO'S THEOREMS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "1st Theorem",
+                "text": "\u2202U/\u2202P = \u03b4  (deflection at point of load P in direction of P)"
+              },
+              {
+                "label": "2nd Theorem",
+                "text": "\u2202U/\u2202M = \u03b8  (rotation at point of moment M)"
+              },
+              {
+                "label": "Strain Energy U",
+                "text": "U = \u222bM\u00b2dx/2EI (bending) + \u222bP\u00b2L/2AE (axial) + \u222bT\u00b2L/2GJ (torsion)"
+              }
+            ],
+            "points": [
+              "1st theorem: partial derivative of strain energy w.r.t. a force = deflection at that force's point",
+              "2nd theorem (Least Work): for redundant structures, \u2202U/\u2202R = 0 (redundant R makes U minimum)",
+              "If no load acts at desired point \u2192 apply fictitious load P, find \u03b4, then set P = 0"
+            ],
+            "alert": "Castigliano's 2nd theorem (Least Work) is used to find redundants in indeterminate structures \u2014 \u2202U/\u2202R = 0"
+          },
+          {
+            "heading": "UNIT LOAD METHOD (VIRTUAL WORK)",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "Deflection by Unit Load",
+                "text": "\u03b4 = \u222b(Mm/EI) dx"
+              },
+              {
+                "label": "Slope by Unit Load",
+                "text": "\u03b8 = \u222b(Mm\u0304/EI) dx"
+              }
+            ],
+            "points": [
+              "M = bending moment due to actual loading",
+              "m = bending moment due to unit load at desired point",
+              "m\u0304 = bending moment due to unit moment at desired point",
+              "Most versatile method \u2014 works for any structure"
+            ]
+          },
+          {
+            "heading": "PRINCIPLE OF VIRTUAL WORK",
+            "color": "green",
+            "points": [
+              "External virtual work = Internal virtual work",
+              "W_ext = W_int \u2192 used for deflection calculation",
+              "Compatible deformation required (geometry)",
+              "Equilibrium of virtual forces required",
+              "Applies to both determinate and indeterminate structures"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 1,
+        "topic_name": "Slope Deflection Method",
+        "cards": [
+          {
+            "heading": "SLOPE DEFLECTION EQUATIONS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "General SDE",
+                "text": "M_AB = 2EI/L (2\u03b8A + \u03b8B \u2212 3\u03c8) + FEM_AB"
+              },
+              {
+                "label": "Where \u03c8",
+                "text": "\u03c8 = \u0394/L = sway (relative settlement / length)"
+              }
+            ],
+            "points": [
+              "\u03b8A, \u03b8B = slopes at ends A and B of member AB",
+              "\u03c8 = chord rotation (sway angle) = \u0394/L",
+              "FEM = Fixed End Moment (from tables)",
+              "Two equations per member (near end + far end)",
+              "Equilibrium condition: \u03a3M at each joint = 0"
+            ],
+            "tip": "Sign convention: clockwise moments positive. \u03b8 and \u03c8 positive clockwise."
+          },
+          {
+            "heading": "FIXED END MOMENTS (FEM) \u2014 Standard Cases",
+            "color": "green",
+            "table": {
+              "headers": [
+                "Loading",
+                "FEM_AB (near)",
+                "FEM_BA (far)"
+              ],
+              "rows": [
+                [
+                  "Central point load P",
+                  "PL/8 (CW)",
+                  "PL/8 (CCW)"
+                ],
+                [
+                  "Eccentric load P at 'a' from A",
+                  "Pab\u00b2/L\u00b2 (CW)",
+                  "Pa\u00b2b/L\u00b2 (CCW)"
+                ],
+                [
+                  "UDL w per unit length",
+                  "wL\u00b2/12 (CW)",
+                  "wL\u00b2/12 (CCW)"
+                ],
+                [
+                  "UVL (0 to w, A to B)",
+                  "wL\u00b2/20 (CW)",
+                  "wL\u00b2/30 (CCW)"
+                ]
+              ]
+            },
+            "alert": "Fixed end carries more moment than simply supported. FEM signs: near end sagging = positive."
+          },
+          {
+            "heading": "PROCEDURE \u2014 SLOPE DEFLECTION METHOD",
+            "color": "orange",
+            "points": [
+              "1. Identify unknown joint rotations (\u03b8) and sway (\u03c8)",
+              "2. Write SDE for each member end (2 equations per member)",
+              "3. Apply joint equilibrium: \u03a3M at each joint = 0",
+              "4. For sway frames: apply shear equilibrium (story equation)",
+              "5. Solve simultaneous equations for \u03b8 and \u03c8",
+              "6. Back-substitute into SDE to find all end moments"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 2,
+        "topic_name": "Moment Distribution Method",
+        "cards": [
+          {
+            "heading": "KEY TERMS IN MOMENT DISTRIBUTION",
+            "color": "green",
+            "table": {
+              "headers": [
+                "Term",
+                "Definition",
+                "Formula"
+              ],
+              "rows": [
+                [
+                  "Stiffness k",
+                  "Moment to cause unit rotation at near end",
+                  "4EI/L (far fixed), 3EI/L (far pinned)"
+                ],
+                [
+                  "Distribution Factor DF",
+                  "Fraction of unbalanced moment distributed to each member",
+                  "k_member / \u03a3k_members at joint"
+                ],
+                [
+                  "Carry-Over Factor COF",
+                  "Fraction carried to far end",
+                  "0.5 (far fixed), 0 (far pinned/free)"
+                ],
+                [
+                  "Fixed End Moment FEM",
+                  "Moment assuming all joints fixed",
+                  "From standard tables"
+                ],
+                [
+                  "Unbalanced Moment",
+                  "\u03a3FEMs at a joint \u2260 0 initially",
+                  "Released in each cycle"
+                ]
+              ]
+            },
+            "alert": "DF of a fixed end = 0 (doesn't rotate). DF of free end = 1 (fully releases). \u03a3DF at any joint = 1."
+          },
+          {
+            "heading": "MOMENT DISTRIBUTION PROCEDURE",
+            "color": "blue",
+            "points": [
+              "1. Calculate stiffness k for each member at every joint",
+              "2. Calculate Distribution Factors DF = k/\u03a3k at each joint",
+              "3. Calculate Fixed End Moments (FEMs) for all spans",
+              "4. Unlock joints one at a time: distribute unbalanced moment using DF",
+              "5. Carry over: half of distributed moment goes to far end (COF = 0.5)",
+              "6. Repeat until moments are small (convergence)",
+              "7. Sum all FEMs + distributed moments + carry-overs for final moments"
+            ],
+            "tip": "Propped cantilever stiffness = 3EI/L. Fixed beam stiffness = 4EI/L. Always use modified stiffness for near-pinned end."
+          },
+          {
+            "heading": "SWAY CORRECTION IN MDM",
+            "color": "orange",
+            "points": [
+              "Non-sway: apply MDM directly with DF and COF",
+              "Sway frames: MDM in two parts \u2014 (1) Non-sway analysis, (2) Sway analysis with unit sway",
+              "Final moments = Non-sway moments + k \u00d7 Sway moments",
+              "Check: \u03a3H = 0 (horizontal equilibrium) to find k"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 3,
+        "topic_name": "Kani's Method",
+        "cards": [
+          {
+            "heading": "KANI'S METHOD (ROTATION CONTRIBUTION METHOD)",
+            "color": "cyan",
+            "formulas": [
+              {
+                "label": "Rotation Factor",
+                "text": "r_AB = \u2212k_AB / (2\u03a3k at A)"
+              },
+              {
+                "label": "Rotation Contribution",
+                "text": "M'_AB = r_AB \u00d7 (F_AB + \u03a3 rotation contributions at A from all members)"
+              },
+              {
+                "label": "Final Moment",
+                "text": "M_AB = F_AB + 2M'_AB + M'_BA"
+              }
+            ],
+            "points": [
+              "More rapid convergence than MDM for multi-story frames",
+              "Particularly suitable for sway frames",
+              "Kani's converges faster than MDM \u2014 preferred for multi-story multi-bay frames"
+            ],
+            "tip": "Kani's gives same result as MDM but converges faster for symmetric frames."
+          },
+          {
+            "heading": "COLUMN ANALOGY METHOD",
+            "color": "blue",
+            "points": [
+              "Converts indeterminate structure to an 'analogous column' under eccentric load",
+              "The 'column' has: area = \u222bds/EI, section properties from M/EI diagram",
+              "Used for fixed arches, closed frames, and complex indeterminate structures",
+              "Analogous column stress = redundant force/moment at chosen section"
+            ]
+          },
+          {
+            "heading": "COMPARISON OF METHODS",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Method",
+                "Type",
+                "Best For",
+                "Convergence"
+              ],
+              "rows": [
+                [
+                  "Slope Deflection",
+                  "Displacement (exact)",
+                  "Any indeterminate frame",
+                  "Simultaneous equations"
+                ],
+                [
+                  "Moment Distribution",
+                  "Displacement (iterative)",
+                  "Non-sway frames",
+                  "Fast, 3\u20134 cycles"
+                ],
+                [
+                  "Kani's Method",
+                  "Displacement (iterative)",
+                  "Sway frames, multi-story",
+                  "Faster than MDM"
+                ],
+                [
+                  "Column Analogy",
+                  "Force analog",
+                  "Fixed arches/closed frames",
+                  "Single cycle"
+                ],
+                [
+                  "Matrix (Stiffness)",
+                  "Displacement (computer)",
+                  "Complex structures",
+                  "Direct solution"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "topic_id": 4,
+        "topic_name": "Influence Lines",
+        "cards": [
+          {
+            "heading": "INFLUENCE LINE BASICS",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "Definition",
+                "text": "IL for a function = diagram showing value of that function as unit load moves across span"
+              },
+              {
+                "label": "IL for BM at section",
+                "text": "Peak ordinate at section = a \u00d7 b / L"
+              }
+            ],
+            "points": [
+              "IL for reaction: triangular, peak = 1 at that support",
+              "IL for SF at section: triangular with jump of 1 at the section",
+              "IL for BM at section: triangular with peak = a\u00d7b/L at the section",
+              "IL ordinate \u00d7 actual load = value of function for that load position",
+              "For UDL: integrate IL ordinate over loaded length \u00d7 w"
+            ]
+          },
+          {
+            "heading": "MULLER-BRESLAU'S PRINCIPLE",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "Principle",
+                "text": "IL for any function = deflected shape when the corresponding restraint is removed and unit deformation is given"
+              }
+            ],
+            "points": [
+              "For reaction: remove support, give unit settlement \u2192 deflected shape is IL",
+              "For SF at section: cut beam at section, give unit relative displacement \u2192 IL for SF",
+              "For BM at section: insert hinge at section, give unit relative rotation \u2192 IL for BM",
+              "Extremely powerful for drawing ILs for indeterminate structures"
+            ]
+          },
+          {
+            "heading": "ROLLING LOADS & ABSOLUTE MAX BM",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "Absolute Max BM (Single load P)",
+                "text": "Occurs at midspan = PL/4"
+              },
+              {
+                "label": "Absolute Max BM (Two loads)",
+                "text": "Midspan bisects distance between resultant and adjacent critical load"
+              }
+            ],
+            "points": [
+              "Series of concentrated loads: max BM under any load when that load is at its IL peak",
+              "Critical position of UDL: load the +ve IL region for max +ve BM",
+              "For trusses: IL for member force = IL for SF in corresponding equivalent beam"
+            ],
+            "alert": "Position for absolute max BM: resultant R and adjacent load P equidistant from midspan (midspan bisects R\u2013P distance)"
+          }
+        ]
+      },
+      {
+        "topic_id": 5,
+        "topic_name": "Arches",
+        "cards": [
+          {
+            "heading": "THREE-HINGED ARCH (Statically Determinate)",
+            "color": "red",
+            "formulas": [
+              {
+                "label": "Horizontal Thrust H",
+                "text": "H = M_ss / y_c  (M_ss = BM of equivalent SS beam, y_c = rise at crown)"
+              },
+              {
+                "label": "For UDL on parabolic arch",
+                "text": "H = wL\u00b2/8h  (h = rise at crown)"
+              },
+              {
+                "label": "BM in arch",
+                "text": "M_arch = M_ss \u2212 H\u00d7y"
+              }
+            ],
+            "points": [
+              "Reactions: 4 unknowns (2H + 2V), 4 equations \u2192 Statically DETERMINATE",
+              "At crown hinge: BM = 0 always (hinge condition)",
+              "Parabolic arch under UDL \u2192 pure axial compression, zero bending moment everywhere",
+              "Temperature rise in two-hinged arch \u2192 increases horizontal thrust"
+            ],
+            "alert": "In arch, BM = (SS beam BM) \u2212 (H \u00d7 rise at that point). Arch reduces BM significantly \u2192 efficient structure."
+          },
+          {
+            "heading": "TWO-HINGED ARCH (1\u00b0 Indeterminate)",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "Horizontal Thrust H",
+                "text": "H = \u222bM_ss \u00d7 y ds/EI \u00f7 \u222by\u00b2 ds/EI"
+              }
+            ],
+            "points": [
+              "One degree indeterminate \u2014 H is the redundant",
+              "Temperature rise \u0394T: additional thrust = EA\u03b1\u0394T / (1 + EI/Ar \u00d7 \u222by\u00b2ds)",
+              "Rib shortening reduces thrust compared to rigid arch"
+            ]
+          },
+          {
+            "heading": "FIXED ARCH & ARCH TYPES SUMMARY",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Arch Type",
+                "Degree of Indeterminacy",
+                "Remarks"
+              ],
+              "rows": [
+                [
+                  "Three-hinged arch",
+                  "0 (Determinate)",
+                  "Both supports + crown hinge"
+                ],
+                [
+                  "Two-hinged arch",
+                  "1",
+                  "H is redundant"
+                ],
+                [
+                  "Fixed arch",
+                  "3",
+                  "H, V, M at each abutment \u2014 6 reactions, 3 equations"
+                ],
+                [
+                  "Tied arch",
+                  "0 (effectively)",
+                  "Horizontal thrust taken by tie rod"
+                ]
+              ]
+            },
+            "tip": "Parabolic arch is the funicular shape for UDL \u2014 pure compression, no bending."
+          }
+        ]
+      },
+      {
+        "topic_id": 6,
+        "topic_name": "Matrix Methods of Analysis",
+        "cards": [
+          {
+            "heading": "STIFFNESS METHOD (DISPLACEMENT METHOD)",
+            "color": "yellow",
+            "formulas": [
+              {
+                "label": "Stiffness Equation",
+                "text": "[K]{D} = {F}"
+              },
+              {
+                "label": "Where",
+                "text": "[K] = stiffness matrix, {D} = displacement vector, {F} = force vector"
+              }
+            ],
+            "points": [
+              "[K] is always symmetric (from Maxwell's reciprocal theorem)",
+              "Diagonal elements k_ii = sum of stiffnesses of members at DOF i",
+              "Unknowns are displacements {D} \u2014 solve [K]{D} = {F} \u2192 {D} = [K]\u207b\u00b9{F}",
+              "Member end forces from back-substitution",
+              "FEM (Finite Element Method) is based on the stiffness method"
+            ]
+          },
+          {
+            "heading": "FLEXIBILITY METHOD (FORCE METHOD)",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "Flexibility Equation",
+                "text": "[f]{X} = {D\u2080}  (compatibility equations for redundants)"
+              },
+              {
+                "label": "Flexibility coefficient",
+                "text": "f_ij = deflection at i due to unit load at j"
+              }
+            ],
+            "points": [
+              "[f] is always symmetric (from Maxwell's reciprocal theorem)",
+              "Unknowns are FORCES (redundants {X})",
+              "Number of unknowns = degree of static indeterminacy"
+            ]
+          },
+          {
+            "heading": "COMPARISON: STIFFNESS vs FLEXIBILITY",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Feature",
+                "Stiffness Method",
+                "Flexibility Method"
+              ],
+              "rows": [
+                [
+                  "Unknowns",
+                  "Displacements",
+                  "Redundant forces"
+                ],
+                [
+                  "Matrix",
+                  "Stiffness [K]",
+                  "Flexibility [f]"
+                ],
+                [
+                  "Size of matrix",
+                  "Based on DOFs",
+                  "Based on indeterminacy"
+                ],
+                [
+                  "Best for",
+                  "Highly indeterminate",
+                  "Low indeterminacy"
+                ],
+                [
+                  "Computer programs",
+                  "FEM uses this",
+                  "Less common in software"
+                ],
+                [
+                  "Matrix property",
+                  "Symmetric, banded",
+                  "Symmetric"
+                ]
+              ]
+            },
+            "tip": "Stiffness and flexibility matrices are INVERSE of each other: [K] = [f]\u207b\u00b9. Both are symmetric from Maxwell's theorem."
+          }
+        ]
+      },
+      {
+        "topic_id": 7,
+        "topic_name": "Plastic Analysis",
+        "cards": [
+          {
+            "heading": "PLASTIC HINGE & SECTION PROPERTIES",
+            "color": "red",
+            "formulas": [
+              {
+                "label": "Shape Factor f",
+                "text": "f = Mp / My = Zp / Ze"
+              },
+              {
+                "label": "Plastic hinges for collapse",
+                "text": "No. of hinges = Degree of Indeterminacy + 1"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Section",
+                "Shape Factor f"
+              ],
+              "rows": [
+                [
+                  "Rectangle",
+                  "1.5"
+                ],
+                [
+                  "Circle",
+                  "1.698 \u2248 1.7"
+                ],
+                [
+                  "Diamond (square rotated 45\u00b0)",
+                  "2.0"
+                ],
+                [
+                  "I-section (approx)",
+                  "1.12 to 1.15"
+                ],
+                [
+                  "Triangle",
+                  "2.34"
+                ]
+              ]
+            },
+            "points": [
+              "Plastic moment Mp = \u03c3y \u00d7 Zp (plastic section modulus)",
+              "Yield moment My = \u03c3y \u00d7 Ze (elastic section modulus)",
+              "Plastic hinge forms when entire cross-section reaches yield stress",
+              "Plastic section modulus Zp = A/2 \u00d7 (\u0233t + \u0233b)"
+            ],
+            "alert": "Shape factor for rectangle = 1.5. For I-section \u2248 1.15. Rectangle is most asked!"
+          },
+          {
+            "heading": "LOAD FACTOR & THEOREMS OF PLASTIC ANALYSIS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "Load Factor \u03bb",
+                "text": "\u03bb = Collapse load Wc / Working load W"
+              }
+            ],
+            "points": [
+              "Lower Bound Theorem: Equilibrium + yield condition satisfied \u2192 \u2264 true collapse load (safe estimate)",
+              "Upper Bound Theorem: Any collapse mechanism with work balance \u2192 \u2265 true collapse load (unsafe estimate)",
+              "Uniqueness Theorem: Collapse load satisfies equilibrium + yield + mechanism conditions",
+              "True collapse load lies between lower and upper bounds"
+            ]
+          },
+          {
+            "heading": "COLLAPSE MECHANISMS \u2014 STANDARD CASES",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Beam",
+                "Collapse Load Wc"
+              ],
+              "rows": [
+                [
+                  "SS beam, central point load",
+                  "4Mp/L"
+                ],
+                [
+                  "SS beam, eccentric load (a from A, b from B)",
+                  "Mp\u00d7L/(ab)"
+                ],
+                [
+                  "SS beam, UDL w",
+                  "8Mp/L\u00b2"
+                ],
+                [
+                  "Propped cantilever, central load",
+                  "6Mp/L"
+                ],
+                [
+                  "Propped cantilever, UDL",
+                  "11.66Mp/L\u00b2"
+                ],
+                [
+                  "Fixed beam, central load",
+                  "8Mp/L"
+                ],
+                [
+                  "Fixed beam, UDL",
+                  "16Mp/L\u00b2"
+                ]
+              ]
+            },
+            "tip": "Fixed beam collapse load = 2 \u00d7 SS beam collapse load. Remember: 4Mp/L (SS) vs 8Mp/L (fixed) for central load."
+          }
+        ]
+      }
+    ]
+  },
+  "steel-design": {
+    "exam": "uppsc-ae",
+    "stage": "mains",
+    "subject": "steel-design",
+    "subject_name": "Steel Structures",
+    "topics": [
+      {
+        "id": 0,
+        "name": "Properties of Steel & IS Codes",
+        "desc": "Steel grades \u00b7 Mechanical properties \u00b7 IS 800:2007 \u00b7 Limit State Design"
+      },
+      {
+        "id": 1,
+        "name": "Bolted Connections",
+        "desc": "Bolt grades \u00b7 Shear, Bearing, Tension capacities \u00b7 HSFG bolts"
+      },
+      {
+        "id": 2,
+        "name": "Welded Connections",
+        "desc": "Butt welds \u00b7 Fillet welds \u00b7 Throat & Effective length \u00b7 Design strength"
+      },
+      {
+        "id": 3,
+        "name": "Tension Members",
+        "desc": "Net area \u00b7 Block shear \u00b7 Design strength \u00b7 IS 800 procedure"
+      },
+      {
+        "id": 4,
+        "name": "Compression Members",
+        "desc": "Buckling \u00b7 Buckling curves \u00b7 Effective length \u00b7 Built-up sections"
+      },
+      {
+        "id": 5,
+        "name": "Beams (Laterally Supported & Unsupported)",
+        "desc": "Plastic/elastic moment capacity \u00b7 LTB \u00b7 Shear & web design"
+      },
+      {
+        "id": 6,
+        "name": "Plate Girders",
+        "desc": "Built-up beams \u00b7 Web design \u00b7 Stiffeners \u00b7 Flange splices"
+      },
+      {
+        "id": 7,
+        "name": "Column Bases & Foundations",
+        "desc": "Slab base \u00b7 Gusseted base \u00b7 Anchor bolts \u00b7 Foundation forces"
+      },
+      {
+        "id": 8,
+        "name": "Roof Trusses & Industrial Structures",
+        "desc": "Truss types \u00b7 Loads (DL, LL, WL) \u00b7 Purlins \u00b7 Bracing"
+      },
+      {
+        "id": 9,
+        "name": "Plastic Design & Limit State",
+        "desc": "Plastic moment \u00b7 Shape factor \u00b7 Collapse mechanism \u00b7 LSD vs WSD"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": 0,
+        "topic_name": "Properties of Steel & IS Codes",
+        "cards": [
+          {
+            "heading": "STEEL GRADES & PROPERTIES",
+            "color": "purple",
+            "table": {
+              "headers": [
+                "Grade",
+                "f_y (MPa)",
+                "f_u (MPa)",
+                "Use"
+              ],
+              "rows": [
+                [
+                  "E250 (Fe 410)",
+                  "250",
+                  "410",
+                  "General structural work"
+                ],
+                [
+                  "E300",
+                  "300",
+                  "440",
+                  "Medium duty"
+                ],
+                [
+                  "E350",
+                  "350",
+                  "490",
+                  "Bridges, heavy structures"
+                ],
+                [
+                  "E410",
+                  "410",
+                  "540",
+                  "High-strength members"
+                ],
+                [
+                  "E450",
+                  "450",
+                  "570\u2013590",
+                  "Special structures"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "YOUNG'S MODULUS",
+                "text": "E = 2 \u00d7 10\u2075 MPa (200 GPa) \u2014 same for ALL structural steels"
+              },
+              {
+                "label": "SHEAR MODULUS",
+                "text": "G = 0.77 \u00d7 10\u2075 MPa \u2248 77 GPa"
+              },
+              {
+                "label": "POISSON'S RATIO",
+                "text": "\u03bc = 0.3"
+              },
+              {
+                "label": "DENSITY",
+                "text": "7850 kg/m\u00b3 (78.5 kN/m\u00b3)"
+              },
+              {
+                "label": "\u03b1 (thermal expansion)",
+                "text": "12 \u00d7 10\u207b\u2076 /\u00b0C"
+              }
+            ]
+          },
+          {
+            "heading": "IS 800:2007 \u2014 LIMIT STATE DESIGN BASICS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "PARTIAL SAFETY FACTORS",
+                "text": "\u03b3_m0 = 1.10 (yielding) | \u03b3_m1 = 1.25 (ultimate/fracture) | \u03b3_mw = 1.25 (shop weld) / 1.50 (site weld) | \u03b3_mb = 1.25 (bolts)"
+              },
+              {
+                "label": "LOAD FACTORS",
+                "text": "DL+LL: 1.5 each | DL+WL: 1.5 each or 0.9DL+1.5WL (uplift)"
+              }
+            ],
+            "points": [
+              "Section classification: Class 1 (Plastic) \u2192 Class 2 (Compact) \u2192 Class 3 (Semi-compact) \u2192 Class 4 (Slender)",
+              "Only Class 1 sections can be used for plastic analysis (adequate rotation capacity)",
+              "Limit State of Strength: yielding, buckling, fracture (collapse)",
+              "Limit State of Serviceability: deflection, vibration, durability"
+            ],
+            "table2": {
+              "headers": [
+                "Parameter",
+                "Limit"
+              ],
+              "rows": [
+                [
+                  "\u03bb for compression members (DL+LL)",
+                  "\u2264 180"
+                ],
+                [
+                  "\u03bb for compression (wind/EQ only)",
+                  "\u2264 250"
+                ],
+                [
+                  "\u03bb for tension members",
+                  "\u2264 350"
+                ],
+                [
+                  "Deflection (beams, brittle finishes)",
+                  "L/360"
+                ],
+                [
+                  "Deflection (non-brittle)",
+                  "L/300"
+                ],
+                [
+                  "Cantilever deflection",
+                  "L/120"
+                ]
+              ]
+            },
+            "tip": "Slenderness ratio \u03bb \u2264 180 for axially loaded compression members (IS 800)."
+          }
+        ]
+      },
+      {
+        "topic_id": 1,
+        "topic_name": "Bolted Connections",
+        "cards": [
+          {
+            "heading": "BOLT TYPES & PROPERTIES",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Grade",
+                "f_yb (MPa)",
+                "f_ub (MPa)",
+                "Use"
+              ],
+              "rows": [
+                [
+                  "4.6 (Black bolt)",
+                  "240",
+                  "400",
+                  "Ordinary, bearing type"
+                ],
+                [
+                  "8.8",
+                  "640",
+                  "800",
+                  "HSFG, high-strength"
+                ],
+                [
+                  "10.9",
+                  "900",
+                  "1000",
+                  "HSFG, critical joints"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "BOLT GRADE DECODE",
+                "text": "Grade X.Y \u2192 f_ub = X \u00d7 100 MPa, f_yb = X \u00d7 Y \u00d7 10 MPa"
+              },
+              {
+                "label": "SHEAR CAPACITY (single shear, threads)",
+                "text": "V_dsb = (f_ub/\u221a3) \u00d7 A_nb / \u03b3_mb  where A_nb \u2248 0.78 \u00d7 A_shank"
+              },
+              {
+                "label": "BEARING CAPACITY",
+                "text": "V_dpb = 2.5 \u00d7 k_b \u00d7 d \u00d7 t \u00d7 f_u / \u03b3_mb  (f_u of PLATE, not bolt)"
+              }
+            ],
+            "alert": "HSFG bolts: load transferred by FRICTION at interface (no slip). Used for vibration-prone, fatigue-critical connections."
+          },
+          {
+            "heading": "BOLT SPACING & DETAILING",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Parameter",
+                "IS 800 Requirement"
+              ],
+              "rows": [
+                [
+                  "Minimum pitch",
+                  "2.5d (bolt nominal diameter)"
+                ],
+                [
+                  "Maximum pitch (compression)",
+                  "min(16t, 200 mm)"
+                ],
+                [
+                  "Min edge distance (rolled edge)",
+                  "1.5 d_o (hole dia)"
+                ],
+                [
+                  "Min edge distance (sheared)",
+                  "1.7 d_o"
+                ],
+                [
+                  "Hole clearance (\u226414mm bolt)",
+                  "1 mm"
+                ],
+                [
+                  "Hole clearance (16\u201322mm)",
+                  "1.5 mm"
+                ],
+                [
+                  "Hole clearance (24mm)",
+                  "2 mm"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "COMBINED SHEAR + TENSION",
+                "text": "(V/V_db)\u00b2 + (T/T_db)\u00b2 \u2264 1.0"
+              },
+              {
+                "label": "TENSION CAPACITY",
+                "text": "T_db = 0.90 \u00d7 f_ub \u00d7 A_n / \u03b3_mb"
+              }
+            ],
+            "tip": "d_o = nominal hole diameter = d + clearance. \u03b5 = \u221a(250/f_y)."
+          }
+        ]
+      },
+      {
+        "topic_id": 2,
+        "topic_name": "Welded Connections",
+        "cards": [
+          {
+            "heading": "TYPES OF WELDS & FILLET WELD DESIGN",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "THROAT THICKNESS",
+                "text": "Throat = 0.7 \u00d7 s  (s = fillet weld size, for equal-leg)"
+              },
+              {
+                "label": "EFFECTIVE LENGTH",
+                "text": "L_eff = L \u2212 2s  (deduct 2 \u00d7 size for craters)"
+              },
+              {
+                "label": "DESIGN STRENGTH per unit length",
+                "text": "P_dw = 0.7s \u00d7 f_u / (\u221a3 \u00d7 \u03b3_mw)  [shear on throat plane]"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Parameter",
+                "Requirement"
+              ],
+              "rows": [
+                [
+                  "Min effective length",
+                  "\u2265 4s AND \u2265 40 mm"
+                ],
+                [
+                  "Min weld size (t \u2264 10mm plate)",
+                  "3 mm"
+                ],
+                [
+                  "Min weld size (10 < t \u2264 16mm)",
+                  "5 mm"
+                ],
+                [
+                  "Min weld size (16 < t \u2264 25mm)",
+                  "6 mm"
+                ],
+                [
+                  "Max size at square edge",
+                  "t \u2212 1.5 mm"
+                ],
+                [
+                  "\u03b3_mw (shop)",
+                  "1.25"
+                ],
+                [
+                  "\u03b3_mw (site)",
+                  "1.50"
+                ],
+                [
+                  "Angle range for fillet weld",
+                  "60\u00b0 to 120\u00b0"
+                ]
+              ]
+            },
+            "alert": "\u26a0 Fillet welds CANNOT be used where members meet at angles < 60\u00b0 or > 120\u00b0."
+          },
+          {
+            "heading": "BUTT WELD & \u221a3 FACTOR",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "FULL-PENETRATION BUTT WELD (tension)",
+                "text": "Strength = throat \u00d7 L \u00d7 f_y / \u03b3_m0 (= parent plate capacity)"
+              },
+              {
+                "label": "WHY \u221a3 IN FILLET WELD FORMULA",
+                "text": "Fillet fails by shear on throat \u2192 von Mises: \u03c4_y = f_u/\u221a3 converts UTS to shear strength"
+              }
+            ],
+            "points": [
+              "Full-penetration butt weld: develops full strength of parent plate",
+              "Partial-penetration butt weld: reduced effective throat",
+              "Site welds have higher \u03b3_mw (1.50 vs 1.25) \u2014 less reliable than shop welds"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 3,
+        "topic_name": "Tension Members",
+        "cards": [
+          {
+            "heading": "THREE FAILURE MODES (IS 800:2007)",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "1. YIELDING OF GROSS SECTION",
+                "text": "T_dg = A_g \u00d7 f_y / \u03b3_m0  (\u03b3_m0 = 1.10)"
+              },
+              {
+                "label": "2. RUPTURE OF NET SECTION",
+                "text": "T_dn = 0.9 \u00d7 A_n \u00d7 f_u / \u03b3_m1  (\u03b3_m1 = 1.25)"
+              },
+              {
+                "label": "3. BLOCK SHEAR",
+                "text": "T_db = [A_vg\u00b7f_y/(\u221a3\u00b7\u03b3_m0) + 0.9\u00b7A_tn\u00b7f_u/\u03b3_m1]  OR  [0.9\u00b7A_vn\u00b7f_u/(\u221a3\u00b7\u03b3_m1) + A_tg\u00b7f_y/\u03b3_m0]"
+              },
+              {
+                "label": "DESIGN STRENGTH",
+                "text": "T_d = MINIMUM of T_dg, T_dn, T_db"
+              }
+            ],
+            "points": [
+              "Net area: A_n = A_g \u2212 \u03a3(d_o \u00d7 t). For staggered holes: add \u03a3(p_s\u00b2\u00b7t/4g) (Cochrane's)",
+              "Shear lag factor \u03b1: 1 bolt = 0.6, 2 bolts = 0.7, 3+ bolts = 0.8",
+              "Block shear: a 'block' pulled out simultaneously in tension + shear"
+            ],
+            "alert": "Always check ALL THREE failure modes. Block shear often governs for short connections with closely spaced bolts."
+          }
+        ]
+      },
+      {
+        "topic_id": 4,
+        "topic_name": "Compression Members",
+        "cards": [
+          {
+            "heading": "EULER & DESIGN BUCKLING",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "EULER'S CRITICAL LOAD",
+                "text": "P_E = \u03c0\u00b2EI / L_e\u00b2  |  \u03c3_E = \u03c0\u00b2E / \u03bb\u00b2  (\u03bb = L_e/r_min)"
+              },
+              {
+                "label": "DESIGN COMPRESSIVE STRENGTH",
+                "text": "P_d = \u03c7 \u00d7 A_g \u00d7 f_y / \u03b3_m0"
+              }
+            ],
+            "table": {
+              "headers": [
+                "End Conditions",
+                "L_e (IS 800 recommended)",
+                "L_e (theoretical)"
+              ],
+              "rows": [
+                [
+                  "Both fixed",
+                  "0.65L",
+                  "0.5L"
+                ],
+                [
+                  "One fixed, one pinned",
+                  "0.80L",
+                  "0.707L"
+                ],
+                [
+                  "Both pinned",
+                  "1.0L",
+                  "1.0L"
+                ],
+                [
+                  "One fixed, one free",
+                  "2.0L",
+                  "2.0L"
+                ]
+              ]
+            },
+            "points": [
+              "IS 800 uses 4 buckling curves: a (\u03b1=0.21), b (0.34), c (0.49), d (0.76)",
+              "Circular hollow section \u2192 curve 'a' (best, lowest imperfection)",
+              "Welded I-section about minor axis \u2192 curve 'd' (worst)"
+            ]
+          },
+          {
+            "heading": "BUILT-UP COLUMNS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "EFFECTIVE SLENDERNESS",
+                "text": "\u03bb_e = \u221a(\u03bb_o\u00b2 + \u03bb_c\u00b2)  (\u03bb_o = overall, \u03bb_c = single component)"
+              },
+              {
+                "label": "TRANSVERSE SHEAR",
+                "text": "V_b = 2.5% of column axial load (for lacing/batten design)"
+              }
+            ],
+            "points": [
+              "Lacing/battens connect components and transfer transverse shear",
+              "Column buckles about axis of MINIMUM moment of inertia",
+              "CHS (circular hollow) is most efficient \u2014 same r about all axes"
+            ],
+            "tip": "Built-up columns increase radius of gyration about weak axis. Connections must transfer shear (lacing/battens carry transverse shear)."
+          }
+        ]
+      },
+      {
+        "topic_id": 5,
+        "topic_name": "Beams (Laterally Supported & Unsupported)",
+        "cards": [
+          {
+            "heading": "LATERALLY SUPPORTED BEAMS \u2014 DESIGN STRENGTH",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "DESIGN BENDING STRENGTH (M_d)",
+                "text": "Class 1 & 2: M_d = \u03b2_b \u00d7 Z_p \u00d7 f_y / \u03b3_m0 (\u03b2_b = 1.0)"
+              },
+              {
+                "label": "Class 3 (Semi-compact)",
+                "text": "M_d = Z_e \u00d7 f_y / \u03b3_m0"
+              },
+              {
+                "label": "DESIGN SHEAR STRENGTH",
+                "text": "V_d = A_v \u00d7 f_yw / (\u221a3 \u00d7 \u03b3_m0)  (von Mises shear yield)"
+              }
+            ],
+            "points": [
+              "Laterally supported = compression flange restrained from lateral movement (e.g., embedded in slab)",
+              "Shape factor for I-section \u2248 1.12\u20131.14",
+              "High shear (V > 0.6V_d) reduces moment capacity"
+            ]
+          },
+          {
+            "heading": "LATERAL TORSIONAL BUCKLING (LTB)",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "M_cr",
+                "text": "M_cr = (\u03c0\u00b2EI_y/L\u00b2)\u221a[I_w/I_y + L\u00b2GI_t/(\u03c0\u00b2EI_y)]"
+              }
+            ],
+            "points": [
+              "LTB occurs in laterally UNSUPPORTED beams \u2014 compression flange displaces sideways + twists",
+              "If \u03bb_LT \u2264 0.4 \u2192 \u03c7_LT = 1.0 \u2192 no LTB reduction (full M_p available)",
+              "Stocky web (d/t_w \u2264 67\u03b5): no shear buckling check needed",
+              "Intermediate stiffeners needed when d/t_w > 200"
+            ],
+            "alert": "Stiffeners required: bearing stiffeners under heavy loads, intermediate stiffeners if d/t_w > 200."
+          }
+        ]
+      },
+      {
+        "topic_id": 6,
+        "topic_name": "Plate Girders",
+        "cards": [
+          {
+            "heading": "PLATE GIRDER OVERVIEW",
+            "color": "purple",
+            "points": [
+              "Deep built-up I-section used when rolled sections are inadequate (spans > 12\u201315 m, heavy loads)",
+              "Web carries ~90% shear; Flanges carry ~90% bending moment",
+              "Typical d/L ratio: buildings 1/10 to 1/14; bridges 1/8 to 1/12",
+              "Web slenderness d/t_w = 200\u2013300 (vs 30\u201360 for rolled sections)"
+            ],
+            "formulas": [
+              {
+                "label": "ECONOMICAL DEPTH",
+                "text": "d_opt \u2248 k \u00d7 (M/f_y\u00b7t_w)^(1/3)  where k \u2248 1.0\u20131.2"
+              }
+            ]
+          },
+          {
+            "heading": "STIFFENERS & TENSION FIELD",
+            "color": "blue",
+            "points": [
+              "Bearing stiffeners: at supports and under concentrated loads (designed as columns, L_e = 0.7d)",
+              "Intermediate transverse stiffeners: prevent web shear buckling (spacing 0.74d to 1.5d)",
+              "Tension field action: after elastic buckling, web develops diagonal tension bands (like Pratt truss)",
+              "End panel needs bearing stiffener always (anchors the tension field)",
+              "Flange splices placed at low-moment regions (not midspan)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 7,
+        "topic_name": "Column Bases & Foundations",
+        "cards": [
+          {
+            "heading": "TYPES OF COLUMN BASES",
+            "color": "purple",
+            "table": {
+              "headers": [
+                "Type",
+                "Use",
+                "Features"
+              ],
+              "rows": [
+                [
+                  "Slab base",
+                  "Light/moderate axial loads, no significant moment",
+                  "Base plate only; simplest type"
+                ],
+                [
+                  "Gusseted base",
+                  "Heavy loads, significant moment/uplift",
+                  "Base plate + gusset plates + cleat angles"
+                ],
+                [
+                  "Grillage foundation",
+                  "Very heavy loads on weak soil",
+                  "Two-tier perpendicular steel beams encased in concrete"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "BEARING PRESSURE ON CONCRETE",
+                "text": "\u03c3_bearing = 0.6 \u00d7 f_ck  (for M20: 0.6 \u00d7 20 = 12 MPa)"
+              },
+              {
+                "label": "REQUIRED BASE PLATE AREA",
+                "text": "A = P / \u03c3_bearing"
+              },
+              {
+                "label": "PLATE THICKNESS",
+                "text": "t_s = \u221a(2.5w(a\u00b2 \u2212 0.3b\u00b2)\u03b3_m0/f_y)  (w = pressure, a/b = projections)"
+              }
+            ],
+            "points": [
+              "Minimum 4 anchor bolts (one near each corner)",
+              "Anchor bolt embedment: 12\u201320 \u00d7 bolt diameter",
+              "Eccentricity e > L/6: some bolts go into tension",
+              "For pure compression: bolts resist erection forces and wind uplift only"
+            ],
+            "tip": "For pure axial load: bolts only resist erection forces. For uplift/moment: bolts are critical structural elements."
+          }
+        ]
+      },
+      {
+        "topic_id": 8,
+        "topic_name": "Roof Trusses & Industrial Structures",
+        "cards": [
+          {
+            "heading": "ROOF TRUSS TYPES",
+            "color": "purple",
+            "table": {
+              "headers": [
+                "Type",
+                "Span Range",
+                "Key Feature"
+              ],
+              "rows": [
+                [
+                  "Pratt",
+                  "6\u201330 m",
+                  "Diagonals in TENSION under gravity (preferred)"
+                ],
+                [
+                  "Howe",
+                  "6\u201330 m",
+                  "Diagonals in COMPRESSION under gravity"
+                ],
+                [
+                  "Fink",
+                  "6\u201315 m",
+                  "Subdivided panels, light weight"
+                ],
+                [
+                  "Warren",
+                  "6\u201330 m",
+                  "Diagonals alternate T/C, no verticals"
+                ],
+                [
+                  "Bowstring",
+                  "15\u201340 m",
+                  "Curved top chord (parabolic), very efficient for UDL"
+                ]
+              ]
+            },
+            "points": [
+              "Typical truss spacing: 3\u20136 m",
+              "Pitch (rise/span): 1/4 to 1/8 (steeper for snow regions)",
+              "Self-weight estimate \u2248 Span/3 kg/m\u00b2 of plan area",
+              "Roof live load (IS 875 Part 2): 0.75 kN/m\u00b2 for slope \u2264 10\u00b0"
+            ]
+          },
+          {
+            "heading": "BRACING & WIND LOADS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "CRITICAL UPLIFT COMBINATION",
+                "text": "0.9DL + 1.5WL  (minimizes DL while wind fully factored)"
+              }
+            ],
+            "points": [
+              "Plan bracing at top chord level \u2192 transfers wind loads from gable to braced bays",
+              "X-bracing in side walls \u2192 resists lateral forces (wind, seismic)",
+              "Sag rods: reduce deflection of purlins along weak axis",
+              "Gantry girders: designed for vertical wheel loads + lateral surge (10% LL) + longitudinal force (5% wheel load)"
+            ],
+            "tip": "Bracing prevents the truss frame from racking under wind/earthquake."
+          }
+        ]
+      },
+      {
+        "topic_id": 9,
+        "topic_name": "Plastic Design & Limit State",
+        "cards": [
+          {
+            "heading": "PLASTIC THEORY FUNDAMENTALS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "YIELD MOMENT",
+                "text": "M_y = Z_e \u00d7 f_y (extreme fibre yields)"
+              },
+              {
+                "label": "PLASTIC MOMENT",
+                "text": "M_p = Z_p \u00d7 f_y (entire section at f_y)"
+              },
+              {
+                "label": "SHAPE FACTOR",
+                "text": "s = M_p/M_y = Z_p/Z_e"
+              }
+            ],
+            "table": {
+              "headers": [
+                "Section",
+                "Shape Factor"
+              ],
+              "rows": [
+                [
+                  "Rectangle",
+                  "1.5"
+                ],
+                [
+                  "I-section",
+                  "1.12\u20131.14"
+                ],
+                [
+                  "Solid circle",
+                  "1.698 \u2248 1.7"
+                ],
+                [
+                  "Diamond",
+                  "2.0"
+                ]
+              ]
+            },
+            "points": [
+              "Plastic neutral axis divides section into TWO EQUAL AREAS",
+              "Hinges for collapse = DI + 1",
+              "Class 1 sections required for plastic analysis (adequate rotation capacity)"
+            ]
+          },
+          {
+            "heading": "COLLAPSE LOADS & THEOREMS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Beam",
+                "Central Load Wc",
+                "UDL wc"
+              ],
+              "rows": [
+                [
+                  "Simply supported",
+                  "4Mp/L",
+                  "8Mp/L\u00b2"
+                ],
+                [
+                  "Propped cantilever",
+                  "6Mp/L",
+                  "11.66Mp/L\u00b2"
+                ],
+                [
+                  "Fixed-fixed",
+                  "8Mp/L",
+                  "16Mp/L\u00b2"
+                ]
+              ]
+            },
+            "points": [
+              "Lower bound (static): equilibrium + M \u2264 Mp \u2192 SAFE estimate",
+              "Upper bound (kinematic): mechanism \u2192 UNSAFE estimate",
+              "True collapse = minimum from kinematic approach = maximum from static approach",
+              "LSD is more economical than WSM: uses M_p instead of M_y (50% more for rectangle)"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
