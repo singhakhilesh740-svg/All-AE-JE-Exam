@@ -1,5 +1,5 @@
 // service-worker.js — Basic PWA caching
-const CACHE_NAME = 'ae-civil-v9-notes';
+const CACHE_NAME = 'ae-civil-v9-notes-2';
 const ASSETS = [
   './',
   './index.html',
