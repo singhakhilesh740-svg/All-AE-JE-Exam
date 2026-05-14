@@ -24,7 +24,7 @@ import {
   findSubjectInExam
 } from './exams.js';
 import { getTopicsFor } from './subjects.js';
-import { renderNotes, loadNotesForSubject } from './notes.js';
+import { renderNotesContent, loadNotesForSubject } from './notes.js';
 
 // ========== State ==========
 let currentUser = null;
@@ -454,10 +454,13 @@ async function handleSubjectRoute(route) {
       toast('Notes not available for this subject');
       return;
     }
-    
-    // Use the new renderNotes function from notes.js
-    renderNotes(subjId, subjName, notesData, topicFilter !== 'all' ? topicFilter : null);
-    // Note: showScreen and header updates are done inside renderNotes()
+    // Set header text (app.js owns these elements)
+    $('notesTitle').textContent = subjName + ' — Notes';
+    $('notesContextLabel').textContent = `${currentExam.name} · ${currentStage.name}`;
+    $('notesSubjectName').textContent = subjName;
+    // Build notes DOM inside #notesScreen <main>
+    renderNotesContent(notesData, topicFilter !== 'all' ? topicFilter : null);
+    showScreen('notesScreen');
 
   } else if (route === 'bookmarks') {
     if (!currentUser) { toast('Sign in to view bookmarks'); return; }

@@ -1022,761 +1022,6 @@
       }
     ]
   },
-  "engineering-mechanics": {
-    "exam": "uppsc-ae",
-    "stage": "mains",
-    "subject": "engineering-mechanics",
-    "subject_name": "Engineering Mechanics",
-    "topics": [
-      {
-        "id": 0,
-        "name": "Force Systems & Resultants",
-        "desc": "Concurrent, Coplanar, Parallel Forces \u00b7 Resultant \u00b7 Couples \u00b7 Lami's Theorem"
-      },
-      {
-        "id": 1,
-        "name": "Equilibrium of Rigid Bodies",
-        "desc": "Equations of Equilibrium, Support Reactions, Beams, Frames"
-      },
-      {
-        "id": 2,
-        "name": "Trusses",
-        "desc": "Method of Joints, Method of Sections, Zero-force members"
-      },
-      {
-        "id": 3,
-        "name": "Centroid & Moment of Inertia",
-        "desc": "Centroid \u00b7 MoI of standard sections \u00b7 Parallel & Perpendicular Axis Theorems"
-      },
-      {
-        "id": 4,
-        "name": "Friction",
-        "desc": "Static & Kinetic Friction \u00b7 Wedge \u00b7 Belt \u00b7 Ladder \u00b7 Inclined Plane"
-      },
-      {
-        "id": 5,
-        "name": "Virtual Work & Energy Methods",
-        "desc": "Principle of Virtual Work \u00b7 Potential Energy \u00b7 Stability of Equilibrium"
-      },
-      {
-        "id": 6,
-        "name": "Kinematics of Particles",
-        "desc": "Rectilinear \u00b7 Curvilinear \u00b7 Projectile \u00b7 Relative Motion"
-      },
-      {
-        "id": 7,
-        "name": "Kinematics of Rigid Bodies",
-        "desc": "Translation \u00b7 Rotation \u00b7 General Plane Motion \u00b7 ICR"
-      },
-      {
-        "id": 8,
-        "name": "Kinetics",
-        "desc": "Newton's 2nd Law \u00b7 Work-Energy \u00b7 Impulse-Momentum \u00b7 Collisions"
-      },
-      {
-        "id": 9,
-        "name": "SHM & Rotational Dynamics",
-        "desc": "Simple Harmonic Motion \u00b7 Rotational Inertia \u00b7 Angular Momentum"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": 0,
-        "topic_name": "Force Systems & Resultants",
-        "cards": [
-          {
-            "heading": "FORCE & RESULTANT FUNDAMENTALS",
-            "color": "purple",
-            "formulas": [
-              {
-                "label": "RESULTANT OF TWO FORCES",
-                "text": "R = \u221a(P\u00b2 + Q\u00b2 + 2PQ\u00b7cos \u03b8)  |  tan \u03b1 = (Q\u00b7sin \u03b8)/(P + Q\u00b7cos \u03b8)"
-              },
-              {
-                "label": "SPECIAL CASES",
-                "text": "\u03b8 = 0\u00b0: R = P+Q (max) | \u03b8 = 90\u00b0: R = \u221a(P\u00b2+Q\u00b2) | \u03b8 = 180\u00b0: R = |P\u2212Q| (min)"
-              }
-            ],
-            "points": [
-              "Concurrent forces: all pass through a single point",
-              "Coplanar forces: all lie in one plane",
-              "Collinear forces: all act along the same line",
-              "Resultant by resolution: R = \u221a(\u03a3Fx\u00b2 + \u03a3Fy\u00b2), tan \u03b8 = \u03a3Fy/\u03a3Fx"
-            ]
-          },
-          {
-            "heading": "COUPLE, MOMENT & LAMI'S THEOREM",
-            "color": "blue",
-            "formulas": [
-              {
-                "label": "MOMENT OF FORCE",
-                "text": "M = F \u00d7 d  (perpendicular distance to point)  Units: N\u00b7m or kN\u00b7m"
-              },
-              {
-                "label": "COUPLE",
-                "text": "Two equal, opposite, parallel (non-collinear) forces. Couple moment = F \u00d7 d (same about any point)"
-              },
-              {
-                "label": "LAMI'S THEOREM",
-                "text": "For 3 concurrent coplanar forces in equilibrium: P/sin \u03b1 = Q/sin \u03b2 = R/sin \u03b3  (\u03b1, \u03b2, \u03b3 are angles between the OTHER two forces)"
-              }
-            ],
-            "alert": "\u26a0 Lami's theorem ONLY for THREE concurrent forces in equilibrium. Doesn't work for 4+ forces."
-          },
-          {
-            "heading": "VARIGNON'S THEOREM & PARALLEL FORCES",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "VARIGNON'S THEOREM (Principle of Moments)",
-                "text": "Moment of resultant = Algebraic sum of moments of components. M_R = \u03a3M_i (about same point)"
-              },
-              {
-                "label": "RESULTANT OF PARALLEL FORCES",
-                "text": "R = \u03a3F (algebraic sum). Position: x\u0304 = \u03a3M_o / R (about reference O)"
-              }
-            ],
-            "points": [
-              "Free Body Diagram (FBD): shows all external forces and reactions on the isolated body",
-              "Wrench: Force + parallel couple \u2014 minimum force-couple system in 3D",
-              "For distributed loads (UDL/UVL): replace with equivalent point load at centroid"
-            ],
-            "tip": "For distributed loads (UDL/UVL): replace with equivalent point load = total area, applied at centroid."
-          }
-        ]
-      },
-      {
-        "topic_id": 1,
-        "topic_name": "Equilibrium of Rigid Bodies",
-        "cards": [
-          {
-            "heading": "EQUILIBRIUM EQUATIONS",
-            "color": "orange",
-            "formulas": [
-              {
-                "label": "2D EQUILIBRIUM (3 EQUATIONS)",
-                "text": "\u03a3Fx = 0  |  \u03a3Fy = 0  |  \u03a3Mz = 0 (about any point)"
-              },
-              {
-                "label": "3D EQUILIBRIUM (6 EQUATIONS)",
-                "text": "\u03a3Fx = \u03a3Fy = \u03a3Fz = 0  |  \u03a3Mx = \u03a3My = \u03a3Mz = 0"
-              }
-            ],
-            "alert": "For 2D: 3 equations \u2192 can solve max 3 unknowns. For 3D: 6 equations \u2192 max 6 unknowns."
-          },
-          {
-            "heading": "SUPPORT REACTIONS",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Support Type",
-                "Reactions Provided",
-                "DOF Restrained"
-              ],
-              "rows": [
-                [
-                  "Roller",
-                  "1 (normal to surface)",
-                  "1 translation"
-                ],
-                [
-                  "Pin / Hinge",
-                  "2 (H and V)",
-                  "2 translations"
-                ],
-                [
-                  "Fixed / Built-in",
-                  "3 (H, V, Moment)",
-                  "2 translations + 1 rotation"
-                ],
-                [
-                  "Link / Rod",
-                  "1 (along link)",
-                  "1 translation along link"
-                ]
-              ]
-            },
-            "tip": "SS beam = pin + roller (1+2 = 3 reactions = 3 equations \u2192 DETERMINATE)"
-          },
-          {
-            "heading": "STATIC INDETERMINACY & STABILITY",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "DEGREE OF STATIC INDETERMINACY (DSI)",
-                "text": "DSI = (no. of unknown reactions) \u2212 (no. of equations available). For 2D beams: DSI = R \u2212 3"
-              },
-              {
-                "label": "2D TRUSS DSI",
-                "text": "DSI = (m + r) \u2212 2j  (m = members, r = reactions, j = joints)"
-              }
-            ],
-            "points": [
-              "DSI = 0: Statically determinate",
-              "DSI > 0: Statically indeterminate",
-              "DSI < 0: Mechanism (unstable)",
-              "SS beam: DSI = 3\u22123 = 0 (Determinate)",
-              "Fixed beam: DSI = 6\u22123 = 3 (Indeterminate to 3rd degree)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": 2,
-        "topic_name": "Trusses",
-        "cards": [
-          {
-            "heading": "TRUSS BASICS & ASSUMPTIONS",
-            "color": "purple",
-            "points": [
-              "Frictionless pin connections at all joints",
-              "Loads applied at joints only (no loads between joints)",
-              "Members carry only AXIAL forces (tension or compression) \u2014 no bending/shear",
-              "Simple truss: built up from basic triangle by adding 2 members + 1 joint at a time",
-              "For determinate plane truss: m + r = 2j"
-            ],
-            "tip": "In FBD of joint: tension pulls AWAY from joint; compression pushes TOWARD joint."
-          },
-          {
-            "heading": "METHODS OF ANALYSIS",
-            "color": "blue",
-            "formulas": [
-              {
-                "label": "METHOD OF JOINTS",
-                "text": "Apply \u03a3Fx = 0 and \u03a3Fy = 0 at each joint. Start at joint with \u2264 2 unknowns; work systematically."
-              },
-              {
-                "label": "METHOD OF SECTIONS",
-                "text": "Cut the truss through \u2264 3 unknown members. Apply \u03a3Fx = 0, \u03a3Fy = 0, \u03a3M = 0 to either part."
-              }
-            ],
-            "points": [
-              "Method of Joints: good for finding forces in all members",
-              "Method of Sections: best to find force in a SPECIFIC member quickly",
-              "Choose \u03a3M at a point where two unknowns intersect to solve directly for the third"
-            ]
-          },
-          {
-            "heading": "ZERO-FORCE MEMBERS",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "ZERO-FORCE RULE 1",
-                "text": "At a joint where only TWO non-collinear members meet AND no external load \u2192 BOTH members are zero-force"
-              },
-              {
-                "label": "ZERO-FORCE RULE 2",
-                "text": "At a joint where THREE members meet (two collinear + one inclined) AND no external load \u2192 the INCLINED member is zero-force"
-              }
-            ],
-            "points": [
-              "Zero-force members don't carry load under the given loading but are needed for stability under other load cases",
-              "Removing zero-force members simplifies analysis",
-              "Always check for zero-force members at start of analysis"
-            ],
-            "alert": "\u26a0 Even if m + r = 2j, the truss can still be unstable due to geometric arrangement."
-          }
-        ]
-      },
-      {
-        "topic_id": 3,
-        "topic_name": "Centroid & Moment of Inertia",
-        "cards": [
-          {
-            "heading": "CENTROID OF STANDARD SHAPES",
-            "color": "orange",
-            "table": {
-              "headers": [
-                "Shape",
-                "Centroid (from base/reference)"
-              ],
-              "rows": [
-                [
-                  "Rectangle (b \u00d7 h)",
-                  "h/2 from base, b/2 from side"
-                ],
-                [
-                  "Triangle (base b, height h)",
-                  "h/3 from base, b/3 from one side"
-                ],
-                [
-                  "Semicircle (radius r)",
-                  "4r/3\u03c0 from diameter"
-                ],
-                [
-                  "Quarter circle (radius r)",
-                  "4r/3\u03c0 from each straight edge"
-                ],
-                [
-                  "Trapezoid (a top, b base, h height)",
-                  "h(2a+b)/[3(a+b)] from base"
-                ]
-              ]
-            },
-            "formulas": [
-              {
-                "label": "CENTROID OF AREA",
-                "text": "x\u0304 = \u03a3A_i\u00b7x_i / \u03a3A_i  |  \u0233 = \u03a3A_i\u00b7y_i / \u03a3A_i"
-              }
-            ],
-            "tip": "For composite shapes: subdivide \u2192 use weighted average. Hollow areas treated as negative."
-          },
-          {
-            "heading": "MOMENT OF INERTIA \u2014 STANDARD SECTIONS",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Section",
-                "I about centroidal axis"
-              ],
-              "rows": [
-                [
-                  "Rectangle (b \u00d7 h)",
-                  "I_xx = bh\u00b3/12 (parallel to b)  |  I_yy = hb\u00b3/12 (parallel to h)"
-                ],
-                [
-                  "Circle (diameter d)",
-                  "I = \u03c0d\u2074/64 (about diameter)  |  J = \u03c0d\u2074/32 (polar)"
-                ],
-                [
-                  "Triangle (base b, height h)",
-                  "I_CG = bh\u00b3/36 (about CG parallel to base)  |  I_base = bh\u00b3/12"
-                ],
-                [
-                  "Hollow circle (D, d)",
-                  "I = \u03c0(D\u2074\u2212d\u2074)/64  |  J = \u03c0(D\u2074\u2212d\u2074)/32"
-                ]
-              ]
-            },
-            "alert": "\u26a0 Triangle: bh\u00b3/36 about CG axis (parallel to base, through centroid). bh\u00b3/12 about the BASE itself."
-          },
-          {
-            "heading": "PARALLEL & PERPENDICULAR AXIS THEOREMS",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "PARALLEL AXIS THEOREM",
-                "text": "I_AB = I_CG + A\u00b7d\u00b2  (d = perpendicular distance between parallel axes)"
-              },
-              {
-                "label": "PERPENDICULAR AXIS THEOREM (PLANAR)",
-                "text": "J = I_xx + I_yy  (only for planar/lamina; J is polar MoI)"
-              }
-            ],
-            "points": [
-              "Parallel axis theorem: I_CG is always MINIMUM for a given axis direction",
-              "Perpendicular axis theorem is valid ONLY for planar (2D) bodies",
-              "Radius of gyration: r = \u221a(I/A)  (used in column buckling)"
-            ],
-            "tip": "Memorize Circle: I = \u03c0d\u2074/64 (about diameter). J (polar) = \u03c0d\u2074/32 = 2 \u00d7 I (perpendicular axis theorem)."
-          }
-        ]
-      },
-      {
-        "topic_id": 4,
-        "topic_name": "Friction",
-        "cards": [
-          {
-            "heading": "FRICTION FUNDAMENTALS",
-            "color": "purple",
-            "formulas": [
-              {
-                "label": "LAWS OF FRICTION (COULOMB)",
-                "text": "F \u2264 \u03bc\u00b7N (limiting friction)  |  F_kinetic = \u03bc_k\u00b7N (constant during sliding)"
-              },
-              {
-                "label": "ANGLE OF FRICTION (\u03c6) & ANGLE OF REPOSE (\u03b1)",
-                "text": "tan \u03c6 = \u03bc  |  Angle of repose \u03b1 = \u03c6  (body just begins to slide on incline)"
-              }
-            ],
-            "points": [
-              "Static friction \u2265 kinetic friction (\u03bc_s > \u03bc_k)",
-              "Friction force opposes relative motion (actual or impending)",
-              "Friction force is independent of contact area (Coulomb's law)"
-            ]
-          },
-          {
-            "heading": "BLOCK ON INCLINE & PULLED FORCE",
-            "color": "blue",
-            "formulas": [
-              {
-                "label": "BODY ON INCLINE (angle \u03b8, weight W)",
-                "text": "To prevent sliding (P along incline up): P = W(sin \u03b8 \u2212 \u03bc cos \u03b8)  |  To push UP: P = W(sin \u03b8 + \u03bc cos \u03b8)"
-              },
-              {
-                "label": "MINIMUM FORCE TO PULL ON HORIZONTAL",
-                "text": "P_min = W\u00b7sin \u03c6  (applied at angle \u03c6 = angle of friction above horizontal)"
-              }
-            ],
-            "points": [
-              "For just sliding down: \u03bc = tan \u03b8 \u2192 \u03b8 = angle of repose",
-              "Minimum pulling force occurs when force is applied at the angle of friction"
-            ]
-          },
-          {
-            "heading": "BELT FRICTION & WEDGE",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "BELT FRICTION (Capstan/Euler equation)",
-                "text": "T\u2081/T\u2082 = e^(\u03bc\u03b8)  (T\u2081 = tight-side, T\u2082 = slack-side, \u03b8 = angle of contact in RADIANS)"
-              }
-            ],
-            "points": [
-              "Wedge: used to lift loads with small effort",
-              "Self-locking condition: wedge angle < 2\u03c6 (angle of friction)",
-              "Screw jack: similar to wedge; self-locking when lead angle < friction angle",
-              "Ladder against smooth wall: take \u03a3Fx, \u03a3Fy, \u03a3M at base"
-            ],
-            "tip": "LADDER: For a ladder leaning against smooth wall + rough floor \u2014 analyze \u03a3Fx, \u03a3Fy, \u03a3M at base. Safe if friction force \u2264 \u03bcN at floor."
-          }
-        ]
-      },
-      {
-        "topic_id": 5,
-        "topic_name": "Virtual Work & Energy Methods",
-        "cards": [
-          {
-            "heading": "PRINCIPLE OF VIRTUAL WORK",
-            "color": "purple",
-            "formulas": [
-              {
-                "label": "PRINCIPLE OF VIRTUAL WORK (PVW)",
-                "text": "\u03b4W = \u03a3F_i \u00b7 \u03b4r_i = 0  (for equilibrium \u2014 total virtual work by all forces = 0)"
-              }
-            ],
-            "points": [
-              "Virtual displacement: imaginary, infinitesimal, consistent with constraints",
-              "Constraint forces (smooth reactions, inextensible strings) do NO virtual work",
-              "PVW is equivalent to equilibrium equations but often simpler for connected systems",
-              "Advantage: does not need to show internal forces at connections"
-            ]
-          },
-          {
-            "heading": "POTENTIAL ENERGY & STABILITY",
-            "color": "blue",
-            "formulas": [
-              {
-                "label": "EQUILIBRIUM CONDITION",
-                "text": "dV/dq = 0  (potential energy V is stationary)"
-              },
-              {
-                "label": "STABILITY CONDITIONS",
-                "text": "Stable: d\u00b2V/dq\u00b2 > 0 (V is minimum). Unstable: d\u00b2V/dq\u00b2 < 0 (V is maximum). Neutral: d\u00b2V/dq\u00b2 = 0"
-              }
-            ],
-            "points": [
-              "Spring potential energy: V = \u00bdkx\u00b2",
-              "Gravitational PE: V = Wh (weight \u00d7 height of CG)",
-              "Stable equilibrium: body returns to equilibrium after small disturbance",
-              "Unstable equilibrium: body moves away from equilibrium after small disturbance",
-              "Pendulum at bottom \u2192 stable (V minimum); Pendulum at top \u2192 unstable (V maximum)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": 6,
-        "topic_name": "Kinematics of Particles",
-        "cards": [
-          {
-            "heading": "RECTILINEAR MOTION (1D)",
-            "color": "orange",
-            "formulas": [
-              {
-                "label": "EQUATIONS OF MOTION (constant acceleration)",
-                "text": "v = u + at  |  s = ut + \u00bdat\u00b2  |  v\u00b2 = u\u00b2 + 2as  |  s_n = u + \u00bda(2n\u22121) (in nth second)"
-              }
-            ],
-            "points": [
-              "Position x, velocity v = dx/dt, acceleration a = dv/dt = d\u00b2x/dt\u00b2",
-              "Non-uniform acceleration: use calculus or v-t graph",
-              "Area under v-t graph = displacement; Slope of v-t graph = acceleration",
-              "Area under a-t graph = change in velocity"
-            ]
-          },
-          {
-            "heading": "PROJECTILE MOTION",
-            "color": "blue",
-            "formulas": [
-              {
-                "label": "TIME OF FLIGHT",
-                "text": "T = 2u\u00b7sin \u03b8/g"
-              },
-              {
-                "label": "HORIZONTAL RANGE",
-                "text": "R = u\u00b2\u00b7sin 2\u03b8/g  (max range at \u03b8 = 45\u00b0)"
-              },
-              {
-                "label": "MAXIMUM HEIGHT",
-                "text": "H = u\u00b2\u00b7sin\u00b2\u03b8/(2g)"
-              }
-            ],
-            "points": [
-              "Horizontal velocity u\u00b7cos \u03b8 remains constant throughout",
-              "Vertical velocity: v_y = u\u00b7sin \u03b8 \u2212 gt",
-              "At max height: v_y = 0; speed = u\u00b7cos \u03b8",
-              "30\u00b0 and 60\u00b0 give same range (since sin 2\u00d730\u00b0 = sin 2\u00d760\u00b0)"
-            ]
-          },
-          {
-            "heading": "CIRCULAR MOTION & RELATIVE MOTION",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "CIRCULAR MOTION",
-                "text": "v = \u03c9r  |  Centripetal acceleration: a_n = v\u00b2/r = \u03c9\u00b2r (toward centre)"
-              },
-              {
-                "label": "RELATIVE VELOCITY",
-                "text": "v_BA = v_B \u2212 v_A (velocity of B relative to A)"
-              }
-            ],
-            "points": [
-              "Tangential acceleration: a_t = \u03b1r  (if angular acceleration \u03b1 \u2260 0)",
-              "Total acceleration: a = \u221a(a_n\u00b2 + a_t\u00b2)",
-              "For uniform circular motion: a_t = 0, only a_n exists"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": 7,
-        "topic_name": "Kinematics of Rigid Bodies",
-        "cards": [
-          {
-            "heading": "TYPES OF RIGID BODY MOTION",
-            "color": "purple",
-            "table": {
-              "headers": [
-                "Type",
-                "Characteristics"
-              ],
-              "rows": [
-                [
-                  "Pure Translation",
-                  "All points have same velocity and acceleration at any instant"
-                ],
-                [
-                  "Pure Rotation",
-                  "All points rotate about fixed axis; v = \u03c9r from axis"
-                ],
-                [
-                  "General Plane Motion",
-                  "Translation of reference point + Rotation about that point"
-                ]
-              ]
-            },
-            "formulas": [
-              {
-                "label": "VELOCITY OF ANY POINT P",
-                "text": "v_P = v_A + \u03c9 \u00d7 r_{AP}  (translation + rotation)"
-              }
-            ]
-          },
-          {
-            "heading": "ROLLING MOTION & ICR",
-            "color": "blue",
-            "formulas": [
-              {
-                "label": "ROLLING WITHOUT SLIPPING",
-                "text": "v_centre = \u03c9r  |  Contact point velocity = 0  |  Top point velocity = 2v_centre"
-              },
-              {
-                "label": "INSTANTANEOUS CENTRE (ICR)",
-                "text": "Point with zero velocity at the instant; v_P = \u03c9 \u00d7 (distance from ICR)"
-              }
-            ],
-            "points": [
-              "ICR: unique point where velocity is zero at that instant",
-              "For rolling wheel: ICR is at contact point with ground",
-              "ICR concept useful for finding velocities of any point quickly"
-            ],
-            "alert": "ICR is a kinematic concept (zero velocity), NOT zero acceleration. Useful only for instantaneous velocity analysis."
-          },
-          {
-            "heading": "ANGULAR MOTION EQUATIONS",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "EQUATIONS (constant angular acceleration \u03b1)",
-                "text": "\u03c9 = \u03c9\u2080 + \u03b1t  |  \u03b8 = \u03c9\u2080t + \u00bd\u03b1t\u00b2  |  \u03c9\u00b2 = \u03c9\u2080\u00b2 + 2\u03b1\u03b8"
-              }
-            ],
-            "points": [
-              "Coriolis acceleration: 2\u03c9 \u00d7 v_rel \u2014 occurs when a particle moves along a rotating path",
-              "For slider-crank and similar mechanisms, use ICR or relative velocity approach",
-              "\u03c9 in rad/s = 2\u03c0N/60  (N in rpm)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": 8,
-        "topic_name": "Kinetics",
-        "cards": [
-          {
-            "heading": "NEWTON'S 2ND LAW",
-            "color": "orange",
-            "formulas": [
-              {
-                "label": "NEWTON'S 2ND LAW",
-                "text": "\u03a3F = ma (translation)  |  \u03a3M = I\u03b1 (rotation about fixed axis)"
-              },
-              {
-                "label": "D'ALEMBERT'S PRINCIPLE",
-                "text": "\u03a3F \u2212 ma = 0 (add \u2212ma as inertia force \u2192 static problem)"
-              }
-            ],
-            "points": [
-              "Work-Energy Theorem: Net work done = Change in kinetic energy = \u00bdmv\u2082\u00b2 \u2212 \u00bdmv\u2081\u00b2",
-              "Impulse-Momentum: F\u00b7t = \u0394(mv) = m(v\u2082 \u2212 v\u2081)",
-              "Conservation of momentum: applies to all collisions (no external force)"
-            ]
-          },
-          {
-            "heading": "COLLISIONS",
-            "color": "blue",
-            "formulas": [
-              {
-                "label": "COEFFICIENT OF RESTITUTION e",
-                "text": "e = (relative velocity of separation)/(relative velocity of approach)"
-              },
-              {
-                "label": "PERFECTLY ELASTIC (e=1)",
-                "text": "KE conserved; both momentum and KE conserved"
-              },
-              {
-                "label": "PERFECTLY INELASTIC (e=0)",
-                "text": "Bodies stick together; only momentum conserved"
-              }
-            ],
-            "points": [
-              "0 \u2264 e \u2264 1 for real-world collisions",
-              "Momentum is ALWAYS conserved in collisions",
-              "KE is conserved ONLY for elastic collisions (e = 1)"
-            ],
-            "tip": "Momentum is ALWAYS conserved in collisions (no external force during collision). KE is conserved only for e = 1."
-          },
-          {
-            "heading": "CIRCULAR MOTION DYNAMICS",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "CENTRIPETAL FORCE",
-                "text": "F_c = mv\u00b2/r = m\u03c9\u00b2r  (directed toward centre)"
-              },
-              {
-                "label": "POWER",
-                "text": "P = F\u00b7v (dot product)  |  P = T\u00b7\u03c9 (for rotation)"
-              }
-            ],
-            "points": [
-              "Centripetal force provided by: tension (string), friction (car turning), gravity (satellite)",
-              "Banking of roads: tan \u03b8 = v\u00b2/(Rg) for no friction condition",
-              "Banking provides centripetal force without relying on friction"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": 9,
-        "topic_name": "SHM & Rotational Dynamics",
-        "cards": [
-          {
-            "heading": "SIMPLE HARMONIC MOTION (SHM)",
-            "color": "purple",
-            "formulas": [
-              {
-                "label": "SHM EQUATIONS",
-                "text": "x = A\u00b7sin(\u03c9t + \u03c6)  |  v = A\u03c9\u00b7cos(\u03c9t + \u03c6)  |  a = \u2212A\u03c9\u00b2\u00b7sin(\u03c9t + \u03c6) = \u2212\u03c9\u00b2x"
-              },
-              {
-                "label": "SPRING-MASS SYSTEM",
-                "text": "\u03c9 = \u221a(k/m)  |  T = 2\u03c0\u221a(m/k)  |  f = \u03c9/2\u03c0"
-              },
-              {
-                "label": "SIMPLE PENDULUM",
-                "text": "T = 2\u03c0\u221a(L/g)  (independent of mass and amplitude for small angles)"
-              }
-            ],
-            "points": [
-              "At maximum displacement (amplitude A): v = 0, a = maximum = A\u03c9\u00b2",
-              "At equilibrium (x = 0): v = maximum = A\u03c9, a = 0",
-              "Total energy = \u00bdkA\u00b2 = constant (undamped SHM)"
-            ]
-          },
-          {
-            "heading": "MASS MOMENT OF INERTIA",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Body",
-                "Axis",
-                "Mass MoI"
-              ],
-              "rows": [
-                [
-                  "Thin rod (length L)",
-                  "Through centre, perpendicular",
-                  "mL\u00b2/12"
-                ],
-                [
-                  "Thin rod (length L)",
-                  "Through one end, perpendicular",
-                  "mL\u00b2/3"
-                ],
-                [
-                  "Solid cylinder/disk (radius R)",
-                  "Geometric axis",
-                  "mR\u00b2/2"
-                ],
-                [
-                  "Solid sphere (radius R)",
-                  "Any diameter",
-                  "2mR\u00b2/5"
-                ],
-                [
-                  "Hollow sphere (radius R)",
-                  "Any diameter",
-                  "2mR\u00b2/3"
-                ],
-                [
-                  "Thin ring (radius R)",
-                  "Geometric axis",
-                  "mR\u00b2"
-                ]
-              ]
-            }
-          },
-          {
-            "heading": "ROTATIONAL DYNAMICS & ANGULAR MOMENTUM",
-            "color": "green",
-            "formulas": [
-              {
-                "label": "ROTATIONAL KE",
-                "text": "KE_rot = \u00bdI\u03c9\u00b2"
-              },
-              {
-                "label": "ROLLING BODY TOTAL KE",
-                "text": "KE_total = \u00bdmv\u00b2 + \u00bdI\u03c9\u00b2 = \u00bdmv\u00b2(1 + I/mr\u00b2)"
-              },
-              {
-                "label": "ANGULAR MOMENTUM",
-                "text": "L = I\u03c9  (conserved when net external torque = 0)"
-              }
-            ],
-            "points": [
-              "Conservation of angular momentum: L = I\u03c9 = constant when \u03a3M_ext = 0",
-              "Spinning skater: pulls arms in \u2192 I decreases \u2192 \u03c9 increases",
-              "Rolling without slipping: a_centre = \u03b1r  |  v_centre = \u03c9r",
-              "Body with smaller I rolls down incline faster (solid sphere > solid cylinder > hollow sphere)"
-            ]
-          }
-        ]
-      }
-    ]
-  },
   "strength-of-materials": {
     "exam": "uppsc-ae",
     "stage": "mains",
@@ -4126,6 +3371,761 @@
               "Upper bound (kinematic): mechanism \u2192 UNSAFE estimate",
               "True collapse = minimum from kinematic approach = maximum from static approach",
               "LSD is more economical than WSM: uses M_p instead of M_y (50% more for rectangle)"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "engg-mechanics": {
+    "exam": "uppsc-ae",
+    "stage": "mains",
+    "subject": "engg-mechanics",
+    "subject_name": "Engineering Mechanics",
+    "topics": [
+      {
+        "id": 0,
+        "name": "Force Systems & Resultants",
+        "desc": "Concurrent, Coplanar, Parallel Forces \u00b7 Resultant \u00b7 Couples \u00b7 Lami's Theorem"
+      },
+      {
+        "id": 1,
+        "name": "Equilibrium of Rigid Bodies",
+        "desc": "Equations of Equilibrium, Support Reactions, Beams, Frames"
+      },
+      {
+        "id": 2,
+        "name": "Trusses",
+        "desc": "Method of Joints, Method of Sections, Zero-force members"
+      },
+      {
+        "id": 3,
+        "name": "Centroid & Moment of Inertia",
+        "desc": "Centroid \u00b7 MoI of standard sections \u00b7 Parallel & Perpendicular Axis Theorems"
+      },
+      {
+        "id": 4,
+        "name": "Friction",
+        "desc": "Static & Kinetic Friction \u00b7 Wedge \u00b7 Belt \u00b7 Ladder \u00b7 Inclined Plane"
+      },
+      {
+        "id": 5,
+        "name": "Virtual Work & Energy Methods",
+        "desc": "Principle of Virtual Work \u00b7 Potential Energy \u00b7 Stability of Equilibrium"
+      },
+      {
+        "id": 6,
+        "name": "Kinematics of Particles",
+        "desc": "Rectilinear \u00b7 Curvilinear \u00b7 Projectile \u00b7 Relative Motion"
+      },
+      {
+        "id": 7,
+        "name": "Kinematics of Rigid Bodies",
+        "desc": "Translation \u00b7 Rotation \u00b7 General Plane Motion \u00b7 ICR"
+      },
+      {
+        "id": 8,
+        "name": "Kinetics",
+        "desc": "Newton's 2nd Law \u00b7 Work-Energy \u00b7 Impulse-Momentum \u00b7 Collisions"
+      },
+      {
+        "id": 9,
+        "name": "SHM & Rotational Dynamics",
+        "desc": "Simple Harmonic Motion \u00b7 Rotational Inertia \u00b7 Angular Momentum"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": 0,
+        "topic_name": "Force Systems & Resultants",
+        "cards": [
+          {
+            "heading": "FORCE & RESULTANT FUNDAMENTALS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "RESULTANT OF TWO FORCES",
+                "text": "R = \u221a(P\u00b2 + Q\u00b2 + 2PQ\u00b7cos \u03b8)  |  tan \u03b1 = (Q\u00b7sin \u03b8)/(P + Q\u00b7cos \u03b8)"
+              },
+              {
+                "label": "SPECIAL CASES",
+                "text": "\u03b8 = 0\u00b0: R = P+Q (max) | \u03b8 = 90\u00b0: R = \u221a(P\u00b2+Q\u00b2) | \u03b8 = 180\u00b0: R = |P\u2212Q| (min)"
+              }
+            ],
+            "points": [
+              "Concurrent forces: all pass through a single point",
+              "Coplanar forces: all lie in one plane",
+              "Collinear forces: all act along the same line",
+              "Resultant by resolution: R = \u221a(\u03a3Fx\u00b2 + \u03a3Fy\u00b2), tan \u03b8 = \u03a3Fy/\u03a3Fx"
+            ]
+          },
+          {
+            "heading": "COUPLE, MOMENT & LAMI'S THEOREM",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "MOMENT OF FORCE",
+                "text": "M = F \u00d7 d  (perpendicular distance to point)  Units: N\u00b7m or kN\u00b7m"
+              },
+              {
+                "label": "COUPLE",
+                "text": "Two equal, opposite, parallel (non-collinear) forces. Couple moment = F \u00d7 d (same about any point)"
+              },
+              {
+                "label": "LAMI'S THEOREM",
+                "text": "For 3 concurrent coplanar forces in equilibrium: P/sin \u03b1 = Q/sin \u03b2 = R/sin \u03b3  (\u03b1, \u03b2, \u03b3 are angles between the OTHER two forces)"
+              }
+            ],
+            "alert": "\u26a0 Lami's theorem ONLY for THREE concurrent forces in equilibrium. Doesn't work for 4+ forces."
+          },
+          {
+            "heading": "VARIGNON'S THEOREM & PARALLEL FORCES",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "VARIGNON'S THEOREM (Principle of Moments)",
+                "text": "Moment of resultant = Algebraic sum of moments of components. M_R = \u03a3M_i (about same point)"
+              },
+              {
+                "label": "RESULTANT OF PARALLEL FORCES",
+                "text": "R = \u03a3F (algebraic sum). Position: x\u0304 = \u03a3M_o / R (about reference O)"
+              }
+            ],
+            "points": [
+              "Free Body Diagram (FBD): shows all external forces and reactions on the isolated body",
+              "Wrench: Force + parallel couple \u2014 minimum force-couple system in 3D",
+              "For distributed loads (UDL/UVL): replace with equivalent point load at centroid"
+            ],
+            "tip": "For distributed loads (UDL/UVL): replace with equivalent point load = total area, applied at centroid."
+          }
+        ]
+      },
+      {
+        "topic_id": 1,
+        "topic_name": "Equilibrium of Rigid Bodies",
+        "cards": [
+          {
+            "heading": "EQUILIBRIUM EQUATIONS",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "2D EQUILIBRIUM (3 EQUATIONS)",
+                "text": "\u03a3Fx = 0  |  \u03a3Fy = 0  |  \u03a3Mz = 0 (about any point)"
+              },
+              {
+                "label": "3D EQUILIBRIUM (6 EQUATIONS)",
+                "text": "\u03a3Fx = \u03a3Fy = \u03a3Fz = 0  |  \u03a3Mx = \u03a3My = \u03a3Mz = 0"
+              }
+            ],
+            "alert": "For 2D: 3 equations \u2192 can solve max 3 unknowns. For 3D: 6 equations \u2192 max 6 unknowns."
+          },
+          {
+            "heading": "SUPPORT REACTIONS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Support Type",
+                "Reactions Provided",
+                "DOF Restrained"
+              ],
+              "rows": [
+                [
+                  "Roller",
+                  "1 (normal to surface)",
+                  "1 translation"
+                ],
+                [
+                  "Pin / Hinge",
+                  "2 (H and V)",
+                  "2 translations"
+                ],
+                [
+                  "Fixed / Built-in",
+                  "3 (H, V, Moment)",
+                  "2 translations + 1 rotation"
+                ],
+                [
+                  "Link / Rod",
+                  "1 (along link)",
+                  "1 translation along link"
+                ]
+              ]
+            },
+            "tip": "SS beam = pin + roller (1+2 = 3 reactions = 3 equations \u2192 DETERMINATE)"
+          },
+          {
+            "heading": "STATIC INDETERMINACY & STABILITY",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "DEGREE OF STATIC INDETERMINACY (DSI)",
+                "text": "DSI = (no. of unknown reactions) \u2212 (no. of equations available). For 2D beams: DSI = R \u2212 3"
+              },
+              {
+                "label": "2D TRUSS DSI",
+                "text": "DSI = (m + r) \u2212 2j  (m = members, r = reactions, j = joints)"
+              }
+            ],
+            "points": [
+              "DSI = 0: Statically determinate",
+              "DSI > 0: Statically indeterminate",
+              "DSI < 0: Mechanism (unstable)",
+              "SS beam: DSI = 3\u22123 = 0 (Determinate)",
+              "Fixed beam: DSI = 6\u22123 = 3 (Indeterminate to 3rd degree)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 2,
+        "topic_name": "Trusses",
+        "cards": [
+          {
+            "heading": "TRUSS BASICS & ASSUMPTIONS",
+            "color": "purple",
+            "points": [
+              "Frictionless pin connections at all joints",
+              "Loads applied at joints only (no loads between joints)",
+              "Members carry only AXIAL forces (tension or compression) \u2014 no bending/shear",
+              "Simple truss: built up from basic triangle by adding 2 members + 1 joint at a time",
+              "For determinate plane truss: m + r = 2j"
+            ],
+            "tip": "In FBD of joint: tension pulls AWAY from joint; compression pushes TOWARD joint."
+          },
+          {
+            "heading": "METHODS OF ANALYSIS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "METHOD OF JOINTS",
+                "text": "Apply \u03a3Fx = 0 and \u03a3Fy = 0 at each joint. Start at joint with \u2264 2 unknowns; work systematically."
+              },
+              {
+                "label": "METHOD OF SECTIONS",
+                "text": "Cut the truss through \u2264 3 unknown members. Apply \u03a3Fx = 0, \u03a3Fy = 0, \u03a3M = 0 to either part."
+              }
+            ],
+            "points": [
+              "Method of Joints: good for finding forces in all members",
+              "Method of Sections: best to find force in a SPECIFIC member quickly",
+              "Choose \u03a3M at a point where two unknowns intersect to solve directly for the third"
+            ]
+          },
+          {
+            "heading": "ZERO-FORCE MEMBERS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "ZERO-FORCE RULE 1",
+                "text": "At a joint where only TWO non-collinear members meet AND no external load \u2192 BOTH members are zero-force"
+              },
+              {
+                "label": "ZERO-FORCE RULE 2",
+                "text": "At a joint where THREE members meet (two collinear + one inclined) AND no external load \u2192 the INCLINED member is zero-force"
+              }
+            ],
+            "points": [
+              "Zero-force members don't carry load under the given loading but are needed for stability under other load cases",
+              "Removing zero-force members simplifies analysis",
+              "Always check for zero-force members at start of analysis"
+            ],
+            "alert": "\u26a0 Even if m + r = 2j, the truss can still be unstable due to geometric arrangement."
+          }
+        ]
+      },
+      {
+        "topic_id": 3,
+        "topic_name": "Centroid & Moment of Inertia",
+        "cards": [
+          {
+            "heading": "CENTROID OF STANDARD SHAPES",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Shape",
+                "Centroid (from base/reference)"
+              ],
+              "rows": [
+                [
+                  "Rectangle (b \u00d7 h)",
+                  "h/2 from base, b/2 from side"
+                ],
+                [
+                  "Triangle (base b, height h)",
+                  "h/3 from base, b/3 from one side"
+                ],
+                [
+                  "Semicircle (radius r)",
+                  "4r/3\u03c0 from diameter"
+                ],
+                [
+                  "Quarter circle (radius r)",
+                  "4r/3\u03c0 from each straight edge"
+                ],
+                [
+                  "Trapezoid (a top, b base, h height)",
+                  "h(2a+b)/[3(a+b)] from base"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "CENTROID OF AREA",
+                "text": "x\u0304 = \u03a3A_i\u00b7x_i / \u03a3A_i  |  \u0233 = \u03a3A_i\u00b7y_i / \u03a3A_i"
+              }
+            ],
+            "tip": "For composite shapes: subdivide \u2192 use weighted average. Hollow areas treated as negative."
+          },
+          {
+            "heading": "MOMENT OF INERTIA \u2014 STANDARD SECTIONS",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Section",
+                "I about centroidal axis"
+              ],
+              "rows": [
+                [
+                  "Rectangle (b \u00d7 h)",
+                  "I_xx = bh\u00b3/12 (parallel to b)  |  I_yy = hb\u00b3/12 (parallel to h)"
+                ],
+                [
+                  "Circle (diameter d)",
+                  "I = \u03c0d\u2074/64 (about diameter)  |  J = \u03c0d\u2074/32 (polar)"
+                ],
+                [
+                  "Triangle (base b, height h)",
+                  "I_CG = bh\u00b3/36 (about CG parallel to base)  |  I_base = bh\u00b3/12"
+                ],
+                [
+                  "Hollow circle (D, d)",
+                  "I = \u03c0(D\u2074\u2212d\u2074)/64  |  J = \u03c0(D\u2074\u2212d\u2074)/32"
+                ]
+              ]
+            },
+            "alert": "\u26a0 Triangle: bh\u00b3/36 about CG axis (parallel to base, through centroid). bh\u00b3/12 about the BASE itself."
+          },
+          {
+            "heading": "PARALLEL & PERPENDICULAR AXIS THEOREMS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "PARALLEL AXIS THEOREM",
+                "text": "I_AB = I_CG + A\u00b7d\u00b2  (d = perpendicular distance between parallel axes)"
+              },
+              {
+                "label": "PERPENDICULAR AXIS THEOREM (PLANAR)",
+                "text": "J = I_xx + I_yy  (only for planar/lamina; J is polar MoI)"
+              }
+            ],
+            "points": [
+              "Parallel axis theorem: I_CG is always MINIMUM for a given axis direction",
+              "Perpendicular axis theorem is valid ONLY for planar (2D) bodies",
+              "Radius of gyration: r = \u221a(I/A)  (used in column buckling)"
+            ],
+            "tip": "Memorize Circle: I = \u03c0d\u2074/64 (about diameter). J (polar) = \u03c0d\u2074/32 = 2 \u00d7 I (perpendicular axis theorem)."
+          }
+        ]
+      },
+      {
+        "topic_id": 4,
+        "topic_name": "Friction",
+        "cards": [
+          {
+            "heading": "FRICTION FUNDAMENTALS",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "LAWS OF FRICTION (COULOMB)",
+                "text": "F \u2264 \u03bc\u00b7N (limiting friction)  |  F_kinetic = \u03bc_k\u00b7N (constant during sliding)"
+              },
+              {
+                "label": "ANGLE OF FRICTION (\u03c6) & ANGLE OF REPOSE (\u03b1)",
+                "text": "tan \u03c6 = \u03bc  |  Angle of repose \u03b1 = \u03c6  (body just begins to slide on incline)"
+              }
+            ],
+            "points": [
+              "Static friction \u2265 kinetic friction (\u03bc_s > \u03bc_k)",
+              "Friction force opposes relative motion (actual or impending)",
+              "Friction force is independent of contact area (Coulomb's law)"
+            ]
+          },
+          {
+            "heading": "BLOCK ON INCLINE & PULLED FORCE",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "BODY ON INCLINE (angle \u03b8, weight W)",
+                "text": "To prevent sliding (P along incline up): P = W(sin \u03b8 \u2212 \u03bc cos \u03b8)  |  To push UP: P = W(sin \u03b8 + \u03bc cos \u03b8)"
+              },
+              {
+                "label": "MINIMUM FORCE TO PULL ON HORIZONTAL",
+                "text": "P_min = W\u00b7sin \u03c6  (applied at angle \u03c6 = angle of friction above horizontal)"
+              }
+            ],
+            "points": [
+              "For just sliding down: \u03bc = tan \u03b8 \u2192 \u03b8 = angle of repose",
+              "Minimum pulling force occurs when force is applied at the angle of friction"
+            ]
+          },
+          {
+            "heading": "BELT FRICTION & WEDGE",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "BELT FRICTION (Capstan/Euler equation)",
+                "text": "T\u2081/T\u2082 = e^(\u03bc\u03b8)  (T\u2081 = tight-side, T\u2082 = slack-side, \u03b8 = angle of contact in RADIANS)"
+              }
+            ],
+            "points": [
+              "Wedge: used to lift loads with small effort",
+              "Self-locking condition: wedge angle < 2\u03c6 (angle of friction)",
+              "Screw jack: similar to wedge; self-locking when lead angle < friction angle",
+              "Ladder against smooth wall: take \u03a3Fx, \u03a3Fy, \u03a3M at base"
+            ],
+            "tip": "LADDER: For a ladder leaning against smooth wall + rough floor \u2014 analyze \u03a3Fx, \u03a3Fy, \u03a3M at base. Safe if friction force \u2264 \u03bcN at floor."
+          }
+        ]
+      },
+      {
+        "topic_id": 5,
+        "topic_name": "Virtual Work & Energy Methods",
+        "cards": [
+          {
+            "heading": "PRINCIPLE OF VIRTUAL WORK",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "PRINCIPLE OF VIRTUAL WORK (PVW)",
+                "text": "\u03b4W = \u03a3F_i \u00b7 \u03b4r_i = 0  (for equilibrium \u2014 total virtual work by all forces = 0)"
+              }
+            ],
+            "points": [
+              "Virtual displacement: imaginary, infinitesimal, consistent with constraints",
+              "Constraint forces (smooth reactions, inextensible strings) do NO virtual work",
+              "PVW is equivalent to equilibrium equations but often simpler for connected systems",
+              "Advantage: does not need to show internal forces at connections"
+            ]
+          },
+          {
+            "heading": "POTENTIAL ENERGY & STABILITY",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "EQUILIBRIUM CONDITION",
+                "text": "dV/dq = 0  (potential energy V is stationary)"
+              },
+              {
+                "label": "STABILITY CONDITIONS",
+                "text": "Stable: d\u00b2V/dq\u00b2 > 0 (V is minimum). Unstable: d\u00b2V/dq\u00b2 < 0 (V is maximum). Neutral: d\u00b2V/dq\u00b2 = 0"
+              }
+            ],
+            "points": [
+              "Spring potential energy: V = \u00bdkx\u00b2",
+              "Gravitational PE: V = Wh (weight \u00d7 height of CG)",
+              "Stable equilibrium: body returns to equilibrium after small disturbance",
+              "Unstable equilibrium: body moves away from equilibrium after small disturbance",
+              "Pendulum at bottom \u2192 stable (V minimum); Pendulum at top \u2192 unstable (V maximum)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 6,
+        "topic_name": "Kinematics of Particles",
+        "cards": [
+          {
+            "heading": "RECTILINEAR MOTION (1D)",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "EQUATIONS OF MOTION (constant acceleration)",
+                "text": "v = u + at  |  s = ut + \u00bdat\u00b2  |  v\u00b2 = u\u00b2 + 2as  |  s_n = u + \u00bda(2n\u22121) (in nth second)"
+              }
+            ],
+            "points": [
+              "Position x, velocity v = dx/dt, acceleration a = dv/dt = d\u00b2x/dt\u00b2",
+              "Non-uniform acceleration: use calculus or v-t graph",
+              "Area under v-t graph = displacement; Slope of v-t graph = acceleration",
+              "Area under a-t graph = change in velocity"
+            ]
+          },
+          {
+            "heading": "PROJECTILE MOTION",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "TIME OF FLIGHT",
+                "text": "T = 2u\u00b7sin \u03b8/g"
+              },
+              {
+                "label": "HORIZONTAL RANGE",
+                "text": "R = u\u00b2\u00b7sin 2\u03b8/g  (max range at \u03b8 = 45\u00b0)"
+              },
+              {
+                "label": "MAXIMUM HEIGHT",
+                "text": "H = u\u00b2\u00b7sin\u00b2\u03b8/(2g)"
+              }
+            ],
+            "points": [
+              "Horizontal velocity u\u00b7cos \u03b8 remains constant throughout",
+              "Vertical velocity: v_y = u\u00b7sin \u03b8 \u2212 gt",
+              "At max height: v_y = 0; speed = u\u00b7cos \u03b8",
+              "30\u00b0 and 60\u00b0 give same range (since sin 2\u00d730\u00b0 = sin 2\u00d760\u00b0)"
+            ]
+          },
+          {
+            "heading": "CIRCULAR MOTION & RELATIVE MOTION",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "CIRCULAR MOTION",
+                "text": "v = \u03c9r  |  Centripetal acceleration: a_n = v\u00b2/r = \u03c9\u00b2r (toward centre)"
+              },
+              {
+                "label": "RELATIVE VELOCITY",
+                "text": "v_BA = v_B \u2212 v_A (velocity of B relative to A)"
+              }
+            ],
+            "points": [
+              "Tangential acceleration: a_t = \u03b1r  (if angular acceleration \u03b1 \u2260 0)",
+              "Total acceleration: a = \u221a(a_n\u00b2 + a_t\u00b2)",
+              "For uniform circular motion: a_t = 0, only a_n exists"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 7,
+        "topic_name": "Kinematics of Rigid Bodies",
+        "cards": [
+          {
+            "heading": "TYPES OF RIGID BODY MOTION",
+            "color": "purple",
+            "table": {
+              "headers": [
+                "Type",
+                "Characteristics"
+              ],
+              "rows": [
+                [
+                  "Pure Translation",
+                  "All points have same velocity and acceleration at any instant"
+                ],
+                [
+                  "Pure Rotation",
+                  "All points rotate about fixed axis; v = \u03c9r from axis"
+                ],
+                [
+                  "General Plane Motion",
+                  "Translation of reference point + Rotation about that point"
+                ]
+              ]
+            },
+            "formulas": [
+              {
+                "label": "VELOCITY OF ANY POINT P",
+                "text": "v_P = v_A + \u03c9 \u00d7 r_{AP}  (translation + rotation)"
+              }
+            ]
+          },
+          {
+            "heading": "ROLLING MOTION & ICR",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "ROLLING WITHOUT SLIPPING",
+                "text": "v_centre = \u03c9r  |  Contact point velocity = 0  |  Top point velocity = 2v_centre"
+              },
+              {
+                "label": "INSTANTANEOUS CENTRE (ICR)",
+                "text": "Point with zero velocity at the instant; v_P = \u03c9 \u00d7 (distance from ICR)"
+              }
+            ],
+            "points": [
+              "ICR: unique point where velocity is zero at that instant",
+              "For rolling wheel: ICR is at contact point with ground",
+              "ICR concept useful for finding velocities of any point quickly"
+            ],
+            "alert": "ICR is a kinematic concept (zero velocity), NOT zero acceleration. Useful only for instantaneous velocity analysis."
+          },
+          {
+            "heading": "ANGULAR MOTION EQUATIONS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "EQUATIONS (constant angular acceleration \u03b1)",
+                "text": "\u03c9 = \u03c9\u2080 + \u03b1t  |  \u03b8 = \u03c9\u2080t + \u00bd\u03b1t\u00b2  |  \u03c9\u00b2 = \u03c9\u2080\u00b2 + 2\u03b1\u03b8"
+              }
+            ],
+            "points": [
+              "Coriolis acceleration: 2\u03c9 \u00d7 v_rel \u2014 occurs when a particle moves along a rotating path",
+              "For slider-crank and similar mechanisms, use ICR or relative velocity approach",
+              "\u03c9 in rad/s = 2\u03c0N/60  (N in rpm)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 8,
+        "topic_name": "Kinetics",
+        "cards": [
+          {
+            "heading": "NEWTON'S 2ND LAW",
+            "color": "orange",
+            "formulas": [
+              {
+                "label": "NEWTON'S 2ND LAW",
+                "text": "\u03a3F = ma (translation)  |  \u03a3M = I\u03b1 (rotation about fixed axis)"
+              },
+              {
+                "label": "D'ALEMBERT'S PRINCIPLE",
+                "text": "\u03a3F \u2212 ma = 0 (add \u2212ma as inertia force \u2192 static problem)"
+              }
+            ],
+            "points": [
+              "Work-Energy Theorem: Net work done = Change in kinetic energy = \u00bdmv\u2082\u00b2 \u2212 \u00bdmv\u2081\u00b2",
+              "Impulse-Momentum: F\u00b7t = \u0394(mv) = m(v\u2082 \u2212 v\u2081)",
+              "Conservation of momentum: applies to all collisions (no external force)"
+            ]
+          },
+          {
+            "heading": "COLLISIONS",
+            "color": "blue",
+            "formulas": [
+              {
+                "label": "COEFFICIENT OF RESTITUTION e",
+                "text": "e = (relative velocity of separation)/(relative velocity of approach)"
+              },
+              {
+                "label": "PERFECTLY ELASTIC (e=1)",
+                "text": "KE conserved; both momentum and KE conserved"
+              },
+              {
+                "label": "PERFECTLY INELASTIC (e=0)",
+                "text": "Bodies stick together; only momentum conserved"
+              }
+            ],
+            "points": [
+              "0 \u2264 e \u2264 1 for real-world collisions",
+              "Momentum is ALWAYS conserved in collisions",
+              "KE is conserved ONLY for elastic collisions (e = 1)"
+            ],
+            "tip": "Momentum is ALWAYS conserved in collisions (no external force during collision). KE is conserved only for e = 1."
+          },
+          {
+            "heading": "CIRCULAR MOTION DYNAMICS",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "CENTRIPETAL FORCE",
+                "text": "F_c = mv\u00b2/r = m\u03c9\u00b2r  (directed toward centre)"
+              },
+              {
+                "label": "POWER",
+                "text": "P = F\u00b7v (dot product)  |  P = T\u00b7\u03c9 (for rotation)"
+              }
+            ],
+            "points": [
+              "Centripetal force provided by: tension (string), friction (car turning), gravity (satellite)",
+              "Banking of roads: tan \u03b8 = v\u00b2/(Rg) for no friction condition",
+              "Banking provides centripetal force without relying on friction"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": 9,
+        "topic_name": "SHM & Rotational Dynamics",
+        "cards": [
+          {
+            "heading": "SIMPLE HARMONIC MOTION (SHM)",
+            "color": "purple",
+            "formulas": [
+              {
+                "label": "SHM EQUATIONS",
+                "text": "x = A\u00b7sin(\u03c9t + \u03c6)  |  v = A\u03c9\u00b7cos(\u03c9t + \u03c6)  |  a = \u2212A\u03c9\u00b2\u00b7sin(\u03c9t + \u03c6) = \u2212\u03c9\u00b2x"
+              },
+              {
+                "label": "SPRING-MASS SYSTEM",
+                "text": "\u03c9 = \u221a(k/m)  |  T = 2\u03c0\u221a(m/k)  |  f = \u03c9/2\u03c0"
+              },
+              {
+                "label": "SIMPLE PENDULUM",
+                "text": "T = 2\u03c0\u221a(L/g)  (independent of mass and amplitude for small angles)"
+              }
+            ],
+            "points": [
+              "At maximum displacement (amplitude A): v = 0, a = maximum = A\u03c9\u00b2",
+              "At equilibrium (x = 0): v = maximum = A\u03c9, a = 0",
+              "Total energy = \u00bdkA\u00b2 = constant (undamped SHM)"
+            ]
+          },
+          {
+            "heading": "MASS MOMENT OF INERTIA",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Body",
+                "Axis",
+                "Mass MoI"
+              ],
+              "rows": [
+                [
+                  "Thin rod (length L)",
+                  "Through centre, perpendicular",
+                  "mL\u00b2/12"
+                ],
+                [
+                  "Thin rod (length L)",
+                  "Through one end, perpendicular",
+                  "mL\u00b2/3"
+                ],
+                [
+                  "Solid cylinder/disk (radius R)",
+                  "Geometric axis",
+                  "mR\u00b2/2"
+                ],
+                [
+                  "Solid sphere (radius R)",
+                  "Any diameter",
+                  "2mR\u00b2/5"
+                ],
+                [
+                  "Hollow sphere (radius R)",
+                  "Any diameter",
+                  "2mR\u00b2/3"
+                ],
+                [
+                  "Thin ring (radius R)",
+                  "Geometric axis",
+                  "mR\u00b2"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "ROTATIONAL DYNAMICS & ANGULAR MOMENTUM",
+            "color": "green",
+            "formulas": [
+              {
+                "label": "ROTATIONAL KE",
+                "text": "KE_rot = \u00bdI\u03c9\u00b2"
+              },
+              {
+                "label": "ROLLING BODY TOTAL KE",
+                "text": "KE_total = \u00bdmv\u00b2 + \u00bdI\u03c9\u00b2 = \u00bdmv\u00b2(1 + I/mr\u00b2)"
+              },
+              {
+                "label": "ANGULAR MOMENTUM",
+                "text": "L = I\u03c9  (conserved when net external torque = 0)"
+              }
+            ],
+            "points": [
+              "Conservation of angular momentum: L = I\u03c9 = constant when \u03a3M_ext = 0",
+              "Spinning skater: pulls arms in \u2192 I decreases \u2192 \u03c9 increases",
+              "Rolling without slipping: a_centre = \u03b1r  |  v_centre = \u03c9r",
+              "Body with smaller I rolls down incline faster (solid sphere > solid cylinder > hollow sphere)"
             ]
           }
         ]
