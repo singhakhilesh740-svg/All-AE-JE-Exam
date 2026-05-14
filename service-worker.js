@@ -1,5 +1,5 @@
 // service-worker.js — Basic PWA caching
-const CACHE_NAME = 'ae-civil-v8-topic';
+const CACHE_NAME = 'ae-civil-v9-notes';
 const ASSETS = [
   './',
   './index.html',
@@ -8,7 +8,11 @@ const ASSETS = [
   './js/auth.js',
   './js/db.js',
   './js/quiz.js',
+  './js/notes.js',
+  './js/exams.js',
+  './js/subjects.js',
   './js/firebase-config.js',
+  './data/notes-combined.json',
   './manifest.json'
 ];
 

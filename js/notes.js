@@ -1,134 +1,134 @@
-// ===== NOTES RENDERING & TOPIC FILTERING =====
-// Called from app.js — renders notes inside #notesScreen
+// ===== NOTES MODULE =====
+// Renders notes cards inside #notesScreen.
+// Exports: loadNotesForSubject, renderNotesContent
 
-let _notesCache = null;
+let _cache = null;
 
-/**
- * Load notes JSON (cached after first fetch)
- */
+/** Fetch + cache the combined notes JSON */
 export async function loadNotesForSubject(subjectId) {
   try {
-    if (!_notesCache) {
-      const response = await fetch('data/notes-combined.json');
-      _notesCache = await response.json();
+    if (!_cache) {
+      const r = await fetch('data/notes-combined.json');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      _cache = await r.json();
     }
-    return _notesCache[subjectId] || null;
-  } catch (error) {
-    console.error('Error loading notes:', error);
+    return _cache[subjectId] || null;
+  } catch (e) {
+    console.error('[notes] load error:', e);
     return null;
   }
 }
 
 /**
- * Render notes inside #notesScreen
- * Called from app.js which handles showScreen, header text, etc.
- * This function ONLY builds DOM inside the notes <main>.
+ * Build the notes UI inside #notesMain.
+ * - Hides the "Notes coming soon" placeholder
+ * - Fills #notesTopicBar with topic chips
+ * - Appends colour-coded cards
+ *
+ * @param {Object} data  — one subject entry from notes-combined.json
+ * @param {*} activeTopic — pre-selected topic id, or null for "All"
  */
-export function renderNotesContent(notesData, selectedTopicId) {
-  const screen = document.getElementById('notesScreen');
-  const container = screen.querySelector('main');
-  const topicBar = document.getElementById('notesTopicBar');
+export function renderNotesContent(data, activeTopic) {
+  var main      = document.getElementById('notesMain');
+  var topicBar  = document.getElementById('notesTopicBar');
+  var placeholder = document.getElementById('notesPlaceholder');
 
-  // Clear previous notes content (everything after topicBar)
-  while (topicBar.nextSibling) {
-    container.removeChild(topicBar.nextSibling);
-  }
+  // 1. Hide the static placeholder
+  if (placeholder) placeholder.style.display = 'none';
 
-  // Build topic chips
+  // 2. Remove any previously rendered notes container
+  var old = document.getElementById('notesRendered');
+  if (old) old.remove();
+
+  // 3. Build topic chips
   topicBar.innerHTML = '';
-
-  if (notesData.topics && notesData.topics.length > 0) {
-    // "All" chip
-    const allChip = document.createElement('button');
-    allChip.className = 'topic-chip' + (selectedTopicId == null ? ' active' : '');
-    allChip.textContent = 'All';
-    allChip.addEventListener('click', () => {
-      setActiveChip(topicBar, allChip);
-      filterSections(container, 'all');
-    });
-    topicBar.appendChild(allChip);
-
-    notesData.topics.forEach(t => {
-      const chip = document.createElement('button');
-      chip.className = 'topic-chip' + (selectedTopicId == t.id ? ' active' : '');
-      chip.textContent = t.name;
-      chip.addEventListener('click', () => {
-        setActiveChip(topicBar, chip);
-        filterSections(container, t.id);
-      });
-      topicBar.appendChild(chip);
+  if (data.topics && data.topics.length) {
+    addChip(topicBar, 'All', 'all', activeTopic == null);
+    data.topics.forEach(function (t) {
+      addChip(topicBar, t.name, t.id, activeTopic == t.id);
     });
   }
 
-  // Build notes cards grouped by topic
-  if (!notesData.notes || notesData.notes.length === 0) {
-    const empty = document.createElement('div');
-    empty.className = 'empty-state';
-    empty.innerHTML = '<div class="empty-icon">📝</div><h3>No notes available</h3>';
-    container.appendChild(empty);
+  // 4. Build notes container
+  var wrap = document.createElement('div');
+  wrap.id = 'notesRendered';
+  wrap.className = 'notes-container';
+
+  if (!data.notes || !data.notes.length) {
+    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><h3>No notes content</h3></div>';
+    main.appendChild(wrap);
     return;
   }
 
-  const wrap = document.createElement('div');
-  wrap.className = 'notes-container';
+  data.notes.forEach(function (section) {
+    if (!section.cards || !section.cards.length) return;
 
-  notesData.notes.forEach(section => {
-    if (!section.cards || section.cards.length === 0) return;
-
-    const sec = document.createElement('div');
+    var sec = document.createElement('div');
     sec.className = 'notes-section';
-    sec.dataset.topicId = section.topic_id;
+    sec.setAttribute('data-topic-id', section.topic_id);
 
-    const h = document.createElement('h3');
-    h.className = 'notes-topic-header';
-    h.textContent = section.topic_name;
-    sec.appendChild(h);
+    var h3 = document.createElement('h3');
+    h3.className = 'notes-topic-header';
+    h3.textContent = section.topic_name;
+    sec.appendChild(h3);
 
-    section.cards.forEach(c => sec.appendChild(buildCard(c)));
+    section.cards.forEach(function (c) { sec.appendChild(buildCard(c)); });
     wrap.appendChild(sec);
   });
 
-  container.appendChild(wrap);
+  main.appendChild(wrap);
 
-  // apply initial filter
-  filterSections(container, selectedTopicId != null ? selectedTopicId : 'all');
+  // 5. Apply initial filter
+  applyFilter(wrap, activeTopic != null ? activeTopic : 'all');
+}
+
+// ── chip builder ──────────────────────────────────────────────
+
+function addChip(bar, label, id, isActive) {
+  var btn = document.createElement('button');
+  btn.className = 'topic-chip' + (isActive ? ' active' : '');
+  btn.textContent = label;
+  btn.addEventListener('click', function () {
+    bar.querySelectorAll('.topic-chip').forEach(function (c) { c.classList.remove('active'); });
+    btn.classList.add('active');
+    var wrap = document.getElementById('notesRendered');
+    if (wrap) applyFilter(wrap, id);
+  });
+  bar.appendChild(btn);
 }
 
 // ── card builder ──────────────────────────────────────────────
 
 function buildCard(card) {
-  const el = document.createElement('div');
+  var el = document.createElement('div');
   el.className = 'notes-card notes-card-' + (card.color || 'blue');
 
-  // heading
-  const h = document.createElement('h4');
-  h.className = 'notes-card-heading';
-  h.textContent = card.heading;
-  el.appendChild(h);
+  var h4 = document.createElement('h4');
+  h4.className = 'notes-card-heading';
+  h4.textContent = card.heading;
+  el.appendChild(h4);
 
   // formulas
-  if (card.formulas) {
-    card.formulas.forEach(f => {
-      const d = document.createElement('div');
-      d.className = 'notes-formula';
-      const lbl = document.createElement('div');
-      lbl.className = 'notes-formula-label';
-      lbl.textContent = f.label;
-      d.appendChild(lbl);
-      const pre = document.createElement('pre');
-      pre.className = 'notes-formula-text';
-      pre.textContent = f.text;
-      d.appendChild(pre);
-      el.appendChild(d);
-    });
-  }
+  if (card.formulas) card.formulas.forEach(function (f) {
+    var d = document.createElement('div');
+    d.className = 'notes-formula';
+    var lbl = document.createElement('div');
+    lbl.className = 'notes-formula-label';
+    lbl.textContent = f.label;
+    d.appendChild(lbl);
+    var pre = document.createElement('pre');
+    pre.className = 'notes-formula-text';
+    pre.textContent = f.text;
+    d.appendChild(pre);
+    el.appendChild(d);
+  });
 
   // points
   if (card.points && card.points.length) {
-    const ul = document.createElement('ul');
+    var ul = document.createElement('ul');
     ul.className = 'notes-points';
-    card.points.forEach(p => {
-      const li = document.createElement('li');
+    card.points.forEach(function (p) {
+      var li = document.createElement('li');
       li.textContent = p;
       ul.appendChild(li);
     });
@@ -137,39 +137,30 @@ function buildCard(card) {
 
   // table
   if (card.table) {
-    const tw = document.createElement('div');
+    var tw = document.createElement('div');
     tw.className = 'notes-table-wrapper';
-    const tbl = document.createElement('table');
+    var tbl = document.createElement('table');
     tbl.className = 'notes-table';
-
-    const thead = document.createElement('thead');
-    const hr = document.createElement('tr');
-    card.table.headers.forEach(hdr => {
-      const th = document.createElement('th');
-      th.textContent = hdr;
-      hr.appendChild(th);
+    var thead = document.createElement('thead');
+    var hr = document.createElement('tr');
+    card.table.headers.forEach(function (h) {
+      var th = document.createElement('th'); th.textContent = h; hr.appendChild(th);
     });
-    thead.appendChild(hr);
-    tbl.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
-    card.table.rows.forEach(row => {
-      const tr = document.createElement('tr');
-      row.forEach(cell => {
-        const td = document.createElement('td');
-        td.textContent = cell;
-        tr.appendChild(td);
+    thead.appendChild(hr); tbl.appendChild(thead);
+    var tbody = document.createElement('tbody');
+    card.table.rows.forEach(function (row) {
+      var tr = document.createElement('tr');
+      row.forEach(function (cell) {
+        var td = document.createElement('td'); td.textContent = cell; tr.appendChild(td);
       });
       tbody.appendChild(tr);
     });
-    tbl.appendChild(tbody);
-    tw.appendChild(tbl);
-    el.appendChild(tw);
+    tbl.appendChild(tbody); tw.appendChild(tbl); el.appendChild(tw);
   }
 
   // alert
   if (card.alert) {
-    const a = document.createElement('div');
+    var a = document.createElement('div');
     a.className = 'notes-alert';
     a.textContent = card.alert;
     el.appendChild(a);
@@ -177,24 +168,19 @@ function buildCard(card) {
 
   // image
   if (card.image) {
-    const img = document.createElement('img');
-    img.src = card.image;
-    img.className = 'notes-image';
+    var img = document.createElement('img');
+    img.src = card.image; img.className = 'notes-image';
     el.appendChild(img);
   }
 
   return el;
 }
 
-// ── helpers ───────────────────────────────────────────────────
+// ── filter ────────────────────────────────────────────────────
 
-function filterSections(container, topicId) {
-  container.querySelectorAll('.notes-section').forEach(sec => {
-    sec.style.display = (topicId === 'all' || sec.dataset.topicId == topicId) ? '' : 'none';
+function applyFilter(wrap, topicId) {
+  wrap.querySelectorAll('.notes-section').forEach(function (sec) {
+    var tid = sec.getAttribute('data-topic-id');
+    sec.style.display = (topicId === 'all' || tid == topicId) ? '' : 'none';
   });
-}
-
-function setActiveChip(bar, active) {
-  bar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
-  active.classList.add('active');
 }
