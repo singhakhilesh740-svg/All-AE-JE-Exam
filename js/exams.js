@@ -17,7 +17,118 @@
 //   - When uploading questions, JSON needs: exam, stage, subject (all required)
 //   - Once a subject id is used in uploaded questions, DON'T change it (orphans data)
 
+// ─── Shared subject lists (reused across exams) ───────────────────────────────
+
+const CIVIL_MAINS_SUBJECTS = [
+  // ===== Paper-I =====
+  {
+    id: 'engg-mechanics',
+    name: 'Engineering Mechanics',
+    icon: '⚙️',
+    description: 'Forces, equilibrium, kinematics, kinetics'
+  },
+  {
+    id: 'strength-of-materials',
+    name: 'Strength of Materials',
+    icon: '💪',
+    description: 'Stress, strain, beams, columns, springs'
+  },
+  {
+    id: 'structural-analysis',
+    name: 'Structural Analysis',
+    icon: '🏛️',
+    description: 'Indeterminate structures, plastic analysis, arches'
+  },
+  {
+    id: 'steel-design',
+    name: 'Steel Design',
+    icon: '🔩',
+    description: 'Joints, plate girders, columns, bridges'
+  },
+  {
+    id: 'concrete-design',
+    name: 'Concrete & Masonry Design',
+    icon: '🏢',
+    description: 'RCC, slabs, prestressed, water tanks, masonry'
+  },
+  {
+    id: 'building-materials',
+    name: 'Building Materials',
+    icon: '🧱',
+    description: 'Cement, concrete, timber, special concretes'
+  },
+  {
+    id: 'construction-tech',
+    name: 'Construction Technology',
+    icon: '🏗️',
+    description: 'Estimation, CPM/PERT, project planning'
+  },
+  {
+    id: 'geotech-foundation',
+    name: 'Geotech & Foundation',
+    icon: '⛰️',
+    description: 'Soil mechanics, bearing capacity, piles, rafts'
+  },
+
+  // ===== Paper-II =====
+  {
+    id: 'fluid-mechanics',
+    name: 'Fluid Mechanics',
+    icon: '💧',
+    description: 'Pipe flow, turbines, pumps, hydropower'
+  },
+  {
+    id: 'hydrology',
+    name: 'Hydrology & Water Resources',
+    icon: '🌊',
+    description: 'Hydrology, irrigation, dams, river training'
+  },
+  {
+    id: 'transportation',
+    name: 'Transportation Engineering',
+    icon: '🛣️',
+    description: 'Highway, railway, airport engineering'
+  },
+  {
+    id: 'environmental',
+    name: 'Environmental Engineering',
+    icon: '🌱',
+    description: 'Water supply, sewerage, solid waste, pollution'
+  },
+  {
+    id: 'surveying-geology',
+    name: 'Surveying & Geology',
+    icon: '📐',
+    description: 'Survey methods, GIS, engineering geology'
+  }
+];
+
+// Interview subjects — personality test prep (shared)
+const CIVIL_INTERVIEW_SUBJECTS = [
+  {
+    id: 'interview-tech',
+    name: 'Technical Review',
+    icon: '🔬',
+    description: 'Core civil engineering concepts quick revision'
+  },
+  {
+    id: 'interview-hr',
+    name: 'HR & Personality',
+    icon: '🤝',
+    description: 'Common HR questions, situational answers'
+  },
+  {
+    id: 'interview-current-affairs',
+    name: 'Current Affairs',
+    icon: '📰',
+    description: 'Govt schemes, infrastructure news, UP-specific GK'
+  }
+];
+
+// ─── Exam definitions ─────────────────────────────────────────────────────────
+
 export const EXAMS = [
+  // ── 1. UPPSC AE ──────────────────────────────────────────────────────────
   {
     id: 'uppsc-ae',
     name: 'UPPSC AE',
@@ -38,52 +149,79 @@ export const EXAMS = [
         name: 'Mains',
         icon: '📚',
         description: 'Descriptive technical exam',
+        subjects: CIVIL_MAINS_SUBJECTS
+      },
+      {
+        id: 'interview',
+        name: 'Interview',
+        icon: '🎤',
+        description: 'Personality test',
+        subjects: CIVIL_INTERVIEW_SUBJECTS
+      }
+    ]
+  },
+
+  // ── 2. UPPSC Polytechnic Lecturer ─────────────────────────────────────────
+  {
+    id: 'uppsc-polytechnic',
+    name: 'UPPSC Polytechnic Lecturer',
+    fullName: 'UPPSC Polytechnic Lecturer - Civil Engineering',
+    icon: '🎓',
+    state: 'Uttar Pradesh',
+    description: 'Polytechnic Lecturer (Civil) preparation',
+    stages: [
+      // ⚠️ NO Prelims stage — this exam has Mains + Interview only
+      {
+        id: 'mains',
+        name: 'Mains',
+        icon: '📚',
+        description: 'Technical written exam (Civil Engineering)',
         subjects: [
           // ===== Paper-I =====
           {
-            id: 'engg-mechanics',
+            id: 'pl-engg-mechanics',
             name: 'Engineering Mechanics',
             icon: '⚙️',
             description: 'Forces, equilibrium, kinematics, kinetics'
           },
           {
-            id: 'strength-of-materials',
+            id: 'pl-strength-of-materials',
             name: 'Strength of Materials',
             icon: '💪',
             description: 'Stress, strain, beams, columns, springs'
           },
           {
-            id: 'structural-analysis',
+            id: 'pl-structural-analysis',
             name: 'Structural Analysis',
             icon: '🏛️',
             description: 'Indeterminate structures, plastic analysis, arches'
           },
           {
-            id: 'steel-design',
+            id: 'pl-steel-design',
             name: 'Steel Design',
             icon: '🔩',
             description: 'Joints, plate girders, columns, bridges'
           },
           {
-            id: 'concrete-design',
+            id: 'pl-concrete-design',
             name: 'Concrete & Masonry Design',
             icon: '🏢',
             description: 'RCC, slabs, prestressed, water tanks, masonry'
           },
           {
-            id: 'building-materials',
+            id: 'pl-building-materials',
             name: 'Building Materials',
             icon: '🧱',
             description: 'Cement, concrete, timber, special concretes'
           },
           {
-            id: 'construction-tech',
+            id: 'pl-construction-tech',
             name: 'Construction Technology',
             icon: '🏗️',
             description: 'Estimation, CPM/PERT, project planning'
           },
           {
-            id: 'geotech-foundation',
+            id: 'pl-geotech-foundation',
             name: 'Geotech & Foundation',
             icon: '⛰️',
             description: 'Soil mechanics, bearing capacity, piles, rafts'
@@ -91,31 +229,31 @@ export const EXAMS = [
 
           // ===== Paper-II =====
           {
-            id: 'fluid-mechanics',
+            id: 'pl-fluid-mechanics',
             name: 'Fluid Mechanics',
             icon: '💧',
             description: 'Pipe flow, turbines, pumps, hydropower'
           },
           {
-            id: 'hydrology',
+            id: 'pl-hydrology',
             name: 'Hydrology & Water Resources',
             icon: '🌊',
             description: 'Hydrology, irrigation, dams, river training'
           },
           {
-            id: 'transportation',
+            id: 'pl-transportation',
             name: 'Transportation Engineering',
             icon: '🛣️',
             description: 'Highway, railway, airport engineering'
           },
           {
-            id: 'environmental',
+            id: 'pl-environmental',
             name: 'Environmental Engineering',
             icon: '🌱',
             description: 'Water supply, sewerage, solid waste, pollution'
           },
           {
-            id: 'surveying-geology',
+            id: 'pl-surveying-geology',
             name: 'Surveying & Geology',
             icon: '📐',
             description: 'Survey methods, GIS, engineering geology'
@@ -126,24 +264,38 @@ export const EXAMS = [
         id: 'interview',
         name: 'Interview',
         icon: '🎤',
-        description: 'Personality test',
-        subjects: []
+        description: 'Personality test & viva voce',
+        subjects: [
+          {
+            id: 'pl-interview-tech',
+            name: 'Technical Review',
+            icon: '🔬',
+            description: 'Core civil engineering concepts quick revision'
+          },
+          {
+            id: 'pl-interview-teaching',
+            name: 'Teaching Aptitude',
+            icon: '🧑‍🏫',
+            description: 'Pedagogy, classroom management, teaching methods'
+          },
+          {
+            id: 'pl-interview-hr',
+            name: 'HR & Personality',
+            icon: '🤝',
+            description: 'Common HR questions, situational answers'
+          },
+          {
+            id: 'pl-interview-current-affairs',
+            name: 'Current Affairs',
+            icon: '📰',
+            description: 'Govt schemes, UP education policy, infrastructure GK'
+          }
+        ]
       }
     ]
   },
-  {
-    id: 'uppsc-polytechnic',
-    name: 'UPPSC Polytechnic',
-    fullName: 'UPPSC Polytechnic Lecturer',
-    icon: '🎓',
-    state: 'Uttar Pradesh',
-    description: 'Lecturer recruitment',
-    stages: [
-      { id: 'prelims', name: 'Prelims', icon: '🎯', description: 'Screening test', subjects: [] },
-      { id: 'mains', name: 'Mains', icon: '📚', description: 'Main exam', subjects: [] },
-      { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
-    ]
-  },
+
+  // ── 3. BPSC AE ───────────────────────────────────────────────────────────
   {
     id: 'bpsc-ae',
     name: 'BPSC AE',
@@ -157,6 +309,8 @@ export const EXAMS = [
       { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
     ]
   },
+
+  // ── 4. CGPSC AE ──────────────────────────────────────────────────────────
   {
     id: 'cgpsc-ae',
     name: 'CGPSC AE',
@@ -170,6 +324,8 @@ export const EXAMS = [
       { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
     ]
   },
+
+  // ── 5. TSPSC AE ──────────────────────────────────────────────────────────
   {
     id: 'tspsc-ae',
     name: 'TSPSC AE',
@@ -183,6 +339,8 @@ export const EXAMS = [
       { id: 'interview', name: 'Interview', icon: '🎤', description: 'Personality test', subjects: [] }
     ]
   },
+
+  // ── 6. GPSC AE ───────────────────────────────────────────────────────────
   {
     id: 'gpsc-ae',
     name: 'GPSC AE',
