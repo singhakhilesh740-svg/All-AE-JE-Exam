@@ -1,5 +1,5 @@
 // service-worker.js — PWA caching
-const CACHE_NAME = 'ae-civil-v10-notes-3';   // ← bumped: forces old cache purge
+const CACHE_NAME = 'ae-civil-v10-notes-9';   // ← bumped: forces old cache purge
 const ASSETS = [
   './',
   './index.html',
