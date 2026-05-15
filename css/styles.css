@@ -441,3 +441,33 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
   .tile-icon { font-size: 26px; }
   .tile-title { font-size: 13px; }
 }
+
+/* ===== Notes Screen ===== */
+.notes-main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-topic-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 10px 16px 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  flex-shrink: 0;
+}
+.notes-topic-bar::-webkit-scrollbar { display: none; }
+.notes-topic-bar:empty { display: none; }
+
+#notesRendered {
+  padding: 14px 16px;
+  flex: 1;
+}

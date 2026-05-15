@@ -134,40 +134,25 @@ function renderSubjectList(containerId, subjects, onSelect) {
 
 async function openNotesSubject(subj) {
   currentSubject = subj;
-  currentTopic   = 'all';
 
   $('notesContentTitle').textContent = subj.name + ' — Notes';
   $('notesContentSub').textContent   = 'Topic-wise study material';
 
-  // Load data
+  // notes.js owns the topic bar (#notesTopicBar) + content (#notesMain)
+  // It reads topics from the JSON (numeric IDs: 0,1,2...) not from subjects.js
   const data = await loadNotesForSubject(subj.id);
   if (!data) {
-    $('notesPlaceholder').classList.remove('hidden');
     const old = $('notesRendered');
     if (old) old.remove();
     $('notesTopicBar').innerHTML = '';
+    $('notesPlaceholder').style.display = '';
     showScreen('notesContentScreen');
     return;
   }
 
-  $('notesPlaceholder').classList.add('hidden');
+  // renderNotesContent: builds chips in #notesTopicBar + renders cards in #notesMain
   renderNotesContent(data, null);
-
-  // Build topic chips
-  buildTopicChips('notesTopicBar', subj.id, topicId => {
-    currentTopic = topicId;
-    const wrap = $('notesRendered');
-    if (wrap) applyNotesFilter(wrap, topicId);
-  });
-
   showScreen('notesContentScreen');
-}
-
-function applyNotesFilter(wrap, topicId) {
-  wrap.querySelectorAll('.notes-section').forEach(sec => {
-    const tid = sec.getAttribute('data-topic-id');
-    sec.style.display = (topicId === 'all' || tid === topicId) ? '' : 'none';
-  });
 }
 
 // ══════════════════════════════════════════════════════════════════════════════

@@ -181,6 +181,10 @@ function buildCard(card) {
 function applyFilter(wrap, topicId) {
   wrap.querySelectorAll('.notes-section').forEach(function (sec) {
     var tid = sec.getAttribute('data-topic-id');
+    // use == not === because tid is always a string, topicId may be int or 'all'
     sec.style.display = (topicId === 'all' || tid == topicId) ? '' : 'none';
   });
+  // scroll notesMain back to top so filtered content is visible
+  var main = document.getElementById('notesMain');
+  if (main) main.scrollTop = 0;
 }
