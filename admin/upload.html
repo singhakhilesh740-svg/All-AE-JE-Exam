@@ -12,10 +12,8 @@
       padding: 20px; min-height: 100vh;
     }
     .container { max-width: 860px; margin: 0 auto; }
-
     h1 { color: #f59e0b; font-size: 22px; margin-bottom: 4px; }
     .sub { color: #94a3b8; font-size: 13px; margin-bottom: 24px; }
-
     .panel {
       background: #1e293b; padding: 20px;
       border-radius: 12px; margin-bottom: 16px;
@@ -23,29 +21,24 @@
     }
     .panel-title {
       font-size: 12px; font-weight: 700; color: #f59e0b;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      margin-bottom: 14px;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px;
     }
-
-    label { font-size: 13px; color: #94a3b8; display: block; margin-bottom: 5px; margin-top: 10px; }
+    label { font-size: 13px; color: #94a3b8; display: block; margin-bottom: 5px; margin-top: 12px; }
     label:first-child { margin-top: 0; }
-
-    select, input[type=text], input[type=number] {
+    select, input[type=number] {
       width: 100%; background: #0f172a; color: #f1f5f9;
       border: 1px solid #334155; border-radius: 8px;
       padding: 10px 12px; font-size: 14px; font-family: inherit;
     }
     select:focus, input:focus { outline: none; border-color: #f59e0b; }
-
     textarea {
-      width: 100%; min-height: 260px;
-      background: #0f172a; color: #f1f5f9;
+      width: 100%; min-height: 280px;
+      background: #0a1122; color: #f1f5f9;
       border: 1px solid #334155; border-radius: 8px;
       padding: 12px; font-family: 'Courier New', monospace;
       font-size: 12.5px; resize: vertical; line-height: 1.6;
     }
     textarea:focus { outline: none; border-color: #f59e0b; }
-
     .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
     button {
       padding: 10px 18px; border-radius: 8px; border: none;
@@ -53,78 +46,74 @@
       font-family: inherit; transition: opacity 0.15s;
     }
     button:active { opacity: 0.8; }
-    .btn-primary { background: #f59e0b; color: #1f2937; }
+    .btn-primary   { background: #f59e0b; color: #1f2937; }
     .btn-secondary { background: #334155; color: #f1f5f9; }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-blue { background: #1e3a5f; color: #93c5fd; border: 1px solid #3b82f6; }
-    .btn-green { background: #064e3b; color: #6ee7b7; border: 1px solid #10b981; }
+    .btn-danger    { background: #ef4444; color: #fff; }
+    .btn-blue      { background: #1e3a5f; color: #93c5fd; border: 1px solid #3b82f6; }
 
-    /* Stats row */
-    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    /* Type tabs */
+    .type-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+    .type-tab {
+      flex: 1; padding: 12px 8px; border-radius: 8px;
+      border: 2px solid #334155; background: #0f172a;
+      color: #94a3b8; font-weight: 600; font-size: 13px;
+      cursor: pointer; text-align: center; transition: all 0.15s; line-height: 1.4;
+    }
+    .type-tab.active.pyq      { border-color: #f59e0b; color: #f59e0b; background: rgba(245,158,11,0.08); }
+    .type-tab.active.practice { border-color: #10b981; color: #10b981; background: rgba(16,185,129,0.08); }
+
+    /* Info box */
+    .info-box {
+      border-radius: 8px; padding: 12px 14px; font-size: 13px; line-height: 1.6; margin-top: 12px;
+    }
+    .info-pyq      { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3); color: #fbbf24; }
+    .info-practice { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3); color: #6ee7b7; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
     .stat { background: #0f172a; padding: 12px 8px; border-radius: 8px; text-align: center; border: 1px solid #334155; }
     .stat-num { font-size: 24px; font-weight: 700; color: #f59e0b; }
     .stat-lbl { font-size: 10px; color: #64748b; text-transform: uppercase; margin-top: 2px; }
+
+    /* Progress */
+    .progress-wrap { background: #0f172a; border-radius: 4px; height: 8px; margin-top: 10px; overflow: hidden; }
+    .progress-fill { background: #f59e0b; height: 8px; border-radius: 4px; width: 0%; transition: width 0.3s; }
 
     /* Log */
     .log {
       background: #0a1122; padding: 12px; border-radius: 8px;
       border: 1px solid #1e3a5f; font-family: 'Courier New', monospace;
-      font-size: 12px; max-height: 260px; overflow-y: auto;
+      font-size: 12px; max-height: 280px; overflow-y: auto;
       white-space: pre-wrap; line-height: 1.6;
     }
-    .ok  { color: #10b981; } .err { color: #ef4444; }
+    .ok   { color: #10b981; } .err  { color: #ef4444; }
     .warn { color: #f59e0b; } .info { color: #94a3b8; }
 
-    /* Reference table */
-    .ref-grid { display: flex; flex-direction: column; gap: 6px; max-height: 300px; overflow-y: auto; }
+    /* Subject ref */
+    .ref-grid { display: flex; flex-direction: column; gap: 5px; max-height: 300px; overflow-y: auto; }
     .ref-subj {
       display: flex; align-items: center; justify-content: space-between;
       background: #0f172a; padding: 8px 12px; border-radius: 6px;
       border: 1px solid #1e293b;
     }
-    .ref-id { font-family: 'Courier New', monospace; color: #f59e0b; font-size: 12px; font-weight: 700; }
+    .ref-id   { font-family: 'Courier New', monospace; color: #f59e0b; font-size: 12px; font-weight: 700; }
     .ref-name { font-size: 12px; color: #94a3b8; }
 
-    /* Progress bar */
-    .progress-wrap { background: #0f172a; border-radius: 4px; height: 8px; margin-top: 10px; overflow: hidden; }
-    .progress-fill { background: #f59e0b; height: 8px; border-radius: 4px; width: 0%; transition: width 0.3s; }
-
-    /* Type selector tabs */
-    .type-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
-    .type-tab {
-      flex: 1; padding: 10px; border-radius: 8px;
-      border: 2px solid #334155; background: #0f172a;
-      color: #94a3b8; font-weight: 600; font-size: 13px;
-      cursor: pointer; text-align: center; transition: all 0.15s;
-    }
-    .type-tab.active.pyq    { border-color: #f59e0b; color: #f59e0b; background: rgba(245,158,11,0.08); }
-    .type-tab.active.practice { border-color: #10b981; color: #10b981; background: rgba(16,185,129,0.08); }
-
-    /* Warning */
-    .warn-box {
-      background: rgba(245,158,11,0.1); border: 1px solid #f59e0b;
-      padding: 10px 14px; border-radius: 8px; font-size: 13px;
-      color: #f59e0b; margin-top: 10px;
-    }
-
-    /* Login */
-    .login-wrap { text-align: center; padding: 60px 20px; }
-    .login-wrap p { color: #94a3b8; margin-bottom: 20px; font-size: 15px; }
-
-    .hidden { display: none !important; }
-    .divider { border: none; border-top: 1px solid #334155; margin: 12px 0; }
-
-    /* Firestore breakdown */
+    /* Breakdown */
     .breakdown-row {
       display: flex; align-items: center; gap: 10px;
-      background: #0f172a; padding: 8px 10px; border-radius: 6px;
-      margin-bottom: 5px;
+      background: #0f172a; padding: 8px 10px; border-radius: 6px; margin-bottom: 5px;
     }
     .breakdown-name { flex: 1; font-size: 12px; color: #e2e8f0; }
-    .breakdown-bar-wrap { width: 120px; background: #1e293b; border-radius: 3px; height: 5px; }
-    .breakdown-bar { height: 5px; border-radius: 3px; background: #f59e0b; }
+    .breakdown-bar-wrap { width: 100px; background: #1e293b; border-radius: 3px; height: 5px; }
+    .breakdown-bar  { height: 5px; border-radius: 3px; background: #f59e0b; }
     .breakdown-count { font-size: 12px; color: #f59e0b; font-weight: 700; min-width: 28px; text-align: right; }
     .breakdown-types { font-size: 10px; color: #64748b; min-width: 110px; text-align: right; }
+
+    .login-wrap { text-align: center; padding: 60px 20px; }
+    .login-wrap p { color: #94a3b8; margin-bottom: 20px; font-size: 15px; }
+    .hidden { display: none !important; }
+    code { background: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -142,7 +131,7 @@
   <!-- MAIN -->
   <div id="mainPanel" class="hidden">
 
-    <!-- STEP 1: Select Exam & Type -->
+    <!-- STEP 1 -->
     <div class="panel">
       <div class="panel-title">Step 1 — Select Exam &amp; Question Type</div>
 
@@ -151,45 +140,70 @@
 
       <label style="margin-top:14px;">Question Type</label>
       <div class="type-tabs">
-        <div class="type-tab pyq active" data-type="pyq">📜 PYQ<br><small style="font-weight:400;font-size:11px;">Previous Year Questions</small></div>
-        <div class="type-tab practice" data-type="practice">✏️ Practice<br><small style="font-weight:400;font-size:11px;">Important Practice Qs</small></div>
+        <div class="type-tab pyq active" data-type="pyq">
+          📜 PYQ<br><small style="font-weight:400;font-size:11px;">Previous Year Questions</small>
+        </div>
+        <div class="type-tab practice" data-type="practice">
+          ✏️ Practice<br><small style="font-weight:400;font-size:11px;">Important Practice Qs</small>
+        </div>
       </div>
 
-      <label>Subject</label>
-      <select id="subjectSel"></select>
+      <!-- PYQ options (subject comes from JSON) -->
+      <div id="pyqOptions">
+        <div class="info-box info-pyq">
+          📌 For PYQ — <strong>subject must be specified in each JSON question</strong> (different subjects per paper).<br>
+          Each question needs: <code>subject</code>, <code>year</code>, and optionally <code>topic</code>.
+        </div>
+        <label>Default Year <small style="color:#64748b;">(used if question has no "year" field)</small></label>
+        <input type="number" id="yearInput" value="2024" min="1990" max="2030" />
+      </div>
 
-      <label id="yearLabel">Default Year <small style="color:#64748b;">(for PYQ — can override per question)</small></label>
-      <input type="number" id="yearInput" value="2024" min="1990" max="2030" />
-
-      <label>Topic Tag <small style="color:#64748b;">(optional — for topic filter chips)</small></label>
-      <select id="topicSel"></select>
+      <!-- Practice options (subject chosen once for whole batch) -->
+      <div id="practiceOptions" class="hidden">
+        <div class="info-box info-practice">
+          📌 For Practice — select one <strong>Subject</strong> and optionally a <strong>Topic</strong> for the whole batch.<br>
+          You can still override <code>subject</code> or <code>topic</code> per question in the JSON.
+        </div>
+        <label>Subject <small style="color:#64748b;">(default for all questions in this batch)</small></label>
+        <select id="subjectSel"></select>
+        <label>Topic Tag <small style="color:#64748b;">(optional — for filter chips in app)</small></label>
+        <select id="topicSel"></select>
+      </div>
     </div>
 
-    <!-- STEP 2: Subject Reference -->
+    <!-- Subject Reference -->
     <div class="panel">
-      <div class="panel-title">Subject IDs Reference</div>
+      <div class="panel-title">Subject IDs — use these in your JSON</div>
       <div class="ref-grid" id="subjectRef"></div>
     </div>
 
-    <!-- STEP 3: JSON Input -->
+    <!-- STEP 2: JSON -->
     <div class="panel">
       <div class="panel-title">Step 2 — Paste Questions JSON</div>
-      <p style="font-size:12px;color:#64748b;margin-bottom:10px;">
-        Required fields: <code style="color:#f59e0b;">question</code>, <code style="color:#f59e0b;">options</code> (array), <code style="color:#f59e0b;">answer</code> (0-based index)<br>
-        Optional: <code style="color:#94a3b8;">explanation</code>, <code style="color:#94a3b8;">year</code>, <code style="color:#94a3b8;">topic</code>, <code style="color:#94a3b8;">subject</code> (overrides selector above)
-      </p>
-      <textarea id="jsonInput" placeholder='Paste your JSON array here...'></textarea>
+
+      <div id="pyqFormat" style="font-size:12px;color:#64748b;margin-bottom:10px;line-height:1.8;">
+        <strong style="color:#94a3b8;">PYQ required fields:</strong>
+        <code>question</code>, <code>options</code> (array), <code>answer</code> (0-based index), <code>subject</code>, <code>year</code><br>
+        <strong style="color:#94a3b8;">Optional:</strong> <code>explanation</code>, <code>topic</code>, <code>difficulty</code>
+      </div>
+      <div id="practiceFormat" class="hidden" style="font-size:12px;color:#64748b;margin-bottom:10px;line-height:1.8;">
+        <strong style="color:#94a3b8;">Practice required fields:</strong>
+        <code>question</code>, <code>options</code> (array), <code>answer</code> (0-based index)<br>
+        <strong style="color:#94a3b8;">Optional:</strong> <code>explanation</code>, <code>topic</code>, <code>subject</code> (overrides selector above)
+      </div>
+
+      <textarea id="jsonInput" placeholder="Paste your JSON array here..."></textarea>
       <div class="btn-row">
         <button class="btn-secondary" id="templateBtn">📄 Load Template</button>
-        <button class="btn-blue" id="validateBtn">✅ Validate</button>
-        <button class="btn-primary" id="uploadBtn">⬆️ Upload to Firestore</button>
+        <button class="btn-blue"      id="validateBtn">✅ Validate</button>
+        <button class="btn-primary"   id="uploadBtn">⬆️ Upload to Firestore</button>
       </div>
       <div class="progress-wrap hidden" id="progressWrap">
         <div class="progress-fill" id="progressFill"></div>
       </div>
     </div>
 
-    <!-- STEP 4: Stats -->
+    <!-- Status -->
     <div class="panel">
       <div class="panel-title">Step 3 — Status</div>
       <div class="stats">
@@ -204,7 +218,7 @@
     <div class="panel">
       <div class="panel-title">Firestore Question Stats</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
-        <select id="statsExamSel" style="width:auto;flex:1;"></select>
+        <select id="statsExamSel" style="flex:1;"></select>
         <button class="btn-blue" id="loadStatsBtn">🔄 Load Stats</button>
       </div>
       <div class="stats" style="margin-bottom:12px;">
@@ -219,10 +233,10 @@
     <!-- Log -->
     <div class="panel">
       <div class="panel-title">Log</div>
-      <div class="log" id="log">Ready. Select exam, type and subject, then paste JSON.</div>
+      <div class="log" id="log">Ready.</div>
       <div class="btn-row" style="margin-top:8px;">
         <button class="btn-secondary" id="clearLogBtn">Clear Log</button>
-        <button class="btn-danger" id="logoutBtn">Logout</button>
+        <button class="btn-danger"    id="logoutBtn">Logout</button>
       </div>
     </div>
 
@@ -231,15 +245,14 @@
 
 <script type="module">
 import { auth, db, googleProvider } from '../js/firebase-config.js';
-import { EXAMS, getExamById } from '../js/exams.js';
+import { EXAMS } from '../js/exams.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from '../js/subjects.js';
 import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { doc, writeBatch, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ── Config ─────────────────────────────────────────────────────────────────
 const ADMIN_EMAILS = ['112ce0489@gmail.com'];
-// All subjects shared across exams (v10 flat structure)
 const ALL_SUBJECTS = SUBJECTS_UPPSC_MAINS;
+const VALID_SUBJECT_IDS = ALL_SUBJECTS.map(s => s.id);
 
 const $ = id => document.getElementById(id);
 
@@ -247,8 +260,7 @@ const $ = id => document.getElementById(id);
 function log(msg, type = 'info') {
   const el = $('log');
   const cls = { ok:'ok', err:'err', warn:'warn', info:'info' }[type] || 'info';
-  const time = new Date().toLocaleTimeString();
-  el.innerHTML += `<span class="${cls}">[${time}] ${msg}\n</span>`;
+  el.innerHTML += `<span class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}\n</span>`;
   el.scrollTop = el.scrollHeight;
 }
 $('clearLogBtn').onclick = () => { $('log').innerHTML = 'Log cleared.\n'; };
@@ -261,7 +273,7 @@ onAuthStateChanged(auth, user => {
     log(`✅ Signed in as ${user.email}`, 'ok');
     initUI();
   } else if (user) {
-    log(`⛔ Access denied for ${user.email}. Not an admin.`, 'err');
+    log(`⛔ Access denied for ${user.email}`, 'err');
     signOut(auth);
   } else {
     $('loginPanel').classList.remove('hidden');
@@ -275,151 +287,202 @@ $('logoutBtn').onclick = () => signOut(auth);
 // ── State ──────────────────────────────────────────────────────────────────
 let selectedType = 'pyq';
 
-// ── Init UI ────────────────────────────────────────────────────────────────
+// ── Init ───────────────────────────────────────────────────────────────────
 function initUI() {
-  // Exam selector
-  $('examSel').innerHTML = EXAMS.map(e =>
-    `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`
+  // Exam selectors
+  const examOpts = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
+  $('examSel').innerHTML = examOpts;
+  $('statsExamSel').innerHTML = examOpts;
+
+  // Subject dropdown (for Practice)
+  $('subjectSel').innerHTML = ALL_SUBJECTS.map(s =>
+    `<option value="${s.id}">${s.icon || '📖'} ${s.name}</option>`
   ).join('');
+  renderTopicDropdown();
+  $('subjectSel').addEventListener('change', renderTopicDropdown);
 
-  // Stats exam selector
-  $('statsExamSel').innerHTML = EXAMS.map(e =>
-    `<option value="${e.id}">${e.name}</option>`
-  ).join('');
+  // Subject reference table
+  $('subjectRef').innerHTML = ALL_SUBJECTS.map(s => `
+    <div class="ref-subj">
+      <span class="ref-id">${s.id}</span>
+      <span class="ref-name">${s.icon || ''} ${s.name}</span>
+    </div>`).join('');
 
-  renderSubjectDropdown();
-  renderSubjectRef();
-
-  // Type tabs
+  // Type tab switching
   document.querySelectorAll('.type-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       selectedType = tab.dataset.type;
-      // Show/hide year field
-      $('yearLabel').style.display = selectedType === 'pyq' ? '' : 'none';
-      $('yearInput').style.display  = selectedType === 'pyq' ? '' : 'none';
-      log(`Type set to: ${selectedType}`, 'info');
+      toggleTypeUI();
+      log(`Type: ${selectedType.toUpperCase()}`, 'info');
     });
   });
 
-  $('subjectSel').addEventListener('change', renderTopicDropdown);
+  toggleTypeUI();
 }
 
-function renderSubjectDropdown() {
-  $('subjectSel').innerHTML = ALL_SUBJECTS.map(s =>
-    `<option value="${s.id}">${s.icon || '📖'} ${s.name}</option>`
-  ).join('');
-  renderTopicDropdown();
+function toggleTypeUI() {
+  const isPyq = selectedType === 'pyq';
+  $('pyqOptions').classList.toggle('hidden', !isPyq);
+  $('practiceOptions').classList.toggle('hidden', isPyq);
+  $('pyqFormat').classList.toggle('hidden', !isPyq);
+  $('practiceFormat').classList.toggle('hidden', isPyq);
 }
 
 function renderTopicDropdown() {
   const subjId = $('subjectSel').value;
-  const topics = getTopicsFor(subjId); // [{id:'all',label:'All'}, ...]
+  const topics = getTopicsFor(subjId);
   $('topicSel').innerHTML = topics.map(t =>
     `<option value="${t.id}">${t.label}</option>`
   ).join('');
 }
 
-function renderSubjectRef() {
-  $('subjectRef').innerHTML = ALL_SUBJECTS.map(s => `
-    <div class="ref-subj">
-      <span class="ref-id">${s.id}</span>
-      <span class="ref-name">${s.icon || ''} ${s.name}</span>
-    </div>
-  `).join('');
-}
-
 // ── Template ───────────────────────────────────────────────────────────────
 $('templateBtn').onclick = () => {
-  const examId  = $('examSel').value;
-  const subjId  = $('subjectSel').value;
-  const year    = parseInt($('yearInput').value) || 2024;
-  const topic   = $('topicSel').value === 'all' ? undefined : $('topicSel').value;
-  const type    = selectedType;
+  const examId = $('examSel').value;
+  const year   = parseInt($('yearInput').value) || 2024;
 
-  const base = { question: "Sample question — replace with real content?",
-    options: ["Option A", "Option B", "Option C", "Option D"],
-    answer: 0, explanation: "Why option A is correct." };
+  let qs;
 
-  const qs = type === 'pyq'
-    ? [
-        { ...base, subject: subjId, year, ...(topic ? {topic} : {}), question: "PYQ Sample 1?" },
-        { ...base, subject: subjId, year: year - 2, answer: 1, ...(topic ? {topic} : {}), question: "PYQ Sample 2?" }
-      ]
-    : [
-        { ...base, subject: subjId, ...(topic ? {topic} : {}), question: "Practice Sample 1?" },
-        { ...base, subject: subjId, answer: 2, ...(topic ? {topic} : {}), question: "Practice Sample 2?" }
-      ];
+  if (selectedType === 'pyq') {
+    // PYQ: each question has its own subject — show multi-subject example
+    qs = [
+      {
+        question: "PYQ Sample — Subject 1 (e.g. Strength of Materials)?",
+        options: ["Option A", "Option B", "Option C", "Option D"],
+        answer: 0,
+        explanation: "Why option A is correct.",
+        subject: "strength-of-materials",
+        year: year,
+        topic: "stress-strain"
+      },
+      {
+        question: "PYQ Sample — Subject 2 (e.g. Fluid Mechanics)?",
+        options: ["Option A", "Option B", "Option C", "Option D"],
+        answer: 1,
+        explanation: "Why option B is correct.",
+        subject: "fluid-mechanics",
+        year: year,
+        topic: "pipe-flow"
+      },
+      {
+        question: "PYQ Sample — Subject 3 (e.g. Structural Analysis)?",
+        options: ["Option A", "Option B", "Option C", "Option D"],
+        answer: 2,
+        explanation: "Why option C is correct.",
+        subject: "structural-analysis",
+        year: year - 2
+      }
+    ];
+  } else {
+    // Practice: all same subject (from dropdown)
+    const subjId = $('subjectSel').value;
+    const topic  = $('topicSel').value !== 'all' ? $('topicSel').value : undefined;
+    qs = [
+      {
+        question: "Practice Sample 1 — replace with real question?",
+        options: ["Option A", "Option B", "Option C", "Option D"],
+        answer: 0,
+        explanation: "Why option A is correct.",
+        subject: subjId,
+        ...(topic ? { topic } : {})
+      },
+      {
+        question: "Practice Sample 2 — replace with real question?",
+        options: ["Option A", "Option B", "Option C", "Option D"],
+        answer: 2,
+        explanation: "Why option C is correct.",
+        subject: subjId,
+        ...(topic ? { topic } : {})
+      }
+    ];
+  }
 
   $('jsonInput').value = JSON.stringify(qs, null, 2);
-  log(`Template loaded — ${type.toUpperCase()} · ${subjId} · exam: ${examId}`, 'info');
+  log(`Template loaded for ${selectedType.toUpperCase()} · exam: ${examId}`, 'info');
 };
 
-// ── Validation ─────────────────────────────────────────────────────────────
-function validateQ(q, defaultSubject, defaultType, defaultYear) {
+// ── Validate each question ─────────────────────────────────────────────────
+function validateAndBuild(raw, index, defaultExam, defaultType, defaultYear, defaultSubject, defaultTopic) {
   const errs = [];
-  if (!q.question || typeof q.question !== 'string' || !q.question.trim())
-    errs.push('missing question text');
-  if (!Array.isArray(q.options) || q.options.length < 2)
-    errs.push('options must be array with 2+ items');
-  if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= (q.options||[]).length)
-    errs.push('answer must be valid 0-based index');
-  return errs;
-}
 
-function buildFinalQ(raw, defaultSubject, defaultExam, defaultType, defaultYear, defaultTopic) {
+  if (!raw.question || typeof raw.question !== 'string' || !raw.question.trim())
+    errs.push('missing question text');
+  if (!Array.isArray(raw.options) || raw.options.length < 2)
+    errs.push('options must be array with ≥2 items');
+  if (typeof raw.answer !== 'number' || raw.answer < 0 || raw.answer >= (raw.options || []).length)
+    errs.push('answer must be valid 0-based index');
+
+  // Subject validation
+  const subject = raw.subject || defaultSubject;
+  if (!subject) {
+    errs.push('subject is required — add "subject": "subject-id" to each question');
+  } else if (!VALID_SUBJECT_IDS.includes(subject)) {
+    errs.push(`unknown subject "${subject}" — check Subject IDs reference above`);
+  }
+
+  if (errs.length) return { ok: false, errs };
+
+  const type = raw.type || defaultType;
   const q = {
     question:    raw.question.trim(),
     options:     raw.options.map(o => String(o).trim()),
     answer:      raw.answer,
     explanation: raw.explanation ? String(raw.explanation).trim() : '',
-    subject:     raw.subject || defaultSubject,
-    exam:        raw.exam    || defaultExam,
-    type:        raw.type    || defaultType,
-    tier:        raw.tier    || 'free',
+    subject,
+    exam:        raw.exam || defaultExam,
+    type,
+    tier:        raw.tier || 'free',
     createdAt:   new Date().toISOString(),
   };
-  // Topic: use per-question if present, else dropdown default (skip if 'all')
-  const topic = raw.topic || (defaultTopic !== 'all' ? defaultTopic : null);
+
+  // Topic
+  const topic = raw.topic || (defaultTopic && defaultTopic !== 'all' ? defaultTopic : null);
   if (topic) q.topic = topic;
-  // Year: only for PYQ
-  if (q.type === 'pyq') {
+
+  // Year (PYQ only)
+  if (type === 'pyq') {
     q.year = raw.year || defaultYear;
+    if (!q.year) errs.push('year is required for PYQ');
   }
+
   if (raw.difficulty) q.difficulty = raw.difficulty;
-  return q;
+
+  if (errs.length) return { ok: false, errs };
+  return { ok: true, q };
 }
 
-// ── Validate button ────────────────────────────────────────────────────────
-$('validateBtn').onclick = () => runValidate(false);
-
+// ── Run validation ─────────────────────────────────────────────────────────
 async function runValidate(doUpload = false) {
   let arr;
   try {
-    arr = JSON.parse($('jsonInput').value.trim());
+    const text = $('jsonInput').value.trim();
+    if (!text) { log('JSON input is empty.', 'err'); return null; }
+    arr = JSON.parse(text);
     if (!Array.isArray(arr)) throw new Error('JSON must be an array [ ... ]');
   } catch(e) {
     log('❌ JSON parse error: ' + e.message, 'err');
     return null;
   }
 
-  const defaultSubject = $('subjectSel').value;
   const defaultExam    = $('examSel').value;
   const defaultType    = selectedType;
   const defaultYear    = parseInt($('yearInput').value) || 2024;
-  const defaultTopic   = $('topicSel').value;
+  // For PYQ: no default subject (must be in JSON). For Practice: use dropdown.
+  const defaultSubject = selectedType === 'practice' ? $('subjectSel').value : null;
+  const defaultTopic   = selectedType === 'practice' ? $('topicSel').value : null;
 
-  $('statParsed').textContent  = arr.length;
+  $('statParsed').textContent = arr.length;
   let valid = [], skipped = 0;
 
   arr.forEach((raw, i) => {
-    const errs = validateQ(raw, defaultSubject, defaultType, defaultYear);
-    if (errs.length) {
-      log(`Q${i+1} ❌ skipped — ${errs.join(' · ')}`, 'err');
+    const result = validateAndBuild(raw, i, defaultExam, defaultType, defaultYear, defaultSubject, defaultTopic);
+    if (!result.ok) {
+      log(`Q${i+1} ❌ — ${result.errs.join(' · ')}`, 'err');
       skipped++;
     } else {
-      valid.push(buildFinalQ(raw, defaultSubject, defaultExam, defaultType, defaultYear, defaultTopic));
+      valid.push(result.q);
     }
   });
 
@@ -427,50 +490,58 @@ async function runValidate(doUpload = false) {
   $('statSkipped').textContent = skipped;
 
   if (!doUpload) {
-    log(`Validation: ${valid.length} valid, ${skipped} skipped out of ${arr.length}`, valid.length > 0 ? 'ok' : 'warn');
     if (valid.length > 0) {
-      log(`Preview Q1: "${valid[0].question.substring(0,60)}…" | type:${valid[0].type} | subject:${valid[0].subject} | exam:${valid[0].exam}${valid[0].year ? ' | year:'+valid[0].year : ''}`, 'info');
+      log(`✅ Validation: ${valid.length} valid, ${skipped} skipped`, 'ok');
+      // Show summary breakdown by subject
+      const bySubj = {};
+      valid.forEach(q => { bySubj[q.subject] = (bySubj[q.subject] || 0) + 1; });
+      Object.entries(bySubj).forEach(([s, c]) => log(`   ${s}: ${c} questions`, 'info'));
+      if (valid[0].year) log(`   Year: ${valid[0].year}`, 'info');
+    } else {
+      log(`⚠️ No valid questions. Fix errors above.`, 'warn');
     }
     return null;
   }
   return valid;
 }
 
+$('validateBtn').onclick = () => runValidate(false);
+
 // ── Upload ─────────────────────────────────────────────────────────────────
 $('uploadBtn').onclick = async () => {
   const valid = await runValidate(true);
   if (!valid || valid.length === 0) {
-    log('Nothing valid to upload. Fix errors and try again.', 'err');
+    log('Nothing valid to upload. Fix errors first.', 'err');
     return;
   }
 
-  log(`⬆️ Uploading ${valid.length} questions...`, 'info');
+  log(`⬆️ Uploading ${valid.length} questions to Firestore...`, 'info');
   $('progressWrap').classList.remove('hidden');
   $('statUploaded').textContent = '0';
+  $('progressFill').style.width = '0%';
 
   let uploaded = 0;
-  const BATCH_SIZE = 400;   // Firestore batch limit is 500
+  const BATCH_SIZE = 400;
 
   try {
     for (let i = 0; i < valid.length; i += BATCH_SIZE) {
       const slice = valid.slice(i, i + BATCH_SIZE);
       const batch = writeBatch(db);
-
       slice.forEach(q => {
-        const examId = q.exam;
-        const ref = doc(collection(db, 'exams', examId, 'questions'));
+        const ref = doc(collection(db, 'exams', q.exam, 'questions'));
         batch.set(ref, q);
       });
-
       await batch.commit();
       uploaded += slice.length;
       $('statUploaded').textContent = uploaded;
       $('progressFill').style.width = `${Math.round(uploaded / valid.length * 100)}%`;
-      log(`Batch ${Math.ceil((i+1)/BATCH_SIZE)}: uploaded ${uploaded}/${valid.length}`, 'ok');
+      log(`Batch uploaded: ${uploaded}/${valid.length}`, 'ok');
     }
-
-    log(`✅ Done! ${uploaded} questions uploaded to Firestore.`, 'ok');
-    log(`Exam: ${valid[0].exam} | Type: ${valid[0].type} | Subject: ${valid[0].subject}`, 'info');
+    log(`✅ Done! ${uploaded} questions uploaded successfully.`, 'ok');
+    // Subject summary
+    const bySubj = {};
+    valid.forEach(q => { bySubj[q.subject] = (bySubj[q.subject] || 0) + 1; });
+    Object.entries(bySubj).forEach(([s, c]) => log(`   ${s}: ${c} questions`, 'info'));
   } catch(e) {
     log('❌ Upload error: ' + e.message, 'err');
     console.error(e);
@@ -480,61 +551,50 @@ $('uploadBtn').onclick = async () => {
 // ── Firestore Stats ────────────────────────────────────────────────────────
 $('loadStatsBtn').onclick = async () => {
   const examId = $('statsExamSel').value;
-  $('fsTotal').textContent = '…'; $('fsPyq').textContent = '…';
-  $('fsPractice').textContent = '…'; $('fsOther').textContent = '…';
+  ['fsTotal','fsPyq','fsPractice','fsOther'].forEach(id => $(id).textContent = '…');
   $('breakdownWrap').classList.add('hidden');
   log(`Loading stats for ${examId}...`, 'info');
-
   try {
-    const col  = collection(db, 'exams', examId, 'questions');
-    const snap = await getDocs(col);
-    const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-
+    const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+    const docs = snap.docs.map(d => d.data());
     const total    = docs.length;
     const pyq      = docs.filter(d => d.type === 'pyq').length;
     const practice = docs.filter(d => d.type === 'practice').length;
-    const other    = total - pyq - practice;
-
     $('fsTotal').textContent    = total;
     $('fsPyq').textContent      = pyq;
     $('fsPractice').textContent = practice;
-    $('fsOther').textContent    = other;
+    $('fsOther').textContent    = total - pyq - practice;
 
     // Subject breakdown
     const bySubj = {};
     docs.forEach(d => {
-      const s = d.subject || '(no subject)';
-      if (!bySubj[s]) bySubj[s] = { total: 0, pyq: 0, practice: 0 };
+      const s = d.subject || '(unknown)';
+      if (!bySubj[s]) bySubj[s] = { total:0, pyq:0, practice:0 };
       bySubj[s].total++;
-      if (d.type === 'pyq') bySubj[s].pyq++;
+      if (d.type === 'pyq')      bySubj[s].pyq++;
       if (d.type === 'practice') bySubj[s].practice++;
     });
-
     const sorted = Object.entries(bySubj).sort((a,b) => b[1].total - a[1].total);
     const max = sorted[0]?.[1].total || 1;
-
     const wrap = $('breakdownWrap');
-    wrap.innerHTML = `<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Subject breakdown</div>`;
-    sorted.forEach(([subj, counts]) => {
-      const pct = Math.round(counts.total / max * 100);
-      const subjName = ALL_SUBJECTS.find(s => s.id === subj)?.name || subj;
+    wrap.innerHTML = `<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Subject breakdown (${examId})</div>`;
+    sorted.forEach(([subj, c]) => {
+      const name = ALL_SUBJECTS.find(s => s.id === subj)?.name || subj;
+      const pct  = Math.round(c.total / max * 100);
       wrap.innerHTML += `
         <div class="breakdown-row">
-          <div class="breakdown-name">${subjName}</div>
+          <div class="breakdown-name">${name}</div>
           <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%"></div></div>
-          <div class="breakdown-count">${counts.total}</div>
-          <div class="breakdown-types">PYQ:${counts.pyq} · Prc:${counts.practice}</div>
+          <div class="breakdown-count">${c.total}</div>
+          <div class="breakdown-types">PYQ:${c.pyq} · Prc:${c.practice}</div>
         </div>`;
     });
     wrap.classList.remove('hidden');
-
-    log(`Stats loaded: ${total} total (${pyq} PYQ, ${practice} practice) for ${examId}`, 'ok');
+    log(`Stats: ${total} total (${pyq} PYQ, ${practice} practice) — ${examId}`, 'ok');
   } catch(e) {
     log('❌ Stats error: ' + e.message, 'err');
-    console.error(e);
   }
 };
-
 </script>
 </body>
 </html>
