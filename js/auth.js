@@ -5,15 +5,37 @@ import {
   signInWithRedirect,
   getRedirectResult,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-export function watchAuth(onLoggedIn, onLoggedOut) {
-  getRedirectResult(auth).catch(err => {
-    console.error('Redirect login error:', err);
-  });
+// Force LOCAL persistence — user stays logged in across reloads/sessions
+setPersistence(auth, browserLocalPersistence).catch(err => {
+  console.warn('Could not set persistence:', err);
+});
 
-  onAuthStateChanged(auth, (user) => {
+export function watchAuth(onLoggedIn, onLoggedOut) {
+  // On mobile, after signInWithRedirect returns to the page, Firebase briefly
+  // emits null from onAuthStateChanged while it processes the redirect result.
+  // We await getRedirectResult() first so we never act on that spurious null.
+
+  const redirectPromise = getRedirectResult(auth)
+    .then(() => {})   // resolves fast if no redirect pending
+    .catch(err => { console.error('Redirect login error:', err); });
+
+  let firstEmission = true;
+
+  onAuthStateChanged(auth, async (user) => {
+    // On first emission, wait for redirect promise to settle
+    if (firstEmission) {
+      firstEmission = false;
+      await redirectPromise;
+      // Re-check current user after redirect settled
+      // (auth.currentUser is up-to-date after await)
+      user = auth.currentUser;
+    }
+
     if (user) {
       onLoggedIn({
         uid: user.uid,
@@ -29,6 +51,7 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
 
 export async function loginWithGoogle() {
   try {
+    await setPersistence(auth, browserLocalPersistence);
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
     if (isMobile) {
       await signInWithRedirect(auth, googleProvider);

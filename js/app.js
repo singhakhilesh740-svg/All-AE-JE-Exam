@@ -399,8 +399,9 @@ async function renderQuiz() {
 
 async function updateBookmarkBtn(q) {
   if (!currentUser) { $('quizBookmarkBtn').textContent = '☆'; return; }
-  const examId = q.examId || (currentExam ? currentExam.id : 'uppsc-ae');
-  const marked = await isQuestionBookmarked(currentUser.uid, examId, q.id);
+  // attach examId to question for bookmark lookup
+  const qWithExam = { ...q, examId: q.examId || (currentExam ? currentExam.id : 'uppsc-ae') };
+  const marked = await isQuestionBookmarked(currentUser.uid, qWithExam);
   $('quizBookmarkBtn').textContent = marked ? '★' : '☆';
   $('quizBookmarkBtn').dataset.marked = marked ? '1' : '0';
 }
@@ -448,23 +449,27 @@ function goBackFromQuiz() {
 
 $('quizBookmarkBtn').addEventListener('click', async () => {
   const q = Quiz.getCurrent();
-  if (!q || !currentUser) return;
-  const examId = q.examId || (currentExam ? currentExam.id : 'uppsc-ae');
+  if (!q || !currentUser) { toast('Sign in to bookmark'); return; }
+  if (!q.id) { toast('Cannot bookmark this question'); return; }
+
+  const qWithExam = { ...q, examId: q.examId || (currentExam ? currentExam.id : 'uppsc-ae') };
   const marked = $('quizBookmarkBtn').dataset.marked === '1';
 
   if (marked) {
-    const ok = await removeBookmark(currentUser.uid, examId, q.id);
+    const ok = await removeBookmark(currentUser.uid, qWithExam);
     if (ok) {
       $('quizBookmarkBtn').textContent = '☆';
       $('quizBookmarkBtn').dataset.marked = '0';
+      allBookmarks = allBookmarks.filter(b => b.id !== q.id);
       toast('Removed from bookmarks');
-    }
+    } else { toast('Failed to remove bookmark'); }
   } else {
-    const ok = await addBookmark(currentUser.uid, examId, q.id);
+    const ok = await addBookmark(currentUser.uid, qWithExam);
     if (ok) {
       $('quizBookmarkBtn').textContent = '★';
       $('quizBookmarkBtn').dataset.marked = '1';
+      allBookmarks.unshift(qWithExam);
       toast('Bookmarked ★');
-    }
+    } else { toast('Failed to bookmark'); }
   }
 });

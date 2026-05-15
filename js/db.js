@@ -1,4 +1,4 @@
-// db.js — Firestore data access layer (exam-scoped + cross-exam bookmarks with stage info)
+// db.js — Firestore data access layer
 import { db } from './firebase-config.js';
 import {
   collection,
@@ -15,18 +15,16 @@ import {
 const cache = {
   questions: {},
   cachedAt: {},
-  TTL: 1000 * 60 * 30
+  TTL: 1000 * 60 * 30   // 30 min
 };
 
-// ========== Questions ==========
-export async function fetchQuestions(opts = {}) {
-  const { exam, subject = null, stage = null, type = null, maxCount = 500, force = false } = opts;
-  if (!exam) {
-    console.error('fetchQuestions: exam is required');
-    return [];
-  }
+// ─── Questions ────────────────────────────────────────────────────────────────
 
-  const cacheKey = `${exam}:${stage || '*'}:${subject || 'all'}:${type || 'all'}`;
+export async function fetchQuestions(opts = {}) {
+  const { exam, subject = null, type = null, maxCount = 500, force = false } = opts;
+  if (!exam) { console.error('fetchQuestions: exam is required'); return []; }
+
+  const cacheKey = `${exam}:${subject || 'all'}:${type || 'all'}`;
   const now = Date.now();
 
   if (!force && cache.questions[cacheKey] && (now - (cache.cachedAt[cacheKey] || 0)) < cache.TTL) {
@@ -47,11 +45,8 @@ export async function fetchQuestions(opts = {}) {
     snap.forEach(docSnap => {
       const data = docSnap.data();
       if (isValidQuestion(data)) {
-        if (stage && data.stage && data.stage !== stage) return;
         if (type && data.type && data.type !== type) return;
-        questions.push({ id: docSnap.id, ...data });
-      } else {
-        console.warn(`Skipping malformed question ${docSnap.id}`);
+        questions.push({ id: docSnap.id, examId: exam, ...data });
       }
     });
 
@@ -71,7 +66,7 @@ export async function fetchQuestionById(examId, questionId) {
     if (!snap.exists()) return null;
     const data = snap.data();
     if (!isValidQuestion(data)) return null;
-    return { id: snap.id, ...data };
+    return { id: snap.id, examId, ...data };
   } catch (err) {
     console.error('Error fetching question:', err);
     return null;
@@ -88,7 +83,8 @@ function isValidQuestion(q) {
     && q.answer < q.options.length;
 }
 
-// ========== User profile ==========
+// ─── User profile ─────────────────────────────────────────────────────────────
+
 export async function saveUserProfile(user) {
   try {
     const userRef = doc(db, 'users', user.uid);
@@ -106,37 +102,35 @@ export async function saveUserProfile(user) {
   }
 }
 
-// ========== Attempts ==========
+// ─── Attempts ─────────────────────────────────────────────────────────────────
+
 export async function saveAttempt(userId, examId, questionId, selectedIndex, isCorrect) {
+  if (!questionId) return;   // skip if no id (local-only questions)
   try {
-    const attemptId = `${examId}_${questionId}`;
-    const attemptRef = doc(db, 'users', userId, 'attempts', attemptId);
-    await setDoc(attemptRef, {
-      examId,
-      questionId,
-      selectedIndex,
-      isCorrect,
-      attemptedAt: new Date().toISOString()
-    }, { merge: true });
+    const ref = doc(db, 'users', userId, 'attempts', `${examId}_${questionId}`);
+    await setDoc(ref, { examId, questionId, selectedIndex, isCorrect, attemptedAt: new Date().toISOString() }, { merge: true });
   } catch (err) {
     console.error('Error saving attempt:', err);
   }
 }
 
-// ========== Bookmarks (with stage info for per-stage filtering) ==========
-export async function addBookmark(userId, examId, questionId) {
+// ─── Bookmarks ────────────────────────────────────────────────────────────────
+// We store the FULL question object in Firestore so bookmarks work even if
+// questions came from local JSON (no Firestore doc to re-fetch).
+
+export async function addBookmark(userId, question) {
+  if (!question || !question.id) {
+    console.warn('addBookmark: question has no id, cannot bookmark');
+    return false;
+  }
   try {
-    const bookmarkId = `${examId}_${questionId}`;
+    const examId = question.examId || 'unknown';
+    const bookmarkId = `${examId}_${question.id}`;
     const ref = doc(db, 'users', userId, 'bookmarks', bookmarkId);
-
-    // Get the question to grab its stage
-    const qData = await fetchQuestionById(examId, questionId);
-    const stage = qData?.stage || null;
-
     await setDoc(ref, {
+      // store full question so we don't need to re-fetch
+      ...question,
       examId,
-      questionId,
-      stage,
       savedAt: new Date().toISOString()
     });
     return true;
@@ -146,9 +140,11 @@ export async function addBookmark(userId, examId, questionId) {
   }
 }
 
-export async function removeBookmark(userId, examId, questionId) {
+export async function removeBookmark(userId, question) {
+  if (!question || !question.id) return false;
   try {
-    const bookmarkId = `${examId}_${questionId}`;
+    const examId = question.examId || 'unknown';
+    const bookmarkId = `${examId}_${question.id}`;
     const ref = doc(db, 'users', userId, 'bookmarks', bookmarkId);
     await deleteDoc(ref);
     return true;
@@ -158,9 +154,11 @@ export async function removeBookmark(userId, examId, questionId) {
   }
 }
 
-export async function isQuestionBookmarked(userId, examId, questionId) {
+export async function isQuestionBookmarked(userId, question) {
+  if (!question || !question.id) return false;
   try {
-    const bookmarkId = `${examId}_${questionId}`;
+    const examId = question.examId || 'unknown';
+    const bookmarkId = `${examId}_${question.id}`;
     const ref = doc(db, 'users', userId, 'bookmarks', bookmarkId);
     const snap = await getDoc(ref);
     return snap.exists();
@@ -170,37 +168,23 @@ export async function isQuestionBookmarked(userId, examId, questionId) {
   }
 }
 
-export async function fetchAllBookmarks(userId) {
+export async function fetchBookmarkedQuestions(userId) {
   try {
     const ref = collection(db, 'users', userId, 'bookmarks');
     const snap = await getDocs(ref);
     const bookmarks = [];
     snap.forEach(docSnap => {
-      bookmarks.push({ id: docSnap.id, ...docSnap.data() });
+      const data = docSnap.data();
+      // Only include valid questions (full data stored at bookmark time)
+      if (isValidQuestion(data)) {
+        bookmarks.push({ ...data, id: data.id || docSnap.id });
+      }
     });
+    // Sort newest first
     bookmarks.sort((a, b) => (b.savedAt || '').localeCompare(a.savedAt || ''));
     return bookmarks;
   } catch (err) {
     console.error('Error fetching bookmarks:', err);
     return [];
   }
-}
-
-export async function fetchBookmarkedQuestions(userId) {
-  const bookmarks = await fetchAllBookmarks(userId);
-  if (bookmarks.length === 0) return [];
-
-  const results = [];
-  for (const bm of bookmarks) {
-    const q = await fetchQuestionById(bm.examId, bm.questionId);
-    if (q) {
-      results.push({
-        ...q,
-        examId: bm.examId,
-        stage: q.stage || bm.stage,
-        savedAt: bm.savedAt
-      });
-    }
-  }
-  return results;
 }
