@@ -179,7 +179,7 @@ export const SUBJECTS_UPPSC_MAINS = [
     ]
   },
   {
-    id: 'construction-tech', icon: '👷', name: 'Construction Mgmt.',
+    id: 'construction-tech', icon: '🏗️', name: 'Construction Technology',
     topics: [
       { id: 'estimation',    label: 'Estimation & Costing' },
       { id: 'specifications', label: 'Specifications & Rates' },
