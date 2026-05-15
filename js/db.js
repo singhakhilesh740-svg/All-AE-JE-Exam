@@ -172,17 +172,43 @@ export async function fetchBookmarkedQuestions(userId) {
   try {
     const ref = collection(db, 'users', userId, 'bookmarks');
     const snap = await getDocs(ref);
-    const bookmarks = [];
+
+    const fullQuestions = [];   // new format — full question stored in bookmark doc
+    const legacyRefs   = [];   // old format — only examId + questionId stored
+
     snap.forEach(docSnap => {
       const data = docSnap.data();
-      // Only include valid questions (full data stored at bookmark time)
       if (isValidQuestion(data)) {
-        bookmarks.push({ ...data, id: data.id || docSnap.id });
+        // New format: full question data is embedded in the bookmark doc
+        fullQuestions.push({ ...data, id: data.id || docSnap.id });
+      } else if (data.examId && data.questionId) {
+        // Old format: bookmark only stored reference IDs — need to fetch question
+        legacyRefs.push({ docId: docSnap.id, examId: data.examId, questionId: data.questionId, savedAt: data.savedAt || '' });
       }
     });
+
+    // Fetch old-format bookmarks from Firestore questions collection
+    const legacyResults = await Promise.all(
+      legacyRefs.map(async bm => {
+        try {
+          const q = await fetchQuestionById(bm.examId, bm.questionId);
+          if (!q) return null;
+          // Migrate: save full question into bookmark doc so future reads are fast
+          const bmRef = doc(db, 'users', userId, 'bookmarks', bm.docId);
+          setDoc(bmRef, { ...q, examId: bm.examId, savedAt: bm.savedAt }).catch(() => {});
+          return { ...q, examId: bm.examId, savedAt: bm.savedAt };
+        } catch { return null; }
+      })
+    );
+
+    const all = [
+      ...fullQuestions,
+      ...legacyResults.filter(Boolean)
+    ];
+
     // Sort newest first
-    bookmarks.sort((a, b) => (b.savedAt || '').localeCompare(a.savedAt || ''));
-    return bookmarks;
+    all.sort((a, b) => (b.savedAt || '').localeCompare(a.savedAt || ''));
+    return all;
   } catch (err) {
     console.error('Error fetching bookmarks:', err);
     return [];
