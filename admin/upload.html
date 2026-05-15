@@ -3,519 +3,538 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin - Upload Questions</title>
+  <title>Admin — Upload Questions</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0f172a;
-      color: #f1f5f9;
-      padding: 20px;
-      min-height: 100vh;
+      background: #0f172a; color: #f1f5f9;
+      padding: 20px; min-height: 100vh;
     }
-    .container { max-width: 800px; margin: 0 auto; }
-    h1 { color: #f59e0b; margin-bottom: 8px; }
-    .subtitle { color: #94a3b8; margin-bottom: 24px; font-size: 14px; }
+    .container { max-width: 860px; margin: 0 auto; }
+
+    h1 { color: #f59e0b; font-size: 22px; margin-bottom: 4px; }
+    .sub { color: #94a3b8; font-size: 13px; margin-bottom: 24px; }
+
     .panel {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 16px;
+      background: #1e293b; padding: 20px;
+      border-radius: 12px; margin-bottom: 16px;
       border: 1px solid #334155;
     }
-    .panel h3 { font-size: 14px; color: #f59e0b; margin-bottom: 12px; text-transform: uppercase; }
+    .panel-title {
+      font-size: 12px; font-weight: 700; color: #f59e0b;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+
+    label { font-size: 13px; color: #94a3b8; display: block; margin-bottom: 5px; margin-top: 10px; }
+    label:first-child { margin-top: 0; }
+
+    select, input[type=text], input[type=number] {
+      width: 100%; background: #0f172a; color: #f1f5f9;
+      border: 1px solid #334155; border-radius: 8px;
+      padding: 10px 12px; font-size: 14px; font-family: inherit;
+    }
+    select:focus, input:focus { outline: none; border-color: #f59e0b; }
+
     textarea {
-      width: 100%;
-      min-height: 240px;
-      background: #0f172a;
-      color: #f1f5f9;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 12px;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      resize: vertical;
+      width: 100%; min-height: 260px;
+      background: #0f172a; color: #f1f5f9;
+      border: 1px solid #334155; border-radius: 8px;
+      padding: 12px; font-family: 'Courier New', monospace;
+      font-size: 12.5px; resize: vertical; line-height: 1.6;
     }
-    select {
-      width: 100%;
-      background: #0f172a;
-      color: #f1f5f9;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
+    textarea:focus { outline: none; border-color: #f59e0b; }
+
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
     button {
-      background: #f59e0b;
-      color: #1f2937;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 12px;
-      margin-right: 8px;
+      padding: 10px 18px; border-radius: 8px; border: none;
+      font-weight: 600; font-size: 13px; cursor: pointer;
+      font-family: inherit; transition: opacity 0.15s;
     }
-    button:hover { background: #d97706; }
-    button.secondary { background: #334155; color: #f1f5f9; }
+    button:active { opacity: 0.8; }
+    .btn-primary { background: #f59e0b; color: #1f2937; }
+    .btn-secondary { background: #334155; color: #f1f5f9; }
+    .btn-danger { background: #ef4444; color: #fff; }
+    .btn-blue { background: #1e3a5f; color: #93c5fd; border: 1px solid #3b82f6; }
+    .btn-green { background: #064e3b; color: #6ee7b7; border: 1px solid #10b981; }
+
+    /* Stats row */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .stat { background: #0f172a; padding: 12px 8px; border-radius: 8px; text-align: center; border: 1px solid #334155; }
+    .stat-num { font-size: 24px; font-weight: 700; color: #f59e0b; }
+    .stat-lbl { font-size: 10px; color: #64748b; text-transform: uppercase; margin-top: 2px; }
+
+    /* Log */
     .log {
-      background: #0f172a;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      max-height: 240px;
-      overflow-y: auto;
-      white-space: pre-wrap;
+      background: #0a1122; padding: 12px; border-radius: 8px;
+      border: 1px solid #1e3a5f; font-family: 'Courier New', monospace;
+      font-size: 12px; max-height: 260px; overflow-y: auto;
+      white-space: pre-wrap; line-height: 1.6;
     }
-    .log-ok { color: #10b981; }
-    .log-err { color: #ef4444; }
-    .log-warn { color: #f59e0b; }
-    .log-info { color: #94a3b8; }
-    .badge { background: #334155; color: #f59e0b; padding: 2px 8px; border-radius: 12px; font-size: 11px; margin-left: 6px; }
-    .login-section { text-align: center; padding: 40px; }
-    .hidden { display: none; }
-    .stats { display: flex; gap: 12px; margin-top: 12px; }
-    .stat {
-      flex: 1;
-      background: #0f172a;
-      padding: 10px;
-      border-radius: 8px;
-      text-align: center;
-      border: 1px solid #334155;
+    .ok  { color: #10b981; } .err { color: #ef4444; }
+    .warn { color: #f59e0b; } .info { color: #94a3b8; }
+
+    /* Reference table */
+    .ref-grid { display: flex; flex-direction: column; gap: 6px; max-height: 300px; overflow-y: auto; }
+    .ref-subj {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #0f172a; padding: 8px 12px; border-radius: 6px;
+      border: 1px solid #1e293b;
     }
-    .stat-num { font-size: 22px; font-weight: 700; color: #f59e0b; }
-    .stat-lbl { font-size: 11px; color: #94a3b8; text-transform: uppercase; }
-    .ref-table {
-      background: #0f172a;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      font-size: 12px;
-      max-height: 280px;
-      overflow-y: auto;
+    .ref-id { font-family: 'Courier New', monospace; color: #f59e0b; font-size: 12px; font-weight: 700; }
+    .ref-name { font-size: 12px; color: #94a3b8; }
+
+    /* Progress bar */
+    .progress-wrap { background: #0f172a; border-radius: 4px; height: 8px; margin-top: 10px; overflow: hidden; }
+    .progress-fill { background: #f59e0b; height: 8px; border-radius: 4px; width: 0%; transition: width 0.3s; }
+
+    /* Type selector tabs */
+    .type-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+    .type-tab {
+      flex: 1; padding: 10px; border-radius: 8px;
+      border: 2px solid #334155; background: #0f172a;
+      color: #94a3b8; font-weight: 600; font-size: 13px;
+      cursor: pointer; text-align: center; transition: all 0.15s;
     }
-    .ref-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 4px 0;
-      border-bottom: 1px solid #1e293b;
-    }
-    .ref-row:last-child { border-bottom: none; }
-    .ref-id {
-      color: #f59e0b;
-      font-family: 'Courier New', monospace;
-      font-weight: 600;
-    }
-    .ref-name { color: #94a3b8; }
-    .empty-msg { color: #94a3b8; font-style: italic; padding: 8px; text-align: center; font-size: 11px; }
-    label { font-size: 13px; color: #94a3b8; display: block; margin-bottom: 6px; }
-    .exam-block { margin-bottom: 16px; }
-    .exam-block-title {
-      color: #f59e0b;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 8px 0 4px;
-      border-bottom: 1px solid #334155;
-      margin-bottom: 6px;
-    }
-    .stage-block-title {
-      color: #94a3b8;
-      font-weight: 600;
-      font-size: 12px;
-      padding: 4px 0 2px 12px;
-      margin-top: 4px;
-    }
+    .type-tab.active.pyq    { border-color: #f59e0b; color: #f59e0b; background: rgba(245,158,11,0.08); }
+    .type-tab.active.practice { border-color: #10b981; color: #10b981; background: rgba(16,185,129,0.08); }
+
+    /* Warning */
     .warn-box {
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px solid #f59e0b;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      color: #f59e0b;
-      margin-bottom: 12px;
+      background: rgba(245,158,11,0.1); border: 1px solid #f59e0b;
+      padding: 10px 14px; border-radius: 8px; font-size: 13px;
+      color: #f59e0b; margin-top: 10px;
     }
-    .form-row { margin-bottom: 12px; }
+
+    /* Login */
+    .login-wrap { text-align: center; padding: 60px 20px; }
+    .login-wrap p { color: #94a3b8; margin-bottom: 20px; font-size: 15px; }
+
+    .hidden { display: none !important; }
+    .divider { border: none; border-top: 1px solid #334155; margin: 12px 0; }
+
+    /* Firestore breakdown */
+    .breakdown-row {
+      display: flex; align-items: center; gap: 10px;
+      background: #0f172a; padding: 8px 10px; border-radius: 6px;
+      margin-bottom: 5px;
+    }
+    .breakdown-name { flex: 1; font-size: 12px; color: #e2e8f0; }
+    .breakdown-bar-wrap { width: 120px; background: #1e293b; border-radius: 3px; height: 5px; }
+    .breakdown-bar { height: 5px; border-radius: 3px; background: #f59e0b; }
+    .breakdown-count { font-size: 12px; color: #f59e0b; font-weight: 700; min-width: 28px; text-align: right; }
+    .breakdown-types { font-size: 10px; color: #64748b; min-width: 110px; text-align: right; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>📋 Admin Panel <span class="badge">Question Upload</span></h1>
-    <p class="subtitle">Bulk-upload questions to Firestore. Validates before saving.</p>
+<div class="container">
 
-    <div id="loginPanel" class="panel login-section">
-      <p style="margin-bottom:16px;">You must be logged in as the admin to upload questions.</p>
-      <button id="loginBtn">Login with Google</button>
-    </div>
+  <h1>📋 Admin Panel</h1>
+  <p class="sub">Upload PYQ &amp; Practice questions to Firestore · Validates before saving</p>
 
-    <div id="mainPanel" class="hidden">
-
-      <div class="panel">
-        <h3>🎯 Default Exam & Stage</h3>
-        <p class="subtitle" style="margin-bottom:12px;">Questions without "exam" or "stage" fields will use these defaults.</p>
-        <div class="form-row">
-          <label>Default Exam:</label>
-          <select id="examSelect"></select>
-        </div>
-        <div class="form-row">
-          <label>Default Stage:</label>
-          <select id="stageSelect"></select>
-        </div>
-        <div id="examWarning" class="warn-box hidden">
-          ⚠️ This stage has no subjects defined. Add subjects in <code>js/exams.js</code> before uploading.
-        </div>
-      </div>
-
-      <div class="panel">
-        <h3>📚 Reference: Exams → Stages → Subjects</h3>
-        <p class="subtitle" style="margin-bottom:8px;">Use these IDs in your JSON. Subjects are scoped per stage.</p>
-        <div class="ref-table" id="examsRef"></div>
-      </div>
-
-      <div class="panel">
-        <h3>1. Paste Questions JSON</h3>
-        <p class="subtitle">Each question must have a "subject" field. Optional: "exam" and "stage" fields override defaults above.</p>
-        <textarea id="jsonInput" placeholder='[{"question":"...", "options":["A","B","C","D"], "answer":0, "explanation":"...", "subject":"YOUR_SUBJECT_ID", "stage":"mains", "exam":"uppsc-ae", "year":2024, "tier":"free"}]'></textarea>
-        <button id="loadTemplateBtn" class="secondary">Load Template</button>
-        <button id="validateBtn" class="secondary">Validate Only</button>
-        <button id="uploadBtn">Upload to Firestore</button>
-      </div>
-
-      <div class="panel">
-        <h3>2. Status</h3>
-        <div class="stats">
-          <div class="stat"><div class="stat-num" id="statValid">0</div><div class="stat-lbl">Valid</div></div>
-          <div class="stat"><div class="stat-num" id="statInvalid">0</div><div class="stat-lbl">Invalid</div></div>
-          <div class="stat"><div class="stat-num" id="statUploaded">0</div><div class="stat-lbl">Uploaded</div></div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h3>3. Firestore Question Stats</h3>
-        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-          <button id="loadStatsBtn" style="background:#1e3a5f;border:1px solid #3b82f6;color:#93c5fd;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;">Load Stats from Firestore</button>
-          <select id="statsExamSel" style="background:#0f172a;border:1px solid #334155;color:#e2e8f0;padding:6px 10px;border-radius:6px;font-size:13px;"></select>
-        </div>
-        <div class="stats" style="margin-bottom:12px;">
-          <div class="stat"><div class="stat-num" id="fsTotal">—</div><div class="stat-lbl">Total Questions</div></div>
-          <div class="stat"><div class="stat-num" id="fsPyq">—</div><div class="stat-lbl">PYQ</div></div>
-          <div class="stat"><div class="stat-num" id="fsPractice">—</div><div class="stat-lbl">Practice</div></div>
-        </div>
-        <div id="subjectBreakdown" style="display:none;">
-          <div style="font-size:12px;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Subject-wise distribution</div>
-          <div id="subjectTable" style="display:grid;gap:4px;"></div>
-        </div>
-        <div id="statsMsg" style="font-size:13px;color:#94a3b8;"></div>
-      </div>
-
-      <div class="panel">
-        <h3>4. Log</h3>
-        <div class="log" id="log">Ready.</div>
-      </div>
-
-      <button id="logoutBtn" class="secondary">Logout</button>
-    </div>
+  <!-- LOGIN -->
+  <div id="loginPanel" class="panel login-wrap">
+    <p>Sign in with your admin Google account to upload questions.</p>
+    <button class="btn-primary" id="loginBtn">🔐 Login with Google</button>
   </div>
 
-  <script type="module">
-    import { auth, db, googleProvider } from '../js/firebase-config.js';
-    import {
-      EXAMS,
-      getValidExamIds,
-      getExamById,
-      getStagesForExam,
-      getStageFromExam,
-      getSubjectsForStage
-    } from '../js/exams.js';
-    import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { doc, setDoc, writeBatch, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <!-- MAIN -->
+  <div id="mainPanel" class="hidden">
 
-    const ADMIN_EMAILS = ['112ce0489@gmail.com'];
-    const VALID_EXAMS = getValidExamIds();
+    <!-- STEP 1: Select Exam & Type -->
+    <div class="panel">
+      <div class="panel-title">Step 1 — Select Exam &amp; Question Type</div>
 
-    const $ = id => document.getElementById(id);
-    const log = (msg, type = 'info') => {
-      const el = $('log');
-      const cls = type === 'ok' ? 'log-ok' : type === 'err' ? 'log-err' : type === 'warn' ? 'log-warn' : 'log-info';
-      el.innerHTML += `<div class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</div>`;
-      el.scrollTop = el.scrollHeight;
-    };
+      <label>Exam</label>
+      <select id="examSel"></select>
 
-    // Render reference: exams → stages → subjects
-    function renderExamsRef() {
-      const container = $('examsRef');
-      container.innerHTML = EXAMS.map(exam => {
-        const stages = exam.stages || [];
-        const stageBlocks = stages.map(stage => {
-          const subjs = stage.subjects || [];
-          const subjRows = subjs.length > 0
-            ? subjs.map(s =>
-                `<div class="ref-row" style="padding-left: 24px;">
-                  <span class="ref-id">${s.id}</span>
-                  <span class="ref-name">${s.icon || '📖'} ${s.name}</span>
-                </div>`
-              ).join('')
-            : `<div class="empty-msg" style="padding-left:24px;">No subjects</div>`;
-          return `
-            <div class="stage-block-title">${stage.icon} ${stage.name} <span style="color:#94a3b8; font-weight:normal; font-size:11px;">(${stage.id})</span></div>
-            ${subjRows}
-          `;
-        }).join('');
+      <label style="margin-top:14px;">Question Type</label>
+      <div class="type-tabs">
+        <div class="type-tab pyq active" data-type="pyq">📜 PYQ<br><small style="font-weight:400;font-size:11px;">Previous Year Questions</small></div>
+        <div class="type-tab practice" data-type="practice">✏️ Practice<br><small style="font-weight:400;font-size:11px;">Important Practice Qs</small></div>
+      </div>
 
-        return `
-          <div class="exam-block">
-            <div class="exam-block-title">${exam.icon} ${exam.name} <span style="color:#94a3b8; font-weight:normal;">(${exam.id})</span></div>
-            ${stageBlocks}
-          </div>
-        `;
-      }).join('');
+      <label>Subject</label>
+      <select id="subjectSel"></select>
+
+      <label id="yearLabel">Default Year <small style="color:#64748b;">(for PYQ — can override per question)</small></label>
+      <input type="number" id="yearInput" value="2024" min="1990" max="2030" />
+
+      <label>Topic Tag <small style="color:#64748b;">(optional — for topic filter chips)</small></label>
+      <select id="topicSel"></select>
+    </div>
+
+    <!-- STEP 2: Subject Reference -->
+    <div class="panel">
+      <div class="panel-title">Subject IDs Reference</div>
+      <div class="ref-grid" id="subjectRef"></div>
+    </div>
+
+    <!-- STEP 3: JSON Input -->
+    <div class="panel">
+      <div class="panel-title">Step 2 — Paste Questions JSON</div>
+      <p style="font-size:12px;color:#64748b;margin-bottom:10px;">
+        Required fields: <code style="color:#f59e0b;">question</code>, <code style="color:#f59e0b;">options</code> (array), <code style="color:#f59e0b;">answer</code> (0-based index)<br>
+        Optional: <code style="color:#94a3b8;">explanation</code>, <code style="color:#94a3b8;">year</code>, <code style="color:#94a3b8;">topic</code>, <code style="color:#94a3b8;">subject</code> (overrides selector above)
+      </p>
+      <textarea id="jsonInput" placeholder='Paste your JSON array here...'></textarea>
+      <div class="btn-row">
+        <button class="btn-secondary" id="templateBtn">📄 Load Template</button>
+        <button class="btn-blue" id="validateBtn">✅ Validate</button>
+        <button class="btn-primary" id="uploadBtn">⬆️ Upload to Firestore</button>
+      </div>
+      <div class="progress-wrap hidden" id="progressWrap">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Stats -->
+    <div class="panel">
+      <div class="panel-title">Step 3 — Status</div>
+      <div class="stats">
+        <div class="stat"><div class="stat-num" id="statParsed">0</div><div class="stat-lbl">Parsed</div></div>
+        <div class="stat"><div class="stat-num" id="statValid">0</div><div class="stat-lbl">Valid</div></div>
+        <div class="stat"><div class="stat-num" id="statSkipped">0</div><div class="stat-lbl">Skipped</div></div>
+        <div class="stat"><div class="stat-num" id="statUploaded">0</div><div class="stat-lbl">Uploaded</div></div>
+      </div>
+    </div>
+
+    <!-- Firestore Stats -->
+    <div class="panel">
+      <div class="panel-title">Firestore Question Stats</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+        <select id="statsExamSel" style="width:auto;flex:1;"></select>
+        <button class="btn-blue" id="loadStatsBtn">🔄 Load Stats</button>
+      </div>
+      <div class="stats" style="margin-bottom:12px;">
+        <div class="stat"><div class="stat-num" id="fsTotal">—</div><div class="stat-lbl">Total</div></div>
+        <div class="stat"><div class="stat-num" id="fsPyq">—</div><div class="stat-lbl">PYQ</div></div>
+        <div class="stat"><div class="stat-num" id="fsPractice">—</div><div class="stat-lbl">Practice</div></div>
+        <div class="stat"><div class="stat-num" id="fsOther">—</div><div class="stat-lbl">Other</div></div>
+      </div>
+      <div id="breakdownWrap" class="hidden"></div>
+    </div>
+
+    <!-- Log -->
+    <div class="panel">
+      <div class="panel-title">Log</div>
+      <div class="log" id="log">Ready. Select exam, type and subject, then paste JSON.</div>
+      <div class="btn-row" style="margin-top:8px;">
+        <button class="btn-secondary" id="clearLogBtn">Clear Log</button>
+        <button class="btn-danger" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+  </div><!-- /mainPanel -->
+</div>
+
+<script type="module">
+import { auth, db, googleProvider } from '../js/firebase-config.js';
+import { EXAMS, getExamById } from '../js/exams.js';
+import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from '../js/subjects.js';
+import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, writeBatch, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ── Config ─────────────────────────────────────────────────────────────────
+const ADMIN_EMAILS = ['112ce0489@gmail.com'];
+// All subjects shared across exams (v10 flat structure)
+const ALL_SUBJECTS = SUBJECTS_UPPSC_MAINS;
+
+const $ = id => document.getElementById(id);
+
+// ── Log ────────────────────────────────────────────────────────────────────
+function log(msg, type = 'info') {
+  const el = $('log');
+  const cls = { ok:'ok', err:'err', warn:'warn', info:'info' }[type] || 'info';
+  const time = new Date().toLocaleTimeString();
+  el.innerHTML += `<span class="${cls}">[${time}] ${msg}\n</span>`;
+  el.scrollTop = el.scrollHeight;
+}
+$('clearLogBtn').onclick = () => { $('log').innerHTML = 'Log cleared.\n'; };
+
+// ── Auth ───────────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, user => {
+  if (user && ADMIN_EMAILS.includes(user.email)) {
+    $('loginPanel').classList.add('hidden');
+    $('mainPanel').classList.remove('hidden');
+    log(`✅ Signed in as ${user.email}`, 'ok');
+    initUI();
+  } else if (user) {
+    log(`⛔ Access denied for ${user.email}. Not an admin.`, 'err');
+    signOut(auth);
+  } else {
+    $('loginPanel').classList.remove('hidden');
+    $('mainPanel').classList.add('hidden');
+  }
+});
+
+$('loginBtn').onclick  = () => signInWithPopup(auth, googleProvider).catch(e => log(e.message, 'err'));
+$('logoutBtn').onclick = () => signOut(auth);
+
+// ── State ──────────────────────────────────────────────────────────────────
+let selectedType = 'pyq';
+
+// ── Init UI ────────────────────────────────────────────────────────────────
+function initUI() {
+  // Exam selector
+  $('examSel').innerHTML = EXAMS.map(e =>
+    `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`
+  ).join('');
+
+  // Stats exam selector
+  $('statsExamSel').innerHTML = EXAMS.map(e =>
+    `<option value="${e.id}">${e.name}</option>`
+  ).join('');
+
+  renderSubjectDropdown();
+  renderSubjectRef();
+
+  // Type tabs
+  document.querySelectorAll('.type-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      selectedType = tab.dataset.type;
+      // Show/hide year field
+      $('yearLabel').style.display = selectedType === 'pyq' ? '' : 'none';
+      $('yearInput').style.display  = selectedType === 'pyq' ? '' : 'none';
+      log(`Type set to: ${selectedType}`, 'info');
+    });
+  });
+
+  $('subjectSel').addEventListener('change', renderTopicDropdown);
+}
+
+function renderSubjectDropdown() {
+  $('subjectSel').innerHTML = ALL_SUBJECTS.map(s =>
+    `<option value="${s.id}">${s.icon || '📖'} ${s.name}</option>`
+  ).join('');
+  renderTopicDropdown();
+}
+
+function renderTopicDropdown() {
+  const subjId = $('subjectSel').value;
+  const topics = getTopicsFor(subjId); // [{id:'all',label:'All'}, ...]
+  $('topicSel').innerHTML = topics.map(t =>
+    `<option value="${t.id}">${t.label}</option>`
+  ).join('');
+}
+
+function renderSubjectRef() {
+  $('subjectRef').innerHTML = ALL_SUBJECTS.map(s => `
+    <div class="ref-subj">
+      <span class="ref-id">${s.id}</span>
+      <span class="ref-name">${s.icon || ''} ${s.name}</span>
+    </div>
+  `).join('');
+}
+
+// ── Template ───────────────────────────────────────────────────────────────
+$('templateBtn').onclick = () => {
+  const examId  = $('examSel').value;
+  const subjId  = $('subjectSel').value;
+  const year    = parseInt($('yearInput').value) || 2024;
+  const topic   = $('topicSel').value === 'all' ? undefined : $('topicSel').value;
+  const type    = selectedType;
+
+  const base = { question: "Sample question — replace with real content?",
+    options: ["Option A", "Option B", "Option C", "Option D"],
+    answer: 0, explanation: "Why option A is correct." };
+
+  const qs = type === 'pyq'
+    ? [
+        { ...base, subject: subjId, year, ...(topic ? {topic} : {}), question: "PYQ Sample 1?" },
+        { ...base, subject: subjId, year: year - 2, answer: 1, ...(topic ? {topic} : {}), question: "PYQ Sample 2?" }
+      ]
+    : [
+        { ...base, subject: subjId, ...(topic ? {topic} : {}), question: "Practice Sample 1?" },
+        { ...base, subject: subjId, answer: 2, ...(topic ? {topic} : {}), question: "Practice Sample 2?" }
+      ];
+
+  $('jsonInput').value = JSON.stringify(qs, null, 2);
+  log(`Template loaded — ${type.toUpperCase()} · ${subjId} · exam: ${examId}`, 'info');
+};
+
+// ── Validation ─────────────────────────────────────────────────────────────
+function validateQ(q, defaultSubject, defaultType, defaultYear) {
+  const errs = [];
+  if (!q.question || typeof q.question !== 'string' || !q.question.trim())
+    errs.push('missing question text');
+  if (!Array.isArray(q.options) || q.options.length < 2)
+    errs.push('options must be array with 2+ items');
+  if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= (q.options||[]).length)
+    errs.push('answer must be valid 0-based index');
+  return errs;
+}
+
+function buildFinalQ(raw, defaultSubject, defaultExam, defaultType, defaultYear, defaultTopic) {
+  const q = {
+    question:    raw.question.trim(),
+    options:     raw.options.map(o => String(o).trim()),
+    answer:      raw.answer,
+    explanation: raw.explanation ? String(raw.explanation).trim() : '',
+    subject:     raw.subject || defaultSubject,
+    exam:        raw.exam    || defaultExam,
+    type:        raw.type    || defaultType,
+    tier:        raw.tier    || 'free',
+    createdAt:   new Date().toISOString(),
+  };
+  // Topic: use per-question if present, else dropdown default (skip if 'all')
+  const topic = raw.topic || (defaultTopic !== 'all' ? defaultTopic : null);
+  if (topic) q.topic = topic;
+  // Year: only for PYQ
+  if (q.type === 'pyq') {
+    q.year = raw.year || defaultYear;
+  }
+  if (raw.difficulty) q.difficulty = raw.difficulty;
+  return q;
+}
+
+// ── Validate button ────────────────────────────────────────────────────────
+$('validateBtn').onclick = () => runValidate(false);
+
+async function runValidate(doUpload = false) {
+  let arr;
+  try {
+    arr = JSON.parse($('jsonInput').value.trim());
+    if (!Array.isArray(arr)) throw new Error('JSON must be an array [ ... ]');
+  } catch(e) {
+    log('❌ JSON parse error: ' + e.message, 'err');
+    return null;
+  }
+
+  const defaultSubject = $('subjectSel').value;
+  const defaultExam    = $('examSel').value;
+  const defaultType    = selectedType;
+  const defaultYear    = parseInt($('yearInput').value) || 2024;
+  const defaultTopic   = $('topicSel').value;
+
+  $('statParsed').textContent  = arr.length;
+  let valid = [], skipped = 0;
+
+  arr.forEach((raw, i) => {
+    const errs = validateQ(raw, defaultSubject, defaultType, defaultYear);
+    if (errs.length) {
+      log(`Q${i+1} ❌ skipped — ${errs.join(' · ')}`, 'err');
+      skipped++;
+    } else {
+      valid.push(buildFinalQ(raw, defaultSubject, defaultExam, defaultType, defaultYear, defaultTopic));
+    }
+  });
+
+  $('statValid').textContent   = valid.length;
+  $('statSkipped').textContent = skipped;
+
+  if (!doUpload) {
+    log(`Validation: ${valid.length} valid, ${skipped} skipped out of ${arr.length}`, valid.length > 0 ? 'ok' : 'warn');
+    if (valid.length > 0) {
+      log(`Preview Q1: "${valid[0].question.substring(0,60)}…" | type:${valid[0].type} | subject:${valid[0].subject} | exam:${valid[0].exam}${valid[0].year ? ' | year:'+valid[0].year : ''}`, 'info');
+    }
+    return null;
+  }
+  return valid;
+}
+
+// ── Upload ─────────────────────────────────────────────────────────────────
+$('uploadBtn').onclick = async () => {
+  const valid = await runValidate(true);
+  if (!valid || valid.length === 0) {
+    log('Nothing valid to upload. Fix errors and try again.', 'err');
+    return;
+  }
+
+  log(`⬆️ Uploading ${valid.length} questions...`, 'info');
+  $('progressWrap').classList.remove('hidden');
+  $('statUploaded').textContent = '0';
+
+  let uploaded = 0;
+  const BATCH_SIZE = 400;   // Firestore batch limit is 500
+
+  try {
+    for (let i = 0; i < valid.length; i += BATCH_SIZE) {
+      const slice = valid.slice(i, i + BATCH_SIZE);
+      const batch = writeBatch(db);
+
+      slice.forEach(q => {
+        const examId = q.exam;
+        const ref = doc(collection(db, 'exams', examId, 'questions'));
+        batch.set(ref, q);
+      });
+
+      await batch.commit();
+      uploaded += slice.length;
+      $('statUploaded').textContent = uploaded;
+      $('progressFill').style.width = `${Math.round(uploaded / valid.length * 100)}%`;
+      log(`Batch ${Math.ceil((i+1)/BATCH_SIZE)}: uploaded ${uploaded}/${valid.length}`, 'ok');
     }
 
-    function renderExamSelect() {
-      $('examSelect').innerHTML = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name}</option>`).join('');
-      renderStageSelect();
-    }
+    log(`✅ Done! ${uploaded} questions uploaded to Firestore.`, 'ok');
+    log(`Exam: ${valid[0].exam} | Type: ${valid[0].type} | Subject: ${valid[0].subject}`, 'info');
+  } catch(e) {
+    log('❌ Upload error: ' + e.message, 'err');
+    console.error(e);
+  }
+};
 
-    function renderStageSelect() {
-      const examId = $('examSelect').value;
-      const stages = getStagesForExam(examId);
-      $('stageSelect').innerHTML = stages.map(s => {
-        const count = (s.subjects || []).length;
-        const label = count > 0 ? `${count} subjects` : 'NO SUBJECTS';
-        return `<option value="${s.id}">${s.icon} ${s.name} — ${label}</option>`;
-      }).join('');
-      checkWarning();
-    }
+// ── Firestore Stats ────────────────────────────────────────────────────────
+$('loadStatsBtn').onclick = async () => {
+  const examId = $('statsExamSel').value;
+  $('fsTotal').textContent = '…'; $('fsPyq').textContent = '…';
+  $('fsPractice').textContent = '…'; $('fsOther').textContent = '…';
+  $('breakdownWrap').classList.add('hidden');
+  log(`Loading stats for ${examId}...`, 'info');
 
-    function checkWarning() {
-      const examId = $('examSelect').value;
-      const stageId = $('stageSelect').value;
-      const subjects = getSubjectsForStage(examId, stageId);
-      if (subjects.length === 0) {
-        $('examWarning').classList.remove('hidden');
-      } else {
-        $('examWarning').classList.add('hidden');
-      }
-    }
+  try {
+    const col  = collection(db, 'exams', examId, 'questions');
+    const snap = await getDocs(col);
+    const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-    $('examSelect').addEventListener('change', renderStageSelect);
-    $('stageSelect').addEventListener('change', checkWarning);
+    const total    = docs.length;
+    const pyq      = docs.filter(d => d.type === 'pyq').length;
+    const practice = docs.filter(d => d.type === 'practice').length;
+    const other    = total - pyq - practice;
 
-    onAuthStateChanged(auth, user => {
-      if (user && ADMIN_EMAILS.includes(user.email)) {
-        $('loginPanel').classList.add('hidden');
-        $('mainPanel').classList.remove('hidden');
-        renderExamsRef();
-        renderExamSelect();
-        log(`Logged in as ${user.email}`, 'ok');
-      } else if (user) {
-        log(`Access denied for ${user.email}`, 'err');
-        signOut(auth);
-      } else {
-        $('loginPanel').classList.remove('hidden');
-        $('mainPanel').classList.add('hidden');
-      }
+    $('fsTotal').textContent    = total;
+    $('fsPyq').textContent      = pyq;
+    $('fsPractice').textContent = practice;
+    $('fsOther').textContent    = other;
+
+    // Subject breakdown
+    const bySubj = {};
+    docs.forEach(d => {
+      const s = d.subject || '(no subject)';
+      if (!bySubj[s]) bySubj[s] = { total: 0, pyq: 0, practice: 0 };
+      bySubj[s].total++;
+      if (d.type === 'pyq') bySubj[s].pyq++;
+      if (d.type === 'practice') bySubj[s].practice++;
     });
 
-    $('loginBtn').onclick = () => signInWithPopup(auth, googleProvider).catch(e => log(e.message, 'err'));
-    $('logoutBtn').onclick = () => signOut(auth);
+    const sorted = Object.entries(bySubj).sort((a,b) => b[1].total - a[1].total);
+    const max = sorted[0]?.[1].total || 1;
 
-    $('loadTemplateBtn').onclick = () => {
-      const examId = $('examSelect').value;
-      const stageId = $('stageSelect').value;
-      const subjects = getSubjectsForStage(examId, stageId);
-      if (subjects.length === 0) {
-        log(`Cannot load template: ${examId}/${stageId} has no subjects.`, 'err');
-        return;
-      }
-      const sampleSubjId = subjects[0].id;
-
-      $('jsonInput').value = JSON.stringify([
-        {
-          question: "Sample question 1 — replace with real content?",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          answer: 0,
-          explanation: "Why option A is correct.",
-          subject: sampleSubjId,
-          year: 2024,
-          tier: "free",
-          difficulty: "easy"
-        },
-        {
-          question: "Sample question 2?",
-          options: ["A", "B", "C", "D"],
-          answer: 1,
-          explanation: "Brief explanation.",
-          subject: sampleSubjId,
-          year: 2022,
-          tier: "free"
-        }
-      ], null, 2);
-      log(`Template loaded with subject "${sampleSubjId}" for ${examId}/${stageId}.`);
-    };
-
-    function validateQuestion(q, defaultExam, defaultStage) {
-      const errs = [];
-      if (!q.question || typeof q.question !== 'string') errs.push('missing question');
-      if (!Array.isArray(q.options) || q.options.length < 2) errs.push('options must be array of 2+');
-      if (typeof q.answer !== 'number' || q.answer < 0 || q.answer >= (q.options || []).length) errs.push('invalid answer index');
-      if (q.tier && !['free', 'premium'].includes(q.tier)) errs.push('tier must be free or premium');
-
-      const examId = q.exam || defaultExam;
-      if (!examId) errs.push('exam not specified');
-      else if (!VALID_EXAMS.includes(examId)) errs.push(`unknown exam "${examId}"`);
-
-      const stageId = q.stage || defaultStage;
-      if (!stageId) errs.push('stage not specified');
-      else if (examId && VALID_EXAMS.includes(examId)) {
-        const stage = getStageFromExam(examId, stageId);
-        if (!stage) errs.push(`unknown stage "${stageId}" for exam "${examId}"`);
-      }
-
-      if (!q.subject) errs.push('subject is required');
-      else if (examId && stageId) {
-        const subjects = getSubjectsForStage(examId, stageId);
-        if (subjects.length === 0) {
-          errs.push(`no subjects defined for ${examId}/${stageId}`);
-        } else if (!subjects.some(s => s.id === q.subject)) {
-          errs.push(`subject "${q.subject}" not valid for ${examId}/${stageId}`);
-        }
-      }
-
-      return errs;
-    }
-
-    $('validateBtn').onclick = () => {
-      try {
-        const arr = JSON.parse($('jsonInput').value);
-        if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
-        const defaultExam = $('examSelect').value;
-        const defaultStage = $('stageSelect').value;
-        let valid = 0, invalid = 0;
-        arr.forEach((q, i) => {
-          const errs = validateQuestion(q, defaultExam, defaultStage);
-          if (errs.length) { log(`Q${i+1}: ${errs.join(', ')}`, 'err'); invalid++; }
-          else valid++;
-        });
-        $('statValid').textContent = valid;
-        $('statInvalid').textContent = invalid;
-        log(`Validation: ${valid} valid, ${invalid} invalid. Defaults: ${defaultExam}/${defaultStage}`, valid > 0 ? 'ok' : 'err');
-      } catch (e) {
-        log('JSON parse error: ' + e.message, 'err');
-      }
-    };
-
-    $('uploadBtn').onclick = async () => {
-      try {
-        const arr = JSON.parse($('jsonInput').value);
-        if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
-        const defaultExam = $('examSelect').value;
-        const defaultStage = $('stageSelect').value;
-
-        let valid = [], invalid = 0;
-        arr.forEach((q, i) => {
-          const errs = validateQuestion(q, defaultExam, defaultStage);
-          if (errs.length) { log(`Q${i+1} skipped: ${errs.join(', ')}`, 'err'); invalid++; }
-          else valid.push({ ...q, exam: q.exam || defaultExam, stage: q.stage || defaultStage });
-        });
-
-        $('statValid').textContent = valid.length;
-        $('statInvalid').textContent = invalid;
-
-        if (valid.length === 0) { log('Nothing to upload.', 'err'); return; }
-
-        log(`Uploading ${valid.length} questions...`);
-        let uploaded = 0;
-
-        const BATCH_SIZE = 400;
-        for (let i = 0; i < valid.length; i += BATCH_SIZE) {
-          const batch = writeBatch(db);
-          const slice = valid.slice(i, i + BATCH_SIZE);
-          slice.forEach(q => {
-            const ref = doc(collection(db, 'exams', q.exam, 'questions'));
-            batch.set(ref, {
-              ...q,
-              tier: q.tier || 'free',
-              createdAt: new Date().toISOString()
-            });
-          });
-          await batch.commit();
-          uploaded += slice.length;
-          $('statUploaded').textContent = uploaded;
-          log(`Batch uploaded: ${uploaded}/${valid.length}`, 'ok');
-        }
-
-        log(`✅ Done. ${uploaded} questions uploaded.`, 'ok');
-      } catch (e) {
-        log('Upload error: ' + e.message, 'err');
-      }
-    };
-
-    // ===== Firestore Stats =====
-    // Populate exam selector
-    function initStatsExamSel() {
-      const sel = $('statsExamSel');
-      sel.innerHTML = getValidExamIds().map(id => `<option value="${id}">${id}</option>`).join('');
-    }
-    initStatsExamSel();
-
-    $('loadStatsBtn').addEventListener('click', async () => {
-      const examId = $('statsExamSel').value;
-      $('statsMsg').textContent = 'Loading...';
-      $('fsTotal').textContent = '…';
-      $('fsPyq').textContent = '…';
-      $('fsPractice').textContent = '…';
-      $('subjectBreakdown').style.display = 'none';
-      try {
-        const col = collection(db, 'exams', examId, 'questions');
-        const snap = await getDocs(col);
-        const docs = snap.docs.map(d => d.data());
-
-        const total    = docs.length;
-        const pyq      = docs.filter(d => d.type === 'pyq').length;
-        const practice = docs.filter(d => d.type === 'practice').length;
-
-        $('fsTotal').textContent    = total;
-        $('fsPyq').textContent      = pyq;
-        $('fsPractice').textContent = practice;
-
-        // Subject breakdown
-        const bySubject = {};
-        docs.forEach(d => {
-          const s = d.subject || 'unknown';
-          bySubject[s] = (bySubject[s] || 0) + 1;
-        });
-
-        const sorted = Object.entries(bySubject).sort((a,b) => b[1]-a[1]);
-        const maxCount = sorted[0]?.[1] || 1;
-
-        $('subjectTable').innerHTML = sorted.map(([subj, count]) => {
-          const pct = Math.round(count / maxCount * 100);
-          const pyqCount = docs.filter(d => d.subject === subj && d.type === 'pyq').length;
-          const prcCount = docs.filter(d => d.subject === subj && d.type === 'practice').length;
-          return `
-            <div style="background:#0f172a;border-radius:6px;padding:8px 10px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                <span style="font-size:13px;color:#e2e8f0;font-weight:500;">${subj}</span>
-                <span style="font-size:13px;color:#f59e0b;font-weight:700;">${count}</span>
-              </div>
-              <div style="background:#1e293b;border-radius:4px;height:6px;margin-bottom:4px;">
-                <div style="background:#f59e0b;height:6px;border-radius:4px;width:${pct}%;transition:width 0.3s;"></div>
-              </div>
-              <div style="font-size:11px;color:#64748b;">PYQ: ${pyqCount} &nbsp;|&nbsp; Practice: ${prcCount}</div>
-            </div>`;
-        }).join('');
-
-        $('subjectBreakdown').style.display = 'block';
-        $('statsMsg').textContent = `Fetched ${total} questions from Firestore (${examId})`;
-      } catch(e) {
-        $('statsMsg').textContent = 'Error: ' + e.message;
-        console.error(e);
-      }
+    const wrap = $('breakdownWrap');
+    wrap.innerHTML = `<div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Subject breakdown</div>`;
+    sorted.forEach(([subj, counts]) => {
+      const pct = Math.round(counts.total / max * 100);
+      const subjName = ALL_SUBJECTS.find(s => s.id === subj)?.name || subj;
+      wrap.innerHTML += `
+        <div class="breakdown-row">
+          <div class="breakdown-name">${subjName}</div>
+          <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%"></div></div>
+          <div class="breakdown-count">${counts.total}</div>
+          <div class="breakdown-types">PYQ:${counts.pyq} · Prc:${counts.practice}</div>
+        </div>`;
     });
+    wrap.classList.remove('hidden');
 
-  </script>
+    log(`Stats loaded: ${total} total (${pyq} PYQ, ${practice} practice) for ${examId}`, 'ok');
+  } catch(e) {
+    log('❌ Stats error: ' + e.message, 'err');
+    console.error(e);
+  }
+};
+
+</script>
 </body>
 </html>
