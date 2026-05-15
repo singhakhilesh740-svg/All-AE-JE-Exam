@@ -1,61 +1,64 @@
-// service-worker.js — PWA caching
-const CACHE_NAME = 'ae-civil-v10-notes-9';   // ← bumped: forces old cache purge
-const ASSETS = [
+// service-worker.js — PWA caching v10-notes-9
+const CACHE_NAME = 'ae-civil-v10-notes-9';
+const STATIC_ASSETS = [
   './',
   './index.html',
   './css/styles.css',
-  './js/app.js',
-  './js/auth.js',
-  './js/db.js',
-  './js/quiz.js',
-  './js/notes.js',
-  './js/exams.js',
-  './js/subjects.js',
-  './js/firebase-config.js',
-  './data/notes-combined.json',
   './manifest.json'
+];
+
+// Network-first assets — always fetch fresh, fallback to cache
+const NETWORK_FIRST = [
+  'notes-combined.json',
+  '/js/app.js',
+  '/js/notes.js',
+  '/js/subjects.js',
+  '/js/exams.js'
 ];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS).catch(() => {}))
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(STATIC_ASSETS).catch(() => {}))
   );
-  self.skipWaiting();   // activate immediately without waiting for old SW to die
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => {
-        console.log('[SW] Deleting old cache:', k);
-        return caches.delete(k);
-      }))
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
     )
   );
-  self.clients.claim();   // take control of all open tabs immediately
+  self.clients.claim();
 });
 
 self.addEventListener('fetch', (e) => {
-  // Always network-first for Firebase (real-time data must not be cached)
-  if (e.request.url.includes('firestore') ||
-      e.request.url.includes('firebase') ||
-      e.request.url.includes('googleapis')) {
+  const url = e.request.url;
+
+  // Always bypass SW for Firebase/Google APIs
+  if (url.includes('firestore') || url.includes('firebase') || url.includes('googleapis')) {
     return;
   }
-  // Network-first for notes JSON so updates are always picked up
-  if (e.request.url.includes('notes-combined.json')) {
+
+  // Network-first for data files and key JS — always get latest
+  const isNetworkFirst = NETWORK_FIRST.some(p => url.includes(p));
+  if (isNetworkFirst) {
     e.respondWith(
-      fetch(e.request)
+      fetch(e.request, { cache: 'no-cache' })
         .then(res => {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+          }
           return res;
         })
-        .catch(() => caches.match(e.request))   // fallback to cache if offline
+        .catch(() => caches.match(e.request))
     );
     return;
   }
-  // Cache-first for app shell (JS, CSS, HTML)
+
+  // Cache-first for everything else (images, firebase SDK, etc.)
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );

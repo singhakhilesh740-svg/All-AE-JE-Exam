@@ -3,12 +3,15 @@
 // Exports: loadNotesForSubject, renderNotesContent
 
 let _cache = null;
+const NOTES_VERSION = 'v10-notes-9'; // bump this whenever notes-combined.json changes
 
 /** Fetch + cache the combined notes JSON */
 export async function loadNotesForSubject(subjectId) {
   try {
     if (!_cache) {
-      const r = await fetch('data/notes-combined.json');
+      // Cache-bust with version string so new notes always load after updates
+      const url = 'data/notes-combined.json?v=' + NOTES_VERSION;
+      const r = await fetch(url, { cache: 'no-cache' });
       if (!r.ok) throw new Error('HTTP ' + r.status);
       _cache = await r.json();
     }
