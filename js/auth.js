@@ -10,32 +10,28 @@ import {
   browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// Force LOCAL persistence — user stays logged in across reloads/sessions
-setPersistence(auth, browserLocalPersistence).catch(err => {
-  console.warn('Could not set persistence:', err);
-});
+setPersistence(auth, browserLocalPersistence).catch(() => {});
 
 export function watchAuth(onLoggedIn, onLoggedOut) {
-  // On mobile, after signInWithRedirect returns to the page, Firebase briefly
-  // emits null from onAuthStateChanged while it processes the redirect result.
-  // We await getRedirectResult() first so we never act on that spurious null.
-
   const redirectPromise = getRedirectResult(auth)
-    .then(() => {})   // resolves fast if no redirect pending
-    .catch(err => { console.error('Redirect login error:', err); });
+    .then(result => {
+      if (result?.user) {
+        // Successful redirect login
+        console.log('[auth] redirect login success:', result.user.email);
+      }
+    })
+    .catch(err => {
+      console.error('[auth] redirect error:', err.code, err.message);
+    });
 
   let firstEmission = true;
 
   onAuthStateChanged(auth, async (user) => {
-    // On first emission, wait for redirect promise to settle
     if (firstEmission) {
       firstEmission = false;
       await redirectPromise;
-      // Re-check current user after redirect settled
-      // (auth.currentUser is up-to-date after await)
       user = auth.currentUser;
     }
-
     if (user) {
       onLoggedIn({
         uid: user.uid,
@@ -52,14 +48,11 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
 export async function loginWithGoogle() {
   try {
     await setPersistence(auth, browserLocalPersistence);
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      await signInWithRedirect(auth, googleProvider);
-    } else {
-      await signInWithPopup(auth, googleProvider);
-    }
+    // Always use redirect — works on both mobile and desktop
+    // Popup fails on GitHub Pages due to cross-origin restrictions
+    await signInWithRedirect(auth, googleProvider);
   } catch (err) {
-    console.error('Login error:', err);
+    console.error('[auth] login error:', err.code, err.message);
     throw err;
   }
 }
@@ -68,6 +61,6 @@ export async function logout() {
   try {
     await signOut(auth);
   } catch (err) {
-    console.error('Logout error:', err);
+    console.error('[auth] logout error:', err);
   }
 }
