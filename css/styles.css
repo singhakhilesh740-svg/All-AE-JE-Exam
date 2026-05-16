@@ -471,3 +471,6 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
   padding: 14px 16px;
   flex: 1;
 }
+
+/* Admin panel exam row hidden state */
+#examRow.hidden { display: none !important; }

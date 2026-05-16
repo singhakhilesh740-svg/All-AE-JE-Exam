@@ -133,10 +133,12 @@
 
     <!-- STEP 1 -->
     <div class="panel">
-      <div class="panel-title">Step 1 — Select Exam &amp; Question Type</div>
+      <div class="panel-title">Step 1 — Select Question Type</div>
 
-      <label>Exam</label>
-      <select id="examSel"></select>
+      <div id="examRow">
+        <label>Exam</label>
+        <select id="examSel"></select>
+      </div>
 
       <label style="margin-top:14px;">Question Type</label>
       <div class="type-tabs">
@@ -328,6 +330,8 @@ function toggleTypeUI() {
   $('practiceOptions').classList.toggle('hidden', isPyq);
   $('pyqFormat').classList.toggle('hidden', !isPyq);
   $('practiceFormat').classList.toggle('hidden', isPyq);
+  // Exam selector only needed for PYQ (which exam paper)
+  $('examRow').classList.toggle('hidden', !isPyq);
 }
 
 function renderTopicDropdown() {
@@ -340,8 +344,8 @@ function renderTopicDropdown() {
 
 // ── Template ───────────────────────────────────────────────────────────────
 $('templateBtn').onclick = () => {
-  const examId = $('examSel').value;
-  const year   = parseInt($('yearInput').value) || 2024;
+  const examId = selectedType === 'pyq' ? $('examSel').value : 'uppsc-ae';
+  const year   = selectedType === 'pyq' ? (parseInt($('yearInput').value) || 2024) : null;
 
   let qs;
 
@@ -466,9 +470,9 @@ async function runValidate(doUpload = false) {
     return null;
   }
 
-  const defaultExam    = $('examSel').value;
+  const defaultExam    = selectedType === 'pyq' ? $('examSel').value : 'uppsc-ae';
   const defaultType    = selectedType;
-  const defaultYear    = parseInt($('yearInput').value) || 2024;
+  const defaultYear    = selectedType === 'pyq' ? (parseInt($('yearInput').value) || 2024) : null;
   // For PYQ: no default subject (must be in JSON). For Practice: use dropdown.
   const defaultSubject = selectedType === 'practice' ? $('subjectSel').value : null;
   const defaultTopic   = selectedType === 'practice' ? $('topicSel').value : null;
