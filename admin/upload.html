@@ -165,12 +165,12 @@
       <div class="ref-grid" id="subjectRef"></div>
     </div>
 
-    <!-- Firestore Stats -->
+    <!-- Firestore Stats & Delete -->
     <div class="panel">
       <div class="panel-title">Firestore Stats</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
         <select id="statsExamSel" style="flex:1"></select>
-        <button class="btn-blue" id="loadStatsBtn">🔄 Load</button>
+        <button class="btn-blue" id="loadStatsBtn">🔄 Load Stats</button>
       </div>
       <div class="stats" style="margin-bottom:10px">
         <div class="stat"><div class="stat-num" id="fsTotal">—</div><div class="stat-lbl">Total</div></div>
@@ -179,6 +179,32 @@
         <div class="stat"><div class="stat-num" id="fsOther">—</div><div class="stat-lbl">Other</div></div>
       </div>
       <div id="breakdownWrap" class="hidden"></div>
+    </div>
+
+    <!-- Delete Questions -->
+    <div class="panel">
+      <div class="panel-title">🗑 Delete Questions</div>
+      <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">Select exam, type, and subjects to delete. Double confirmation required.</p>
+
+      <label>Exam</label>
+      <select id="delExamSel"></select>
+
+      <label style="margin-top:10px">Question Type to Delete</label>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <button class="type-tab active" id="delTypePractice" data-dtype="practice" style="font-size:12px;padding:8px">✏️ Practice</button>
+        <button class="type-tab" id="delTypePyq" data-dtype="pyq" style="font-size:12px;padding:8px">📜 PYQ</button>
+        <button class="type-tab" id="delTypeAll" data-dtype="all" style="font-size:12px;padding:8px">⚠️ All</button>
+      </div>
+
+      <label style="margin-top:12px">Select Subjects to Delete <small style="color:#64748b">(uncheck to keep)</small></label>
+      <div id="delSubjectList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:300px;overflow-y:auto"></div>
+
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn-secondary" id="delSelectAll" style="font-size:12px;padding:7px 12px">☑ Select All</button>
+        <button class="btn-secondary" id="delClearAll" style="font-size:12px;padding:7px 12px">☐ Clear All</button>
+        <button class="btn-danger" id="delExecuteBtn" style="flex:1">🗑 Delete Selected</button>
+      </div>
+      <div id="delPreview" style="margin-top:10px;font-size:12px;color:#f59e0b;display:none"></div>
     </div>
 
     <!-- Log -->
@@ -242,6 +268,8 @@ function initUI() {
   const examOpts = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
   $('examSel').innerHTML = examOpts;
   $('statsExamSel').innerHTML = examOpts;
+  if ($('delExamSel')) $('delExamSel').innerHTML = examOpts;
+  buildDelSubjectList();
 
   $('subjectSel').innerHTML = ALL_SUBJECTS.map(s =>
     `<option value="${s.id}">${s.icon||'📖'} ${s.name}</option>`
@@ -481,6 +509,120 @@ $('uploadBtn').onclick = async () => {
     log('❌ Upload error: ' + e.message, 'err');
   }
 };
+
+// ── Delete All Practice Questions ────────────────────────────────────────
+// ── Delete Panel Logic ───────────────────────────────────────────────────
+let delSelectedType = 'practice';
+
+// Type tab switching for delete panel
+document.querySelectorAll('[data-dtype]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('[data-dtype]').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    delSelectedType = tab.dataset.dtype;
+    updateDelPreview();
+  });
+});
+
+function buildDelSubjectList() {
+  const container = $('delSubjectList');
+  if (!container) return;
+  container.innerHTML = '';
+  ALL_SUBJECTS.forEach(s => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#0f172a;padding:8px 12px;border-radius:8px;border:1px solid #1e293b';
+    row.innerHTML = `
+      <input type="checkbox" id="del_${s.id}" value="${s.id}" checked
+        style="width:16px;height:16px;cursor:pointer;accent-color:#ef4444">
+      <label for="del_${s.id}" style="flex:1;font-size:13px;color:#e2e8f0;cursor:pointer">
+        ${s.icon||'📖'} ${s.name}
+      </label>
+      <span style="font-size:11px;color:#64748b;font-family:monospace">${s.id}</span>`;
+    row.querySelector('input').addEventListener('change', updateDelPreview);
+    container.appendChild(row);
+  });
+  updateDelPreview();
+}
+
+function getCheckedSubjects() {
+  return [...document.querySelectorAll('#delSubjectList input[type=checkbox]:checked')]
+    .map(cb => cb.value);
+}
+
+function updateDelPreview() {
+  const subjects = getCheckedSubjects();
+  const preview = $('delPreview');
+  if (!preview) return;
+  if (!subjects.length) {
+    preview.style.display = 'block';
+    preview.textContent = '⚠️ No subjects selected.';
+    return;
+  }
+  const typeLabel = delSelectedType === 'all' ? 'ALL types' : delSelectedType.toUpperCase();
+  preview.style.display = 'block';
+  preview.textContent = `Will delete: ${typeLabel} questions from ${subjects.length} subject(s): ${subjects.join(', ')}`;
+}
+
+if ($('delSelectAll')) {
+  $('delSelectAll').onclick = () => {
+    document.querySelectorAll('#delSubjectList input[type=checkbox]').forEach(cb => cb.checked = true);
+    updateDelPreview();
+  };
+}
+if ($('delClearAll')) {
+  $('delClearAll').onclick = () => {
+    document.querySelectorAll('#delSubjectList input[type=checkbox]').forEach(cb => cb.checked = false);
+    updateDelPreview();
+  };
+}
+
+if ($('delExecuteBtn')) {
+  $('delExecuteBtn').onclick = async () => {
+    const examId = $('delExamSel').value;
+    const subjects = getCheckedSubjects();
+    const dtype = delSelectedType;
+
+    if (!subjects.length) { log('No subjects selected.', 'err'); return; }
+
+    const typeLabel = dtype === 'all' ? 'ALL types' : dtype;
+    if (!confirm(`Delete ${typeLabel} questions for ${subjects.length} subject(s) from "${examId}"?\nSubjects: ${subjects.join(', ')}\n\nThis CANNOT be undone!`)) return;
+    if (!confirm(`FINAL CONFIRMATION:\nPermanently delete ${typeLabel} from:\n${subjects.join('\n')}?`)) return;
+
+    log(`🗑 Deleting — exam:${examId} type:${dtype} subjects:[${subjects.join(',')}]`, 'warn');
+
+    try {
+      const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+      const toDelete = snap.docs.filter(d => {
+        const data = d.data();
+        const typeMatch = dtype === 'all' || data.type === dtype;
+        const subjMatch = subjects.includes(data.subject);
+        return typeMatch && subjMatch;
+      });
+
+      if (!toDelete.length) { log('No matching questions found.', 'warn'); return; }
+
+      // Show breakdown
+      const bySubj = {};
+      toDelete.forEach(d => { const s = d.data().subject||'unknown'; bySubj[s]=(bySubj[s]||0)+1; });
+      log(`Found ${toDelete.length} questions to delete:`, 'warn');
+      Object.entries(bySubj).forEach(([s,c]) => log(`  ${s}: ${c}Q`, 'info'));
+
+      let deleted = 0;
+      for (let i = 0; i < toDelete.length; i += 400) {
+        const batch = writeBatch(db);
+        toDelete.slice(i,i+400).forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        deleted += Math.min(400, toDelete.length - i);
+        log(`Deleted ${deleted}/${toDelete.length}...`, 'warn');
+      }
+
+      log(`✅ Done! ${deleted} questions deleted.`, 'ok');
+      subjects.forEach(s => { const cb = document.getElementById(`del_${s}`); if(cb) cb.checked = false; });
+      updateDelPreview();
+    } catch(e) { log('❌ Delete error: '+e.message, 'err'); }
+  };
+}
+
 
 // ── Firestore Stats ───────────────────────────────────────────────────────
 $('loadStatsBtn').onclick = async () => {
