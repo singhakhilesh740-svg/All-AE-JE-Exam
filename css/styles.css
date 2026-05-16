@@ -474,3 +474,10 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
 
 /* Admin panel exam row hidden state */
 #examRow.hidden { display: none !important; }
+
+/* PYQ Mode tiles reuse home-grid but need full width on small screens */
+#pyqModeScreen .home-grid {
+  grid-template-columns: 1fr 1fr;
+  max-width: 400px;
+  margin: 0 auto;
+}

@@ -140,10 +140,49 @@
     </main>
   </div>
 
+  <!-- ===== PYQ: MODE SELECT (Year-wise / Subject-wise) ===== -->
+  <div id="pyqModeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pyqExamsScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="pyqModeTitle">📜 PYQ</h2>
+        <span class="header-sub">How do you want to browse?</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-pyq" id="pyqModeYear">
+          <div class="tile-icon">📅</div>
+          <div class="tile-title">Year-wise</div>
+          <div class="tile-sub">Browse by exam year</div>
+        </button>
+        <button class="home-tile tile-notes" id="pyqModeSubject">
+          <div class="tile-icon">📖</div>
+          <div class="tile-title">Subject-wise</div>
+          <div class="tile-sub">Browse by subject</div>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== PYQ: YEAR LIST ===== -->
+  <div id="pyqYearsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="pyqYearsTitle">📅 PYQ — Year-wise</h2>
+        <span class="header-sub" id="pyqYearsSub">Pick a year</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pyqYearList" class="subjects-list"></div>
+    </main>
+  </div>
+
   <!-- ===== PYQ: SUBJECT LIST ===== -->
   <div id="pyqSubjectsScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="pyqExamsScreen">←</button>
+      <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
       <div class="header-left" style="flex:1; margin-left:8px;">
         <h2 id="pyqSubjectsTitle">PYQ</h2>
         <span class="header-sub" id="pyqSubjectsSub">Pick a subject</span>
