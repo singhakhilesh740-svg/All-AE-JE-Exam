@@ -1,9 +1,7 @@
-// auth.js — Handles Google login, logout, and auth state
+// auth.js
 import { auth, googleProvider } from './firebase-config.js';
 import {
   signInWithPopup,
-  signInWithRedirect,
-  getRedirectResult,
   signOut,
   onAuthStateChanged,
   setPersistence,
@@ -13,29 +11,11 @@ import {
 setPersistence(auth, browserLocalPersistence).catch(() => {});
 
 export function watchAuth(onLoggedIn, onLoggedOut) {
-  const redirectPromise = getRedirectResult(auth)
-    .then(result => {
-      if (result?.user) {
-        // Successful redirect login
-        console.log('[auth] redirect login success:', result.user.email);
-      }
-    })
-    .catch(err => {
-      console.error('[auth] redirect error:', err.code, err.message);
-    });
-
-  let firstEmission = true;
-
-  onAuthStateChanged(auth, async (user) => {
-    if (firstEmission) {
-      firstEmission = false;
-      await redirectPromise;
-      user = auth.currentUser;
-    }
+  onAuthStateChanged(auth, user => {
     if (user) {
       onLoggedIn({
-        uid: user.uid,
-        name: user.displayName || 'Student',
+        uid:   user.uid,
+        name:  user.displayName || 'Student',
         email: user.email,
         photo: user.photoURL || ''
       });
@@ -46,21 +26,12 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
 }
 
 export async function loginWithGoogle() {
-  try {
-    await setPersistence(auth, browserLocalPersistence);
-    // Always use redirect — works on both mobile and desktop
-    // Popup fails on GitHub Pages due to cross-origin restrictions
-    await signInWithRedirect(auth, googleProvider);
-  } catch (err) {
-    console.error('[auth] login error:', err.code, err.message);
-    throw err;
-  }
+  await setPersistence(auth, browserLocalPersistence);
+  // signInWithPopup works on GitHub Pages — redirect is broken in
+  // storage-partitioned browsers (Chrome 115+, Firefox, Edge)
+  await signInWithPopup(auth, googleProvider);
 }
 
 export async function logout() {
-  try {
-    await signOut(auth);
-  } catch (err) {
-    console.error('[auth] logout error:', err);
-  }
+  await signOut(auth);
 }
