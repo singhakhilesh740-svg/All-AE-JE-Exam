@@ -251,15 +251,15 @@ async function renderYearList() {
       const count = questions.filter(q => q.year === year).length;
       const btn = document.createElement('button');
       btn.className = 'subject-card';
-      btn.innerHTML = \`
+      btn.innerHTML = `
         <div class="subject-icon">📅</div>
         <div class="subject-info">
-          <div class="subject-name">\${year}</div>
-          <div class="subject-desc">\${currentExam.name} Paper</div>
+          <div class="subject-name">${year}</div>
+          <div class="subject-desc">${currentExam.name} Paper</div>
         </div>
-        <div class="subject-count">\${count}Q</div>
+        <div class="subject-count">${count}Q</div>
         <div class="subject-arrow">›</div>
-      \`;
+      `;
       btn.addEventListener('click', () => openPyqYear(year, questions.filter(q => q.year === year)));
       container.appendChild(btn);
     });
