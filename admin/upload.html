@@ -163,8 +163,8 @@
       <!-- Practice options (subject chosen once for whole batch) -->
       <div id="practiceOptions" class="hidden">
         <div class="info-box info-practice">
-          📌 For Practice — select one <strong>Subject</strong> and optionally a <strong>Topic</strong> for the whole batch.<br>
-          You can still override <code>subject</code> or <code>topic</code> per question in the JSON.
+          📌 For Practice — select <strong>Subject</strong> and <strong>Topic</strong> for the whole batch.<br>
+          Topic <strong>"All"</strong> = questions appear under every topic chip. A specific topic = filtered only to that chip.
         </div>
         <label>Subject <small style="color:#64748b;">(default for all questions in this batch)</small></label>
         <select id="subjectSel"></select>
@@ -382,7 +382,7 @@ $('templateBtn').onclick = () => {
   } else {
     // Practice: all same subject (from dropdown)
     const subjId = $('subjectSel').value;
-    const topic  = $('topicSel').value !== 'all' ? $('topicSel').value : undefined;
+    const topic  = $('topicSel').value; // 'all' means show under every topic
     qs = [
       {
         question: "Practice Sample 1 — replace with real question?",
@@ -390,7 +390,7 @@ $('templateBtn').onclick = () => {
         answer: 0,
         explanation: "Why option A is correct.",
         subject: subjId,
-        ...(topic ? { topic } : {})
+        topic: topic
       },
       {
         question: "Practice Sample 2 — replace with real question?",
@@ -398,7 +398,7 @@ $('templateBtn').onclick = () => {
         answer: 2,
         explanation: "Why option C is correct.",
         subject: subjId,
-        ...(topic ? { topic } : {})
+        topic: topic
       }
     ];
   }
@@ -441,9 +441,9 @@ function validateAndBuild(raw, index, defaultExam, defaultType, defaultYear, def
     createdAt:   new Date().toISOString(),
   };
 
-  // Topic
-  const topic = raw.topic || (defaultTopic && defaultTopic !== 'all' ? defaultTopic : null);
-  if (topic) q.topic = topic;
+  // Topic: store 'all' explicitly so filter shows question under every topic chip
+  const topic = raw.topic || defaultTopic || 'all';
+  q.topic = topic;
 
   // Year (PYQ only)
   if (type === 'pyq') {

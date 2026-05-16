@@ -179,7 +179,7 @@ async function openPracticeSubject(subj) {
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
     let qs = await fetchQuestions({ exam: 'uppsc-ae', subject: subj.id, type: 'practice', maxCount: 500 });
-    if (topicId !== 'all') qs = qs.filter(q => q.topic === topicId);
+    if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
     Quiz.resetToQuestions(qs);
     renderQuiz();
@@ -212,11 +212,115 @@ function renderExamList() {
 
 function openPyqExam(exam) {
   currentExam = exam;
-  $('pyqSubjectsTitle').textContent = exam.name + ' — PYQ';
-  $('pyqSubjectsSub').textContent   = 'Pick a subject';
+  $('pyqModeTitle').textContent = '📜 ' + exam.name + ' PYQ';
+  showScreen('pyqModeScreen');
+}
 
+// ── PYQ Mode buttons ────────────────────────────────────────────────────────
+$('pyqModeYear').addEventListener('click', () => {
+  $('pyqYearsTitle').textContent = '📅 ' + currentExam.name + ' — Year-wise';
+  $('pyqYearsSub').textContent   = 'Pick a year';
+  renderYearList();
+  showScreen('pyqYearsScreen');
+});
+
+$('pyqModeSubject').addEventListener('click', () => {
+  $('pyqSubjectsTitle').textContent = currentExam.name + ' — Subject-wise';
+  $('pyqSubjectsSub').textContent   = 'Pick a subject';
   renderSubjectList('pyqSubjectList', SUBJECTS_UPPSC_MAINS, openPyqSubject);
   showScreen('pyqSubjectsScreen');
+});
+
+// ── Year-wise PYQ ──────────────────────────────────────────────────────────
+async function renderYearList() {
+  const container = $('pyqYearList');
+  container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim)">Loading years...</div>';
+
+  try {
+    const questions = await fetchQuestions({ exam: currentExam.id, type: 'pyq', maxCount: 1000 });
+    // Extract unique years
+    const years = [...new Set(questions.map(q => q.year).filter(Boolean))].sort((a,b) => b-a);
+
+    if (!years.length) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><h3>No PYQ uploaded yet</h3><p>Upload questions via admin panel first.</p></div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    years.forEach(year => {
+      const count = questions.filter(q => q.year === year).length;
+      const btn = document.createElement('button');
+      btn.className = 'subject-card';
+      btn.innerHTML = \`
+        <div class="subject-icon">📅</div>
+        <div class="subject-info">
+          <div class="subject-name">\${year}</div>
+          <div class="subject-desc">\${currentExam.name} Paper</div>
+        </div>
+        <div class="subject-count">\${count}Q</div>
+        <div class="subject-arrow">›</div>
+      \`;
+      btn.addEventListener('click', () => openPyqYear(year, questions.filter(q => q.year === year)));
+      container.appendChild(btn);
+    });
+  } catch(e) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Error loading</h3><p>' + e.message + '</p></div>';
+  }
+}
+
+async function openPyqYear(year, questions) {
+  currentTopic = 'all';
+  quizRoute    = 'pyq';
+  quizSource   = 'pyqYearsScreen';
+
+  if (!questions || !questions.length) { toast('No questions for this year'); return; }
+
+  // Sort by subject then q_num
+  questions.sort((a,b) => (a.subject||'').localeCompare(b.subject||'') || (a.q_num||0)-(b.q_num||0));
+
+  Quiz.startQuiz(questions);
+  showScreen('quizScreen');
+
+  // Build subject chips for year-wise view (subjects as filter)
+  buildYearSubjectChips(questions);
+  renderQuiz();
+}
+
+function buildYearSubjectChips(allQs) {
+  const bar = $('quizTopicBar');
+  bar.innerHTML = '';
+  const subjects = [...new Set(allQs.map(q => q.subject).filter(Boolean))];
+
+  // Use data-topic consistently (same as buildTopicChips) to avoid conflicts
+  // Value prefix 'subj:' distinguishes from regular topic IDs
+  const allChip = document.createElement('button');
+  allChip.className = 'topic-chip active';
+  allChip.textContent = 'All Subjects';
+  allChip.dataset.topic = 'subj:all';
+  bar.appendChild(allChip);
+
+  subjects.forEach(subjId => {
+    const subj = SUBJECTS_UPPSC_MAINS.find(s => s.id === subjId);
+    const chip = document.createElement('button');
+    chip.className = 'topic-chip';
+    chip.textContent = (subj?.icon || '') + ' ' + (subj?.name || subjId);
+    chip.dataset.topic = 'subj:' + subjId;
+    bar.appendChild(chip);
+  });
+
+  bar.querySelectorAll('.topic-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      // Only update chips inside this bar (not global selector)
+      bar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const val = chip.dataset.topic; // 'subj:all' or 'subj:fluid-mechanics' etc
+      const subjId = val.replace('subj:', '');
+      const filtered = subjId === 'all' ? allQs : allQs.filter(q => q.subject === subjId);
+      if (!filtered.length) { toast('No questions for this subject'); return; }
+      Quiz.resetToQuestions(filtered);
+      renderQuiz();
+    });
+  });
 }
 
 async function openPyqSubject(subj) {
@@ -243,7 +347,7 @@ async function openPyqSubject(subj) {
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
     let qs = await fetchQuestions({ exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 500 });
-    if (topicId !== 'all') qs = qs.filter(q => q.topic === topicId);
+    if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
     qs.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
     Quiz.resetToQuestions(qs);
@@ -268,8 +372,9 @@ function buildTopicChips(containerId, subjectId, onSelect) {
 
   container.querySelectorAll('.topic-chip').forEach(chip => {
     chip.addEventListener('click', () => {
-      // sync active state across all topic bars on this screen
-      document.querySelectorAll('.topic-bar-scroll .topic-chip').forEach(c =>
+      // Only sync chips in same bar (avoid interfering with year-subject chips)
+      const bar = chip.closest('.topic-bar-scroll');
+      if (bar) bar.querySelectorAll('.topic-chip').forEach(c =>
         c.classList.toggle('active', c.dataset.topic === chip.dataset.topic)
       );
       currentTopic = chip.dataset.topic;
@@ -373,7 +478,8 @@ async function renderQuiz() {
   $('quizYearTag').textContent = q.year ? `${q.year}` : '—';
 
   const examTag = $('quizExamTag');
-  if (q.examId) {
+  // Show exam tag only for PYQ — not for practice questions
+  if (quizRoute === 'pyq' && q.examId) {
     examTag.textContent = q.examId.toUpperCase().replace(/-/g, ' ');
     examTag.classList.remove('hidden');
   } else {
