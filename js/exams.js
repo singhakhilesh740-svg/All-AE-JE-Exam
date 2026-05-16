@@ -32,8 +32,8 @@ export const EXAMS = [
   },
   {
     id: 'gpsc-ae',
-    name: 'GPSC AE',
-    fullName: 'Gujarat PSC – Assistant Engineer',
+    name: 'GPSC Civil Engineering Exam',
+    fullName: 'Gujarat Engineering Service (Civil) Class-1 & Class-2',
     icon: '🏬',
     state: 'Gujarat',
   },

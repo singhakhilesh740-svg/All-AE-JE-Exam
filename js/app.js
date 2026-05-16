@@ -213,14 +213,14 @@ function renderExamList() {
 
 function openPyqExam(exam) {
   currentExam = exam;
-  $('pyqModeTitle').textContent = '📜 ' + exam.name + ' PYQ';
+  $('pyqModeTitle').textContent = '📜 ' + exam.name;
   showScreen('pyqModeScreen');
 }
 
 // ── PYQ Mode buttons ────────────────────────────────────────────────────────
 $('pyqModeYear').addEventListener('click', () => {
-  $('pyqYearsTitle').textContent = '📅 ' + currentExam.name + ' — Year-wise';
-  $('pyqYearsSub').textContent   = 'Pick a year';
+  $('pyqYearsTitle').textContent = '📅 ' + currentExam.name + ' — Exam & Year-wise';
+  $('pyqYearsSub').textContent   = 'Pick an exam paper';
   renderYearList();
   showScreen('pyqYearsScreen');
 });
@@ -232,49 +232,74 @@ $('pyqModeSubject').addEventListener('click', () => {
   showScreen('pyqSubjectsScreen');
 });
 
-// ── Year-wise PYQ ──────────────────────────────────────────────────────────
+// ── Exam & Year-wise PYQ ───────────────────────────────────────────────────
 async function renderYearList() {
   const container = $('pyqYearList');
-  container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim)">Loading years...</div>';
+  container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim)">Loading...</div>';
 
   try {
     const questions = await fetchQuestions({ exam: currentExam.id, type: 'pyq', maxCount: 1000 });
-    // Extract unique years
-    const years = [...new Set(questions.map(q => q.year).filter(Boolean))].sort((a,b) => b-a);
 
-    if (!years.length) {
+    if (!questions.length) {
       container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><h3>No PYQ uploaded yet</h3><p>Upload questions via admin panel first.</p></div>';
       return;
     }
 
+    // Group by exam_name + year (for exams with multiple papers/codes per year)
+    const groups = {};
+    questions.forEach(q => {
+      const examLabel = q.exam_name || `${currentExam.name} ${q.year}`;
+      const key = `${q.year}__${examLabel}`;
+      if (!groups[key]) {
+        groups[key] = {
+          examLabel,
+          year: q.year || '—',
+          exam_code: q.exam_code || '',
+          exam_date: q.exam_date || '',
+          questions: []
+        };
+      }
+      groups[key].questions.push(q);
+    });
+
+    // Sort: latest year first, then by exam_name alphabetically
+    const sorted = Object.values(groups).sort((a, b) =>
+      (b.year || 0) - (a.year || 0) || a.examLabel.localeCompare(b.examLabel)
+    );
+
     container.innerHTML = '';
-    years.forEach(year => {
-      const count = questions.filter(q => q.year === year).length;
+    sorted.forEach(g => {
+      const dateStr = g.exam_date
+        ? new Date(g.exam_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+        : g.year;
+      const codeTag = g.exam_code ? ` · ${g.exam_code}` : '';
+
       const btn = document.createElement('button');
       btn.className = 'subject-card';
       btn.innerHTML = `
         <div class="subject-icon">📅</div>
         <div class="subject-info">
-          <div class="subject-name">${year}</div>
-          <div class="subject-desc">${currentExam.name} Paper</div>
+          <div class="subject-name">${escapeHtml(g.examLabel)}</div>
+          <div class="subject-desc">${dateStr}${escapeHtml(codeTag)}</div>
         </div>
-        <div class="subject-count">${count}Q</div>
+        <div class="subject-count">${g.questions.length}Q</div>
         <div class="subject-arrow">›</div>
       `;
-      btn.addEventListener('click', () => openPyqYear(year, questions.filter(q => q.year === year)));
+      btn.addEventListener('click', () => openPyqYear(g.examLabel, g.questions));
       container.appendChild(btn);
     });
+
   } catch(e) {
     container.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Error loading</h3><p>' + e.message + '</p></div>';
   }
 }
 
-async function openPyqYear(year, questions) {
+async function openPyqYear(examLabel, questions) {
   currentTopic = 'all';
   quizRoute    = 'pyq';
   quizSource   = 'pyqYearsScreen';
 
-  if (!questions || !questions.length) { toast('No questions for this year'); return; }
+  if (!questions || !questions.length) { toast('No questions for this paper'); return; }
 
   // Sort by subject then q_num
   questions.sort((a,b) => (a.subject||'').localeCompare(b.subject||'') || (a.q_num||0)-(b.q_num||0));
