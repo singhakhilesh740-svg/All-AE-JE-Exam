@@ -230,11 +230,15 @@
     <div id="quizTopicBar" class="topic-bar-scroll"></div>
 
     <main class="quiz-main">
-      <div class="quiz-meta">
-        <span id="quizSubjectTag">—</span>
-        <span id="quizYearTag">—</span>
-        <span id="quizExamTag" class="hidden">—</span>
+      <div class="quiz-meta-row">
+        <div class="quiz-meta">
+          <span id="quizSubjectTag">—</span>
+          <span id="quizYearTag">—</span>
+          <span id="quizExamTag" class="hidden">—</span>
+        </div>
+        <button id="quizGridBtn" class="btn-grid" title="Jump to question">⊞</button>
       </div>
+      <div id="quizSrNo" class="quiz-sr-no">Q.1</div>
       <h2 id="quizQuestion" class="quiz-question">Loading...</h2>
       <div id="quizOptions" class="quiz-options"></div>
       <div id="quizExplanation" class="quiz-explanation hidden">
@@ -247,6 +251,17 @@
       <button id="quizPrevBtn" class="btn-secondary">← Prev</button>
       <button id="quizNextBtn" class="btn-primary">Next →</button>
     </footer>
+  </div>
+
+  <!-- QUESTION JUMP PANEL -->
+  <div id="jumpPanel" class="jump-panel hidden">
+    <div class="jump-panel-inner">
+      <div class="jump-panel-header">
+        <span class="jump-panel-title">Jump to Question</span>
+        <button id="jumpCloseBtn" class="btn-icon">✕</button>
+      </div>
+      <div id="jumpGrid" class="jump-grid"></div>
+    </div>
   </div>
 
   <!-- TOAST -->

@@ -80,3 +80,11 @@ export function resetToQuestions(questions) {
 export function getAllQuestions() {
   return state.questions;
 }
+
+export function jumpTo(index) {
+  if (index >= 0 && index < state.questions.length) {
+    state.currentIndex = index;
+    state.selectedIndex = null;
+    state.answered = false;
+  }
+}

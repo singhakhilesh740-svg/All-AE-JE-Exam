@@ -174,6 +174,7 @@ async function openPracticeSubject(subj) {
     return;
   }
 
+  Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
@@ -341,6 +342,7 @@ async function openPyqSubject(subj) {
   // Sort: latest year first
   questions.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
 
+  Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
 
@@ -455,6 +457,9 @@ $('practiceBookmarksBtn').addEventListener('click', () => {
 // QUIZ RENDERER
 // ══════════════════════════════════════════════════════════════════════════════
 
+// Track answered state for jump panel colours
+const quizAnswerMap = {}; // index → 'correct' | 'wrong'
+
 async function renderQuiz() {
   const q = Quiz.getCurrent();
   if (!q) {
@@ -465,6 +470,9 @@ async function renderQuiz() {
 
   const { current, total } = Quiz.getProgress();
   $('quizProgress').textContent = `${current} / ${total}`;
+
+  // Sr No
+  $('quizSrNo').textContent = `Q.${current}`;
 
   // Progress bar fill
   const fill = $('quizProgressFill');
@@ -478,7 +486,6 @@ async function renderQuiz() {
   $('quizYearTag').textContent = q.year ? `${q.year}` : '—';
 
   const examTag = $('quizExamTag');
-  // Show exam tag only for PYQ — not for practice questions
   if (quizRoute === 'pyq' && q.examId) {
     examTag.textContent = q.examId.toUpperCase().replace(/-/g, ' ');
     examTag.classList.remove('hidden');
@@ -503,6 +510,41 @@ async function renderQuiz() {
   await updateBookmarkBtn(q);
 }
 
+// ── Jump Panel ─────────────────────────────────────────────────────────────
+function openJumpPanel() {
+  const { total } = Quiz.getProgress();
+  const { current } = Quiz.getProgress();
+  const grid = $('jumpGrid');
+  grid.innerHTML = '';
+
+  for (let i = 1; i <= total; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'jump-btn';
+    btn.textContent = i;
+    const state = quizAnswerMap[i - 1];
+    if (i === current)        btn.classList.add('current');
+    else if (state === 'correct') btn.classList.add('answered');
+    else if (state === 'wrong')   btn.classList.add('wrong');
+    btn.addEventListener('click', () => {
+      Quiz.jumpTo(i - 1);
+      closeJumpPanel();
+      renderQuiz();
+    });
+    grid.appendChild(btn);
+  }
+  $('jumpPanel').classList.remove('hidden');
+}
+
+function closeJumpPanel() {
+  $('jumpPanel').classList.add('hidden');
+}
+
+$('quizGridBtn').addEventListener('click', openJumpPanel);
+$('jumpCloseBtn').addEventListener('click', closeJumpPanel);
+$('jumpPanel').addEventListener('click', e => {
+  if (e.target === $('jumpPanel')) closeJumpPanel();
+});
+
 async function updateBookmarkBtn(q) {
   if (!currentUser) { $('quizBookmarkBtn').textContent = '☆'; return; }
   // attach examId to question for bookmark lookup
@@ -517,6 +559,11 @@ function onOptionClick(index) {
   if (!result) return;
 
   const q = Quiz.getCurrent();
+  const { current } = Quiz.getProgress();
+
+  // Track answer for jump panel colours
+  quizAnswerMap[current - 1] = result.isCorrect ? 'correct' : 'wrong';
+
   document.querySelectorAll('.quiz-option').forEach((b, i) => {
     b.disabled = true;
     if (i === result.correctIndex) b.classList.add('correct');
