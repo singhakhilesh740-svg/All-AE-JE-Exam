@@ -9,7 +9,6 @@ import { watchAuth, loginWithGoogle, logout, sendOTP, verifyOTPLogin, verifyOTPR
 import {
   fetchQuestions,
   fetchPracticeQuestions,
-  saveUserProfile,
   saveAttempt,
   addBookmark,
   removeBookmark,
@@ -63,7 +62,6 @@ watchAuth(
     currentUser = user;
     $('userName').textContent = user.name.split(' ')[0];
     if (user.photo) $('userAvatar').src = user.photo;
-    await saveUserProfile(user);
     showScreen('homeScreen');
   },
   () => {
@@ -90,17 +88,23 @@ function showAuthStep(stepId) {
 
 let _regData = {}; // temporary store during registration
 
+// ── Safely attach click with null check ────────────────────────────────────
+function on(id, fn) {
+  const el = $(id);
+  if (el) el.addEventListener('click', fn);
+}
+
 // ── Choice buttons ──────────────────────────────────────────────────────────
-$('goLoginBtn').addEventListener('click', () => showAuthStep('loginOptions'));
-$('goRegisterBtn').addEventListener('click', () => showAuthStep('regStep1'));
-$('backToChoice1').addEventListener('click', () => showAuthStep('authChoice'));
-$('backToChoice2').addEventListener('click', () => showAuthStep('authChoice'));
-$('backToLoginOptions').addEventListener('click', () => showAuthStep('loginOptions'));
-$('backToLoginPhone').addEventListener('click', () => showAuthStep('loginPhoneStep'));
-$('backToRegStep1').addEventListener('click', () => showAuthStep('regStep1'));
+on('goLoginBtn',        () => showAuthStep('loginOptions'));
+on('goRegisterBtn',     () => showAuthStep('regStep1'));
+on('backToChoice1',     () => showAuthStep('authChoice'));
+on('backToChoice2',     () => showAuthStep('authChoice'));
+on('backToLoginOptions',() => showAuthStep('loginOptions'));
+on('backToLoginPhone',  () => showAuthStep('loginPhoneStep'));
+on('backToRegStep1',    () => showAuthStep('regStep1'));
 
 // ── Google Login (registered users only) ───────────────────────────────────
-$('googleLoginBtn').addEventListener('click', async () => {
+on('googleLoginBtn', async () => {
   authMsg('Signing in with Google…');
   try {
     await loginWithGoogle();
@@ -116,9 +120,9 @@ $('googleLoginBtn').addEventListener('click', async () => {
 });
 
 // ── Login with Mobile OTP ───────────────────────────────────────────────────
-$('phoneLoginBtn').addEventListener('click', () => showAuthStep('loginPhoneStep'));
+on('phoneLoginBtn', () => showAuthStep('loginPhoneStep'));
 
-$('loginSendOtpBtn').addEventListener('click', async () => {
+on('loginSendOtpBtn', async () => {
   const mobile = $('loginMobileInput').value.trim();
   if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
   const full = '+91' + mobile;
@@ -138,7 +142,7 @@ $('loginSendOtpBtn').addEventListener('click', async () => {
   } catch(e) { authMsg('Failed to send OTP: ' + e.message, '#ef4444'); }
 });
 
-$('loginVerifyOtpBtn').addEventListener('click', async () => {
+on('loginVerifyOtpBtn', async () => {
   const otp = $('loginOtpInput').value.trim();
   if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
   authMsg('Verifying OTP…');
@@ -152,7 +156,7 @@ $('loginVerifyOtpBtn').addEventListener('click', async () => {
   } catch(e) { authMsg('Invalid OTP. Try again.', '#ef4444'); }
 });
 
-$('loginResendOtpBtn').addEventListener('click', async () => {
+on('loginResendOtpBtn', async () => {
   const mobile = $('loginMobileInput').value.trim();
   if (!mobile) { showAuthStep('loginPhoneStep'); return; }
   authMsg('Resending OTP…');
@@ -163,7 +167,7 @@ $('loginResendOtpBtn').addEventListener('click', async () => {
 });
 
 // ── Registration Flow ───────────────────────────────────────────────────────
-$('regSendOtpBtn').addEventListener('click', async () => {
+on('regSendOtpBtn', async () => {
   const name   = $('regName').value.trim();
   const email  = $('regEmail').value.trim();
   const mobile = $('regMobile').value.trim();
@@ -193,7 +197,7 @@ $('regSendOtpBtn').addEventListener('click', async () => {
   } catch(e) { authMsg('Failed to send OTP: ' + e.message, '#ef4444'); }
 });
 
-$('regVerifyOtpBtn').addEventListener('click', async () => {
+on('regVerifyOtpBtn', async () => {
   const otp = $('regOtpInput').value.trim();
   if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
   authMsg('Verifying OTP…');
@@ -211,7 +215,7 @@ $('regVerifyOtpBtn').addEventListener('click', async () => {
   } catch(e) { authMsg('Invalid OTP. Try again.', '#ef4444'); }
 });
 
-$('regResendOtpBtn').addEventListener('click', async () => {
+on('regResendOtpBtn', async () => {
   if (!_regData.mobile) { showAuthStep('regStep1'); return; }
   authMsg('Resending OTP…');
   try {
