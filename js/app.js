@@ -679,8 +679,10 @@ async function renderQuiz() {
 
   const examTag = $('quizExamTag');
   if (quizRoute === 'pyq') {
-    // Show exam_name (full name) — never show raw examId
-    const examLabel = q.exam_name || null;
+    // exam_name from question data, fallback to currentExam name
+    const examLabel = q.exam_name
+      || (currentExam ? currentExam.name : null)
+      || null;
     if (examLabel) {
       examTag.textContent = examLabel;
       examTag.classList.remove('hidden');
