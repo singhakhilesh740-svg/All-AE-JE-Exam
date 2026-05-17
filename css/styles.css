@@ -359,13 +359,23 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
 
 .quiz-main { flex: 1; padding: 18px 16px; overflow-y: auto; }
 
-.quiz-meta { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.quiz-meta { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
 .quiz-meta span {
   background: var(--surface); color: var(--text-dim);
   padding: 3px 10px; border-radius: 20px;
   font-size: 11px; font-weight: 600; text-transform: uppercase;
   border: 1px solid var(--border);
 }
+#quizExamTag {
+  background: #0c2a0c; color: #4ade80;
+  border-color: #166534;
+  font-size: 11px; font-weight: 700;
+  text-transform: none;
+  padding: 4px 12px; border-radius: 20px;
+  display: block; width: 100%; box-sizing: border-box;
+  margin-bottom: 6px; text-align: center;
+}
+#quizExamTag.hidden { display: none; }
 
 .quiz-question { font-size: 16px; font-weight: 500; line-height: 1.65; margin-bottom: 22px; }
 .quiz-options { display: flex; flex-direction: column; gap: 10px; }

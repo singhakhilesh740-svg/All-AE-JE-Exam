@@ -679,7 +679,8 @@ async function renderQuiz() {
 
   const examTag = $('quizExamTag');
   if (quizRoute === 'pyq') {
-    const examLabel = q.exam_name || (q.examId ? q.examId.toUpperCase().replace(/-/g, ' ') : null);
+    // Show exam_name (full name) — never show raw examId
+    const examLabel = q.exam_name || null;
     if (examLabel) {
       examTag.textContent = examLabel;
       examTag.classList.remove('hidden');
