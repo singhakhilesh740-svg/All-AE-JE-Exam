@@ -135,7 +135,7 @@ on('loginSendOtpBtn', async () => {
   }
   authMsg('Sending OTP…');
   try {
-    await sendOTP(full, 'loginSendOtpBtn');
+    await sendOTP(full);
     $('loginOtpSentTo').textContent = '+91 ' + mobile;
     showAuthStep('loginOtpStep');
     authMsg('OTP sent ✓', '#10b981');
@@ -161,7 +161,7 @@ on('loginResendOtpBtn', async () => {
   if (!mobile) { showAuthStep('loginPhoneStep'); return; }
   authMsg('Resending OTP…');
   try {
-    await sendOTP('+91' + mobile, 'loginSendOtpBtn');
+    await sendOTP('+91' + mobile);
     authMsg('OTP resent ✓', '#10b981');
   } catch(e) { authMsg('Failed: ' + e.message, '#ef4444'); }
 });
@@ -189,7 +189,7 @@ on('regSendOtpBtn', async () => {
 
   authMsg('Sending OTP to +91 ' + mobile + '…');
   try {
-    await sendOTP(full, 'regSendOtpBtn');
+    await sendOTP(full);
     _regData = { name, email, mobile: full };
     $('regOtpSentTo').textContent = '+91 ' + mobile;
     showAuthStep('regOtpStep');
@@ -219,7 +219,7 @@ on('regResendOtpBtn', async () => {
   if (!_regData.mobile) { showAuthStep('regStep1'); return; }
   authMsg('Resending OTP…');
   try {
-    await sendOTP(_regData.mobile, 'regSendOtpBtn');
+    await sendOTP(_regData.mobile);
     authMsg('OTP resent ✓', '#10b981');
   } catch(e) { authMsg('Failed: ' + e.message, '#ef4444'); }
 });

@@ -14,12 +14,20 @@ let recaptchaVerifier = null;
 let confirmationResult = null;
 
 // ── Recaptcha ──────────────────────────────────────────────────────────────
-function setupRecaptcha(buttonId) {
+function setupRecaptcha() {
+  // Always use a dedicated div, never the button itself
+  let container = document.getElementById('recaptcha-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'recaptcha-container';
+    document.body.appendChild(container);
+  }
   if (recaptchaVerifier) {
     try { recaptchaVerifier.clear(); } catch(e) {}
     recaptchaVerifier = null;
+    container.innerHTML = '';
   }
-  recaptchaVerifier = new RecaptchaVerifier(auth, buttonId, {
+  recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
     size: 'invisible', callback: () => {}
   });
   return recaptchaVerifier;
@@ -96,8 +104,8 @@ export async function loginWithGoogle() {
 }
 
 // ── Phone OTP: Send ────────────────────────────────────────────────────────
-export async function sendOTP(mobileNumber, buttonId) {
-  const verifier = setupRecaptcha(buttonId);
+export async function sendOTP(mobileNumber) {
+  const verifier = setupRecaptcha();
   confirmationResult = await signInWithPhoneNumber(auth, mobileNumber, verifier);
   return confirmationResult;
 }
