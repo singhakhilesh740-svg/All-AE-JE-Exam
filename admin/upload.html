@@ -477,8 +477,15 @@ function validateAndBuild(raw, i, defaultExam, defaultType, defaultYear, default
   if (type === 'pyq') {
     q.year = raw.year || defaultYear;
     if (!q.year) errs.push('year required for PYQ');
+    // Preserve all PYQ-specific fields
+    if (raw.exam_name)  q.exam_name  = raw.exam_name;
+    if (raw.exam_code)  q.exam_code  = raw.exam_code;
+    if (raw.exam_date)  q.exam_date  = raw.exam_date;
+    if (raw.stage)      q.stage      = raw.stage;
+    if (raw.q_num)      q.q_num      = raw.q_num;
   }
-  if (raw.difficulty) q.difficulty = raw.difficulty;
+  if (raw.difficulty)    q.difficulty    = raw.difficulty;
+  if (raw.source_category) q.source_category = raw.source_category;
   if (errs.length) return { ok:false, errs, raw };
   return { ok:true, q };
 }
