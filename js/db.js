@@ -34,8 +34,13 @@ export async function fetchQuestions(opts = {}) {
   try {
     const qRef = collection(db, 'exams', exam, 'questions');
     let q;
-    if (subject) {
+    // Filter by type at Firestore level so limit() is not wasted on wrong types
+    if (subject && type) {
+      q = query(qRef, where('subject', '==', subject), where('type', '==', type), limit(maxCount));
+    } else if (subject) {
       q = query(qRef, where('subject', '==', subject), limit(maxCount));
+    } else if (type) {
+      q = query(qRef, where('type', '==', type), limit(maxCount));
     } else {
       q = query(qRef, limit(maxCount));
     }
@@ -45,7 +50,6 @@ export async function fetchQuestions(opts = {}) {
     snap.forEach(docSnap => {
       const data = docSnap.data();
       if (isValidQuestion(data)) {
-        if (type && data.type && data.type !== type) return;
         questions.push({ id: docSnap.id, examId: exam, ...data });
       }
     });
@@ -62,7 +66,7 @@ export async function fetchQuestions(opts = {}) {
 // Fetch practice questions across ALL exams (not locked to one exam)
 // Automatically includes any exam added to exams.js — no changes needed here
 export async function fetchPracticeQuestions(opts = {}) {
-  const { subject = null, maxCount = 500, force = false } = opts;
+  const { subject = null, maxCount = 3000, force = false } = opts;
   const { EXAMS } = await import('./exams.js');
   const EXAM_IDS = EXAMS.map(e => e.id);
 
