@@ -13,22 +13,93 @@
 <body>
 
   <!-- ===== LOGIN SCREEN ===== -->
+  <!-- ===== LOGIN SCREEN ===== -->
   <div id="loginScreen" class="screen active">
     <div class="login-card">
       <div class="logo">📘</div>
       <h1>AE/JE Civil Hub</h1>
       <p class="tagline">Civil Engineering Exam Prep</p>
       <p class="subtitle">Notes · PYQ · Practice · Bookmarks</p>
-      <button id="googleLoginBtn" class="btn-google">
-        <svg width="18" height="18" viewBox="0 0 18 18">
-          <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
-          <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
-          <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
-          <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
-        </svg>
-        Continue with Google
-      </button>
-      <p class="footer-note">Free questions available • Premium coming soon</p>
+
+      <!-- Step 0: Login or Register choice -->
+      <div id="authChoice">
+        <button id="goLoginBtn" class="btn-primary-auth" style="background:#1e40af">🔐 Login</button>
+        <button id="goRegisterBtn" class="btn-primary-auth" style="background:#065f46;margin-top:0">📝 New Registration</button>
+      </div>
+
+      <!-- ── LOGIN FLOW ── -->
+      <!-- Login: choose method -->
+      <div id="loginOptions" style="display:none">
+        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Login to your account</p>
+        <button id="googleLoginBtn" class="btn-google">
+          <svg width="18" height="18" viewBox="0 0 18 18">
+            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
+            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+          </svg>
+          Login with Google
+        </button>
+        <div class="divider"><span>or</span></div>
+        <button id="phoneLoginBtn" class="btn-phone">📱 Login with Mobile OTP</button>
+        <button id="backToChoice1" class="btn-ghost">← Back</button>
+      </div>
+
+      <!-- Login: enter mobile -->
+      <div id="loginPhoneStep" style="display:none">
+        <p class="auth-step-label">Enter your registered mobile number</p>
+        <div class="phone-input-row">
+          <span class="country-code">+91</span>
+          <input id="loginMobileInput" type="tel" inputmode="numeric" maxlength="10"
+            placeholder="10-digit mobile number" autocomplete="tel"/>
+        </div>
+        <button id="loginSendOtpBtn" class="btn-primary-auth">Send OTP</button>
+        <button id="backToLoginOptions" class="btn-ghost">← Back</button>
+      </div>
+
+      <!-- Login: verify OTP -->
+      <div id="loginOtpStep" style="display:none">
+        <p class="auth-step-label">OTP sent to <strong id="loginOtpSentTo" style="color:#60a5fa"></strong></p>
+        <div class="otp-row">
+          <input id="loginOtpInput" type="tel" inputmode="numeric" maxlength="6"
+            placeholder="6-digit OTP" autocomplete="one-time-code"/>
+        </div>
+        <button id="loginVerifyOtpBtn" class="btn-primary-auth">Verify & Login</button>
+        <button id="loginResendOtpBtn" class="btn-ghost" style="font-size:12px">Resend OTP</button>
+        <button id="backToLoginPhone" class="btn-ghost">← Change Number</button>
+      </div>
+
+      <!-- ── REGISTER FLOW ── -->
+      <!-- Register: Step 1 — Name + Email + Mobile -->
+      <div id="regStep1" style="display:none">
+        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Create your account</p>
+        <input id="regName" type="text" placeholder="Full Name *" maxlength="60" class="auth-input"/>
+        <input id="regEmail" type="email" placeholder="Email ID *" class="auth-input"/>
+        <div class="phone-input-row">
+          <span class="country-code">+91</span>
+          <input id="regMobile" type="tel" inputmode="numeric" maxlength="10"
+            placeholder="Mobile number *" autocomplete="tel"/>
+        </div>
+        <button id="regSendOtpBtn" class="btn-primary-auth">Send OTP to Verify Mobile</button>
+        <button id="backToChoice2" class="btn-ghost">← Back</button>
+      </div>
+
+      <!-- Register: Step 2 — OTP -->
+      <div id="regOtpStep" style="display:none">
+        <p class="auth-step-label">OTP sent to <strong id="regOtpSentTo" style="color:#60a5fa"></strong><br/>
+          <span style="color:#64748b;font-size:11px">Enter OTP to verify and complete registration</span>
+        </p>
+        <div class="otp-row">
+          <input id="regOtpInput" type="tel" inputmode="numeric" maxlength="6"
+            placeholder="6-digit OTP" autocomplete="one-time-code"/>
+        </div>
+        <button id="regVerifyOtpBtn" class="btn-primary-auth" style="background:#065f46">Verify & Register</button>
+        <button id="regResendOtpBtn" class="btn-ghost" style="font-size:12px">Resend OTP</button>
+        <button id="backToRegStep1" class="btn-ghost">← Back</button>
+      </div>
+
+      <p class="footer-note" id="loginFooter">Only registered users can access the app</p>
+      <div id="authMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
     </div>
   </div>
 

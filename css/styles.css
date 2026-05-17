@@ -573,3 +573,65 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
 .jump-btn.answered { background: var(--success); color: #fff; border-color: var(--success); }
 .jump-btn.wrong    { background: var(--error);   color: #fff; border-color: var(--error); }
 .jump-btn:active   { opacity: 0.8; transform: scale(0.95); }
+
+/* ── Phone Auth Styles ─────────────────────────────────────────────────── */
+.divider {
+  display: flex; align-items: center; gap: 10px;
+  margin: 12px 0; color: #475569; font-size: 12px;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: #1e293b;
+}
+.btn-phone {
+  width: 100%; padding: 13px; border-radius: 12px;
+  background: #1e293b; color: #94a3b8; border: 1px solid #334155;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: background .2s;
+}
+.btn-phone:hover { background: #334155; color: #e2e8f0; }
+.btn-primary-auth {
+  width: 100%; padding: 13px; border-radius: 12px;
+  background: #3b82f6; color: #fff; border: none;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  margin-bottom: 8px; transition: background .2s;
+}
+.btn-primary-auth:hover { background: #2563eb; }
+.btn-primary-auth:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+.btn-ghost {
+  width: 100%; padding: 9px; border-radius: 10px;
+  background: transparent; color: #64748b; border: none;
+  font-size: 13px; cursor: pointer; margin-bottom: 4px;
+}
+.btn-ghost:hover { color: #94a3b8; }
+.auth-step-label {
+  font-size: 13px; color: #94a3b8; margin: 0 0 14px;
+  text-align: center; line-height: 1.5;
+}
+.phone-input-row {
+  display: flex; align-items: center; gap: 8px;
+  background: #0f172a; border: 1px solid #334155;
+  border-radius: 10px; padding: 0 12px; margin-bottom: 10px;
+}
+.country-code {
+  color: #94a3b8; font-size: 14px; font-weight: 600;
+  border-right: 1px solid #334155; padding-right: 10px;
+}
+.phone-input-row input {
+  flex: 1; background: transparent; border: none;
+  color: #e2e8f0; font-size: 14px; padding: 11px 0; outline: none;
+}
+.otp-row input {
+  width: 100%; padding: 14px; border-radius: 10px;
+  border: 1px solid #334155; background: #0f172a;
+  color: #e2e8f0; font-size: 20px; font-weight: 700;
+  text-align: center; letter-spacing: 6px; box-sizing: border-box;
+  margin-bottom: 10px; outline: none;
+}
+.otp-row input:focus { border-color: #3b82f6; }
+.auth-input {
+  width: 100%; padding: 11px 14px; border-radius: 10px;
+  border: 1px solid #334155; background: #0f172a;
+  color: #e2e8f0; font-size: 14px; box-sizing: border-box;
+  margin-bottom: 10px; outline: none;
+}
+.auth-input:focus { border-color: #3b82f6; }

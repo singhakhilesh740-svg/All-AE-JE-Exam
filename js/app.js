@@ -5,7 +5,7 @@
 //   PYQ:      Home → pyqExamsScreen → pyqSubjectsScreen → quizScreen (topic chips)
 //   Bookmarks:Home → bookmarksScreen → quizScreen
 
-import { watchAuth, loginWithGoogle, logout } from './auth.js';
+import { watchAuth, loginWithGoogle, logout, sendOTP, verifyOTPLogin, verifyOTPRegister, saveUserProfile, isMobileRegistered, isEmailRegistered } from './auth.js';
 import {
   fetchQuestions,
   fetchPracticeQuestions,
@@ -72,9 +72,152 @@ watchAuth(
   }
 );
 
+// ── Auth UI helpers ────────────────────────────────────────────────────────
+function authMsg(msg, color='#f59e0b') {
+  const el = $('authMsg');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color;
+}
+function showAuthStep(stepId) {
+  ['authChoice','loginOptions','loginPhoneStep','loginOtpStep',
+   'regStep1','regOtpStep'].forEach(id => {
+    const el = $(id);
+    if (el) el.style.display = (id === stepId) ? 'block' : 'none';
+  });
+  authMsg('');
+}
+
+let _regData = {}; // temporary store during registration
+
+// ── Choice buttons ──────────────────────────────────────────────────────────
+$('goLoginBtn').addEventListener('click', () => showAuthStep('loginOptions'));
+$('goRegisterBtn').addEventListener('click', () => showAuthStep('regStep1'));
+$('backToChoice1').addEventListener('click', () => showAuthStep('authChoice'));
+$('backToChoice2').addEventListener('click', () => showAuthStep('authChoice'));
+$('backToLoginOptions').addEventListener('click', () => showAuthStep('loginOptions'));
+$('backToLoginPhone').addEventListener('click', () => showAuthStep('loginPhoneStep'));
+$('backToRegStep1').addEventListener('click', () => showAuthStep('regStep1'));
+
+// ── Google Login (registered users only) ───────────────────────────────────
 $('googleLoginBtn').addEventListener('click', async () => {
-  try { await loginWithGoogle(); }
-  catch { toast('Login failed. Try again.'); }
+  authMsg('Signing in with Google…');
+  try {
+    await loginWithGoogle();
+    // watchAuth handles the rest
+  } catch(e) {
+    if (e.message === 'NOT_REGISTERED') {
+      authMsg('⚠️ This Google account is not registered. Please register first.', '#ef4444');
+    } else {
+      authMsg('Login failed: ' + e.message, '#ef4444');
+    }
+    showAuthStep('loginOptions');
+  }
+});
+
+// ── Login with Mobile OTP ───────────────────────────────────────────────────
+$('phoneLoginBtn').addEventListener('click', () => showAuthStep('loginPhoneStep'));
+
+$('loginSendOtpBtn').addEventListener('click', async () => {
+  const mobile = $('loginMobileInput').value.trim();
+  if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
+  const full = '+91' + mobile;
+  // Check registration first
+  authMsg('Checking registration…');
+  const registered = await isMobileRegistered(full);
+  if (!registered) {
+    authMsg('⚠️ This mobile is not registered. Please register first.', '#ef4444');
+    return;
+  }
+  authMsg('Sending OTP…');
+  try {
+    await sendOTP(full, 'loginSendOtpBtn');
+    $('loginOtpSentTo').textContent = '+91 ' + mobile;
+    showAuthStep('loginOtpStep');
+    authMsg('OTP sent ✓', '#10b981');
+  } catch(e) { authMsg('Failed to send OTP: ' + e.message, '#ef4444'); }
+});
+
+$('loginVerifyOtpBtn').addEventListener('click', async () => {
+  const otp = $('loginOtpInput').value.trim();
+  if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
+  authMsg('Verifying OTP…');
+  try {
+    const { registered } = await verifyOTPLogin(otp);
+    if (!registered) {
+      authMsg('⚠️ Mobile not registered. Please register first.', '#ef4444');
+      showAuthStep('authChoice');
+    }
+    // if registered, watchAuth fires automatically
+  } catch(e) { authMsg('Invalid OTP. Try again.', '#ef4444'); }
+});
+
+$('loginResendOtpBtn').addEventListener('click', async () => {
+  const mobile = $('loginMobileInput').value.trim();
+  if (!mobile) { showAuthStep('loginPhoneStep'); return; }
+  authMsg('Resending OTP…');
+  try {
+    await sendOTP('+91' + mobile, 'loginSendOtpBtn');
+    authMsg('OTP resent ✓', '#10b981');
+  } catch(e) { authMsg('Failed: ' + e.message, '#ef4444'); }
+});
+
+// ── Registration Flow ───────────────────────────────────────────────────────
+$('regSendOtpBtn').addEventListener('click', async () => {
+  const name   = $('regName').value.trim();
+  const email  = $('regEmail').value.trim();
+  const mobile = $('regMobile').value.trim();
+
+  if (!name)  { authMsg('Please enter your full name', '#ef4444'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    authMsg('Please enter a valid email ID', '#ef4444'); return;
+  }
+  if (!/^\d{10}$/.test(mobile)) {
+    authMsg('Enter valid 10-digit mobile number', '#ef4444'); return;
+  }
+  const full = '+91' + mobile;
+
+  authMsg('Checking availability…');
+  const mobileExists = await isMobileRegistered(full);
+  if (mobileExists) { authMsg('⚠️ This mobile is already registered. Please login.', '#ef4444'); return; }
+  const emailExists = await isEmailRegistered(email);
+  if (emailExists) { authMsg('⚠️ This email is already registered. Please login.', '#ef4444'); return; }
+
+  authMsg('Sending OTP to +91 ' + mobile + '…');
+  try {
+    await sendOTP(full, 'regSendOtpBtn');
+    _regData = { name, email, mobile: full };
+    $('regOtpSentTo').textContent = '+91 ' + mobile;
+    showAuthStep('regOtpStep');
+    authMsg('OTP sent ✓', '#10b981');
+  } catch(e) { authMsg('Failed to send OTP: ' + e.message, '#ef4444'); }
+});
+
+$('regVerifyOtpBtn').addEventListener('click', async () => {
+  const otp = $('regOtpInput').value.trim();
+  if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
+  authMsg('Verifying OTP…');
+  try {
+    const user = await verifyOTPRegister(otp);
+    authMsg('Mobile verified! Saving profile…', '#10b981');
+    await saveUserProfile({
+      uid:    user.uid,
+      name:   _regData.name,
+      email:  _regData.email,
+      mobile: _regData.mobile
+    });
+    authMsg('Registration complete! 🎉', '#10b981');
+    // watchAuth fires and logs user in automatically
+  } catch(e) { authMsg('Invalid OTP. Try again.', '#ef4444'); }
+});
+
+$('regResendOtpBtn').addEventListener('click', async () => {
+  if (!_regData.mobile) { showAuthStep('regStep1'); return; }
+  authMsg('Resending OTP…');
+  try {
+    await sendOTP(_regData.mobile, 'regSendOtpBtn');
+    authMsg('OTP resent ✓', '#10b981');
+  } catch(e) { authMsg('Failed: ' + e.message, '#ef4444'); }
 });
 
 $('logoutBtn').addEventListener('click', async () => {
