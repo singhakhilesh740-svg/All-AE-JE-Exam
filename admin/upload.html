@@ -214,26 +214,65 @@
     <!-- Delete Questions -->
     <div class="panel">
       <div class="panel-title">🗑 Delete Questions</div>
-      <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">Select exam, type, and subjects to delete. Double confirmation required.</p>
+      <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">Double confirmation required. This cannot be undone.</p>
 
       <label>Exam</label>
       <select id="delExamSel"></select>
 
-      <label style="margin-top:10px">Question Type to Delete</label>
+      <label style="margin-top:10px">Question Type</label>
       <div style="display:flex;gap:8px;margin-top:6px">
         <button class="type-tab active" id="delTypePractice" data-dtype="practice" style="font-size:12px;padding:8px">✏️ Practice</button>
         <button class="type-tab" id="delTypePyq" data-dtype="pyq" style="font-size:12px;padding:8px">📜 PYQ</button>
         <button class="type-tab" id="delTypeAll" data-dtype="all" style="font-size:12px;padding:8px">⚠️ All</button>
       </div>
 
-      <label style="margin-top:12px">Select Subjects to Delete <small style="color:#64748b">(uncheck to keep)</small></label>
-      <div id="delSubjectList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:300px;overflow-y:auto"></div>
-
-      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-        <button class="btn-secondary" id="delSelectAll" style="font-size:12px;padding:7px 12px">☑ Select All</button>
-        <button class="btn-secondary" id="delClearAll" style="font-size:12px;padding:7px 12px">☐ Clear All</button>
-        <button class="btn-danger" id="delExecuteBtn" style="flex:1">🗑 Delete Selected</button>
+      <!-- Practice: delete by subject -->
+      <div id="delPracticeSection">
+        <label style="margin-top:12px">Select Subjects <small style="color:#64748b">(uncheck to keep)</small></label>
+        <div id="delSubjectList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:260px;overflow-y:auto"></div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <button class="btn-secondary" id="delSelectAll" style="font-size:12px;padding:7px 12px">☑ Select All</button>
+          <button class="btn-secondary" id="delClearAll" style="font-size:12px;padding:7px 12px">☐ Clear All</button>
+        </div>
       </div>
+
+      <!-- PYQ: two sub-tabs -->
+      <div id="delPyqSection" style="display:none">
+        <label style="margin-top:12px">Delete PYQ by</label>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button class="type-tab active" id="delPyqBySubject" data-pyqmode="subject" style="font-size:12px;padding:8px;flex:1">By Subject</button>
+          <button class="type-tab" id="delPyqByExamYear" data-pyqmode="examyear" style="font-size:12px;padding:8px;flex:1">By Exam &amp; Year</button>
+        </div>
+
+        <!-- by subject -->
+        <div id="delPyqSubjectSec">
+          <label style="margin-top:10px">Select Subjects</label>
+          <div id="delPyqSubjectList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:220px;overflow-y:auto"></div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn-secondary" id="delPyqSubjSelectAll" style="font-size:12px;padding:7px 12px">☑ All</button>
+            <button class="btn-secondary" id="delPyqSubjClearAll" style="font-size:12px;padding:7px 12px">☐ None</button>
+          </div>
+        </div>
+
+        <!-- by exam & year -->
+        <div id="delPyqExamYearSec" style="display:none">
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:flex-end">
+            <div style="flex:1;min-width:140px">
+              <label style="margin-top:0">Exam</label>
+              <select id="delPyqExamSel" style="margin-top:4px"></select>
+            </div>
+            <div style="flex:1;min-width:100px">
+              <label style="margin-top:0">Year <small style="color:#64748b">(blank = all years)</small></label>
+              <input id="delPyqYear" type="number" placeholder="e.g. 2022" min="2000" max="2099"
+                style="margin-top:4px;background:#0f172a;border:1px solid #334155;color:#e2e8f0;border-radius:8px;padding:9px 12px;font-size:13px;width:100%;box-sizing:border-box">
+            </div>
+            <button class="btn-secondary" id="delPyqPreviewBtn" style="font-size:12px;padding:9px 14px;white-space:nowrap">🔍 Preview</button>
+          </div>
+          <div id="delPyqExamYearPreview" style="margin-top:8px;font-size:12px;color:#94a3b8;display:none"></div>
+        </div>
+      </div>
+
+      <button class="btn-danger" id="delExecuteBtn" style="width:100%;margin-top:14px">🗑 Delete Selected</button>
       <div id="delPreview" style="margin-top:10px;font-size:12px;color:#f59e0b;display:none"></div>
     </div>
 
@@ -544,98 +583,202 @@ $('uploadBtn').onclick = async () => {
 // ── Delete All Practice Questions ────────────────────────────────────────
 // ── Delete Panel Logic ───────────────────────────────────────────────────
 let delSelectedType = 'practice';
+let delPyqMode      = 'subject';   // 'subject' | 'examyear'
 
-// Type tab switching for delete panel
+// ── Type tab switching ────────────────────────────────────────────────────
 document.querySelectorAll('[data-dtype]').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('[data-dtype]').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     delSelectedType = tab.dataset.dtype;
+    // show/hide practice vs PYQ sections
+    const isPyq = delSelectedType === 'pyq';
+    $('delPracticeSection').style.display = isPyq ? 'none' : 'block';
+    $('delPyqSection').style.display      = isPyq ? 'block' : 'none';
     updateDelPreview();
   });
 });
 
-function buildDelSubjectList() {
-  const container = $('delSubjectList');
+// ── PYQ sub-tab switching (by subject / by exam+year) ─────────────────────
+document.querySelectorAll('[data-pyqmode]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('[data-pyqmode]').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    delPyqMode = tab.dataset.pyqmode;
+    $('delPyqSubjectSec').style.display    = delPyqMode === 'subject'   ? 'block' : 'none';
+    $('delPyqExamYearSec').style.display   = delPyqMode === 'examyear'  ? 'block' : 'none';
+    updateDelPreview();
+  });
+});
+
+// ── Build subject lists ───────────────────────────────────────────────────
+function buildSubjectCheckboxes(containerId, prefix) {
+  const container = $(containerId);
   if (!container) return;
   container.innerHTML = '';
   ALL_SUBJECTS.forEach(s => {
     const row = document.createElement('div');
     row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#0f172a;padding:8px 12px;border-radius:8px;border:1px solid #1e293b';
     row.innerHTML = `
-      <input type="checkbox" id="del_${s.id}" value="${s.id}" checked
+      <input type="checkbox" id="${prefix}_${s.id}" value="${s.id}" checked
         style="width:16px;height:16px;cursor:pointer;accent-color:#ef4444">
-      <label for="del_${s.id}" style="flex:1;font-size:13px;color:#e2e8f0;cursor:pointer">
+      <label for="${prefix}_${s.id}" style="flex:1;font-size:13px;color:#e2e8f0;cursor:pointer">
         ${s.icon||'📖'} ${s.name}
       </label>
       <span style="font-size:11px;color:#64748b;font-family:monospace">${s.id}</span>`;
     row.querySelector('input').addEventListener('change', updateDelPreview);
     container.appendChild(row);
   });
+}
+
+function buildDelSubjectList() {
+  buildSubjectCheckboxes('delSubjectList', 'del');
+  buildSubjectCheckboxes('delPyqSubjectList', 'delpyq');
+  // populate PYQ exam selector
+  if ($('delPyqExamSel')) {
+    $('delPyqExamSel').innerHTML = EXAMS.map(e =>
+      `<option value="${e.id}">${e.icon} ${e.name}</option>`).join('');
+  }
   updateDelPreview();
 }
 
-function getCheckedSubjects() {
-  return [...document.querySelectorAll('#delSubjectList input[type=checkbox]:checked')]
+function getCheckedSubjects(prefix) {
+  return [...document.querySelectorAll(`#${prefix === 'del' ? 'delSubjectList' : 'delPyqSubjectList'} input[type=checkbox]:checked`)]
     .map(cb => cb.value);
 }
 
 function updateDelPreview() {
-  const subjects = getCheckedSubjects();
   const preview = $('delPreview');
   if (!preview) return;
-  if (!subjects.length) {
-    preview.style.display = 'block';
-    preview.textContent = '⚠️ No subjects selected.';
+
+  if (delSelectedType === 'pyq') {
+    if (delPyqMode === 'subject') {
+      const subjs = getCheckedSubjects('delpyq');
+      preview.style.display = 'block';
+      preview.textContent = subjs.length
+        ? `Will delete PYQ from ${subjs.length} subject(s): ${subjs.join(', ')}`
+        : '⚠️ No subjects selected.';
+    } else {
+      preview.style.display = 'none';   // preview shown by Preview button
+    }
     return;
   }
-  const typeLabel = delSelectedType === 'all' ? 'ALL types' : delSelectedType.toUpperCase();
+
+  // practice or all
+  const subjs = getCheckedSubjects('del');
   preview.style.display = 'block';
-  preview.textContent = `Will delete: ${typeLabel} questions from ${subjects.length} subject(s): ${subjects.join(', ')}`;
+  if (!subjs.length) { preview.textContent = '⚠️ No subjects selected.'; return; }
+  const typeLabel = delSelectedType === 'all' ? 'ALL types' : delSelectedType.toUpperCase();
+  preview.textContent = `Will delete: ${typeLabel} from ${subjs.length} subject(s): ${subjs.join(', ')}`;
 }
 
-if ($('delSelectAll')) {
-  $('delSelectAll').onclick = () => {
-    document.querySelectorAll('#delSubjectList input[type=checkbox]').forEach(cb => cb.checked = true);
-    updateDelPreview();
-  };
-}
-if ($('delClearAll')) {
-  $('delClearAll').onclick = () => {
-    document.querySelectorAll('#delSubjectList input[type=checkbox]').forEach(cb => cb.checked = false);
-    updateDelPreview();
+// Select/Clear All for practice subjects
+if ($('delSelectAll')) $('delSelectAll').onclick = () => {
+  document.querySelectorAll('#delSubjectList input').forEach(cb => cb.checked = true);
+  updateDelPreview();
+};
+if ($('delClearAll')) $('delClearAll').onclick = () => {
+  document.querySelectorAll('#delSubjectList input').forEach(cb => cb.checked = false);
+  updateDelPreview();
+};
+// Select/Clear All for PYQ by subject
+if ($('delPyqSubjSelectAll')) $('delPyqSubjSelectAll').onclick = () => {
+  document.querySelectorAll('#delPyqSubjectList input').forEach(cb => cb.checked = true);
+  updateDelPreview();
+};
+if ($('delPyqSubjClearAll')) $('delPyqSubjClearAll').onclick = () => {
+  document.querySelectorAll('#delPyqSubjectList input').forEach(cb => cb.checked = false);
+  updateDelPreview();
+};
+
+// PYQ by exam+year: Preview button
+if ($('delPyqPreviewBtn')) {
+  $('delPyqPreviewBtn').onclick = async () => {
+    const examId = $('delPyqExamSel').value;
+    const year   = parseInt($('delPyqYear').value) || null;
+    const prev   = $('delPyqExamYearPreview');
+    prev.style.display = 'block';
+    prev.textContent   = 'Fetching…';
+    try {
+      const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+      const matching = snap.docs.filter(d => {
+        const data = d.data();
+        return data.type === 'pyq' && (!year || data.year === year);
+      });
+      prev.textContent = matching.length
+        ? `Found ${matching.length} PYQ questions in "${examId}"${year ? ` year ${year}` : ' (all years)'}.`
+        : `No PYQ found for "${examId}"${year ? ` year ${year}` : ''}.`;
+    } catch(e) { prev.textContent = '❌ Error: ' + e.message; }
   };
 }
 
+// ── Execute Delete ────────────────────────────────────────────────────────
 if ($('delExecuteBtn')) {
   $('delExecuteBtn').onclick = async () => {
     const examId = $('delExamSel').value;
-    const subjects = getCheckedSubjects();
-    const dtype = delSelectedType;
-
-    if (!subjects.length) { log('No subjects selected.', 'err'); return; }
-
-    const typeLabel = dtype === 'all' ? 'ALL types' : dtype;
-    if (!confirm(`Delete ${typeLabel} questions for ${subjects.length} subject(s) from "${examId}"?\nSubjects: ${subjects.join(', ')}\n\nThis CANNOT be undone!`)) return;
-    if (!confirm(`FINAL CONFIRMATION:\nPermanently delete ${typeLabel} from:\n${subjects.join('\n')}?`)) return;
-
-    log(`🗑 Deleting — exam:${examId} type:${dtype} subjects:[${subjects.join(',')}]`, 'warn');
+    const dtype  = delSelectedType;
+    let toDelete = [];
+    let label    = '';
 
     try {
-      const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
-      const toDelete = snap.docs.filter(d => {
-        const data = d.data();
-        const typeMatch = dtype === 'all' || data.type === dtype;
-        const subjMatch = subjects.includes(data.subject);
-        return typeMatch && subjMatch;
-      });
+      if (dtype === 'pyq') {
+        // ── PYQ delete ──────────────────────────────────────────────
+        if (delPyqMode === 'subject') {
+          const subjects = getCheckedSubjects('delpyq');
+          if (!subjects.length) { log('No subjects selected.', 'err'); return; }
+          label = `PYQ — subjects: ${subjects.join(', ')} from exam: ${examId}`;
+          if (!confirm(`Delete PYQ for ${subjects.length} subject(s) from "${examId}"?
+${subjects.join(', ')}
+
+CANNOT be undone!`)) return;
+          if (!confirm(`FINAL CONFIRMATION: Permanently delete PYQ from:
+${subjects.join('
+')}?`)) return;
+          const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+          toDelete = snap.docs.filter(d => {
+            const data = d.data();
+            return data.type === 'pyq' && subjects.includes(data.subject);
+          });
+        } else {
+          // by exam + year
+          const pyqExamId = $('delPyqExamSel').value;
+          const year      = parseInt($('delPyqYear').value) || null;
+          label = `PYQ — exam: ${pyqExamId}${year ? ` year: ${year}` : ' (all years)'}`;
+          if (!confirm(`Delete PYQ from "${pyqExamId}"${year ? ` year ${year}` : ' ALL years'}?
+
+CANNOT be undone!`)) return;
+          if (!confirm(`FINAL CONFIRMATION: Permanently delete ${label}?`)) return;
+          const snap = await getDocs(collection(db, 'exams', pyqExamId, 'questions'));
+          toDelete = snap.docs.filter(d => {
+            const data = d.data();
+            return data.type === 'pyq' && (!year || data.year === year);
+          });
+        }
+      } else {
+        // ── Practice / All delete (by subject) ──────────────────────
+        const subjects = getCheckedSubjects('del');
+        if (!subjects.length) { log('No subjects selected.', 'err'); return; }
+        const typeLabel = dtype === 'all' ? 'ALL types' : dtype.toUpperCase();
+        label = `${typeLabel} — subjects: ${subjects.join(', ')} from exam: ${examId}`;
+        if (!confirm(`Delete ${typeLabel} questions for ${subjects.length} subject(s) from "${examId}"?
+${subjects.join(', ')}
+
+CANNOT be undone!`)) return;
+        if (!confirm(`FINAL CONFIRMATION: Permanently delete ${typeLabel} from:
+${subjects.join('
+')}?`)) return;
+        const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+        toDelete = snap.docs.filter(d => {
+          const data = d.data();
+          return (dtype === 'all' || data.type === dtype) && subjects.includes(data.subject);
+        });
+      }
 
       if (!toDelete.length) { log('No matching questions found.', 'warn'); return; }
 
-      // Show breakdown
       const bySubj = {};
       toDelete.forEach(d => { const s = d.data().subject||'unknown'; bySubj[s]=(bySubj[s]||0)+1; });
-      log(`Found ${toDelete.length} questions to delete:`, 'warn');
+      log(`Found ${toDelete.length} questions to delete (${label}):`, 'warn');
       Object.entries(bySubj).forEach(([s,c]) => log(`  ${s}: ${c}Q`, 'info'));
 
       let deleted = 0;
@@ -644,13 +787,12 @@ if ($('delExecuteBtn')) {
         toDelete.slice(i,i+400).forEach(d => batch.delete(d.ref));
         await batch.commit();
         deleted += Math.min(400, toDelete.length - i);
-        log(`Deleted ${deleted}/${toDelete.length}...`, 'warn');
+        log(`Deleted ${deleted}/${toDelete.length}…`, 'warn');
       }
 
       log(`✅ Done! ${deleted} questions deleted.`, 'ok');
-      subjects.forEach(s => { const cb = document.getElementById(`del_${s}`); if(cb) cb.checked = false; });
       updateDelPreview();
-    } catch(e) { log('❌ Delete error: '+e.message, 'err'); }
+    } catch(e) { log('❌ Delete error: ' + e.message, 'err'); }
   };
 }
 
