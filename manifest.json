@@ -1,7 +1,7 @@
 {
-  "name": "All AE/JE Exams - Civil Engineering",
-  "short_name": "AE Civil",
-  "description": "UPPSC AE Civil Engineering preparation hub",
+  "name": "All AE/JE Civil Exams",
+  "short_name": "AE/JE Civil",
+  "description": "All State AE/JE Civil Engineering Exam Preparation \u2014 PYQ, Practice, Notes",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
