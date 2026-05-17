@@ -415,7 +415,7 @@ async function renderYearList() {
     // Group by exam_name + year (for exams with multiple papers/codes per year)
     const groups = {};
     questions.forEach(q => {
-      const examLabel = q.exam_name || `${currentExam.name} ${q.year}`;
+      const examLabel = q.exam_name || q.exam_code || `${currentExam.name} ${q.year}`;
       const key = `${q.year}__${examLabel}`;
       if (!groups[key]) {
         groups[key] = {
@@ -678,9 +678,14 @@ async function renderQuiz() {
   $('quizYearTag').textContent = q.year ? `${q.year}` : '—';
 
   const examTag = $('quizExamTag');
-  if (quizRoute === 'pyq' && q.examId) {
-    examTag.textContent = q.examId.toUpperCase().replace(/-/g, ' ');
-    examTag.classList.remove('hidden');
+  if (quizRoute === 'pyq') {
+    const examLabel = q.exam_name || (q.examId ? q.examId.toUpperCase().replace(/-/g, ' ') : null);
+    if (examLabel) {
+      examTag.textContent = examLabel;
+      examTag.classList.remove('hidden');
+    } else {
+      examTag.classList.add('hidden');
+    }
   } else {
     examTag.classList.add('hidden');
   }
