@@ -59,6 +59,11 @@ document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
 // ── Auth ───────────────────────────────────────────────────────────────────
 watchAuth(
   async user => {
+    // If no profile exists yet (mid-registration), don't go to home
+    if (user.isNew) {
+      console.log('[Auth] User logged in but no profile yet — waiting for registration to complete');
+      return;
+    }
     currentUser = user;
     $('userName').textContent = user.name.split(' ')[0];
     if (user.photo) $('userAvatar').src = user.photo;
@@ -181,12 +186,6 @@ on('regSendOtpBtn', async () => {
   }
   const full = '+91' + mobile;
 
-  authMsg('Checking availability…');
-  const mobileExists = await isMobileRegistered(full);
-  if (mobileExists) { authMsg('⚠️ This mobile is already registered. Please login.', '#ef4444'); return; }
-  const emailExists = await isEmailRegistered(email);
-  if (emailExists) { authMsg('⚠️ This email is already registered. Please login.', '#ef4444'); return; }
-
   authMsg('Sending OTP to +91 ' + mobile + '…');
   try {
     await sendOTP(full);
@@ -201,18 +200,37 @@ on('regVerifyOtpBtn', async () => {
   const otp = $('regOtpInput').value.trim();
   if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
   authMsg('Verifying OTP…');
+
+  // Step 1: Verify OTP
+  let user;
   try {
-    const user = await verifyOTPRegister(otp);
-    authMsg('Mobile verified! Saving profile…', '#10b981');
+    user = await verifyOTPRegister(otp);
+    console.log('[Reg] OTP verified, uid:', user.uid);
+  } catch(e) {
+    console.error('[Reg] OTP error:', e);
+    authMsg('Invalid OTP. Try again.', '#ef4444');
+    return;
+  }
+
+  // Step 2: Save profile to Firestore
+  authMsg('Mobile verified! Saving profile…', '#10b981');
+  try {
     await saveUserProfile({
       uid:    user.uid,
       name:   _regData.name,
       email:  _regData.email,
       mobile: _regData.mobile
     });
+    console.log('[Reg] Profile saved successfully');
     authMsg('Registration complete! 🎉', '#10b981');
-    // watchAuth fires and logs user in automatically
-  } catch(e) { authMsg('Invalid OTP. Try again.', '#ef4444'); }
+    // Small delay so user sees success message, then watchAuth takes over
+    setTimeout(() => {
+      showScreen('homeScreen');
+    }, 1000);
+  } catch(e) {
+    console.error('[Reg] Profile save error:', e);
+    authMsg('Profile save failed: ' + e.message + ' — please try again.', '#ef4444');
+  }
 });
 
 on('regResendOtpBtn', async () => {

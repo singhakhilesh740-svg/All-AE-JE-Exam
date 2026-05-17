@@ -61,19 +61,26 @@ export async function getUserProfile(uid) {
 }
 
 export async function saveUserProfile({ uid, name, email, mobile }) {
+  console.log('[Auth] Saving profile:', { uid, name, email, mobile });
   await setDoc(doc(db, 'users', uid), {
     name, email: email || '', mobile: mobile || '',
     createdAt: serverTimestamp(), updatedAt: serverTimestamp()
   }, { merge: true });
+  console.log('[Auth] Profile saved successfully');
 }
 
 // Check if mobile is already registered (in users collection)
 export async function isMobileRegistered(mobile) {
   try {
+    console.log('[Auth] Checking mobile registration:', mobile);
     const q = query(collection(db, 'users'), where('mobile', '==', mobile));
     const snap = await getDocs(q);
+    console.log('[Auth] isMobileRegistered result:', !snap.empty, 'docs:', snap.size);
     return !snap.empty;
-  } catch { return false; }
+  } catch(e) {
+    console.error('[Auth] isMobileRegistered error:', e);
+    return false;
+  }
 }
 
 // Check if email is already registered
@@ -115,10 +122,11 @@ export async function verifyOTPLogin(otp) {
   if (!confirmationResult) throw new Error('No OTP sent. Please try again.');
   const result = await confirmationResult.confirm(otp);
   const user = result.user;
-  // Check if user has a profile (i.e. registered)
+  console.log('[Auth] OTP verified, uid:', user.uid, 'phone:', user.phoneNumber);
+  // Check by UID first (most reliable)
   const profile = await getUserProfile(user.uid);
+  console.log('[Auth] Profile found by UID:', profile);
   if (!profile) {
-    // Not registered — sign them out, return flag
     await signOut(auth);
     return { user, registered: false };
   }
