@@ -168,6 +168,36 @@
     <!-- Firestore Stats & Delete -->
     <div class="panel">
       <div class="panel-title">Firestore Stats</div>
+
+      <!-- Grand Total Bar (always visible) -->
+      <div id="grandTotalBar" style="background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;flex:0 0 100%;margin-bottom:2px">Grand Total — All Exams</div>
+        <div style="flex:1;min-width:80px;text-align:center">
+          <div id="gtTotal" style="font-size:28px;font-weight:800;color:#60a5fa;line-height:1">—</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">Total</div>
+        </div>
+        <div style="flex:1;min-width:80px;text-align:center">
+          <div id="gtPyq" style="font-size:28px;font-weight:800;color:#a78bfa;line-height:1">—</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">PYQ</div>
+        </div>
+        <div style="flex:1;min-width:80px;text-align:center">
+          <div id="gtPractice" style="font-size:28px;font-weight:800;color:#10b981;line-height:1">—</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">Practice</div>
+        </div>
+        <div style="flex:1;min-width:80px;text-align:center">
+          <div id="gtExams" style="font-size:28px;font-weight:800;color:#f59e0b;line-height:1">—</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">Exams</div>
+        </div>
+        <button class="btn-blue" id="loadGrandTotalBtn" style="flex:0 0 auto;font-size:12px;padding:7px 14px">🔄 Refresh</button>
+      </div>
+
+      <!-- PYQ Exam-wise Breakdown -->
+      <div id="pyqBreakdownWrap" style="display:none;background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:12px 16px;margin-bottom:10px">
+        <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">PYQ — Exam-wise Breakdown</div>
+        <div id="pyqBreakdownList"></div>
+      </div>
+
+      <!-- Per-exam breakdown -->
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
         <select id="statsExamSel" style="flex:1"></select>
         <button class="btn-blue" id="loadStatsBtn">🔄 Load Stats</button>
@@ -252,6 +282,7 @@ onAuthStateChanged(auth, user => {
     $('mainPanel').classList.remove('hidden');
     log(`✅ Signed in as ${user.email}`, 'ok');
     initUI();
+    setTimeout(loadGrandTotal, 800);  // auto-load grand total on login
   } else if (user) {
     log(`⛔ Access denied for ${user.email}`, 'err');
     signOut(auth);
@@ -267,7 +298,7 @@ $('logoutBtn').onclick = () => signOut(auth);
 function initUI() {
   const examOpts = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
   $('examSel').innerHTML = examOpts;
-  $('statsExamSel').innerHTML = examOpts;
+  $('statsExamSel').innerHTML = `<option value="__all__">📊 All Exams (Combined)</option>` + examOpts;
   if ($('delExamSel')) $('delExamSel').innerHTML = examOpts;
   buildDelSubjectList();
 
@@ -624,40 +655,152 @@ if ($('delExecuteBtn')) {
 }
 
 
+// ── Grand Total ───────────────────────────────────────────────────────────
+async function loadGrandTotal() {
+  ['gtTotal','gtPyq','gtPractice','gtExams'].forEach(id => $(id).textContent='…');
+  $('pyqBreakdownWrap').style.display = 'none';
+  try {
+    const results = await Promise.all(EXAMS.map((e, i) => fetchStatsForExam(e.id).then(docs => ({ exam: EXAMS[i], docs }))));
+    const allDocs = results.flatMap(r => r.docs);
+    const examsWith = results.filter(r => r.docs.length > 0).length;
+    const total = allDocs.length;
+    const pyq   = allDocs.filter(d => d.type === 'pyq').length;
+    const prc   = allDocs.filter(d => d.type === 'practice').length;
+    $('gtTotal').textContent    = total.toLocaleString();
+    $('gtPyq').textContent      = pyq.toLocaleString();
+    $('gtPractice').textContent = prc.toLocaleString();
+    $('gtExams').textContent    = examsWith;
+
+    // PYQ exam-wise breakdown
+    const pyqRows = results.map(r => ({
+      exam: r.exam,
+      pyq:  r.docs.filter(d => d.type === 'pyq').length,
+      prc:  r.docs.filter(d => d.type === 'practice').length,
+      total: r.docs.length
+    })).filter(r => r.total > 0);
+
+    if (pyqRows.length > 0) {
+      const maxPyq = Math.max(...pyqRows.map(r => r.pyq), 1);
+      $('pyqBreakdownList').innerHTML = pyqRows.map(r => {
+        const pct = Math.round(r.pyq / maxPyq * 100);
+        return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px">
+          <div style="font-size:12px;color:#94a3b8;min-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.exam.icon} ${r.exam.name}</div>
+          <div style="flex:1;background:#1e293b;border-radius:4px;height:8px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:#a78bfa;border-radius:4px"></div>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#a78bfa;min-width:32px;text-align:right">${r.pyq}</div>
+          <div style="font-size:11px;color:#10b981;min-width:40px;text-align:right">+${r.prc} Prc</div>
+        </div>`;
+      }).join('');
+      $('pyqBreakdownWrap').style.display = 'block';
+    }
+  } catch(e) { log('❌ Grand total error: ' + e.message, 'err'); }
+}
+$('loadGrandTotalBtn').onclick = loadGrandTotal;
+
 // ── Firestore Stats ───────────────────────────────────────────────────────
+async function fetchStatsForExam(examId) {
+  const snap = await getDocs(collection(db,'exams',examId,'questions'));
+  return snap.docs.map(d => ({ ...d.data(), _examId: examId }));
+}
+
 $('loadStatsBtn').onclick = async () => {
   const examId = $('statsExamSel').value;
   ['fsTotal','fsPyq','fsPractice','fsOther'].forEach(id => $(id).textContent='…');
   $('breakdownWrap').classList.add('hidden');
   try {
-    const snap = await getDocs(collection(db,'exams',examId,'questions'));
-    const docs = snap.docs.map(d => d.data());
-    const total=docs.length, pyq=docs.filter(d=>d.type==='pyq').length, prc=docs.filter(d=>d.type==='practice').length;
-    $('fsTotal').textContent=total; $('fsPyq').textContent=pyq;
-    $('fsPractice').textContent=prc; $('fsOther').textContent=total-pyq-prc;
+    let docs = [];
+    let perExamResults = [];
 
-    const bySubj={};
-    docs.forEach(d => {
-      const s=d.subject||'(unknown)';
-      if(!bySubj[s]) bySubj[s]={total:0,pyq:0,practice:0};
-      bySubj[s].total++; if(d.type==='pyq') bySubj[s].pyq++; if(d.type==='practice') bySubj[s].practice++;
+    if (examId === '__all__') {
+      perExamResults = await Promise.all(EXAMS.map(e => fetchStatsForExam(e.id).then(d => ({ exam: e, docs: d }))));
+      docs = perExamResults.flatMap(r => r.docs);
+    } else {
+      docs = await fetchStatsForExam(examId);
+    }
+
+    const total = docs.length;
+    const pyqDocs = docs.filter(d => d.type === 'pyq');
+    const prcDocs = docs.filter(d => d.type === 'practice');
+    const pyq = pyqDocs.length, prc = prcDocs.length;
+    $('fsTotal').textContent = total; $('fsPyq').textContent = pyq;
+    $('fsPractice').textContent = prc; $('fsOther').textContent = total - pyq - prc;
+
+    const label = examId === '__all__' ? 'All Exams Combined' : examId;
+    const wrap = $('breakdownWrap');
+    wrap.innerHTML = '';
+
+    // ── Practice: subject-wise breakdown ──────────────────────────────
+    const bySubjPrc = {};
+    prcDocs.forEach(d => {
+      const s = d.subject || '(unknown)';
+      if (!bySubjPrc[s]) bySubjPrc[s] = 0;
+      bySubjPrc[s]++;
     });
-    const sorted=Object.entries(bySubj).sort((a,b)=>b[1].total-a[1].total);
-    const max=sorted[0]?.[1].total||1;
-    const wrap=$('breakdownWrap');
-    wrap.innerHTML=`<div style="font-size:11px;color:#64748b;text-transform:uppercase;margin-bottom:6px">Subject breakdown (${examId})</div>`;
-    sorted.forEach(([subj,c])=>{
-      const name=ALL_SUBJECTS.find(s=>s.id===subj)?.name||subj;
-      const pct=Math.round(c.total/max*100);
-      wrap.innerHTML+=`<div class="breakdown-row">
-        <div class="breakdown-name">${name}</div>
-        <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%"></div></div>
-        <div class="breakdown-count">${c.total}</div>
-        <div class="breakdown-types">PYQ:${c.pyq} · Prc:${c.practice}</div>
-      </div>`;
-    });
+    const sortedPrc = Object.entries(bySubjPrc).sort((a,b) => b[1]-a[1]);
+    const maxPrc = sortedPrc[0]?.[1] || 1;
+
+    wrap.innerHTML += `<div style="font-size:11px;color:#10b981;text-transform:uppercase;font-weight:700;margin-bottom:8px">
+      ✏️ Practice — Subject-wise &nbsp;<span style="color:#64748b;font-weight:400">(Total: ${prc})</span>
+    </div>`;
+    if (sortedPrc.length === 0) {
+      wrap.innerHTML += `<div style="font-size:12px;color:#475569;margin-bottom:12px">No practice questions found.</div>`;
+    } else {
+      sortedPrc.forEach(([subj, count]) => {
+        const name = ALL_SUBJECTS.find(s => s.id === subj)?.name || subj;
+        const pct = Math.round(count / maxPrc * 100);
+        wrap.innerHTML += `<div class="breakdown-row">
+          <div class="breakdown-name">${name}</div>
+          <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%;background:#10b981"></div></div>
+          <div class="breakdown-count" style="color:#10b981">${count}</div>
+        </div>`;
+      });
+    }
+
+    // ── PYQ: exam-wise breakdown ───────────────────────────────────────
+    wrap.innerHTML += `<div style="font-size:11px;color:#a78bfa;text-transform:uppercase;font-weight:700;margin:16px 0 8px">
+      📜 PYQ — Exam-wise &nbsp;<span style="color:#64748b;font-weight:400">(Total: ${pyq})</span>
+    </div>`;
+
+    if (examId === '__all__') {
+      // Show each exam's PYQ count
+      const maxEPyq = Math.max(...perExamResults.map(r => r.docs.filter(d=>d.type==='pyq').length), 1);
+      perExamResults.forEach(r => {
+        const ePyq = r.docs.filter(d => d.type === 'pyq').length;
+        const pct  = Math.round(ePyq / maxEPyq * 100);
+        wrap.innerHTML += `<div class="breakdown-row">
+          <div class="breakdown-name" style="min-width:140px">${r.exam.icon} ${r.exam.name}</div>
+          <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%;background:#a78bfa"></div></div>
+          <div class="breakdown-count" style="color:#a78bfa">${ePyq}</div>
+        </div>`;
+      });
+    } else {
+      // Single exam — show PYQ subject-wise
+      const bySubjPyq = {};
+      pyqDocs.forEach(d => {
+        const s = d.subject || '(unknown)';
+        if (!bySubjPyq[s]) bySubjPyq[s] = 0;
+        bySubjPyq[s]++;
+      });
+      const sortedPyq = Object.entries(bySubjPyq).sort((a,b) => b[1]-a[1]);
+      const maxPyq = sortedPyq[0]?.[1] || 1;
+      if (sortedPyq.length === 0) {
+        wrap.innerHTML += `<div style="font-size:12px;color:#475569">No PYQ found for this exam.</div>`;
+      } else {
+        sortedPyq.forEach(([subj, count]) => {
+          const name = ALL_SUBJECTS.find(s => s.id === subj)?.name || subj;
+          const pct = Math.round(count / maxPyq * 100);
+          wrap.innerHTML += `<div class="breakdown-row">
+            <div class="breakdown-name">${name}</div>
+            <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%;background:#a78bfa"></div></div>
+            <div class="breakdown-count" style="color:#a78bfa">${count}</div>
+          </div>`;
+        });
+      }
+    }
+
     wrap.classList.remove('hidden');
-    log(`Stats: ${total} total (${pyq} PYQ, ${prc} practice) — ${examId}`, 'ok');
+    log(`Stats: ${total} total (${pyq} PYQ, ${prc} practice) — ${label}`, 'ok');
   } catch(e) { log('❌ Stats error: '+e.message,'err'); }
 };
 </script>
