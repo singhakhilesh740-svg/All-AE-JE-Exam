@@ -681,7 +681,7 @@ async function renderQuiz() {
   if (quizRoute === 'pyq') {
     // exam_name from question data, fallback to currentExam name
     const examLabel = q.exam_name
-      || (currentExam ? currentExam.name : null)
+      || (currentExam ? (currentExam.fullName || currentExam.name) : null)
       || null;
     if (examLabel) {
       examTag.textContent = examLabel;
