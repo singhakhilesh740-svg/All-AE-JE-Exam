@@ -59,9 +59,13 @@ document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
 // ── Auth ───────────────────────────────────────────────────────────────────
 watchAuth(
   async user => {
-    // If no profile exists yet (mid-registration), don't go to home
+    console.log('[Auth] watchAuth fired, isNew:', user.isNew, 'uid:', user.uid);
     if (user.isNew) {
-      console.log('[Auth] User logged in but no profile yet — waiting for registration to complete');
+      // No profile in Firestore — stay on login screen, show message
+      console.log('[Auth] No profile found, staying on login');
+      authMsg('⚠️ Mobile not registered. Please register first.', '#ef4444');
+      showAuthStep('authChoice');
+      await logout();
       return;
     }
     currentUser = user;
@@ -131,13 +135,6 @@ on('loginSendOtpBtn', async () => {
   const mobile = $('loginMobileInput').value.trim();
   if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
   const full = '+91' + mobile;
-  // Check registration first
-  authMsg('Checking registration…');
-  const registered = await isMobileRegistered(full);
-  if (!registered) {
-    authMsg('⚠️ This mobile is not registered. Please register first.', '#ef4444');
-    return;
-  }
   authMsg('Sending OTP…');
   try {
     await sendOTP(full);
@@ -152,13 +149,19 @@ on('loginVerifyOtpBtn', async () => {
   if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
   authMsg('Verifying OTP…');
   try {
-    const { registered } = await verifyOTPLogin(otp);
+    const { user, registered } = await verifyOTPLogin(otp);
+    console.log('[Login] OTP verified, uid:', user?.uid, 'registered:', registered);
     if (!registered) {
       authMsg('⚠️ Mobile not registered. Please register first.', '#ef4444');
       showAuthStep('authChoice');
+    } else {
+      authMsg('Login successful! 🎉', '#10b981');
+      // watchAuth fires automatically and shows homeScreen
     }
-    // if registered, watchAuth fires automatically
-  } catch(e) { authMsg('Invalid OTP. Try again.', '#ef4444'); }
+  } catch(e) {
+    console.error('[Login] OTP verify error:', e);
+    authMsg('Invalid OTP. Try again.', '#ef4444');
+  }
 });
 
 on('loginResendOtpBtn', async () => {
