@@ -15,7 +15,7 @@ import {
 const cache = {
   questions: {},
   cachedAt: {},
-  TTL: 1000 * 60 * 30   // 30 min
+  TTL: 1000 * 60 * 5    // 5 min (development) — change to 30 when done
 };
 
 // ─── Questions ────────────────────────────────────────────────────────────────
@@ -55,6 +55,57 @@ export async function fetchQuestions(opts = {}) {
     return questions;
   } catch (err) {
     console.error('Error fetching questions:', err);
+    return [];
+  }
+}
+
+// Fetch practice questions across ALL exams (not locked to one exam)
+// Automatically includes any exam added to exams.js — no changes needed here
+export async function fetchPracticeQuestions(opts = {}) {
+  const { subject = null, maxCount = 500, force = false } = opts;
+  const { EXAMS } = await import('./exams.js');
+  const EXAM_IDS = EXAMS.map(e => e.id);
+
+  const cacheKey = `practice:all:${subject || 'all'}`;
+  const now = Date.now();
+
+  if (!force && cache.questions[cacheKey] && (now - (cache.cachedAt[cacheKey] || 0)) < cache.TTL) {
+    return cache.questions[cacheKey];
+  }
+
+  try {
+  const perExam = maxCount;   // each exam gets full quota; dedup handled by Firestore IDs
+    const results = await Promise.all(
+      EXAM_IDS.map(async examId => {
+        try {
+          const qRef = collection(db, 'exams', examId, 'questions');
+          let q;
+          if (subject) {
+            q = query(qRef, where('subject', '==', subject), where('type', '==', 'practice'), limit(perExam));
+          } else {
+            q = query(qRef, where('type', '==', 'practice'), limit(perExam));
+          }
+          const snap = await getDocs(q);
+          const qs = [];
+          snap.forEach(docSnap => {
+            const data = docSnap.data();
+            if (isValidQuestion(data)) {
+              qs.push({ id: docSnap.id, examId, ...data });
+            }
+          });
+          return qs;
+        } catch {
+          return [];
+        }
+      })
+    );
+
+    const all = results.flat();
+    cache.questions[cacheKey] = all;
+    cache.cachedAt[cacheKey] = now;
+    return all;
+  } catch (err) {
+    console.error('Error fetching practice questions:', err);
     return [];
   }
 }

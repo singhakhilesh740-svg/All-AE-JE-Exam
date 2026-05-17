@@ -8,6 +8,7 @@
 import { watchAuth, loginWithGoogle, logout } from './auth.js';
 import {
   fetchQuestions,
+  fetchPracticeQuestions,
   saveUserProfile,
   saveAttempt,
   addBookmark,
@@ -165,9 +166,7 @@ async function openPracticeSubject(subj) {
   quizRoute      = 'practice';
   quizSource     = 'practiceSubjectsScreen';
 
-  let questions = await fetchQuestions({
-    exam: 'uppsc-ae', subject: subj.id, type: 'practice', maxCount: 500
-  });
+  let questions = await fetchPracticeQuestions({ subject: subj.id, maxCount: 500 });
 
   if (!questions || questions.length === 0) {
     toast('No practice questions for this subject yet');
@@ -179,7 +178,7 @@ async function openPracticeSubject(subj) {
   showScreen('quizScreen');
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
-    let qs = await fetchQuestions({ exam: 'uppsc-ae', subject: subj.id, type: 'practice', maxCount: 500 });
+    let qs = await fetchPracticeQuestions({ subject: subj.id, maxCount: 500 });
     if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
     Quiz.resetToQuestions(qs);
@@ -573,7 +572,7 @@ $('jumpPanel').addEventListener('click', e => {
 async function updateBookmarkBtn(q) {
   if (!currentUser) { $('quizBookmarkBtn').textContent = '☆'; return; }
   // attach examId to question for bookmark lookup
-  const qWithExam = { ...q, examId: q.examId || (currentExam ? currentExam.id : 'uppsc-ae') };
+  const qWithExam = { ...q, examId: q.examId || (currentExam ? currentExam.id : 'practice') };
   const marked = await isQuestionBookmarked(currentUser.uid, qWithExam);
   $('quizBookmarkBtn').textContent = marked ? '★' : '☆';
   $('quizBookmarkBtn').dataset.marked = marked ? '1' : '0';
@@ -601,7 +600,7 @@ function onOptionClick(index) {
   }
 
   if (currentUser) {
-    const examId = q.examId || (currentExam ? currentExam.id : 'uppsc-ae');
+    const examId = q.examId || (currentExam ? currentExam.id : 'practice');
     saveAttempt(currentUser.uid, examId, q.id, index, result.isCorrect);
   }
 }
@@ -630,7 +629,7 @@ $('quizBookmarkBtn').addEventListener('click', async () => {
   if (!q || !currentUser) { toast('Sign in to bookmark'); return; }
   if (!q.id) { toast('Cannot bookmark this question'); return; }
 
-  const qWithExam = { ...q, examId: q.examId || (currentExam ? currentExam.id : 'uppsc-ae') };
+  const qWithExam = { ...q, examId: q.examId || (currentExam ? currentExam.id : 'practice') };
   const marked = $('quizBookmarkBtn').dataset.marked === '1';
 
   if (marked) {
