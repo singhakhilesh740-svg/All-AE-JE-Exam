@@ -214,66 +214,79 @@
     <!-- Delete Questions -->
     <div class="panel">
       <div class="panel-title">🗑 Delete Questions</div>
-      <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">Double confirmation required. This cannot be undone.</p>
+      <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">Double confirmation required. Cannot be undone.</p>
 
-      <label>Exam</label>
-      <select id="delExamSel"></select>
-
-      <label style="margin-top:10px">Question Type</label>
-      <div style="display:flex;gap:8px;margin-top:6px">
-        <button class="type-tab active" id="delTypePractice" data-dtype="practice" style="font-size:12px;padding:8px">✏️ Practice</button>
-        <button class="type-tab" id="delTypePyq" data-dtype="pyq" style="font-size:12px;padding:8px">📜 PYQ</button>
-        <button class="type-tab" id="delTypeAll" data-dtype="all" style="font-size:12px;padding:8px">⚠️ All</button>
+      <!-- Step 1: Choose type -->
+      <label>What to delete?</label>
+      <div style="display:flex;gap:8px;margin-top:6px;margin-bottom:14px">
+        <button class="type-tab active" id="delTypePractice" data-dtype="practice" style="flex:1;padding:10px;font-size:13px">✏️ Practice</button>
+        <button class="type-tab" id="delTypePyq" data-dtype="pyq" style="flex:1;padding:10px;font-size:13px">📜 PYQ</button>
       </div>
 
-      <!-- Practice: delete by subject -->
+      <!-- ══ PRACTICE SECTION ══════════════════════════════════════════════ -->
       <div id="delPracticeSection">
-        <label style="margin-top:12px">Select Subjects <small style="color:#64748b">(uncheck to keep)</small></label>
-        <div id="delSubjectList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:260px;overflow-y:auto"></div>
-        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-          <button class="btn-secondary" id="delSelectAll" style="font-size:12px;padding:7px 12px">☑ Select All</button>
-          <button class="btn-secondary" id="delClearAll" style="font-size:12px;padding:7px 12px">☐ Clear All</button>
+
+        <!-- Practice: Exam selector -->
+        <label>Exam</label>
+        <select id="delPracExamSel" style="margin-bottom:10px"></select>
+
+        <!-- Practice: Subject checkboxes -->
+        <label>Select Subject(s)</label>
+        <div id="delSubjectList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:240px;overflow-y:auto"></div>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <button class="btn-secondary" id="delSelectAll" style="font-size:12px;padding:7px 12px">☑ All</button>
+          <button class="btn-secondary" id="delClearAll" style="font-size:12px;padding:7px 12px">☐ None</button>
         </div>
+
+        <!-- Practice: All or by Q number -->
+        <label style="margin-top:12px">Delete scope</label>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button class="type-tab active" id="delPracScopeAll" data-pracscope="all" style="flex:1;font-size:12px;padding:8px">🗑 All Questions</button>
+          <button class="type-tab" id="delPracScopeQnum" data-pracscope="qnum" style="flex:1;font-size:12px;padding:8px">🔢 By Q Number</button>
+        </div>
+        <div id="delPracQnumSec" style="display:none;margin-top:10px">
+          <input id="delPracQnums" type="text" placeholder="e.g. 1,5,12,23 or 1-10"
+            style="width:100%;padding:9px 12px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:13px;box-sizing:border-box"/>
+          <p style="font-size:11px;color:#64748b;margin-top:4px">Enter question numbers separated by commas, or a range like 1-10</p>
+        </div>
+
+        <!-- Practice: Preview -->
+        <button class="btn-secondary" id="delPracPreviewBtn" style="width:100%;margin-top:10px;font-size:12px">🔍 Preview Count</button>
+        <div id="delPracPreview" style="margin-top:6px;font-size:12px;color:#94a3b8;min-height:16px"></div>
       </div>
 
-      <!-- PYQ: two sub-tabs -->
+      <!-- ══ PYQ SECTION ════════════════════════════════════════════════════ -->
       <div id="delPyqSection" style="display:none">
-        <label style="margin-top:12px">Delete PYQ by</label>
+
+        <!-- PYQ Step 1: Select Exam -->
+        <label>Select Exam</label>
+        <select id="delPyqExamSel" style="margin-bottom:10px"></select>
+
+        <!-- PYQ Step 2: Select Exam + Year (loaded dynamically) -->
+        <label>Select Exam Paper &amp; Year</label>
+        <div id="delPyqPaperList" style="display:flex;flex-direction:column;gap:6px;margin-top:6px;max-height:200px;overflow-y:auto">
+          <p style="font-size:12px;color:#64748b;padding:8px">← Select an exam above to load papers</p>
+        </div>
+
+        <!-- PYQ Step 3: All or by Q number -->
+        <label style="margin-top:12px">Delete scope</label>
         <div style="display:flex;gap:8px;margin-top:6px">
-          <button class="type-tab active" id="delPyqBySubject" data-pyqmode="subject" style="font-size:12px;padding:8px;flex:1">By Subject</button>
-          <button class="type-tab" id="delPyqByExamYear" data-pyqmode="examyear" style="font-size:12px;padding:8px;flex:1">By Exam &amp; Year</button>
+          <button class="type-tab active" id="delPyqScopeAll" data-pyqscope="all" style="flex:1;font-size:12px;padding:8px">🗑 All Questions</button>
+          <button class="type-tab" id="delPyqScopeQnum" data-pyqscope="qnum" style="flex:1;font-size:12px;padding:8px">🔢 By Q Number</button>
+        </div>
+        <div id="delPyqQnumSec" style="display:none;margin-top:10px">
+          <input id="delPyqQnums" type="text" placeholder="e.g. 1,5,12,23 or 1-10"
+            style="width:100%;padding:9px 12px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:13px;box-sizing:border-box"/>
+          <p style="font-size:11px;color:#64748b;margin-top:4px">Enter question numbers (q_num field) separated by commas, or a range</p>
         </div>
 
-        <!-- by subject -->
-        <div id="delPyqSubjectSec">
-          <label style="margin-top:10px">Select Subjects</label>
-          <div id="delPyqSubjectList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:220px;overflow-y:auto"></div>
-          <div style="display:flex;gap:8px;margin-top:10px">
-            <button class="btn-secondary" id="delPyqSubjSelectAll" style="font-size:12px;padding:7px 12px">☑ All</button>
-            <button class="btn-secondary" id="delPyqSubjClearAll" style="font-size:12px;padding:7px 12px">☐ None</button>
-          </div>
-        </div>
-
-        <!-- by exam & year -->
-        <div id="delPyqExamYearSec" style="display:none">
-          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:flex-end">
-            <div style="flex:1;min-width:140px">
-              <label style="margin-top:0">Exam</label>
-              <select id="delPyqExamSel" style="margin-top:4px"></select>
-            </div>
-            <div style="flex:1;min-width:100px">
-              <label style="margin-top:0">Year <small style="color:#64748b">(blank = all years)</small></label>
-              <input id="delPyqYear" type="number" placeholder="e.g. 2022" min="2000" max="2099"
-                style="margin-top:4px;background:#0f172a;border:1px solid #334155;color:#e2e8f0;border-radius:8px;padding:9px 12px;font-size:13px;width:100%;box-sizing:border-box">
-            </div>
-            <button class="btn-secondary" id="delPyqPreviewBtn" style="font-size:12px;padding:9px 14px;white-space:nowrap">🔍 Preview</button>
-          </div>
-          <div id="delPyqExamYearPreview" style="margin-top:8px;font-size:12px;color:#94a3b8;display:none"></div>
-        </div>
+        <!-- PYQ: Preview -->
+        <button class="btn-secondary" id="delPyqPreviewBtn" style="width:100%;margin-top:10px;font-size:12px">🔍 Preview Count</button>
+        <div id="delPyqExamYearPreview" style="margin-top:6px;font-size:12px;color:#94a3b8;min-height:16px"></div>
       </div>
 
       <button class="btn-danger" id="delExecuteBtn" style="width:100%;margin-top:14px">🗑 Delete Selected</button>
-      <div id="delPreview" style="margin-top:10px;font-size:12px;color:#f59e0b;display:none"></div>
+      <div id="delPreview" style="margin-top:10px;font-size:12px;color:#f59e0b;min-height:18px;text-align:center"></div>
     </div>
 
     <!-- Log -->
@@ -583,7 +596,9 @@ $('uploadBtn').onclick = async () => {
 // ── Delete All Practice Questions ────────────────────────────────────────
 // ── Delete Panel Logic ───────────────────────────────────────────────────
 let delSelectedType = 'practice';
-let delPyqMode      = 'subject';   // 'subject' | 'examyear'
+let delPyqScope     = 'all';
+let delPracScope    = 'all';
+let _pyqPaperDocs   = [];   // cached docs for selected exam+year
 
 // ── Type tab switching ────────────────────────────────────────────────────
 document.querySelectorAll('[data-dtype]').forEach(tab => {
@@ -591,250 +606,235 @@ document.querySelectorAll('[data-dtype]').forEach(tab => {
     document.querySelectorAll('[data-dtype]').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     delSelectedType = tab.dataset.dtype;
-    // show/hide practice vs PYQ sections
-    const isPyq = delSelectedType === 'pyq';
-    $('delPracticeSection').style.display = isPyq ? 'none' : 'block';
-    $('delPyqSection').style.display      = isPyq ? 'block' : 'none';
-    updateDelPreview();
+    $('delPracticeSection').style.display = delSelectedType === 'practice' ? 'block' : 'none';
+    $('delPyqSection').style.display      = delSelectedType === 'pyq'      ? 'block' : 'none';
+    $('delPreview').textContent = '';
   });
 });
 
-// ── PYQ sub-tab switching (by subject / by exam+year) ─────────────────────
-document.querySelectorAll('[data-pyqmode]').forEach(tab => {
+// ── Practice scope tabs ───────────────────────────────────────────────────
+document.querySelectorAll('[data-pracscope]').forEach(tab => {
   tab.addEventListener('click', () => {
-    document.querySelectorAll('[data-pyqmode]').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('[data-pracscope]').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-    delPyqMode = tab.dataset.pyqmode;
-    $('delPyqSubjectSec').style.display    = delPyqMode === 'subject'   ? 'block' : 'none';
-    $('delPyqExamYearSec').style.display   = delPyqMode === 'examyear'  ? 'block' : 'none';
-    updateDelPreview();
+    delPracScope = tab.dataset.pracscope;
+    $('delPracQnumSec').style.display = delPracScope === 'qnum' ? 'block' : 'none';
   });
 });
 
-// ── Build subject lists ───────────────────────────────────────────────────
-function buildSubjectCheckboxes(containerId, prefix) {
-  const container = $(containerId);
+// ── PYQ scope tabs ────────────────────────────────────────────────────────
+document.querySelectorAll('[data-pyqscope]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('[data-pyqscope]').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    delPyqScope = tab.dataset.pyqscope;
+    $('delPyqQnumSec').style.display = delPyqScope === 'qnum' ? 'block' : 'none';
+  });
+});
+
+// ── Build subject checkboxes for practice ─────────────────────────────────
+function buildDelSubjectList() {
+  // Populate exam selectors
+  const examOpts = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name}</option>`).join('');
+  if ($('delPracExamSel')) $('delPracExamSel').innerHTML = examOpts;
+  if ($('delPyqExamSel'))  $('delPyqExamSel').innerHTML  = examOpts;
+
+  // Build practice subject checkboxes
+  const container = $('delSubjectList');
   if (!container) return;
   container.innerHTML = '';
   ALL_SUBJECTS.forEach(s => {
     const row = document.createElement('div');
     row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#0f172a;padding:8px 12px;border-radius:8px;border:1px solid #1e293b';
     row.innerHTML = `
-      <input type="checkbox" id="${prefix}_${s.id}" value="${s.id}" checked
+      <input type="checkbox" id="del_${s.id}" value="${s.id}" checked
         style="width:16px;height:16px;cursor:pointer;accent-color:#ef4444">
-      <label for="${prefix}_${s.id}" style="flex:1;font-size:13px;color:#e2e8f0;cursor:pointer">
+      <label for="del_${s.id}" style="flex:1;font-size:13px;color:#e2e8f0;cursor:pointer">
         ${s.icon||'📖'} ${s.name}
       </label>
       <span style="font-size:11px;color:#64748b;font-family:monospace">${s.id}</span>`;
-    row.querySelector('input').addEventListener('change', updateDelPreview);
     container.appendChild(row);
   });
 }
 
-function buildDelSubjectList() {
-  buildSubjectCheckboxes('delSubjectList', 'del');
-  buildSubjectCheckboxes('delPyqSubjectList', 'delpyq');
-  // populate PYQ exam selector
-  if ($('delPyqExamSel')) {
-    $('delPyqExamSel').innerHTML = EXAMS.map(e =>
-      `<option value="${e.id}">${e.icon} ${e.name}</option>`).join('');
-  }
-  updateDelPreview();
-}
-
-function getCheckedSubjects(prefix) {
-  return [...document.querySelectorAll(`#${prefix === 'del' ? 'delSubjectList' : 'delPyqSubjectList'} input[type=checkbox]:checked`)]
-    .map(cb => cb.value);
-}
-
-function updateDelPreview() {
-  const preview = $('delPreview');
-  if (!preview) return;
-
-  if (delSelectedType === 'pyq') {
-    if (delPyqMode === 'subject') {
-      const subjs = getCheckedSubjects('delpyq');
-      preview.style.display = 'block';
-      preview.textContent = subjs.length
-        ? `Will delete PYQ from ${subjs.length} subject(s): ${subjs.join(', ')}`
-        : '⚠️ No subjects selected.';
-    } else {
-      preview.style.display = 'none';   // preview shown by Preview button
-    }
-    return;
-  }
-
-  // practice or all
-  const subjs = getCheckedSubjects('del');
-  preview.style.display = 'block';
-  if (!subjs.length) { preview.textContent = '⚠️ No subjects selected.'; return; }
-  const typeLabel = delSelectedType === 'all' ? 'ALL types' : delSelectedType.toUpperCase();
-  preview.textContent = `Will delete: ${typeLabel} from ${subjs.length} subject(s): ${subjs.join(', ')}`;
-}
-
-// Select/Clear All for practice subjects
-if ($('delSelectAll')) $('delSelectAll').onclick = () => {
-  document.querySelectorAll('#delSubjectList input').forEach(cb => cb.checked = true);
-  updateDelPreview();
-};
-if ($('delClearAll')) $('delClearAll').onclick = () => {
-  document.querySelectorAll('#delSubjectList input').forEach(cb => cb.checked = false);
-  updateDelPreview();
-};
-// Select/Clear All for PYQ by subject
-if ($('delPyqSubjSelectAll')) $('delPyqSubjSelectAll').onclick = () => {
-  document.querySelectorAll('#delPyqSubjectList input').forEach(cb => cb.checked = true);
-  updateDelPreview();
-};
-if ($('delPyqSubjClearAll')) $('delPyqSubjClearAll').onclick = () => {
-  document.querySelectorAll('#delPyqSubjectList input').forEach(cb => cb.checked = false);
-  updateDelPreview();
-};
-
-// PYQ by exam+year: Preview button
-if ($('delPyqPreviewBtn')) {
-  $('delPyqPreviewBtn').onclick = async () => {
+// ── PYQ: Load papers for selected exam ───────────────────────────────────
+if ($('delPyqExamSel')) {
+  $('delPyqExamSel').addEventListener('change', async () => {
     const examId = $('delPyqExamSel').value;
-    const year   = parseInt($('delPyqYear').value) || null;
-    const prev   = $('delPyqExamYearPreview');
-    prev.style.display = 'block';
-    prev.textContent   = 'Fetching…';
+    const wrap = $('delPyqPaperList');
+    wrap.innerHTML = '<p style="font-size:12px;color:#64748b;padding:8px">Loading papers…</p>';
     try {
       const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
-      const matching = snap.docs.filter(d => {
-        const data = d.data();
-        return data.type === 'pyq' && (!year || data.year === year);
+      const docs = snap.docs.map(d => ({ id: d.id, ref: d.ref, ...d.data() }))
+                           .filter(d => d.type === 'pyq');
+      // Group by exam_name + year
+      const groups = {};
+      docs.forEach(d => {
+        const key = `${d.exam_name || d.examId || examId}__${d.year || '—'}`;
+        if (!groups[key]) groups[key] = { label: d.exam_name || examId, year: d.year || '—', docs: [] };
+        groups[key].docs.push(d);
       });
-      prev.textContent = matching.length
-        ? `Found ${matching.length} PYQ questions in "${examId}"${year ? ` year ${year}` : ' (all years)'}.`
-        : `No PYQ found for "${examId}"${year ? ` year ${year}` : ''}.`;
-    } catch(e) { prev.textContent = '❌ Error: ' + e.message; }
+      const entries = Object.entries(groups).sort((a,b) => b[1].year - a[1].year);
+      if (!entries.length) {
+        wrap.innerHTML = '<p style="font-size:12px;color:#64748b;padding:8px">No PYQ found for this exam</p>';
+        return;
+      }
+      wrap.innerHTML = '';
+      entries.forEach(([key, g]) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#0f172a;padding:9px 12px;border-radius:8px;border:1px solid #1e293b;cursor:pointer';
+        row.innerHTML = `
+          <input type="radio" name="pyqPaper" value="${key}"
+            style="width:16px;height:16px;accent-color:#ef4444">
+          <div style="flex:1">
+            <div style="font-size:13px;color:#e2e8f0">${g.label}</div>
+            <div style="font-size:11px;color:#64748b">Year: ${g.year} · ${g.docs.length} questions</div>
+          </div>`;
+        row.addEventListener('click', () => row.querySelector('input').checked = true);
+        wrap.appendChild(row);
+      });
+      // store for delete
+      window._pyqGrouped = groups;
+    } catch(e) { wrap.innerHTML = `<p style="font-size:12px;color:#ef4444;padding:8px">Error: ${e.message}</p>`; }
+  });
+}
+
+// ── Select/Clear all practice subjects ────────────────────────────────────
+if ($('delSelectAll')) $('delSelectAll').onclick = () =>
+  document.querySelectorAll('#delSubjectList input').forEach(cb => cb.checked = true);
+if ($('delClearAll')) $('delClearAll').onclick = () =>
+  document.querySelectorAll('#delSubjectList input').forEach(cb => cb.checked = false);
+
+// ── Parse Q number input (e.g. "1,5,12" or "1-10") ───────────────────────
+function parseQnums(str) {
+  const nums = new Set();
+  str.split(',').forEach(part => {
+    part = part.trim();
+    if (part.includes('-')) {
+      const [a, b] = part.split('-').map(Number);
+      for (let i = a; i <= b; i++) nums.add(i);
+    } else if (!isNaN(parseInt(part))) {
+      nums.add(parseInt(part));
+    }
+  });
+  return nums;
+}
+
+// ── Practice Preview ──────────────────────────────────────────────────────
+if ($('delPracPreviewBtn')) {
+  $('delPracPreviewBtn').onclick = async () => {
+    const examId   = $('delPracExamSel').value;
+    const subjects = [...document.querySelectorAll('#delSubjectList input:checked')].map(cb => cb.value);
+    if (!subjects.length) { $('delPracPreview').textContent = '⚠️ No subjects selected'; return; }
+    $('delPracPreview').textContent = 'Loading…';
+    try {
+      const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+      let docs = snap.docs.filter(d => {
+        const data = d.data();
+        return data.type === 'practice' && subjects.includes(data.subject);
+      });
+      if (delPracScope === 'qnum') {
+        const nums = parseQnums($('delPracQnums').value);
+        docs = docs.filter(d => nums.has(d.data().q_num));
+      }
+      $('delPracPreview').textContent = `Found ${docs.length} practice questions to delete`;
+      $('delPracPreview').style.color = docs.length ? '#f59e0b' : '#10b981';
+    } catch(e) { $('delPracPreview').textContent = 'Error: ' + e.message; }
+  };
+}
+
+// ── PYQ Preview ───────────────────────────────────────────────────────────
+if ($('delPyqPreviewBtn')) {
+  $('delPyqPreviewBtn').onclick = async () => {
+    const selected = document.querySelector('input[name="pyqPaper"]:checked');
+    if (!selected) { $('delPyqExamYearPreview').textContent = '⚠️ Select a paper first'; return; }
+    const group = window._pyqGrouped?.[selected.value];
+    if (!group) return;
+    let count = group.docs.length;
+    if (delPyqScope === 'qnum') {
+      const nums = parseQnums($('delPyqQnums').value);
+      count = group.docs.filter(d => nums.has(d.q_num)).length;
+    }
+    $('delPyqExamYearPreview').textContent = `Found ${count} PYQ questions to delete`;
+    $('delPyqExamYearPreview').style.color = count ? '#f59e0b' : '#10b981';
   };
 }
 
 // ── Execute Delete ────────────────────────────────────────────────────────
 if ($('delExecuteBtn')) {
   $('delExecuteBtn').onclick = async () => {
-    const examId = $('delExamSel').value;
-    const dtype  = delSelectedType;
     let toDelete = [];
-    let label    = '';
+    let label = '';
 
     try {
-      if (dtype === 'pyq') {
-        // ── PYQ delete ──────────────────────────────────────────────
-        if (delPyqMode === 'subject') {
-          const subjects = getCheckedSubjects('delpyq');
-          if (!subjects.length) { log('No subjects selected.', 'err'); return; }
-          label = `PYQ — subjects: ${subjects.join(', ')} from exam: ${examId}`;
-          if (!confirm(`Delete PYQ for ${subjects.length} subject(s) from "${examId}"?
-${subjects.join(', ')}
+      if (delSelectedType === 'practice') {
+        // ── Practice delete ─────────────────────────────────────────────
+        const examId   = $('delPracExamSel').value;
+        const subjects = [...document.querySelectorAll('#delSubjectList input:checked')].map(cb => cb.value);
+        if (!subjects.length) { log('No subjects selected', 'err'); return; }
 
-CANNOT be undone!`)) return;
-          if (!confirm(`FINAL CONFIRMATION: Permanently delete PYQ from: ${subjects.join(', ')}?`)) return;
-          const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
-          toDelete = snap.docs.filter(d => {
-            const data = d.data();
-            return data.type === 'pyq' && subjects.includes(data.subject);
-          });
-        } else {
-          // by exam + year
-          const pyqExamId = $('delPyqExamSel').value;
-          const year      = parseInt($('delPyqYear').value) || null;
-          label = `PYQ — exam: ${pyqExamId}${year ? ` year: ${year}` : ' (all years)'}`;
-          if (!confirm(`Delete PYQ from "${pyqExamId}"${year ? ` year ${year}` : ' ALL years'}?
-
-CANNOT be undone!`)) return;
-          if (!confirm(`FINAL CONFIRMATION: Permanently delete ${label}?`)) return;
-          const snap = await getDocs(collection(db, 'exams', pyqExamId, 'questions'));
-          toDelete = snap.docs.filter(d => {
-            const data = d.data();
-            return data.type === 'pyq' && (!year || data.year === year);
-          });
-        }
-      } else {
-        // ── Practice / All delete (by subject) ──────────────────────
-        const subjects = getCheckedSubjects('del');
-        if (!subjects.length) { log('No subjects selected.', 'err'); return; }
-        const typeLabel = dtype === 'all' ? 'ALL types' : dtype.toUpperCase();
-        label = `${typeLabel} — subjects: ${subjects.join(', ')} from exam: ${examId}`;
-        if (!confirm(`Delete ${typeLabel} questions for ${subjects.length} subject(s) from "${examId}"?
-${subjects.join(', ')}
-
-CANNOT be undone!`)) return;
-        if (!confirm(`FINAL CONFIRMATION: Permanently delete ${typeLabel} from: ${subjects.join(', ')}?`)) return;
         const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
-        toDelete = snap.docs.filter(d => {
+        let docs = snap.docs.filter(d => {
           const data = d.data();
-          return (dtype === 'all' || data.type === dtype) && subjects.includes(data.subject);
+          return data.type === 'practice' && subjects.includes(data.subject);
         });
+
+        if (delPracScope === 'qnum') {
+          const qnumStr = $('delPracQnums').value.trim();
+          if (!qnumStr) { log('Enter question numbers', 'err'); return; }
+          const nums = parseQnums(qnumStr);
+          docs = docs.filter(d => nums.has(d.data().q_num));
+          label = `Practice Q# [${[...nums].join(',')}] in ${subjects.join(', ')} — ${examId}`;
+        } else {
+          label = `All Practice in ${subjects.join(', ')} — ${examId}`;
+        }
+        toDelete = docs;
+
+      } else {
+        // ── PYQ delete ──────────────────────────────────────────────────
+        const selected = document.querySelector('input[name="pyqPaper"]:checked');
+        if (!selected) { log('Select a paper first', 'err'); return; }
+        const group = window._pyqGrouped?.[selected.value];
+        if (!group) { log('Paper data not loaded', 'err'); return; }
+
+        let docs = group.docs;
+        if (delPyqScope === 'qnum') {
+          const qnumStr = $('delPyqQnums').value.trim();
+          if (!qnumStr) { log('Enter question numbers', 'err'); return; }
+          const nums = parseQnums(qnumStr);
+          docs = docs.filter(d => nums.has(d.q_num));
+          label = `PYQ Q# [${[...nums].join(',')}] from "${group.label}" ${group.year}`;
+        } else {
+          label = `All PYQ from "${group.label}" ${group.year} (${group.docs.length} questions)`;
+        }
+        toDelete = docs;
       }
 
-      if (!toDelete.length) { log('No matching questions found.', 'warn'); return; }
+      if (!toDelete.length) { log('No matching questions found', 'warn'); return; }
 
-      const bySubj = {};
-      toDelete.forEach(d => { const s = d.data().subject||'unknown'; bySubj[s]=(bySubj[s]||0)+1; });
-      log(`Found ${toDelete.length} questions to delete (${label}):`, 'warn');
-      Object.entries(bySubj).forEach(([s,c]) => log(`  ${s}: ${c}Q`, 'info'));
+      if (!confirm(`Delete ${toDelete.length} questions?
+${label}
 
+CANNOT be undone!`)) return;
+      if (!confirm(`FINAL CONFIRMATION:
+Permanently delete ${toDelete.length} questions?`)) return;
+
+      log(`🗑 Deleting ${toDelete.length} questions — ${label}`, 'warn');
       let deleted = 0;
       for (let i = 0; i < toDelete.length; i += 400) {
         const batch = writeBatch(db);
-        toDelete.slice(i,i+400).forEach(d => batch.delete(d.ref));
+        toDelete.slice(i, i+400).forEach(d => batch.delete(d.ref));
         await batch.commit();
         deleted += Math.min(400, toDelete.length - i);
         log(`Deleted ${deleted}/${toDelete.length}…`, 'warn');
       }
-
       log(`✅ Done! ${deleted} questions deleted.`, 'ok');
-      updateDelPreview();
+      $('delPreview').textContent = '';
+      // Reload PYQ papers list if in PYQ mode
+      if (delSelectedType === 'pyq') $('delPyqExamSel').dispatchEvent(new Event('change'));
     } catch(e) { log('❌ Delete error: ' + e.message, 'err'); }
   };
 }
-
-
-// ── Grand Total ───────────────────────────────────────────────────────────
-async function loadGrandTotal() {
-  ['gtTotal','gtPyq','gtPractice','gtExams'].forEach(id => $(id).textContent='…');
-  $('pyqBreakdownWrap').style.display = 'none';
-  try {
-    const results = await Promise.all(EXAMS.map((e, i) => fetchStatsForExam(e.id).then(docs => ({ exam: EXAMS[i], docs }))));
-    const allDocs = results.flatMap(r => r.docs);
-    const examsWith = results.filter(r => r.docs.length > 0).length;
-    const total = allDocs.length;
-    const pyq   = allDocs.filter(d => d.type === 'pyq').length;
-    const prc   = allDocs.filter(d => d.type === 'practice').length;
-    $('gtTotal').textContent    = total.toLocaleString();
-    $('gtPyq').textContent      = pyq.toLocaleString();
-    $('gtPractice').textContent = prc.toLocaleString();
-    $('gtExams').textContent    = examsWith;
-
-    // PYQ exam-wise breakdown
-    const pyqRows = results.map(r => ({
-      exam: r.exam,
-      pyq:  r.docs.filter(d => d.type === 'pyq').length,
-      prc:  r.docs.filter(d => d.type === 'practice').length,
-      total: r.docs.length
-    })).filter(r => r.total > 0);
-
-    if (pyqRows.length > 0) {
-      const maxPyq = Math.max(...pyqRows.map(r => r.pyq), 1);
-      $('pyqBreakdownList').innerHTML = pyqRows.map(r => {
-        const pct = Math.round(r.pyq / maxPyq * 100);
-        return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px">
-          <div style="font-size:12px;color:#94a3b8;min-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.exam.icon} ${r.exam.name}</div>
-          <div style="flex:1;background:#1e293b;border-radius:4px;height:8px;overflow:hidden">
-            <div style="width:${pct}%;height:100%;background:#a78bfa;border-radius:4px"></div>
-          </div>
-          <div style="font-size:13px;font-weight:700;color:#a78bfa;min-width:32px;text-align:right">${r.pyq}</div>
-          <div style="font-size:11px;color:#10b981;min-width:40px;text-align:right">+${r.prc} Prc</div>
-        </div>`;
-      }).join('');
-      $('pyqBreakdownWrap').style.display = 'block';
-    }
-  } catch(e) { log('❌ Grand total error: ' + e.message, 'err'); }
-}
-$('loadGrandTotalBtn').onclick = loadGrandTotal;
 
 // ── Firestore Stats ───────────────────────────────────────────────────────
 async function fetchStatsForExam(examId) {
