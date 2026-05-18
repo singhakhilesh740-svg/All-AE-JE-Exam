@@ -19,7 +19,7 @@ import * as Quiz from './quiz.js';
 import { EXAMS, getExamById } from './exams.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from './subjects.js';
 import { renderNotesContent, loadNotesForSubject } from './notes.js';
-import { loadGSNotes, loadHindiNotes, renderGSNotesContent } from './gs-notes.js';
+import { loadGSNotes, loadHindiNotes, renderGSNotesContent, getSubSubjects, getSubSubjectData } from './gs-notes.js';
 
 // ── State ──────────────────────────────────────────────────────────────────
 let currentUser         = null;
@@ -745,54 +745,67 @@ let _currentGSSubId   = null;
 async function openGSSubject(subj) {
   _currentGSSubject = subj;
 
-  const subSubs = GS_SUB_SUBJECTS[subj.id];
+  // Load the subject's data first
+  const data = await loadGSNotes(subj.id);
+  const subSubs = data ? getSubSubjects(data) : GS_SUB_SUBJECTS[subj.id];
+
   if (subSubs && subSubs.length) {
     // Show sub-subject list screen
     $('gsSubSubjectTitle').textContent = subj.icon + ' ' + subj.name;
     $('gsSubSubjectSub').textContent   = 'Choose a section';
-    renderGSSubjectList('gsSubSubjectList', subSubs, (sub) => openGSSubSubject(subj, sub));
+    renderGSSubjectList('gsSubSubjectList', subSubs, (sub) => openGSSubSubject(subj, sub, data));
     showScreen('gsSubSubjectsScreen');
+  } else if (data) {
+    // No sub-subjects — render notes directly
+    await _loadAndShowGSNotes(subj.id, subj.icon + ' ' + subj.name, 'gsSubjectsScreen', null, data);
   } else {
-    // No sub-subjects — load notes directly
-    await _loadAndShowGSNotes(subj.id, subj.icon + ' ' + subj.name, 'gsSubjectsScreen');
+    toast('Notes not available yet');
   }
 }
 
-async function openGSSubSubject(parentSubj, sub) {
+async function openGSSubSubject(parentSubj, sub, preloadedData) {
   _currentGSSubId = sub.id;
   await _loadAndShowGSNotes(
     parentSubj.id,
     sub.icon + ' ' + sub.name,
     'gsSubSubjectsScreen',
-    sub.id   // scroll to / filter to this topic
+    sub.id,
+    preloadedData
   );
 }
 
-async function _loadAndShowGSNotes(subjectId, title, backScreen, filterTopicId) {
+async function _loadAndShowGSNotes(subjectId, title, backScreen, subSubjectId, preloadedData) {
   $('gsNotesTitle').textContent = title;
   $('gsNotesSub').textContent   = 'Topic-wise detailed notes';
   $('gsPlaceholder').style.display = 'block';
   $('gsPlaceholder').querySelector('h3').textContent = 'Loading…';
 
-  const old = document.getElementById('gsNotesMain-rendered');
-  if (old) old.remove();
+  const oldEl = document.getElementById('gsNotesMain-rendered');
+  if (oldEl) oldEl.remove();
   $('gsTopicBar').innerHTML = '';
 
   // Wire back button dynamically
   const backBtn = $('gsNotesBackBtn');
-  if (backBtn) {
-    backBtn.onclick = () => showScreen(backScreen);
-  }
+  if (backBtn) backBtn.onclick = () => showScreen(backScreen);
 
   showScreen('gsNotesScreen');
 
-  const data = await loadGSNotes(subjectId);
-  if (!data) {
+  // Load full data if not preloaded
+  const fullData = preloadedData || await loadGSNotes(subjectId);
+  if (!fullData) {
     $('gsPlaceholder').querySelector('h3').textContent = 'Notes coming soon';
     return;
   }
+
+  // If sub-subject requested, get that slice of data
+  let notesData = fullData;
+  if (subSubjectId) {
+    const sub = getSubSubjectData(fullData, subSubjectId);
+    if (sub) notesData = sub;
+  }
+
   $('gsPlaceholder').style.display = 'none';
-  renderGSNotesContent(data, 'gsNotesMain', 'gsTopicBar', 'gsPlaceholder', filterTopicId);
+  renderGSNotesContent(notesData, 'gsNotesMain', 'gsTopicBar', 'gsPlaceholder');
 }
 
 async function openHindiSubject(subj) {

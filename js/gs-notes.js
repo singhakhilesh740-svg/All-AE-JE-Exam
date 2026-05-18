@@ -9,10 +9,10 @@ const _subjectCache = {};
 
 // Subject → JSON file mapping
 const GS_SUBJECT_FILES = {
-  'history':         { file: 'data/gs-history.json',   version: 'v2-hist-1' },
-  'polity':          { file: 'data/gs-polity.json',    version: 'v1-pol-1'  },
-  'geography':       { file: 'data/gs-geography.json', version: 'v1-geo-1'  },
-  'general-science': { file: 'data/gs-science.json',   version: 'v1-sci-1'  },
+  'history':         { file: 'data/gs-history.json',   version: 'v3-hist-2' },
+  'polity':          { file: 'data/gs-polity.json',    version: 'v2-pol-2'  },
+  'geography':       { file: 'data/gs-geography.json', version: 'v2-geo-2'  },
+  'general-science': { file: 'data/gs-science.json',   version: 'v2-sci-2'  },
 };
 
 // Fallback: load from combined gs-notes.json if no dedicated file
@@ -68,6 +68,25 @@ export async function loadHindiNotes(subjectId) {
     console.error('[hindi-notes] load error:', e);
     return null;
   }
+}
+
+
+/**
+ * Get the sub-subjects list for a given GS subject (e.g. all periods of History)
+ * Returns array of {id, icon, name, description} or null
+ */
+export function getSubSubjects(data) {
+  return data && data.sub_subjects ? data.sub_subjects : null;
+}
+
+/**
+ * Get notes data for a specific sub-subject (e.g. Ancient India within History)
+ * @param {Object} data - full subject data loaded from JSON
+ * @param {string} subId - sub-subject id (e.g. 'ancient')
+ */
+export function getSubSubjectData(data, subId) {
+  if (!data || !data[subId]) return null;
+  return data[subId]; // returns {topics: [...], notes: [...]}
 }
 
 // ── Renderer (shared for GS + Hindi) ─────────────────────────────────────

@@ -1,5 +1,5 @@
-// service-worker.js — PWA caching v10-notes-9
-const CACHE_NAME = 'ae-civil-v10-notes-9';
+// service-worker.js — PWA caching v14-gs-complete
+const CACHE_NAME = 'ae-civil-v14-gs-complete';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -10,6 +10,12 @@ const STATIC_ASSETS = [
 // Network-first assets — always fetch fresh, fallback to cache
 const NETWORK_FIRST = [
   'notes-combined.json',
+  'data/gs-notes.json',
+  'data/gs-history.json',
+  'data/gs-polity.json',
+  'data/gs-geography.json',
+  'data/gs-science.json',
+  'data/hindi-notes.json',
   'gs-notes.json',
   'gs-history.json',
   'hindi-notes.json',
