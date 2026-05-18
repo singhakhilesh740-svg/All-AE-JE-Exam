@@ -19,6 +19,7 @@ import * as Quiz from './quiz.js';
 import { EXAMS, getExamById } from './exams.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from './subjects.js';
 import { renderNotesContent, loadNotesForSubject } from './notes.js';
+import { loadGSNotes, loadHindiNotes, renderGSNotesContent } from './gs-notes.js';
 
 // ── State ──────────────────────────────────────────────────────────────────
 let currentUser         = null;
@@ -28,6 +29,20 @@ let currentExam         = null;    // selected exam (PYQ)
 let allBookmarks        = [];
 let quizSource          = 'home';  // where to go back from quiz
 let quizRoute           = null;    // 'practice' | 'pyq' | 'bookmarks'
+
+// ── General Studies Subjects ───────────────────────────────────────────────
+const GS_SUBJECTS = [
+  { id: 'polity',          icon: '⚖️',  name: 'Polity',           description: 'Constitution, Parliament, Judiciary, Elections' },
+  { id: 'geography',       icon: '🗺️',  name: 'Geography',        description: 'Physical, Climate, Rivers, Resources, World' },
+  { id: 'history',         icon: '🏛️',  name: 'History',          description: 'Ancient, Medieval, Modern, Freedom Struggle, Culture' },
+  { id: 'general-science', icon: '🔬',  name: 'General Science',  description: 'Physics, Chemistry, Biology, Technology, Health' },
+];
+
+// ── Hindi Subjects ─────────────────────────────────────────────────────────
+const HINDI_SUBJECTS = [
+  { id: 'hindi-grammar',  icon: '📝', name: 'Hindi Grammar (व्याकरण)',  description: 'वर्णमाला · संधि · समास · कारक · काल · अलंकार · रस' },
+  { id: 'hindi-sahitya',  icon: '📚', name: 'Hindi Literature (साहित्य)', description: 'भक्तिकाल · रीतिकाल · आधुनिककाल · कवि · उपन्यास' },
+];
 
 // ── DOM helper ─────────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
@@ -272,6 +287,18 @@ $('homePYQ').addEventListener('click', () => {
 $('homeBookmarks').addEventListener('click', async () => {
   await loadAndShowBookmarks();
   showScreen('bookmarksScreen');
+});
+
+// ── GS tile ────────────────────────────────────────────────────────────────
+$('homeGS').addEventListener('click', () => {
+  renderGSSubjectList('gsSubjectList', GS_SUBJECTS, openGSSubject);
+  showScreen('gsSubjectsScreen');
+});
+
+// ── Hindi tile ─────────────────────────────────────────────────────────────
+$('homeHindi').addEventListener('click', () => {
+  renderGSSubjectList('hindiSubjectList', HINDI_SUBJECTS, openHindiSubject);
+  showScreen('hindiSubjectsScreen');
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -644,6 +671,71 @@ $('practiceBookmarksBtn').addEventListener('click', () => {
   $('quizTopicBar').innerHTML = '';
   renderQuiz();
 });
+
+// ══════════════════════════════════════════════════════════════════════════════
+// GS & HINDI SUBJECT LIST + NOTES FLOW
+// ══════════════════════════════════════════════════════════════════════════════
+
+function renderGSSubjectList(containerId, subjects, onSelect) {
+  const container = $(containerId);
+  container.innerHTML = '';
+  subjects.forEach(subj => {
+    const btn = document.createElement('button');
+    btn.className = 'subject-card';
+    btn.innerHTML = `
+      <div class="subject-icon">${subj.icon || '📖'}</div>
+      <div class="subject-info">
+        <div class="subject-name">${escapeHtml(subj.name)}</div>
+        <div class="subject-desc">${escapeHtml(subj.description || '')}</div>
+      </div>
+      <div class="subject-arrow">›</div>
+    `;
+    btn.addEventListener('click', () => onSelect(subj));
+    container.appendChild(btn);
+  });
+}
+
+async function openGSSubject(subj) {
+  $('gsNotesTitle').textContent = subj.icon + ' ' + subj.name;
+  $('gsNotesSub').textContent   = 'Topic-wise notes';
+  $('gsPlaceholder').style.display = 'block';
+  $('gsPlaceholder').querySelector('h3').textContent = 'Loading…';
+
+  const old = document.getElementById('gsNotesMain-rendered');
+  if (old) old.remove();
+  $('gsTopicBar').innerHTML = '';
+
+  showScreen('gsNotesScreen');
+
+  const data = await loadGSNotes(subj.id);
+  if (!data) {
+    $('gsPlaceholder').querySelector('h3').textContent = 'Notes coming soon';
+    return;
+  }
+  $('gsPlaceholder').style.display = 'none';
+  renderGSNotesContent(data, 'gsNotesMain', 'gsTopicBar', 'gsPlaceholder');
+}
+
+async function openHindiSubject(subj) {
+  $('hindiNotesTitle').textContent = subj.icon + ' ' + subj.name;
+  $('hindiNotesSub').textContent   = 'Topic-wise notes';
+  $('hindiPlaceholder').style.display = 'block';
+  $('hindiPlaceholder').querySelector('h3').textContent = 'Loading…';
+
+  const old = document.getElementById('hindiNotesMain-rendered');
+  if (old) old.remove();
+  $('hindiTopicBar').innerHTML = '';
+
+  showScreen('hindiNotesScreen');
+
+  const data = await loadHindiNotes(subj.id);
+  if (!data) {
+    $('hindiPlaceholder').querySelector('h3').textContent = 'Notes coming soon';
+    return;
+  }
+  $('hindiPlaceholder').style.display = 'none';
+  renderGSNotesContent(data, 'hindiNotesMain', 'hindiTopicBar', 'hindiPlaceholder');
+}
 
 // ══════════════════════════════════════════════════════════════════════════════
 // QUIZ RENDERER

@@ -10,8 +10,11 @@ const STATIC_ASSETS = [
 // Network-first assets — always fetch fresh, fallback to cache
 const NETWORK_FIRST = [
   'notes-combined.json',
+  'gs-notes.json',
+  'hindi-notes.json',
   '/js/app.js',
   '/js/notes.js',
+  '/js/gs-notes.js',
   '/js/subjects.js',
   '/js/exams.js'
 ];

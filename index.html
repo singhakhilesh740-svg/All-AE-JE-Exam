@@ -146,6 +146,18 @@
           <div class="tile-sub">Your saved questions</div>
         </button>
 
+        <button class="home-tile tile-gs" id="homeGS">
+          <div class="tile-icon">🌍</div>
+          <div class="tile-title">General Studies</div>
+          <div class="tile-sub">Polity · History · Geography · Science</div>
+        </button>
+
+        <button class="home-tile tile-hindi" id="homeHindi">
+          <div class="tile-icon">📖</div>
+          <div class="tile-title">Hindi</div>
+          <div class="tile-sub">व्याकरण · साहित्य · कवि</div>
+        </button>
+
       </div>
     </main>
   </div>
@@ -335,6 +347,71 @@
     </div>
   </div>
 
+
+  <!-- ===== GENERAL STUDIES: SUBJECT LIST ===== -->
+  <div id="gsSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>🌍 General Studies</h2>
+        <span class="header-sub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="gsSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== GS NOTES CONTENT ===== -->
+  <div id="gsNotesScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="gsSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="gsNotesTitle">General Studies</h2>
+        <span class="header-sub" id="gsNotesSub">Notes</span>
+      </div>
+    </header>
+    <main class="notes-main" id="gsNotesMain">
+      <div id="gsTopicBar" class="notes-topic-bar"></div>
+      <div id="gsPlaceholder" class="empty-state">
+        <div class="empty-icon">🌍</div>
+        <h3>Notes loading…</h3>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== HINDI: SUBJECT LIST ===== -->
+  <div id="hindiSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>📖 Hindi</h2>
+        <span class="header-sub">Pick a section</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="hindiSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== HINDI NOTES CONTENT ===== -->
+  <div id="hindiNotesScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="hindiSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="hindiNotesTitle">Hindi</h2>
+        <span class="header-sub" id="hindiNotesSub">Notes</span>
+      </div>
+    </header>
+    <main class="notes-main" id="hindiNotesMain">
+      <div id="hindiTopicBar" class="notes-topic-bar"></div>
+      <div id="hindiPlaceholder" class="empty-state">
+        <div class="empty-icon">📖</div>
+        <h3>Notes loading…</h3>
+      </div>
+    </main>
+  </div>
+
   <!-- TOAST -->
   <div id="toast" class="toast"></div>
 
@@ -345,6 +422,7 @@
   <script type="module" src="js/subjects.js"></script>
   <script type="module" src="js/exams.js"></script>
   <script type="module" src="js/notes.js"></script>
+  <script type="module" src="js/gs-notes.js"></script>
   <script type="module" src="js/app.js"></script>
 
   <script>

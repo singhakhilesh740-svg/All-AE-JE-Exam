@@ -17,6 +17,11 @@
 
   /* tile accent colours */
   --notes-color: #3b82f6;
+
+  /* General Studies & Hindi tile colours */
+  --gs-color: #06b6d4;
+  --hindi-color: #f43f5e;
+
   --practice-color: #10b981;
   --pyq-color: #f59e0b;
   --bm-color: #a855f7;
@@ -144,6 +149,49 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
 .tile-practice::before { background: var(--practice-color); }
 .tile-pyq::before     { background: var(--pyq-color); }
 .tile-bookmarks::before { background: var(--bm-color); }
+.tile-gs::before    { background: var(--gs-color); }
+.tile-hindi::before { background: var(--hindi-color); }
+.tile-gs    { border-color: rgba(6,182,212,0.2); }
+.tile-hindi { border-color: rgba(244,63,94,0.2); }
+
+/* ===== Enhanced Notes Cards — highlight colours ===== */
+.notes-card-red    { border-left-color: #ef4444; }
+.notes-card-teal   { border-left-color: #14b8a6; }
+.notes-card-yellow { border-left-color: #eab308; }
+.notes-card-pink   { border-left-color: #ec4899; }
+
+/* Important highlight span inside notes points */
+.hi-yellow { color: #fbbf24; font-weight: 700; }
+.hi-green  { color: #34d399; font-weight: 700; }
+.hi-red    { color: #f87171; font-weight: 700; }
+.hi-blue   { color: #60a5fa; font-weight: 700; }
+.hi-pink   { color: #f472b6; font-weight: 700; }
+
+/* Notes alert variants */
+.notes-alert-green {
+  background: rgba(16,185,129,0.08); border-left: 3px solid #10b981;
+  border-radius: 4px; padding: 12px 14px; margin-top: 10px;
+  font-size: 13px; color: var(--text-dim); line-height: 1.5;
+}
+.notes-alert-blue {
+  background: rgba(59,130,246,0.08); border-left: 3px solid #3b82f6;
+  border-radius: 4px; padding: 12px 14px; margin-top: 10px;
+  font-size: 13px; color: var(--text-dim); line-height: 1.5;
+}
+.notes-alert-orange {
+  background: rgba(249,115,22,0.08); border-left: 3px solid #f97316;
+  border-radius: 4px; padding: 12px 14px; margin-top: 10px;
+  font-size: 13px; color: var(--text-dim); line-height: 1.5;
+}
+
+/* GS/Hindi specific topic bar */
+#gsTopicBar, #hindiTopicBar {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px 14px 6px; background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 5;
+}
+
 
 .tile-icon { font-size: 32px; margin-bottom: 10px; }
 .tile-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
