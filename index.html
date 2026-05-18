@@ -362,10 +362,25 @@
     </main>
   </div>
 
+
+  <!-- ===== GS: SUB-SUBJECT LIST (e.g. History → Ancient, Medieval…) ===== -->
+  <div id="gsSubSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="gsSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="gsSubSubjectTitle">History</h2>
+        <span class="header-sub" id="gsSubSubjectSub">Choose a period</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="gsSubSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
   <!-- ===== GS NOTES CONTENT ===== -->
   <div id="gsNotesScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="gsSubjectsScreen">←</button>
+      <button class="btn-icon" id="gsNotesBackBtn">←</button>
       <div class="header-left" style="flex:1; margin-left:8px;">
         <h2 id="gsNotesTitle">General Studies</h2>
         <span class="header-sub" id="gsNotesSub">Notes</span>

@@ -1,0 +1,795 @@
+{
+  "topics": [
+    { "id": "ancient", "name": "Ancient India" },
+    { "id": "medieval", "name": "Medieval India" },
+    { "id": "modern", "name": "Modern India" },
+    { "id": "freedom", "name": "Freedom Struggle" },
+    { "id": "post-independence", "name": "Post-Independence" },
+    { "id": "culture", "name": "Art & Culture" }
+  ],
+  "notes": [
+
+    {
+      "topic_id": "ancient",
+      "topic_name": "Ancient India",
+      "cards": [
+        {
+          "heading": "Prehistoric India — Stone Age",
+          "color": "orange",
+          "points": [
+            "Palaeolithic Age (Old Stone Age): 500,000 – 10,000 BCE; tools: hand axe, cleaver, scraper; sites: Bhimbetka (MP), Hunsgi (Karnataka), Attirampakkam (Tamil Nadu)",
+            "Mesolithic Age: 10,000 – 6000 BCE; microliths (small blades); rock paintings at Bhimbetka",
+            "Neolithic Age: 6000 – 1000 BCE; agriculture begins, polished stone tools, pottery; sites: Mehrgarh (Balochistan — earliest Neolithic site in Indian subcontinent)",
+            "Chalcolithic Age: Use of copper alongside stone; sites: Jorwe (Maharashtra), Ahar (Rajasthan), Malwa",
+            "Iron Age: 1500 – 600 BCE; iron tools changed agriculture and warfare; associated with Vedic civilization"
+          ],
+          "alert": "⭐ Bhimbetka (MP) — UNESCO World Heritage Site; has rock shelters showing human occupation from Lower Palaeolithic to Medieval period. Mehrgarh is earliest evidence of farming in the subcontinent."
+        },
+        {
+          "heading": "Indus Valley / Harappan Civilization (2600–1900 BCE)",
+          "color": "blue",
+          "points": [
+            "Discovery: Harappa excavated by Daya Ram Sahni (1921); Mohenjo-daro by R.D. Banerji (1922)",
+            "Extent: 1.5 million sq km — largest Bronze Age civilization; spread across Punjab, Sindh, Rajasthan, Gujarat, UP, Maharashtra",
+            "Major sites in India: Kalibangan (Rajasthan), Lothal (Gujarat), Dholavira (Gujarat), Rakhigarhi (Haryana — largest Indian site), Banawali (Haryana), Surkotada (Gujarat)",
+            "Dholavira: Had a unique water reservoir system and stadium-like structure; inscription board",
+            "Rakhigarhi: Largest Harappan site in India; DNA analysis showed no Steppe ancestry",
+            "Lothal: Dockyard (first in world); bead factory; double burial; evidence of rice cultivation"
+          ],
+          "table": {
+            "headers": ["Feature", "Detail"],
+            "rows": [
+              ["Town Planning", "Grid pattern; streets at right angles; burnt brick construction"],
+              ["Drainage", "Underground covered drains — most advanced in ancient world"],
+              ["Great Bath", "Mohenjo-daro; 12m×7m; ritual bathing; waterproofed with bitumen"],
+              ["Granaries", "Harappa & Mohenjo-daro; largest structures; evidence of surplus storage"],
+              ["Script", "Pictographic (400+ signs); boustrophedon (right to left); NOT deciphered yet"],
+              ["Trade", "Internal & external (Mesopotamia — 'Meluhha'); weights & measures standardized"],
+              ["Religion", "Mother Goddess; Pashupati seal; fire altars at Kalibangan; no temples found"]
+            ]
+          }
+        },
+        {
+          "heading": "Decline of Indus Valley Civilization",
+          "color": "purple",
+          "points": [
+            "Aryan Invasion Theory (Mortimer Wheeler): now largely discredited; no archaeological evidence of battle",
+            "Climate Change Theory: Aridification; monsoon shift; dried up of Saraswati/Ghaggar-Hakra river",
+            "Flood Theory: Repeated floods changed river course at Mohenjo-daro",
+            "Epidemic Theory: Evidence of unburied bodies at Mohenjo-daro",
+            "Trade Decline: Collapse of trade networks with Mesopotamia around 2000 BCE",
+            "Most accepted today: Multi-causal — climate change + floods + disease + internal breakdown"
+          ],
+          "alert": "⭐ Saraswati River (now Ghaggar-Hakra) — satellite images show ancient river bed; most Harappan sites (over 500) are along this river, not Indus. Hence some scholars prefer 'Saraswati Civilization'."
+        },
+        {
+          "heading": "Vedic Period — Early Vedic (1500–1000 BCE)",
+          "color": "green",
+          "points": [
+            "Rigvedic geography: Sapta Sindhu (seven rivers — Indus, Jhelum, Chenab, Ravi, Beas, Sutlej, Saraswati)",
+            "Society: Tribal (jana); patriarchal; Varna not rigid; women had education (Gargi, Maitreyi)",
+            "Economy: Cattle-based (godhana = cow wealth); some agriculture; barter system",
+            "Polity: Raja (tribal chief); Sabha (assembly of elders); Samiti (general assembly of people)",
+            "Gods: Indra (most mentioned, 250 hymns), Agni (fire), Varuna (water/cosmic order), Soma",
+            "Rigveda: 1028 hymns; 10 mandalas; oldest book of the world still in use; UNESCO inscription"
+          ],
+          "table": {
+            "headers": ["Veda", "Content", "Upveda", "Brahman"],
+            "rows": [
+              ["Rigveda", "Hymns (1028)", "Ayurveda", "Aitareya"],
+              ["Samaveda", "Melodies/Music (1875 verses)", "Gandharvaveda", "Chandogya"],
+              ["Yajurveda", "Rituals/Sacrifice", "Dhanurveda", "Shatapatha"],
+              ["Atharvaveda", "Magic/Medicine (731 hymns)", "Shilpaveda", "Gopatha"]
+            ]
+          }
+        },
+        {
+          "heading": "Later Vedic Period (1000–600 BCE)",
+          "color": "orange",
+          "points": [
+            "Geography expanded: Ganga-Yamuna doab became center; eastward migration",
+            "Society: Varna system became rigid (Brahmin, Kshatriya, Vaishya, Shudra); women's status declined",
+            "Economy: Agriculture dominant; iron plough used; rice became main crop",
+            "Polity: Janapadas emerged (territorial states); kingship became hereditary; Rajasuya, Ashvamedha, Vajapeya yajnas",
+            "Philosophy: Upanishads (108) emerged — Brahman-Atman, Moksha, Karma, Samsara",
+            "Later Vedic literature: Brahmanas (ritual texts), Aranyakas (forest texts), Upanishads (philosophical)"
+          ],
+          "alert": "⭐ Chandogya Upanishad contains 'Tat Tvam Asi' (That thou art). Brihadaranyaka Upanishad is the largest. Mundaka — 'Satyameva Jayate' (Truth alone triumphs) — India's national motto."
+        },
+        {
+          "heading": "Mahajanapadas (600–300 BCE)",
+          "color": "blue",
+          "points": [
+            "16 Mahajanapadas mentioned in Anguttara Nikaya (Buddhist text)",
+            "Most powerful: Magadha, Kosala, Vatsa, Avanti",
+            "Magadha rose to power due to: iron ore in Chota Nagpur, fertile Gangetic plain, strategic location, elephants",
+            "Haryanka dynasty: Bimbisara (first historical king; married into Kosala & Lichchhavi), Ajatashatru (killed Bimbisara; expanded Magadha)",
+            "Shishunaga dynasty: Defeated Avanti; moved capital to Vaishali briefly",
+            "Nanda dynasty: First non-Kshatriya dynasty; Dhana Nanda (last Nanda) — Alexander's contemporary; huge army",
+            "Republic states (Ganas/Sanghas): Vajji (Vaishali), Mallas, Shakyas (Buddha's clan), Lichchhavis"
+          ],
+          "table": {
+            "headers": ["Dynasty", "Important King", "Capital"],
+            "rows": [
+              ["Haryanka", "Bimbisara, Ajatashatru", "Rajagriha (Patna)"],
+              ["Shishunaga", "Shishunaga, Kalashoka", "Vaishali then Pataliputra"],
+              ["Nanda", "Mahapadma Nanda, Dhana Nanda", "Pataliputra"],
+              ["Maurya", "Chandragupta, Ashoka", "Pataliputra"]
+            ]
+          }
+        },
+        {
+          "heading": "Rise of New Religions — Buddhism & Jainism",
+          "color": "purple",
+          "points": [
+            "Cause: Revolt against Brahmanical domination, complex rituals, and Varna discrimination",
+            "Vardhamana Mahavira (599–527 BCE): 24th Tirthankara; born in Vaishali; attained Kevala Jnana at Jambikagrama; died at Pavapuri",
+            "Jainism: 5 Mahavratas — Ahimsa, Satya, Asteya, Brahmacharya, Aparigraha; Syadvada (relativism); Anekantavada",
+            "Jain sects: Digambara (sky-clad; no clothes) vs Shvetambara (white-clad)",
+            "Gautama Buddha (563–483 BCE): Born at Lumbini (Nepal); father Suddhodana; mother Mahamaya",
+            "Four Sights that changed Siddhartha: Old man, Sick man, Dead body, Wandering ascetic",
+            "Enlightenment (Nirvana): At Bodh Gaya under Peepal tree; First sermon at Sarnath (Dhammachakka Pavattana — Turning of Wheel of Law)",
+            "Four Noble Truths (Arya Satya): 1.Life is suffering (Dukkha) 2.Desire causes suffering (Samudaya) 3.Cessation possible (Nirodha) 4.Eightfold Path leads to cessation (Magga)"
+          ],
+          "alert": "⭐ Eightfold Path: Right View, Right Thought, Right Speech, Right Action, Right Livelihood, Right Effort, Right Mindfulness, Right Concentration. Three Jewels of Buddhism: Buddha, Dhamma, Sangha. Buddha died at Kushinagar (Mahaparinirvana)."
+        },
+        {
+          "heading": "Maurya Empire (321–185 BCE)",
+          "color": "green",
+          "points": [
+            "Founded by Chandragupta Maurya (321 BCE) with help of Kautilya/Chanakya after defeating Dhana Nanda",
+            "Arthashastra by Kautilya: 15 books; covers statecraft, economy, military, spying — 'world's first treatise on political economy'",
+            "Chandragupta: Defeated Seleucus Nicator 305 BCE; got Hindu Kush region; married his daughter; converted to Jainism; died at Shravanabelagola",
+            "Bindusara (298–272 BCE): Called 'Amitraghata'; maintained Greek contacts; son Ashoka was governor of Taxila",
+            "Ashoka the Great (268–232 BCE): Kalinga War 261 BCE; 100,000 killed, 150,000 deported; converted to Buddhism",
+            "Ashoka's Dhamma: Non-violence, tolerance, vegetarianism, respect for elders, truthfulness",
+            "Rock Edicts: 14 major + 2 minor; Pillar Edicts: 7 major; Cave Inscriptions: 3 (for Ajivika monks)",
+            "Megasthenes (Greek ambassador): Wrote Indica; described 7 castes in Pataliputra; first foreign account of India"
+          ],
+          "alert": "⭐ Ashoka's inscriptions written in Brahmi (most), Kharosthi (NW), Greek & Aramaic (Afghanistan). James Prinsep deciphered Brahmi in 1837. National Emblem taken from Ashoka's Sarnath Pillar (4 lions)."
+        },
+        {
+          "heading": "Post-Mauryan Period (185 BCE – 300 CE)",
+          "color": "orange",
+          "points": [
+            "Shunga dynasty (185–73 BCE): Pushyamitra Shunga killed last Mauryan; performed Ashvamedha; anti-Buddhist (Sanchi stupa damaged then restored)",
+            "Kanva dynasty (73–28 BCE): 4 kings; replaced by Satavahanas",
+            "Satavahana dynasty: Longest ruling dynasty of Deccan (230 BCE–220 CE); Simuka = founder; important kings: Gautamiputra Satakarni",
+            "Indo-Greek (Bactrian Greeks): Menander (Milinda) converted to Buddhism; Milindapanha — dialogue with Nagasena; introduced Hellenistic art",
+            "Shakas (Scythians): Important in NW India; era started 78 CE (Shaka Samvat = Indian national calendar)",
+            "Kushanas: Kujula Kadphises founded; Kanishka I — greatest Kushana; 4th Buddhist Council at Kashmir; Gandhara art flourished",
+            "Kanishka's era: 78 CE (some historians); patron of Mahayana Buddhism; coins show Buddha, Greek gods",
+            "Sangam Age (300 BCE–300 CE): Three Tamil kingdoms — Cheras (Vanji), Cholas (Uraiyur/Kaveripattinam), Pandyas (Madurai)"
+          ]
+        },
+        {
+          "heading": "Gupta Empire — Golden Age (320–550 CE)",
+          "color": "blue",
+          "points": [
+            "Sri Gupta (240–280 CE): founder; Ghatotkachagupta son; Chandragupta I took Maharajadhiraja title",
+            "Chandragupta I (319–335 CE): Married Kumaradevi (Lichchhavi princess); Gupta Era begins 319/320 CE",
+            "Samudragupta (335–375 CE): 'Napoleon of India' — V.A. Smith; Allahabad Pillar inscription (Harishena composed); Ashvamedha performed; great poet/musician",
+            "Chandragupta II / Vikramaditya (375–415 CE): Defeated Shakas of W. India; Silver coins; Fa Hien visited; Navratnas at court",
+            "Kumaragupta I (415–455 CE): Founded Nalanda University",
+            "Skandagupta (455–467 CE): Defeated Huns (Hunas); last great Gupta king",
+            "Decline: White Hun (Huna) invasions, internal rebellions, rise of feudal chiefs"
+          ],
+          "table": {
+            "headers": ["Scholar", "Contribution"],
+            "rows": [
+              ["Aryabhata", "Zero, decimal, π=3.1416, Earth rotates, solar eclipse cause, Aryabhatiya"],
+              ["Varahamihira", "Panchasiddhantika, Brihatsamhita, Brihat Jataka (astronomy)"],
+              ["Kalidasa", "Shakuntalam, Meghadutam, Raghuvamsham, Kumarasambhavam, Malavikagnimitram"],
+              ["Vishakhadatta", "Mudrarakshasa, Devichandraguptam (plays)"],
+              ["Amarasimha", "Amarakosha (Sanskrit dictionary)"],
+              ["Vatsyayana", "Kamasutra"],
+              ["Dhanvantari", "Medicine; Ayurveda"]
+            ]
+          },
+          "alert": "⭐ Fa Hien (399–414 CE): Chinese Buddhist pilgrim; described Gupta India as peaceful, prosperous; people kind and vegetarian; no capital punishment. Gupta coins: gold = Dinar; silver = Rupyaka."
+        },
+        {
+          "heading": "Harshavardhana (606–647 CE) & Post-Gupta",
+          "color": "purple",
+          "points": [
+            "Harsha of Pushyabhuti/Vardhana dynasty; capital Kanauj; ruled vast empire",
+            "Xuanzang (Hiuen Tsang): Chinese pilgrim; visited Nalanda; wrote 'Si-Yu-Ki' (Record of Western Regions); 'Prince of Pilgrims'",
+            "Harsha: himself a playwright — Ratnavali, Priyadarshika, Nagananda; patron of scholars",
+            "Harshacharita: Biography by Banabhatta",
+            "Defeat: By Pulakeshi II (Chalukya king) at Battle of Narmada (618 CE) — Harsha could not cross Deccan",
+            "After Harsha's death: India broke into regional kingdoms",
+            "Pallavas (Kanchipuram): Mahendravarman I, Narasimhavarman I (Mamalla); Dravidian temple architecture began",
+            "Chalukyas (Badami): Pulakeshi II (greatest); Aihole inscription; Vesara style temples",
+            "Rashtrakutas: Dantidurga founded; Amoghavarsha (greatest); Ellora caves; defeated Gurjara-Pratiharas"
+          ]
+        }
+      ]
+    },
+
+    {
+      "topic_id": "medieval",
+      "topic_name": "Medieval India",
+      "cards": [
+        {
+          "heading": "Arab Conquest of Sindh & Early Invasions",
+          "color": "orange",
+          "points": [
+            "Muhammad bin Qasim (712 CE): Defeated Dahir (ruler of Sindh); first permanent Muslim conquest in India",
+            "Arab conquest limited to Sindh; could not penetrate further due to resistance from Pratiharas and Rashtrakutas",
+            "Mahmud of Ghazni (997–1030): 17 invasions into India (1000–1027 CE); looted wealth; destroyed Somnath temple (1025 CE)",
+            "Alberuni (Al-Biruni): Came with Mahmud; wrote Kitab-ul-Hind (Tahqiq-i-Hind) — encyclopedic study of India",
+            "Muhammad Ghori (1173–1206): Aimed at permanent conquest, not just plunder"
+          ],
+          "table": {
+            "headers": ["Battle", "Year", "Result"],
+            "rows": [
+              ["1st Battle of Tarain", "1191", "Prithviraj Chauhan defeated Muhammad Ghori"],
+              ["2nd Battle of Tarain", "1192", "Ghori defeated Prithviraj; turning point — Delhi Sultanate established"],
+              ["Battle of Chandawar", "1194", "Ghori defeated Jaichandra (Gahadavala king of Kannauj)"],
+              ["Battle of Panipat I", "1526", "Babur defeated Ibrahim Lodi — Mughal Empire begins"]
+            ]
+          }
+        },
+        {
+          "heading": "Delhi Sultanate — Slave/Mamluk Dynasty (1206–1290)",
+          "color": "blue",
+          "points": [
+            "Qutb-ud-din Aibak (1206–1210): First Sultan of Delhi; slave of Muhammad Ghori; 'Lakh Baksh' (giver of lakhs); started Qutb Minar; died playing chaugan (polo)",
+            "Iltutmish (1211–1236): Real founder of Delhi Sultanate; completed Qutb Minar; introduced iqta system; Shamsi group of 40 nobles (Chalisa)",
+            "Razia Sultana (1236–1240): First female ruler of Delhi; deposed by Chalisa nobles",
+            "Ghiyas-ud-din Balban (1266–1286): Destroyed Chalisa; theory of divine right of kings (Zil-e-Ilahi); Persian court etiquette (sijda, paibos); iron-and-blood policy",
+            "Qutb Minar: Started by Aibak, completed by Iltutmish; 4 storeys (5th added by Firoz Shah Tughlaq); 72.5m tall; inscribed UNESCO"
+          ],
+          "alert": "⭐ Iltutmish introduced: Silver Tanka (currency), Iqta system (revenue assignment), standardized coinage. Balban's court was modeled on Sassanid Persia — 'Nauroz' festival introduced."
+        },
+        {
+          "heading": "Delhi Sultanate — Khilji Dynasty (1290–1320)",
+          "color": "purple",
+          "points": [
+            "Jalal-ud-din Khilji (1290–1296): First Khilji Sultan; mild and generous; killed by nephew Alauddin",
+            "Alauddin Khilji (1296–1316): Greatest Khilji sultan; conquered Deccan (Malik Kafur as general); Market Control Reforms",
+            "Market Reforms: 4 markets — grain, cattle, cloth, horses/cattle/slaves; Shahna (controller) + Barids (spies) + Munhiyans (secret agents)",
+            "Price control success: Fixed prices, ensured supply; soldiers could maintain large army at low cost",
+            "Military reforms: First to introduce da'gh (branding of horses) and chehra (muster roll) system",
+            "Mongol invasions: Repelled 6 major Mongol invasions; built defensive walls",
+            "Malik Kafur: Eunuch general; conquered Devagiri (1307), Warangal (1309), Dwarsamudra, Madurai (1311)"
+          ],
+          "alert": "⭐ Alauddin's Market Control — described by Ziauddin Barani in 'Tarikh-i-Firoz Shahi'. 'Sijda' (prostration before sultan) and 'Paibos' (kissing feet) — court etiquette. Khilji revolution: first non-Turkish Muslim dynasty."
+        },
+        {
+          "heading": "Delhi Sultanate — Tughlaq Dynasty (1320–1414)",
+          "color": "green",
+          "points": [
+            "Ghiyas-ud-din Tughlaq (1320–1325): Founded dynasty; built Tughlaqabad; died in accident (Muhammed Tughlaq suspected)",
+            "Muhammad bin Tughlaq (1325–1351): Genius-but-erratic; 5 controversial experiments:",
+            "  1. Transfer of Capital: Delhi → Daulatabad (Devagiri) — massive failure; people died on 1500 km march",
+            "  2. Token Currency: Bronze coins instead of gold/silver — forged massively; withdrawn",
+            "  3. Taxation in Doab: Increased land tax; famine followed; rebellion",
+            "  4. Khurasan Expedition: Planned, never executed",
+            "  5. Qarachil Expedition: Against Chinese-controlled territory; disaster",
+            "Ibn Battuta: Moroccan traveler; visited during Muhammad bin Tughlaq; wrote Rihla; appointed Qazi of Delhi",
+            "Firoz Shah Tughlaq (1351–1388): Welfare measures; 1200 fruit gardens; canals (first major canal system); abolished torture; hospitals (shifa khanas); 24 new towns including Firozabad, Jaunpur, Fatehabad",
+            "Timur's invasion (1398): Sacked Delhi; Tughlaq empire collapsed"
+          ]
+        },
+        {
+          "heading": "Vijayanagara Empire (1336–1646)",
+          "color": "orange",
+          "points": [
+            "Founded by Harihara I and Bukka Raya (brothers) at Hampi on Tungabhadra; inspired by Vidyaranya (saint)",
+            "Four dynasties: Sangama → Saluva → Tuluva → Aravidu",
+            "Krishnadevaraya (1509–1529): Greatest ruler; Tuluva dynasty; conquered Raichur Doab; patronized Telugu literature; himself wrote Amuktamalyada (Telugu) and Jambavathi Kalyanam (Sanskrit)",
+            "Ashta Diggajas: 8 great Telugu poets at Krishnadevaraya's court; Allasani Peddana = 'Andhra Kavita Pitamaha'",
+            "Battle of Talikota (1565): Vijayanagara defeated by Deccan Sultanates coalition (Bijapur, Bidar, Ahmadnagar, Golconda); Rama Raya killed; Hampi sacked",
+            "Architecture: Dravidian style; Vittala Temple (stone chariot); Hazara Rama Temple; gopurams (gateway towers)"
+          ],
+          "alert": "⭐ Domingo Paes and Fernão Nunes: Portuguese travelers who visited Vijayanagara and gave detailed accounts. Hampi is now a UNESCO World Heritage Site (1986). Tungabhadra river = lifeline of Vijayanagara."
+        },
+        {
+          "heading": "Bhakti Movement",
+          "color": "blue",
+          "points": [
+            "Background: Reaction to caste rigidity, Brahmanical domination, and desire for direct personal devotion to God",
+            "South India pioneers (Alvars & Nayanmars): 6th–9th CE; Tamil devotional poetry",
+            "Ramanuja (1017–1137 CE): Vishishtadvaita (qualified non-dualism); devotion to Vishnu; opposed caste discrimination",
+            "Madhvacharya (1238–1317): Dvaita (dualism); devotion to Vishnu",
+            "Adi Shankaracharya (788–820 CE): Advaita Vedanta (non-dualism); Brahman is the only reality; established 4 mathas (Sringeri, Dwaraka, Puri, Badrinath)",
+            "Ramananda (14th–15th CE): Disciple of Ramanuja; preached in Hindi; accepted all castes; guru of Kabir, Raidas, Dhanna",
+            "Kabirdas (1440–1518): Weaver; nirguni bhakti; unity of Hinduism-Islam; Bijak; dohas; criticized rituals and caste",
+            "Guru Nanak (1469–1539): Founded Sikhism; Ik Onkar (one God); Japji Sahib; Guru Granth Sahib (compiled by Guru Arjan Dev)",
+            "Mirabai (1498–1546): Rajput princess; Krishna devotee; Meera ke Pad",
+            "Tukaram (1608–1649): Maharashtra; Abhangas; Warkari sect; devotion to Vitthal"
+          ],
+          "table": {
+            "headers": ["Saint", "Region", "Sect/Path"],
+            "rows": [
+              ["Shankaracharya", "Kerala → All India", "Advaita Vedanta"],
+              ["Ramanuja", "Tamil Nadu", "Vishishtadvaita, Vaishnavism"],
+              ["Ramananda", "UP", "Vaishnava Bhakti, all castes"],
+              ["Kabir", "Varanasi (UP)", "Nirguni Bhakti, Sant tradition"],
+              ["Guru Nanak", "Punjab", "Sikhism"],
+              ["Chaitanya Mahaprabhu", "Bengal", "Gaudiya Vaishnavism, Krishna bhakti"],
+              ["Mirabai", "Rajasthan", "Krishna Bhakti"],
+              ["Eknath / Tukaram", "Maharashtra", "Warkari (Vitthal devotion)"],
+              ["Shankaradeva", "Assam", "Ek Saran Nama Dharma, Vaishnavism"]
+            ]
+          }
+        },
+        {
+          "heading": "Mughal Empire — Babur to Akbar",
+          "color": "purple",
+          "points": [
+            "Babur (1526–1530): Descendant of Timur (father) and Genghis Khan (mother); from Fergana (Uzbekistan); defeated Ibrahim Lodi at Panipat I (1526); used gunpowder/artillery for first time in India; wrote Baburnama (autobiography in Chagatai Turkish)",
+            "Humayun (1530–1556 with interruption): Lost to Sher Shah Suri at Chausa (1539) and Kanauj (1540); exile in Persia 15 years; regained throne 1555; died falling from library steps; 'stumbled out of life as he stumbled through it' — Lane-Poole",
+            "Sher Shah Suri (1540–1545): Greatest Afghan ruler; Grand Trunk Road (Peshawar to Sonargaon); Rupee currency; Rohtas Fort; land revenue reforms (measurement + fixed rate); postal system (dak chowkis)",
+            "Akbar (1556–1605): Battle of Panipat II (1556) vs Hemu — Bairam Khan as regent; built Fatehpur Sikri; Navratnas; Din-i-Ilahi (1582); abolished Jizyah; Ibadat Khana (House of Worship) for religious debate; Sulh-i-Kul (peace with all)"
+          ],
+          "table": {
+            "headers": ["Akbar's Navratna", "Specialty"],
+            "rows": [
+              ["Birbal", "Wit, humor, confidant"],
+              ["Todar Mal", "Finance minister; land revenue reform"],
+              ["Abul Fazl", "Author of Ain-i-Akbari and Akbarnama"],
+              ["Faizi", "Persian poet; Abul Fazl's brother"],
+              ["Tansen", "Musician; Raga Miyan ki Malhar"],
+              ["Raja Man Singh", "Military commander"],
+              ["Raja Bhagwan Das", "Military general"],
+              ["Mulla Do Piaza", "Statesman/minister"],
+              ["Abd-ur-Rahim Khan-i-Khana", "Poet, military commander"]
+            ]
+          }
+        },
+        {
+          "heading": "Mughal Empire — Jahangir to Aurangzeb",
+          "color": "green",
+          "points": [
+            "Jahangir (1605–1627): 'Nur-ud-din Muhammad Jahangir'; married Nur Jahan (real power behind throne); patronized painting (Mansur — animal painter; Bichitr); Thomas Roe's embassy (1615) seeking trade rights",
+            "Shah Jahan (1628–1658): Golden age of Mughal architecture; Taj Mahal (built 1632–1653 in memory of Mumtaz Mahal); Red Fort (Delhi); Jama Masjid; Peacock Throne; Shah Jahan Masjid; Moti Masjid; war of succession — imprisoned by son Aurangzeb",
+            "Aurangzeb (1658–1707): Most controversial Mughal; reimposed Jizyah (1679); banned music and dance at court; Alamgir (world conqueror); annexed Bijapur (1686) and Golconda (1687); 25 years in Deccan against Marathas — 'the war that wrecked the Mughal empire'",
+            "Shivaji Maharaj: Founded Maratha kingdom; guerrilla warfare (ganimi kava); captured numerous forts; crowned at Raigad (1674) as Chhatrapati; Ashtapradhan (8-minister council)",
+            "Decline of Mughals: Aurangzeb's long Deccan wars, Nadir Shah's invasion (1739), Ahmed Shah Abdali's invasions, rise of Marathas, Sikhs, Jats"
+          ],
+          "alert": "⭐ Taj Mahal architects: Ustad Ahmad Lahauri (chief); 20,000 workers; 22 years to build; white marble from Makrana (Rajasthan). Aurangzeb's tomb at Khuldabad (Maharashtra) — simple and unadorned (per his wishes)."
+        },
+        {
+          "heading": "Sufi Movement",
+          "color": "orange",
+          "points": [
+            "Origin: Islamic mysticism; 'Sufi' from 'suf' (wool — coarse garment worn by mystics) or 'safa' (purity)",
+            "Core belief: Personal union with God through love and devotion; rejected formal rituals",
+            "Silsilas (Orders): Hereditary chains of masters (Pirs/Shaykhs) and disciples (Murids); khanqahs (hospices) were centers",
+            "Chishti Order: Most popular in India; Khwaja Moinuddin Chishti (Ajmer); Qutb-ud-din Bakhtiyar Kaki (Delhi); Farid-ud-din Ganj-i-Shakar (Pak Pattan — Punjab); Nizamuddin Auliya (Delhi)",
+            "Suhrawardi Order: Less popular; Abu Hafs Umar Suhrawardi; active in Punjab and Sindh",
+            "Qadiri Order: Abdul Qadir Gilani; Shah Badakhshani in India; Dara Shikoh a follower",
+            "Naqshbandi Order: Most orthodox; Sheikh Ahmad Sirhindi (opposed Akbar's Din-i-Ilahi); Baqi Billah in India",
+            "Influence: Broke caste barriers; used vernacular languages; qawwali (devotional music); contributed to Urdu literature"
+          ]
+        },
+        {
+          "heading": "Maratha Empire & Peshwas",
+          "color": "blue",
+          "points": [
+            "Shivaji (1627–1680): Born at Shivneri Fort; mother Jijabai; mentor Dadoji Kondadev; crowned 1674 at Raigad; Swarajya (self-rule) concept",
+            "Shivaji's administration: Ashtapradhan — Peshwa (PM), Amatya (finance), Sachiv (correspondence), Mantri (chronicles), Senapati (army chief), Sumant (foreign minister), Nyayadhish (justice), Panditrao (religious)",
+            "Battle of Pratapgad (1659): Shivaji killed Afzal Khan; turning point",
+            "Sambhaji (1680–1689): Shivaji's son; killed by Aurangzeb",
+            "Peshwa era: Balaji Vishwanath (1713 — first Peshwa); Baji Rao I (1720–1740 — greatest general; never lost a battle); Balaji Baji Rao (Nana Sahib) — peak Maratha expansion",
+            "Battle of Panipat III (1761): Maratha Confederacy defeated by Ahmed Shah Abdali (Afghan); Vishwasrao (Peshwa's son) and Bhau Saheb (commander) killed; 'Panipat that broke Maratha power'",
+            "British and Maratha Wars: 3 Anglo-Maratha Wars (1775–1818); 3rd war ended Peshwa rule"
+          ],
+          "alert": "⭐ Shivaji's navy: First organized naval force; Kanhoji Angre — greatest Maratha admiral. Shivaji used hill forts strategically — controlled 300+ forts. Revenue system: Chauth (1/4 of land revenue) and Sardeshmukhi (1/10 extra)."
+        }
+      ]
+    },
+
+    {
+      "topic_id": "modern",
+      "topic_name": "Modern India — British Rule",
+      "cards": [
+        {
+          "heading": "European Trading Companies in India",
+          "color": "blue",
+          "points": [
+            "Vasco da Gama: Reached Calicut (Kozhikode) May 1498; opened sea route via Cape of Good Hope; welcomed by Zamorin",
+            "Portuguese: Established first European trading post at Calicut; Goa captured by Albuquerque (1510); Diu (1535); Estado da India = Portuguese India; brought Christianity, introduced printing press",
+            "Dutch (VOC): Est. 1602; captured some Portuguese stations; main interest in SE Asia; defeated at Battle of Bedara (1759) by English",
+            "British East India Company (EIC): Chartered by Elizabeth I on 31 December 1600; first factory at Surat (1608); Fort St. George (Madras, 1639); Fort William (Calcutta, 1690); Bombay (gifted by Portuguese to British Crown 1661)",
+            "French (Compagnie des Indes): Est. 1664; Pondicherry (1673) headquarters; Dupleix — greatest French governor; lost Carnatic Wars to British",
+            "Danish: Tranquebar and Serampore (Srirampur); not significant commercially; missionaries (Bible translation)"
+          ],
+          "table": {
+            "headers": ["Company", "Est.", "First Settlement", "Fate"],
+            "rows": [
+              ["Portuguese", "1498", "Calicut, then Goa", "Goa merged with India 1961"],
+              ["British EIC", "1600", "Surat 1608", "Became dominant power"],
+              ["Dutch VOC", "1602", "Masulipatnam", "Left India after 1759"],
+              ["French EIC", "1664", "Surat, then Pondicherry", "Lost Carnatic Wars; Pondicherry merged 1962"],
+              ["Danish", "1616", "Tranquebar", "Sold to British 1845"]
+            ]
+          }
+        },
+        {
+          "heading": "Carnatic Wars & Expansion of British Power",
+          "color": "purple",
+          "points": [
+            "1st Carnatic War (1746–1748): French (Dupleix) vs British; French captured Madras; ended by Treaty of Aix-la-Chapelle; Madras returned to British",
+            "2nd Carnatic War (1749–1754): Robert Clive's defense of Arcot (1751) — turning point; British supported Muhammed Ali vs Chanda Sahib (French-backed)",
+            "3rd Carnatic War (1756–1763): Part of Seven Years War; Lally (French) vs Eyre Coote (British); Battle of Wandiwash (1760) — decisive British victory; Treaty of Paris 1763 — French restricted to 5 cities without military power",
+            "Battle of Plassey (1757): Clive defeated Siraj-ud-Daulah (Nawab of Bengal); helped by Mir Jafar (betrayal); established British dominance in Bengal",
+            "Black Hole of Calcutta (1756): Siraj-ud-Daulah imprisoned 146 British in a small cell; 123 died (disputed account)",
+            "Battle of Buxar (1764): British defeated joint forces of Mir Qasim, Nawab of Awadh, and Mughal Emperor Shah Alam II; more significant than Plassey — proved British military superiority",
+            "Dual Government in Bengal (1765–1772): EIC had diwani (revenue) rights; Nawab retained nizamat (administration); result: massive exploitation, Bengal Famine of 1770 (10 million died)"
+          ]
+        },
+        {
+          "heading": "Major British Policies & Reforms",
+          "color": "green",
+          "points": [
+            "Regulating Act 1773: First interference of British Parliament in EIC; Governor of Bengal became Governor-General; Warren Hastings = first GG",
+            "Pitt's India Act 1784: Dual control — Board of Control (political) + Court of Directors (commercial); political matters under Crown",
+            "Subsidiary Alliance (1798–1805, Lord Wellesley): Native ruler kept British troops and paid for them; ceded territory if unable to pay; surrendered control of foreign relations; princes became subordinate; adopted by Hyderabad, Mysore, Awadh, Maratha chiefs",
+            "Doctrine of Lapse (1848–1856, Lord Dalhousie): State without natural heir 'lapsed' to British; annexed: Satara (1848), Jaitpur, Sambalpur (1849), Baghat (1850), Udaipur (1852), Jhansi (1853), Nagpur (1854), Awadh (1856 — 'misgovernance')",
+            "Charter Act 1813: Ended EIC trade monopoly (except tea and China trade); missionaries allowed; ₹1 lakh for Indian education",
+            "Charter Act 1833: EIC became purely administrative body; Governor-General of Bengal became Governor-General of India (Lord William Bentinck = first)",
+            "Charter Act 1853: Last Charter Act; introduced competitive exam for ICS; legislative + executive functions separated"
+          ]
+        },
+        {
+          "heading": "Social Reforms & British Education Policy",
+          "color": "orange",
+          "points": [
+            "Sati Abolition Act 1829: Lord William Bentinck; campaigned by Raja Ram Mohan Roy; Brahmo Samaj (1828) founded by Roy",
+            "Widow Remarriage Act 1856: Lord Dalhousie; campaigned by Pandit Ishwar Chandra Vidyasagar",
+            "Female Infanticide Abolition Act 1870",
+            "Child Marriage Restraint Act (Sarda Act) 1929: Min age — girls 14, boys 18",
+            "Macaulay's Minute (1835): English medium education; 'filtration theory' — educate upper class who would educate lower; created 'Indian in blood and colour, British in taste and opinion'",
+            "Wood's Education Despatch 1854: 'Magna Carta of Indian education'; universities at Bombay, Calcutta, Madras (1857); vernacular education emphasized",
+            "Orientalists vs Anglicists debate: Orientalists (Sanskrit/Arabic learning) vs Anglicists (English education); Anglicists won with Macaulay"
+          ],
+          "alert": "⭐ Raja Ram Mohan Roy = 'Father of Modern India'; first Indian to use term 'Hinduism'; died in Bristol (England) 1833. Brahmo Samaj later split: Debendranath Tagore (Adi Brahmo Samaj) vs Keshab Chandra Sen (Brahmo Samaj of India)."
+        },
+        {
+          "heading": "Economic Impact of British Rule",
+          "color": "blue",
+          "points": [
+            "Drain of Wealth: Dadabhai Naoroji coined the term in 'Poverty and Un-British Rule in India' (1901); estimated drain at £200 million annually; later calculated by R.C. Dutt",
+            "De-industrialization: Indian handicrafts destroyed by cheap machine-made British goods + discriminatory tariffs; weavers, artisans ruined; 'reverse drain'",
+            "Land Revenue Systems: Permanent Settlement (Bengal 1793 — Cornwallis); Ryotwari (Madras and Bombay — Thomas Munro); Mahalwari (NW India, Punjab — Holt Mackenzie)",
+            "Famines under British: Great Bengal Famine 1770 (10 million); Orissa Famine 1866; Rajputana Famine 1869; Bihar Famine 1874; Great Famine 1876–78; Deccan Famine 1896–97; Bengal Famine 1943 (3 million)",
+            "Railways: First railway 1853 (Bombay–Thane, 34 km); by 1905 = 44,000 km; helped British drain resources, not Indian development",
+            "International trade: India became supplier of raw materials (cotton, jute, indigo, opium) and buyer of British manufactured goods"
+          ]
+        },
+        {
+          "heading": "Revolt of 1857 — First War of Independence",
+          "color": "purple",
+          "points": [
+            "Immediate cause: Enfield P-53 rifle with cartridges greased with cow and pig fat; soldiers had to bite the cartridge",
+            "Started: 29 March 1857 — Mangal Pandey at Barrackpore; 10 May 1857 — Sepoy Mutiny at Meerut",
+            "Spread: Delhi, Lucknow, Kanpur, Jhansi, Bareilly, Allahabad, Faizabad",
+            "Leaders: Bahadur Shah Zafar II (Delhi — nominal leader), Rani Lakshmibai (Jhansi — 'India's Joan of Arc'), Nana Sahib (Kanpur), Tantia Tope (Kanpur/Central India), Begum Hazrat Mahal (Lucknow), Bakht Khan (Delhi military commander), Kunwar Singh (Bihar)"
+          ],
+          "table": {
+            "headers": ["Cause Category", "Examples"],
+            "rows": [
+              ["Political", "Doctrine of Lapse, annexation of Awadh (1856), insult to Mughal dynasty"],
+              ["Economic", "Drain of wealth, destruction of artisans, heavy taxation"],
+              ["Social", "Interference in religion (widow remarriage act, missionary activity), Sati abolition"],
+              ["Military", "Unequal pay, service in distant lands, racial discrimination, cartridge issue"],
+              ["Ideological", "Rumor that bones of cows/pigs mixed in flour supplied to soldiers"]
+            ]
+          },
+          "alert": "⭐ Result of 1857: EIC rule ended; Crown rule began — Government of India Act 1858; Secretary of State for India created with 15-member Council; Viceroy replaced Governor-General; Queen Victoria's Proclamation promised equal treatment. Disraeli called it 'Sepoy Mutiny'; Savarkar — '1st War of Independence'; SN Sen — 'Mutiny'; RC Majumdar — 'neither first, nor national, nor war of independence'."
+        }
+      ]
+    },
+
+    {
+      "topic_id": "freedom",
+      "topic_name": "Freedom Struggle",
+      "cards": [
+        {
+          "heading": "Early Nationalism — Moderates (1885–1905)",
+          "color": "blue",
+          "points": [
+            "Indian National Congress founded: 28 December 1885; Bombay (Gokuldas Tejpal Sanskrit College); AO Hume (retired ICS), Dadabhai Naoroji, Dinshaw Wacha instrumental",
+            "First president: W.C. Bonnerjee; first session: Bombay (72 delegates)",
+            "Moderates' methods: Constitutional agitation, petitions, prayers, delegations to Britain; believed in British justice",
+            "Moderate leaders: Dadabhai Naoroji ('Grand Old Man of India'; MP in British Parliament 1892), Gopal Krishna Gokhale ('political guru of Gandhi'; Servants of India Society 1905), Pherozeshah Mehta, Surendranath Banerjee",
+            "Moderate demands: Expansion of legislative councils, separation of judiciary from executive, reduction of military expenditure, India Council reform",
+            "Moderate achievement: Created national consciousness, trained leaders, exposed British economic exploitation through data",
+            "INC in early years: 'a three-day tamasha' — Bal Gangadhar Tilak's criticism of Moderates' limited approach"
+          ]
+        },
+        {
+          "heading": "Extremists & Swadeshi Movement (1905–1918)",
+          "color": "orange",
+          "points": [
+            "Partition of Bengal (1905): Lord Curzon divided Bengal on 16 October 1905 (into Hindu-majority West Bengal + Muslim-majority East Bengal); 'divide and rule'; united Hindus and Muslims initially against it",
+            "Swadeshi Movement: Boycott of British goods; use of Indian goods; burning of foreign cloth",
+            "Bal-Pal-Lal: Bal Gangadhar Tilak (Pune), Bipin Chandra Pal (Bengal), Lala Lajpat Rai (Punjab) — extremist trio",
+            "Tilak's slogans: 'Swaraj is my birthright and I shall have it'; started Ganesh Chaturthi and Shivaji festivals as national events; Kesari and Mahratta newspapers",
+            "Annulment of Partition: 1911 — Bengal reunited; capital shifted from Calcutta to Delhi",
+            "Muslim League founded: 1906 at Dhaka; Aga Khan; separate electorate demand",
+            "Morley-Minto Reforms (1909): Introduced communal electorate for Muslims — 'poisonous in principle' according to Gokhale",
+            "Lucknow Pact (1916): Congress-League unity; joint demands for self-government; Congress accepted separate electorates temporarily"
+          ],
+          "alert": "⭐ Vande Mataram: Written by Bankim Chandra Chattopadhyay in 'Anandamath' (1882); set to music by Tagore; became anthem of Swadeshi Movement. Only first two stanzas adopted as national song (1950)."
+        },
+        {
+          "heading": "Gandhian Era — First Phase (1917–1922)",
+          "color": "green",
+          "points": [
+            "Gopal Krishna Gokhale invited Gandhi to return from South Africa; Gandhi agreed to observe India for one year before taking political positions",
+            "Champaran Satyagraha (1917): Against Tinkathia system (indigo planters forced farmers to cultivate 3/20 of land with indigo); Gandhi's first satyagraha in India; won partial concession",
+            "Kheda Satyagraha (1918): Revenue suspension for drought-affected peasants of Kheda (Gujarat); Gandhi won",
+            "Ahmedabad Mill Strike (1918): Gandhi's first hunger strike; on behalf of textile workers; settled with 35% wage increase",
+            "Rowlatt Act (1919): Black Act; allowed detention without trial for 2 years; Gandhi called for hartal (strike)",
+            "Jallianwala Bagh Massacre (13 April 1919): General Dyer ordered firing on unarmed crowd (Baisakhi gathering); 379 killed (official), ~1000+ according to Congress; Hunter Committee inquiry; Udham Singh avenged in 1940 (shot O'Dwyer in London)",
+            "Khilafat Movement (1920): Gandhi allied with Muslim leaders Ali brothers (Muhammad Ali & Shaukat Ali) to protest dismemberment of Ottoman Caliphate; Hindu-Muslim unity",
+            "Non-Cooperation Movement (1920–1922): Boycott of British goods, courts, educational institutions, government jobs; return of titles; Gandhi stopped it after Chauri Chaura (4 Feb 1922 — mob burned police station, 22 police killed)"
+          ]
+        },
+        {
+          "heading": "Civil Disobedience & Round Table Conferences (1928–1934)",
+          "color": "purple",
+          "points": [
+            "Simon Commission (1927): All-British; 'Simon Go Back' protests; Lala Lajpat Rai lathi-charged in Lahore; died November 1928; Bhagat Singh, Rajguru, Sukhdev — arrested for killing Saunders",
+            "Nehru Report (1928): Motilal Nehru's report proposing Dominion Status (not Poorna Swaraj); Jinnah rejected communal proposals",
+            "Poorna Swaraj Resolution: 31 December 1929, Lahore session, Jawaharlal Nehru as Congress president; 26 January 1930 declared as Poorna Swaraj Day (Independence Day)",
+            "Dandi March / Salt Satyagraha: 12 March – 6 April 1930; Gandhi walked 241 miles from Sabarmati Ashram to Dandi (Gujarat coast); broke salt law on 6 April; 'most creative act of disobedience'",
+            "Civil Disobedience Movement: Spread across India; forest laws broken, liquor shops picketed",
+            "Round Table Conferences: 1st (1930) — Congress absent; 2nd (1931) — Gandhi-Irwin Pact led to Gandhi attending; 3rd (1932) — Congress absent (Gandhi arrested)",
+            "Gandhi-Irwin Pact (1931): 'March to talks' — civil disobedience suspended; political prisoners released; Congress allowed to make salt for personal use; Gandhi agreed to attend 2nd RTC",
+            "Communal Award (1932): Ramsay MacDonald — separate electorates for Dalits; Gandhi's fast-unto-death; Poona Pact (September 1932) — reserved seats for Dalits within Hindu electorate (not separate)"
+          ]
+        },
+        {
+          "heading": "Quit India Movement & Final Phase (1939–1947)",
+          "color": "orange",
+          "points": [
+            "Congress and WW2: Congress demanded independence declaration before cooperation; Viceroy Linlithgow declared India at war without consulting Congress; Congress ministries resigned (1939)",
+            "Pakistan Resolution (1940): Lahore; Muslim League demanded separate state for Muslims",
+            "August Offer (1940): Linlithgow offered expanded Viceroy's council, promise of Dominion Status after war — rejected by Congress",
+            "Cripps Mission (1942): Stafford Cripps; offered Dominion Status after war + right of provinces to secede; Gandhi called it 'post-dated cheque on a failing bank'; rejected",
+            "Quit India Movement (8 August 1942): Bombay session; 'Do or Die'; Gandhi's speech at Gowalia Tank Maidan; Gandhi and all leaders arrested the very next day; underground leadership — JP Narayan, Ram Manohar Lohia, Aruna Asaf Ali; parallel governments at Ballia, Satara, Midnapore",
+            "INA (Indian National Army): Rash Behari Bose organized; Subhas Chandra Bose took over 1943; 'Jai Hind'; 'Delhi Chalo'; INA Trials (1945) — Red Fort; made Nehru don barrister's gown again; public sympathy with INA",
+            "Cabinet Mission Plan (1946): 3-tier federation (Centre–Groupings–Provinces); Congress accepted with reservations; Jinnah and League accepted, then rejected; interim government formed",
+            "Independence & Partition: Mountbatten Plan (3 June 1947); Indian Independence Act (18 July 1947); 15 August 1947 — Independence; partition into India + Pakistan (Radcliffe Line)"
+          ]
+        },
+        {
+          "heading": "Revolutionary Nationalism",
+          "color": "blue",
+          "points": [
+            "Bal Gangadhar Tilak (1856–1920): Founded Home Rule League (1916); defended himself in Sedition trial 1897 and 1908; wrote 'Gita Rahasya' in prison (Mandalay); died 1 August 1920 — Gandhi called his death 'a debt we cannot repay'",
+            "Lala Lajpat Rai (1865–1928): 'Punjab Kesari'; founded Punjab National Bank; wrote 'Unhappy India'; died after police lathi charge",
+            "Bipin Chandra Pal (1858–1932): 'Father of revolutionary thoughts'; advocated passive resistance",
+            "Aurobindo Ghosh (1872–1950): Alipore bomb case (1908); spiritual retreat to Pondicherry; founded Auroville",
+            "HSRA (Hindustan Socialist Republican Association): Founded 1928 by Bhagat Singh, Chandrashekhar Azad, Sukhdev, Rajguru; opposed to non-violence",
+            "Bhagat Singh (1907–1931): Lahore Conspiracy Case; threw bombs in Central Assembly (8 April 1929) — 'to make the deaf hear'; hanged 23 March 1931; youngest martyr at 23",
+            "Chandrashekhar Azad (1906–1931): 'Azad' (never arrested alive); shot himself at Alfred Park, Allahabad on 27 February 1931",
+            "Subhas Chandra Bose (1897–1945?): 'Netaji'; elected Congress president 1938; resigned over differences; founded Forward Bloc; escaped house arrest; reached Germany then Japan; reorganized INA; 'Give me blood, I will give you freedom'; disappeared after plane crash near Taipei (1945)"
+          ],
+          "alert": "⭐ Kakori Conspiracy (1925): Ram Prasad Bismil, Ashfaqullah Khan, Roshan Singh, Rajendra Lahiri — looted British treasury train near Kakori; hanged. Chittagong Armoury Raid (1930): Surya Sen (Master Da) led attack on British armoury in Chittagong."
+        },
+        {
+          "heading": "Peasant, Tribal & Workers' Movements",
+          "color": "green",
+          "points": [
+            "Indigo Revolt (1859–60): Bengal; against forced indigo cultivation; first major peasant revolt; Nil Darpan (play by Dinabandhu Mitra) exposed conditions",
+            "Deccan Riots (1875): Poona and Ahmadnagar; peasants against moneylenders; looted records (loan bonds)",
+            "Pabna Agrarian League (1873): Bengal; against zamindars' illegal levies",
+            "Mappila Rebellion (Moplah Revolt, 1921): Kerala; Muslim peasants against Hindu landlords; turned violent; suppressed brutally",
+            "Eka Movement (1921–22): UP; peasants under Madari Pasi; against high rents",
+            "Bardoli Satyagraha (1928): Gujarat; under Vallabhbhai Patel; against 30% land revenue increase; revenue suspended; Bardoli women gave Patel title 'Sardar'",
+            "Tebhaga Movement (1946): Bengal; sharecroppers demanded 2/3 share (from 1/2) of crop",
+            "Workers' Movements: All India Trade Union Congress (AITUC) — 1920; Bombay Mill Strike 1919; Jamshedpur Strike 1920; influence of Marxism after Russian Revolution 1917",
+            "Tribal Revolts: Santhal Hul (1855), Munda Rebellion (Birsa Munda 1899–1900 — 'Ulgulan'), Rampa Rebellion (1879–80), Kol Rebellion (1831–32)"
+          ]
+        },
+        {
+          "heading": "Women in Freedom Struggle",
+          "color": "purple",
+          "points": [
+            "Annie Besant (1847–1933): Irish-British; Theosophical Society; founded Home Rule League (1916); first woman president of INC (1917)",
+            "Sarojini Naidu (1879–1949): 'Nightingale of India'; poet; participated in Non-Cooperation, Civil Disobedience, Quit India; first Indian woman president of INC (1925); first woman Governor (UP, 1947)",
+            "Kasturba Gandhi (1869–1944): Participated in all of Gandhi's campaigns; died in Aga Khan Palace (Pune) during Quit India imprisonment",
+            "Aruna Asaf Ali (1909–1996): 'Heroine of Quit India'; hoisted Congress flag at Gowalia Tank 1942 when leaders arrested; underground leader",
+            "Usha Mehta (1920–2000): Operated secret Congress Radio during Quit India (1942)",
+            "Rani Lakshmibai (1828–1858): Fought British in 1857; died at Gwalior; 'Khoob ladi mardani woh to Jhansi wali rani thi' — Subhadra Kumari Chauhan",
+            "Captain Lakshmi Sahgal: Commanded Rani Jhansi Regiment of INA"
+          ]
+        }
+      ]
+    },
+
+    {
+      "topic_id": "post-independence",
+      "topic_name": "Post-Independence India",
+      "cards": [
+        {
+          "heading": "Integration of Princely States",
+          "color": "blue",
+          "points": [
+            "On 15 August 1947: 562 princely states; given choice to join India, Pakistan, or remain independent",
+            "Sardar Vallabhbhai Patel (Iron Man of India) + V.P. Menon (Secretary, States Ministry) — masterminded integration",
+            "Most states joined voluntarily; Standstill Agreement signed first, then Instrument of Accession",
+            "Problematic cases: Junagarh (Muslim ruler, Hindu majority — people's vote for India), Hyderabad (Muslim Nizam, Hindu majority — Police action 'Operation Polo' September 1948), Kashmir (Hindu Maharaja Hari Singh, Muslim majority — acceded on 26 Oct 1947 after Pakistani tribal raid; Instrument of Accession signed)",
+            "Kashmir accession conditions: Accession of defence, foreign affairs, communications; rest with state; basis of Art. 370 (now abrogated 5 August 2019)",
+            "Goa, Daman, Diu: Portuguese colonies; liberated by military action ('Operation Vijay') December 1961; 37th amendment — added to India",
+            "Pondicherry: French colony; transferred to India November 1954"
+          ],
+          "alert": "⭐ Sardar Patel called 'Bismarck of India' for unifying princely states, just as Bismarck unified Germany. Patel also directed the drafting of Part V (Union) and Part VI (States) of the Constitution."
+        },
+        {
+          "heading": "Constitutional Development & First Government",
+          "color": "purple",
+          "points": [
+            "Constituent Assembly: Elected by Provincial Assemblies; 299 members; Cabinet Mission Plan; first met 9 December 1946; Dr. Rajendra Prasad = President",
+            "Drafting Committee: Chairman Dr. B.R. Ambedkar; 7 members including Alladi Krishnaswami Ayyar, T.T. Krishnamachari, N. Gopalaswami Ayyangar",
+            "Constitution adopted 26 November 1949; came into force 26 January 1950",
+            "First General Election (1951–52): 489 seats; universal adult franchise for first time in India; INC won 364 seats; voter turnout 45.7%; Sukumar Sen = first Chief Election Commissioner",
+            "Jawaharlal Nehru: First PM; served 16 years, 9 months (longest); non-aligned movement (Panchsheel — 5 principles of peaceful coexistence); planned economic development; socialist pattern",
+            "Panchsheel (1954): Signed with China; 5 principles — mutual respect, non-aggression, non-interference, equality, peaceful coexistence; violated by China in 1962",
+            "Sino-Indian War (1962): China attacked; India unprepared; lost Aksai Chin (Ladakh); massive national humiliation; Nehru broken; died May 1964"
+          ]
+        },
+        {
+          "heading": "Five Year Plans & Economic Development",
+          "color": "green",
+          "points": [
+            "Planning Commission: Est. 1950; PM as chairman; Five Year Plans",
+            "1st FYP (1951–56): Focus on agriculture; Bhakra Nangal, Hirakud dams; exceeded targets",
+            "2nd FYP (1956–61): Mahalanobis model; heavy industry (Bhilai, Durgapur, Rourkela steel plants); Rapid Industrialization strategy",
+            "3rd FYP (1961–66): War years (1962, 1965); drought; failed badly; 3 Annual Plans (Plan Holiday 1966–69)",
+            "4th FYP (1969–74): Green Revolution consolidation; Garibi Hatao (Indira Gandhi slogan)",
+            "Green Revolution (late 1960s): M.S. Swaminathan; HYV seeds (IR-8 rice, Lerma Rojo wheat); Punjab, Haryana, western UP; India achieved food self-sufficiency by 1970s; negative: regional disparity, pesticide overuse, groundwater depletion",
+            "LPG Reforms (1991): Liberalisation, Privatisation, Globalisation; PM Narasimha Rao + Finance Minister Manmohan Singh; India opened economy during BOP crisis",
+            "NITI Aayog (2015): Replaced Planning Commission; not a constitutional body; PM as chairman; think tank + policy making"
+          ]
+        },
+        {
+          "heading": "Major Wars & Foreign Policy",
+          "color": "orange",
+          "points": [
+            "Indo-Pak War 1947–48: Over Kashmir; ceasefire 1 January 1949; UN Resolution for plebiscite (never held)",
+            "Sino-Indian War 1962: 20 October – 21 November 1962; India lost Aksai Chin; Henderson Brooks Report (classified)",
+            "Indo-Pak War 1965: Over Rann of Kutch and Kashmir; ended with Tashkent Declaration (10 January 1966) — PM Shastri died in Tashkent",
+            "Indo-Pak War 1971: Bangladesh Liberation War; India helped Mukti Bahini; 16 December 1971 — Pakistani Army surrendered (90,000 POWs); Shimla Agreement (1972) — bilateral resolution of Kashmir",
+            "Pokhran Nuclear Test I (1974): Smiling Buddha; PV Narasimha Rao government test; India became 6th nuclear power",
+            "Pokhran II (1998): Operation Shakti; Vajpayee government; 5 tests; India declared nuclear state; US sanctions",
+            "Kargil War (1999): Pakistani soldiers occupied peaks in Kargil; 'Operation Vijay' — India recaptured; Pervez Musharraf responsible; India won diplomatically and militarily"
+          ]
+        },
+        {
+          "heading": "Political History — Key Events",
+          "color": "blue",
+          "points": [
+            "States Reorganisation Act 1956: Linguistic reorganisation; Fazl Ali Commission (SRC 1953); created 14 states + 6 UTs",
+            "Emergency (1975–1977): Article 352; Indira Gandhi declared on 25 June 1975 citing internal disturbance; Allahabad HC declared her election void; press censorship, mass arrests (JP Narayan, Vajpayee, Advani); 21-point programme; ended March 1977; Janata Party won",
+            "Operation Blue Star (1984): Army stormed Golden Temple (Amritsar) to flush out Jarnail Singh Bhindranwale and militants (June 1984); Indira Gandhi assassinated by Sikh bodyguards (31 October 1984); anti-Sikh riots",
+            "Rajiv Gandhi era (1984–89): 73rd and 74th Amendment (Panchayati Raj, Municipalities); Bofors scandal; Punjab accord (1985); Assam accord (1985); Sri Lanka (IPKF 1987–89)",
+            "Mandal Commission (1992): OBC reservations implemented by VP Singh; 27% reservation for OBCs; Mandal agitation; counter-agitation — 'Kamandal' (BJP's Ayodhya movement)",
+            "Ayodhya (1992): Babri Masjid demolished 6 December 1992; riots; Supreme Court verdict 2019 — Ram Lalla gets the disputed land"
+          ]
+        }
+      ]
+    },
+
+    {
+      "topic_id": "culture",
+      "topic_name": "Art & Culture of India",
+      "cards": [
+        {
+          "heading": "Rock-Cut Architecture & Ancient Temples",
+          "color": "orange",
+          "points": [
+            "Ajanta Caves (Maharashtra): 30 Buddhist caves; 2nd BCE – 7th CE; paintings depicting Jataka tales and Buddha's life; UNESCO WHS",
+            "Ellora Caves (Maharashtra): 34 caves — Buddhist (12) + Hindu (17) + Jain (5); 6th–11th CE; Kailasha Temple (cave 16) — largest monolithic rock-cut structure; UNESCO WHS",
+            "Elephanta Caves (near Mumbai): 7 caves; mainly Hindu; Trimurti of Shiva (5m high) — most famous sculpture; UNESCO WHS",
+            "Mahabalipuram (Tamil Nadu): 7th–8th CE; Pallava period; Shore Temple; Pancha Rathas (5 monolithic temples); Arjuna's Penance (world's largest rock relief); UNESCO WHS",
+            "Badami Cave Temples (Karnataka): Chalukya period; 6th CE; 4 caves (3 Hindu + 1 Jain)",
+            "Udayagiri Caves (MP): Gupta period; Varaha panel (boar incarnation of Vishnu); most famous Gupta sculpture"
+          ]
+        },
+        {
+          "heading": "Temple Architecture Styles",
+          "color": "blue",
+          "table": {
+            "headers": ["Style", "Region", "Features", "Examples"],
+            "rows": [
+              ["Nagara (North Indian)", "North India", "Curvilinear shikhara (tower), amalaka (disc) on top, square sanctum", "Khajuraho, Konark, Lingaraj (Bhubaneswar), Somnath"],
+              ["Dravida (South Indian)", "South India", "Pyramidal vimana (tower), gopuram (gateway), large walled complex", "Brihadeeswarar (Thanjavur), Meenakshi (Madurai), Shore Temple"],
+              ["Vesara (Mixed)", "Deccan", "Combination of North + South styles", "Hoysaleswara (Halebid), Belur, Pattadakal"],
+              ["Hemadpanthi", "Maharashtra", "Black basalt; small compact temples", "Many temples in Vidarbha"]
+            ]
+          },
+          "alert": "⭐ Brihadeeswarar Temple (Thanjavur, 1010 CE) — built by Rajaraja Chola I; 66m high vimana; shadow of the shikhara does not fall on ground at noon; made entirely from granite (not locally available); UNESCO. Khajuraho (MP) — UNESCO; Chandela dynasty; erotic sculptures on outer walls, devotional inside."
+        },
+        {
+          "heading": "Indian Painting Traditions",
+          "color": "purple",
+          "points": [
+            "Prehistoric: Bhimbetka rock paintings (30,000+ years old); animals, hunting scenes, dancing",
+            "Ajanta Paintings: Tempera technique; two types — Jataka stories + scenes from Buddha's life; artists unknown",
+            "Mughal Painting: Persian + Indian fusion; portrait painting emerged; Mir Sayyid Ali and Abd al-Samad (first Mughal painters under Humayun); Abdus Samad, Daswant, Basawan (under Akbar); Abu'l Hasan (under Jahangir — Squirrel painting)",
+            "Rajput Painting: Sub-schools — Mewar, Marwar, Bundi-Kota, Amber-Jaipur; Krishna-Radha themes; Ragamala paintings (musical modes depicted visually)",
+            "Pahari Painting: Himachal Pradesh hills; Basohli (bold colors), Kangra (delicate, romantic); 17th–19th CE",
+            "Madhubani (Mithila) Painting: Bihar; geometric patterns; done by women; natural colors; on walls and floors; now on paper and canvas; GI tag",
+            "Warli Painting: Maharashtra tribal; geometric shapes (circles, triangles); white on red/brown; scenes of daily life; rice paste on mud walls",
+            "Kalamkari: Andhra Pradesh; hand-painted or block-printed; Srikalahasti style (freehand) + Machilipatnam style (block print); mythological scenes"
+          ]
+        },
+        {
+          "heading": "Indian Music — Classical Traditions",
+          "color": "green",
+          "points": [
+            "Natya Shastra: Bharata Muni; 2nd BCE – 2nd CE; encyclopedic treatise on performing arts; basis of Indian classical music, dance, drama",
+            "Hindustani (North Indian) Classical Music: Influenced by Persian/Mughal; khyal, thumri, dhrupad, dadra; associated with ragas and talas",
+            "Carnatic (South Indian) Classical Music: Purer Dravidian tradition; Trinity — Tyagaraja, Muthuswami Dikshitar, Syama Sastri (19th CE Thanjavur)",
+            "Tansen: Greatest Mughal court musician; Darbari Kanada raga, Miyan ki Malhar; disciple of Haridas Swami",
+            "Ustad Bismillah Khan: Shehnai; Bharat Ratna 2001",
+            "Pandit Ravi Shankar: Sitar; introduced Indian music to West; Bharat Ratna 1999",
+            "M.S. Subbulakshmi: First musician to get Bharat Ratna (1998); Carnatic vocalist",
+            "Ghazal: Urdu poetry set to music; Mirza Ghalib (poetry); Mehdi Hassan, Jagjit Singh, Ghulam Ali (singers)"
+          ]
+        },
+        {
+          "heading": "Classical Dance Forms",
+          "color": "orange",
+          "table": {
+            "headers": ["Dance", "State", "Origin/Period", "Features"],
+            "rows": [
+              ["Bharatanatyam", "Tamil Nadu", "Ancient; Devadasi tradition; revived 20th C by Rukmini Devi Arundale", "Nritta + Nritya + Natya; Abhinaya (expression)"],
+              ["Kathak", "UP/Rajasthan", "Temple dance; Mughal court influence; 16th-18th CE", "Fast footwork, spins, expressive facial mime"],
+              ["Odissi", "Odisha", "Temple tradition; sculptures of Konark & Puri; suppressed under British", "Tribhanga posture; lyrical, graceful"],
+              ["Kathakali", "Kerala", "17th CE; Raja of Kottarakkara", "Elaborate makeup + costumes; 12+ hours epics from Ramayana/Mahabharata"],
+              ["Kuchipudi", "Andhra Pradesh", "17th CE village (Kuchipudi) Brahmin men played all roles", "Fast tempo, dramatic; Tarangam (brass plate dance)"],
+              ["Manipuri", "Manipur", "Ancient; Vaishnavite influence; Rabindranath Tagore introduced to mainland India", "Gentle, circular; no vigorous footwork"],
+              ["Mohiniyattam", "Kerala", "16th CE; revived by Vallathol Narayana Menon", "Lasya (feminine grace); white costume with gold border"],
+              ["Sattriya", "Assam", "15th CE by Shankaradeva; monastery-based", "Vaishnavite themes; till 2000 only male monks performed"]
+            ]
+          }
+        },
+        {
+          "heading": "Literature — Ancient to Medieval",
+          "color": "blue",
+          "points": [
+            "Sanskrit Literature: Vedas (1500–500 BCE); Epics — Ramayana (Valmiki, 24,000 verses) and Mahabharata (Vyasa, 100,000 verses, world's longest epic)",
+            "Sangam Literature (300 BCE – 300 CE): Tamil; 2381 poems; 8 anthologies (Ettuthokai) + 10 idylls; themes: love (akam) and war (puram)",
+            "Pali Literature: Tripitaka (Buddhist canon) — Vinaya Pitaka, Sutta Pitaka, Abhidhamma Pitaka",
+            "Prakrit Literature: Jain texts; Agamas",
+            "Kalidasa (4th–5th CE): Sanskrit's greatest poet and playwright; Meghadutam, Raghuvamsham, Kumarasambhavam, Shakuntalam, Vikramorvaishiyam, Malavikagnimitram",
+            "Banabhatta (7th CE): Harshacharita (Harsha's biography), Kadambari (first novel in Sanskrit)",
+            "Medieval vernacular literature: Kabir (dohas), Tulsidas (Ramcharitmanas — Awadhi), Surdas (Sursagar — Braj Bhasha), Mirabai (Padas — Rajasthani/Braj)",
+            "Amir Khusro (1253–1325): 'Parrot of India'; invented khayal, tarana, qawwali; introduced sitar and tabla; wrote in Persian and Hindawi; disciple of Nizamuddin Auliya"
+          ],
+          "alert": "⭐ Mahabharata: 18 parvas (books) + Harivamsa; 'What is here is found elsewhere, what is not here is nowhere'. Ramayana: 7 kandas. Both classified as Itihasa (history/epic), not Purana. 18 Puranas — Bhagavata Purana most popular."
+        },
+        {
+          "heading": "UNESCO World Heritage Sites & GI Tags",
+          "color": "purple",
+          "table": {
+            "headers": ["UNESCO WHS", "State", "Year", "Category"],
+            "rows": [
+              ["Taj Mahal", "UP", "1983", "Cultural"],
+              ["Ajanta Caves", "Maharashtra", "1983", "Cultural"],
+              ["Ellora Caves", "Maharashtra", "1983", "Cultural"],
+              ["Mahabodhi Temple Complex", "Bihar", "2002", "Cultural"],
+              ["Kaziranga National Park", "Assam", "1985", "Natural"],
+              ["Sundarbans NP", "West Bengal", "1987", "Natural"],
+              ["Western Ghats", "Multi-state", "2012", "Natural"],
+              ["Rani-ki-Vav (Patan)", "Gujarat", "2014", "Cultural"],
+              ["Nalanda Mahavihara", "Bihar", "2016", "Cultural"],
+              ["Dholavira", "Gujarat", "2021", "Cultural"],
+              ["Hoysala Sacred Ensembles", "Karnataka", "2023", "Cultural"],
+              ["Moidams (Charaideo)", "Assam", "2024", "Cultural"]
+            ]
+          },
+          "alert": "⭐ India has 43 UNESCO World Heritage Sites (2024): 35 Cultural + 7 Natural + 1 Mixed. Moidams (Ahom mound-burial sites) is the latest addition (2024). GI Tag: Darjeeling Tea (first GI tag in India 2004), Basmati Rice, Alphonso Mango, Kanchipuram Silk, Kolhapuri Chappal."
+        }
+      ]
+    }
+  ]
+}

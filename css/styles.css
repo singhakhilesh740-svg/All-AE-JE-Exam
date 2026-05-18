@@ -693,3 +693,37 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
   margin-bottom: 10px; outline: none;
 }
 .auth-input:focus { border-color: #3b82f6; }
+
+/* ===== Sub-subject cards (GS deeper navigation) ===== */
+.subject-card {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--surface); padding: 16px;
+  border-radius: var(--radius); border: 1px solid var(--border);
+  text-align: left; width: 100%; transition: all 0.15s;
+}
+.subject-card:active { transform: scale(0.98); border-color: var(--accent); background: var(--surface-2); }
+.subject-icon { font-size: 28px; flex-shrink: 0; }
+.subject-info { flex: 1; min-width: 0; }
+.subject-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.subject-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+.subject-arrow { font-size: 20px; color: var(--text-dim); flex-shrink: 0; }
+.subjects-main { flex: 1; padding: 12px 14px; overflow-y: auto; }
+.subjects-list { display: flex; flex-direction: column; gap: 8px; }
+
+/* ===== Notes topic bar (sticky) ===== */
+.notes-topic-bar {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px 14px 8px; background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 5;
+}
+.notes-main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+#notesTopicBar { display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px 14px 8px; background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 5; }
+.notes-container { padding: 14px; display: flex; flex-direction: column; gap: 20px; }
+
+/* Tile tile-gs hover color */
+.tile-gs:active   { border-color: rgba(6,182,212,0.5); }
+.tile-hindi:active { border-color: rgba(244,63,94,0.5); }

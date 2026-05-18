@@ -1,27 +1,61 @@
-// gs-notes.js — General Studies & Hindi Notes Module
-// Handles loading, rendering, topic filtering for GS and Hindi notes
+// gs-notes.js — General Studies & Hindi Notes Module v2
+// Architecture: each GS subject has its own JSON file for detailed notes
+// Flow: Home → GS Subject → Sub-Subject List → Notes (topic chips + cards)
 
-const GS_VERSION  = 'v1-gs-notes-1';
-const HI_VERSION  = 'v1-hi-notes-1';
-let _gsCache  = null;
-let _hiCache  = null;
+const HI_VERSION = 'v1-hi-notes-1';
+
+// Per-subject cache map
+const _subjectCache = {};
+
+// Subject → JSON file mapping
+const GS_SUBJECT_FILES = {
+  'history':         { file: 'data/gs-history.json',   version: 'v2-hist-1' },
+  'polity':          { file: 'data/gs-polity.json',    version: 'v1-pol-1'  },
+  'geography':       { file: 'data/gs-geography.json', version: 'v1-geo-1'  },
+  'general-science': { file: 'data/gs-science.json',   version: 'v1-sci-1'  },
+};
+
+// Fallback: load from combined gs-notes.json if no dedicated file
+const GS_COMBINED_VERSION = 'v1-gs-notes-1';
+let _gsCombinedCache = null;
 
 // ── Loaders ────────────────────────────────────────────────────────────────
 
 export async function loadGSNotes(subjectId) {
-  try {
-    if (!_gsCache) {
-      const r = await fetch('data/gs-notes.json?v=' + GS_VERSION, { cache: 'no-cache' });
+  // Return from per-subject cache if available
+  if (_subjectCache[subjectId]) return _subjectCache[subjectId];
+
+  const mapping = GS_SUBJECT_FILES[subjectId];
+  if (mapping) {
+    try {
+      const r = await fetch(mapping.file + '?v=' + mapping.version, { cache: 'no-cache' });
       if (!r.ok) throw new Error('HTTP ' + r.status);
-      _gsCache = await r.json();
+      const data = await r.json();
+      _subjectCache[subjectId] = data;
+      return data;
+    } catch (e) {
+      console.error('[gs-notes] dedicated file load error for', subjectId, e);
+      // fall through to combined
     }
-    return _gsCache[subjectId] || null;
+  }
+
+  // Fallback: combined file
+  try {
+    if (!_gsCombinedCache) {
+      const r = await fetch('data/gs-notes.json?v=' + GS_COMBINED_VERSION, { cache: 'no-cache' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      _gsCombinedCache = await r.json();
+    }
+    const data = _gsCombinedCache[subjectId] || null;
+    if (data) _subjectCache[subjectId] = data;
+    return data;
   } catch (e) {
-    console.error('[gs-notes] load error:', e);
+    console.error('[gs-notes] combined load error:', e);
     return null;
   }
 }
 
+let _hiCache = null;
 export async function loadHindiNotes(subjectId) {
   try {
     if (!_hiCache) {
@@ -44,7 +78,7 @@ export async function loadHindiNotes(subjectId) {
  * @param {string} topicBarId  — DOM id of the topic bar container
  * @param {string} placeholderId
  */
-export function renderGSNotesContent(data, mainId, topicBarId, placeholderId) {
+export function renderGSNotesContent(data, mainId, topicBarId, placeholderId, filterTopicId) {
   const main        = document.getElementById(mainId);
   const topicBar    = document.getElementById(topicBarId);
   const placeholder = document.getElementById(placeholderId);
@@ -89,7 +123,37 @@ export function renderGSNotesContent(data, mainId, topicBarId, placeholderId) {
   });
 
   main.appendChild(wrap);
-  _applyFilter(wrap, 'all');
+  // If a specific topic was requested, auto-activate it
+  const initialFilter = filterTopicId || 'all';
+  _applyFilter(wrap, initialFilter);
+
+  // Sync the chip bar to match the initial filter
+  if (filterTopicId) {
+    const bar = document.getElementById(topicBarId);
+    if (bar) {
+      bar.querySelectorAll('.topic-chip').forEach(c => {
+        c.classList.toggle('active', c.textContent.trim() === 'All'
+          ? false
+          : (data.topics || []).find(t => t.id === filterTopicId && t.name === c.textContent.trim()) != null
+        );
+      });
+      // Mark the matching chip active; fallback: keep All active
+      let found = false;
+      bar.querySelectorAll('.topic-chip').forEach(c => {
+        if (!found) {
+          const matchTopic = (data.topics || []).find(t => t.id === filterTopicId);
+          if (matchTopic && c.textContent.trim() === matchTopic.name) {
+            c.classList.add('active');
+            found = true;
+          }
+        }
+      });
+      if (!found) {
+        const allChip = bar.querySelector('.topic-chip');
+        if (allChip) allChip.classList.add('active');
+      }
+    }
+  }
 }
 
 // ── Internal helpers ───────────────────────────────────────────────────────

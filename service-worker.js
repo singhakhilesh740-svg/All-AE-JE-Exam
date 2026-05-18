@@ -11,6 +11,7 @@ const STATIC_ASSETS = [
 const NETWORK_FIRST = [
   'notes-combined.json',
   'gs-notes.json',
+  'gs-history.json',
   'hindi-notes.json',
   '/js/app.js',
   '/js/notes.js',

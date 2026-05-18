@@ -31,6 +31,49 @@ let quizSource          = 'home';  // where to go back from quiz
 let quizRoute           = null;    // 'practice' | 'pyq' | 'bookmarks'
 
 // ── General Studies Subjects ───────────────────────────────────────────────
+// Sub-subject definitions for each GS subject
+const GS_SUB_SUBJECTS = {
+  'history': [
+    { id: 'ancient',          icon: '🏺', name: 'Ancient India',          description: 'Prehistoric, Indus Valley, Vedic, Maurya, Gupta' },
+    { id: 'medieval',         icon: '🏰', name: 'Medieval India',          description: 'Delhi Sultanate, Vijayanagara, Mughal, Bhakti-Sufi' },
+    { id: 'modern',           icon: '🏛️', name: 'Modern India',            description: 'European arrival, British rule, Social reforms, 1857' },
+    { id: 'freedom',          icon: '🇮🇳', name: 'Freedom Struggle',        description: 'Moderates, Extremists, Gandhi era, Quit India, INA' },
+    { id: 'post-independence',icon: '🗺️', name: 'Post-Independence',        description: 'Integration, Constitution, Wars, Five Year Plans' },
+    { id: 'culture',          icon: '🎭', name: 'Art & Culture',           description: 'Architecture, Painting, Dance, Music, Literature' },
+  ],
+  'polity': [
+    { id: 'constitution',     icon: '📜', name: 'Constitution',            description: 'Making, Preamble, Schedules, Features borrowed' },
+    { id: 'fundamental-rights', icon: '⚖️', name: 'Fundamental Rights',   description: 'Articles 12-35, Writs, Restrictions' },
+    { id: 'dpsp',             icon: '📋', name: 'DPSP & Duties',           description: 'Directive Principles, Fundamental Duties' },
+    { id: 'parliament',       icon: '🏛️', name: 'Parliament',              description: 'Lok Sabha, Rajya Sabha, Sessions, Bills' },
+    { id: 'executive',        icon: '👤', name: 'Executive',               description: 'President, PM, Council of Ministers, Governor' },
+    { id: 'judiciary',        icon: '⚔️', name: 'Judiciary',              description: 'Supreme Court, High Courts, Writs, Doctrines' },
+    { id: 'federalism',       icon: '🗺️', name: 'Federalism',              description: 'Centre-State, Three Lists, Finance Commission' },
+    { id: 'elections',        icon: '🗳️', name: 'Elections & Bodies',      description: 'ECI, CAG, UPSC, Constitutional Commissions' },
+    { id: 'amendments',       icon: '✏️', name: 'Amendments',              description: 'Key amendments 1st to 105th' },
+    { id: 'emergency',        icon: '🚨', name: 'Emergency Provisions',    description: 'National, President Rule, Financial Emergency' },
+  ],
+  'geography': [
+    { id: 'physical',         icon: '⛰️', name: 'Physical Features',       description: 'Mountains, Plateaus, Plains, Passes' },
+    { id: 'climate',          icon: '🌦️', name: 'Climate',                 description: 'Monsoon, Climate zones, El Nino, Seasons' },
+    { id: 'rivers',           icon: '🌊', name: 'Rivers & Drainage',       description: 'Himalayan rivers, Peninsular rivers, Lakes' },
+    { id: 'soils',            icon: '🌱', name: 'Soils & Vegetation',      description: 'Soil types, Natural vegetation zones' },
+    { id: 'resources',        icon: '⛏️', name: 'Natural Resources',       description: 'Minerals, Energy, Forest resources' },
+    { id: 'agriculture',      icon: '🌾', name: 'Agriculture',             description: 'Crops, Seasons, Revolutions, MSP' },
+    { id: 'industry',         icon: '🏭', name: 'Industry',                description: 'Major industries, Industrial corridors' },
+    { id: 'population',       icon: '👥', name: 'Population & Census',     description: 'Census 2011, Density, Sex ratio, Literacy' },
+    { id: 'world',            icon: '🌍', name: 'World Geography',         description: 'Continents, Oceans, International boundaries' },
+  ],
+  'general-science': [
+    { id: 'physics',          icon: '⚡', name: 'Physics',                 description: 'Laws of motion, Light, Electricity, Sound' },
+    { id: 'chemistry',        icon: '🧪', name: 'Chemistry',               description: 'Periodic table, Acids-Bases, Compounds' },
+    { id: 'biology',          icon: '🧬', name: 'Biology',                 description: 'Cell, Human body, Classification, Plants' },
+    { id: 'technology',       icon: '🚀', name: 'Science & Technology',    description: 'ISRO missions, Inventions, Defence' },
+    { id: 'health',           icon: '🏥', name: 'Health & Disease',        description: 'Vitamins, Deficiencies, Communicable diseases' },
+    { id: 'space',            icon: '🌌', name: 'Space Science',           description: 'Solar system, Planets, Space missions' },
+  ],
+};
+
 const GS_SUBJECTS = [
   { id: 'polity',          icon: '⚖️',  name: 'Polity',           description: 'Constitution, Parliament, Judiciary, Elections' },
   { id: 'geography',       icon: '🗺️',  name: 'Geography',        description: 'Physical, Climate, Rivers, Resources, World' },
@@ -695,9 +738,39 @@ function renderGSSubjectList(containerId, subjects, onSelect) {
   });
 }
 
+// Current GS subject and sub-subject state
+let _currentGSSubject = null;
+let _currentGSSubId   = null;
+
 async function openGSSubject(subj) {
-  $('gsNotesTitle').textContent = subj.icon + ' ' + subj.name;
-  $('gsNotesSub').textContent   = 'Topic-wise notes';
+  _currentGSSubject = subj;
+
+  const subSubs = GS_SUB_SUBJECTS[subj.id];
+  if (subSubs && subSubs.length) {
+    // Show sub-subject list screen
+    $('gsSubSubjectTitle').textContent = subj.icon + ' ' + subj.name;
+    $('gsSubSubjectSub').textContent   = 'Choose a section';
+    renderGSSubjectList('gsSubSubjectList', subSubs, (sub) => openGSSubSubject(subj, sub));
+    showScreen('gsSubSubjectsScreen');
+  } else {
+    // No sub-subjects — load notes directly
+    await _loadAndShowGSNotes(subj.id, subj.icon + ' ' + subj.name, 'gsSubjectsScreen');
+  }
+}
+
+async function openGSSubSubject(parentSubj, sub) {
+  _currentGSSubId = sub.id;
+  await _loadAndShowGSNotes(
+    parentSubj.id,
+    sub.icon + ' ' + sub.name,
+    'gsSubSubjectsScreen',
+    sub.id   // scroll to / filter to this topic
+  );
+}
+
+async function _loadAndShowGSNotes(subjectId, title, backScreen, filterTopicId) {
+  $('gsNotesTitle').textContent = title;
+  $('gsNotesSub').textContent   = 'Topic-wise detailed notes';
   $('gsPlaceholder').style.display = 'block';
   $('gsPlaceholder').querySelector('h3').textContent = 'Loading…';
 
@@ -705,15 +778,21 @@ async function openGSSubject(subj) {
   if (old) old.remove();
   $('gsTopicBar').innerHTML = '';
 
+  // Wire back button dynamically
+  const backBtn = $('gsNotesBackBtn');
+  if (backBtn) {
+    backBtn.onclick = () => showScreen(backScreen);
+  }
+
   showScreen('gsNotesScreen');
 
-  const data = await loadGSNotes(subj.id);
+  const data = await loadGSNotes(subjectId);
   if (!data) {
     $('gsPlaceholder').querySelector('h3').textContent = 'Notes coming soon';
     return;
   }
   $('gsPlaceholder').style.display = 'none';
-  renderGSNotesContent(data, 'gsNotesMain', 'gsTopicBar', 'gsPlaceholder');
+  renderGSNotesContent(data, 'gsNotesMain', 'gsTopicBar', 'gsPlaceholder', filterTopicId);
 }
 
 async function openHindiSubject(subj) {
