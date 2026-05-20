@@ -1,24 +1,451 @@
-{
-  "name": "All AE/JE Civil Exams",
-  "short_name": "AE/JE Civil",
-  "description": "All State AE/JE Civil Engineering Exam Preparation \u2014 PYQ, Practice, Notes",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>All AE/JE Civil Exams</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== LOGIN SCREEN ===== -->
+  <!-- ===== LOGIN SCREEN ===== -->
+  <div id="loginScreen" class="screen active">
+    <div class="login-card">
+      <div class="logo">📘</div>
+      <h1>All AE/JE Civil Exams</h1>
+      <p class="tagline">All State AE/JE Civil Engineering Exams</p>
+      <p class="subtitle">PYQ · Practice · Notes · Bookmarks</p>
+
+      <!-- Step 0: Login or Register choice -->
+      <div id="authChoice">
+        <button id="goLoginBtn" class="btn-primary-auth" style="background:#1e40af">🔐 Login</button>
+        <button id="goRegisterBtn" class="btn-primary-auth" style="background:#065f46;margin-top:0">📝 New Registration</button>
+      </div>
+
+      <!-- ── LOGIN FLOW ── -->
+      <!-- Login: choose method -->
+      <div id="loginOptions" style="display:none">
+        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Login to your account</p>
+        <button id="googleLoginBtn" class="btn-google">
+          <svg width="18" height="18" viewBox="0 0 18 18">
+            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
+            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+          </svg>
+          Login with Google
+        </button>
+        <div class="divider"><span>or</span></div>
+        <button id="phoneLoginBtn" class="btn-phone">📱 Login with Mobile OTP</button>
+        <button id="backToChoice1" class="btn-ghost">← Back</button>
+      </div>
+
+      <!-- Login: enter mobile -->
+      <div id="loginPhoneStep" style="display:none">
+        <p class="auth-step-label">Enter your registered mobile number</p>
+        <div class="phone-input-row">
+          <span class="country-code">+91</span>
+          <input id="loginMobileInput" type="tel" inputmode="numeric" maxlength="10"
+            placeholder="10-digit mobile number" autocomplete="tel"/>
+        </div>
+        <button id="loginSendOtpBtn" class="btn-primary-auth">Send OTP</button>
+        <button id="backToLoginOptions" class="btn-ghost">← Back</button>
+      </div>
+
+      <!-- Login: verify OTP -->
+      <div id="loginOtpStep" style="display:none">
+        <p class="auth-step-label">OTP sent to <strong id="loginOtpSentTo" style="color:#60a5fa"></strong></p>
+        <div class="otp-row">
+          <input id="loginOtpInput" type="tel" inputmode="numeric" maxlength="6"
+            placeholder="6-digit OTP" autocomplete="one-time-code"/>
+        </div>
+        <button id="loginVerifyOtpBtn" class="btn-primary-auth">Verify & Login</button>
+        <button id="loginResendOtpBtn" class="btn-ghost" style="font-size:12px">Resend OTP</button>
+        <button id="backToLoginPhone" class="btn-ghost">← Change Number</button>
+      </div>
+
+      <!-- ── REGISTER FLOW ── -->
+      <!-- Register: Step 1 — Name + Email + Mobile -->
+      <div id="regStep1" style="display:none">
+        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Create your account</p>
+        <input id="regName" type="text" placeholder="Full Name *" maxlength="60" class="auth-input"/>
+        <input id="regEmail" type="email" placeholder="Email ID *" class="auth-input"/>
+        <div class="phone-input-row">
+          <span class="country-code">+91</span>
+          <input id="regMobile" type="tel" inputmode="numeric" maxlength="10"
+            placeholder="Mobile number *" autocomplete="tel"/>
+        </div>
+        <button id="regSendOtpBtn" class="btn-primary-auth">Send OTP to Verify Mobile</button>
+        <button id="backToChoice2" class="btn-ghost">← Back</button>
+      </div>
+
+      <!-- Register: Step 2 — OTP -->
+      <div id="regOtpStep" style="display:none">
+        <p class="auth-step-label">OTP sent to <strong id="regOtpSentTo" style="color:#60a5fa"></strong><br/>
+          <span style="color:#64748b;font-size:11px">Enter OTP to verify and complete registration</span>
+        </p>
+        <div class="otp-row">
+          <input id="regOtpInput" type="tel" inputmode="numeric" maxlength="6"
+            placeholder="6-digit OTP" autocomplete="one-time-code"/>
+        </div>
+        <button id="regVerifyOtpBtn" class="btn-primary-auth" style="background:#065f46">Verify & Register</button>
+        <button id="regResendOtpBtn" class="btn-ghost" style="font-size:12px">Resend OTP</button>
+        <button id="backToRegStep1" class="btn-ghost">← Back</button>
+      </div>
+
+      <p class="footer-note" id="loginFooter">Only registered users can access the app</p>
+      <div id="authMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
+    </div>
+  </div>
+
+  <!-- ===== HOME SCREEN ===== -->
+  <div id="homeScreen" class="screen">
+    <header class="app-header">
+      <div class="header-left">
+        <h2>🏠 Home</h2>
+        <span class="header-sub">All State AE/JE Civil Exams</span>
+      </div>
+      <div class="header-right">
+        <img id="userAvatar" class="avatar" alt="" />
+        <button id="logoutBtn" class="btn-icon" title="Logout">⏻</button>
+      </div>
+    </header>
+    <div class="welcome-strip">
+      <p>Welcome, <span id="userName">student</span> 👋</p>
+    </div>
+    <main class="home-main">
+      <!-- 4 big feature tiles -->
+      <div class="home-grid">
+
+        <button class="home-tile tile-notes" id="homeNotes">
+          <div class="tile-icon">📝</div>
+          <div class="tile-title">Notes</div>
+          <div class="tile-sub">Subject-wise study material</div>
+        </button>
+
+        <button class="home-tile tile-practice" id="homePractice">
+          <div class="tile-icon">✏️</div>
+          <div class="tile-title">Imp Practice</div>
+          <div class="tile-sub">Important questions by subject</div>
+        </button>
+
+        <button class="home-tile tile-pyq" id="homePYQ">
+          <div class="tile-icon">📜</div>
+          <div class="tile-title">PYQ</div>
+          <div class="tile-sub">Exam → Subject → Questions</div>
+        </button>
+
+        <button class="home-tile tile-bookmarks" id="homeBookmarks">
+          <div class="tile-icon">⭐</div>
+          <div class="tile-title">Bookmarks</div>
+          <div class="tile-sub">Your saved questions</div>
+        </button>
+
+        <button class="home-tile tile-gs" id="homeGS">
+          <div class="tile-icon">🌍</div>
+          <div class="tile-title">General Studies</div>
+          <div class="tile-sub">Polity · History · Geography · Science</div>
+        </button>
+
+        <button class="home-tile tile-hindi" id="homeHindi">
+          <div class="tile-icon">📖</div>
+          <div class="tile-title">Hindi</div>
+          <div class="tile-sub">व्याकरण · साहित्य · कवि</div>
+        </button>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== NOTES: SUBJECT LIST ===== -->
+  <div id="notesSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>📝 Notes</h2>
+        <span class="header-sub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="notesSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== NOTES: CONTENT SCREEN ===== -->
+  <div id="notesContentScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="notesSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="notesContentTitle">Notes</h2>
+        <span class="header-sub" id="notesContentSub">Subject notes</span>
+      </div>
+    </header>
+    <main class="notes-main" id="notesMain">
+      <div id="notesTopicBar" class="notes-topic-bar"></div>
+      <div id="notesPlaceholder" class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>Notes coming soon</h3>
+        <p>Notes for this subject will be added here.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== PRACTICE: SUBJECT LIST ===== -->
+  <div id="practiceSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>✏️ Imp Practice</h2>
+        <span class="header-sub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="practiceSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== PYQ: EXAM LIST ===== -->
+  <div id="pyqExamsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>📜 PYQ</h2>
+        <span class="header-sub">Pick an exam</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pyqExamList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== PYQ: MODE SELECT (Year-wise / Subject-wise) ===== -->
+  <div id="pyqModeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pyqExamsScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="pyqModeTitle">📜 PYQ</h2>
+        <span class="header-sub">How do you want to browse?</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-pyq" id="pyqModeYear">
+          <div class="tile-icon">📅</div>
+          <div class="tile-title">Exam & Year-wise</div>
+          <div class="tile-sub">Browse by exam year</div>
+        </button>
+        <button class="home-tile tile-notes" id="pyqModeSubject">
+          <div class="tile-icon">📖</div>
+          <div class="tile-title">Subject-wise</div>
+          <div class="tile-sub">Browse by subject</div>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== PYQ: YEAR LIST ===== -->
+  <div id="pyqYearsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="pyqYearsTitle">📅 PYQ — Exam & Year-wise</h2>
+        <span class="header-sub" id="pyqYearsSub">Pick an exam paper</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pyqYearList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== PYQ: SUBJECT LIST ===== -->
+  <div id="pyqSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="pyqSubjectsTitle">PYQ</h2>
+        <span class="header-sub" id="pyqSubjectsSub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pyqSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== BOOKMARKS SCREEN ===== -->
+  <div id="bookmarksScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>⭐ Bookmarks</h2>
+        <span class="header-sub">Your saved questions</span>
+      </div>
+    </header>
+    <main class="bookmarks-main">
+      <button id="practiceBookmarksBtn" class="practice-all-btn hidden">Practice all bookmarks</button>
+      <div id="bookmarksList" class="bookmarks-list"></div>
+      <div id="bookmarksEmpty" class="empty-state hidden">
+        <div class="empty-icon">⭐</div>
+        <h3>No bookmarks yet</h3>
+        <p>Tap the ☆ icon during a quiz to save questions here.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== QUIZ SCREEN ===== -->
+  <div id="quizScreen" class="screen">
+    <header class="quiz-header">
+      <button id="quizBackBtn" class="btn-icon">←</button>
+      <div class="quiz-header-center">
+        <div class="quiz-progress-bar">
+          <div id="quizProgressFill" class="quiz-progress-fill"></div>
+        </div>
+        <span id="quizProgress" class="quiz-progress-text">0 / 0</span>
+      </div>
+      <button id="quizBookmarkBtn" class="btn-icon" title="Bookmark" data-marked="0">☆</button>
+    </header>
+
+    <!-- Topic chips in quiz -->
+    <div id="quizTopicBar" class="topic-bar-scroll"></div>
+
+    <main class="quiz-main">
+      <div class="quiz-meta-row">
+        <div class="quiz-meta">
+          <span id="quizExamTag" class="hidden">—</span>
+          <span id="quizSubjectTag">—</span>
+          <span id="quizYearTag">—</span>
+        </div>
+        <button id="quizGridBtn" class="btn-grid" title="Jump to question">⊞</button>
+      </div>
+      <div id="quizSrNo" class="quiz-sr-no">Q.1</div>
+      <h2 id="quizQuestion" class="quiz-question">Loading...</h2>
+      <div id="quizOptions" class="quiz-options"></div>
+      <div id="quizExplanation" class="quiz-explanation hidden">
+        <h4>Explanation</h4>
+        <p id="quizExplanationText"></p>
+      </div>
+    </main>
+
+    <footer class="quiz-footer">
+      <button id="quizPrevBtn" class="btn-secondary">← Prev</button>
+      <button id="quizNextBtn" class="btn-primary">Next →</button>
+    </footer>
+  </div>
+
+  <!-- QUESTION JUMP PANEL -->
+  <div id="jumpPanel" class="jump-panel hidden">
+    <div class="jump-panel-inner">
+      <div class="jump-panel-header">
+        <span class="jump-panel-title">Jump to Question</span>
+        <button id="jumpCloseBtn" class="btn-icon">✕</button>
+      </div>
+      <div id="jumpGrid" class="jump-grid"></div>
+    </div>
+  </div>
+
+
+  <!-- ===== GENERAL STUDIES: SUBJECT LIST ===== -->
+  <div id="gsSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>🌍 General Studies</h2>
+        <span class="header-sub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="gsSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+
+  <!-- ===== GS: SUB-SUBJECT LIST (e.g. History → Ancient, Medieval…) ===== -->
+  <div id="gsSubSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="gsSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="gsSubSubjectTitle">History</h2>
+        <span class="header-sub" id="gsSubSubjectSub">Choose a period</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="gsSubSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== GS NOTES CONTENT ===== -->
+  <div id="gsNotesScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon" id="gsNotesBackBtn">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="gsNotesTitle">General Studies</h2>
+        <span class="header-sub" id="gsNotesSub">Notes</span>
+      </div>
+    </header>
+    <main class="notes-main" id="gsNotesMain">
+      <div id="gsTopicBar" class="notes-topic-bar"></div>
+      <div id="gsPlaceholder" class="empty-state">
+        <div class="empty-icon">🌍</div>
+        <h3>Notes loading…</h3>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== HINDI: SUBJECT LIST ===== -->
+  <div id="hindiSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>📖 Hindi</h2>
+        <span class="header-sub">Pick a section</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="hindiSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== HINDI NOTES CONTENT ===== -->
+  <div id="hindiNotesScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="hindiSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2 id="hindiNotesTitle">Hindi</h2>
+        <span class="header-sub" id="hindiNotesSub">Notes</span>
+      </div>
+    </header>
+    <main class="notes-main" id="hindiNotesMain">
+      <div id="hindiTopicBar" class="notes-topic-bar"></div>
+      <div id="hindiPlaceholder" class="empty-state">
+        <div class="empty-icon">📖</div>
+        <h3>Notes loading…</h3>
+      </div>
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/db.js"></script>
+  <script type="module" src="js/quiz.js"></script>
+  <script type="module" src="js/subjects.js"></script>
+  <script type="module" src="js/exams.js"></script>
+  <script type="module" src="js/notes.js"></script>
+  <script type="module" src="js/gs-notes.js"></script>
+  <script type="module" src="js/app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').catch(() => {});
+      });
     }
-  ]
-}
+  </script>
+</body>
+</html>

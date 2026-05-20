@@ -1,22 +1,90 @@
-// firebase-config.js
-// Firebase project: ae-exam-app
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
-  authDomain: "ae-exam-app.firebaseapp.com",
-  projectId: "ae-exam-app",
-  storageBucket: "ae-exam-app.firebasestorage.app",
-  messagingSenderId: "101353507688",
-  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+// quiz.js — Quiz engine. Pure logic.
+let state = {
+  questions: [],
+  currentIndex: 0,
+  selectedIndex: null,
+  answered: false,
+  bookmarked: new Set()
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+export function startQuiz(questions) {
+  state.questions = questions;
+  state.currentIndex = 0;
+  state.selectedIndex = null;
+  state.answered = false;
+}
 
-export { app, auth, db, googleProvider };
+export function getCurrent() {
+  return state.questions[state.currentIndex] || null;
+}
+
+export function getProgress() {
+  return {
+    current: state.currentIndex + 1,
+    total: state.questions.length
+  };
+}
+
+export function selectOption(index) {
+  if (state.answered) return null;
+  state.selectedIndex = index;
+  state.answered = true;
+  const q = getCurrent();
+  return {
+    isCorrect: index === q.answer,
+    correctIndex: q.answer
+  };
+}
+
+export function next() {
+  if (state.currentIndex < state.questions.length - 1) {
+    state.currentIndex++;
+    state.selectedIndex = null;
+    state.answered = false;
+    return true;
+  }
+  return false;
+}
+
+export function prev() {
+  if (state.currentIndex > 0) {
+    state.currentIndex--;
+    state.selectedIndex = null;
+    state.answered = false;
+    return true;
+  }
+  return false;
+}
+
+export function isBookmarked(qId) {
+  return state.bookmarked.has(qId);
+}
+
+export function toggleBookmark(qId) {
+  if (state.bookmarked.has(qId)) {
+    state.bookmarked.delete(qId);
+    return false;
+  }
+  state.bookmarked.add(qId);
+  return true;
+}
+
+// Replace the active question set (used by topic filter chip inside quiz)
+export function resetToQuestions(questions) {
+  state.questions = questions;
+  state.currentIndex = 0;
+  state.selectedIndex = null;
+  state.answered = false;
+}
+
+export function getAllQuestions() {
+  return state.questions;
+}
+
+export function jumpTo(index) {
+  if (index >= 0 && index < state.questions.length) {
+    state.currentIndex = index;
+    state.selectedIndex = null;
+    state.answered = false;
+  }
+}
