@@ -21,7 +21,7 @@ const cache = {
 // ─── Questions ────────────────────────────────────────────────────────────────
 
 export async function fetchQuestions(opts = {}) {
-  const { exam, subject = null, type = null, maxCount = 500, force = false } = opts;
+  const { exam, subject = null, type = null, maxCount = 15000, force = false } = opts;
   if (!exam) { console.error('fetchQuestions: exam is required'); return []; }
 
   const cacheKey = `${exam}:${subject || 'all'}:${type || 'all'}`;
@@ -66,7 +66,7 @@ export async function fetchQuestions(opts = {}) {
 // Fetch practice questions across ALL exams (not locked to one exam)
 // Automatically includes any exam added to exams.js — no changes needed here
 export async function fetchPracticeQuestions(opts = {}) {
-  const { subject = null, maxCount = 3000, force = false } = opts;
+  const { subject = null, maxCount = 10000, force = false } = opts;
   const { EXAMS } = await import('./exams.js');
   const EXAM_IDS = EXAMS.map(e => e.id);
 
