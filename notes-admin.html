@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Notes Admin — All AE/JE Civil</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
+    .container{max-width:960px;margin:0 auto}
+    h1{color:#10b981;font-size:22px;margin-bottom:4px}
+    .sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
+    .panel{background:#1e293b;padding:18px;border-radius:12px;margin-bottom:14px;border:1px solid #334155}
+    .panel-title{font-size:11px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+    label{font-size:13px;color:#94a3b8;display:block;margin-bottom:4px;margin-top:10px}
+    label:first-child{margin-top:0}
+    select,input[type=text]{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:14px;font-family:inherit}
+    select:focus,input:focus{outline:none;border-color:#10b981}
+    textarea{width:100%;background:#0a1122;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:12px;font-family:'Courier New',monospace;font-size:12.5px;resize:vertical;line-height:1.6;min-height:260px}
+    textarea:focus{outline:none;border-color:#10b981}
+    .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    button{padding:9px 16px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;transition:opacity .15s}
+    button:active{opacity:.8}
+    .btn-primary{background:#10b981;color:#022c22}
+    .btn-secondary{background:#334155;color:#f1f5f9}
+    .btn-danger{background:#ef4444;color:#fff}
+    .btn-blue{background:#1e3a5f;color:#93c5fd;border:1px solid #3b82f6}
+    .btn-amber{background:#f59e0b;color:#1f2937}
+    .hidden{display:none!important}
+    code{background:#0f172a;padding:2px 6px;border-radius:4px;font-size:11px;color:#10b981}
+    /* Log */
+    .log{background:#0a1122;padding:12px;border-radius:8px;border:1px solid #064e3b;font-family:'Courier New',monospace;font-size:12px;max-height:200px;overflow-y:auto;white-space:pre-wrap;line-height:1.6;margin-top:10px}
+    .ok{color:#10b981}.err{color:#ef4444}.warn{color:#f59e0b}.info{color:#94a3b8}
+    /* Progress */
+    .progress-wrap{background:#0f172a;border-radius:4px;height:8px;margin-top:10px;overflow:hidden}
+    .progress-fill{background:#10b981;height:8px;border-radius:4px;width:0%;transition:width .3s}
+    /* Login */
+    .login-wrap{text-align:center;padding:50px 20px}
+    .login-wrap p{color:#94a3b8;margin-bottom:20px;font-size:15px}
+    /* Subject grid */
+    .subj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-top:8px}
+    .subj-card{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:10px 12px;cursor:pointer;transition:all .15s}
+    .subj-card:hover{border-color:#10b981}
+    .subj-card.selected{border-color:#10b981;background:rgba(16,185,129,.08)}
+    .subj-name{font-size:13px;font-weight:600;color:#f1f5f9}
+    .subj-id{font-size:11px;color:#64748b;font-family:'Courier New',monospace;margin-top:2px}
+    .subj-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;margin-top:4px;font-weight:700}
+    .badge-has{background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+    .badge-empty{background:rgba(100,116,139,.15);color:#64748b;border:1px solid #334155}
+    /* Card preview */
+    .cards-preview{display:flex;flex-direction:column;gap:10px;margin-top:10px;max-height:400px;overflow-y:auto}
+    .note-card{border-radius:10px;padding:14px;border-left:4px solid}
+    .note-card.purple{background:rgba(139,92,246,.08);border-color:#8b5cf6}
+    .note-card.blue{background:rgba(59,130,246,.08);border-color:#3b82f6}
+    .note-card.green{background:rgba(16,185,129,.08);border-color:#10b981}
+    .note-card.amber{background:rgba(245,158,11,.08);border-color:#f59e0b}
+    .note-card.red{background:rgba(239,68,68,.08);border-color:#ef4444}
+    .note-card.cyan{background:rgba(6,182,212,.08);border-color:#06b6d4}
+    .note-card.default{background:rgba(100,116,139,.08);border-color:#64748b}
+    .card-heading{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:8px}
+    .card-formula{background:#0f172a;border-radius:6px;padding:8px 10px;margin-bottom:6px}
+    .formula-label{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+    .formula-text{font-family:'Courier New',monospace;font-size:12px;color:#e2e8f0;white-space:pre-wrap}
+    .card-point{font-size:12px;color:#cbd5e1;line-height:1.6;padding:2px 0 2px 10px;border-left:2px solid rgba(255,255,255,.1);margin-bottom:3px}
+    /* Section header */
+    .section-header{background:#0f172a;border-radius:8px;padding:10px 14px;margin-bottom:6px;border:1px solid #334155}
+    .section-topic{font-size:12px;font-weight:700;color:#f59e0b;margin-bottom:2px}
+    .section-count{font-size:11px;color:#64748b}
+    /* Stats row */
+    .stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .stat{background:#0f172a;padding:8px 14px;border-radius:8px;text-align:center;border:1px solid #334155;flex:1;min-width:80px}
+    .stat-num{font-size:20px;font-weight:700;color:#10b981}
+    .stat-lbl{font-size:10px;color:#64748b;margin-top:2px}
+    /* Existing notes list */
+    .notes-list{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto;margin-top:8px}
+    .notes-row{display:flex;align-items:center;justify-content:space-between;background:#0f172a;padding:8px 12px;border-radius:8px;border:1px solid #1e293b}
+    .notes-row-info{font-size:12px}
+    .notes-row-subj{color:#f1f5f9;font-weight:600}
+    .notes-row-meta{color:#64748b;font-size:11px;margin-top:1px}
+    .tab-bar{display:flex;gap:6px;margin-bottom:14px}
+    .tab{padding:8px 16px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#94a3b8;font-weight:600;font-size:13px;cursor:pointer}
+    .tab.active{border-color:#10b981;color:#10b981;background:rgba(16,185,129,.08)}
+    .info-box{border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.7;margin-bottom:10px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);color:#6ee7b7}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>📝 Notes Admin Panel</h1>
+  <p class="sub">Upload · Preview · Manage subject notes via Firestore</p>
+
+  <!-- LOGIN -->
+  <div id="loginPanel" class="panel login-wrap">
+    <p>Sign in with admin Google account to manage notes.</p>
+    <button class="btn-primary" id="loginBtn">🔐 Login with Google</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainPanel" class="hidden">
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab active" data-tab="upload">⬆️ Upload Notes</button>
+      <button class="tab" data-tab="manage">📋 Manage Existing</button>
+      <button class="tab" data-tab="template">📄 JSON Template</button>
+    </div>
+
+    <!-- ══════════ UPLOAD TAB ══════════ -->
+    <div id="tab-upload">
+
+      <!-- Step 1: Subject -->
+      <div class="panel">
+        <div class="panel-title">Step 1 — Select Subject</div>
+        <div class="subj-grid" id="subjGrid"></div>
+      </div>
+
+      <!-- Step 2: Paste JSON -->
+      <div class="panel" id="step2Panel">
+        <div class="panel-title">Step 2 — Paste Notes JSON</div>
+        <div class="info-box">
+          Format: Array of <strong>sections</strong>, each with <code>topic_id</code>, <code>topic_name</code>, and <code>cards[]</code>.<br>
+          Each card has: <code>heading</code>, <code>color</code> (purple/blue/green/amber/red/cyan), <code>points[]</code>, <code>formulas[]</code>.<br>
+          See <strong>Template</strong> tab for full example.
+        </div>
+        <div style="font-size:12px;color:#64748b;margin-bottom:8px">
+          Selected: <span id="selectedSubjName" style="color:#10b981;font-weight:700">—</span>
+          &nbsp;|&nbsp; Subject ID: <code id="selectedSubjId">—</code>
+        </div>
+        <textarea id="jsonInput" placeholder='[
+  {
+    "topic_id": 0,
+    "topic_name": "Cement",
+    "cards": [
+      {
+        "heading": "OPC COMPOUNDS",
+        "color": "purple",
+        "points": ["C₃S gives early strength", "C₂S gives late strength"],
+        "formulas": [{"label": "Strength Order", "text": "C₃S > C₂S > C₃A > C₄AF"}]
+      }
+    ]
+  }
+]'></textarea>
+        <div class="btn-row">
+          <button class="btn-secondary" id="validateBtn">✅ Validate & Preview</button>
+          <button class="btn-primary hidden" id="uploadBtn">⬆️ Save to Firestore</button>
+          <button class="btn-danger hidden" id="replaceBtn">🔄 Replace Existing</button>
+        </div>
+        <div class="progress-wrap hidden" id="progressWrap">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="log hidden" id="uploadLog"></div>
+      </div>
+
+      <!-- Step 3: Preview -->
+      <div class="panel hidden" id="previewPanel">
+        <div class="panel-title">Step 3 — Preview</div>
+        <div class="stats" id="previewStats"></div>
+        <div class="cards-preview" id="cardsPreview"></div>
+      </div>
+
+    </div><!-- /tab-upload -->
+
+    <!-- ══════════ MANAGE TAB ══════════ -->
+    <div id="tab-manage" class="hidden">
+
+      <!-- Download panel -->
+      <div class="panel">
+        <div class="panel-title">⬇️ Download Notes JSON</div>
+        <div class="info-box" style="margin-bottom:10px">
+          Download existing notes as JSON → edit on your PC → re-upload via Upload tab.
+        </div>
+        <label>Select Subject</label>
+        <select id="downloadSubjSel"></select>
+        <div class="btn-row" style="margin-top:10px">
+          <button class="btn-amber" id="downloadOneBtn">⬇️ Download Selected Subject</button>
+          <button class="btn-blue" id="downloadAllBtn">⬇️ Download ALL Subjects</button>
+        </div>
+        <div class="log hidden" id="downloadLog"></div>
+      </div>
+
+      <!-- Existing list -->
+      <div class="panel">
+        <div class="panel-title">Existing Notes in Firestore</div>
+        <div class="btn-row" style="margin-bottom:10px">
+          <button class="btn-blue" id="refreshNotesBtn">🔄 Refresh List</button>
+        </div>
+        <div class="notes-list" id="notesList">
+          <div style="color:#64748b;font-size:13px;padding:10px">Click Refresh to load existing notes.</div>
+        </div>
+      </div>
+
+      <!-- Delete panel -->
+      <div class="panel">
+        <div class="panel-title">Delete Notes</div>
+        <label>Select Subject to Delete</label>
+        <select id="deleteSubjSel"></select>
+        <div class="btn-row" style="margin-top:10px">
+          <button class="btn-danger" id="deleteNotesBtn">🗑️ Delete Notes for Subject</button>
+        </div>
+        <div class="log hidden" id="deleteLog"></div>
+      </div>
+    </div><!-- /tab-manage -->
+
+    <!-- ══════════ TEMPLATE TAB ══════════ -->
+    <div id="tab-template" class="hidden">
+      <div class="panel">
+        <div class="panel-title">JSON Format Reference</div>
+        <div class="info-box" style="margin-bottom:12px">
+          Copy this template and fill in your notes data. Each <strong>section</strong> = one topic. Each <strong>card</strong> = one concept block.
+        </div>
+        <textarea id="templateText" style="min-height:500px;font-size:12px" readonly></textarea>
+        <div class="btn-row">
+          <button class="btn-secondary" id="copyTemplateBtn">📋 Copy Template</button>
+        </div>
+      </div>
+
+      <!-- Subject → Topic reference -->
+      <div class="panel">
+        <div class="panel-title">Subject & Topic ID Reference</div>
+        <div id="subjTopicRef" style="font-family:'Courier New',monospace;font-size:12px;line-height:2;color:#94a3b8"></div>
+      </div>
+    </div><!-- /tab-template -->
+
+  </div><!-- /mainPanel -->
+</div>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ── Firebase init ────────────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const gp   = new GoogleAuthProvider();
+
+// ── Subject / Topic data ─────────────────────────────────────────────────────
+const SUBJECTS = [
+  { id:'building-materials',   name:'Building Materials',       icon:'🧱',
+    topics:[{id:0,name:'Cement'},{id:1,name:'Stones & Aggregates'},{id:2,name:'Bricks & Masonry'},
+            {id:3,name:'Timber & Wood'},{id:4,name:'Metals & Paints'},{id:5,name:'Bitumen & Flooring'},
+            {id:6,name:'Building Components'}] },
+  { id:'concrete-design',      name:'RCC / Concrete Design',    icon:'🏗️',
+    topics:[{id:0,name:'WSM'},{id:1,name:'LSM'},{id:2,name:'T-Beam & Doubly Reinforced'},
+            {id:3,name:'Shear, Bond & Torsion'},{id:4,name:'Slabs'},{id:5,name:'Columns & Footings'},
+            {id:6,name:'Prestressed Concrete'},{id:7,name:'Concrete Technology'}] },
+  { id:'strength-of-materials',name:'Strength of Materials',    icon:'💪',
+    topics:[{id:0,name:'Stress & Strain'},{id:1,name:'SFD & BMD'},{id:2,name:'Bending Stress'},
+            {id:3,name:'Shear Stress'},{id:4,name:'Torsion'},{id:5,name:'Deflection'},
+            {id:6,name:'Columns & Buckling'},{id:7,name:'Strain Energy'},{id:8,name:'Combined Loading'},
+            {id:9,name:'Thin & Thick Cylinders'}] },
+  { id:'structural-analysis',  name:'Structural Analysis',      icon:'🏛️',
+    topics:[{id:0,name:"Castigliano's"},{id:1,name:'Slope Deflection'},{id:2,name:'Moment Distribution'},
+            {id:3,name:"Kani's Method"},{id:4,name:'Influence Lines'},{id:5,name:'Arches'},
+            {id:6,name:'Matrix Methods'},{id:7,name:'Plastic Analysis'}] },
+  { id:'steel-design',         name:'Steel Structures',         icon:'🔩',
+    topics:[{id:0,name:'Properties & IS Codes'},{id:1,name:'Bolted Connections'},{id:2,name:'Welded Connections'},
+            {id:3,name:'Tension Members'},{id:4,name:'Compression Members'},{id:5,name:'Beams'},
+            {id:6,name:'Plate Girders'},{id:7,name:'Column Bases'},{id:8,name:'Roof Trusses'},
+            {id:9,name:'Plastic Design'}] },
+  { id:'engg-mechanics',       name:'Engineering Mechanics',    icon:'⚙️',
+    topics:[{id:0,name:'Force Systems'},{id:1,name:'Equilibrium'},{id:2,name:'Trusses'},
+            {id:3,name:'Centroid & MI'},{id:4,name:'Friction'},{id:5,name:'Virtual Work'},
+            {id:6,name:'Kinematics Particles'},{id:7,name:'Kinematics Rigid Bodies'},
+            {id:8,name:'Kinetics'},{id:9,name:'SHM & Rotation'}] },
+  { id:'construction-tech',    name:'Construction Technology',  icon:'🏚️',
+    topics:[{id:0,name:'Earthwork & Site'},{id:1,name:'Masonry & Scaffolding'},{id:2,name:'Concrete Tech'},
+            {id:3,name:'Estimation & Costing'},{id:4,name:'Specifications & Contracts'},
+            {id:5,name:'Bar Chart & Milestone'},{id:6,name:'CPM & PERT'},{id:7,name:'Project Management'}] },
+  { id:'geotech-foundation',   name:'Geotechnical Engineering', icon:'🪨',
+    topics:[{id:0,name:'Soil Classification'},{id:1,name:'Permeability & Seepage'},{id:2,name:'Compaction'},
+            {id:3,name:'Consolidation'},{id:4,name:'Shear Strength'},{id:5,name:'Earth Pressure'},
+            {id:6,name:'Bearing Capacity'},{id:7,name:'Slope Stability'},{id:8,name:'Pile Foundations'},
+            {id:9,name:'Well & Raft'},{id:10,name:'In-situ Testing'}] },
+  { id:'fluid-mechanics',      name:'Fluid Mechanics',          icon:'💧',
+    topics:[{id:0,name:'Fluid Properties'},{id:1,name:'Hydrostatics'},{id:2,name:'Buoyancy'},
+            {id:3,name:'Flow Kinematics'},{id:4,name:'Bernoulli & Energy'},{id:5,name:'Pipe Flow'},
+            {id:6,name:'Open Channel'},{id:7,name:'Hydraulic Jump'},{id:8,name:'Turbines & Pumps'},
+            {id:9,name:'Dimensional Analysis'},{id:10,name:'Boundary Layer'}] },
+  { id:'hydrology',            name:'Hydrology & Irrigation',   icon:'🌊',
+    topics:[{id:0,name:'Precipitation'},{id:1,name:'Runoff & Hydrograph'},{id:2,name:'Unit Hydrograph'},
+            {id:3,name:'Flood Routing'},{id:4,name:'Groundwater'},{id:5,name:'Evaporation & ET'},
+            {id:6,name:'Irrigation Basics'},{id:7,name:'Canal Design'},{id:8,name:'Dams & Spillways'},
+            {id:9,name:'Diversion Works'},{id:10,name:'Waterlogging'}] },
+  { id:'transportation',       name:'Transportation Engineering',icon:'🛣️',
+    topics:[{id:0,name:'Highway Planning'},{id:1,name:'Sight Distance'},{id:2,name:'Curves'},
+            {id:3,name:'Pavement Design'},{id:4,name:'Pavement Materials'},{id:5,name:'Traffic Engg'},
+            {id:6,name:'Intersections'},{id:7,name:'Railways'},{id:8,name:'Airport'},
+            {id:9,name:'Tunnels & Bridges'}] },
+  { id:'environmental',        name:'Environmental Engineering', icon:'🌿',
+    topics:[{id:0,name:'Water Demand'},{id:1,name:'Water Treatment'},{id:2,name:'Water Quality'},
+            {id:3,name:'Water Distribution'},{id:4,name:'Sewage Treatment'},{id:5,name:'BOD & COD'},
+            {id:6,name:'Sewer Design'},{id:7,name:'Air Pollution'},{id:8,name:'Solid Waste'},
+            {id:9,name:'Self-purification'}] },
+  { id:'surveying-geology',    name:'Surveying & Geology',      icon:'🗺️',
+    topics:[{id:0,name:'Chain & Compass'},{id:1,name:'Levelling & Contouring'},{id:2,name:'Theodolite'},
+            {id:3,name:'Tacheometry'},{id:4,name:'Triangulation'},{id:5,name:'Curves'},
+            {id:6,name:'Photogrammetry'},{id:7,name:'Remote Sensing'},{id:8,name:'Geology'},
+            {id:9,name:'Errors & Adjustments'}] },
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let currentUser   = null;
+let selectedSubj  = null;
+let parsedNotes   = null;
+let existingInFS  = {};   // subjectId → true/false (has notes)
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+document.getElementById('loginBtn').addEventListener('click', () => {
+  signInWithPopup(auth, gp).catch(e => alert('Login failed: ' + e.message));
+});
+
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  document.getElementById('loginPanel').classList.toggle('hidden', !!user);
+  document.getElementById('mainPanel').classList.toggle('hidden', !user);
+  if (user) { init(); }
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+async function init() {
+  buildSubjectGrid();
+  buildTemplate();
+  buildDeleteSelect();
+  buildDownloadSelect();
+  buildTopicRef();
+  setupTabs();
+  await checkExistingNotes();
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function setupTabs() {
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      ['upload','manage','template'].forEach(t => {
+        document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
+      });
+    });
+  });
+}
+
+// ── Subject Grid ──────────────────────────────────────────────────────────────
+function buildSubjectGrid() {
+  const grid = document.getElementById('subjGrid');
+  grid.innerHTML = '';
+  SUBJECTS.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'subj-card';
+    card.dataset.id = s.id;
+    const hasNote = existingInFS[s.id];
+    card.innerHTML = `
+      <div class="subj-name">${s.icon} ${s.name}</div>
+      <div class="subj-id">${s.id}</div>
+      <span class="subj-badge ${hasNote ? 'badge-has' : 'badge-empty'}">${hasNote ? '✓ Has Notes' : 'No Notes'}</span>
+    `;
+    card.addEventListener('click', () => selectSubject(s));
+    grid.appendChild(card);
+  });
+}
+
+function selectSubject(s) {
+  selectedSubj = s;
+  document.querySelectorAll('.subj-card').forEach(c => c.classList.remove('selected'));
+  document.querySelector(`.subj-card[data-id="${s.id}"]`).classList.add('selected');
+  document.getElementById('selectedSubjName').textContent = s.name;
+  document.getElementById('selectedSubjId').textContent   = s.id;
+  // Show replace button if has existing notes
+  document.getElementById('replaceBtn').classList.toggle('hidden', !existingInFS[s.id]);
+  document.getElementById('uploadBtn').classList.toggle('hidden', existingInFS[s.id]);
+  // Reset preview
+  parsedNotes = null;
+  document.getElementById('previewPanel').classList.add('hidden');
+  document.getElementById('uploadBtn').classList.remove('hidden');
+  document.getElementById('uploadLog').classList.add('hidden');
+}
+
+// ── Check existing notes in Firestore ────────────────────────────────────────
+async function checkExistingNotes() {
+  try {
+    const results = await Promise.all(SUBJECTS.map(async s => {
+      const ref = doc(db, 'notes', s.id);
+      const snap = await getDoc(ref);
+      return { id: s.id, exists: snap.exists() };
+    }));
+    results.forEach(r => existingInFS[r.id] = r.exists);
+    buildSubjectGrid();   // re-render with badges
+  } catch(e) {
+    console.error('checkExistingNotes:', e);
+  }
+}
+
+// ── Validate & Preview ────────────────────────────────────────────────────────
+document.getElementById('validateBtn').addEventListener('click', () => {
+  if (!selectedSubj) { alert('Select a subject first.'); return; }
+  const raw = document.getElementById('jsonInput').value.trim();
+  if (!raw) { alert('Paste your notes JSON first.'); return; }
+
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch(e) {
+    alert('Invalid JSON: ' + e.message); return;
+  }
+
+  if (!Array.isArray(data)) { alert('JSON must be an array of sections.'); return; }
+
+  // Validate each section
+  let totalCards = 0, errors = [];
+  data.forEach((sec, si) => {
+    if (typeof sec.topic_id === 'undefined') errors.push(`Section ${si}: missing topic_id`);
+    if (!sec.topic_name) errors.push(`Section ${si}: missing topic_name`);
+    if (!Array.isArray(sec.cards)) errors.push(`Section ${si}: cards must be an array`);
+    else {
+      sec.cards.forEach((c, ci) => {
+        if (!c.heading) errors.push(`Section ${si} Card ${ci}: missing heading`);
+        totalCards++;
+      });
+    }
+  });
+
+  if (errors.length) { alert('Validation errors:\n' + errors.join('\n')); return; }
+
+  parsedNotes = data;
+
+  // Show stats
+  const statsEl = document.getElementById('previewStats');
+  statsEl.innerHTML = `
+    <div class="stat"><div class="stat-num">${data.length}</div><div class="stat-lbl">Sections</div></div>
+    <div class="stat"><div class="stat-num">${totalCards}</div><div class="stat-lbl">Cards</div></div>
+    <div class="stat"><div class="stat-num">${selectedSubj.topics.length}</div><div class="stat-lbl">Topics</div></div>
+  `;
+
+  // Build card previews
+  const preview = document.getElementById('cardsPreview');
+  preview.innerHTML = '';
+  data.forEach(sec => {
+    const hdr = document.createElement('div');
+    hdr.className = 'section-header';
+    hdr.innerHTML = `<div class="section-topic">📌 ${sec.topic_name} <small style="color:#64748b">(topic_id: ${sec.topic_id})</small></div>
+                     <div class="section-count">${sec.cards.length} card${sec.cards.length!==1?'s':''}</div>`;
+    preview.appendChild(hdr);
+
+    sec.cards.forEach(c => {
+      const card = document.createElement('div');
+      card.className = `note-card ${c.color || 'default'}`;
+      let html = `<div class="card-heading">${c.heading}</div>`;
+      if (c.formulas && c.formulas.length) {
+        c.formulas.forEach(f => {
+          html += `<div class="card-formula"><div class="formula-label">${f.label||''}</div><div class="formula-text">${f.text||''}</div></div>`;
+        });
+      }
+      if (c.points && c.points.length) {
+        c.points.forEach(p => { html += `<div class="card-point">• ${p}</div>`; });
+      }
+      card.innerHTML = html;
+      preview.appendChild(card);
+    });
+  });
+
+  document.getElementById('previewPanel').classList.remove('hidden');
+  // Show correct action button
+  if (existingInFS[selectedSubj.id]) {
+    document.getElementById('uploadBtn').classList.add('hidden');
+    document.getElementById('replaceBtn').classList.remove('hidden');
+  } else {
+    document.getElementById('uploadBtn').classList.remove('hidden');
+    document.getElementById('replaceBtn').classList.add('hidden');
+  }
+});
+
+// ── Upload to Firestore ───────────────────────────────────────────────────────
+async function doUpload() {
+  if (!parsedNotes) { alert('Validate first.'); return; }
+  if (!selectedSubj) { alert('Select a subject.'); return; }
+
+  const logEl = document.getElementById('uploadLog');
+  const prog  = document.getElementById('progressWrap');
+  const fill  = document.getElementById('progressFill');
+  logEl.classList.remove('hidden');
+  prog.classList.remove('hidden');
+  logEl.innerHTML = '';
+
+  const log = (msg, cls='info') => { logEl.innerHTML += `<span class="${cls}">${msg}</span>\n`; logEl.scrollTop = 9999; };
+
+  log(`📤 Saving notes for: ${selectedSubj.name} (${selectedSubj.id})...`);
+  fill.style.width = '30%';
+
+  // Build Firestore document
+  const docData = {
+    subject: selectedSubj.id,
+    subject_name: selectedSubj.name,
+    topics: selectedSubj.topics,
+    notes: parsedNotes,
+    updatedAt: new Date().toISOString(),
+    updatedBy: currentUser.email,
+    totalCards: parsedNotes.reduce((s, sec) => s + (sec.cards||[]).length, 0),
+    totalSections: parsedNotes.length,
+  };
+
+  try {
+    fill.style.width = '60%';
+    const ref = doc(db, 'notes', selectedSubj.id);
+    await setDoc(ref, docData);
+    fill.style.width = '100%';
+    log(`✅ Saved! ${docData.totalSections} sections, ${docData.totalCards} cards.`, 'ok');
+    log(`📍 Firestore path: notes/${selectedSubj.id}`, 'info');
+    existingInFS[selectedSubj.id] = true;
+    buildSubjectGrid();
+    document.getElementById('uploadBtn').classList.add('hidden');
+    document.getElementById('replaceBtn').classList.remove('hidden');
+  } catch(e) {
+    fill.style.width = '0%';
+    log(`❌ Error: ${e.message}`, 'err');
+  }
+}
+
+document.getElementById('uploadBtn').addEventListener('click', doUpload);
+document.getElementById('replaceBtn').addEventListener('click', () => {
+  if (confirm(`Replace ALL existing notes for "${selectedSubj?.name}"? This cannot be undone.`)) {
+    doUpload();
+  }
+});
+
+// ── Manage: Refresh notes list ────────────────────────────────────────────────
+document.getElementById('refreshNotesBtn').addEventListener('click', async () => {
+  const list = document.getElementById('notesList');
+  list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:10px">Loading...</div>';
+  await checkExistingNotes();
+
+  const existing = SUBJECTS.filter(s => existingInFS[s.id]);
+  if (!existing.length) {
+    list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:10px">No notes found in Firestore.</div>';
+    return;
+  }
+
+  // Fetch details for each
+  list.innerHTML = '';
+  for (const s of existing) {
+    try {
+      const snap = await getDoc(doc(db, 'notes', s.id));
+      const d = snap.data();
+      const row = document.createElement('div');
+      row.className = 'notes-row';
+      row.innerHTML = `
+        <div class="notes-row-info">
+          <div class="notes-row-subj">${s.icon} ${s.name}</div>
+          <div class="notes-row-meta">${d.totalSections||0} sections · ${d.totalCards||0} cards · Updated: ${(d.updatedAt||'').substring(0,10)} by ${d.updatedBy||'?'}</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn-amber" style="font-size:11px;padding:5px 10px" onclick="downloadSubject('${s.id}','${s.name}')">⬇️ JSON</button>
+          <button class="btn-blue"  style="font-size:11px;padding:5px 10px" onclick="loadIntoEditor('${s.id}')">✏️ Edit</button>
+        </div>
+      `;
+      list.appendChild(row);
+    } catch(e) {
+      console.error(e);
+    }
+  }
+});
+
+// ── Download select ───────────────────────────────────────────────────────────
+function buildDownloadSelect() {
+  const sel = document.getElementById('downloadSubjSel');
+  sel.innerHTML = SUBJECTS.map(s => `<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
+}
+
+function downloadJSON(data, filename) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('downloadOneBtn').addEventListener('click', async () => {
+  const subjId  = document.getElementById('downloadSubjSel').value;
+  const subj    = SUBJECTS.find(s => s.id === subjId);
+  const logEl   = document.getElementById('downloadLog');
+  logEl.classList.remove('hidden');
+  logEl.innerHTML = `<span class="info">⏳ Fetching notes for ${subj.name}...</span>`;
+
+  try {
+    const snap = await getDoc(doc(db, 'notes', subjId));
+    if (!snap.exists()) {
+      logEl.innerHTML = `<span class="warn">⚠️ No Firestore notes found for ${subj.name}. Try downloading from local JSON.</span>`;
+      return;
+    }
+    const data    = snap.data();
+    // Extract only the editable notes array (what you'd re-upload)
+    const payload = data.notes || [];
+    const filename = `notes-${subjId}-${new Date().toISOString().substring(0,10)}.json`;
+    downloadJSON(payload, filename);
+    logEl.innerHTML = `<span class="ok">✅ Downloaded: ${filename} (${payload.length} sections, ${data.totalCards||'?'} cards)</span>`;
+  } catch(e) {
+    logEl.innerHTML = `<span class="err">❌ Error: ${e.message}</span>`;
+  }
+});
+
+document.getElementById('downloadAllBtn').addEventListener('click', async () => {
+  const logEl = document.getElementById('downloadLog');
+  logEl.classList.remove('hidden');
+  logEl.innerHTML = `<span class="info">⏳ Fetching all subjects from Firestore...</span>`;
+
+  const result = {};
+  let found = 0;
+
+  for (const s of SUBJECTS) {
+    try {
+      const snap = await getDoc(doc(db, 'notes', s.id));
+      if (snap.exists()) {
+        result[s.id] = snap.data().notes || [];
+        found++;
+        logEl.innerHTML += `\n<span class="ok">  ✓ ${s.name} (${result[s.id].length} sections)</span>`;
+      } else {
+        logEl.innerHTML += `\n<span class="warn">  – ${s.name}: not in Firestore</span>`;
+      }
+    } catch(e) {
+      logEl.innerHTML += `\n<span class="err">  ✗ ${s.name}: ${e.message}</span>`;
+    }
+    logEl.scrollTop = 9999;
+  }
+
+  if (found === 0) {
+    logEl.innerHTML += `\n<span class="warn">⚠️ No notes found in Firestore.</span>`;
+    return;
+  }
+
+  const filename = `notes-all-subjects-${new Date().toISOString().substring(0,10)}.json`;
+  downloadJSON(result, filename);
+  logEl.innerHTML += `\n<span class="ok">✅ Downloaded: ${filename} (${found} subjects)</span>`;
+});
+
+// ── Delete notes ──────────────────────────────────────────────────────────────
+function buildDeleteSelect() {
+  const sel = document.getElementById('deleteSubjSel');
+  sel.innerHTML = SUBJECTS.map(s => `<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
+}
+
+document.getElementById('deleteNotesBtn').addEventListener('click', async () => {
+  const subjId = document.getElementById('deleteSubjSel').value;
+  const subj   = SUBJECTS.find(s => s.id === subjId);
+  if (!confirm(`DELETE all notes for "${subj?.name}"? This cannot be undone.`)) return;
+
+  const logEl = document.getElementById('deleteLog');
+  logEl.classList.remove('hidden');
+  logEl.innerHTML = '';
+
+  try {
+    await deleteDoc(doc(db, 'notes', subjId));
+    logEl.innerHTML = `<span class="ok">✅ Deleted notes for ${subj?.name}</span>`;
+    existingInFS[subjId] = false;
+    buildSubjectGrid();
+  } catch(e) {
+    logEl.innerHTML = `<span class="err">❌ Error: ${e.message}</span>`;
+  }
+});
+
+// ── Template ──────────────────────────────────────────────────────────────────
+function buildTemplate() {
+  const tmpl = [
+    {
+      "topic_id": 0,
+      "topic_name": "Topic Name Here",
+      "cards": [
+        {
+          "heading": "CARD HEADING (e.g. KEY FORMULAS)",
+          "color": "purple",
+          "formulas": [
+            { "label": "Formula Label", "text": "E = σ/ε\nG = τ/γ\nK = σ/(volumetric strain)" }
+          ],
+          "points": [
+            "Important point 1",
+            "Important point 2 with value: 0.3 for steel"
+          ]
+        },
+        {
+          "heading": "ANOTHER CARD",
+          "color": "blue",
+          "formulas": [],
+          "points": [
+            "Point A",
+            "Point B"
+          ]
+        }
+      ]
+    },
+    {
+      "topic_id": 1,
+      "topic_name": "Second Topic",
+      "cards": [
+        {
+          "heading": "CONCEPT CARD",
+          "color": "green",
+          "formulas": [],
+          "points": ["Key fact 1", "Key fact 2"]
+        }
+      ]
+    }
+  ];
+  document.getElementById('templateText').value = JSON.stringify(tmpl, null, 2);
+}
+
+document.getElementById('copyTemplateBtn').addEventListener('click', () => {
+  const ta = document.getElementById('templateText');
+  ta.select();
+  navigator.clipboard.writeText(ta.value).then(() => alert('Copied!'));
+});
+
+// ── Topic Reference ───────────────────────────────────────────────────────────
+function buildTopicRef() {
+  const el = document.getElementById('subjTopicRef');
+  let html = '';
+  SUBJECTS.forEach(s => {
+    html += `<div style="margin-bottom:12px">`;
+    html += `<div style="color:#10b981;font-weight:700;margin-bottom:4px">${s.icon} ${s.name} — <span style="color:#f59e0b">"${s.id}"</span></div>`;
+    s.topics.forEach(t => {
+      html += `<div style="padding-left:16px;color:#94a3b8">topic_id: <span style="color:#f59e0b">${t.id}</span>  →  "${t.name}"</div>`;
+    });
+    html += `</div>`;
+  });
+  el.innerHTML = html;
+}
+
+// ── Quick download from list row ──────────────────────────────────────────────
+window.downloadSubject = async (subjId, subjName) => {
+  try {
+    const snap = await getDoc(doc(db, 'notes', subjId));
+    if (!snap.exists()) { alert('Not found in Firestore'); return; }
+    const payload  = snap.data().notes || [];
+    const filename = `notes-${subjId}-${new Date().toISOString().substring(0,10)}.json`;
+    downloadJSON(payload, filename);
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
+// ── Load into editor (Edit button in list row) ────────────────────────────────
+window.loadIntoEditor = async (subjId) => {
+  try {
+    const snap = await getDoc(doc(db, 'notes', subjId));
+    if (!snap.exists()) { alert('Not found in Firestore'); return; }
+    const subj    = SUBJECTS.find(s => s.id === subjId);
+    const payload = snap.data().notes || [];
+    // Switch to Upload tab
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('.tab[data-tab="upload"]').classList.add('active');
+    ['upload','manage','template'].forEach(t => {
+      document.getElementById('tab-' + t).classList.toggle('hidden', t !== 'upload');
+    });
+    // Select the subject
+    selectSubject(subj);
+    // Fill in the JSON textarea
+    document.getElementById('jsonInput').value = JSON.stringify(payload, null, 2);
+    window.scrollTo(0, 0);
+  } catch(e) { alert('Error: ' + e.message); }
+};
+
+</script>
+</body>
+</html>
