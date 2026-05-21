@@ -267,15 +267,23 @@
       <!-- ══ PYQ SECTION ════════════════════════════════════════════════════ -->
       <div id="delPyqSection" style="display:none">
 
-        <!-- PYQ Step 1: Select Exam -->
-        <label>Select Exam</label>
-        <select id="delPyqExamSel" style="margin-bottom:10px"></select>
-
-        <!-- PYQ Step 2: Select Exam + Year (loaded dynamically) -->
-        <label>Select Exam Paper &amp; Year</label>
-        <div id="delPyqPaperList" style="display:flex;flex-direction:column;gap:6px;margin-top:6px;max-height:200px;overflow-y:auto">
-          <p style="font-size:12px;color:#64748b;padding:8px">← Select an exam above to load papers</p>
+        <!-- PYQ Step 1: Select Exam to load papers -->
+        <label>Select Exam to load papers</label>
+        <div style="display:flex;gap:8px;margin-bottom:10px;margin-top:6px">
+          <select id="delPyqExamSel" style="flex:1"></select>
+          <button class="btn-blue" id="delPyqLoadBtn" style="font-size:12px;padding:7px 14px;white-space:nowrap">Load Papers</button>
         </div>
+
+        <!-- PYQ Step 2: Checkboxes for multiple papers -->
+        <label>Select Paper(s) to Delete <span style="color:#64748b;font-size:11px">(can select multiple)</span></label>
+        <div style="display:flex;gap:8px;margin:6px 0 8px">
+          <button class="btn-secondary" id="delPyqSelectAll" style="font-size:11px;padding:5px 10px">☑ All</button>
+          <button class="btn-secondary" id="delPyqClearAll"  style="font-size:11px;padding:5px 10px">☐ None</button>
+        </div>
+        <div id="delPyqPaperList" style="display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto;background:#0a1122;border-radius:8px;padding:8px;border:1px solid #1e293b">
+          <p style="font-size:12px;color:#64748b;padding:4px">← Select an exam above and click Load Papers</p>
+        </div>
+        <div id="delPyqSelectedCount" style="font-size:11px;color:#f59e0b;margin-top:6px"></div>
 
         <!-- PYQ Step 3: All or by Q number -->
         <label style="margin-top:12px">Delete scope</label>
@@ -701,12 +709,13 @@ function buildDelSubjectList() {
   });
 }
 
-// ── PYQ: Load papers for selected exam ───────────────────────────────────
-if ($('delPyqExamSel')) {
-  $('delPyqExamSel').addEventListener('change', async () => {
+// ── PYQ: Load papers for selected exam (multi-checkbox) ──────────────────
+if ($('delPyqLoadBtn')) {
+  $('delPyqLoadBtn').addEventListener('click', async () => {
     const examId = $('delPyqExamSel').value;
-    const wrap = $('delPyqPaperList');
-    wrap.innerHTML = '<p style="font-size:12px;color:#64748b;padding:8px">Loading papers…</p>';
+    const wrap   = $('delPyqPaperList');
+    wrap.innerHTML = '<p style="font-size:12px;color:#64748b;padding:4px">Loading papers…</p>';
+    $('delPyqSelectedCount').textContent = '';
     try {
       const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
       const docs = snap.docs.map(d => ({ id: d.id, ref: d.ref, ...d.data() }))
@@ -714,34 +723,68 @@ if ($('delPyqExamSel')) {
       // Group by exam_name + year
       const groups = {};
       docs.forEach(d => {
-        const key = `${d.exam_name || d.examId || examId}__${d.year || '—'}`;
+        const key = `${d.exam_name || examId}__${d.year || '—'}`;
         if (!groups[key]) groups[key] = { label: d.exam_name || examId, year: d.year || '—', docs: [] };
         groups[key].docs.push(d);
       });
       const entries = Object.entries(groups).sort((a,b) => b[1].year - a[1].year);
       if (!entries.length) {
-        wrap.innerHTML = '<p style="font-size:12px;color:#64748b;padding:8px">No PYQ found for this exam</p>';
+        wrap.innerHTML = '<p style="font-size:12px;color:#64748b;padding:4px">No PYQ found for this exam</p>';
         return;
       }
       wrap.innerHTML = '';
       entries.forEach(([key, g]) => {
+        const safeKey = key.replace(/[^a-zA-Z0-9_-]/g, '_');
         const row = document.createElement('div');
-        row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#0f172a;padding:9px 12px;border-radius:8px;border:1px solid #1e293b;cursor:pointer';
+        row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#1e293b;padding:9px 12px;border-radius:8px;border:1px solid #334155;cursor:pointer';
         row.innerHTML = `
-          <input type="radio" name="pyqPaper" value="${key}"
-            style="width:16px;height:16px;accent-color:#ef4444">
-          <div style="flex:1">
+          <input type="checkbox" id="pyqpaper_${safeKey}" value="${key}"
+            style="width:16px;height:16px;cursor:pointer;accent-color:#ef4444">
+          <label for="pyqpaper_${safeKey}" style="flex:1;cursor:pointer">
             <div style="font-size:13px;color:#e2e8f0">${g.label}</div>
             <div style="font-size:11px;color:#64748b">Year: ${g.year} · ${g.docs.length} questions</div>
-          </div>`;
-        row.addEventListener('click', () => row.querySelector('input').checked = true);
+          </label>`;
+        row.addEventListener('click', (e) => {
+          if (e.target.tagName !== 'INPUT') {
+            const cb = row.querySelector('input');
+            cb.checked = !cb.checked;
+          }
+          updatePyqSelectedCount();
+        });
         wrap.appendChild(row);
       });
-      // store for delete
       window._pyqGrouped = groups;
-    } catch(e) { wrap.innerHTML = `<p style="font-size:12px;color:#ef4444;padding:8px">Error: ${e.message}</p>`; }
+      updatePyqSelectedCount();
+    } catch(e) { wrap.innerHTML = `<p style="font-size:12px;color:#ef4444;padding:4px">Error: ${e.message}</p>`; }
   });
 }
+
+function updatePyqSelectedCount() {
+  const checked = document.querySelectorAll('#delPyqPaperList input:checked');
+  const el = $('delPyqSelectedCount');
+  if (!el) return;
+  if (checked.length === 0) {
+    el.textContent = 'No papers selected';
+    el.style.color = '#64748b';
+  } else {
+    const totalQ = [...checked].reduce((sum, cb) => {
+      const g = window._pyqGrouped?.[cb.value];
+      return sum + (g ? g.docs.length : 0);
+    }, 0);
+    el.textContent = `✅ ${checked.length} paper(s) selected · ${totalQ} questions`;
+    el.style.color = '#f59e0b';
+  }
+}
+
+// ── Select/Clear all PYQ papers ───────────────────────────────────────────
+if ($('delPyqSelectAll')) $('delPyqSelectAll').onclick = () => {
+  document.querySelectorAll('#delPyqPaperList input').forEach(cb => cb.checked = true);
+  updatePyqSelectedCount();
+};
+if ($('delPyqClearAll')) $('delPyqClearAll').onclick = () => {
+  document.querySelectorAll('#delPyqPaperList input').forEach(cb => cb.checked = false);
+  updatePyqSelectedCount();
+};
 
 // ── Select/Clear all practice subjects ────────────────────────────────────
 if ($('delSelectAll')) $('delSelectAll').onclick = () =>
@@ -789,18 +832,24 @@ if ($('delPracPreviewBtn')) {
 
 // ── PYQ Preview ───────────────────────────────────────────────────────────
 if ($('delPyqPreviewBtn')) {
-  $('delPyqPreviewBtn').onclick = async () => {
-    const selected = document.querySelector('input[name="pyqPaper"]:checked');
-    if (!selected) { $('delPyqExamYearPreview').textContent = '⚠️ Select a paper first'; return; }
-    const group = window._pyqGrouped?.[selected.value];
-    if (!group) return;
-    let count = group.docs.length;
-    if (delPyqScope === 'qnum') {
-      const nums = parseQnums($('delPyqQnums').value);
-      count = group.docs.filter(d => nums.has(d.q_num)).length;
-    }
-    $('delPyqExamYearPreview').textContent = `Found ${count} PYQ questions to delete`;
-    $('delPyqExamYearPreview').style.color = count ? '#f59e0b' : '#10b981';
+  $('delPyqPreviewBtn').onclick = () => {
+    const checked = [...document.querySelectorAll('#delPyqPaperList input:checked')];
+    if (!checked.length) { $('delPyqExamYearPreview').textContent = '⚠️ Select at least one paper'; return; }
+    let total = 0;
+    const labels = [];
+    checked.forEach(cb => {
+      const g = window._pyqGrouped?.[cb.value];
+      if (!g) return;
+      let count = g.docs.length;
+      if (delPyqScope === 'qnum') {
+        const nums = parseQnums($('delPyqQnums').value);
+        count = g.docs.filter(d => nums.has(d.q_num)).length;
+      }
+      total += count;
+      labels.push(`"${g.label} ${g.year}" (${count}Q)`);
+    });
+    $('delPyqExamYearPreview').textContent = `Found ${total} questions across ${checked.length} paper(s): ${labels.join(', ')}`;
+    $('delPyqExamYearPreview').style.color = total ? '#f59e0b' : '#10b981';
   };
 }
 
@@ -835,23 +884,25 @@ if ($('delExecuteBtn')) {
         toDelete = docs;
 
       } else {
-        // ── PYQ delete ──────────────────────────────────────────────────
-        const selected = document.querySelector('input[name="pyqPaper"]:checked');
-        if (!selected) { log('Select a paper first', 'err'); return; }
-        const group = window._pyqGrouped?.[selected.value];
-        if (!group) { log('Paper data not loaded', 'err'); return; }
+        // ── PYQ delete (multi-select) ───────────────────────────────────
+        const checked = [...document.querySelectorAll('#delPyqPaperList input:checked')];
+        if (!checked.length) { log('Select at least one paper first', 'err'); return; }
 
-        let docs = group.docs;
-        if (delPyqScope === 'qnum') {
-          const qnumStr = $('delPyqQnums').value.trim();
-          if (!qnumStr) { log('Enter question numbers', 'err'); return; }
-          const nums = parseQnums(qnumStr);
-          docs = docs.filter(d => nums.has(d.q_num));
-          label = `PYQ Q# [${[...nums].join(',')}] from "${group.label}" ${group.year}`;
-        } else {
-          label = `All PYQ from "${group.label}" ${group.year} (${group.docs.length} questions)`;
-        }
-        toDelete = docs;
+        const labels = [];
+        checked.forEach(cb => {
+          const group = window._pyqGrouped?.[cb.value];
+          if (!group) return;
+          let docs = group.docs;
+          if (delPyqScope === 'qnum') {
+            const qnumStr = $('delPyqQnums').value.trim();
+            if (!qnumStr) { log('Enter question numbers', 'err'); return; }
+            const nums = parseQnums(qnumStr);
+            docs = docs.filter(d => nums.has(d.q_num));
+          }
+          toDelete.push(...docs);
+          labels.push(`"${group.label} ${group.year}" (${docs.length}Q)`);
+        });
+        label = `PYQ from ${labels.join(', ')}`;
       }
 
       if (!toDelete.length) { log('No matching questions found', 'warn'); return; }
@@ -875,7 +926,7 @@ Permanently delete ${toDelete.length} questions?`)) return;
       log(`✅ Done! ${deleted} questions deleted.`, 'ok');
       $('delPreview').textContent = '';
       // Reload PYQ papers list if in PYQ mode
-      if (delSelectedType === 'pyq') $('delPyqExamSel').dispatchEvent(new Event('change'));
+      if (delSelectedType === 'pyq') $('delPyqLoadBtn').click();
     } catch(e) { log('❌ Delete error: ' + e.message, 'err'); }
   };
 }
