@@ -21,7 +21,7 @@ const cache = {
 // ─── Questions ────────────────────────────────────────────────────────────────
 
 export async function fetchQuestions(opts = {}) {
-  const { exam, subject = null, type = null, maxCount = 20000, force = false } = opts;
+  const { exam, subject = null, type = null, maxCount = 10000, force = false } = opts;
   if (!exam) { console.error('fetchQuestions: exam is required'); return []; }
 
   const cacheKey = `${exam}:${subject || 'all'}:${type || 'all'}`;
