@@ -404,7 +404,7 @@ async function openPracticeSubject(subj) {
   quizRoute      = 'practice';
   quizSource     = 'practiceSubjectsScreen';
 
-  let questions = await fetchPracticeQuestions({ subject: subj.id, maxCount: 3000 });
+  let questions = await fetchPracticeQuestions({ subject: subj.id, maxCount: 10000 });
 
   if (!questions || questions.length === 0) {
     toast('No practice questions for this subject yet');
@@ -416,7 +416,7 @@ async function openPracticeSubject(subj) {
   showScreen('quizScreen');
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
-    let qs = await fetchPracticeQuestions({ subject: subj.id, maxCount: 3000 });
+    let qs = await fetchPracticeQuestions({ subject: subj.id, maxCount: 10000 });
     if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
     Quiz.resetToQuestions(qs);
@@ -475,7 +475,7 @@ async function renderYearList() {
   container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim)">Loading...</div>';
 
   try {
-    const questions = await fetchQuestions({ exam: currentExam.id, type: 'pyq', maxCount: 15000 });
+    const questions = await fetchQuestions({ exam: currentExam.id, type: 'pyq', maxCount: 20000 });
 
     if (!questions.length) {
       container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><h3>No PYQ uploaded yet</h3><p>Upload questions via admin panel first.</p></div>';
@@ -593,7 +593,7 @@ async function openPyqSubject(subj) {
   quizSource     = 'pyqSubjectsScreen';
 
   let questions = await fetchQuestions({
-    exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 15000
+    exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 20000
   });
 
   if (!questions || questions.length === 0) {
@@ -610,7 +610,7 @@ async function openPyqSubject(subj) {
 
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
-    let qs = await fetchQuestions({ exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 15000 });
+    let qs = await fetchQuestions({ exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 20000 });
     if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
     qs.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
