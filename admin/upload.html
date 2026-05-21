@@ -90,6 +90,15 @@
   <div id="loginPanel" class="panel login-wrap">
     <p>Sign in with admin Google account to upload questions.</p>
     <button class="btn-primary" id="loginBtn">🔐 Login with Google</button>
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid #334155">
+      <p style="font-size:12px;color:#64748b;margin-bottom:10px">— or use PIN to bypass login —</p>
+      <div style="display:flex;gap:8px;justify-content:center;max-width:280px;margin:0 auto">
+        <input type="password" id="pinInput" placeholder="Enter admin PIN" maxlength="8"
+          style="flex:1;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:14px;font-family:inherit;text-align:center;letter-spacing:4px"/>
+        <button class="btn-secondary" id="pinBtn" style="white-space:nowrap">🔑 Enter</button>
+      </div>
+      <p id="pinErr" style="color:#ef4444;font-size:12px;margin-top:8px;display:none">Wrong PIN</p>
+    </div>
   </div>
 
   <!-- MAIN -->
@@ -328,23 +337,51 @@ function log(msg, type='info') {
 $('clearLogBtn').onclick = () => { $('log').innerHTML = 'Log cleared.\n'; };
 
 // ── Auth ──────────────────────────────────────────────────────────────────
+const ADMIN_PIN = '1947';   // ← change this to your secret PIN
+
+function enterAdmin(email) {
+  $('loginPanel').classList.add('hidden');
+  $('mainPanel').classList.remove('hidden');
+  log(`✅ Signed in as ${email}`, 'ok');
+  initUI();
+  setTimeout(loadGrandTotal, 800);
+}
+
 onAuthStateChanged(auth, user => {
   if (user && ADMIN_EMAILS.includes(user.email)) {
-    $('loginPanel').classList.add('hidden');
-    $('mainPanel').classList.remove('hidden');
-    log(`✅ Signed in as ${user.email}`, 'ok');
-    initUI();
-    setTimeout(loadGrandTotal, 800);  // auto-load grand total on login
+    enterAdmin(user.email);
   } else if (user) {
     log(`⛔ Access denied for ${user.email}`, 'err');
     signOut(auth);
   } else {
-    $('loginPanel').classList.remove('hidden');
-    $('mainPanel').classList.add('hidden');
+    // Check if already PIN-unlocked in this session
+    if (sessionStorage.getItem('adminPin') === ADMIN_PIN) {
+      enterAdmin('pin-admin');
+    } else {
+      $('loginPanel').classList.remove('hidden');
+      $('mainPanel').classList.add('hidden');
+    }
   }
 });
+
+// PIN bypass
+$('pinBtn').onclick = checkPin;
+$('pinInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkPin(); });
+function checkPin() {
+  const entered = $('pinInput').value.trim();
+  if (entered === ADMIN_PIN) {
+    sessionStorage.setItem('adminPin', ADMIN_PIN);
+    $('pinErr').style.display = 'none';
+    enterAdmin('pin-admin');
+  } else {
+    $('pinErr').style.display = 'block';
+    $('pinInput').value = '';
+    $('pinInput').focus();
+  }
+}
+
 $('loginBtn').onclick  = () => signInWithPopup(auth, googleProvider).catch(e => log(e.message,'err'));
-$('logoutBtn').onclick = () => signOut(auth);
+$('logoutBtn').onclick = () => { sessionStorage.removeItem('adminPin'); signOut(auth); };
 
 // ── Init ──────────────────────────────────────────────────────────────────
 function initUI() {
