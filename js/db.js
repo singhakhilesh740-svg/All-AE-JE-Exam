@@ -12,13 +12,10 @@ import {
   limit
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const FREE_PYQ_LIMIT = 10; // free users get first 10 PYQ questions per exam
-export { FREE_PYQ_LIMIT };
-
 const cache = {
   questions: {},
   cachedAt: {},
-  TTL: 1000 * 60 * 5
+  TTL: 1000 * 60 * 5    // 5 min (development) — change to 30 when done
 };
 
 // ─── Questions ────────────────────────────────────────────────────────────────
@@ -37,6 +34,7 @@ export async function fetchQuestions(opts = {}) {
   try {
     const qRef = collection(db, 'exams', exam, 'questions');
     let q;
+    // Filter by type at Firestore level so limit() is not wasted on wrong types
     if (subject && type) {
       q = query(qRef, where('subject', '==', subject), where('type', '==', type), limit(maxCount));
     } else if (subject) {
@@ -65,7 +63,8 @@ export async function fetchQuestions(opts = {}) {
   }
 }
 
-// Fetch practice questions across ALL exams
+// Fetch practice questions across ALL exams (not locked to one exam)
+// Automatically includes any exam added to exams.js — no changes needed here
 export async function fetchPracticeQuestions(opts = {}) {
   const { subject = null, maxCount = 10000, force = false } = opts;
   const { EXAMS } = await import('./exams.js');
@@ -79,7 +78,7 @@ export async function fetchPracticeQuestions(opts = {}) {
   }
 
   try {
-    const perExam = maxCount;
+  const perExam = maxCount;   // each exam gets full quota; dedup handled by Firestore IDs
     const results = await Promise.all(
       EXAM_IDS.map(async examId => {
         try {
@@ -99,7 +98,9 @@ export async function fetchPracticeQuestions(opts = {}) {
             }
           });
           return qs;
-        } catch { return []; }
+        } catch {
+          return [];
+        }
       })
     );
 
@@ -137,21 +138,6 @@ function isValidQuestion(q) {
     && q.answer < q.options.length;
 }
 
-// ─── Apply free PYQ cap ───────────────────────────────────────────────────────
-// Call this after sorting PYQ questions when user is not premium
-// Returns { questions, isCapped, totalCount }
-export function applyPyqFreeCap(questions, isPremium) {
-  const totalCount = questions.length;
-  if (isPremium || totalCount <= FREE_PYQ_LIMIT) {
-    return { questions, isCapped: false, totalCount };
-  }
-  return {
-    questions: questions.slice(0, FREE_PYQ_LIMIT),
-    isCapped: true,
-    totalCount
-  };
-}
-
 // ─── User profile ─────────────────────────────────────────────────────────────
 
 export async function saveUserProfile(user) {
@@ -174,7 +160,7 @@ export async function saveUserProfile(user) {
 // ─── Attempts ─────────────────────────────────────────────────────────────────
 
 export async function saveAttempt(userId, examId, questionId, selectedIndex, isCorrect) {
-  if (!questionId) return;
+  if (!questionId) return;   // skip if no id (local-only questions)
   try {
     const ref = doc(db, 'users', userId, 'attempts', `${examId}_${questionId}`);
     await setDoc(ref, { examId, questionId, selectedIndex, isCorrect, attemptedAt: new Date().toISOString() }, { merge: true });
@@ -184,6 +170,8 @@ export async function saveAttempt(userId, examId, questionId, selectedIndex, isC
 }
 
 // ─── Bookmarks ────────────────────────────────────────────────────────────────
+// We store the FULL question object in Firestore so bookmarks work even if
+// questions came from local JSON (no Firestore doc to re-fetch).
 
 export async function addBookmark(userId, question) {
   if (!question || !question.id) {
@@ -194,7 +182,12 @@ export async function addBookmark(userId, question) {
     const examId = question.examId || 'unknown';
     const bookmarkId = `${examId}_${question.id}`;
     const ref = doc(db, 'users', userId, 'bookmarks', bookmarkId);
-    await setDoc(ref, { ...question, examId, savedAt: new Date().toISOString() });
+    await setDoc(ref, {
+      // store full question so we don't need to re-fetch
+      ...question,
+      examId,
+      savedAt: new Date().toISOString()
+    });
     return true;
   } catch (err) {
     console.error('Error adding bookmark:', err);
@@ -235,23 +228,27 @@ export async function fetchBookmarkedQuestions(userId) {
     const ref = collection(db, 'users', userId, 'bookmarks');
     const snap = await getDocs(ref);
 
-    const fullQuestions = [];
-    const legacyRefs   = [];
+    const fullQuestions = [];   // new format — full question stored in bookmark doc
+    const legacyRefs   = [];   // old format — only examId + questionId stored
 
     snap.forEach(docSnap => {
       const data = docSnap.data();
       if (isValidQuestion(data)) {
+        // New format: full question data is embedded in the bookmark doc
         fullQuestions.push({ ...data, id: data.id || docSnap.id });
       } else if (data.examId && data.questionId) {
+        // Old format: bookmark only stored reference IDs — need to fetch question
         legacyRefs.push({ docId: docSnap.id, examId: data.examId, questionId: data.questionId, savedAt: data.savedAt || '' });
       }
     });
 
+    // Fetch old-format bookmarks from Firestore questions collection
     const legacyResults = await Promise.all(
       legacyRefs.map(async bm => {
         try {
           const q = await fetchQuestionById(bm.examId, bm.questionId);
           if (!q) return null;
+          // Migrate: save full question into bookmark doc so future reads are fast
           const bmRef = doc(db, 'users', userId, 'bookmarks', bm.docId);
           setDoc(bmRef, { ...q, examId: bm.examId, savedAt: bm.savedAt }).catch(() => {});
           return { ...q, examId: bm.examId, savedAt: bm.savedAt };
@@ -259,7 +256,12 @@ export async function fetchBookmarkedQuestions(userId) {
       })
     );
 
-    const all = [...fullQuestions, ...legacyResults.filter(Boolean)];
+    const all = [
+      ...fullQuestions,
+      ...legacyResults.filter(Boolean)
+    ];
+
+    // Sort newest first
     all.sort((a, b) => (b.savedAt || '').localeCompare(a.savedAt || ''));
     return all;
   } catch (err) {

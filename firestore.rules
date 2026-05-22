@@ -2,26 +2,19 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper: is admin?
+    // Helper: is admin? (only this email can upload questions/notes)
     function isAdmin() {
       return request.auth != null
         && request.auth.token.email == '112ce0489@gmail.com';
     }
 
-    // Helper: is premium active?
-    function isPremium(userId) {
-      return exists(/databases/$(database)/documents/users/$(userId))
-        && get(/databases/$(database)/documents/users/$(userId)).data.isPremium == true
-        && get(/databases/$(database)/documents/users/$(userId)).data.premiumExpiry > request.time;
-    }
-
-    // Questions: logged-in users can read, only admin can write
+    // Questions: anyone logged in can read, only admin can write
     match /exams/{examId}/questions/{questionId} {
       allow read: if request.auth != null;
       allow write: if isAdmin();
     }
 
-    // Notes: logged-in users can read, only admin can write
+    // Notes: anyone logged in can read, only admin can write
     match /notes/{subjectId} {
       allow read: if request.auth != null;
       allow write: if isAdmin();
