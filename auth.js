@@ -93,16 +93,20 @@ export async function isEmailRegistered(email) {
 
 // ── REGISTRATION — Email + Password ───────────────────────────────────────
 export async function registerWithEmail({ name, email, mobile, password }) {
-  const emailTaken  = await isEmailRegistered(email);
-  if (emailTaken) throw new Error('EMAIL_TAKEN');
-
+  // Only check mobile in Firestore (Firebase Auth doesn't store mobile)
+  // Email uniqueness is enforced by Firebase Auth itself (throws auth/email-already-in-use)
   const mobileTaken = await isMobileRegistered(mobile);
   if (mobileTaken) throw new Error('MOBILE_TAKEN');
 
+  // This throws auth/email-already-in-use if email exists in Firebase Auth
   const cred = await createUserWithEmailAndPassword(auth, email.toLowerCase(), password);
   const user = cred.user;
 
   await updateProfile(user, { displayName: name }).catch(() => {});
+
+  // Force token refresh so Firestore rules see the new auth uid immediately
+  await user.getIdToken(true).catch(() => {});
+
   await saveUserProfile({ uid: user.uid, name, email: email.toLowerCase(), mobile });
 
   return user;
