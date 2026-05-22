@@ -1,299 +1,157 @@
-// gs-notes.js — General Studies & Hindi Notes Module v2
-// Architecture: each GS subject has its own JSON file for detailed notes
-// Flow: Home → GS Subject → Sub-Subject List → Notes (topic chips + cards)
+// payment.js — Razorpay subscription + premium status management
+import { db } from './firebase-config.js';
+import {
+  doc, getDoc, setDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const HI_VERSION = 'v1-hi-notes-1';
+// ── Config ─────────────────────────────────────────────────────────────────
+// Replace with your actual Razorpay Key ID from dashboard.razorpay.com
+const RAZORPAY_KEY_ID = 'rzp_live_XXXXXXXXXXXXXXXX';
 
-// Per-subject cache map
-const _subjectCache = {};
-
-// Subject → JSON file mapping
-const GS_SUBJECT_FILES = {
-  'history':         { file: 'data/gs-history.json',   version: 'v3-hist-2' },
-  'polity':          { file: 'data/gs-polity.json',    version: 'v2-pol-2'  },
-  'geography':       { file: 'data/gs-geography.json', version: 'v2-geo-2'  },
-  'general-science': { file: 'data/gs-science.json',   version: 'v2-sci-2'  },
+const PLANS = {
+  monthly: {
+    id: 'monthly',
+    label: 'Monthly',
+    price: 99,
+    duration_days: 30,
+    badge: '',
+    description: '₹99 / month',
+    razorpay_amount: 9900,  // in paise
+  },
+  yearly: {
+    id: 'yearly',
+    label: 'Yearly',
+    price: 499,
+    duration_days: 365,
+    badge: '🔥 Save 58%',
+    description: '₹499 / year',
+    razorpay_amount: 49900, // in paise
+  }
 };
 
-// Fallback: load from combined gs-notes.json if no dedicated file
-const GS_COMBINED_VERSION = 'v1-gs-notes-1';
-let _gsCombinedCache = null;
+export { PLANS };
 
-// ── Loaders ────────────────────────────────────────────────────────────────
+// ── Premium check ──────────────────────────────────────────────────────────
 
-export async function loadGSNotes(subjectId) {
-  // Return from per-subject cache if available
-  if (_subjectCache[subjectId]) return _subjectCache[subjectId];
-
-  const mapping = GS_SUBJECT_FILES[subjectId];
-  if (mapping) {
-    try {
-      const r = await fetch(mapping.file + '?v=' + mapping.version, { cache: 'no-cache' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const data = await r.json();
-      _subjectCache[subjectId] = data;
-      return data;
-    } catch (e) {
-      console.error('[gs-notes] dedicated file load error for', subjectId, e);
-      // fall through to combined
-    }
-  }
-
-  // Fallback: combined file
+export async function isPremiumUser(uid) {
+  if (!uid) return false;
   try {
-    if (!_gsCombinedCache) {
-      const r = await fetch('data/gs-notes.json?v=' + GS_COMBINED_VERSION, { cache: 'no-cache' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      _gsCombinedCache = await r.json();
-    }
-    const data = _gsCombinedCache[subjectId] || null;
-    if (data) _subjectCache[subjectId] = data;
-    return data;
+    const snap = await getDoc(doc(db, 'users', uid));
+    if (!snap.exists()) return false;
+    const data = snap.data();
+    if (!data.premiumExpiry) return false;
+    // premiumExpiry is a Firestore Timestamp or ISO string
+    const expiry = data.premiumExpiry.toDate
+      ? data.premiumExpiry.toDate()
+      : new Date(data.premiumExpiry);
+    return expiry > new Date();
   } catch (e) {
-    console.error('[gs-notes] combined load error:', e);
-    return null;
+    console.error('[Payment] isPremiumUser error:', e);
+    return false;
   }
 }
 
-let _hiCache = null;
-export async function loadHindiNotes(subjectId) {
+export async function getPremiumExpiry(uid) {
+  if (!uid) return null;
   try {
-    if (!_hiCache) {
-      const r = await fetch('data/hindi-notes.json?v=' + HI_VERSION, { cache: 'no-cache' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      _hiCache = await r.json();
-    }
-    return _hiCache[subjectId] || null;
+    const snap = await getDoc(doc(db, 'users', uid));
+    if (!snap.exists()) return null;
+    const data = snap.data();
+    if (!data.premiumExpiry) return null;
+    return data.premiumExpiry.toDate
+      ? data.premiumExpiry.toDate()
+      : new Date(data.premiumExpiry);
+  } catch { return null; }
+}
+
+// ── Save premium after payment ─────────────────────────────────────────────
+// Called after Razorpay payment success
+async function activatePremium(uid, planId, paymentId, orderId) {
+  const plan = PLANS[planId];
+  if (!plan) throw new Error('Invalid plan');
+
+  const now = new Date();
+  const expiry = new Date(now.getTime() + plan.duration_days * 24 * 60 * 60 * 1000);
+
+  await setDoc(doc(db, 'users', uid), {
+    isPremium: true,
+    premiumPlan: planId,
+    premiumActivatedAt: serverTimestamp(),
+    premiumExpiry: expiry,
+    lastPaymentId: paymentId || null,
+    lastOrderId: orderId || null,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+
+  console.log('[Payment] Premium activated:', planId, 'expires:', expiry);
+  return expiry;
+}
+
+// ── Load Razorpay script ────────────────────────────────────────────────────
+function loadRazorpayScript() {
+  return new Promise((resolve, reject) => {
+    if (window.Razorpay) { resolve(); return; }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = resolve;
+    script.onerror = () => reject(new Error('Failed to load Razorpay'));
+    document.head.appendChild(script);
+  });
+}
+
+// ── Main: open Razorpay checkout ───────────────────────────────────────────
+export async function openPayment({ uid, name, email, mobile, planId, onSuccess, onFailure }) {
+  const plan = PLANS[planId];
+  if (!plan) { onFailure?.('Invalid plan selected'); return; }
+
+  try {
+    await loadRazorpayScript();
   } catch (e) {
-    console.error('[hindi-notes] load error:', e);
-    return null;
-  }
-}
-
-
-/**
- * Get the sub-subjects list for a given GS subject (e.g. all periods of History)
- * Returns array of {id, icon, name, description} or null
- */
-export function getSubSubjects(data) {
-  return data && data.sub_subjects ? data.sub_subjects : null;
-}
-
-/**
- * Get notes data for a specific sub-subject (e.g. Ancient India within History)
- * @param {Object} data - full subject data loaded from JSON
- * @param {string} subId - sub-subject id (e.g. 'ancient')
- */
-export function getSubSubjectData(data, subId) {
-  if (!data || !data[subId]) return null;
-  return data[subId]; // returns {topics: [...], notes: [...]}
-}
-
-// ── Renderer (shared for GS + Hindi) ─────────────────────────────────────
-
-/**
- * @param {Object} data        — subject notes data from JSON
- * @param {string} mainId      — DOM id of the <main> element
- * @param {string} topicBarId  — DOM id of the topic bar container
- * @param {string} placeholderId
- */
-export function renderGSNotesContent(data, mainId, topicBarId, placeholderId, filterTopicId) {
-  const main        = document.getElementById(mainId);
-  const topicBar    = document.getElementById(topicBarId);
-  const placeholder = document.getElementById(placeholderId);
-
-  if (placeholder) placeholder.style.display = 'none';
-
-  // Remove old rendered content
-  const old = document.getElementById(mainId + '-rendered');
-  if (old) old.remove();
-
-  // Build topic chips
-  topicBar.innerHTML = '';
-  if (data.topics && data.topics.length) {
-    _addChip(topicBar, 'All', 'all', true, mainId);
-    data.topics.forEach(t => _addChip(topicBar, t.name, t.id, false, mainId));
-  }
-
-  // Build notes container
-  const wrap = document.createElement('div');
-  wrap.id = mainId + '-rendered';
-  wrap.className = 'notes-container';
-
-  if (!data.notes || !data.notes.length) {
-    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><h3>No content yet</h3></div>';
-    main.appendChild(wrap);
+    onFailure?.('Payment gateway failed to load. Check your internet connection.');
     return;
   }
 
-  data.notes.forEach(section => {
-    if (!section.cards || !section.cards.length) return;
-    const sec = document.createElement('div');
-    sec.className = 'notes-section';
-    sec.setAttribute('data-topic-id', section.topic_id);
-
-    const h3 = document.createElement('h3');
-    h3.className = 'notes-topic-header';
-    h3.textContent = section.topic_name;
-    sec.appendChild(h3);
-
-    section.cards.forEach(c => sec.appendChild(_buildCard(c)));
-    wrap.appendChild(sec);
-  });
-
-  main.appendChild(wrap);
-  // If a specific topic was requested, auto-activate it
-  const initialFilter = filterTopicId || 'all';
-  _applyFilter(wrap, initialFilter);
-
-  // Sync the chip bar to match the initial filter
-  if (filterTopicId) {
-    const bar = document.getElementById(topicBarId);
-    if (bar) {
-      bar.querySelectorAll('.topic-chip').forEach(c => {
-        c.classList.toggle('active', c.textContent.trim() === 'All'
-          ? false
-          : (data.topics || []).find(t => t.id === filterTopicId && t.name === c.textContent.trim()) != null
+  const options = {
+    key: RAZORPAY_KEY_ID,
+    amount: plan.razorpay_amount,
+    currency: 'INR',
+    name: 'AE/JE Civil Exams',
+    description: `Premium ${plan.label} Plan`,
+    image: '', // optional: your app logo URL
+    prefill: {
+      name: name || '',
+      email: email || '',
+      contact: mobile ? `+91${mobile}` : '',
+    },
+    theme: { color: '#3b82f6' },
+    modal: {
+      backdropclose: false,
+      escape: true,
+      animation: true,
+    },
+    handler: async function (response) {
+      // response.razorpay_payment_id, response.razorpay_order_id, response.razorpay_signature
+      try {
+        const expiry = await activatePremium(
+          uid,
+          planId,
+          response.razorpay_payment_id,
+          response.razorpay_order_id || null
         );
-      });
-      // Mark the matching chip active; fallback: keep All active
-      let found = false;
-      bar.querySelectorAll('.topic-chip').forEach(c => {
-        if (!found) {
-          const matchTopic = (data.topics || []).find(t => t.id === filterTopicId);
-          if (matchTopic && c.textContent.trim() === matchTopic.name) {
-            c.classList.add('active');
-            found = true;
-          }
-        }
-      });
-      if (!found) {
-        const allChip = bar.querySelector('.topic-chip');
-        if (allChip) allChip.classList.add('active');
+        onSuccess?.({ expiry, paymentId: response.razorpay_payment_id, planId });
+      } catch (e) {
+        console.error('[Payment] activatePremium error:', e);
+        // Payment succeeded but DB write failed — still show success to user
+        // and retry saving
+        onSuccess?.({ expiry: null, paymentId: response.razorpay_payment_id, planId });
       }
-    }
-  }
-}
+    },
+  };
 
-// ── Internal helpers ───────────────────────────────────────────────────────
-
-function _addChip(bar, label, id, isActive, mainId) {
-  const btn = document.createElement('button');
-  btn.className = 'topic-chip' + (isActive ? ' active' : '');
-  btn.textContent = label;
-  btn.addEventListener('click', () => {
-    bar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
-    btn.classList.add('active');
-    const wrap = document.getElementById(mainId + '-rendered');
-    if (wrap) _applyFilter(wrap, id);
-    // scroll back to top
-    const m = document.getElementById(mainId);
-    if (m) m.scrollTop = 0;
+  const rzp = new window.Razorpay(options);
+  rzp.on('payment.failed', function (response) {
+    console.error('[Payment] Failed:', response.error);
+    onFailure?.(response.error?.description || 'Payment failed. Please try again.');
   });
-  bar.appendChild(btn);
-}
-
-function _applyFilter(wrap, topicId) {
-  wrap.querySelectorAll('.notes-section').forEach(sec => {
-    const tid = sec.getAttribute('data-topic-id');
-    sec.style.display = (topicId === 'all' || tid === topicId) ? '' : 'none';
-  });
-}
-
-function _buildCard(card) {
-  const el = document.createElement('div');
-  el.className = 'notes-card notes-card-' + (card.color || 'blue');
-
-  // Heading
-  const h4 = document.createElement('h4');
-  h4.className = 'notes-card-heading';
-  h4.textContent = card.heading;
-  el.appendChild(h4);
-
-  // Formula blocks
-  if (card.formulas) {
-    card.formulas.forEach(f => {
-      const d = document.createElement('div');
-      d.className = 'notes-formula';
-      const lbl = document.createElement('div');
-      lbl.className = 'notes-formula-label';
-      lbl.textContent = f.label;
-      d.appendChild(lbl);
-      const pre = document.createElement('pre');
-      pre.className = 'notes-formula-text';
-      pre.textContent = f.text;
-      d.appendChild(pre);
-      el.appendChild(d);
-    });
-  }
-
-  // Points
-  if (card.points && card.points.length) {
-    const ul = document.createElement('ul');
-    ul.className = 'notes-points';
-    card.points.forEach(p => {
-      const li = document.createElement('li');
-      // Support inline highlighting: **text** → yellow highlight
-      li.innerHTML = _parseHighlights(p);
-      ul.appendChild(li);
-    });
-    el.appendChild(ul);
-  }
-
-  // Table
-  if (card.table) {
-    const tw = document.createElement('div');
-    tw.className = 'notes-table-wrapper';
-    const tbl = document.createElement('table');
-    tbl.className = 'notes-table';
-
-    const thead = document.createElement('thead');
-    const hr = document.createElement('tr');
-    card.table.headers.forEach(h => {
-      const th = document.createElement('th');
-      th.textContent = h;
-      hr.appendChild(th);
-    });
-    thead.appendChild(hr);
-    tbl.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
-    card.table.rows.forEach(row => {
-      const tr = document.createElement('tr');
-      row.forEach((cell, ci) => {
-        const td = document.createElement('td');
-        // First column gets accent color
-        if (ci === 0) td.style.color = 'var(--accent)';
-        td.innerHTML = _parseHighlights(cell);
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-    tbl.appendChild(tbody);
-    tw.appendChild(tbl);
-    el.appendChild(tw);
-  }
-
-  // Alert / important note — shown in coloured box
-  if (card.alert) {
-    const a = document.createElement('div');
-    a.className = 'notes-alert';
-    a.innerHTML = _parseHighlights(card.alert);
-    el.appendChild(a);
-  }
-
-  return el;
-}
-
-// Parse **text** → highlighted span, and ★/⭐ lines get special treatment
-function _parseHighlights(str) {
-  if (!str) return '';
-  // Escape HTML first
-  const escaped = str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-  // Bold **text** → yellow highlight
-  return escaped.replace(/\*\*(.+?)\*\*/g,
-    '<span class="hi-yellow">$1</span>');
+  rzp.open();
 }

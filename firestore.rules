@@ -1,45 +1,90 @@
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
+// quiz.js — Quiz engine. Pure logic.
+let state = {
+  questions: [],
+  currentIndex: 0,
+  selectedIndex: null,
+  answered: false,
+  bookmarked: new Set()
+};
 
-    // Helper: is admin?
-    function isAdmin() {
-      return request.auth != null
-        && request.auth.token.email == '112ce0489@gmail.com';
-    }
+export function startQuiz(questions) {
+  state.questions = questions;
+  state.currentIndex = 0;
+  state.selectedIndex = null;
+  state.answered = false;
+}
 
-    // Helper: is premium active?
-    function isPremium(userId) {
-      return exists(/databases/$(database)/documents/users/$(userId))
-        && get(/databases/$(database)/documents/users/$(userId)).data.isPremium == true
-        && get(/databases/$(database)/documents/users/$(userId)).data.premiumExpiry > request.time;
-    }
+export function getCurrent() {
+  return state.questions[state.currentIndex] || null;
+}
 
-    // Questions: logged-in users can read, only admin can write
-    match /exams/{examId}/questions/{questionId} {
-      allow read: if request.auth != null;
-      allow write: if isAdmin();
-    }
+export function getProgress() {
+  return {
+    current: state.currentIndex + 1,
+    total: state.questions.length
+  };
+}
 
-    // Notes: logged-in users can read, only admin can write
-    match /notes/{subjectId} {
-      allow read: if request.auth != null;
-      allow write: if isAdmin();
-    }
+export function selectOption(index) {
+  if (state.answered) return null;
+  state.selectedIndex = index;
+  state.answered = true;
+  const q = getCurrent();
+  return {
+    isCorrect: index === q.answer,
+    correctIndex: q.answer
+  };
+}
 
-    // User profile: only the user can read/write their own data
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+export function next() {
+  if (state.currentIndex < state.questions.length - 1) {
+    state.currentIndex++;
+    state.selectedIndex = null;
+    state.answered = false;
+    return true;
+  }
+  return false;
+}
 
-      // Subcollections (attempts, bookmarks, etc.)
-      match /{subCollection}/{docId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
-      }
-    }
+export function prev() {
+  if (state.currentIndex > 0) {
+    state.currentIndex--;
+    state.selectedIndex = null;
+    state.answered = false;
+    return true;
+  }
+  return false;
+}
 
-    // Default: deny everything else
-    match /{document=**} {
-      allow read, write: if false;
-    }
+export function isBookmarked(qId) {
+  return state.bookmarked.has(qId);
+}
+
+export function toggleBookmark(qId) {
+  if (state.bookmarked.has(qId)) {
+    state.bookmarked.delete(qId);
+    return false;
+  }
+  state.bookmarked.add(qId);
+  return true;
+}
+
+// Replace the active question set (used by topic filter chip inside quiz)
+export function resetToQuestions(questions) {
+  state.questions = questions;
+  state.currentIndex = 0;
+  state.selectedIndex = null;
+  state.answered = false;
+}
+
+export function getAllQuestions() {
+  return state.questions;
+}
+
+export function jumpTo(index) {
+  if (index >= 0 && index < state.questions.length) {
+    state.currentIndex = index;
+    state.selectedIndex = null;
+    state.answered = false;
   }
 }

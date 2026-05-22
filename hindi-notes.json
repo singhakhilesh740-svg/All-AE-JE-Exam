@@ -1,2033 +1,1041 @@
-{
-  "sub_subjects": [
-    {
-      "id": "physical",
-      "icon": "⛰️",
-      "name": "Physical Features",
-      "description": "Mountains · Plateaus · Plains · Coastal regions · Islands"
-    },
-    {
-      "id": "climate",
-      "icon": "🌦️",
-      "name": "Climate of India",
-      "description": "Monsoon · Seasons · Rainfall · Cyclones · Climate zones"
-    },
-    {
-      "id": "rivers",
-      "icon": "🌊",
-      "name": "Rivers and Drainage",
-      "description": "Himalayan rivers · Peninsular rivers · Lakes · Waterfalls"
-    },
-    {
-      "id": "soils",
-      "icon": "🌱",
-      "name": "Soils and Vegetation",
-      "description": "8 soil types · Natural vegetation · Forest types · Biomes"
-    },
-    {
-      "id": "resources",
-      "icon": "⛏️",
-      "name": "Natural Resources and Minerals",
-      "description": "Coal · Iron ore · Petroleum · Minerals · Distribution"
-    },
-    {
-      "id": "agriculture",
-      "icon": "🌾",
-      "name": "Agriculture",
-      "description": "Kharif · Rabi · Zaid · Major crops · Irrigation · Green Revolution"
-    },
-    {
-      "id": "industry",
-      "icon": "🏭",
-      "name": "Industry and Transport",
-      "description": "Iron and steel · Textiles · IT · Railways · Ports · Highways"
-    },
-    {
-      "id": "population",
-      "icon": "👥",
-      "name": "Population and Census",
-      "description": "Census 2011 · Literacy · Sex ratio · Density · Migration"
-    },
-    {
-      "id": "world",
-      "icon": "🌍",
-      "name": "World Geography",
-      "description": "Continents · Oceans · Climate zones · Biomes · Countries"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin — All AE/JE Civil Exams</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
+    .container{max-width:900px;margin:0 auto}
+    h1{color:#f59e0b;font-size:22px;margin-bottom:4px}
+    .sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
+    .panel{background:#1e293b;padding:18px;border-radius:12px;margin-bottom:14px;border:1px solid #334155}
+    .panel-title{font-size:11px;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+    label{font-size:13px;color:#94a3b8;display:block;margin-bottom:4px;margin-top:10px}
+    label:first-child{margin-top:0}
+    select,input[type=number],input[type=text]{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:14px;font-family:inherit}
+    select:focus,input:focus{outline:none;border-color:#f59e0b}
+    textarea{width:100%;background:#0a1122;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:12px;font-family:'Courier New',monospace;font-size:12.5px;resize:vertical;line-height:1.6;min-height:200px}
+    textarea:focus{outline:none;border-color:#f59e0b}
+    .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    button{padding:9px 16px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;transition:opacity .15s}
+    button:active{opacity:.8}
+    .btn-primary{background:#f59e0b;color:#1f2937}
+    .btn-secondary{background:#334155;color:#f1f5f9}
+    .btn-danger{background:#ef4444;color:#fff}
+    .btn-blue{background:#1e3a5f;color:#93c5fd;border:1px solid #3b82f6}
+    .btn-green{background:#064e3b;color:#6ee7b7;border:1px solid #10b981}
+    /* Type tabs */
+    .type-tabs{display:flex;gap:8px;margin-bottom:12px}
+    .type-tab{flex:1;padding:10px 8px;border-radius:8px;border:2px solid #334155;background:#0f172a;color:#94a3b8;font-weight:600;font-size:13px;cursor:pointer;text-align:center;transition:all .15s;line-height:1.4}
+    .type-tab.active.pyq{border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,.08)}
+    .type-tab.active.practice{border-color:#10b981;color:#10b981;background:rgba(16,185,129,.08)}
+    /* Stats */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .stat{background:#0f172a;padding:10px 6px;border-radius:8px;text-align:center;border:1px solid #334155}
+    .stat-num{font-size:22px;font-weight:700;color:#f59e0b}
+    .stat-lbl{font-size:10px;color:#64748b;text-transform:uppercase;margin-top:2px}
+    /* Progress */
+    .progress-wrap{background:#0f172a;border-radius:4px;height:8px;margin-top:10px;overflow:hidden}
+    .progress-fill{background:#f59e0b;height:8px;border-radius:4px;width:0%;transition:width .3s}
+    /* Log */
+    .log{background:#0a1122;padding:12px;border-radius:8px;border:1px solid #1e3a5f;font-family:'Courier New',monospace;font-size:12px;max-height:220px;overflow-y:auto;white-space:pre-wrap;line-height:1.6}
+    .ok{color:#10b981}.err{color:#ef4444}.warn{color:#f59e0b}.info{color:#94a3b8}
+    /* Topic pill grid */
+    .topic-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    .topic-pill{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;background:#0f172a;border:1px solid #334155;color:#94a3b8;cursor:pointer;transition:all .15s}
+    .topic-pill.selected{background:#f59e0b;color:#1f2937;border-color:#f59e0b}
+    /* Ref table */
+    .ref-grid{display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto}
+    .ref-row{display:flex;align-items:center;justify-content:space-between;background:#0f172a;padding:6px 10px;border-radius:6px;border:1px solid #1e293b}
+    .ref-id{font-family:'Courier New',monospace;color:#f59e0b;font-size:11px;font-weight:700}
+    .ref-name{font-size:12px;color:#94a3b8}
+    /* Info box */
+    .info-box{border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.6;margin-top:10px}
+    .info-pyq{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);color:#fbbf24}
+    .info-practice{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
+    /* Breakdown */
+    .breakdown-row{display:flex;align-items:center;gap:8px;background:#0f172a;padding:7px 10px;border-radius:6px;margin-bottom:4px}
+    .breakdown-name{flex:1;font-size:12px;color:#e2e8f0}
+    .breakdown-bar-wrap{width:90px;background:#1e293b;border-radius:3px;height:5px}
+    .breakdown-bar{height:5px;border-radius:3px;background:#f59e0b}
+    .breakdown-count{font-size:12px;color:#f59e0b;font-weight:700;min-width:28px;text-align:right}
+    .breakdown-types{font-size:10px;color:#64748b;min-width:100px;text-align:right}
+    .login-wrap{text-align:center;padding:50px 20px}
+    .login-wrap p{color:#94a3b8;margin-bottom:20px;font-size:15px}
+    .hidden{display:none!important}
+    code{background:#0f172a;padding:2px 6px;border-radius:4px;font-size:11px;color:#f59e0b}
+    #examRow.hidden{display:none!important}
+    /* Question preview cards */
+    .preview-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;margin-top:10px}
+    .preview-card{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px}
+    .preview-card.valid{border-left:3px solid #10b981}
+    .preview-card.invalid{border-left:3px solid #ef4444}
+    .preview-q{font-size:13px;color:#f1f5f9;margin-bottom:6px}
+    .preview-meta{display:flex;flex-wrap:wrap;gap:5px}
+    .preview-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600}
+    .tag-topic{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3)}
+    .tag-subject{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+    .tag-err{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+    .tag-ans{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>📋 Admin Panel</h1>
+  <p class="sub">Upload PYQ &amp; Practice questions · Auto topic-tagging · Validates before saving</p>
+
+  <!-- LOGIN -->
+  <div id="loginPanel" class="panel login-wrap">
+    <p>Sign in with admin Google account to upload questions.</p>
+    <button class="btn-primary" id="loginBtn">🔐 Login with Google</button>
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid #334155">
+      <p style="font-size:12px;color:#64748b;margin-bottom:10px">— or use PIN to bypass login —</p>
+      <div style="display:flex;gap:8px;justify-content:center;max-width:280px;margin:0 auto">
+        <input type="password" id="pinInput" placeholder="Enter admin PIN" maxlength="8"
+          style="flex:1;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:14px;font-family:inherit;text-align:center;letter-spacing:4px"/>
+        <button class="btn-secondary" id="pinBtn" style="white-space:nowrap">🔑 Enter</button>
+      </div>
+      <p id="pinErr" style="color:#ef4444;font-size:12px;margin-top:8px;display:none">Wrong PIN</p>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainPanel" class="hidden">
+
+    <!-- STEP 1 -->
+    <div class="panel">
+      <div class="panel-title">Step 1 — Select Type</div>
+      <div class="type-tabs">
+        <div class="type-tab pyq active" data-type="pyq">📜 PYQ<br><small style="font-weight:400;font-size:11px">Previous Year Questions</small></div>
+        <div class="type-tab practice" data-type="practice">✏️ Practice<br><small style="font-weight:400;font-size:11px">Important Practice Qs</small></div>
+      </div>
+
+      <!-- PYQ options -->
+      <div id="pyqOptions">
+        <div class="info-box info-pyq">📌 PYQ — each question needs <code>subject</code>, <code>year</code>. Topic auto-tagged or add manually.</div>
+        <div id="examRow">
+          <label>Exam</label>
+          <select id="examSel"></select>
+        </div>
+        <label>Default Year</label>
+        <input type="number" id="yearInput" value="2024" min="1990" max="2030"/>
+      </div>
+
+      <!-- Practice options -->
+      <div id="practiceOptions" class="hidden">
+        <div class="info-box info-practice">📌 Practice — select Subject &amp; Topic. Questions appear under that topic chip in the app.</div>
+        <label>Subject</label>
+        <select id="subjectSel"></select>
+        <label>Topic <small style="color:#64748b">(click to select — "All" = shows under every chip)</small></label>
+        <div id="topicPills" class="topic-pills"></div>
+        <input type="hidden" id="topicVal" value="all"/>
+      </div>
+    </div>
+
+    <!-- STEP 2: Paste JSON -->
+    <div class="panel">
+      <div class="panel-title">Step 2 — Paste Questions JSON</div>
+      <div id="pyqFormat" style="font-size:12px;color:#64748b;margin-bottom:8px;line-height:1.8">
+        Required: <code>question</code>, <code>options[]</code>, <code>answer</code> (0-based), <code>subject</code>, <code>year</code><br>
+        Optional: <code>explanation</code>, <code>topic</code> (auto-assigned if omitted), <code>difficulty</code>
+      </div>
+      <div id="practiceFormat" class="hidden" style="font-size:12px;color:#64748b;margin-bottom:8px;line-height:1.8">
+        Required: <code>question</code>, <code>options[]</code>, <code>answer</code> (0-based)<br>
+        Optional: <code>explanation</code> — topic &amp; subject set from dropdowns above
+      </div>
+      <textarea id="jsonInput" placeholder="Paste your JSON array here..."></textarea>
+      <div class="btn-row">
+        <button class="btn-secondary" id="templateBtn">📄 Template</button>
+        <button class="btn-blue" id="validateBtn">✅ Validate &amp; Preview</button>
+        <button class="btn-primary" id="uploadBtn">⬆️ Upload to Firestore</button>
+      </div>
+      <div class="progress-wrap hidden" id="progressWrap">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Preview -->
+    <div class="panel" id="previewPanel" style="display:none">
+      <div class="panel-title">Preview — Validated Questions</div>
+      <div class="stats" style="margin-bottom:10px">
+        <div class="stat"><div class="stat-num" id="statParsed">0</div><div class="stat-lbl">Parsed</div></div>
+        <div class="stat"><div class="stat-num" id="statValid">0</div><div class="stat-lbl">Valid</div></div>
+        <div class="stat"><div class="stat-num" id="statSkipped">0</div><div class="stat-lbl">Skipped</div></div>
+        <div class="stat"><div class="stat-num" id="statUploaded">0</div><div class="stat-lbl">Uploaded</div></div>
+      </div>
+      <div id="previewList" class="preview-list"></div>
+    </div>
+
+    <!-- Subject Reference -->
+    <div class="panel">
+      <div class="panel-title">Subject &amp; Topic IDs Reference</div>
+      <div class="ref-grid" id="subjectRef"></div>
+    </div>
+
+    <!-- Firestore Stats & Delete -->
+    <div class="panel">
+      <div class="panel-title">Firestore Stats</div>
+
+      <!-- Grand Total Bar (always visible) -->
+      <div id="grandTotalBar" style="background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;flex:0 0 100%;margin-bottom:2px">Grand Total — All Exams</div>
+        <div style="flex:1;min-width:80px;text-align:center">
+          <div id="gtTotal" style="font-size:28px;font-weight:800;color:#60a5fa;line-height:1">—</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">Total</div>
+        </div>
+        <div style="flex:1;min-width:80px;text-align:center">
+          <div id="gtPyq" style="font-size:28px;font-weight:800;color:#a78bfa;line-height:1">—</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">PYQ</div>
+        </div>
+        <div style="flex:1;min-width:80px;text-align:center">
+          <div id="gtPractice" style="font-size:28px;font-weight:800;color:#10b981;line-height:1">—</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">Practice</div>
+        </div>
+        <div style="flex:1;min-width:80px;text-align:center">
+          <div id="gtExams" style="font-size:28px;font-weight:800;color:#f59e0b;line-height:1">—</div>
+          <div style="font-size:11px;color:#64748b;margin-top:2px">Exams</div>
+        </div>
+        <button class="btn-blue" id="loadGrandTotalBtn" style="flex:0 0 auto;font-size:12px;padding:7px 14px">🔄 Refresh</button>
+      </div>
+
+      <!-- PYQ Exam-wise Breakdown -->
+      <div id="pyqBreakdownWrap" style="display:none;background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:12px 16px;margin-bottom:10px">
+        <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">PYQ — Exam-wise Breakdown</div>
+        <div id="pyqBreakdownList"></div>
+      </div>
+
+      <!-- Per-exam breakdown -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+        <select id="statsExamSel" style="flex:1"></select>
+        <button class="btn-blue" id="loadStatsBtn">🔄 Load Stats</button>
+      </div>
+      <div class="stats" style="margin-bottom:10px">
+        <div class="stat"><div class="stat-num" id="fsTotal">—</div><div class="stat-lbl">Total</div></div>
+        <div class="stat"><div class="stat-num" id="fsPyq">—</div><div class="stat-lbl">PYQ</div></div>
+        <div class="stat"><div class="stat-num" id="fsPractice">—</div><div class="stat-lbl">Practice</div></div>
+        <div class="stat"><div class="stat-num" id="fsOther">—</div><div class="stat-lbl">Other</div></div>
+      </div>
+      <div id="breakdownWrap" class="hidden"></div>
+    </div>
+
+    <!-- Delete Questions -->
+    <div class="panel">
+      <div class="panel-title">🗑 Delete Questions</div>
+      <p style="font-size:12px;color:#94a3b8;margin-bottom:12px">Double confirmation required. Cannot be undone.</p>
+
+      <!-- Step 1: Choose type -->
+      <label>What to delete?</label>
+      <div style="display:flex;gap:8px;margin-top:6px;margin-bottom:14px">
+        <button class="type-tab active" id="delTypePractice" data-dtype="practice" style="flex:1;padding:10px;font-size:13px">✏️ Practice</button>
+        <button class="type-tab" id="delTypePyq" data-dtype="pyq" style="flex:1;padding:10px;font-size:13px">📜 PYQ</button>
+      </div>
+
+      <!-- ══ PRACTICE SECTION ══════════════════════════════════════════════ -->
+      <div id="delPracticeSection">
+
+        <!-- Practice: Exam selector -->
+        <label>Exam</label>
+        <select id="delPracExamSel" style="margin-bottom:10px"></select>
+
+        <!-- Practice: Subject checkboxes -->
+        <label>Select Subject(s)</label>
+        <div id="delSubjectList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:240px;overflow-y:auto"></div>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <button class="btn-secondary" id="delSelectAll" style="font-size:12px;padding:7px 12px">☑ All</button>
+          <button class="btn-secondary" id="delClearAll" style="font-size:12px;padding:7px 12px">☐ None</button>
+        </div>
+
+        <!-- Practice: All or by Q number -->
+        <label style="margin-top:12px">Delete scope</label>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button class="type-tab active" id="delPracScopeAll" data-pracscope="all" style="flex:1;font-size:12px;padding:8px">🗑 All Questions</button>
+          <button class="type-tab" id="delPracScopeQnum" data-pracscope="qnum" style="flex:1;font-size:12px;padding:8px">🔢 By Q Number</button>
+        </div>
+        <div id="delPracQnumSec" style="display:none;margin-top:10px">
+          <input id="delPracQnums" type="text" placeholder="e.g. 1,5,12,23 or 1-10"
+            style="width:100%;padding:9px 12px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:13px;box-sizing:border-box"/>
+          <p style="font-size:11px;color:#64748b;margin-top:4px">Enter question numbers separated by commas, or a range like 1-10</p>
+        </div>
+
+        <!-- Practice: Preview -->
+        <button class="btn-secondary" id="delPracPreviewBtn" style="width:100%;margin-top:10px;font-size:12px">🔍 Preview Count</button>
+        <div id="delPracPreview" style="margin-top:6px;font-size:12px;color:#94a3b8;min-height:16px"></div>
+      </div>
+
+      <!-- ══ PYQ SECTION ════════════════════════════════════════════════════ -->
+      <div id="delPyqSection" style="display:none">
+
+        <!-- PYQ Step 1: Select Exam to load papers -->
+        <label>Select Exam to load papers</label>
+        <div style="display:flex;gap:8px;margin-bottom:10px;margin-top:6px">
+          <select id="delPyqExamSel" style="flex:1"></select>
+          <button class="btn-blue" id="delPyqLoadBtn" style="font-size:12px;padding:7px 14px;white-space:nowrap">Load Papers</button>
+        </div>
+
+        <!-- PYQ Step 2: Checkboxes for multiple papers -->
+        <label>Select Paper(s) to Delete <span style="color:#64748b;font-size:11px">(can select multiple)</span></label>
+        <div style="display:flex;gap:8px;margin:6px 0 8px">
+          <button class="btn-secondary" id="delPyqSelectAll" style="font-size:11px;padding:5px 10px">☑ All</button>
+          <button class="btn-secondary" id="delPyqClearAll"  style="font-size:11px;padding:5px 10px">☐ None</button>
+        </div>
+        <div id="delPyqPaperList" style="display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto;background:#0a1122;border-radius:8px;padding:8px;border:1px solid #1e293b">
+          <p style="font-size:12px;color:#64748b;padding:4px">← Select an exam above and click Load Papers</p>
+        </div>
+        <div id="delPyqSelectedCount" style="font-size:11px;color:#f59e0b;margin-top:6px"></div>
+
+        <!-- PYQ Step 3: All or by Q number -->
+        <label style="margin-top:12px">Delete scope</label>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <button class="type-tab active" id="delPyqScopeAll" data-pyqscope="all" style="flex:1;font-size:12px;padding:8px">🗑 All Questions</button>
+          <button class="type-tab" id="delPyqScopeQnum" data-pyqscope="qnum" style="flex:1;font-size:12px;padding:8px">🔢 By Q Number</button>
+        </div>
+        <div id="delPyqQnumSec" style="display:none;margin-top:10px">
+          <input id="delPyqQnums" type="text" placeholder="e.g. 1,5,12,23 or 1-10"
+            style="width:100%;padding:9px 12px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:13px;box-sizing:border-box"/>
+          <p style="font-size:11px;color:#64748b;margin-top:4px">Enter question numbers (q_num field) separated by commas, or a range</p>
+        </div>
+
+        <!-- PYQ: Preview -->
+        <button class="btn-secondary" id="delPyqPreviewBtn" style="width:100%;margin-top:10px;font-size:12px">🔍 Preview Count</button>
+        <div id="delPyqExamYearPreview" style="margin-top:6px;font-size:12px;color:#94a3b8;min-height:16px"></div>
+      </div>
+
+      <button class="btn-danger" id="delExecuteBtn" style="width:100%;margin-top:14px">🗑 Delete Selected</button>
+      <div id="delPreview" style="margin-top:10px;font-size:12px;color:#f59e0b;min-height:18px;text-align:center"></div>
+    </div>
+
+    <!-- Log -->
+    <div class="panel">
+      <div class="panel-title">Log</div>
+      <div class="log" id="log">Ready.</div>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn-secondary" id="clearLogBtn">Clear Log</button>
+        <button class="btn-danger" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import { auth, db, googleProvider } from '../js/firebase-config.js';
+import { EXAMS } from '../js/exams.js';
+import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from '../js/subjects.js';
+import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { doc, writeBatch, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const ADMIN_EMAILS = ['112ce0489@gmail.com'];
+const ALL_SUBJECTS = SUBJECTS_UPPSC_MAINS;
+const VALID_IDS = ALL_SUBJECTS.map(s => s.id);
+
+const $ = id => document.getElementById(id);
+let selectedType = 'pyq';
+let selectedTopic = 'all';
+let validatedQuestions = [];
+
+// ── Log ──────────────────────────────────────────────────────────────────
+function log(msg, type='info') {
+  const el = $('log');
+  const cls = {ok:'ok',err:'err',warn:'warn',info:'info'}[type]||'info';
+  el.innerHTML += `<span class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}\n</span>`;
+  el.scrollTop = el.scrollHeight;
+}
+$('clearLogBtn').onclick = () => { $('log').innerHTML = 'Log cleared.\n'; };
+
+// ── Auth ──────────────────────────────────────────────────────────────────
+const ADMIN_PIN = '1947';   // ← change this to your secret PIN
+
+function enterAdmin(email) {
+  $('loginPanel').classList.add('hidden');
+  $('mainPanel').classList.remove('hidden');
+  log(`✅ Signed in as ${email}`, 'ok');
+  initUI();
+  setTimeout(loadGrandTotal, 800);
+}
+
+onAuthStateChanged(auth, user => {
+  if (user && ADMIN_EMAILS.includes(user.email)) {
+    enterAdmin(user.email);
+  } else if (user) {
+    log(`⛔ Access denied for ${user.email}`, 'err');
+    signOut(auth);
+  } else {
+    // Check if already PIN-unlocked in this session
+    if (sessionStorage.getItem('adminPin') === ADMIN_PIN) {
+      enterAdmin('pin-admin');
+    } else {
+      $('loginPanel').classList.remove('hidden');
+      $('mainPanel').classList.add('hidden');
     }
-  ],
-  "physical": {
-    "topics": [
-      {
-        "id": "himalayas",
-        "name": "Himalayan Mountains"
-      },
-      {
-        "id": "plateaus",
-        "name": "Peninsular Plateau and Deccan"
-      },
-      {
-        "id": "plains",
-        "name": "Northern Plains and Thar Desert"
-      },
-      {
-        "id": "coastal",
-        "name": "Coastal Plains and Islands"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "himalayas",
-        "topic_name": "Himalayan Mountains",
-        "cards": [
-          {
-            "heading": "Himalayas — Structure and Key Facts",
-            "color": "blue",
-            "points": [
-              "Formed by: Collision of Indian Plate (northward moving) with Eurasian Plate; Tethys Sea sediments folded upward; youngest fold mountains in the world; still rising (active orogeny)",
-              "Length: 2,500 km from Indus gorge (west) to Brahmaputra gorge (east); width 150–400 km; covers 5 lakh sq km",
-              "Three parallel ranges (west to east and north to south):",
-              "1. Himadri (Greater Himalaya/Inner Himalaya): Highest peaks; perennially snow-covered; average elevation 6,000m; Mt. Everest (8,849m — Nepal), Kanchenjunga (8,586m — Sikkim-Nepal; highest peak in India), K2/Godwin Austen (8,611m — POK; 2nd highest in world)",
-              "2. Himachal (Lesser Himalaya/Middle Himalaya): 3,700–4,500m; Mussoorie, Shimla, Nainital, Ranikhet; Pir Panjal range; Dhauladhar range; Valley of Kashmir here",
-              "3. Shiwaliks (Outer Himalaya/Sub-Himalaya): 900–1,100m; FOOTHILLS; Doons/Duars (longitudinal valleys between Shiwaliks and Lesser Himalaya) — Dehra Dun, Patli Dun, Kota Dun",
-              "Trans-Himalaya (beyond main range): Karakoram range (K2); Ladakh range; Zanskar range; these are older and harder rocks",
-              "Himalayan passes (important): Karakoram Pass (Ladakh — highest motorable pass in world — DISPUTED; Khardung La also claims this); Rohtang Pass (Himachal Pradesh); Zoji La (J&K; connects Srinagar with Ladakh); Nathu La (Sikkim; India-China trade); Bom Di La (Arunachal Pradesh)",
-              "Western extensions: Hindukush and Sulaiman ranges (Pakistan/Afghanistan); Arakan Yoma (Myanmar) = eastern extension of Himalaya"
-            ],
-            "alert": "⭐ Kanchenjunga (8,586m) = HIGHEST PEAK in India; K2 (8,611m) = in Pakistan-occupied Kashmir — so sometimes excluded from 'India's peaks'. Mt. Everest = Nepal (not India). Himalayas are FOLD mountains (not volcanic). Indus-Ganga Plain = formed by alluvium deposited by Himalayan rivers = most fertile region. Himalayas act as climate barrier — blocking cold Central Asian winds and forcing monsoon to rain."
-          },
-          {
-            "heading": "Major Himalayan Sub-Regions and States",
-            "color": "green",
-            "table": {
-              "headers": [
-                "Region",
-                "States",
-                "Key Features"
-              ],
-              "rows": [
-                [
-                  "Kashmir Himalaya",
-                  "J&K",
-                  "Dal Lake; Jhelum river valley; Karewa soils (saffron cultivation); highest density of glaciers; Wular lake (largest freshwater lake in India)"
-                ],
-                [
-                  "Himachal Himalaya",
-                  "Himachal Pradesh, Uttarakhand",
-                  "Shimla; apple orchards; Kullu-Manali; Spiti Valley; Rohtang Pass; Corbett National Park (first NP in India 1936); Gangotri glacier"
-                ],
-                [
-                  "Darjeeling Himalaya",
-                  "West Bengal (Darjeeling)",
-                  "Darjeeling tea (India's 1st GI tag); Kanchenjunga NP; Terai plains at foothills"
-                ],
-                [
-                  "Sikkim Himalaya",
-                  "Sikkim",
-                  "Kanchenjunga (highest in India); Zemu glacier; only UNESCO Mixed WHS in India (Khangchendzonga NP)"
-                ],
-                [
-                  "Arunachal Himalaya",
-                  "Arunachal Pradesh",
-                  "Bom Di La pass; McMahon Line; Brahmaputra gorges; Namdapha NP"
-                ],
-                [
-                  "Meghalaya Plateau",
-                  "Meghalaya",
-                  "Shillong Plateau — detached from main Peninsular Plateau; Cherrapunji+Mawsynram (wettest places on Earth); Garo, Khasi, Jaintia Hills"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "plateaus",
-        "topic_name": "Peninsular Plateau and Deccan",
-        "cards": [
-          {
-            "heading": "Peninsular Plateau — Complete Coverage",
-            "color": "purple",
-            "points": [
-              "Oldest and most stable landmass of India; part of ancient Gondwana land; composed of old crystalline igneous and metamorphic rocks",
-              "Two parts: Central Highlands (north of Narmada river) + Deccan Plateau (south of Narmada river)",
-              "Central Highlands: Aravalli range (oldest fold mountains in India; runs NE-SW from Delhi to Gujarat; Guru Shikhar 1722m = highest peak in Aravallis and in Rajasthan); Vindhya range; Satpura range; Chota Nagpur Plateau",
-              "Chota Nagpur Plateau (Jharkhand): Rich mineral belt — iron ore (Singhbhum), coal (Jharia, Bokaro, Raniganj), copper, mica; Damodar river valley; Jharia = largest coalfield in India",
-              "Deccan Plateau: Triangular; bounded by Western Ghats (west), Eastern Ghats (east), Satpura+Vindhya (north); tilts slightly east (rivers flow east); composed of basalt in northwestern part (Deccan Traps)",
-              "Deccan Traps: Northwestern Deccan (Maharashtra, Gujarat, MP, AP); formed by volcanic lava flows 65 million years ago (Cretaceous period — same time as dinosaur extinction); covers 5 lakh sq km; lava created BLACK COTTON SOIL (regur) = fertile for cotton",
-              "Western Ghats (Sahyadri): Runs along west coast; continuous; average 1000–1500m; highest = Anamudi (2695m) in Kerala = highest peak in South India; UNESCO WHS (biodiversity hotspot); source of peninsular rivers flowing east; rainfall on western side = high; eastern side (rain shadow) = less rainfall",
-              "Eastern Ghats: Discontinuous; broken by rivers (Mahanadi, Godavari, Krishna, Cauvery); average 600m; Mahendragiri (1501m in Odisha = highest in Eastern Ghats)"
-            ],
-            "table": {
-              "headers": [
-                "Mountain Range",
-                "Location",
-                "Highest Peak",
-                "Key Fact"
-              ],
-              "rows": [
-                [
-                  "Aravalli",
-                  "Rajasthan + Haryana + Gujarat",
-                  "Guru Shikhar (1722m)",
-                  "Oldest fold mountains in India; Delhi Ridge is northern extension"
-                ],
-                [
-                  "Vindhya",
-                  "MP + UP border",
-                  "Sad Bhawna (752m)",
-                  "N-S boundary of Deccan Plateau; Narmada flows along its southern edge"
-                ],
-                [
-                  "Satpura",
-                  "MP + Maharashtra",
-                  "Dhupgarh (1350m) in MP",
-                  "Block mountains; Pachmarhi = only hill station in MP; Project Tiger reserve"
-                ],
-                [
-                  "Western Ghats",
-                  "Kerala + Karnataka + TN + Goa + Maharashtra",
-                  "Anamudi (2695m) in Kerala",
-                  "UNESCO WHS; biodiversity hotspot; highest rainfall; source of Kaveri, Krishna, Godavari"
-                ],
-                [
-                  "Eastern Ghats",
-                  "Odisha + AP + TN",
-                  "Mahendragiri (1501m) in Odisha",
-                  "Discontinuous; broken by rivers; much lower than Western Ghats"
-                ],
-                [
-                  "Nilgiri Hills",
-                  "TN + Kerala + Karnataka junction",
-                  "Doddabetta (2637m)",
-                  "Joins Western and Eastern Ghats; Ooty (Udhagamandalam) hill station"
-                ],
-                [
-                  "Cardamom Hills",
-                  "Kerala + TN",
-                  "Agasthyamalai (1868m)",
-                  "Southernmost; Agasthyamalai Biosphere Reserve; cardamom cultivation"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "plains",
-        "topic_name": "Northern Plains and Thar Desert",
-        "cards": [
-          {
-            "heading": "Northern Plains (Indo-Gangetic Plains)",
-            "color": "orange",
-            "points": [
-              "Formation: Alluvial deposits of Himalayan rivers (Indus, Ganga, Brahmaputra and their tributaries) over millions of years in the geosyncline between Himalayas and Peninsular Plateau",
-              "Area: 7 lakh sq km; length 2,400 km (Indus to Brahmaputra); width 150–300 km",
-              "Most fertile region of India; most densely populated; major agricultural zone",
-              "Three sections: Punjab-Haryana Plain (Indus basin; level; wheat+rice); Ganga Plain (main; Bihar to UP; most fertile; rice+wheat+sugarcane); Brahmaputra Plain (assam; floods; jute+rice+tea)",
-              "Types of alluvial soil in Northern Plains: Bhangar (older alluvium; higher elevation; less fertile; kankar/calcium carbonate nodules); Khadar (newer alluvium; lower elevation; flood plains; more fertile; renewed every year by floods)",
-              "Terai: Belt of wet and marshy land along foothills of Himalayas; thick forests; swamps; cleared for cultivation now; good for sugarcane, rice, jute",
-              "Bhabar: Coarse gravel belt immediately below Himalayas (south of Shiwaliks); streams disappear underground here; good for orchards"
-            ]
-          },
-          {
-            "heading": "Thar Desert and Rajasthan",
-            "color": "blue",
-            "points": [
-              "Location: Northwestern India; mainly Rajasthan (extends to Gujarat, Punjab, Haryana); also in Pakistan (Sind desert)",
-              "Area: 2 lakh sq km in India",
-              "Sand dunes: Barchans (crescent-shaped; most common); Seif dunes (longitudinal); Parabolic dunes; dunes cover only 1/5 of desert",
-              "Lowest rainfall: Jaisalmer receives 8–10 cm/year; some areas even less",
-              "Rivers: Luni river (only major river — drains into Rann of Kutch; saline in lower course); Ghaggar river (seasonal — 'river of lost identity'; considered ancient Saraswati by some scholars; disappears in sands of Rajasthan)",
-              "Salt lakes: Sambhar (largest inland salt lake in India — Rajasthan); Didwana; Degana (all in Rajasthan)",
-              "Fauna: Great Indian Bustard (critically endangered; Rajasthan + Gujarat); blackbuck; chinkara gazelle; desert fox",
-              "Aravalli as barrier: Aravalli blocks moisture-carrying Arabian Sea monsoon from reaching Rajasthan — hence desert; cities on eastern side of Aravalli (Jaipur) get more rain than cities on western side (Jodhpur)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "coastal",
-        "topic_name": "Coastal Plains and Islands",
-        "cards": [
-          {
-            "heading": "West and East Coastal Plains",
-            "color": "green",
-            "table": {
-              "headers": [
-                "Feature",
-                "Western Coast",
-                "Eastern Coast"
-              ],
-              "rows": [
-                [
-                  "Length",
-                  "1,500 km (Rann of Kutch to Kanyakumari)",
-                  "1,100 km (Subarnarekha river to Kanyakumari)"
-                ],
-                [
-                  "Width",
-                  "Narrow (10–25 km)",
-                  "Wide (80–100 km)"
-                ],
-                [
-                  "Type",
-                  "Submerged coast; smooth; few beaches; natural harbours",
-                  "Emergent coast; wide beaches; sandy; deltaic plains"
-                ],
-                [
-                  "Rivers",
-                  "Rivers short; do not form deltas (fall steeply into sea); backwaters (lagoons/kayals)",
-                  "Rivers long; form deltas (Mahanadi, Godavari, Krishna, Cauvery deltas)"
-                ],
-                [
-                  "Lakes/Lagoons",
-                  "Vembanad Lake (Kerala; largest in India; 96 km long); Chilika Lake... wait — on E coast",
-                  "Chilika Lake (Odisha; largest lagoon in India; largest wintering ground for migratory birds in Asia; Irrawaddy dolphin)"
-                ],
-                [
-                  "Parts (N to S)",
-                  "Konkan (Maharashtra+Goa); Kanara (Karnataka); Malabar (Kerala)",
-                  "Utkal Coast (Odisha); Northern Circars (AP); Coromandel Coast (TN)"
-                ],
-                [
-                  "Rainfall",
-                  "Very high (1500–3000mm+); SW monsoon hits first",
-                  "Moderate; gets NE monsoon (Oct–Dec)"
-                ],
-                [
-                  "Ports",
-                  "Mumbai (largest; natural harbour), Kandla, Goa, Mangalore, Kochi (deepest natural harbour)",
-                  "Chennai, Kolkata (on Hooghly — not on sea), Paradip, Visakhapatnam, Ennore/Kamarajar"
-                ]
-              ]
-            }
-          },
-          {
-            "heading": "Indian Islands",
-            "color": "purple",
-            "points": [
-              "Andaman and Nicobar Islands (Bay of Bengal): 572 islands; only 37 inhabited; capital Port Blair; largest island = South Andaman; highest point = Saddle Peak (North Andaman, 738m); only active volcano in India = Barren Island; India's only mud volcano = Baratang Island; Cellular Jail (Kala Pani) at Port Blair; close to equator (Indira Point = southernmost point of India at 6°45'N, in Great Nicobar Island)",
-              "Lakshadweep Islands (Arabian Sea): 36 islands; only 10 inhabited; capital Kavaratti; entirely CORAL ISLANDS; smallest UT of India by area and population; no rivers; no forests; coconut trees; only Muslim population; nearest to Kerala; Minicoy (southernmost; closest to Maldives); pony car not used — only walking + boats",
-              "Coral reefs in India: Andaman and Nicobar (richest coral reefs); Lakshadweep; Gulf of Mannar (between India and Sri Lanka); Gulf of Kutch",
-              "Pamban Island (Rameswaram, Tamil Nadu): India's largest island (not counting A&N and Lakshadweep); connected by Pamban Bridge (first sea bridge in India 1914) + new cable-stayed bridge (2024)"
-            ],
-            "alert": "⭐ Barren Island = ONLY ACTIVE VOLCANO in India (Andaman Islands). Narcondam = dormant volcano (Andaman Islands). Indira Point (Great Nicobar) = southernmost point of India (submerged partially by 2004 tsunami). Chilika Lake (Odisha) = largest coastal lake in India + largest wintering ground for migratory birds in Asia + Irrawaddy dolphins. Vembanad Lake (Kerala) = longest lake in India (96 km)."
-          }
-        ]
-      }
-    ]
-  },
-  "climate": {
-    "topics": [
-      {
-        "id": "monsoon",
-        "name": "Monsoon — Mechanism and Types"
-      },
-      {
-        "id": "seasons",
-        "name": "Four Seasons of India"
-      },
-      {
-        "id": "rainfall",
-        "name": "Rainfall Distribution"
-      },
-      {
-        "id": "cyclones",
-        "name": "Cyclones and Climate Zones"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "monsoon",
-        "topic_name": "Monsoon — Mechanism and Types",
-        "cards": [
-          {
-            "heading": "Monsoon Mechanism — Complete",
-            "color": "blue",
-            "points": [
-              "Definition: Seasonal reversal of wind direction; from Arabic 'mausim' (season)",
-              "SW Monsoon (June–September): Main rainy season; winds blow from sea to land (Arabian Sea + Bay of Bengal → India); caused by differential heating (land heats faster than sea → low pressure over India → high pressure over Indian Ocean → winds rush inland)",
-              "Two branches of SW Monsoon: Arabian Sea Branch (hits Kerala coast first around 1 June; more rainfall; reaches Mumbai, Western Ghats, Gujarat, Rajasthan); Bay of Bengal Branch (hits northeastern India first; moves westward; reaches UP, MP, Bihar)",
-              "NE Monsoon (October–December): Winds blow from land to sea; dry winds (already passed over land); BUT pick up moisture over Bay of Bengal → rain to southeastern coast (Tamil Nadu, coastal AP) = Tamil Nadu gets rain in Oct-Dec when rest of India is dry",
-              "Break in Monsoon: Temporary pause of 1–2 weeks during SW monsoon; anticyclone develops over NW India; southern India continues to receive rainfall while northern India faces a dry spell",
-              "El Nino: Warming of central and eastern tropical Pacific Ocean; weakens SW monsoon over India; associated with droughts in India; La Nina (cooling of Pacific) = often stronger than normal monsoon",
-              "Indian Ocean Dipole (IOD): Difference in sea surface temperature between western and eastern Indian Ocean; positive IOD = stronger monsoon; discovered 1999; linked to Indian monsoon rainfall"
-            ],
-            "alert": "⭐ Onset of SW Monsoon: Kerala on 1 June (average); reaches Delhi by 15 July; covers entire India by 15 July approximately. Withdrawal: From northwest (Rajasthan) by 1 September; complete withdrawal by 1 December from southern India. Tamil Nadu = only coastal state that BENEFITS from NE monsoon (when rest of India has post-monsoon dry season)."
-          }
-        ]
-      },
-      {
-        "topic_id": "seasons",
-        "topic_name": "Four Seasons of India",
-        "cards": [
-          {
-            "heading": "Four Seasons and Their Characteristics",
-            "color": "green",
-            "table": {
-              "headers": [
-                "Season",
-                "Months",
-                "Wind",
-                "Key Characteristics"
-              ],
-              "rows": [
-                [
-                  "Winter Season (Cold Weather Season)",
-                  "Dec–Feb",
-                  "NE trade winds blow from land to sea",
-                  "Cold in north; mild in south; western disturbances bring rain to Punjab/Himachal/J&K (important for rabi crops); foggy mornings in IGP; cold wave and frost in north"
-                ],
-                [
-                  "Hot Weather Season (Summer)",
-                  "Mar–May",
-                  "Local hot winds — 'Loo' in NW; 'Kalbaisakhi' (Nor'westers) in West Bengal",
-                  "Temperatures 45°C+ in Rajasthan; Loo = hot, dry, dusty wind; Kalbaisakhi = violent thunderstorms (beneficial for tea in Assam, jute in WB); Mango showers in Karnataka+Kerala"
-                ],
-                [
-                  "Advancing Monsoon (SW Monsoon)",
-                  "June–September",
-                  "SW winds from Arabian Sea + Bay of Bengal",
-                  "Most rainfall; sudden onset ('burst of monsoon'); Kerala gets rain first; Western Ghats get maximum; Rajasthan least; highest at Cherrapunji/Mawsynram"
-                ],
-                [
-                  "Retreating Monsoon (NE Monsoon)",
-                  "Oct–Nov",
-                  "Winds reverse; blow from land to sea (NE direction)",
-                  "Cyclones in Bay of Bengal (hit Andhra Pradesh + Tamil Nadu + Odisha); clear sky in most of India; Tamil Nadu gets rain from NE Monsoon"
-                ]
-              ]
-            },
-            "alert": "⭐ Western Disturbances: Extra-tropical cyclones born in Mediterranean Sea; travel east; bring rain/snow to Punjab, Haryana, HP, J&K, Uttarakhand in winter (important for wheat — rabi crop). 'Mango showers' (Kerala + Karnataka in April-May) = pre-monsoon showers that help mango ripening. 'Cherry Blossom showers' in coffee plantations of Karnataka = same phenomenon."
-          }
-        ]
-      },
-      {
-        "topic_id": "rainfall",
-        "topic_name": "Rainfall Distribution",
-        "cards": [
-          {
-            "heading": "Rainfall Distribution Across India",
-            "color": "orange",
-            "points": [
-              "Highest rainfall: Cherrapunji/Sohra (Meghalaya) — average 11,000 mm/year; Mawsynram (Meghalaya) — average 11,872 mm/year (highest in the world); both in rain shadow of Shillong Plateau",
-              "Lowest rainfall: Jaisalmer (Rajasthan) — about 8 cm/year; Leh (Ladakh) — cold desert",
-              "VERY HIGH rainfall (above 200 cm): Western Ghats slopes, Meghalaya and Assam (NE India), coastal Karnataka, West Bengal (sub-Himalayan), Andaman and Nicobar Islands",
-              "HIGH rainfall (100–200 cm): Eastern Rajasthan, eastern UP, Bihar, eastern MP, coastal Tamil Nadu (NE monsoon), most of Odisha, West Bengal plains",
-              "MODERATE rainfall (50–100 cm): Most of Rajasthan (except west), western UP, western MP, Deccan Plateau, Tamil Nadu interior",
-              "LOW rainfall (less than 50 cm): Rajasthan desert (Thar), Gujarat interior, Deccan rain shadow area (Pune, parts of Karnataka and AP), J&K rain shadow (Leh-Ladakh)",
-              "Rain shadow effect: Western Ghats block Arabian Sea branch of SW monsoon — western slope gets very heavy rain (Mahabaleshwar = 600 cm); eastern side (Pune, Sholapur) gets much less (30–50 cm)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "cyclones",
-        "topic_name": "Cyclones and Climate Zones",
-        "cards": [
-          {
-            "heading": "Cyclones and Major Climate Zones",
-            "color": "purple",
-            "points": [
-              "Tropical Cyclones: Develop over warm tropical oceans (sea surface temperature >26°C); called Typhoons (Pacific), Hurricanes (Atlantic), Cyclones (Indian Ocean); anticlockwise rotation (Northern Hemisphere)",
-              "Bay of Bengal cyclones: More frequent and more intense than Arabian Sea cyclones; warmer waters; landfall mostly on Odisha, Andhra Pradesh, Tamil Nadu, West Bengal coasts; October-November = peak season",
-              "Arabian Sea cyclones: Less frequent; increasing recently (linked to global warming); landfall on Gujarat, Maharashtra, Kerala coasts; Cyclone Ockhi (2017), Cyclone Tauktae (2021) = recent examples",
-              "IMD cyclone scale: Low Pressure → Depression → Deep Depression → Cyclonic Storm → Severe Cyclonic Storm → Very Severe Cyclonic Storm → Extremely Severe → Super Cyclonic Storm",
-              "Devastating cyclones: 1999 Odisha Super Cyclone (15,000 deaths); 2020 Amphan (West Bengal); 2021 Yaas (West Bengal+Odisha); 2021 Tauktae (Gujarat+Maharashtra)"
-            ],
-            "table": {
-              "headers": [
-                "Climate Zone",
-                "Region",
-                "Key Characteristics",
-                "States"
-              ],
-              "rows": [
-                [
-                  "Tropical Monsoon",
-                  "Most of India",
-                  "Distinct wet (June-Sept) and dry seasons; high temp throughout",
-                  "Most states"
-                ],
-                [
-                  "Tropical Savanna",
-                  "Central India + Deccan",
-                  "Drier than monsoon zone; distinct dry season; grasslands",
-                  "Parts of MP, AP, Telangana"
-                ],
-                [
-                  "Semi-Arid",
-                  "Rajasthan border + Punjab",
-                  "Less rainfall; extreme temperatures; scrub vegetation",
-                  "W.Rajasthan, W.Gujarat"
-                ],
-                [
-                  "Arid (Hot Desert)",
-                  "Thar Desert",
-                  "Very low rainfall (<25 cm); extreme heat; sand dunes",
-                  "W.Rajasthan (Jaisalmer, Barmer)"
-                ],
-                [
-                  "Cold Desert (Alpine)",
-                  "J&K, Ladakh, HP, Uttarakhand (high altitude)",
-                  "Very low rainfall; extreme cold; snow; cold desert",
-                  "Ladakh, Spiti Valley"
-                ],
-                [
-                  "Tropical Wet (Humid)",
-                  "West coast + NE India",
-                  "Very high rainfall; high humidity; tropical rainforest",
-                  "Kerala, Karnataka coast, NE India"
-                ],
-                [
-                  "Subtropical (Mediterranean-type)",
-                  "Part of J&K (Kashmir)",
-                  "Mild climate; dry summer + wet winter (Western Disturbances)",
-                  "Kashmir Valley"
-                ]
-              ]
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "rivers": {
-    "topics": [
-      {
-        "id": "himalayan",
-        "name": "Himalayan Rivers — Indus, Ganga, Brahmaputra"
-      },
-      {
-        "id": "peninsular",
-        "name": "Peninsular Rivers — East and West Flowing"
-      },
-      {
-        "id": "lakes",
-        "name": "Important Lakes of India"
-      },
-      {
-        "id": "waterfalls",
-        "name": "Waterfalls and Dams"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "himalayan",
-        "topic_name": "Himalayan Rivers",
-        "cards": [
-          {
-            "heading": "Indus, Ganga and Brahmaputra River Systems",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "River",
-                "Origin",
-                "Length (India)",
-                "Key Tributaries",
-                "Key Facts"
-              ],
-              "rows": [
-                [
-                  "Indus",
-                  "Mansarovar Lake, Tibet (near Kailash)",
-                  "3,180 km total (709 km in India)",
-                  "Zaskar, Nubra, Shyok, Hunza (in J&K); Jhelum, Chenab, Ravi, Beas, Sutlej",
-                  "Flows through J&K; enters Pakistan near Attock; Indus Water Treaty (1960) — India gets Ravi+Beas+Sutlej; Pakistan gets Indus+Jhelum+Chenab"
-                ],
-                [
-                  "Jhelum",
-                  "Verinag Spring (Kashmir)",
-                  "725 km",
-                  "Kishanganga (Neelum)",
-                  "Flows through Dal Lake; forms Wular Lake; enters Pakistan; Indian side called Jhelum, Pakistan side = Hydaspes (ancient)"
-                ],
-                [
-                  "Chenab",
-                  "Bara Lacha La pass (HP)",
-                  "960 km",
-                  "Chandra + Bhaga rivers merge = Chenab",
-                  "Largest of Punjab rivers (by discharge); origin at Chandra Bhaga (Chandrabhaga)"
-                ],
-                [
-                  "Ravi",
-                  "Kullu hills (Rohtang Pass area, HP)",
-                  "720 km",
-                  "Budhi, Nai, Saho",
-                  "Passes through Dalhousie area; enters Pakistan; Ravi flows past Lahore"
-                ],
-                [
-                  "Beas",
-                  "Beas Kund (near Rohtang, HP)",
-                  "470 km",
-                  "Banganga, Luni",
-                  "Westernmost river entirely in India; Alexander's soldiers refused to cross at Beas"
-                ],
-                [
-                  "Sutlej",
-                  "Rakshas Tal lake, Tibet",
-                  "1,450 km total (600 km India)",
-                  "Spiti, Beas (joins below Harike)",
-                  "Originates in Tibet; cuts through Himalayas near Shipki La; Bhakra Nangal Dam on Sutlej"
-                ],
-                [
-                  "Ganga",
-                  "Gangotri glacier (Uttarakhand); technically from Bhagirathi + Alaknanda",
-                  "2,525 km",
-                  "Yamuna+Ghaghara+Gandak+Kosi+Son+Chambal (left bank); Gomti (right bank)",
-                  "National River of India; Triveni Sangam at Prayagraj (Ganga+Yamuna+mythical Saraswati); meets Bay of Bengal at Bay of Bengal (Ganga Sagar); Sundarbans mangroves in delta"
-                ],
-                [
-                  "Yamuna",
-                  "Yamunotri glacier (Uttarakhand)",
-                  "1,376 km",
-                  "Chambal, Betwa, Ken, Tons, Hindon",
-                  "Largest tributary of Ganga; highly polluted in Delhi stretch; joins Ganga at Prayagraj"
-                ],
-                [
-                  "Brahmaputra",
-                  "Mansarovar Lake, Tibet (as Tsangpo)",
-                  "2,900 km total (916 km India)",
-                  "Subansiri, Jia Bhareli, Dhansiri, Manas, Teesta, Lohit",
-                  "Longest river in the world by some measures in Tibet; enters India near Pasighat (Arunachal); world's longest river gorge at Namcha Barwa; called Tsangpo (Tibet), Siang (Arunachal), Brahmaputra (Assam), Jamuna (Bangladesh); Majuli Island = world's largest river island"
-                ]
-              ]
-            },
-            "alert": "⭐ Ganga becomes Padma in Bangladesh; Brahmaputra becomes Jamuna. They merge to form Meghna which meets Bay of Bengal. Teesta river = in Sikkim+WB → joins Brahmaputra in Bangladesh. Indus Water Treaty (1960): PM Nehru + President Ayub Khan; World Bank mediated; governs water sharing of 6 Punjab rivers between India and Pakistan."
-          }
-        ]
-      },
-      {
-        "topic_id": "peninsular",
-        "topic_name": "Peninsular Rivers — East and West Flowing",
-        "cards": [
-          {
-            "heading": "Peninsular Rivers",
-            "color": "green",
-            "table": {
-              "headers": [
-                "River",
-                "Length",
-                "Originates",
-                "Drains Into",
-                "Key Facts"
-              ],
-              "rows": [
-                [
-                  "Mahanadi",
-                  "858 km",
-                  "Chhattisgarh (Raipur dist)",
-                  "Bay of Bengal (Odisha)",
-                  "Hirakud Dam (longest earthen dam in world — 4.8 km); Chilika Lake in delta; Mahanadi delta most productive delta"
-                ],
-                [
-                  "Godavari",
-                  "1,465 km",
-                  "Nasik (Maharashtra, Western Ghats)",
-                  "Bay of Bengal (AP/Telangana)",
-                  "Longest peninsular river; 'Vriddha Ganga' (Old Ganga/Ganga of South); Papikondalu gorge in AP"
-                ],
-                [
-                  "Krishna",
-                  "1,400 km",
-                  "Mahabaleshwar (Maharashtra, Western Ghats)",
-                  "Bay of Bengal (AP)",
-                  "Nagarjuna Sagar Dam (largest masonry dam); Tungabhadra tributary (Hampi is on Tungabhadra)"
-                ],
-                [
-                  "Cauvery (Kaveri)",
-                  "800 km",
-                  "Talakaveri (Kodagu/Coorg, Karnataka, Western Ghats)",
-                  "Bay of Bengal (TN)",
-                  "'Dakshina Ganga' (Ganga of South); Ranganathittu + Ranganathaswamy island in river; Shivasamudram waterfall; Mettur Dam (oldest large dam in South India); INTER-STATE WATER DISPUTE (Karnataka vs Tamil Nadu — Cauvery Water Disputes Tribunal)"
-                ],
-                [
-                  "Narmada",
-                  "1,312 km",
-                  "Amarkantak plateau (MP)",
-                  "Arabian Sea (Gulf of Khambhat)",
-                  "Only major west-flowing peninsular river with a rift valley origin (flows in a trough between Vindhya and Satpura ranges); Marble Rocks at Jabalpur (Bhedaghat); Dhuandhar Falls; Sardar Sarovar Dam (Gujarat) — world's 2nd largest concrete dam; flows east to west — UNUSUAL for peninsular river"
-                ],
-                [
-                  "Tapti (Tapi)",
-                  "724 km",
-                  "Multai (Betul, MP)",
-                  "Arabian Sea (Gulf of Khambhat)",
-                  "Second major west-flowing peninsular river; parallel to Narmada in rift valley; Surat on Tapti"
-                ],
-                [
-                  "Luni",
-                  "495 km",
-                  "Pushkar Lake (Aravalli range, Rajasthan)",
-                  "Rann of Kutch (Gujarat)",
-                  "Only major river in Rajasthan desert; saline in lower course; seasonal; drains Thar Desert"
-                ],
-                [
-                  "Tungabhadra",
-                  "531 km",
-                  "Union of Tunga + Bhadra rivers (Western Ghats, Karnataka)",
-                  "Joins Krishna (AP)",
-                  "Hampi (Vijayanagara capital) is on Tungabhadra; Tungabhadra Dam (Hospet)"
-                ],
-                [
-                  "Periyar",
-                  "244 km",
-                  "Sivagiri hills (Western Ghats, Kerala)",
-                  "Arabian Sea (Kerala)",
-                  "Idukki Dam on Periyar; Periyar Wildlife Sanctuary; important source for Kerala's irrigation"
-                ]
-              ]
-            },
-            "alert": "⭐ East-flowing peninsular rivers form DELTAS (Mahanadi, Godavari, Krishna, Cauvery). West-flowing peninsular rivers (Narmada, Tapti) do NOT form deltas — they flow fast through gorges and the coarse material doesn't settle. Godavari = longest peninsular river. Cauvery = most litigated river (water dispute). Narmada = only major west-flowing peninsular river in a rift valley."
-          }
-        ]
-      },
-      {
-        "topic_id": "lakes",
-        "topic_name": "Important Lakes of India",
-        "cards": [
-          {
-            "heading": "Major Lakes — All for Exam",
-            "color": "purple",
-            "table": {
-              "headers": [
-                "Lake",
-                "State",
-                "Type",
-                "Key Facts"
-              ],
-              "rows": [
-                [
-                  "Wular Lake",
-                  "J&K",
-                  "Freshwater (largest freshwater lake in India)",
-                  "Fed by Jhelum river; 130–260 sq km; migratory birds"
-                ],
-                [
-                  "Chilika Lake",
-                  "Odisha",
-                  "Brackish water lagoon (largest coastal lagoon in India; largest in Asia)",
-                  "Irrawaddy dolphins; RAMSAR site; largest wintering ground for migratory birds in Asia; Nalabana Island Bird Sanctuary"
-                ],
-                [
-                  "Sambhar Lake",
-                  "Rajasthan",
-                  "Saline (largest inland salt lake in India)",
-                  "Source of salt for India; RAMSAR site; flamingos in winter; 230 sq km"
-                ],
-                [
-                  "Vembanad Lake",
-                  "Kerala",
-                  "Brackish water (longest lake in India; largest in Kerala)",
-                  "96 km long; Nehru Trophy Boat Race on Punnamada stretch; Kumarakom Bird Sanctuary on banks; RAMSAR site"
-                ],
-                [
-                  "Dal Lake",
-                  "J&K",
-                  "Freshwater",
-                  "Srinagar; houseboats; Hazratbal mosque nearby; surrounded by mountains; shrinking due to encroachment"
-                ],
-                [
-                  "Loktak Lake",
-                  "Manipur",
-                  "Freshwater (largest freshwater lake in NE India)",
-                  "Famous for 'phumdis' (floating islands of vegetation); Keibul Lamjao NP on phumdis (only floating national park in world); Sangai deer (brow-antlered deer) = state animal of Manipur"
-                ],
-                [
-                  "Pangong Tso",
-                  "Ladakh (shared with China)",
-                  "Saline",
-                  "70 km long; 60% in China; changes color 5 times a day; filming location of 3 Idiots; altitude 4,350m"
-                ],
-                [
-                  "Tsomoriri",
-                  "Ladakh",
-                  "Saline; high altitude",
-                  "Biosphere Reserve; breeding ground of bar-headed goose and black-necked crane"
-                ],
-                [
-                  "Pushkar Lake",
-                  "Rajasthan",
-                  "Freshwater (sacred)",
-                  "Only Brahma temple in world at Pushkar; Pushkar Camel Fair; Aravalli origin"
-                ],
-                [
-                  "Hussain Sagar",
-                  "Telangana",
-                  "Artificial lake",
-                  "Hyderabad; built by Ibrahim Quli Qutb Shah (1562); Rock of Gibraltar statue in middle"
-                ],
-                [
-                  "Lonar Lake",
-                  "Maharashtra",
-                  "Saltwater crater lake (meteorite impact — ONLY such lake in Asia)",
-                  "Created by meteorite impact 52,000 years ago; Wildlife Sanctuary; UNESCO tentative list"
-                ]
-              ]
-            },
-            "alert": "⭐ RAMSAR Sites (Wetlands of International Importance) in India: 75+ RAMSAR sites (as of 2023) — most in the world. Largest RAMSAR = Sundarbans (WB). Chilika, Keoladeo, Loktak, Wular, Harike, Sambhar, Bhoj, Point Calimere, Vembanad-Kol, Kolleru = important RAMSAR sites. India has more RAMSAR sites than any other country."
-          }
-        ]
-      },
-      {
-        "topic_id": "waterfalls",
-        "topic_name": "Waterfalls and Major Dams",
-        "cards": [
-          {
-            "heading": "Major Waterfalls and Dams of India",
-            "color": "orange",
-            "table": {
-              "headers": [
-                "Name",
-                "State",
-                "River",
-                "Height/Notable Facts"
-              ],
-              "rows": [
-                [
-                  "Jog Falls (Gersoppa)",
-                  "Karnataka",
-                  "Sharavathi river",
-                  "253m — highest plunge waterfall in India; 4 falls: Raja, Rani, Rover, Rocket; UNESCO tentative list"
-                ],
-                [
-                  "Dudhsagar Falls",
-                  "Goa/Karnataka border",
-                  "Mandovi river",
-                  "310m — 2nd highest; Dudhsagar means 'sea of milk'; falls across Konkan Railway line — scenic"
-                ],
-                [
-                  "Athirappilly Falls",
-                  "Kerala",
-                  "Chalakudy river",
-                  "80m — 'Niagara of India'; largest waterfall in Kerala"
-                ],
-                [
-                  "Dhuandhar Falls",
-                  "Madhya Pradesh",
-                  "Narmada river",
-                  "30m — 'Smoke Cascade'; Marble Rocks at Bhedaghat; Jabalpur"
-                ],
-                [
-                  "Shivasamudram Falls",
-                  "Karnataka",
-                  "Cauvery river",
-                  "90m — one of the earliest hydroelectric power projects (1902)"
-                ],
-                [
-                  "Kynrem Falls",
-                  "Meghalaya",
-                  "Near Cherrapunji",
-                  "305m — 3rd highest in India; 3-tiered"
-                ],
-                [
-                  "Bhakra Nangal Dam",
-                  "HP/Punjab border",
-                  "Sutlej river",
-                  "Height 226m — highest gravity dam in India; largest reservoir = Gobind Sagar Lake"
-                ],
-                [
-                  "Sardar Sarovar",
-                  "Gujarat",
-                  "Narmada river",
-                  "163m height — 2nd largest concrete dam in world; Narmada Bachao Andolan (Medha Patkar led)"
-                ],
-                [
-                  "Tehri Dam",
-                  "Uttarakhand",
-                  "Bhagirathi river",
-                  "260.5m — tallest dam in India + tallest in Asia; rock-fill dam; Tehri Lake"
-                ],
-                [
-                  "Hirakud Dam",
-                  "Odisha",
-                  "Mahanadi river",
-                  "4,800m length — world's longest earthen dam (some say longest dam in India)"
-                ],
-                [
-                  "Nagarjuna Sagar",
-                  "Telangana/AP border",
-                  "Krishna river",
-                  "Largest masonry dam in world; 409 islands created in reservoir; Nagarjunakonda Buddhist site submerged"
-                ]
-              ]
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "soils": {
-    "topics": [
-      {
-        "id": "soil-types",
-        "name": "8 Types of Soils in India"
-      },
-      {
-        "id": "vegetation",
-        "name": "Natural Vegetation and Forest Types"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "soil-types",
-        "topic_name": "8 Types of Soils in India",
-        "cards": [
-          {
-            "heading": "All 8 Soil Types — Key Facts for Exam",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Soil Type",
-                "Color",
-                "Region",
-                "Crops",
-                "Key Feature"
-              ],
-              "rows": [
-                [
-                  "Alluvial Soil (largest area)",
-                  "Light grey to ash grey",
-                  "Northern Plains; coastal plains; river deltas",
-                  "Wheat, Rice, Sugarcane, Cotton, Jute, Oilseeds",
-                  "Most fertile; deposited by rivers; Khadar (new, fertile) + Bhangar (old); rich in potash but poor in nitrogen + phosphorus"
-                ],
-                [
-                  "Black/Regur Soil (Cotton soil)",
-                  "Black (iron-rich)",
-                  "Deccan Plateau; Maharashtra, MP, Karnataka, AP; Malwa Plateau",
-                  "Cotton (best for); Sugarcane, Wheat, Groundnut, Tobacco, Citrus",
-                  "Formed from Deccan Trap lava; self-ploughing (cracks when dry — mixes itself); holds moisture well; fertile without irrigation; poor in nitrogen+phosphorus+organic"
-                ],
-                [
-                  "Red and Yellow Soil",
-                  "Red (iron); Yellow when hydrated",
-                  "Eastern Plateau (Odisha, Chhattisgarh, AP, TN, parts of MP and UP)",
-                  "Groundnut, Pulses, Millets, Rice, Tobacco",
-                  "Red color due to iron oxide; yellow when hydrated; poor in nitrogen, phosphorus, organic; porous and less fertile"
-                ],
-                [
-                  "Laterite Soil",
-                  "Red/brick red",
-                  "Kerala, Karnataka, TN, Odisha, Chhattisgarh (high rainfall areas)",
-                  "Tea, Coffee, Cashew, Rubber, Coconut",
-                  "Formed by leaching in heavy rainfall; silica leaches out; aluminum+iron remain; hard surface; cannot hold water; acidic; poor fertility"
-                ],
-                [
-                  "Desert/Arid Soil",
-                  "Sandy, light brown",
-                  "Rajasthan, Gujarat, Haryana (semi-arid parts)",
-                  "Bajra, Pulses, Barley (with irrigation)",
-                  "Sandy; poor in organic matter; high in soluble salts; low moisture retention; alkaline; can be productive with irrigation (Indira Gandhi Canal transformed Rajasthan)"
-                ],
-                [
-                  "Mountain/Forest Soil",
-                  "Dark brown to black",
-                  "Himalayan mountain slopes, NE India",
-                  "Tea (in Darjeeling), Coffee, Tropical fruits",
-                  "Formed by breakdown of rocks; varies greatly with altitude; acidic in nature; thin layer; good for coniferous forests"
-                ],
-                [
-                  "Peaty/Marshy Soil",
-                  "Dark/black",
-                  "Kerala backwaters, Sundarbans WB, coastal Odisha, Almora district",
-                  "Rice",
-                  "High organic matter; water-logged; acidic; rich in humus; very limited distribution"
-                ],
-                [
-                  "Saline/Alkaline Soil",
-                  "White efflorescence on surface",
-                  "Arid regions of Rajasthan, Punjab, Haryana, UP (Usar/Reh/Thur/Bhur)",
-                  "Unproductive unless reclaimed",
-                  "Excessive salt content; 'reh' or 'usar' land; caused by poor drainage and high evaporation; can be reclaimed"
-                ]
-              ]
-            },
-            "alert": "⭐ Soil distribution: Alluvial = largest area (about 40%); Red = second largest; Black = third (about 15%); Laterite = 4th. Black soil = BEST for cotton = also called 'regur' (from Telugu word). Laterite = 'brick' in Latin; used as building material in Kerala. Alluvial soil classified by ICAR (Indian Council of Agricultural Research) into 8 types. Soil erosion = wind erosion (Rajasthan), water erosion (NE+peninsular rivers), gully erosion (Chambal ravines)."
-          }
-        ]
-      },
-      {
-        "topic_id": "vegetation",
-        "topic_name": "Natural Vegetation and Forest Types",
-        "cards": [
-          {
-            "heading": "Types of Natural Vegetation in India",
-            "color": "green",
-            "table": {
-              "headers": [
-                "Forest Type",
-                "Region/Rainfall",
-                "Key Trees",
-                "Examples"
-              ],
-              "rows": [
-                [
-                  "Tropical Evergreen Forests",
-                  ">200 cm rainfall; Western Ghats, NE India, Andaman",
-                  "Ebony, Mahogany, Rosewood, Rubber, Cinchona",
-                  "Silent Valley (Kerala); Namdapha (Arunachal); Agumbe (Karnataka)"
-                ],
-                [
-                  "Tropical Deciduous (Monsoon) Forests",
-                  "100–200 cm rainfall; Most of India",
-                  "Teak (best timber), Sal, Sandalwood, Khair, Sheesham",
-                  "Sal forests = UP, MP, Jharkhand; Teak = Maharashtra, MP, Karnataka"
-                ],
-                [
-                  "Tropical Thorn Forests (Scrub)",
-                  "< 70 cm rainfall; Rajasthan, semi-arid",
-                  "Acacia, Euphoria, Cactus, Date palm, Babool (Khejri = state tree of Rajasthan)",
-                  "Thar Desert margin; Deccan rain shadow; Gujarat"
-                ],
-                [
-                  "Montane (Mountain) Forests",
-                  "Altitude-based; Himalayas, NE",
-                  "Lower: Shorea, Sal; Middle: Oak, Chestnut, Rhododendron; Higher: Pine, Fir, Spruce, Cedar (Deodar); Timberline: Alpine meadows (Bugyals)",
-                  "Deodar = Uttarakhand state tree; Cedar in J&K"
-                ],
-                [
-                  "Mangrove (Tidal) Forests",
-                  "Coastal areas; tidal zones; saline",
-                  "Sundari (from which Sundarbans is named), Rhizophora, Avicennia",
-                  "Sundarbans (WB) = world's largest mangrove; Bhitarkanika (Odisha); Pichavaram (TN); Coringa (AP)"
-                ],
-                [
-                  "Littoral Forests",
-                  "Coastal regions along beaches",
-                  "Casuarina, Coconut, Pandanus",
-                  "Coastal strips; not large forests"
-                ]
-              ]
-            },
-            "alert": "⭐ Largest forest area: MP (77,000+ sq km) > Arunachal Pradesh > Chhattisgarh > Odisha > Maharashtra. Highest forest cover percentage: Mizoram (85%+) > Meghalaya > Manipur. Teak and Sal = most important commercially. Sandalwood = Karnataka (state tree of Karnataka = Sandalwood tree). Khejri = Rajputs used for fodder + food — Chipko-like movement (Bishnoi community protected khejri trees). Chipko Movement (1973, Uttarakhand): Sundarlal Bahuguna; women hugged trees to prevent felling; 'hug the tree' movement; led to ban on felling in Himalayas."
-          }
-        ]
-      }
-    ]
-  },
-  "resources": {
-    "topics": [
-      {
-        "id": "coal",
-        "name": "Coal and Petroleum"
-      },
-      {
-        "id": "iron-minerals",
-        "name": "Iron Ore and Key Minerals"
-      },
-      {
-        "id": "power",
-        "name": "Power Resources — Conventional and Non-conventional"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "coal",
-        "topic_name": "Coal and Petroleum Resources",
-        "cards": [
-          {
-            "heading": "Coal — Distribution and Types",
-            "color": "blue",
-            "points": [
-              "India = 4th largest coal reserves in world; 3rd largest producer",
-              "Types: Anthracite (highest carbon 92–98%; hard; best quality; very limited in India — J&K), Bituminous (80–90% carbon; most common; used in industry), Lignite/Brown coal (low carbon 40–55%; soft; Neyveli TN = largest lignite mine), Peat (lowest carbon; not commercial)",
-              "Distribution: 80%+ in Gondwana coalfields (Damodar Valley — most important); rest in Tertiary coalfields (NE India, J&K)",
-              "Damodar Valley coalfields: Jharia (Jharkhand — LARGEST coalfield in India; coking coal); Raniganj (WB — oldest coalfield in India); Bokaro (Jharkhand); Ramgarh (Jharkhand); Korba (Chhattisgarh)",
-              "Other coalfields: Singrauli (MP-UP border); Wardha Valley (Maharashtra); Talcher (Odisha); Godavari Valley (Telangana); Umaria (MP)",
-              "Neyveli Lignite: Tamil Nadu; open cast mine; feeds thermal power station; India's largest lignite deposit"
-            ]
-          },
-          {
-            "heading": "Petroleum — Distribution and Refineries",
-            "color": "green",
-            "table": {
-              "headers": [
-                "Oil Field/Refinery",
-                "State",
-                "Notes"
-              ],
-              "rows": [
-                [
-                  "Mumbai High (Bombay High)",
-                  "Offshore (Maharashtra coast)",
-                  "Largest oil field in India; offshore; discovered 1974; ONGC operates"
-                ],
-                [
-                  "Ankleshwar",
-                  "Gujarat",
-                  "First commercial oil well in India after independence"
-                ],
-                [
-                  "Digboi",
-                  "Assam",
-                  "Oldest oil field in Asia (1889); still producing; oldest refinery in Asia"
-                ],
-                [
-                  "Naharkatiya-Moran",
-                  "Assam",
-                  "Major oil field in NE India"
-                ],
-                [
-                  "Krishna-Godavari Basin",
-                  "Andhra Pradesh + Telangana (offshore)",
-                  "KG Basin; major gas (Reliance D6 block); Mangamaripeta oil field"
-                ],
-                [
-                  "Jamnagar Refinery",
-                  "Gujarat (Reliance)",
-                  "World's largest single-location refinery complex"
-                ],
-                [
-                  "Koyali Refinery",
-                  "Gujarat (IOCL)",
-                  "Oldest refinery after Digboi; largest public sector refinery"
-                ],
-                [
-                  "Mathura Refinery",
-                  "UP (IOCL)",
-                  "Near Agra; controversy over fumes harming Taj Mahal"
-                ],
-                [
-                  "Numaligarh Refinery",
-                  "Assam",
-                  "NE India; part of NE peace accord"
-                ],
-                [
-                  "Digboi Refinery",
-                  "Assam",
-                  "Oldest refinery in Asia (1901)"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "iron-minerals",
-        "topic_name": "Iron Ore and Key Minerals",
-        "cards": [
-          {
-            "heading": "Iron Ore, Steel and Key Minerals",
-            "color": "purple",
-            "table": {
-              "headers": [
-                "Mineral",
-                "Major States",
-                "Notable Facts"
-              ],
-              "rows": [
-                [
-                  "Iron Ore",
-                  "Jharkhand(Singhbhum), Odisha(Keonjhar/Mayurbhanj), Chhattisgarh, Karnataka(Bellary/Hospet), Goa",
-                  "India = 4th largest iron ore reserves; 2nd largest exporter; Hemantite (best quality) and Magnetite are main types"
-                ],
-                [
-                  "Coal",
-                  "Jharkhand, WB, MP, Chhattisgarh, Odisha, Telangana",
-                  "4th largest reserves; Jharia = largest coalfield (coking coal)"
-                ],
-                [
-                  "Bauxite (Aluminum ore)",
-                  "Odisha, Andhra Pradesh, MP, Gujarat, Maharashtra",
-                  "India = 5th largest bauxite reserves; Odisha = largest producer"
-                ],
-                [
-                  "Copper",
-                  "Rajasthan (Khetri), MP (Malanjkhand), Jharkhand (Singhbhum)",
-                  "Very low reserves; Khetri = 'Copper City'; major importer"
-                ],
-                [
-                  "Mica",
-                  "Jharkhand, AP, Rajasthan",
-                  "India = world's largest mica producer; used in electrical industry; Jharkhand = Koderma district"
-                ],
-                [
-                  "Manganese",
-                  "Odisha, Madhya Pradesh, Maharashtra, Karnataka",
-                  "Used in steel industry + batteries; India = 4th largest producer"
-                ],
-                [
-                  "Gold",
-                  "Karnataka (Kolar Gold Fields — KGF; deepest gold mine in Asia; now closed), Andhra Pradesh",
-                  "KGF mines now government owned; Karnataka = major producer"
-                ],
-                [
-                  "Thorium",
-                  "Kerala (Monazite sands in beaches)",
-                  "India = world's largest thorium reserves; important for nuclear power"
-                ],
-                [
-                  "Uranium",
-                  "Jharkhand (Jaduguda), Rajasthan, Andhra Pradesh, Meghalaya",
-                  "Jaduguda = first uranium mine in India (1967)"
-                ],
-                [
-                  "Chromite",
-                  "Odisha (Sukinda Valley)",
-                  "India = 3rd largest chromite producer; Sukinda = world's largest open cast chromite mine"
-                ],
-                [
-                  "Limestone",
-                  "MP, Rajasthan, AP, Gujarat, Karnataka",
-                  "Used in cement industry; India = major cement producer"
-                ],
-                [
-                  "Diamond",
-                  "Madhya Pradesh (Panna district)",
-                  "Only diamond mines in India; limited production"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "power",
-        "topic_name": "Power Resources",
-        "cards": [
-          {
-            "heading": "Conventional and Non-conventional Energy Sources",
-            "color": "orange",
-            "points": [
-              "Thermal Power: Coal-based thermal plants generate most electricity in India (~60%); major plants at Vindhyachal (MP), Singrauli (MP-UP border), Korba (Chhattisgarh), Ramagundam (Telangana), Rihand (UP), Talcher (Odisha)",
-              "Hydroelectric Power: About 13% of installed capacity; major: Bhakra-Nangal (Sutlej), Bhilai+Damodar Valley, Nagarjuna Sagar (Krishna), Koyna (Maharashtra — largest HEP in Maharashtra), Salal (J&K), Dulhasti (J&K), Tehri (Uttarakhand)",
-              "Nuclear Power: About 3% of total; plants at Tarapur (Maharashtra — first nuclear plant 1969), Rawatbhata (Rajasthan), Kalpakkam (Tamil Nadu — first Fast Breeder Reactor under construction), Narora (UP), Kakrapar (Gujarat), Kaiga (Karnataka), Kudankulam (TN — Russian built; largest nuclear plant)",
-              "Solar Power: India has vast potential; Rajasthan, Gujarat best potential; major parks: Bhadla Solar Park (Rajasthan — world's largest solar park, 2245 MW), Kamuthi Solar Power Plant (TN — was world's largest single-location solar plant briefly), Gujarat Solar Park",
-              "Wind Power: India = 4th largest wind power producer; Tamil Nadu, Gujarat, Karnataka, Maharashtra, Rajasthan, AP have best potential; Muppandal Wind Farm (TN) = largest wind farm in India; Jaisalmer Wind Park (Rajasthan)",
-              "Target: India aims for 500 GW renewable energy by 2030 (announced at COP26)"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "agriculture": {
-    "topics": [
-      {
-        "id": "seasons-crops",
-        "name": "Agricultural Seasons and Major Crops"
-      },
-      {
-        "id": "irrigation",
-        "name": "Irrigation Systems"
-      },
-      {
-        "id": "revolutions",
-        "name": "Agricultural Revolutions in India"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "seasons-crops",
-        "topic_name": "Agricultural Seasons and Major Crops",
-        "cards": [
-          {
-            "heading": "Three Crop Seasons — Kharif, Rabi, Zaid",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Season",
-                "Sowing",
-                "Harvesting",
-                "Major Crops",
-                "Key States"
-              ],
-              "rows": [
-                [
-                  "Kharif (Monsoon crops)",
-                  "June–July (with onset of SW monsoon)",
-                  "September–October",
-                  "Rice, Jowar (Sorghum), Bajra, Maize, Cotton, Groundnut, Jute, Sugarcane, Soyabean, Tur (Arhar dal), Urad, Moong",
-                  "Rice: WB, UP, Punjab; Cotton: Maharashtra, Gujarat; Groundnut: Gujarat, AP; Jute: WB"
-                ],
-                [
-                  "Rabi (Winter crops)",
-                  "October–November",
-                  "March–April",
-                  "Wheat, Barley, Gram (Chickpea), Mustard, Linseed, Peas, Masur (Lentil)",
-                  "Wheat: Punjab, Haryana, UP, MP, Rajasthan; Gram: MP, Maharashtra; Mustard: Rajasthan"
-                ],
-                [
-                  "Zaid (Summer crops)",
-                  "March–April",
-                  "June–July",
-                  "Watermelon, Muskmelon, Cucumber, Vegetables, Fodder crops",
-                  "UP (Ganga-Yamuna Doab), Punjab, Haryana; requires intensive irrigation"
-                ],
-                [
-                  "Plantation crops",
-                  "Year-round (perennial)",
-                  "Varies",
-                  "Tea, Coffee, Rubber, Coconut, Spices, Tobacco",
-                  "Tea: Assam+WB; Coffee: Karnataka; Rubber: Kerala"
-                ]
-              ]
-            }
-          },
-          {
-            "heading": "State-wise Important Crops",
-            "color": "green",
-            "table": {
-              "headers": [
-                "Crop",
-                "Top Producing States",
-                "Key Facts"
-              ],
-              "rows": [
-                [
-                  "Rice",
-                  "WB, UP, Punjab, Andhra Pradesh",
-                  "India = 2nd largest producer in world; staple food of eastern+southern India"
-                ],
-                [
-                  "Wheat",
-                  "UP, Punjab, Haryana, MP, Rajasthan",
-                  "India = 2nd largest producer; mainly N.India; Green Revolution success crop"
-                ],
-                [
-                  "Sugarcane",
-                  "UP, Maharashtra, Karnataka, TN",
-                  "India = 2nd largest producer + largest consumer; UP = largest producer; Maharashtra = highest productivity"
-                ],
-                [
-                  "Cotton",
-                  "Maharashtra, Gujarat, Telangana, AP, MP",
-                  "India = 3rd largest producer; Black soil = best for cotton; Bt cotton (GMO) = most widely grown"
-                ],
-                [
-                  "Tea",
-                  "Assam, WB (Darjeeling), TN (Nilgiris), Kerala",
-                  "India = 2nd largest producer (after China); Assam = 52% of India's tea; Darjeeling tea = GI tag"
-                ],
-                [
-                  "Coffee",
-                  "Karnataka (70%), Kerala, TN",
-                  "Arabica and Robusta varieties; Bababudan Hills (Chikmagalur Karnataka) = origin of coffee cultivation in India; brought by Baba Budan (Sufi saint) from Yemen"
-                ],
-                [
-                  "Rubber",
-                  "Kerala (91%), TN",
-                  "India = 5th largest natural rubber producer; Kerala plantation sector"
-                ],
-                [
-                  "Groundnut",
-                  "Gujarat, AP, TN, Karnataka",
-                  "India = 2nd largest producer after China; edible oil + cattle feed"
-                ],
-                [
-                  "Soyabean",
-                  "MP, Maharashtra, Rajasthan",
-                  "India = 5th largest producer; MP = 'Soya State'"
-                ],
-                [
-                  "Spices",
-                  "Kerala (Pepper, Cardamom, Cloves), Rajasthan (Coriander), AP (Chilli)",
-                  "India = largest spice exporter in world; 'Spice Bowl of World'"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "irrigation",
-        "topic_name": "Irrigation Systems",
-        "cards": [
-          {
-            "heading": "Types of Irrigation and Major Projects",
-            "color": "purple",
-            "points": [
-              "Canal Irrigation: Most important; mainly in IGP (UP, Punjab, Haryana, Bihar, WB); also Rajasthan Canal / Indira Gandhi Canal (Rajasthan — 649 km main canal; transforms Thar Desert; from Sutlej+Beas rivers at Harike barrage); TN (from Cauvery); Andhra Pradesh (Krishna+Godavari)",
-              "Well and Tube Well Irrigation: Most widely used type in India (by area irrigated); mainly IGP; Punjab, Haryana, UP, Bihar; ground water depletion is major concern",
-              "Tank Irrigation: Mainly South India (Tamil Nadu, AP, Karnataka); tanks = artificial reservoirs; Chembarambakkam Lake (Chennai's main water source); also Odisha",
-              "Drip and Sprinkler Irrigation: Water efficient; promoted by government; Maharashtra, Gujarat, Rajasthan, Karnataka; important for water conservation",
-              "Major Irrigation Projects:",
-              "Indira Gandhi Canal (Rajasthan): Longest canal in India; from Harike Barrage (Sutlej+Beas); transforms Rajasthan desert",
-              "Upper Ganga Canal (UP): From Haridwar; oldest major canal in India",
-              "Nagarjuna Sagar (AP/Telangana): On Krishna river; Largest masonry dam; major irrigation for AP and Telangana",
-              "Tungabhadra Project (Karnataka/AP): Joint; Tungabhadra river; important for northern Karnataka+AP",
-              "Bhakra-Nangal (Punjab/HP): Sutlej river; major irrigation for Punjab, Haryana, Rajasthan"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "revolutions",
-        "topic_name": "Agricultural Revolutions in India",
-        "cards": [
-          {
-            "heading": "Color-Coded Revolutions in Indian Agriculture",
-            "color": "orange",
-            "table": {
-              "headers": [
-                "Revolution",
-                "Color",
-                "Domain",
-                "Key Person"
-              ],
-              "rows": [
-                [
-                  "Green Revolution",
-                  "Green",
-                  "Food grains (wheat+rice); HYV seeds; increased production",
-                  "M.S. Swaminathan (India); Norman Borlaug (International)"
-                ],
-                [
-                  "White Revolution (Operation Flood)",
-                  "White",
-                  "Milk/Dairy; made India world's largest milk producer",
-                  "Verghese Kurien ('Milkman of India'); NDDB; Amul model"
-                ],
-                [
-                  "Blue Revolution",
-                  "Blue",
-                  "Fish production (aquaculture + fisheries)",
-                  "India = 2nd largest fish producer; major aquaculture growth"
-                ],
-                [
-                  "Yellow Revolution",
-                  "Yellow",
-                  "Oilseeds (mustard, sunflower, soyabean, groundnut)",
-                  "India became self-sufficient in edible oils period (then gap again)"
-                ],
-                [
-                  "Golden Revolution",
-                  "Golden",
-                  "Horticulture (fruits + honey); also called 'Honey Revolution'",
-                  "Nirpakh Tutaj; major push to fruit cultivation; NE India fruits"
-                ],
-                [
-                  "Silver Revolution",
-                  "Silver",
-                  "Eggs and Poultry production",
-                  "India = 3rd largest egg producer in world"
-                ],
-                [
-                  "Pink Revolution",
-                  "Pink",
-                  "Meat + Onion (dual usage)",
-                  "India = major meat exporter"
-                ],
-                [
-                  "Brown Revolution",
-                  "Brown",
-                  "Non-conventional energy (leather, cocoa)",
-                  "Leather industry growth"
-                ],
-                [
-                  "Red Revolution",
-                  "Red",
-                  "Tomato + Meat production (different from pink)",
-                  "—"
-                ],
-                [
-                  "Rainbow Revolution",
-                  "Rainbow",
-                  "Composite agricultural development (all sectors)",
-                  "Dr. M.S. Swaminathan advocated holistic development"
-                ],
-                [
-                  "Evergreen Revolution",
-                  "Evergreen",
-                  "Sustainable agriculture without harming environment",
-                  "Dr. M.S. Swaminathan's concept for 21st century"
-                ]
-              ]
-            },
-            "alert": "⭐ Green Revolution: Punjab, Haryana, W.UP = main beneficiaries; IR-8 (miracle rice) + Sonora-64/Lerma Rojo (wheat); HYV = High Yielding Variety. Negative effects: Groundwater depletion, soil degradation, pesticide overuse, regional inequality, only rice+wheat (not pulses+millets). Evergreen Revolution = Dr. Swaminathan's concept for sustainable food security. NDDB (National Dairy Development Board) = Verghese Kurien founded 1965 at Anand, Gujarat."
-          }
-        ]
-      }
-    ]
-  },
-  "industry": {
-    "topics": [
-      {
-        "id": "iron-steel",
-        "name": "Iron and Steel Industry"
-      },
-      {
-        "id": "textiles",
-        "name": "Textile and Other Industries"
-      },
-      {
-        "id": "transport",
-        "name": "Transport — Railways, Roads, Ports"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "iron-steel",
-        "topic_name": "Iron and Steel Industry",
-        "cards": [
-          {
-            "heading": "Iron and Steel Plants in India",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Steel Plant",
-                "State",
-                "Established",
-                "Collaboration"
-              ],
-              "rows": [
-                [
-                  "TISCO (Tata Iron and Steel Company)",
-                  "Jharkhand (Jamshedpur)",
-                  "1907",
-                  "Private (first in India; oldest integrated steel plant)"
-                ],
-                [
-                  "IISCO (Indian Iron and Steel Company)",
-                  "West Bengal (Burnpur)",
-                  "1918",
-                  "British collaboration; now under SAIL"
-                ],
-                [
-                  "Bhilai Steel Plant",
-                  "Chhattisgarh",
-                  "1959",
-                  "Soviet Union (USSR) collaboration"
-                ],
-                [
-                  "Durgapur Steel Plant",
-                  "West Bengal",
-                  "1959",
-                  "UK (British) collaboration"
-                ],
-                [
-                  "Rourkela Steel Plant",
-                  "Odisha",
-                  "1959",
-                  "West Germany (German) collaboration"
-                ],
-                [
-                  "Bokaro Steel Plant",
-                  "Jharkhand",
-                  "1964",
-                  "USSR collaboration (originally US proposed but they withdrew)"
-                ],
-                [
-                  "Vizag Steel (RINL)",
-                  "Andhra Pradesh (Visakhapatnam)",
-                  "1992",
-                  "First coastal steel plant in India; 'Steel City of India'"
-                ],
-                [
-                  "Salem Steel Plant",
-                  "Tamil Nadu (Salem)",
-                  "1981",
-                  "Stainless steel"
-                ],
-                [
-                  "Bhadravati Steel Plant",
-                  "Karnataka",
-                  "1923",
-                  "One of oldest; manganese steel"
-                ],
-                [
-                  "ESSAR Steel (now AM/NS)",
-                  "Gujarat (Hazira)",
-                  "Private sector",
-                  "Second largest steel producer in India"
-                ]
-              ]
-            },
-            "alert": "⭐ TISCO = FIRST private sector integrated steel plant in India (1907, Jamshedpur — founded by J.N. Tata; advice by German metallurgist Julius Vogelstein). VIZAG = first coastal steel plant. Bhilai+Durgapur+Rourkela = 1959 = 2nd Five Year Plan steel plants. SAIL (Steel Authority of India Limited) = public sector umbrella; controls Bhilai, Durgapur, Rourkela, Bokaro, IISCO."
-          }
-        ]
-      },
-      {
-        "topic_id": "textiles",
-        "topic_name": "Textile and Other Industries",
-        "cards": [
-          {
-            "heading": "Major Industries and Their Centers",
-            "color": "green",
-            "table": {
-              "headers": [
-                "Industry",
-                "Major Centers",
-                "Key Facts"
-              ],
-              "rows": [
-                [
-                  "Cotton Textile",
-                  "Mumbai (was 'Cottonopolis of India'), Ahmedabad (Manchester of India), Coimbatore, Surat, Nagpur, Indore",
-                  "India = world's largest cotton yarn exporter + 2nd largest textile exporter"
-                ],
-                [
-                  "Jute Textile",
-                  "Kolkata region (Hooghly River belt) — Rishra, Serampore, Baranagar, Howrah",
-                  "India = largest jute producer + largest jute goods producer; Bangladesh = largest raw jute exporter"
-                ],
-                [
-                  "Silk Textile",
-                  "Karnataka (Mysore — mulberry silk; Kolar, Ramanagara), WB (Murshidabad), Tamil Nadu, Assam (Sualkuchi)",
-                  "India = 2nd largest silk producer (after China); Bangalore = silk city; Sualkuchi = Manchester of the East (Assam)"
-                ],
-                [
-                  "Sugar Industry",
-                  "UP + Maharashtra = 60%+ of India's sugar; also Bihar, Karnataka, TN",
-                  "India = 2nd largest sugar producer after Brazil; UP = largest producer"
-                ],
-                [
-                  "Cement Industry",
-                  "MP, Rajasthan, Gujarat, AP (limestone-rich states)",
-                  "India = 2nd largest cement producer in world; ACC (1936) = oldest cement company"
-                ],
-                [
-                  "Chemical Industry",
-                  "Gujarat (largest — Ankleshwar, Vadodara, Surat), Mumbai, Pune, TN",
-                  "Petro-chemicals, fertilizers, pharmaceuticals, dyes"
-                ],
-                [
-                  "Pharmaceutical",
-                  "Hyderabad (Pharma capital of India), Mumbai, Ahmedabad, Pune, Bengaluru",
-                  "India = 3rd largest pharma producer in volume; 'Pharmacy of the World'"
-                ],
-                [
-                  "IT/Software",
-                  "Bengaluru (Silicon Valley of India), Hyderabad (Cyberabad), Pune, Chennai, Noida-Gurugram, Kolkata",
-                  "India = largest IT services exporter; TCS, Infosys, Wipro = top companies"
-                ],
-                [
-                  "Automobile",
-                  "Chennai (Detroit of India), Pune, Gurugram-Manesar, Bengaluru, Kolkata",
-                  "India = 3rd largest auto market in world; Maruti Suzuki (largest car maker); TVS+Hero (two-wheelers)"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "transport",
-        "topic_name": "Transport — Railways, Roads and Ports",
-        "cards": [
-          {
-            "heading": "Transport Networks of India",
-            "color": "purple",
-            "points": [
-              "Indian Railways: Largest rail network in Asia; 4th largest in world; 68,000+ km route length; 7,000+ stations; 1.3 crore passengers daily; first train 16 April 1853 (Bori Bunder-Thane, 34 km); 18 railway zones (HQ: CST Mumbai/Chennai/Kolkata/Delhi/etc.)",
-              "Railway gauges: Broad gauge (1.676m — 90% of network); Metre gauge; Narrow gauge; All being converted to Broad gauge (Project Unigauge)",
-              "Mountain Railways: Darjeeling Himalayan Railway (2ft gauge — UNESCO WHS); Nilgiri Mountain Railway (Ooty — only rack-and-pinion railway in India — UNESCO WHS); Kalka-Shimla Railway (UNESCO WHS)",
-              "National Highway Network: NH-44 = longest NH in India (3,745 km — Srinagar to Kanyakumari); NH-48 = Delhi-Mumbai-Bangalore; NH-27 = East-West corridor; Golden Quadrilateral (Delhi-Mumbai-Chennai-Kolkata = 5,846 km; NHAI project; completed 2012)",
-              "Major Ports: 13 major ports; Kandla (Deendayal) = largest cargo port; Jawaharlal Nehru Port Trust (JNPT/Nhava Sheva) = busiest container port; Paradip (Odisha) = on east coast; Chennai = oldest artificial port; Vizag = deepest natural port; Kochi = deepest natural harbour; Kolkata (on Hooghly) = only riverine major port",
-              "Inland Waterways: National Waterway-1 = Allahabad to Haldia (Ganga river — 1,620 km; longest); NW-2 = Sadiya to Dhubri (Brahmaputra); NW-3 = West Coast Canal (Kerala — 205 km)",
-              "Air Transport: Indira Gandhi International Airport (Delhi) = busiest in South Asia; Chhatrapati Shivaji Maharaj International Airport (Mumbai) = 2nd; Air India = national carrier (privatized to Tata Group 2022)"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "population": {
-    "topics": [
-      {
-        "id": "census2011",
-        "name": "Census 2011 — Key Data"
-      },
-      {
-        "id": "trends",
-        "name": "Population Trends and Distribution"
-      },
-      {
-        "id": "literacy-sex",
-        "name": "Literacy, Sex Ratio and Density"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "census2011",
-        "topic_name": "Census 2011 — Key Data",
-        "cards": [
-          {
-            "heading": "Census 2011 — Must Know Facts",
-            "color": "blue",
-            "points": [
-              "Total population: 121.09 crore (1.21 billion); 2nd largest in world after China (now India is 1st as of 2023 — 143 crore)",
-              "Decadal growth rate (2001–2011): 17.7% (lowest since 1951); population growth rate declining",
-              "Census 2011 motto: 'Our Census Our Future'",
-              "Census Commissioner: C. Chandramauli",
-              "Population density: 382 persons/sq km (India average; UP has 828, WB has 1029)",
-              "Sex ratio: 943 females per 1000 males (2011); improved from 933 (2001); best ever since 1971",
-              "Child sex ratio (0–6 years): 919 girls per 1000 boys — very concerning; declined from 927 (2001)",
-              "Literacy rate: 74.04% (2011); Male 82.14%; Female 65.46%; improved from 64.8% (2001)"
-            ],
-            "table": {
-              "headers": [
-                "Category",
-                "Highest",
-                "Lowest"
-              ],
-              "rows": [
-                [
-                  "Most Populous State",
-                  "Uttar Pradesh (19.98 crore)",
-                  "Sikkim (6.1 lakh)"
-                ],
-                [
-                  "Least Populous State",
-                  "Sikkim",
-                  "—"
-                ],
-                [
-                  "Most Populous UT",
-                  "Delhi",
-                  "Lakshadweep"
-                ],
-                [
-                  "Highest Density State",
-                  "Bihar (1106 persons/sq km)",
-                  "Arunachal Pradesh (17 persons/sq km)"
-                ],
-                [
-                  "Highest Density UT",
-                  "Delhi (11,297)",
-                  "A&N Islands (46)"
-                ],
-                [
-                  "Best Sex Ratio State",
-                  "Kerala (1084 females/1000 males)",
-                  "Haryana (879)"
-                ],
-                [
-                  "Best Literacy State",
-                  "Kerala (93.91%)",
-                  "Bihar (61.80%)"
-                ],
-                [
-                  "Fastest Growing State (2001–11)",
-                  "Meghalaya",
-                  "—"
-                ],
-                [
-                  "Largest State by Area",
-                  "Rajasthan",
-                  "Goa (state); Lakshadweep (UT)"
-                ],
-                [
-                  "Largest District by Area",
-                  "Lahul and Spiti (HP)",
-                  "Mahe (Puducherry)"
-                ],
-                [
-                  "Most Urbanized State",
-                  "Goa (62.2%)",
-                  "Himachal Pradesh (10%)"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "trends",
-        "topic_name": "Population Trends and Distribution",
-        "cards": [
-          {
-            "heading": "Population Distribution and Urbanization",
-            "color": "green",
-            "points": [
-              "Northern Plains = most densely populated region (Bihar 1106, WB 1029, UP 828); fertile land + good transport + economic opportunity",
-              "NE states, Himalayas, Thar Desert = sparsely populated; difficult terrain/climate",
-              "India's demographic dividend: 65%+ population under 35 years (2022); large working-age population = economic opportunity IF properly educated and employed",
-              "Population policy: National Population Policy 2000; Total Fertility Rate (TFR) target = 2.1 (replacement level); currently 2.0 (2020) — TFR already at replacement level; South India and Kerala lower than north India",
-              "Urbanization: 31.16% urban population (2011); Urban India growing; 53 cities with 10 lakh+ population; Mumbai = most populous city",
-              "Million Cities (2011): 53 cities with 10 lakh+ population; 8 cities with 50 lakh+ (Mumbai 1.25 crore, Delhi 1.1 crore, Kolkata 91 lakh, Chennai 70 lakh, Bangalore 84 lakh)",
-              "Migration: Internal migration mainly from UP+Bihar+Rajasthan to Maharashtra, Gujarat, Delhi; inter-state migration for employment; push factors (poverty, drought) and pull factors (jobs, amenities)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "literacy-sex",
-        "topic_name": "Literacy, Sex Ratio and Density",
-        "cards": [
-          {
-            "heading": "Literacy, Sex Ratio and Density — State-wise Rankings",
-            "color": "orange",
-            "table": {
-              "headers": [
-                "Parameter",
-                "Highest",
-                "Lowest",
-                "India Average"
-              ],
-              "rows": [
-                [
-                  "Literacy Rate",
-                  "Kerala (93.91%)",
-                  "Bihar (61.80%)",
-                  "74.04% (2011)"
-                ],
-                [
-                  "Male Literacy",
-                  "Lakshadweep (96.11%)",
-                  "Bihar (71.2%)",
-                  "82.14%"
-                ],
-                [
-                  "Female Literacy",
-                  "Kerala (92.07%)",
-                  "Rajasthan (52.66%)",
-                  "65.46%"
-                ],
-                [
-                  "Sex Ratio",
-                  "Kerala (1084)",
-                  "Haryana (879)",
-                  "943 per 1000 males"
-                ],
-                [
-                  "Child Sex Ratio (0-6)",
-                  "Mizoram (971)",
-                  "Haryana (834)",
-                  "919 per 1000 boys"
-                ],
-                [
-                  "Population Density",
-                  "Bihar (1106/sq km)",
-                  "Arunachal Pradesh (17/sq km)",
-                  "382/sq km"
-                ],
-                [
-                  "Decadal Growth Rate (2001-11)",
-                  "Meghalaya (27.9%)",
-                  "Nagaland (-0.5%); first negative growth",
-                  "17.7%"
-                ],
-                [
-                  "Urban Population %",
-                  "Goa (62.2%)",
-                  "Himachal Pradesh (10%)",
-                  "31.16%"
-                ]
-              ]
-            },
-            "alert": "⭐ Kerala = most educated, best sex ratio, highest HDI state. Bihar = lowest literacy, highest density state. Nagaland = only state with NEGATIVE population growth (2001-2011) — due to migration. Child sex ratio most concerning in Haryana (834) despite being prosperous state — sex-selective abortion. Census 2021 (due in 2021) postponed due to COVID — yet to be conducted."
-          }
-        ]
-      }
-    ]
-  },
-  "world": {
-    "topics": [
-      {
-        "id": "continents-oceans",
-        "name": "Continents, Oceans and Major Features"
-      },
-      {
-        "id": "countries-capitals",
-        "name": "Countries, Capitals and GK"
-      },
-      {
-        "id": "climate-zones",
-        "name": "World Climate Zones and Biomes"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "continents-oceans",
-        "topic_name": "Continents, Oceans and Major Features",
-        "cards": [
-          {
-            "heading": "World's Major Geographical Features",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Category",
-                "1st",
-                "2nd",
-                "3rd",
-                "Notes"
-              ],
-              "rows": [
-                [
-                  "Largest Continent",
-                  "Asia (44.5 million sq km)",
-                  "Africa",
-                  "N.America",
-                  "Asia = 30% of Earth's land"
-                ],
-                [
-                  "Smallest Continent",
-                  "Australia",
-                  "—",
-                  "—",
-                  "Sometimes Antarctic counted as continent"
-                ],
-                [
-                  "Largest Ocean",
-                  "Pacific (165 million sq km)",
-                  "Atlantic",
-                  "Indian",
-                  "Pacific = larger than all land combined"
-                ],
-                [
-                  "Deepest Point",
-                  "Mariana Trench (11,034m — Pacific)",
-                  "—",
-                  "—",
-                  "Challenger Deep in Mariana Trench"
-                ],
-                [
-                  "Longest River",
-                  "Nile (6,650 km — Africa)",
-                  "Amazon (S.America)",
-                  "Yangtze (China)",
-                  "Debate: Amazon might be longer; Nile = traditionally accepted"
-                ],
-                [
-                  "Largest Lake",
-                  "Caspian Sea (370,000 sq km)",
-                  "Superior (N.America)",
-                  "Victoria (Africa)",
-                  "Caspian = saline; landlocked sea"
-                ],
-                [
-                  "Largest Desert",
-                  "Antarctic Desert (14 million sq km)",
-                  "Sahara (Africa — 9.2 million; largest hot desert)",
-                  "Arabian",
-                  "Sahara = largest HOT desert"
-                ],
-                [
-                  "Largest Island",
-                  "Greenland",
-                  "New Guinea",
-                  "Borneo",
-                  "Australia counted as continent not island"
-                ],
-                [
-                  "Longest Mountain Range",
-                  "Andes (S.America — 7,000 km)",
-                  "Rockies",
-                  "Himalayas",
-                  "Andes also longest in world; Himalayas = highest"
-                ],
-                [
-                  "Highest Mountain",
-                  "Mt. Everest (8,849m — Nepal-China border)",
-                  "K2 (8,611m — Pakistan)",
-                  "Kanchenjunga (8,586m — Nepal-India)",
-                  "Everest height revised to 8,849m in 2020 by Nepal+China joint survey (was 8,848m)"
-                ],
-                [
-                  "Largest Country by Area",
-                  "Russia (17.1 million sq km)",
-                  "Canada",
-                  "USA",
-                  "India = 7th largest"
-                ],
-                [
-                  "Largest Country by Population",
-                  "India (143 crore — 2023)",
-                  "China (142 crore)",
-                  "USA",
-                  "India surpassed China in 2023"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "countries-capitals",
-        "topic_name": "Countries, Capitals and Important GK",
-        "cards": [
-          {
-            "heading": "Frequently Asked Countries and GK",
-            "color": "green",
-            "points": [
-              "Landlocked countries bordering India: Nepal (capital Kathmandu), Bhutan (capital Thimphu) — both landlocked; Nepal = buffer state between India and China",
-              "Smallest country in world: Vatican City (0.44 sq km; Rome, Italy); followed by Monaco; San Marino",
-              "Most island-dependent country: Maldives (1192 islands; capital Male; all low-lying — threatened by sea level rise); Tuvalu; Marshall Islands; Kiribati",
-              "Straits important for India: Palk Strait (between India and Sri Lanka; very shallow; Ram Setu/Adam's Bridge of islands here); Strait of Malacca (between Malay Peninsula and Sumatra; busiest shipping lane in world; India-China trade route); Strait of Hormuz (Iran-Oman; oil tankers from Middle East pass through here)",
-              "International Date Line: 180° meridian; roughly along Pacific Ocean; Samoa, Tonga, Fiji east of it; Japan, Australia, NZ west of it; arbitrary adjustments for island nations",
-              "Major Passes in World: Khyber Pass (Pakistan-Afghanistan; Hindu Kush; historic invasion route); Bolan Pass (Pakistan; connects Quetta-Sind); Karakoram Pass (India-China; high altitude)",
-              "Deserts of World: Sahara (Africa; hot); Gobi (China-Mongolia; cold); Arabian (Arabia); Atacama (Chile; driest place on Earth; 0.1 mm/year); Patagonian (Argentina; cold); Great Victoria (Australia)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "climate-zones",
-        "topic_name": "World Climate Zones and Biomes",
-        "cards": [
-          {
-            "heading": "Major World Biomes and Climate Zones",
-            "color": "orange",
-            "table": {
-              "headers": [
-                "Biome/Climate Zone",
-                "Location",
-                "Key Characteristics",
-                "Important Species"
-              ],
-              "rows": [
-                [
-                  "Tropical Rainforest",
-                  "Amazon (S.America), Congo (Africa), SE Asia",
-                  "High rainfall (>200 cm), High temperature, High biodiversity; 50% of all species; canopy structure",
-                  "Jaguar, Gorilla, Orangutan, Anaconda, Toucan"
-                ],
-                [
-                  "Savanna (Tropical Grassland)",
-                  "Africa (east+south), Brazil (Cerrado), India (Deccan)",
-                  "Seasonal rainfall; distinct dry season; scattered trees; grasses dominant",
-                  "Lion, Elephant, Zebra, Giraffe, Wildebeest"
-                ],
-                [
-                  "Hot Desert",
-                  "Sahara, Arabian, Australian outback, Atacama",
-                  "< 25 cm rainfall; extreme temperature variation; sandy/rocky",
-                  "Camel, Fennec fox, Roadrunner, Saharan horned viper"
-                ],
-                [
-                  "Mediterranean",
-                  "Mediterranean basin, California, Chile, SW Australia, SW South Africa",
-                  "Hot dry summer + mild wet winter; evergreen shrubs; UNIQUE climate",
-                  "Olive, Cork Oak, Lavender, Macchia"
-                ],
-                [
-                  "Temperate Grassland",
-                  "Prairies (N.America), Steppes (Eurasia), Pampas (S.America), Veld (S.Africa), Downs (Australia)",
-                  "Low rainfall; extreme temperature; no trees; fertile soils",
-                  "Bison (Prairies), Saiga antelope (Steppes)"
-                ],
-                [
-                  "Temperate Deciduous Forest",
-                  "Eastern USA, Western Europe, Eastern China, Japan",
-                  "Moderate rainfall; distinct seasons; trees shed leaves in autumn",
-                  "Oak, Maple, Deer, Bear, Fox, Squirrel"
-                ],
-                [
-                  "Boreal Forest (Taiga)",
-                  "Russia, Canada, Scandinavia (sub-polar)",
-                  "Long cold winters; short summers; coniferous trees (pine, fir, spruce, larch)",
-                  "Wolf, Moose, Lynx, Wolverine, Brown bear"
-                ],
-                [
-                  "Tundra",
-                  "Arctic (above 60°N), high mountains (Alpine tundra)",
-                  "Permafrost; no trees; mosses+lichens; very cold; brief summer",
-                  "Polar bear, Arctic fox, Musk ox, Reindeer/Caribou"
-                ],
-                [
-                  "Tropical Monsoon",
-                  "South+SE Asia, India, Bangladesh",
-                  "Distinct wet and dry season; SW monsoon; high rainfall in wet season",
-                  "Indian Tiger, Leopard, Peacock, Indian Elephant"
-                ]
-              ]
-            },
-            "alert": "⭐ Major Biodiversity Hotspots (Norman Myers concept; Conservation International): 36 hotspots globally; in India: Western Ghats + Sri Lanka hotspot; Eastern Himalayas; Indo-Burma; Sundaland (partly covers Andaman). Hotspot criteria: 1500+ endemic plant species AND lost 70%+ of original habitat. India hosts 2 major hotspots fully + 2 partially."
-          }
-        ]
-      }
-    ]
+  }
+});
+
+// PIN bypass
+$('pinBtn').onclick = checkPin;
+$('pinInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkPin(); });
+function checkPin() {
+  const entered = $('pinInput').value.trim();
+  if (entered === ADMIN_PIN) {
+    sessionStorage.setItem('adminPin', ADMIN_PIN);
+    $('pinErr').style.display = 'none';
+    enterAdmin('pin-admin');
+  } else {
+    $('pinErr').style.display = 'block';
+    $('pinInput').value = '';
+    $('pinInput').focus();
   }
 }
+
+$('loginBtn').onclick  = () => signInWithPopup(auth, googleProvider).catch(e => log(e.message,'err'));
+$('logoutBtn').onclick = () => { sessionStorage.removeItem('adminPin'); signOut(auth); };
+
+// ── Init ──────────────────────────────────────────────────────────────────
+function initUI() {
+  const examOpts = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
+  $('examSel').innerHTML = examOpts;
+  $('statsExamSel').innerHTML = `<option value="__all__">📊 All Exams (Combined)</option>` + examOpts;
+  if ($('delExamSel')) $('delExamSel').innerHTML = examOpts;
+  buildDelSubjectList();
+
+  $('subjectSel').innerHTML = ALL_SUBJECTS.map(s =>
+    `<option value="${s.id}">${s.icon||'📖'} ${s.name}</option>`
+  ).join('');
+
+  renderTopicPills();
+  $('subjectSel').addEventListener('change', renderTopicPills);
+  renderSubjectRef();
+
+  document.querySelectorAll('.type-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      selectedType = tab.dataset.type;
+      toggleTypeUI();
+      log(`Type: ${selectedType.toUpperCase()}`, 'info');
+    });
+  });
+
+  toggleTypeUI();
+}
+
+function toggleTypeUI() {
+  const isPyq = selectedType === 'pyq';
+  $('pyqOptions').classList.toggle('hidden', !isPyq);
+  $('practiceOptions').classList.toggle('hidden', isPyq);
+  $('pyqFormat').classList.toggle('hidden', !isPyq);
+  $('practiceFormat').classList.toggle('hidden', isPyq);
+}
+
+function renderTopicPills() {
+  const subjId = $('subjectSel').value;
+  const topics = getTopicsFor(subjId); // [{id:'all',label:'All'}, ...]
+  selectedTopic = 'all';
+  $('topicVal').value = 'all';
+
+  $('topicPills').innerHTML = topics.map(t =>
+    `<button type="button" class="topic-pill${t.id==='all'?' selected':''}" data-id="${t.id}">${t.label}</button>`
+  ).join('');
+
+  $('topicPills').querySelectorAll('.topic-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      $('topicPills').querySelectorAll('.topic-pill').forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+      selectedTopic = pill.dataset.id;
+      $('topicVal').value = selectedTopic;
+    });
+  });
+}
+
+function renderSubjectRef() {
+  $('subjectRef').innerHTML = ALL_SUBJECTS.map(s => {
+    const topics = getTopicsFor(s.id).filter(t => t.id !== 'all');
+    return `<div class="ref-row">
+      <span class="ref-id">${s.id}</span>
+      <span class="ref-name">${s.icon||''} ${s.name}</span>
+    </div>` + topics.map(t =>
+      `<div class="ref-row" style="padding-left:24px;opacity:.7">
+        <span class="ref-id" style="color:#94a3b8">${t.id}</span>
+        <span class="ref-name">${t.label}</span>
+      </div>`).join('');
+  }).join('');
+}
+
+// ── Template ──────────────────────────────────────────────────────────────
+$('templateBtn').onclick = () => {
+  let qs;
+  if (selectedType === 'pyq') {
+    const year = parseInt($('yearInput').value)||2024;
+    qs = [
+      { question:"PYQ Sample Q1?", options:["Option A","Option B","Option C","Option D"], answer:0, explanation:"Why A is correct.", subject:"strength-of-materials", year, topic:"stress-strain" },
+      { question:"PYQ Sample Q2?", options:["Option A","Option B","Option C","Option D"], answer:1, explanation:"Why B is correct.", subject:"fluid-mechanics", year, topic:"pipe-flow" }
+    ];
+  } else {
+    const subjId = $('subjectSel').value;
+    const topic = selectedTopic;
+    qs = [
+      { question:"Practice Q1 — replace with real question?", options:["Option A","Option B","Option C","Option D"], answer:0, explanation:"Why A is correct." },
+      { question:"Practice Q2 — replace with real question?", options:["Option A","Option B","Option C","Option D"], answer:2, explanation:"Why C is correct." }
+    ];
+    log(`Template: subject=${subjId}, topic=${topic} (will be applied to all questions)`, 'info');
+  }
+  $('jsonInput').value = JSON.stringify(qs, null, 2);
+};
+
+// ── Auto topic assignment for practice ────────────────────────────────────
+function autoAssignTopic(subjId, topicFromDropdown) {
+  // If user selected a specific topic from pills → use it
+  if (topicFromDropdown && topicFromDropdown !== 'all') return topicFromDropdown;
+  return 'all'; // show under all topic chips
+}
+
+// ── Validate ──────────────────────────────────────────────────────────────
+function validateAndBuild(raw, i, defaultExam, defaultType, defaultYear, defaultSubject, defaultTopic) {
+  const errs = [];
+  if (!raw.question || typeof raw.question !== 'string' || !raw.question.trim()) errs.push('missing question');
+  if (!Array.isArray(raw.options) || raw.options.length < 2) errs.push('options must be array ≥2');
+  if (typeof raw.answer !== 'number' || raw.answer < 0 || raw.answer >= (raw.options||[]).length) errs.push('answer invalid 0-based index');
+
+  const subject = raw.subject || defaultSubject;
+  if (!subject) errs.push('subject required');
+  else if (!VALID_IDS.includes(subject)) errs.push(`unknown subject "${subject}"`);
+
+  if (errs.length) return { ok:false, errs, raw };
+
+  const type = raw.type || defaultType;
+  const topic = raw.topic || autoAssignTopic(subject, defaultTopic);
+
+  const q = {
+    question:    raw.question.trim(),
+    options:     raw.options.map(o => String(o).trim()),
+    answer:      raw.answer,
+    explanation: raw.explanation ? String(raw.explanation).trim() : '',
+    subject,
+    exam:        raw.exam || defaultExam,
+    type,
+    topic,       // always stored — 'all' means show under every chip
+    tier:        raw.tier || 'free',
+    createdAt:   new Date().toISOString(),
+  };
+
+  if (type === 'pyq') {
+    q.year = raw.year || defaultYear;
+    if (!q.year) errs.push('year required for PYQ');
+    // Preserve all PYQ-specific fields
+    if (raw.exam_name)  q.exam_name  = raw.exam_name;
+    if (raw.exam_code)  q.exam_code  = raw.exam_code;
+    if (raw.exam_date)  q.exam_date  = raw.exam_date;
+    if (raw.stage)      q.stage      = raw.stage;
+    if (raw.q_num)      q.q_num      = raw.q_num;
+  }
+  if (raw.difficulty)    q.difficulty    = raw.difficulty;
+  if (raw.source_category) q.source_category = raw.source_category;
+  if (errs.length) return { ok:false, errs, raw };
+  return { ok:true, q };
+}
+
+async function runValidate(doUpload=false) {
+  let arr;
+  try {
+    const text = $('jsonInput').value.trim();
+    if (!text) { log('JSON is empty', 'err'); return null; }
+    arr = JSON.parse(text);
+    if (!Array.isArray(arr)) throw new Error('Must be a JSON array [...]');
+  } catch(e) { log('❌ JSON parse error: ' + e.message, 'err'); return null; }
+
+  const defaultExam    = selectedType === 'pyq' ? $('examSel').value : 'uppsc-ae';
+  const defaultType    = selectedType;
+  const defaultYear    = selectedType === 'pyq' ? (parseInt($('yearInput').value)||2024) : null;
+  const defaultSubject = selectedType === 'practice' ? $('subjectSel').value : null;
+  const defaultTopic   = selectedType === 'practice' ? selectedTopic : null;
+
+  $('statParsed').textContent = arr.length;
+  let valid = [], skipped = 0;
+  const previewList = $('previewList');
+  previewList.innerHTML = '';
+
+  arr.forEach((raw, i) => {
+    const result = validateAndBuild(raw, i, defaultExam, defaultType, defaultYear, defaultSubject, defaultTopic);
+    if (!result.ok) {
+      log(`Q${i+1} ❌ — ${result.errs.join(' · ')}`, 'err');
+      skipped++;
+      // Show invalid card
+      const card = document.createElement('div');
+      card.className = 'preview-card invalid';
+      card.innerHTML = `<div class="preview-q">Q${i+1}: ${escHtml(String(raw.question||'(no question)').substring(0,80))}</div>
+        <div class="preview-meta">${result.errs.map(e => `<span class="preview-tag tag-err">❌ ${escHtml(e)}</span>`).join('')}</div>`;
+      previewList.appendChild(card);
+    } else {
+      valid.push(result.q);
+      // Show valid card
+      const card = document.createElement('div');
+      card.className = 'preview-card valid';
+      const ans = result.q.options[result.q.answer];
+      card.innerHTML = `<div class="preview-q">Q${valid.length}: ${escHtml(result.q.question.substring(0,100))}${result.q.question.length>100?'…':''}</div>
+        <div class="preview-meta">
+          <span class="preview-tag tag-subject">📖 ${escHtml(result.q.subject)}</span>
+          <span class="preview-tag tag-topic">🏷 ${escHtml(result.q.topic)}</span>
+          <span class="preview-tag tag-ans">✅ ${escHtml(ans)}</span>
+          ${result.q.year ? `<span class="preview-tag tag-topic">📅 ${result.q.year}</span>` : ''}
+          ${result.q.explanation ? `<span class="preview-tag tag-ans">💡 Has explanation</span>` : ''}
+        </div>`;
+      previewList.appendChild(card);
+    }
+  });
+
+  $('statValid').textContent   = valid.length;
+  $('statSkipped').textContent = skipped;
+  $('previewPanel').style.display = '';
+
+  validatedQuestions = valid;
+
+  if (!doUpload) {
+    if (valid.length > 0) {
+      log(`✅ Validation done: ${valid.length} valid, ${skipped} skipped`, 'ok');
+      const topicCounts = {};
+      valid.forEach(q => { topicCounts[q.topic] = (topicCounts[q.topic]||0)+1; });
+      Object.entries(topicCounts).forEach(([t,c]) => log(`   topic "${t}": ${c} questions`,'info'));
+    } else {
+      log('⚠️ No valid questions.', 'warn');
+    }
+    return null;
+  }
+  return valid;
+}
+
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = String(str||'');
+  return d.innerHTML;
+}
+
+$('validateBtn').onclick = () => runValidate(false);
+
+// ── Upload ────────────────────────────────────────────────────────────────
+$('uploadBtn').onclick = async () => {
+  // Use already-validated questions if available, else validate first
+  let valid = validatedQuestions.length > 0 ? validatedQuestions : await runValidate(true);
+  if (!valid || !valid.length) { log('Nothing to upload. Validate first.', 'err'); return; }
+
+  log(`⬆️ Uploading ${valid.length} questions...`, 'info');
+  $('progressWrap').classList.remove('hidden');
+  $('statUploaded').textContent = '0';
+  $('progressFill').style.width = '0%';
+
+  let uploaded = 0;
+  try {
+    for (let i = 0; i < valid.length; i += 400) {
+      const slice = valid.slice(i, i+400);
+      const batch = writeBatch(db);
+      slice.forEach(q => {
+        const ref = doc(collection(db,'exams', q.exam, 'questions'));
+        batch.set(ref, q);
+      });
+      await batch.commit();
+      uploaded += slice.length;
+      $('statUploaded').textContent = uploaded;
+      $('progressFill').style.width = `${Math.round(uploaded/valid.length*100)}%`;
+      log(`Batch uploaded: ${uploaded}/${valid.length}`, 'ok');
+    }
+    log(`✅ Done! ${uploaded} questions uploaded.`, 'ok');
+    validatedQuestions = []; // clear after upload
+  } catch(e) {
+    log('❌ Upload error: ' + e.message, 'err');
+  }
+};
+
+// ── Delete All Practice Questions ────────────────────────────────────────
+// ── Delete Panel Logic ───────────────────────────────────────────────────
+let delSelectedType = 'practice';
+let delPyqScope     = 'all';
+let delPracScope    = 'all';
+let _pyqPaperDocs   = [];   // cached docs for selected exam+year
+
+// ── Type tab switching ────────────────────────────────────────────────────
+document.querySelectorAll('[data-dtype]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('[data-dtype]').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    delSelectedType = tab.dataset.dtype;
+    $('delPracticeSection').style.display = delSelectedType === 'practice' ? 'block' : 'none';
+    $('delPyqSection').style.display      = delSelectedType === 'pyq'      ? 'block' : 'none';
+    $('delPreview').textContent = '';
+  });
+});
+
+// ── Practice scope tabs ───────────────────────────────────────────────────
+document.querySelectorAll('[data-pracscope]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('[data-pracscope]').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    delPracScope = tab.dataset.pracscope;
+    $('delPracQnumSec').style.display = delPracScope === 'qnum' ? 'block' : 'none';
+  });
+});
+
+// ── PYQ scope tabs ────────────────────────────────────────────────────────
+document.querySelectorAll('[data-pyqscope]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('[data-pyqscope]').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    delPyqScope = tab.dataset.pyqscope;
+    $('delPyqQnumSec').style.display = delPyqScope === 'qnum' ? 'block' : 'none';
+  });
+});
+
+// ── Build subject checkboxes for practice ─────────────────────────────────
+function buildDelSubjectList() {
+  // Populate exam selectors
+  const examOpts = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name}</option>`).join('');
+  if ($('delPracExamSel')) $('delPracExamSel').innerHTML = examOpts;
+  if ($('delPyqExamSel'))  $('delPyqExamSel').innerHTML  = examOpts;
+
+  // Build practice subject checkboxes
+  const container = $('delSubjectList');
+  if (!container) return;
+  container.innerHTML = '';
+  ALL_SUBJECTS.forEach(s => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#0f172a;padding:8px 12px;border-radius:8px;border:1px solid #1e293b';
+    row.innerHTML = `
+      <input type="checkbox" id="del_${s.id}" value="${s.id}" checked
+        style="width:16px;height:16px;cursor:pointer;accent-color:#ef4444">
+      <label for="del_${s.id}" style="flex:1;font-size:13px;color:#e2e8f0;cursor:pointer">
+        ${s.icon||'📖'} ${s.name}
+      </label>
+      <span style="font-size:11px;color:#64748b;font-family:monospace">${s.id}</span>`;
+    container.appendChild(row);
+  });
+}
+
+// ── PYQ: Load papers for selected exam (multi-checkbox) ──────────────────
+if ($('delPyqLoadBtn')) {
+  $('delPyqLoadBtn').addEventListener('click', async () => {
+    const examId = $('delPyqExamSel').value;
+    const wrap   = $('delPyqPaperList');
+    wrap.innerHTML = '<p style="font-size:12px;color:#64748b;padding:4px">Loading papers…</p>';
+    $('delPyqSelectedCount').textContent = '';
+    try {
+      const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+      const docs = snap.docs.map(d => ({ id: d.id, ref: d.ref, ...d.data() }))
+                           .filter(d => d.type === 'pyq');
+      // Group by exam_name + year
+      const groups = {};
+      docs.forEach(d => {
+        const key = `${d.exam_name || examId}__${d.year || '—'}`;
+        if (!groups[key]) groups[key] = { label: d.exam_name || examId, year: d.year || '—', docs: [] };
+        groups[key].docs.push(d);
+      });
+      const entries = Object.entries(groups).sort((a,b) => b[1].year - a[1].year);
+      if (!entries.length) {
+        wrap.innerHTML = '<p style="font-size:12px;color:#64748b;padding:4px">No PYQ found for this exam</p>';
+        return;
+      }
+      wrap.innerHTML = '';
+      entries.forEach(([key, g]) => {
+        const safeKey = key.replace(/[^a-zA-Z0-9_-]/g, '_');
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#1e293b;padding:9px 12px;border-radius:8px;border:1px solid #334155;cursor:pointer';
+        row.innerHTML = `
+          <input type="checkbox" id="pyqpaper_${safeKey}" value="${key}"
+            style="width:16px;height:16px;cursor:pointer;accent-color:#ef4444">
+          <label for="pyqpaper_${safeKey}" style="flex:1;cursor:pointer">
+            <div style="font-size:13px;color:#e2e8f0">${g.label}</div>
+            <div style="font-size:11px;color:#64748b">Year: ${g.year} · ${g.docs.length} questions</div>
+          </label>`;
+        row.addEventListener('click', (e) => {
+          if (e.target.tagName !== 'INPUT') {
+            const cb = row.querySelector('input');
+            cb.checked = !cb.checked;
+          }
+          updatePyqSelectedCount();
+        });
+        wrap.appendChild(row);
+      });
+      window._pyqGrouped = groups;
+      updatePyqSelectedCount();
+    } catch(e) { wrap.innerHTML = `<p style="font-size:12px;color:#ef4444;padding:4px">Error: ${e.message}</p>`; }
+  });
+}
+
+function updatePyqSelectedCount() {
+  const checked = document.querySelectorAll('#delPyqPaperList input:checked');
+  const el = $('delPyqSelectedCount');
+  if (!el) return;
+  if (checked.length === 0) {
+    el.textContent = 'No papers selected';
+    el.style.color = '#64748b';
+  } else {
+    const totalQ = [...checked].reduce((sum, cb) => {
+      const g = window._pyqGrouped?.[cb.value];
+      return sum + (g ? g.docs.length : 0);
+    }, 0);
+    el.textContent = `✅ ${checked.length} paper(s) selected · ${totalQ} questions`;
+    el.style.color = '#f59e0b';
+  }
+}
+
+// ── Select/Clear all PYQ papers ───────────────────────────────────────────
+if ($('delPyqSelectAll')) $('delPyqSelectAll').onclick = () => {
+  document.querySelectorAll('#delPyqPaperList input').forEach(cb => cb.checked = true);
+  updatePyqSelectedCount();
+};
+if ($('delPyqClearAll')) $('delPyqClearAll').onclick = () => {
+  document.querySelectorAll('#delPyqPaperList input').forEach(cb => cb.checked = false);
+  updatePyqSelectedCount();
+};
+
+// ── Select/Clear all practice subjects ────────────────────────────────────
+if ($('delSelectAll')) $('delSelectAll').onclick = () =>
+  document.querySelectorAll('#delSubjectList input').forEach(cb => cb.checked = true);
+if ($('delClearAll')) $('delClearAll').onclick = () =>
+  document.querySelectorAll('#delSubjectList input').forEach(cb => cb.checked = false);
+
+// ── Parse Q number input (e.g. "1,5,12" or "1-10") ───────────────────────
+function parseQnums(str) {
+  const nums = new Set();
+  str.split(',').forEach(part => {
+    part = part.trim();
+    if (part.includes('-')) {
+      const [a, b] = part.split('-').map(Number);
+      for (let i = a; i <= b; i++) nums.add(i);
+    } else if (!isNaN(parseInt(part))) {
+      nums.add(parseInt(part));
+    }
+  });
+  return nums;
+}
+
+// ── Practice Preview ──────────────────────────────────────────────────────
+if ($('delPracPreviewBtn')) {
+  $('delPracPreviewBtn').onclick = async () => {
+    const examId   = $('delPracExamSel').value;
+    const subjects = [...document.querySelectorAll('#delSubjectList input:checked')].map(cb => cb.value);
+    if (!subjects.length) { $('delPracPreview').textContent = '⚠️ No subjects selected'; return; }
+    $('delPracPreview').textContent = 'Loading…';
+    try {
+      const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+      let docs = snap.docs.filter(d => {
+        const data = d.data();
+        return data.type === 'practice' && subjects.includes(data.subject);
+      });
+      if (delPracScope === 'qnum') {
+        const nums = parseQnums($('delPracQnums').value);
+        docs = docs.filter(d => nums.has(d.data().q_num));
+      }
+      $('delPracPreview').textContent = `Found ${docs.length} practice questions to delete`;
+      $('delPracPreview').style.color = docs.length ? '#f59e0b' : '#10b981';
+    } catch(e) { $('delPracPreview').textContent = 'Error: ' + e.message; }
+  };
+}
+
+// ── PYQ Preview ───────────────────────────────────────────────────────────
+if ($('delPyqPreviewBtn')) {
+  $('delPyqPreviewBtn').onclick = () => {
+    const checked = [...document.querySelectorAll('#delPyqPaperList input:checked')];
+    if (!checked.length) { $('delPyqExamYearPreview').textContent = '⚠️ Select at least one paper'; return; }
+    let total = 0;
+    const labels = [];
+    checked.forEach(cb => {
+      const g = window._pyqGrouped?.[cb.value];
+      if (!g) return;
+      let count = g.docs.length;
+      if (delPyqScope === 'qnum') {
+        const nums = parseQnums($('delPyqQnums').value);
+        count = g.docs.filter(d => nums.has(d.q_num)).length;
+      }
+      total += count;
+      labels.push(`"${g.label} ${g.year}" (${count}Q)`);
+    });
+    $('delPyqExamYearPreview').textContent = `Found ${total} questions across ${checked.length} paper(s): ${labels.join(', ')}`;
+    $('delPyqExamYearPreview').style.color = total ? '#f59e0b' : '#10b981';
+  };
+}
+
+// ── Execute Delete ────────────────────────────────────────────────────────
+if ($('delExecuteBtn')) {
+  $('delExecuteBtn').onclick = async () => {
+    let toDelete = [];
+    let label = '';
+
+    try {
+      if (delSelectedType === 'practice') {
+        // ── Practice delete ─────────────────────────────────────────────
+        const examId   = $('delPracExamSel').value;
+        const subjects = [...document.querySelectorAll('#delSubjectList input:checked')].map(cb => cb.value);
+        if (!subjects.length) { log('No subjects selected', 'err'); return; }
+
+        const snap = await getDocs(collection(db, 'exams', examId, 'questions'));
+        let docs = snap.docs.filter(d => {
+          const data = d.data();
+          return data.type === 'practice' && subjects.includes(data.subject);
+        });
+
+        if (delPracScope === 'qnum') {
+          const qnumStr = $('delPracQnums').value.trim();
+          if (!qnumStr) { log('Enter question numbers', 'err'); return; }
+          const nums = parseQnums(qnumStr);
+          docs = docs.filter(d => nums.has(d.data().q_num));
+          label = `Practice Q# [${[...nums].join(',')}] in ${subjects.join(', ')} — ${examId}`;
+        } else {
+          label = `All Practice in ${subjects.join(', ')} — ${examId}`;
+        }
+        toDelete = docs;
+
+      } else {
+        // ── PYQ delete (multi-select) ───────────────────────────────────
+        const checked = [...document.querySelectorAll('#delPyqPaperList input:checked')];
+        if (!checked.length) { log('Select at least one paper first', 'err'); return; }
+
+        const labels = [];
+        checked.forEach(cb => {
+          const group = window._pyqGrouped?.[cb.value];
+          if (!group) return;
+          let docs = group.docs;
+          if (delPyqScope === 'qnum') {
+            const qnumStr = $('delPyqQnums').value.trim();
+            if (!qnumStr) { log('Enter question numbers', 'err'); return; }
+            const nums = parseQnums(qnumStr);
+            docs = docs.filter(d => nums.has(d.q_num));
+          }
+          toDelete.push(...docs);
+          labels.push(`"${group.label} ${group.year}" (${docs.length}Q)`);
+        });
+        label = `PYQ from ${labels.join(', ')}`;
+      }
+
+      if (!toDelete.length) { log('No matching questions found', 'warn'); return; }
+
+      if (!confirm(`Delete ${toDelete.length} questions?
+${label}
+
+CANNOT be undone!`)) return;
+      if (!confirm(`FINAL CONFIRMATION:
+Permanently delete ${toDelete.length} questions?`)) return;
+
+      log(`🗑 Deleting ${toDelete.length} questions — ${label}`, 'warn');
+      let deleted = 0;
+      for (let i = 0; i < toDelete.length; i += 400) {
+        const batch = writeBatch(db);
+        toDelete.slice(i, i+400).forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        deleted += Math.min(400, toDelete.length - i);
+        log(`Deleted ${deleted}/${toDelete.length}…`, 'warn');
+      }
+      log(`✅ Done! ${deleted} questions deleted.`, 'ok');
+      $('delPreview').textContent = '';
+      // Reload PYQ papers list if in PYQ mode
+      if (delSelectedType === 'pyq') $('delPyqLoadBtn').click();
+    } catch(e) { log('❌ Delete error: ' + e.message, 'err'); }
+  };
+}
+
+// ── Firestore Stats ───────────────────────────────────────────────────────
+async function fetchStatsForExam(examId) {
+  const snap = await getDocs(collection(db,'exams',examId,'questions'));
+  return snap.docs.map(d => ({ ...d.data(), _examId: examId }));
+}
+
+$('loadStatsBtn').onclick = async () => {
+  const examId = $('statsExamSel').value;
+  ['fsTotal','fsPyq','fsPractice','fsOther'].forEach(id => $(id).textContent='…');
+  $('breakdownWrap').classList.add('hidden');
+  try {
+    let docs = [];
+    let perExamResults = [];
+
+    if (examId === '__all__') {
+      perExamResults = await Promise.all(EXAMS.map(e => fetchStatsForExam(e.id).then(d => ({ exam: e, docs: d }))));
+      docs = perExamResults.flatMap(r => r.docs);
+    } else {
+      docs = await fetchStatsForExam(examId);
+    }
+
+    const total = docs.length;
+    const pyqDocs = docs.filter(d => d.type === 'pyq');
+    const prcDocs = docs.filter(d => d.type === 'practice');
+    const pyq = pyqDocs.length, prc = prcDocs.length;
+    $('fsTotal').textContent = total; $('fsPyq').textContent = pyq;
+    $('fsPractice').textContent = prc; $('fsOther').textContent = total - pyq - prc;
+
+    const label = examId === '__all__' ? 'All Exams Combined' : examId;
+    const wrap = $('breakdownWrap');
+    wrap.innerHTML = '';
+
+    // ── Practice: subject-wise breakdown ──────────────────────────────
+    const bySubjPrc = {};
+    prcDocs.forEach(d => {
+      const s = d.subject || '(unknown)';
+      if (!bySubjPrc[s]) bySubjPrc[s] = 0;
+      bySubjPrc[s]++;
+    });
+    const sortedPrc = Object.entries(bySubjPrc).sort((a,b) => b[1]-a[1]);
+    const maxPrc = sortedPrc[0]?.[1] || 1;
+
+    wrap.innerHTML += `<div style="font-size:11px;color:#10b981;text-transform:uppercase;font-weight:700;margin-bottom:8px">
+      ✏️ Practice — Subject-wise &nbsp;<span style="color:#64748b;font-weight:400">(Total: ${prc})</span>
+    </div>`;
+    if (sortedPrc.length === 0) {
+      wrap.innerHTML += `<div style="font-size:12px;color:#475569;margin-bottom:12px">No practice questions found.</div>`;
+    } else {
+      sortedPrc.forEach(([subj, count]) => {
+        const name = ALL_SUBJECTS.find(s => s.id === subj)?.name || subj;
+        const pct = Math.round(count / maxPrc * 100);
+        wrap.innerHTML += `<div class="breakdown-row">
+          <div class="breakdown-name">${name}</div>
+          <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%;background:#10b981"></div></div>
+          <div class="breakdown-count" style="color:#10b981">${count}</div>
+        </div>`;
+      });
+    }
+
+    // ── PYQ: exam-wise breakdown ───────────────────────────────────────
+    wrap.innerHTML += `<div style="font-size:11px;color:#a78bfa;text-transform:uppercase;font-weight:700;margin:16px 0 8px">
+      📜 PYQ — Exam-wise &nbsp;<span style="color:#64748b;font-weight:400">(Total: ${pyq})</span>
+    </div>`;
+
+    if (examId === '__all__') {
+      // Show each exam's PYQ count
+      const maxEPyq = Math.max(...perExamResults.map(r => r.docs.filter(d=>d.type==='pyq').length), 1);
+      perExamResults.forEach(r => {
+        const ePyq = r.docs.filter(d => d.type === 'pyq').length;
+        const pct  = Math.round(ePyq / maxEPyq * 100);
+        wrap.innerHTML += `<div class="breakdown-row">
+          <div class="breakdown-name" style="min-width:140px">${r.exam.icon} ${r.exam.name}</div>
+          <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%;background:#a78bfa"></div></div>
+          <div class="breakdown-count" style="color:#a78bfa">${ePyq}</div>
+        </div>`;
+      });
+    } else {
+      // Single exam — show PYQ subject-wise
+      const bySubjPyq = {};
+      pyqDocs.forEach(d => {
+        const s = d.subject || '(unknown)';
+        if (!bySubjPyq[s]) bySubjPyq[s] = 0;
+        bySubjPyq[s]++;
+      });
+      const sortedPyq = Object.entries(bySubjPyq).sort((a,b) => b[1]-a[1]);
+      const maxPyq = sortedPyq[0]?.[1] || 1;
+      if (sortedPyq.length === 0) {
+        wrap.innerHTML += `<div style="font-size:12px;color:#475569">No PYQ found for this exam.</div>`;
+      } else {
+        sortedPyq.forEach(([subj, count]) => {
+          const name = ALL_SUBJECTS.find(s => s.id === subj)?.name || subj;
+          const pct = Math.round(count / maxPyq * 100);
+          wrap.innerHTML += `<div class="breakdown-row">
+            <div class="breakdown-name">${name}</div>
+            <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${pct}%;background:#a78bfa"></div></div>
+            <div class="breakdown-count" style="color:#a78bfa">${count}</div>
+          </div>`;
+        });
+      }
+    }
+
+    wrap.classList.remove('hidden');
+    log(`Stats: ${total} total (${pyq} PYQ, ${prc} practice) — ${label}`, 'ok');
+  } catch(e) { log('❌ Stats error: '+e.message,'err'); }
+};
+</script>
+</body>
+</html>
