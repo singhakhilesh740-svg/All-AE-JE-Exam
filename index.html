@@ -116,7 +116,7 @@
       </div>
     </header>
     <div class="welcome-strip">
-      <p>Welcome, <span id="userName">student</span> 👋</p>
+      <p>Welcome, <span id="userName">student</span> 👋 <span id="premiumBadge" class="premium-badge hidden">⭐ Premium</span></p>
     </div>
     <main class="home-main">
       <!-- 4 big feature tiles -->
@@ -144,6 +144,7 @@
           <div class="tile-icon">⭐</div>
           <div class="tile-title">Bookmarks</div>
           <div class="tile-sub">Your saved questions</div>
+          <div id="bookmarkLockBadge" class="tile-lock hidden">🔒 Premium</div>
         </button>
 
         <button class="home-tile tile-gs" id="homeGS">
@@ -427,6 +428,90 @@
     </main>
   </div>
 
+
+  <!-- ===== SUBSCRIPTION / UPGRADE SCREEN ===== -->
+  <div id="subscriptionScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" id="subBackBtn">←</button>
+      <div class="header-left" style="flex:1; margin-left:8px;">
+        <h2>⭐ Go Premium</h2>
+        <span class="header-sub">Unlock full PYQ access + Bookmarks</span>
+      </div>
+    </header>
+    <main class="sub-main">
+      <div class="sub-hero">
+        <div class="sub-hero-icon">🏆</div>
+        <h3 class="sub-hero-title">Premium Membership</h3>
+        <p class="sub-hero-desc">Get unlimited access to all Previous Year Questions across every exam, plus bookmark your favourite questions.</p>
+      </div>
+
+      <!-- Feature comparison -->
+      <div class="sub-features">
+        <div class="sub-feature-row sub-feature-head">
+          <span class="sub-feat-label">Feature</span>
+          <span class="sub-feat-free">Free</span>
+          <span class="sub-feat-premium">Premium</span>
+        </div>
+        <div class="sub-feature-row">
+          <span class="sub-feat-label">📝 Notes</span>
+          <span class="sub-feat-free sub-yes">✓</span>
+          <span class="sub-feat-premium sub-yes">✓</span>
+        </div>
+        <div class="sub-feature-row">
+          <span class="sub-feat-label">✏️ Practice MCQs</span>
+          <span class="sub-feat-free sub-yes">✓</span>
+          <span class="sub-feat-premium sub-yes">✓</span>
+        </div>
+        <div class="sub-feature-row">
+          <span class="sub-feat-label">📜 PYQ (10/exam)</span>
+          <span class="sub-feat-free sub-yes">✓</span>
+          <span class="sub-feat-premium sub-yes">✓</span>
+        </div>
+        <div class="sub-feature-row">
+          <span class="sub-feat-label">📜 PYQ (Full)</span>
+          <span class="sub-feat-free sub-no">✗</span>
+          <span class="sub-feat-premium sub-yes">✓</span>
+        </div>
+        <div class="sub-feature-row">
+          <span class="sub-feat-label">⭐ Bookmarks</span>
+          <span class="sub-feat-free sub-no">✗</span>
+          <span class="sub-feat-premium sub-yes">✓</span>
+        </div>
+      </div>
+
+      <!-- Plan cards -->
+      <div class="sub-plans">
+        <div class="sub-plan-card" id="planMonthly" data-plan="monthly">
+          <div class="sub-plan-name">Monthly</div>
+          <div class="sub-plan-price">₹99<span class="sub-plan-period">/month</span></div>
+          <div class="sub-plan-badge">&nbsp;</div>
+          <button class="sub-plan-btn" data-plan="monthly">Subscribe</button>
+        </div>
+        <div class="sub-plan-card sub-plan-popular" id="planYearly" data-plan="yearly">
+          <div class="sub-plan-name">Yearly</div>
+          <div class="sub-plan-price">₹499<span class="sub-plan-period">/year</span></div>
+          <div class="sub-plan-badge">🔥 Save 58%</div>
+          <button class="sub-plan-btn sub-plan-btn-popular" data-plan="yearly">Subscribe</button>
+        </div>
+      </div>
+
+      <p class="sub-note">Payments secured by Razorpay · UPI / Cards / NetBanking accepted</p>
+      <div id="subMsg" class="sub-msg"></div>
+    </main>
+  </div>
+
+  <!-- ===== PYQ PAYWALL BANNER (injected into quizScreen) ===== -->
+  <div id="paywallBanner" class="paywall-banner hidden">
+    <div class="paywall-inner">
+      <div class="paywall-icon">🔒</div>
+      <div class="paywall-text">
+        <strong>Free limit reached</strong>
+        <span>You've seen the 10 free PYQ questions for this exam. Upgrade to unlock all questions.</span>
+      </div>
+      <button id="paywallUpgradeBtn" class="paywall-btn">Upgrade ⭐</button>
+    </div>
+  </div>
+
   <!-- TOAST -->
   <div id="toast" class="toast"></div>
 
@@ -438,6 +523,7 @@
   <script type="module" src="js/exams.js"></script>
   <script type="module" src="js/notes.js"></script>
   <script type="module" src="js/gs-notes.js"></script>
+  <script type="module" src="js/payment.js"></script>
   <script type="module" src="js/app.js"></script>
 
   <script>

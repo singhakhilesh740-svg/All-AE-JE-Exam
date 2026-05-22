@@ -9,12 +9,14 @@ import { watchAuth, loginWithGoogle, logout, sendOTP, verifyOTPLogin, verifyOTPR
 import {
   fetchQuestions,
   fetchPracticeQuestions,
+  applyPyqFreeCap,
   saveAttempt,
   addBookmark,
   removeBookmark,
   isQuestionBookmarked,
   fetchBookmarkedQuestions
 } from './db.js';
+import { isPremiumUser, getPremiumExpiry, openPayment, PLANS } from './payment.js';
 import * as Quiz from './quiz.js';
 import { EXAMS, getExamById } from './exams.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from './subjects.js';
@@ -29,6 +31,32 @@ let currentExam         = null;    // selected exam (PYQ)
 let allBookmarks        = [];
 let quizSource          = 'home';  // where to go back from quiz
 let quizRoute           = null;    // 'practice' | 'pyq' | 'bookmarks'
+
+// ── Premium state ──────────────────────────────────────────────────────────
+let _isPremium          = false;   // cached premium flag
+let _subBackTarget      = 'homeScreen'; // where sub screen goes back to
+
+async function refreshPremiumStatus() {
+  if (!currentUser) { _isPremium = false; return false; }
+  _isPremium = await isPremiumUser(currentUser.uid);
+  updatePremiumUI();
+  return _isPremium;
+}
+
+function updatePremiumUI() {
+  const badge = $('premiumBadge');
+  const lockBadge = $('bookmarkLockBadge');
+  if (badge)     badge.classList.toggle('hidden', !_isPremium);
+  if (lockBadge) lockBadge.classList.toggle('hidden', _isPremium);
+  // Show/hide upgrade button
+  const upgradeBtn = $('headerUpgradeBtn');
+  if (_isPremium) {
+    if (upgradeBtn) upgradeBtn.style.display = 'none';
+  } else {
+    // Inject on next tick so home screen DOM is ready
+    setTimeout(injectUpgradeBtn, 100);
+  }
+}
 
 // ── General Studies Subjects ───────────────────────────────────────────────
 // Sub-subject definitions for each GS subject
@@ -129,6 +157,7 @@ watchAuth(
     currentUser = user;
     $('userName').textContent = user.name.split(' ')[0];
     if (user.photo) $('userAvatar').src = user.photo;
+    await refreshPremiumStatus();
     showScreen('homeScreen');
   },
   () => {
@@ -541,8 +570,13 @@ async function openPyqYear(examLabel, questions) {
   // Sort by subject then q_num
   questions.sort((a,b) => (a.subject||'').localeCompare(b.subject||'') || (a.q_num||0)-(b.q_num||0));
 
+  // Apply free user PYQ cap
+  const capResult = applyPyqFreeCap(questions, _isPremium);
+  questions = capResult.questions;
+
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
+  showPaywallBanner(capResult.isCapped, capResult.totalCount);
 
   // Build subject chips for year-wise view (subjects as filter)
   buildYearSubjectChips(questions);
@@ -604,9 +638,14 @@ async function openPyqSubject(subj) {
   // Sort: latest year first
   questions.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
 
+  // Apply free user PYQ cap
+  const capResult = applyPyqFreeCap(questions, _isPremium);
+  questions = capResult.questions;
+
   Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
+  showPaywallBanner(capResult.isCapped, capResult.totalCount);
 
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
@@ -614,7 +653,9 @@ async function openPyqSubject(subj) {
     if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
     qs.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
-    Quiz.resetToQuestions(qs);
+    const cr = applyPyqFreeCap(qs, _isPremium);
+    Quiz.resetToQuestions(cr.questions);
+    showPaywallBanner(cr.isCapped, cr.totalCount);
     renderQuiz();
   });
 
@@ -981,6 +1022,7 @@ $('quizPrevBtn').addEventListener('click', () => {
 $('quizBackBtn').addEventListener('click', goBackFromQuiz);
 
 function goBackFromQuiz() {
+  hidePaywallBanner();
   showScreen(quizSource || 'homeScreen');
 }
 
@@ -1010,3 +1052,135 @@ $('quizBookmarkBtn').addEventListener('click', async () => {
     } else { toast('Failed to bookmark'); }
   }
 });
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+// SUBSCRIPTION SCREEN
+// ══════════════════════════════════════════════════════════════════════════════
+
+function showSubscriptionScreen() {
+  showScreen('subscriptionScreen');
+  renderSubscriptionStatus();
+}
+
+async function renderSubscriptionStatus() {
+  const msg = $('subMsg');
+  if (!msg) return;
+  if (_isPremium) {
+    const expiry = await getPremiumExpiry(currentUser?.uid);
+    if (expiry) {
+      const dateStr = expiry.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+      msg.style.color = '#22c55e';
+      msg.textContent = `✅ You are Premium — active until ${dateStr}`;
+    }
+  } else {
+    msg.style.color = '#94a3b8';
+    msg.textContent = '';
+  }
+}
+
+// Back button for subscription screen
+$('subBackBtn').addEventListener('click', () => {
+  showScreen(_subBackTarget || 'homeScreen');
+});
+
+// Plan subscribe buttons
+document.querySelectorAll('.sub-plan-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    if (!currentUser) { toast('Please sign in first'); return; }
+    const planId = btn.dataset.plan;
+    const msg = $('subMsg');
+    msg.style.color = '#f59e0b';
+    msg.textContent = 'Opening payment…';
+
+    openPayment({
+      uid: currentUser.uid,
+      name: currentUser.name,
+      email: currentUser.email,
+      mobile: currentUser.mobile,
+      planId,
+      onSuccess: async ({ expiry, paymentId, planId }) => {
+        await refreshPremiumStatus();
+        const plan = PLANS[planId];
+        const dateStr = expiry
+          ? expiry.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })
+          : '';
+        msg.style.color = '#22c55e';
+        msg.textContent = `✅ Payment successful! Premium active${dateStr ? ' until ' + dateStr : ''}.`;
+        toast('🎉 Welcome to Premium!', 3000);
+      },
+      onFailure: (reason) => {
+        msg.style.color = '#ef4444';
+        msg.textContent = '❌ ' + (reason || 'Payment failed. Please try again.');
+      }
+    });
+  });
+});
+
+// ── Upgrade link from home (add to header) ────────────────────────────────
+
+// Show "Upgrade" button in home header for free users
+function injectUpgradeBtn() {
+  const headerRight = document.querySelector('#homeScreen .header-right');
+  if (!headerRight || $('headerUpgradeBtn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'headerUpgradeBtn';
+  btn.className = 'btn-icon';
+  btn.title = 'Go Premium';
+  btn.style.cssText = 'font-size:11px;font-weight:700;color:#f59e0b;padding:4px 8px;border:1px solid #f59e0b;border-radius:8px;background:transparent;cursor:pointer;margin-right:4px;';
+  btn.textContent = '⭐ Upgrade';
+  btn.addEventListener('click', () => {
+    _subBackTarget = 'homeScreen';
+    showSubscriptionScreen();
+  });
+  headerRight.insertBefore(btn, headerRight.firstChild);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PAYWALL BANNER
+// ══════════════════════════════════════════════════════════════════════════════
+
+function showPaywallBanner(isCapped, totalCount) {
+  const banner = $('paywallBanner');
+  if (!banner) return;
+  if (!isCapped) { banner.classList.add('hidden'); return; }
+  // Update text with total count
+  const textEl = banner.querySelector('.paywall-text span');
+  if (textEl && totalCount) {
+    textEl.textContent = `You've seen the 10 free PYQ questions (${totalCount} total). Upgrade to unlock all.`;
+  }
+  banner.classList.remove('hidden');
+}
+
+function hidePaywallBanner() {
+  const banner = $('paywallBanner');
+  if (banner) banner.classList.add('hidden');
+}
+
+$('paywallUpgradeBtn').addEventListener('click', () => {
+  _subBackTarget = 'quizScreen';
+  showSubscriptionScreen();
+});
+
+// ── Post-login: inject upgrade button and show lock badge ─────────────────
+// Called after refreshPremiumStatus in watchAuth
+(function patchUpdatePremiumUI_withUpgradeBtn() {
+  const orig = updatePremiumUI;
+  // We already call updatePremiumUI from refreshPremiumStatus —
+  // also inject the upgrade button
+  window.__updatePremiumUIFull = function() {
+    orig();
+    const upgradeBtn = $('headerUpgradeBtn');
+    if (_isPremium) {
+      if (upgradeBtn) upgradeBtn.style.display = 'none';
+    } else {
+      injectUpgradeBtn();
+    }
+  };
+})();
+
+// Override refreshPremiumStatus to also call full UI update
+const _origRefresh = refreshPremiumStatus;
+// Re-assign is not possible for let in module scope; patch watchAuth flow via:
+// After watchAuth fires and refreshPremiumStatus resolves, call the upgrade btn logic
+// This is handled by calling injectUpgradeBtn() from updatePremiumUI directly:
