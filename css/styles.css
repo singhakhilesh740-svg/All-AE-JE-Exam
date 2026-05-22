@@ -972,3 +972,35 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
   white-space: nowrap;
   flex-shrink: 0;
 }
+
+/* ══════════════════════════════════════════════════════
+   AUTH — PASSWORD FIELD STYLES
+══════════════════════════════════════════════════════ */
+
+.password-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.password-row .auth-input {
+  flex: 1;
+  padding-right: 44px; /* room for eye icon */
+}
+
+.toggle-pw {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  color: #64748b;
+  line-height: 1;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.toggle-pw:hover { color: #94a3b8; }

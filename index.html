@@ -13,7 +13,6 @@
 <body>
 
   <!-- ===== LOGIN SCREEN ===== -->
-  <!-- ===== LOGIN SCREEN ===== -->
   <div id="loginScreen" class="screen active">
     <div class="login-card">
       <div class="logo">📘</div>
@@ -27,7 +26,8 @@
         <button id="goRegisterBtn" class="btn-primary-auth" style="background:#065f46;margin-top:0">📝 New Registration</button>
       </div>
 
-      <!-- ── LOGIN FLOW ── -->
+      <!-- ══ LOGIN FLOW ══ -->
+
       <!-- Login: choose method -->
       <div id="loginOptions" style="display:none">
         <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Login to your account</p>
@@ -38,64 +38,64 @@
             <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
             <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
           </svg>
-          Login with Google
+          Continue with Google
         </button>
         <div class="divider"><span>or</span></div>
-        <button id="phoneLoginBtn" class="btn-phone">📱 Login with Mobile OTP</button>
+        <button id="loginEmailBtn" class="btn-phone" style="background:#1e40af">📧 Login with Email</button>
+        <button id="loginMobileBtn" class="btn-phone" style="background:#065f46;margin-top:8px">📱 Login with Mobile No.</button>
         <button id="backToChoice1" class="btn-ghost">← Back</button>
       </div>
 
-      <!-- Login: enter mobile -->
-      <div id="loginPhoneStep" style="display:none">
-        <p class="auth-step-label">Enter your registered mobile number</p>
+      <!-- Login: Email + Password -->
+      <div id="loginEmailStep" style="display:none">
+        <p class="auth-step-label">Enter your email and password</p>
+        <input id="loginEmailInput" type="email" placeholder="Email ID" class="auth-input" autocomplete="email"/>
+        <div class="password-row">
+          <input id="loginPasswordInput" type="password" placeholder="Password" class="auth-input" autocomplete="current-password" style="margin-bottom:0"/>
+          <button type="button" class="toggle-pw" data-target="loginPasswordInput">👁</button>
+        </div>
+        <button id="loginEmailBtn2" class="btn-primary-auth">Login →</button>
+        <button id="backToLoginOptions1" class="btn-ghost">← Back</button>
+      </div>
+
+      <!-- Login: Mobile + Password -->
+      <div id="loginMobileStep" style="display:none">
+        <p class="auth-step-label">Enter your mobile number and password</p>
         <div class="phone-input-row">
           <span class="country-code">+91</span>
           <input id="loginMobileInput" type="tel" inputmode="numeric" maxlength="10"
             placeholder="10-digit mobile number" autocomplete="tel"/>
         </div>
-        <button id="loginSendOtpBtn" class="btn-primary-auth">Send OTP</button>
-        <button id="backToLoginOptions" class="btn-ghost">← Back</button>
-      </div>
-
-      <!-- Login: verify OTP -->
-      <div id="loginOtpStep" style="display:none">
-        <p class="auth-step-label">OTP sent to <strong id="loginOtpSentTo" style="color:#60a5fa"></strong></p>
-        <div class="otp-row">
-          <input id="loginOtpInput" type="tel" inputmode="numeric" maxlength="6"
-            placeholder="6-digit OTP" autocomplete="one-time-code"/>
+        <div class="password-row">
+          <input id="loginMobilePasswordInput" type="password" placeholder="Password" class="auth-input" autocomplete="current-password" style="margin-bottom:0"/>
+          <button type="button" class="toggle-pw" data-target="loginMobilePasswordInput">👁</button>
         </div>
-        <button id="loginVerifyOtpBtn" class="btn-primary-auth">Verify & Login</button>
-        <button id="loginResendOtpBtn" class="btn-ghost" style="font-size:12px">Resend OTP</button>
-        <button id="backToLoginPhone" class="btn-ghost">← Change Number</button>
+        <button id="loginMobileBtn2" class="btn-primary-auth" style="background:#065f46">Login →</button>
+        <button id="backToLoginOptions2" class="btn-ghost">← Back</button>
       </div>
 
-      <!-- ── REGISTER FLOW ── -->
-      <!-- Register: Step 1 — Name + Email + Mobile -->
+      <!-- ══ REGISTER FLOW ══ -->
+
+      <!-- Register: Name + Mobile + Email + Password -->
       <div id="regStep1" style="display:none">
         <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Create your account</p>
-        <input id="regName" type="text" placeholder="Full Name *" maxlength="60" class="auth-input"/>
-        <input id="regEmail" type="email" placeholder="Email ID *" class="auth-input"/>
+        <input id="regName"   type="text"  placeholder="Full Name *" maxlength="60" class="auth-input"/>
         <div class="phone-input-row">
           <span class="country-code">+91</span>
           <input id="regMobile" type="tel" inputmode="numeric" maxlength="10"
             placeholder="Mobile number *" autocomplete="tel"/>
         </div>
-        <button id="regSendOtpBtn" class="btn-primary-auth">Send OTP to Verify Mobile</button>
-        <button id="backToChoice2" class="btn-ghost">← Back</button>
-      </div>
-
-      <!-- Register: Step 2 — OTP -->
-      <div id="regOtpStep" style="display:none">
-        <p class="auth-step-label">OTP sent to <strong id="regOtpSentTo" style="color:#60a5fa"></strong><br/>
-          <span style="color:#64748b;font-size:11px">Enter OTP to verify and complete registration</span>
-        </p>
-        <div class="otp-row">
-          <input id="regOtpInput" type="tel" inputmode="numeric" maxlength="6"
-            placeholder="6-digit OTP" autocomplete="one-time-code"/>
+        <input id="regEmail"  type="email" placeholder="Email ID *" class="auth-input" autocomplete="email"/>
+        <div class="password-row">
+          <input id="regPassword" type="password" placeholder="Password * (min 6 chars)" class="auth-input" autocomplete="new-password" style="margin-bottom:0"/>
+          <button type="button" class="toggle-pw" data-target="regPassword">👁</button>
         </div>
-        <button id="regVerifyOtpBtn" class="btn-primary-auth" style="background:#065f46">Verify & Register</button>
-        <button id="regResendOtpBtn" class="btn-ghost" style="font-size:12px">Resend OTP</button>
-        <button id="backToRegStep1" class="btn-ghost">← Back</button>
+        <div class="password-row">
+          <input id="regConfirmPassword" type="password" placeholder="Confirm Password *" class="auth-input" autocomplete="new-password" style="margin-bottom:0"/>
+          <button type="button" class="toggle-pw" data-target="regConfirmPassword">👁</button>
+        </div>
+        <button id="regSubmitBtn" class="btn-primary-auth" style="background:#065f46">Register →</button>
+        <button id="backToChoice2" class="btn-ghost">← Back</button>
       </div>
 
       <p class="footer-note" id="loginFooter">Only registered users can access the app</p>

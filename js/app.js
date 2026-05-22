@@ -5,7 +5,7 @@
 //   PYQ:      Home → pyqExamsScreen → pyqSubjectsScreen → quizScreen (topic chips)
 //   Bookmarks:Home → bookmarksScreen → quizScreen
 
-import { watchAuth, loginWithGoogle, logout, sendOTP, verifyOTPLogin, verifyOTPRegister, saveUserProfile, isMobileRegistered, isEmailRegistered } from './auth.js';
+import { watchAuth, loginWithGoogle, loginWithEmail, loginWithMobile, registerWithEmail, logout, saveUserProfile } from './auth.js';
 import {
   fetchQuestions,
   fetchPracticeQuestions,
@@ -149,7 +149,7 @@ watchAuth(
     if (user.isNew) {
       // No profile in Firestore — stay on login screen, show message
       console.log('[Auth] No profile found, staying on login');
-      authMsg('⚠️ Mobile not registered. Please register first.', '#ef4444');
+      authMsg('⚠️ Account not found. Please register first.', '#ef4444');
       showAuthStep('authChoice');
       await logout();
       return;
@@ -174,8 +174,8 @@ function authMsg(msg, color='#f59e0b') {
   el.style.color = color;
 }
 function showAuthStep(stepId) {
-  ['authChoice','loginOptions','loginPhoneStep','loginOtpStep',
-   'regStep1','regOtpStep'].forEach(id => {
+  ['authChoice','loginOptions','loginEmailStep','loginMobileStep',
+   'regStep1'].forEach(id => {
     const el = $(id);
     if (el) el.style.display = (id === stepId) ? 'block' : 'none';
   });
@@ -190,21 +190,20 @@ function on(id, fn) {
   if (el) el.addEventListener('click', fn);
 }
 
-// ── Choice buttons ──────────────────────────────────────────────────────────
-on('goLoginBtn',        () => showAuthStep('loginOptions'));
-on('goRegisterBtn',     () => showAuthStep('regStep1'));
-on('backToChoice1',     () => showAuthStep('authChoice'));
-on('backToChoice2',     () => showAuthStep('authChoice'));
-on('backToLoginOptions',() => showAuthStep('loginOptions'));
-on('backToLoginPhone',  () => showAuthStep('loginPhoneStep'));
-on('backToRegStep1',    () => showAuthStep('regStep1'));
+// ── Choice buttons ───────────────────────────────────────────────────────
+on('goLoginBtn',         () => showAuthStep('loginOptions'));
+on('goRegisterBtn',      () => showAuthStep('regStep1'));
+on('backToChoice1',      () => showAuthStep('authChoice'));
+on('backToChoice2',      () => showAuthStep('authChoice'));
+on('backToLoginOptions1',() => showAuthStep('loginOptions'));
+on('backToLoginOptions2',() => showAuthStep('loginOptions'));
 
-// ── Google Login (registered users only) ───────────────────────────────────
+// ── Google Login ──────────────────────────────────────────────────────────
 on('googleLoginBtn', async () => {
   authMsg('Signing in with Google…');
   try {
     await loginWithGoogle();
-    // watchAuth handles the rest
+    // watchAuth handles navigation
   } catch(e) {
     if (e.message === 'NOT_REGISTERED') {
       authMsg('⚠️ This Google account is not registered. Please register first.', '#ef4444');
@@ -215,121 +214,93 @@ on('googleLoginBtn', async () => {
   }
 });
 
-// ── Login with Mobile OTP ───────────────────────────────────────────────────
-on('phoneLoginBtn', () => showAuthStep('loginPhoneStep'));
+// ── Email login button → show email step ──────────────────────────────────
+on('loginEmailBtn', () => showAuthStep('loginEmailStep'));
 
-on('loginSendOtpBtn', async () => {
-  const mobile = $('loginMobileInput').value.trim();
-  if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
-  const full = '+91' + mobile;
-  authMsg('Sending OTP…');
+// ── Email + Password Login ────────────────────────────────────────────────
+on('loginEmailBtn2', async () => {
+  const email    = $('loginEmailInput').value.trim();
+  const password = $('loginPasswordInput').value;
+  if (!email)    { authMsg('Enter your email ID', '#ef4444'); return; }
+  if (!password) { authMsg('Enter your password', '#ef4444'); return; }
+  authMsg('Logging in…');
   try {
-    await sendOTP(full);
-    $('loginOtpSentTo').textContent = '+91 ' + mobile;
-    showAuthStep('loginOtpStep');
-    authMsg('OTP sent ✓', '#10b981');
-  } catch(e) { authMsg('Failed to send OTP: ' + e.message, '#ef4444'); }
-});
-
-on('loginVerifyOtpBtn', async () => {
-  const otp = $('loginOtpInput').value.trim();
-  if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
-  authMsg('Verifying OTP…');
-  try {
-    const { user, registered } = await verifyOTPLogin(otp);
-    console.log('[Login] OTP verified, uid:', user?.uid, 'registered:', registered);
-    if (!registered) {
-      authMsg('⚠️ Mobile not registered. Please register first.', '#ef4444');
-      showAuthStep('authChoice');
-    } else {
-      authMsg('Login successful! 🎉', '#10b981');
-      // watchAuth fires automatically and shows homeScreen
-    }
+    await loginWithEmail(email, password);
+    // watchAuth fires and shows homeScreen
   } catch(e) {
-    console.error('[Login] OTP verify error:', e);
-    authMsg('Invalid OTP. Try again.', '#ef4444');
+    if (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential' || e.message === 'NOT_REGISTERED') {
+      authMsg('⚠️ Email not registered or password incorrect.', '#ef4444');
+    } else if (e.code === 'auth/wrong-password') {
+      authMsg('⚠️ Incorrect password. Try again.', '#ef4444');
+    } else if (e.code === 'auth/too-many-requests') {
+      authMsg('⚠️ Too many attempts. Please wait and try again.', '#ef4444');
+    } else {
+      authMsg('Login failed: ' + e.message, '#ef4444');
+    }
   }
 });
 
-on('loginResendOtpBtn', async () => {
-  const mobile = $('loginMobileInput').value.trim();
-  if (!mobile) { showAuthStep('loginPhoneStep'); return; }
-  authMsg('Resending OTP…');
+// ── Mobile login button → show mobile step ────────────────────────────────
+on('loginMobileBtn', () => showAuthStep('loginMobileStep'));
+
+// ── Mobile + Password Login ───────────────────────────────────────────────
+on('loginMobileBtn2', async () => {
+  const mobile   = $('loginMobileInput').value.trim();
+  const password = $('loginMobilePasswordInput').value;
+  if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
+  if (!password) { authMsg('Enter your password', '#ef4444'); return; }
+  authMsg('Logging in…');
   try {
-    await sendOTP('+91' + mobile);
-    authMsg('OTP resent ✓', '#10b981');
-  } catch(e) { authMsg('Failed: ' + e.message, '#ef4444'); }
+    await loginWithMobile(mobile, password);
+    // watchAuth handles navigation
+  } catch(e) {
+    if (e.message === 'MOBILE_NOT_FOUND') {
+      authMsg('⚠️ Mobile number not registered. Please register first.', '#ef4444');
+    } else if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+      authMsg('⚠️ Incorrect password. Try again.', '#ef4444');
+    } else if (e.code === 'auth/too-many-requests') {
+      authMsg('⚠️ Too many attempts. Please wait and try again.', '#ef4444');
+    } else {
+      authMsg('Login failed: ' + e.message, '#ef4444');
+    }
+  }
 });
 
-// ── Registration Flow ───────────────────────────────────────────────────────
-on('regSendOtpBtn', async () => {
-  const name   = $('regName').value.trim();
-  const email  = $('regEmail').value.trim();
-  const mobile = $('regMobile').value.trim();
+// ── Registration: Name + Mobile + Email + Password ────────────────────────
+on('regSubmitBtn', async () => {
+  const name            = $('regName').value.trim();
+  const mobile          = $('regMobile').value.trim();
+  const email           = $('regEmail').value.trim();
+  const password        = $('regPassword').value;
+  const confirmPassword = $('regConfirmPassword').value;
 
-  if (!name)  { authMsg('Please enter your full name', '#ef4444'); return; }
+  // Validations
+  if (!name)   { authMsg('Please enter your full name', '#ef4444'); return; }
+  if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     authMsg('Please enter a valid email ID', '#ef4444'); return;
   }
-  if (!/^\d{10}$/.test(mobile)) {
-    authMsg('Enter valid 10-digit mobile number', '#ef4444'); return;
-  }
-  const full = '+91' + mobile;
+  if (password.length < 6) { authMsg('Password must be at least 6 characters', '#ef4444'); return; }
+  if (password !== confirmPassword) { authMsg('Passwords do not match', '#ef4444'); return; }
 
-  authMsg('Sending OTP to +91 ' + mobile + '…');
+  authMsg('Creating account…');
   try {
-    await sendOTP(full);
-    _regData = { name, email, mobile: full };
-    $('regOtpSentTo').textContent = '+91 ' + mobile;
-    showAuthStep('regOtpStep');
-    authMsg('OTP sent ✓', '#10b981');
-  } catch(e) { authMsg('Failed to send OTP: ' + e.message, '#ef4444'); }
-});
-
-on('regVerifyOtpBtn', async () => {
-  const otp = $('regOtpInput').value.trim();
-  if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
-  authMsg('Verifying OTP…');
-
-  // Step 1: Verify OTP
-  let user;
-  try {
-    user = await verifyOTPRegister(otp);
-    console.log('[Reg] OTP verified, uid:', user.uid);
-  } catch(e) {
-    console.error('[Reg] OTP error:', e);
-    authMsg('Invalid OTP. Try again.', '#ef4444');
-    return;
-  }
-
-  // Step 2: Save profile to Firestore
-  authMsg('Mobile verified! Saving profile…', '#10b981');
-  try {
-    await saveUserProfile({
-      uid:    user.uid,
-      name:   _regData.name,
-      email:  _regData.email,
-      mobile: _regData.mobile
-    });
-    console.log('[Reg] Profile saved successfully');
+    await registerWithEmail({ name, email, mobile, password });
     authMsg('Registration complete! 🎉', '#10b981');
-    // Small delay so user sees success message, then watchAuth takes over
-    setTimeout(() => {
-      showScreen('homeScreen');
-    }, 1000);
+    // watchAuth fires automatically and shows homeScreen
   } catch(e) {
-    console.error('[Reg] Profile save error:', e);
-    authMsg('Profile save failed: ' + e.message + ' — please try again.', '#ef4444');
+    if (e.message === 'EMAIL_TAKEN') {
+      authMsg('⚠️ This email is already registered. Please login.', '#ef4444');
+    } else if (e.message === 'MOBILE_TAKEN') {
+      authMsg('⚠️ This mobile number is already registered.', '#ef4444');
+    } else if (e.code === 'auth/email-already-in-use') {
+      authMsg('⚠️ This email is already in use. Please login.', '#ef4444');
+    } else if (e.code === 'auth/weak-password') {
+      authMsg('⚠️ Password too weak. Use at least 6 characters.', '#ef4444');
+    } else {
+      authMsg('Registration failed: ' + e.message, '#ef4444');
+    }
   }
-});
-
-on('regResendOtpBtn', async () => {
-  if (!_regData.mobile) { showAuthStep('regStep1'); return; }
-  authMsg('Resending OTP…');
-  try {
-    await sendOTP(_regData.mobile);
-    authMsg('OTP resent ✓', '#10b981');
-  } catch(e) { authMsg('Failed: ' + e.message, '#ef4444'); }
 });
 
 $('logoutBtn').addEventListener('click', async () => {
@@ -1184,3 +1155,18 @@ const _origRefresh = refreshPremiumStatus;
 // Re-assign is not possible for let in module scope; patch watchAuth flow via:
 // After watchAuth fires and refreshPremiumStatus resolves, call the upgrade btn logic
 // This is handled by calling injectUpgradeBtn() from updatePremiumUI directly:
+
+// ── Password show/hide toggle ──────────────────────────────────────────────
+document.querySelectorAll('.toggle-pw').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const input = document.getElementById(btn.dataset.target);
+    if (!input) return;
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      btn.textContent = '👁';
+    }
+  });
+});
