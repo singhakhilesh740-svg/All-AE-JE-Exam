@@ -2,35 +2,34 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper: is admin? (only this email can upload questions/notes)
     function isAdmin() {
       return request.auth != null
         && request.auth.token.email == '112ce0489@gmail.com';
     }
 
-    // Questions: anyone logged in can read, only admin can write
+    // Questions: any logged-in user can read, only admin writes
     match /exams/{examId}/questions/{questionId} {
       allow read: if request.auth != null;
       allow write: if isAdmin();
     }
 
-    // Notes: anyone logged in can read, only admin can write
+    // Notes: any logged-in user can read, only admin writes
     match /notes/{subjectId} {
       allow read: if request.auth != null;
       allow write: if isAdmin();
     }
 
-    // User profile: only the user can read/write their own data
+    // User profile: only the owner (matched by phone-auth UID) can read/write
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
 
-      // Subcollections (attempts, bookmarks, etc.)
+      // Subcollections (attempts, bookmarks)
       match /{subCollection}/{docId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
     }
 
-    // Default: deny everything else
+    // Deny everything else
     match /{document=**} {
       allow read, write: if false;
     }

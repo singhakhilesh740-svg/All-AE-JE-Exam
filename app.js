@@ -5,18 +5,16 @@
 //   PYQ:      Home → pyqExamsScreen → pyqSubjectsScreen → quizScreen (topic chips)
 //   Bookmarks:Home → bookmarksScreen → quizScreen
 
-import { watchAuth, loginWithGoogle, loginWithEmail, loginWithMobile, registerWithEmail, linkGoogleToCurrentUser, sendPasswordResetLink, logout, saveUserProfile, sendOtp, verifyOtp } from './auth.js';
+import { watchAuth, logout, sendOTP, verifyOTP, saveUserProfile, getUserProfile } from './auth.js';
 import {
   fetchQuestions,
   fetchPracticeQuestions,
-  applyPyqFreeCap,
   saveAttempt,
   addBookmark,
   removeBookmark,
   isQuestionBookmarked,
   fetchBookmarkedQuestions
 } from './db.js';
-import { isPremiumUser, getPremiumExpiry, openPayment, PLANS } from './payment.js';
 import * as Quiz from './quiz.js';
 import { EXAMS, getExamById } from './exams.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from './subjects.js';
@@ -31,32 +29,6 @@ let currentExam         = null;    // selected exam (PYQ)
 let allBookmarks        = [];
 let quizSource          = 'home';  // where to go back from quiz
 let quizRoute           = null;    // 'practice' | 'pyq' | 'bookmarks'
-
-// ── Premium state ──────────────────────────────────────────────────────────
-let _isPremium          = false;   // cached premium flag
-let _subBackTarget      = 'homeScreen'; // where sub screen goes back to
-
-async function refreshPremiumStatus() {
-  if (!currentUser) { _isPremium = false; return false; }
-  _isPremium = await isPremiumUser(currentUser.uid);
-  updatePremiumUI();
-  return _isPremium;
-}
-
-function updatePremiumUI() {
-  const badge = $('premiumBadge');
-  const lockBadge = $('bookmarkLockBadge');
-  if (badge)     badge.classList.toggle('hidden', !_isPremium);
-  if (lockBadge) lockBadge.classList.toggle('hidden', _isPremium);
-  // Show/hide upgrade button
-  const upgradeBtn = $('headerUpgradeBtn');
-  if (_isPremium) {
-    if (upgradeBtn) upgradeBtn.style.display = 'none';
-  } else {
-    // Inject on next tick so home screen DOM is ready
-    setTimeout(injectUpgradeBtn, 100);
-  }
-}
 
 // ── General Studies Subjects ───────────────────────────────────────────────
 // Sub-subject definitions for each GS subject
@@ -143,29 +115,25 @@ document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
 });
 
 // ── Auth ───────────────────────────────────────────────────────────────────
-// Bug 3 fix: shared handler used by watchAuth AND registration success path
-async function handleLoggedInUser(user) {
-  currentUser = user;
-  $('userName').textContent = user.name.split(' ')[0];
-  if (user.photo) $('userAvatar').src = user.photo;
-  await refreshPremiumStatus();
-  showScreen('homeScreen');
-}
-
 watchAuth(
   async user => {
-    console.log('[Auth] watchAuth fired, isNew:', user.isNew, 'uid:', user.uid);
-    if (user.isNew) {
-      console.log('[Auth] No profile found, staying on login');
-      authMsg('⚠️ Account not found. Please register first.', '#ef4444');
-      showAuthStep('authChoice');
-      await logout();
-      return;
+    console.log('[Auth] watchAuth fired, uid:', user.uid, 'hasProfile:', user.hasProfile);
+    currentUser = user;
+    // Show first name if set, else fall back to mobile number
+    const displayName = user.name ? user.name.split(' ')[0] : (user.mobile || 'Student');
+    $('userName').textContent = displayName;
+
+    if (!user.hasProfile) {
+      // First-time login — no name yet. Send them to fill profile.
+      toast('Welcome! Please add your details');
+      openProfileScreen();
+    } else {
+      showScreen('homeScreen');
     }
-    handleLoggedInUser(user);
   },
   () => {
     currentUser = null;
+    showAuthStep('loginPhoneStep');
     showScreen('loginScreen');
   }
 );
@@ -178,15 +146,12 @@ function authMsg(msg, color='#f59e0b') {
   el.style.color = color;
 }
 function showAuthStep(stepId) {
-  ['authChoice','loginOptions','loginEmailStep','loginMobileStep',
-   'loginMobileOtpStep','regStep1','forgotStep','linkGoogleStep'].forEach(id => {
+  ['loginPhoneStep','loginOtpStep'].forEach(id => {
     const el = $(id);
     if (el) el.style.display = (id === stepId) ? 'block' : 'none';
   });
   authMsg('');
 }
-
-let _regData = {}; // temporary store during registration
 
 // ── Safely attach click with null check ────────────────────────────────────
 function on(id, fn) {
@@ -194,289 +159,125 @@ function on(id, fn) {
   if (el) el.addEventListener('click', fn);
 }
 
-// ── Choice buttons ───────────────────────────────────────────────────────
-on('goLoginBtn',         () => showAuthStep('loginOptions'));
-on('goRegisterBtn',      () => showAuthStep('regStep1'));
-on('backToChoice1',      () => showAuthStep('authChoice'));
-on('backToChoice2',      () => showAuthStep('authChoice'));
-on('backToLoginOptions1',() => showAuthStep('loginOptions'));
-on('backToLoginOptions2',() => showAuthStep('loginOptions'));
-
-// ── Google Login ──────────────────────────────────────────────────────────
-on('googleLoginBtn', async () => {
-  authMsg('Signing in with Google…');
-  try {
-    await loginWithGoogle();
-    // watchAuth handles navigation
-  } catch(e) {
-    if (e.message === 'NOT_REGISTERED') {
-      authMsg('⚠️ This Google account is not registered. Please register first.', '#ef4444');
-      showAuthStep('loginOptions');
-    } else if (e.message && e.message.startsWith('LINK_REQUIRED:')) {
-      // Same email exists under email+password — ask for password to link
-      const email = e.message.split('LINK_REQUIRED:')[1];
-      showLinkGooglePrompt(email);
-    } else {
-      authMsg('Login failed: ' + e.message, '#ef4444');
-      showAuthStep('loginOptions');
-    }
-  }
-});
-
-// ── Link Google Prompt ────────────────────────────────────────────────────
-// Shown when user tries Google login but same email is registered with password
-function showLinkGooglePrompt(email) {
-  showAuthStep('linkGoogleStep');
-  $('linkGoogleEmail').textContent = email;
-  $('linkGooglePasswordInput').value = '';
-  authMsg('');
-}
-
-on('linkGoogleConfirmBtn', async () => {
-  const email    = $('linkGoogleEmail').textContent.trim();
-  const password = $('linkGooglePasswordInput').value;
-  if (!password) { authMsg('Enter your password to continue', '#ef4444'); return; }
-  authMsg('Verifying password…');
-  try {
-    // Step 1: Login with email+password
-    await loginWithEmail(email, password);
-    authMsg('Linking Google account…');
-    // Step 2: Link Google to this account
-    await linkGoogleToCurrentUser();
-    authMsg('✅ Google linked! You can now login with either method.', '#10b981');
-    // watchAuth fires and shows homeScreen
-  } catch(e) {
-    if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
-      authMsg('⚠️ Incorrect password.', '#ef4444');
-    } else if (e.code === 'auth/credential-already-in-use') {
-      // Google account already linked to another account — just log in normally
-      authMsg('Logging in…');
-      try { await loginWithGoogle(); } catch(e2) { authMsg('Login failed: ' + e2.message, '#ef4444'); }
-    } else {
-      authMsg('Failed: ' + e.message, '#ef4444');
-    }
-  }
-});
-
-on('backFromLinkGoogle', () => showAuthStep('loginOptions'));
-
-// ── Email login button → show email step ──────────────────────────────────
-on('loginEmailBtn', () => showAuthStep('loginEmailStep'));
-
-// ── Email + Password Login ────────────────────────────────────────────────
-on('loginEmailBtn2', async () => {
-  const email    = $('loginEmailInput').value.trim();
-  const password = $('loginPasswordInput').value;
-  if (!email)    { authMsg('Enter your email ID', '#ef4444'); return; }
-  if (!password) { authMsg('Enter your password', '#ef4444'); return; }
-  authMsg('Logging in…');
-  try {
-    await loginWithEmail(email, password);
-    // watchAuth fires and shows homeScreen
-  } catch(e) {
-    if (e.message === 'NOT_REGISTERED') {
-      authMsg('⚠️ Email not registered. Please register first.', '#ef4444');
-    } else if (e.code === 'auth/user-not-found') {
-      authMsg('⚠️ Email not registered. Please register first.', '#ef4444');
-    } else if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
-      authMsg('⚠️ Incorrect password. Use Forgot Password to reset.', '#ef4444');
-    } else if (e.code === 'auth/too-many-requests') {
-      authMsg('⚠️ Too many attempts. Please wait a few minutes.', '#ef4444');
-    } else if (e.code === 'auth/invalid-email') {
-      authMsg('⚠️ Invalid email format.', '#ef4444');
-    } else {
-      authMsg('Login failed: ' + e.message, '#ef4444');
-    }
-  }
-});
-
-// ── Mobile login button → show mobile step ────────────────────────────────
-on('loginMobileBtn', () => showAuthStep('loginMobileStep'));
-on('loginMobileOtpBtn', () => showAuthStep('loginMobileOtpStep'));
-
-// ── Forgot Password ────────────────────────────────────────────────────────
-on('forgotPasswordLink', () => {
-  showAuthStep('forgotStep');
-  const box = $('forgotSuccessBox');
-  if (box) box.style.display = 'none';
-  const inp = $('forgotEmailInput');
-  // Pre-fill with whatever was typed in email login
-  if (inp) inp.value = ($('loginEmailInput')?.value || '');
-  authMsg('');
-});
-
-on('backFromForgot', () => showAuthStep('loginEmailStep'));
-
-on('forgotSendBtn', async () => {
-  const email = $('forgotEmailInput').value.trim();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    authMsg('Enter a valid email ID', '#ef4444'); return;
-  }
-  authMsg('Sending reset link…');
-  const btn = $('forgotSendBtn');
-  btn.disabled = true;
-
-  try {
-    await sendPasswordResetLink(email);
-    authMsg('');
-    const box = $('forgotSuccessBox');
-    if (box) box.style.display = 'block';
-    btn.textContent = '✓ Link Sent';
-  } catch(e) {
-    btn.disabled = false;
-    if (e.message === 'NOT_REGISTERED') {
-      authMsg('⚠️ This email is not registered. Please register first.', '#ef4444');
-    } else {
-      authMsg('Failed to send: ' + e.message, '#ef4444');
-    }
-  }
-});
-
-
-// ── Mobile + Password Login ───────────────────────────────────────────────
-on('loginMobileBtn2', async () => {
-  const mobile   = $('loginMobileInput').value.trim();
-  const password = $('loginMobilePasswordInput').value;
+// ── Login: Send OTP ──────────────────────────────────────────────────────
+on('loginSendOtpBtn', async () => {
+  const mobile = $('loginMobileInput').value.trim();
   if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
-  if (!password) { authMsg('Enter your password', '#ef4444'); return; }
-  authMsg('Logging in…');
-  try {
-    await loginWithMobile(mobile, password);
-    // watchAuth handles navigation
-  } catch(e) {
-    if (e.message === 'MOBILE_NOT_FOUND') {
-      authMsg('⚠️ Mobile number not registered. Please register first.', '#ef4444');
-    } else if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
-      authMsg('⚠️ Incorrect password. Try again.', '#ef4444');
-    } else if (e.code === 'auth/too-many-requests') {
-      authMsg('⚠️ Too many attempts. Please wait and try again.', '#ef4444');
-    } else {
-      authMsg('Login failed: ' + e.message, '#ef4444');
-    }
-  }
-});
-
-
-// ── OTP Login — Send OTP ──────────────────────────────────────────────────
-let _confirmationResult = null;
-
-on('sendOtpBtn', async () => {
-  const mobile = $('otpMobileInput').value.trim();
-  if (!/^\d{10}$/.test(mobile)) {
-    authMsg('Enter valid 10-digit mobile number', '#ef4444'); return;
-  }
+  const full = '+91' + mobile;
   authMsg('Sending OTP…');
-  const btn = $('sendOtpBtn');
+  const btn = $('loginSendOtpBtn');
   btn.disabled = true;
   try {
-    _confirmationResult = await sendOtp(mobile, 'recaptcha-container');
-    authMsg('OTP sent to +91 ' + mobile + ' ✅', '#10b981');
-    // Show OTP input row
-    $('otpInputRow').style.display = 'flex';
-    $('verifyOtpBtn').style.display = 'block';
-    // Cooldown: re-enable Resend after 30s
-    let sec = 30;
-    $('sendOtpBtn').textContent = 'Resend OTP (' + sec + 's)';
-    const timer = setInterval(() => {
-      sec--;
-      $('sendOtpBtn').textContent = 'Resend OTP (' + sec + 's)';
-      if (sec <= 0) {
-        clearInterval(timer);
-        btn.disabled = false;
-        btn.textContent = 'Resend OTP';
-      }
-    }, 1000);
+    await sendOTP(full);
+    $('loginOtpSentTo').textContent = '+91 ' + mobile;
+    showAuthStep('loginOtpStep');
+    authMsg('OTP sent ✓', '#10b981');
   } catch(e) {
-    btn.disabled = false;
-    if (e.message === 'MOBILE_NOT_FOUND') {
-      authMsg('⚠️ Mobile number not registered. Please register first.', '#ef4444');
-    } else if (e.code === 'auth/too-many-requests') {
-      authMsg('⚠️ Too many OTP requests. Wait a few minutes.', '#ef4444');
+    if (e.code === 'auth/too-many-requests') {
+      authMsg('Too many attempts. Please wait a few minutes.', '#ef4444');
     } else if (e.code === 'auth/invalid-phone-number') {
-      authMsg('⚠️ Invalid phone number format.', '#ef4444');
+      authMsg('Invalid phone number.', '#ef4444');
     } else {
       authMsg('Failed to send OTP: ' + (e.message || e.code), '#ef4444');
     }
+  } finally {
+    btn.disabled = false;
   }
 });
 
-// ── OTP Login — Verify OTP ─────────────────────────────────────────────────
-on('verifyOtpBtn', async () => {
-  const code = $('otpCodeInput').value.trim();
-  if (!/^\d{6}$/.test(code)) {
-    authMsg('Enter the 6-digit OTP', '#ef4444'); return;
-  }
-  if (!_confirmationResult) {
-    authMsg('Please request OTP first', '#ef4444'); return;
-  }
+// ── Login: Verify OTP ────────────────────────────────────────────────────
+on('loginVerifyOtpBtn', async () => {
+  const otp = $('loginOtpInput').value.trim();
+  if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
   authMsg('Verifying OTP…');
+  const btn = $('loginVerifyOtpBtn');
+  btn.disabled = true;
   try {
-    await verifyOtp(_confirmationResult, code);
-    _confirmationResult = null;
-    authMsg('✅ OTP verified! Logging in…', '#10b981');
-    // watchAuth fires and calls handleLoggedInUser
+    await verifyOTP(otp);
+    authMsg('Login successful! 🎉', '#10b981');
+    // watchAuth fires and routes to home or profile
   } catch(e) {
-    if (e.message === 'NOT_REGISTERED') {
-      authMsg('⚠️ Mobile not registered. Please register first.', '#ef4444');
-    } else if (e.code === 'auth/invalid-verification-code') {
-      authMsg('⚠️ Incorrect OTP. Please try again.', '#ef4444');
+    if (e.code === 'auth/invalid-verification-code') {
+      authMsg('Incorrect OTP. Please try again.', '#ef4444');
     } else if (e.code === 'auth/code-expired') {
-      authMsg('⚠️ OTP expired. Please request a new one.', '#ef4444');
+      authMsg('OTP expired. Please resend.', '#ef4444');
     } else {
       authMsg('Verification failed: ' + (e.message || e.code), '#ef4444');
     }
+  } finally {
+    btn.disabled = false;
   }
 });
 
-on('backFromOtp', () => {
-  _confirmationResult = null;
-  showAuthStep('loginOptions');
-});
-
-// ── Registration: Name + Mobile + Email + Password ────────────────────────
-on('regSubmitBtn', async () => {
-  const name            = $('regName').value.trim();
-  const mobile          = $('regMobile').value.trim();
-  const email           = $('regEmail').value.trim();
-  const password        = $('regPassword').value;
-  const confirmPassword = $('regConfirmPassword').value;
-
-  // Validations
-  if (!name)   { authMsg('Please enter your full name', '#ef4444'); return; }
-  if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    authMsg('Please enter a valid email ID', '#ef4444'); return;
-  }
-  if (password.length < 6) { authMsg('Password must be at least 6 characters', '#ef4444'); return; }
-  if (password !== confirmPassword) { authMsg('Passwords do not match', '#ef4444'); return; }
-
-  authMsg('Creating account…');
+// ── Login: Resend OTP ────────────────────────────────────────────────────
+on('loginResendOtpBtn', async () => {
+  const mobile = $('loginMobileInput').value.trim();
+  if (!mobile) { showAuthStep('loginPhoneStep'); return; }
+  authMsg('Resending OTP…');
   try {
-    const user = await registerWithEmail({ name, email, mobile, password });
-    authMsg('Registration complete! 🎉', '#10b981');
-    // Bug 3 fix: watchAuth was suppressed during registration, so manually
-    // call handleLoggedInUser with the freshly created user data
-    const profile = { name, email: email.toLowerCase(), mobile };
-    await handleLoggedInUser({
-      uid:    user.uid,
-      name:   profile.name,
-      email:  profile.email,
-      mobile: profile.mobile,
-      photo:  user.photoURL || '',
-      isNew:  false
+    await sendOTP('+91' + mobile);
+    authMsg('OTP resent ✓', '#10b981');
+  } catch(e) { authMsg('Failed: ' + (e.message || e.code), '#ef4444'); }
+});
+
+on('backToLoginPhone', () => showAuthStep('loginPhoneStep'));
+
+// ══════════════════════════════════════════════════════════════════════════
+// PROFILE — view & edit name/email
+// ══════════════════════════════════════════════════════════════════════════
+
+function profileMsg(msg, color='#10b981') {
+  const el = $('profileMsg');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color;
+}
+
+async function openProfileScreen() {
+  if (!currentUser) return;
+  // Load latest profile from Firestore
+  const profile = await getUserProfile(currentUser.uid);
+  $('profileMobile').value = profile?.mobile || currentUser.mobile || '';
+  $('profileName').value   = profile?.name  || '';
+  $('profileEmail').value  = profile?.email || '';
+  profileMsg('');
+  showScreen('profileScreen');
+}
+
+on('editProfileBtn', () => openProfileScreen());
+
+on('saveProfileBtn', async () => {
+  if (!currentUser) return;
+  const name  = $('profileName').value.trim();
+  const email = $('profileEmail').value.trim();
+
+  if (!name) { profileMsg('Please enter your name', '#ef4444'); return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    profileMsg('Please enter a valid email ID', '#ef4444'); return;
+  }
+
+  profileMsg('Saving…', '#f59e0b');
+  const btn = $('saveProfileBtn');
+  btn.disabled = true;
+  try {
+    await saveUserProfile({
+      uid:    currentUser.uid,
+      name,
+      email,
+      mobile: currentUser.mobile
     });
+    // Update in-memory state + header
+    currentUser.name = name;
+    currentUser.email = email;
+    currentUser.hasProfile = true;
+    $('userName').textContent = name.split(' ')[0];
+    profileMsg('Saved! ✓', '#10b981');
+    toast('Details saved');
+    setTimeout(() => showScreen('homeScreen'), 800);
   } catch(e) {
-    if (e.message === 'EMAIL_TAKEN') {
-      authMsg('⚠️ This email is already registered. Please login.', '#ef4444');
-    } else if (e.message === 'MOBILE_TAKEN') {
-      authMsg('⚠️ This mobile number is already registered.', '#ef4444');
-    } else if (e.code === 'auth/email-already-in-use') {
-      authMsg('⚠️ This email is already in use. Please login.', '#ef4444');
-    } else if (e.code === 'auth/weak-password') {
-      authMsg('⚠️ Password too weak. Use at least 6 characters.', '#ef4444');
-    } else {
-      authMsg('Registration failed: ' + e.message, '#ef4444');
-    }
+    profileMsg('Save failed: ' + (e.message || e.code), '#ef4444');
+  } finally {
+    btn.disabled = false;
   }
 });
 
@@ -718,13 +519,8 @@ async function openPyqYear(examLabel, questions) {
   // Sort by subject then q_num
   questions.sort((a,b) => (a.subject||'').localeCompare(b.subject||'') || (a.q_num||0)-(b.q_num||0));
 
-  // Apply free user PYQ cap
-  const capResult = applyPyqFreeCap(questions, _isPremium);
-  questions = capResult.questions;
-
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
-  showPaywallBanner(capResult.isCapped, capResult.totalCount);
 
   // Build subject chips for year-wise view (subjects as filter)
   buildYearSubjectChips(questions);
@@ -786,14 +582,9 @@ async function openPyqSubject(subj) {
   // Sort: latest year first
   questions.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
 
-  // Apply free user PYQ cap
-  const capResult = applyPyqFreeCap(questions, _isPremium);
-  questions = capResult.questions;
-
   Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
-  showPaywallBanner(capResult.isCapped, capResult.totalCount);
 
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
@@ -801,9 +592,7 @@ async function openPyqSubject(subj) {
     if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
     qs.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
-    const cr = applyPyqFreeCap(qs, _isPremium);
-    Quiz.resetToQuestions(cr.questions);
-    showPaywallBanner(cr.isCapped, cr.totalCount);
+    Quiz.resetToQuestions(qs);
     renderQuiz();
   });
 
@@ -1170,7 +959,6 @@ $('quizPrevBtn').addEventListener('click', () => {
 $('quizBackBtn').addEventListener('click', goBackFromQuiz);
 
 function goBackFromQuiz() {
-  hidePaywallBanner();
   showScreen(quizSource || 'homeScreen');
 }
 
@@ -1199,151 +987,4 @@ $('quizBookmarkBtn').addEventListener('click', async () => {
       toast('Bookmarked ★');
     } else { toast('Failed to bookmark'); }
   }
-});
-
-
-// ══════════════════════════════════════════════════════════════════════════════
-// SUBSCRIPTION SCREEN
-// ══════════════════════════════════════════════════════════════════════════════
-
-function showSubscriptionScreen() {
-  showScreen('subscriptionScreen');
-  renderSubscriptionStatus();
-}
-
-async function renderSubscriptionStatus() {
-  const msg = $('subMsg');
-  if (!msg) return;
-  if (_isPremium) {
-    const expiry = await getPremiumExpiry(currentUser?.uid);
-    if (expiry) {
-      const dateStr = expiry.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
-      msg.style.color = '#22c55e';
-      msg.textContent = `✅ You are Premium — active until ${dateStr}`;
-    }
-  } else {
-    msg.style.color = '#94a3b8';
-    msg.textContent = '';
-  }
-}
-
-// Back button for subscription screen
-$('subBackBtn').addEventListener('click', () => {
-  showScreen(_subBackTarget || 'homeScreen');
-});
-
-// Plan subscribe buttons
-document.querySelectorAll('.sub-plan-btn').forEach(btn => {
-  btn.addEventListener('click', async () => {
-    if (!currentUser) { toast('Please sign in first'); return; }
-    const planId = btn.dataset.plan;
-    const msg = $('subMsg');
-    msg.style.color = '#f59e0b';
-    msg.textContent = 'Opening payment…';
-
-    openPayment({
-      uid: currentUser.uid,
-      name: currentUser.name,
-      email: currentUser.email,
-      mobile: currentUser.mobile,
-      planId,
-      onSuccess: async ({ expiry, paymentId, planId }) => {
-        await refreshPremiumStatus();
-        const plan = PLANS[planId];
-        const dateStr = expiry
-          ? expiry.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })
-          : '';
-        msg.style.color = '#22c55e';
-        msg.textContent = `✅ Payment successful! Premium active${dateStr ? ' until ' + dateStr : ''}.`;
-        toast('🎉 Welcome to Premium!', 3000);
-      },
-      onFailure: (reason) => {
-        msg.style.color = '#ef4444';
-        msg.textContent = '❌ ' + (reason || 'Payment failed. Please try again.');
-      }
-    });
-  });
-});
-
-// ── Upgrade link from home (add to header) ────────────────────────────────
-
-// Show "Upgrade" button in home header for free users
-function injectUpgradeBtn() {
-  const headerRight = document.querySelector('#homeScreen .header-right');
-  if (!headerRight || $('headerUpgradeBtn')) return;
-  const btn = document.createElement('button');
-  btn.id = 'headerUpgradeBtn';
-  btn.className = 'btn-icon';
-  btn.title = 'Go Premium';
-  btn.style.cssText = 'font-size:11px;font-weight:700;color:#f59e0b;padding:4px 8px;border:1px solid #f59e0b;border-radius:8px;background:transparent;cursor:pointer;margin-right:4px;';
-  btn.textContent = '⭐ Upgrade';
-  btn.addEventListener('click', () => {
-    _subBackTarget = 'homeScreen';
-    showSubscriptionScreen();
-  });
-  headerRight.insertBefore(btn, headerRight.firstChild);
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// PAYWALL BANNER
-// ══════════════════════════════════════════════════════════════════════════════
-
-function showPaywallBanner(isCapped, totalCount) {
-  const banner = $('paywallBanner');
-  if (!banner) return;
-  if (!isCapped) { banner.classList.add('hidden'); return; }
-  // Update text with total count
-  const textEl = banner.querySelector('.paywall-text span');
-  if (textEl && totalCount) {
-    textEl.textContent = `You've seen the 10 free PYQ questions (${totalCount} total). Upgrade to unlock all.`;
-  }
-  banner.classList.remove('hidden');
-}
-
-function hidePaywallBanner() {
-  const banner = $('paywallBanner');
-  if (banner) banner.classList.add('hidden');
-}
-
-$('paywallUpgradeBtn').addEventListener('click', () => {
-  _subBackTarget = 'quizScreen';
-  showSubscriptionScreen();
-});
-
-// ── Post-login: inject upgrade button and show lock badge ─────────────────
-// Called after refreshPremiumStatus in watchAuth
-(function patchUpdatePremiumUI_withUpgradeBtn() {
-  const orig = updatePremiumUI;
-  // We already call updatePremiumUI from refreshPremiumStatus —
-  // also inject the upgrade button
-  window.__updatePremiumUIFull = function() {
-    orig();
-    const upgradeBtn = $('headerUpgradeBtn');
-    if (_isPremium) {
-      if (upgradeBtn) upgradeBtn.style.display = 'none';
-    } else {
-      injectUpgradeBtn();
-    }
-  };
-})();
-
-// Override refreshPremiumStatus to also call full UI update
-const _origRefresh = refreshPremiumStatus;
-// Re-assign is not possible for let in module scope; patch watchAuth flow via:
-// After watchAuth fires and refreshPremiumStatus resolves, call the upgrade btn logic
-// This is handled by calling injectUpgradeBtn() from updatePremiumUI directly:
-
-// ── Password show/hide toggle ──────────────────────────────────────────────
-document.querySelectorAll('.toggle-pw').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const input = document.getElementById(btn.dataset.target);
-    if (!input) return;
-    if (input.type === 'password') {
-      input.type = 'text';
-      btn.textContent = '🙈';
-    } else {
-      input.type = 'password';
-      btn.textContent = '👁';
-    }
-  });
 });
