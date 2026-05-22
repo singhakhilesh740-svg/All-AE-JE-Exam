@@ -319,10 +319,15 @@ on('forgotSendBtn', async () => {
     btn.textContent = '✓ Link Sent';
   } catch(e) {
     btn.disabled = false;
-    if (e.message === 'NOT_REGISTERED') {
+    btn.textContent = '📧 Send Reset Link';
+    if (e.message === 'NOT_REGISTERED'
+        || e.code === 'auth/user-not-found'
+        || e.code === 'auth/invalid-email') {
       authMsg('⚠️ This email is not registered. Please register first.', '#ef4444');
+    } else if (e.code === 'auth/too-many-requests') {
+      authMsg('⚠️ Too many attempts. Please wait a few minutes.', '#ef4444');
     } else {
-      authMsg('Failed to send: ' + e.message, '#ef4444');
+      authMsg('Failed to send: ' + (e.message || e.code), '#ef4444');
     }
   }
 });

@@ -5,7 +5,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   linkWithPopup,
-  fetchSignInMethodsForEmail,
   signOut,
   onAuthStateChanged,
   setPersistence,
@@ -208,15 +207,13 @@ export async function logout() {
 }
 
 // ── Forgot Password ────────────────────────────────────────────────────────
+// Note: fetchSignInMethodsForEmail is disabled in newer Firebase projects (returns 400)
+// So we attempt sendPasswordResetEmail directly — Firebase throws
+// auth/user-not-found if the email doesn't exist in Auth
 export async function sendPasswordResetLink(email) {
   const { sendPasswordResetEmail } = await import(
     "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
   );
   const normalised = email.toLowerCase().trim();
-  // Check Firebase Auth directly (works for all sign-in methods)
-  const methods = await fetchSignInMethodsForEmail(auth, normalised);
-  if (!methods || methods.length === 0) {
-    throw new Error('NOT_REGISTERED');
-  }
   await sendPasswordResetEmail(auth, normalised);
 }
