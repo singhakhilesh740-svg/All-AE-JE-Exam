@@ -1,8 +1,12 @@
-// auth.js — Registration + OTP Login + Google Login
-import { auth, googleProvider, db, RecaptchaVerifier, signInWithPhoneNumber } from './firebase-config.js';
+// auth.js — Mobile OTP login + Google login
+// Flow: enter mobile → OTP → logged in,  OR  Google sign-in.
+// Profile (name/email/mobile) saved after login. On repeat login, profile
+// loads automatically and is shared across both login methods (matched by
+// email or mobile).
+
+import { auth, db, googleProvider, RecaptchaVerifier, signInWithPhoneNumber } from './firebase-config.js';
 import {
-  signInWithPopup, signOut, onAuthStateChanged,
-  setPersistence, browserLocalPersistence
+  signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   doc, getDoc, setDoc, collection, query, where, getDocs, serverTimestamp
@@ -15,7 +19,6 @@ let confirmationResult = null;
 
 // ── Recaptcha ──────────────────────────────────────────────────────────────
 function setupRecaptcha() {
-  // Always use a dedicated div, never the button itself
   let container = document.getElementById('recaptcha-container');
   if (!container) {
     container = document.createElement('div');
@@ -39,12 +42,12 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
     if (user) {
       const profile = await getUserProfile(user.uid);
       onLoggedIn({
-        uid:    user.uid,
-        name:   profile?.name  || user.displayName || 'Student',
-        email:  profile?.email || user.email || '',
-        mobile: profile?.mobile || '',
-        photo:  user.photoURL || '',
-        isNew:  !profile
+        uid:     user.uid,
+        name:    profile?.name  || '',
+        email:   profile?.email || '',
+        mobile:  profile?.mobile || user.phoneNumber || '',
+        // hasProfile = true once the user has filled in their name at least once
+        hasProfile: !!(profile && profile.name)
       });
     } else {
       onLoggedOut();
@@ -52,7 +55,7 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
   });
 }
 
-// ── User profile helpers ───────────────────────────────────────────────────
+// ── Profile helpers ─────────────────────────────────────────────────────────
 export async function getUserProfile(uid) {
   try {
     const snap = await getDoc(doc(db, 'users', uid));
@@ -60,84 +63,95 @@ export async function getUserProfile(uid) {
   } catch { return null; }
 }
 
+// Save / update the user's profile details (name, email)
+// Mobile comes from the verified phone auth, stored automatically.
 export async function saveUserProfile({ uid, name, email, mobile }) {
-  console.log('[Auth] Saving profile:', { uid, name, email, mobile });
   await setDoc(doc(db, 'users', uid), {
-    name, email: email || '', mobile: mobile || '',
-    createdAt: serverTimestamp(), updatedAt: serverTimestamp()
+    name:   (name || '').trim(),
+    email:  (email || '').toLowerCase().trim(),
+    mobile: mobile || '',
+    updatedAt: serverTimestamp()
   }, { merge: true });
-  console.log('[Auth] Profile saved successfully');
 }
 
-// Check if mobile is already registered (in users collection)
-export async function isMobileRegistered(mobile) {
-  try {
-    console.log('[Auth] Checking mobile registration:', mobile);
-    const q = query(collection(db, 'users'), where('mobile', '==', mobile));
-    const snap = await getDocs(q);
-    console.log('[Auth] isMobileRegistered result:', !snap.empty, 'docs:', snap.size);
-    return !snap.empty;
-  } catch(e) {
-    console.error('[Auth] isMobileRegistered error:', e);
-    return false;
-  }
-}
-
-// Check if email is already registered
-export async function isEmailRegistered(email) {
-  try {
-    const q = query(collection(db, 'users'), where('email', '==', email));
-    const snap = await getDocs(q);
-    return !snap.empty;
-  } catch { return false; }
-}
-
-// ── Google login — only if registered ─────────────────────────────────────
-export async function loginWithGoogle() {
-  await setPersistence(auth, browserLocalPersistence);
-  const result = await signInWithPopup(auth, googleProvider);
-  const user = result.user;
-  // Check if this google email is registered
-  const profile = await getUserProfile(user.uid);
-  if (!profile) {
-    // Check if email exists in any user doc
-    const registered = await isEmailRegistered(user.email);
-    if (!registered) {
-      await signOut(auth);
-      throw new Error('NOT_REGISTERED');
-    }
-  }
-  return user;
-}
-
-// ── Phone OTP: Send ────────────────────────────────────────────────────────
+// ── OTP: Send ────────────────────────────────────────────────────────────────
 export async function sendOTP(mobileNumber) {
   const verifier = setupRecaptcha();
   confirmationResult = await signInWithPhoneNumber(auth, mobileNumber, verifier);
   return confirmationResult;
 }
 
-// ── Phone OTP: Verify + check registration ─────────────────────────────────
-export async function verifyOTPLogin(otp) {
+// ── OTP: Verify ──────────────────────────────────────────────────────────────
+// Verifies the code and logs the user in. No registration check —
+// anyone with a valid mobile + OTP can log in. Profile is created/loaded by UID.
+export async function verifyOTP(otp) {
   if (!confirmationResult) throw new Error('No OTP sent. Please try again.');
   const result = await confirmationResult.confirm(otp);
   const user = result.user;
-  console.log('[Auth] OTP verified, uid:', user.uid, 'phone:', user.phoneNumber);
-  // Check by UID first (most reliable)
-  const profile = await getUserProfile(user.uid);
-  console.log('[Auth] Profile found by UID:', profile);
-  if (!profile) {
-    await signOut(auth);
-    return { user, registered: false };
+
+  // Ensure a user doc exists with at least the mobile number on first login.
+  // Wrapped in try/catch so a Firestore permission error does NOT block login —
+  // the user is already authenticated; the profile doc can be created later.
+  try {
+    const existing = await getUserProfile(user.uid);
+    if (!existing) {
+      await setDoc(doc(db, 'users', user.uid), {
+        name:   '',
+        email:  '',
+        mobile: user.phoneNumber || '',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    }
+  } catch (e) {
+    console.error('[Auth] Could not create profile doc (check Firestore rules):', e);
+    // Continue anyway — login succeeded. Profile will be saved on the Profile screen.
   }
-  return { user, registered: true };
+
+  return user;
 }
 
-// ── Phone OTP: Verify for registration (no check) ─────────────────────────
-export async function verifyOTPRegister(otp) {
-  if (!confirmationResult) throw new Error('No OTP sent. Please try again.');
-  const result = await confirmationResult.confirm(otp);
-  return result.user;
+// ── Google login ─────────────────────────────────────────────────────────────
+// Anyone can sign in with Google. On first Google login, if a profile already
+// exists under the same email (or this Google email matches an OTP-created
+// profile), we copy it across so the user's name/email/mobile carry over.
+export async function loginWithGoogle() {
+  await setPersistence(auth, browserLocalPersistence);
+  const result = await signInWithPopup(auth, googleProvider);
+  const user = result.user;
+  const googleEmail = (user.email || '').toLowerCase();
+
+  try {
+    // 1. Profile already under this Google UID? (repeat logins) — done.
+    let profile = await getUserProfile(user.uid);
+
+    if (!profile) {
+      // 2. Look for an existing profile with the same email (from a prior
+      //    Google login under a different UID, or saved via the profile screen).
+      let existingData = null;
+      if (googleEmail) {
+        try {
+          const q = query(collection(db, 'users'), where('email', '==', googleEmail));
+          const snap = await getDocs(q);
+          if (!snap.empty) existingData = snap.docs[0].data();
+        } catch (e) { console.error('[Auth] email lookup failed:', e); }
+      }
+
+      // 3. Create / copy a profile doc under the Google UID.
+      await setDoc(doc(db, 'users', user.uid), {
+        name:   existingData?.name   || user.displayName || '',
+        email:  googleEmail,
+        mobile: existingData?.mobile || '',
+        createdAt: existingData?.createdAt || serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    }
+  } catch (e) {
+    console.error('[Auth] Google profile setup error (check Firestore rules):', e);
+    // Login still succeeded — continue.
+  }
+
+  return user;
 }
 
 // ── Logout ─────────────────────────────────────────────────────────────────

@@ -5,7 +5,7 @@
 //   PYQ:      Home → pyqExamsScreen → pyqSubjectsScreen → quizScreen (topic chips)
 //   Bookmarks:Home → bookmarksScreen → quizScreen
 
-import { watchAuth, loginWithGoogle, logout, sendOTP, verifyOTPLogin, verifyOTPRegister, saveUserProfile, isMobileRegistered, isEmailRegistered } from './auth.js';
+import { watchAuth, logout, sendOTP, verifyOTP, saveUserProfile, getUserProfile, loginWithGoogle } from './auth.js';
 import {
   fetchQuestions,
   fetchPracticeQuestions,
@@ -117,22 +117,30 @@ document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
 // ── Auth ───────────────────────────────────────────────────────────────────
 watchAuth(
   async user => {
-    console.log('[Auth] watchAuth fired, isNew:', user.isNew, 'uid:', user.uid);
-    if (user.isNew) {
-      // No profile in Firestore — stay on login screen, show message
-      console.log('[Auth] No profile found, staying on login');
-      authMsg('⚠️ Mobile not registered. Please register first.', '#ef4444');
-      showAuthStep('authChoice');
-      await logout();
-      return;
-    }
+    console.log('[Auth] watchAuth fired, uid:', user.uid, 'hasProfile:', user.hasProfile);
     currentUser = user;
-    $('userName').textContent = user.name.split(' ')[0];
-    if (user.photo) $('userAvatar').src = user.photo;
-    showScreen('homeScreen');
+    try {
+      // Show first name if set, else fall back to mobile number
+      const displayName = user.name ? user.name.split(' ')[0] : (user.mobile || 'Student');
+      const nameEl = $('userName');
+      if (nameEl) nameEl.textContent = displayName;
+
+      if (!user.hasProfile) {
+        // First-time login — no name yet. Send them to fill profile.
+        toast('Welcome! Please add your details');
+        await openProfileScreen();
+      } else {
+        showScreen('homeScreen');
+      }
+    } catch (e) {
+      console.error('[Auth] post-login routing error:', e);
+      // Never leave the user on a blank screen — fall back to home
+      showScreen('homeScreen');
+    }
   },
   () => {
     currentUser = null;
+    showAuthStep('loginPhoneStep');
     showScreen('loginScreen');
   }
 );
@@ -145,15 +153,12 @@ function authMsg(msg, color='#f59e0b') {
   el.style.color = color;
 }
 function showAuthStep(stepId) {
-  ['authChoice','loginOptions','loginPhoneStep','loginOtpStep',
-   'regStep1','regOtpStep'].forEach(id => {
+  ['loginPhoneStep','loginOtpStep'].forEach(id => {
     const el = $(id);
     if (el) el.style.display = (id === stepId) ? 'block' : 'none';
   });
   authMsg('');
 }
-
-let _regData = {}; // temporary store during registration
 
 // ── Safely attach click with null check ────────────────────────────────────
 function on(id, fn) {
@@ -161,67 +166,57 @@ function on(id, fn) {
   if (el) el.addEventListener('click', fn);
 }
 
-// ── Choice buttons ──────────────────────────────────────────────────────────
-on('goLoginBtn',        () => showAuthStep('loginOptions'));
-on('goRegisterBtn',     () => showAuthStep('regStep1'));
-on('backToChoice1',     () => showAuthStep('authChoice'));
-on('backToChoice2',     () => showAuthStep('authChoice'));
-on('backToLoginOptions',() => showAuthStep('loginOptions'));
-on('backToLoginPhone',  () => showAuthStep('loginPhoneStep'));
-on('backToRegStep1',    () => showAuthStep('regStep1'));
-
-// ── Google Login (registered users only) ───────────────────────────────────
-on('googleLoginBtn', async () => {
-  authMsg('Signing in with Google…');
-  try {
-    await loginWithGoogle();
-    // watchAuth handles the rest
-  } catch(e) {
-    if (e.message === 'NOT_REGISTERED') {
-      authMsg('⚠️ This Google account is not registered. Please register first.', '#ef4444');
-    } else {
-      authMsg('Login failed: ' + e.message, '#ef4444');
-    }
-    showAuthStep('loginOptions');
-  }
-});
-
-// ── Login with Mobile OTP ───────────────────────────────────────────────────
-on('phoneLoginBtn', () => showAuthStep('loginPhoneStep'));
-
+// ── Login: Send OTP ──────────────────────────────────────────────────────
 on('loginSendOtpBtn', async () => {
   const mobile = $('loginMobileInput').value.trim();
   if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
   const full = '+91' + mobile;
   authMsg('Sending OTP…');
+  const btn = $('loginSendOtpBtn');
+  btn.disabled = true;
   try {
     await sendOTP(full);
     $('loginOtpSentTo').textContent = '+91 ' + mobile;
     showAuthStep('loginOtpStep');
     authMsg('OTP sent ✓', '#10b981');
-  } catch(e) { authMsg('Failed to send OTP: ' + e.message, '#ef4444'); }
+  } catch(e) {
+    if (e.code === 'auth/too-many-requests') {
+      authMsg('Too many attempts. Please wait a few minutes.', '#ef4444');
+    } else if (e.code === 'auth/invalid-phone-number') {
+      authMsg('Invalid phone number.', '#ef4444');
+    } else {
+      authMsg('Failed to send OTP: ' + (e.message || e.code), '#ef4444');
+    }
+  } finally {
+    btn.disabled = false;
+  }
 });
 
+// ── Login: Verify OTP ────────────────────────────────────────────────────
 on('loginVerifyOtpBtn', async () => {
   const otp = $('loginOtpInput').value.trim();
   if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
   authMsg('Verifying OTP…');
+  const btn = $('loginVerifyOtpBtn');
+  btn.disabled = true;
   try {
-    const { user, registered } = await verifyOTPLogin(otp);
-    console.log('[Login] OTP verified, uid:', user?.uid, 'registered:', registered);
-    if (!registered) {
-      authMsg('⚠️ Mobile not registered. Please register first.', '#ef4444');
-      showAuthStep('authChoice');
-    } else {
-      authMsg('Login successful! 🎉', '#10b981');
-      // watchAuth fires automatically and shows homeScreen
-    }
+    await verifyOTP(otp);
+    authMsg('Login successful! 🎉', '#10b981');
+    // watchAuth fires and routes to home or profile
   } catch(e) {
-    console.error('[Login] OTP verify error:', e);
-    authMsg('Invalid OTP. Try again.', '#ef4444');
+    if (e.code === 'auth/invalid-verification-code') {
+      authMsg('Incorrect OTP. Please try again.', '#ef4444');
+    } else if (e.code === 'auth/code-expired') {
+      authMsg('OTP expired. Please resend.', '#ef4444');
+    } else {
+      authMsg('Verification failed: ' + (e.message || e.code), '#ef4444');
+    }
+  } finally {
+    btn.disabled = false;
   }
 });
 
+// ── Login: Resend OTP ────────────────────────────────────────────────────
 on('loginResendOtpBtn', async () => {
   const mobile = $('loginMobileInput').value.trim();
   if (!mobile) { showAuthStep('loginPhoneStep'); return; }
@@ -229,78 +224,92 @@ on('loginResendOtpBtn', async () => {
   try {
     await sendOTP('+91' + mobile);
     authMsg('OTP resent ✓', '#10b981');
-  } catch(e) { authMsg('Failed: ' + e.message, '#ef4444'); }
+  } catch(e) { authMsg('Failed: ' + (e.message || e.code), '#ef4444'); }
 });
 
-// ── Registration Flow ───────────────────────────────────────────────────────
-on('regSendOtpBtn', async () => {
-  const name   = $('regName').value.trim();
-  const email  = $('regEmail').value.trim();
-  const mobile = $('regMobile').value.trim();
+on('backToLoginPhone', () => showAuthStep('loginPhoneStep'));
 
-  if (!name)  { authMsg('Please enter your full name', '#ef4444'); return; }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    authMsg('Please enter a valid email ID', '#ef4444'); return;
-  }
-  if (!/^\d{10}$/.test(mobile)) {
-    authMsg('Enter valid 10-digit mobile number', '#ef4444'); return;
-  }
-  const full = '+91' + mobile;
-
-  authMsg('Sending OTP to +91 ' + mobile + '…');
+// ── Login: Google ────────────────────────────────────────────────────────
+on('googleLoginBtn', async () => {
+  authMsg('Opening Google sign-in…');
   try {
-    await sendOTP(full);
-    _regData = { name, email, mobile: full };
-    $('regOtpSentTo').textContent = '+91 ' + mobile;
-    showAuthStep('regOtpStep');
-    authMsg('OTP sent ✓', '#10b981');
-  } catch(e) { authMsg('Failed to send OTP: ' + e.message, '#ef4444'); }
-});
-
-on('regVerifyOtpBtn', async () => {
-  const otp = $('regOtpInput').value.trim();
-  if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
-  authMsg('Verifying OTP…');
-
-  // Step 1: Verify OTP
-  let user;
-  try {
-    user = await verifyOTPRegister(otp);
-    console.log('[Reg] OTP verified, uid:', user.uid);
+    await loginWithGoogle();
+    authMsg('Login successful! 🎉', '#10b981');
+    // watchAuth fires and routes to home or profile
   } catch(e) {
-    console.error('[Reg] OTP error:', e);
-    authMsg('Invalid OTP. Try again.', '#ef4444');
-    return;
+    if (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request') {
+      authMsg('Google sign-in cancelled.', '#f59e0b');
+    } else if (e.code === 'auth/popup-blocked') {
+      authMsg('Popup blocked. Please allow popups and try again.', '#ef4444');
+    } else {
+      authMsg('Google login failed: ' + (e.message || e.code), '#ef4444');
+    }
+  }
+});
+
+// ══════════════════════════════════════════════════════════════════════════
+// PROFILE — view & edit name/email
+// ══════════════════════════════════════════════════════════════════════════
+
+function profileMsg(msg, color='#10b981') {
+  const el = $('profileMsg');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color;
+}
+
+async function openProfileScreen() {
+  if (!currentUser) return;
+  // Load latest profile from Firestore (tolerate failure)
+  let profile = null;
+  try {
+    profile = await getUserProfile(currentUser.uid);
+  } catch (e) {
+    console.error('[Profile] load error:', e);
+  }
+  const mEl = $('profileMobile'), nEl = $('profileName'), eEl = $('profileEmail');
+  if (mEl) mEl.value = profile?.mobile || currentUser.mobile || '';
+  if (nEl) nEl.value = profile?.name  || currentUser.name  || '';
+  if (eEl) eEl.value = profile?.email || currentUser.email || '';
+  profileMsg('');
+  showScreen('profileScreen');
+}
+
+on('editProfileBtn', () => openProfileScreen());
+
+on('saveProfileBtn', async () => {
+  if (!currentUser) return;
+  const name  = $('profileName').value.trim();
+  const email = $('profileEmail').value.trim();
+
+  if (!name) { profileMsg('Please enter your name', '#ef4444'); return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    profileMsg('Please enter a valid email ID', '#ef4444'); return;
   }
 
-  // Step 2: Save profile to Firestore
-  authMsg('Mobile verified! Saving profile…', '#10b981');
+  profileMsg('Saving…', '#f59e0b');
+  const btn = $('saveProfileBtn');
+  btn.disabled = true;
   try {
     await saveUserProfile({
-      uid:    user.uid,
-      name:   _regData.name,
-      email:  _regData.email,
-      mobile: _regData.mobile
+      uid:    currentUser.uid,
+      name,
+      email,
+      mobile: currentUser.mobile
     });
-    console.log('[Reg] Profile saved successfully');
-    authMsg('Registration complete! 🎉', '#10b981');
-    // Small delay so user sees success message, then watchAuth takes over
-    setTimeout(() => {
-      showScreen('homeScreen');
-    }, 1000);
+    // Update in-memory state + header
+    currentUser.name = name;
+    currentUser.email = email;
+    currentUser.hasProfile = true;
+    $('userName').textContent = name.split(' ')[0];
+    profileMsg('Saved! ✓', '#10b981');
+    toast('Details saved');
+    setTimeout(() => showScreen('homeScreen'), 800);
   } catch(e) {
-    console.error('[Reg] Profile save error:', e);
-    authMsg('Profile save failed: ' + e.message + ' — please try again.', '#ef4444');
+    profileMsg('Save failed: ' + (e.message || e.code), '#ef4444');
+  } finally {
+    btn.disabled = false;
   }
-});
-
-on('regResendOtpBtn', async () => {
-  if (!_regData.mobile) { showAuthStep('regStep1'); return; }
-  authMsg('Resending OTP…');
-  try {
-    await sendOTP(_regData.mobile);
-    authMsg('OTP resent ✓', '#10b981');
-  } catch(e) { authMsg('Failed: ' + e.message, '#ef4444'); }
 });
 
 $('logoutBtn').addEventListener('click', async () => {
