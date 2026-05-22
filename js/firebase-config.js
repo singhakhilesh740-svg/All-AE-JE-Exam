@@ -20,8 +20,4 @@ const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope('profile');
 googleProvider.addScope('email');
 
-// Allow linking multiple sign-in methods to same account
-// Must also enable "Account linking" in Firebase Console:
-// Authentication → Settings → User account linking → Link accounts that use the same email
-
 export { app, auth, db, googleProvider };

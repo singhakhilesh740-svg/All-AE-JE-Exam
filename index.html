@@ -71,38 +71,8 @@
           <input id="loginMobilePasswordInput" type="password" placeholder="Password" class="auth-input" autocomplete="current-password" style="margin-bottom:0"/>
           <button type="button" class="toggle-pw" data-target="loginMobilePasswordInput">👁</button>
         </div>
-        <button id="loginMobileBtn2" class="btn-primary-auth" style="background:#065f46">Login with Password →</button>
-        <div class="divider"><span>or</span></div>
-        <button id="loginMobileOtpBtn" class="btn-primary-auth" style="background:#7c3aed">📲 Login with OTP</button>
+        <button id="loginMobileBtn2" class="btn-primary-auth" style="background:#065f46">Login →</button>
         <button id="backToLoginOptions2" class="btn-ghost">← Back</button>
-      </div>
-
-
-      <!-- ══ OTP LOGIN FLOW ══ -->
-      <div id="loginMobileOtpStep" style="display:none">
-        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">OTP Login</p>
-        <p style="font-size:12px;color:#94a3b8;margin-bottom:10px;text-align:center">
-          Enter your registered mobile number to receive an OTP
-        </p>
-        <!-- Invisible reCAPTCHA container (required by Firebase Phone Auth) -->
-        <div id="recaptcha-container"></div>
-        <div class="phone-input-row">
-          <span class="country-code">+91</span>
-          <input id="otpMobileInput" type="tel" inputmode="numeric" maxlength="10"
-            placeholder="10-digit mobile number" autocomplete="tel"/>
-        </div>
-        <button id="sendOtpBtn" class="btn-primary-auth" style="background:#7c3aed">Send OTP</button>
-
-        <!-- OTP input — hidden until OTP is sent -->
-        <div id="otpInputRow" class="phone-input-row" style="display:none;margin-top:10px">
-          <input id="otpCodeInput" type="tel" inputmode="numeric" maxlength="6"
-            placeholder="Enter 6-digit OTP" class="auth-input"
-            style="letter-spacing:6px;font-size:20px;text-align:center"/>
-        </div>
-        <button id="verifyOtpBtn" class="btn-primary-auth" style="background:#065f46;display:none">
-          Verify OTP & Login →
-        </button>
-        <button id="backFromOtp" class="btn-ghost">← Back</button>
       </div>
 
       <!-- ══ REGISTER FLOW ══ -->
@@ -129,23 +99,6 @@
         <button id="backToChoice2" class="btn-ghost">← Back</button>
       </div>
 
-
-
-      <!-- ══ LINK GOOGLE STEP ══ -->
-      <!-- Shown when user tries Google login but same email has email+password account -->
-      <div id="linkGoogleStep" style="display:none">
-        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">🔗 Link Google Account</p>
-        <div style="background:#1e3a5f;border:1px solid #3b82f6;border-radius:10px;padding:12px;margin-bottom:14px;font-size:12px;color:#93c5fd;line-height:1.5;text-align:center">
-          Your Google account (<strong id="linkGoogleEmail" style="color:#60a5fa"></strong>) is already registered with email &amp; password.<br/>
-          Enter your password below to link both — after this you can login with either.
-        </div>
-        <div class="password-row">
-          <input id="linkGooglePasswordInput" type="password" placeholder="Your current password" class="auth-input" autocomplete="current-password" style="margin-bottom:0"/>
-          <button type="button" class="toggle-pw" data-target="linkGooglePasswordInput">👁</button>
-        </div>
-        <button id="linkGoogleConfirmBtn" class="btn-primary-auth" style="background:#1e40af">🔗 Link & Login</button>
-        <button id="backFromLinkGoogle" class="btn-ghost">← Back</button>
-      </div>
 
       <!-- ══ FORGOT PASSWORD STEP ══ -->
       <div id="forgotStep" style="display:none">
