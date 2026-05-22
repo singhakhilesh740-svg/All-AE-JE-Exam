@@ -5,7 +5,7 @@
 //   PYQ:      Home → pyqExamsScreen → pyqSubjectsScreen → quizScreen (topic chips)
 //   Bookmarks:Home → bookmarksScreen → quizScreen
 
-import { watchAuth, loginWithGoogle, loginWithEmail, loginWithMobile, registerWithEmail, logout, saveUserProfile } from './auth.js';
+import { watchAuth, loginWithGoogle, loginWithEmail, loginWithMobile, registerWithEmail, sendPasswordResetLink, logout, saveUserProfile } from './auth.js';
 import {
   fetchQuestions,
   fetchPracticeQuestions,
@@ -175,7 +175,7 @@ function authMsg(msg, color='#f59e0b') {
 }
 function showAuthStep(stepId) {
   ['authChoice','loginOptions','loginEmailStep','loginMobileStep',
-   'regStep1'].forEach(id => {
+   'regStep1','forgotStep'].forEach(id => {
     const el = $(id);
     if (el) el.style.display = (id === stepId) ? 'block' : 'none';
   });
@@ -242,6 +242,45 @@ on('loginEmailBtn2', async () => {
 
 // ── Mobile login button → show mobile step ────────────────────────────────
 on('loginMobileBtn', () => showAuthStep('loginMobileStep'));
+
+// ── Forgot Password ────────────────────────────────────────────────────────
+on('forgotPasswordLink', () => {
+  showAuthStep('forgotStep');
+  const box = $('forgotSuccessBox');
+  if (box) box.style.display = 'none';
+  const inp = $('forgotEmailInput');
+  // Pre-fill with whatever was typed in email login
+  if (inp) inp.value = ($('loginEmailInput')?.value || '');
+  authMsg('');
+});
+
+on('backFromForgot', () => showAuthStep('loginEmailStep'));
+
+on('forgotSendBtn', async () => {
+  const email = $('forgotEmailInput').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    authMsg('Enter a valid email ID', '#ef4444'); return;
+  }
+  authMsg('Sending reset link…');
+  const btn = $('forgotSendBtn');
+  btn.disabled = true;
+
+  try {
+    await sendPasswordResetLink(email);
+    authMsg('');
+    const box = $('forgotSuccessBox');
+    if (box) box.style.display = 'block';
+    btn.textContent = '✓ Link Sent';
+  } catch(e) {
+    btn.disabled = false;
+    if (e.message === 'NOT_REGISTERED') {
+      authMsg('⚠️ This email is not registered. Please register first.', '#ef4444');
+    } else {
+      authMsg('Failed to send: ' + e.message, '#ef4444');
+    }
+  }
+});
+
 
 // ── Mobile + Password Login ───────────────────────────────────────────────
 on('loginMobileBtn2', async () => {

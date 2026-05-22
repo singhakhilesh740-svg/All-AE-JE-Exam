@@ -150,3 +150,14 @@ export async function loginWithGoogle() {
 export async function logout() {
   await signOut(auth);
 }
+
+// ── Forgot Password — Firebase reset link ─────────────────────────────────
+export async function sendPasswordResetLink(email) {
+  const { sendPasswordResetEmail } = await import(
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
+  );
+  // Check email is actually registered in our system first
+  const registered = await isEmailRegistered(email.toLowerCase());
+  if (!registered) throw new Error('NOT_REGISTERED');
+  await sendPasswordResetEmail(auth, email.toLowerCase());
+}

@@ -55,6 +55,7 @@
           <button type="button" class="toggle-pw" data-target="loginPasswordInput">👁</button>
         </div>
         <button id="loginEmailBtn2" class="btn-primary-auth">Login →</button>
+        <button id="forgotPasswordLink" class="btn-ghost" style="color:#a78bfa;font-size:12px;margin-top:0">🔑 Forgot Password?</button>
         <button id="backToLoginOptions1" class="btn-ghost">← Back</button>
       </div>
 
@@ -96,6 +97,23 @@
         </div>
         <button id="regSubmitBtn" class="btn-primary-auth" style="background:#065f46">Register →</button>
         <button id="backToChoice2" class="btn-ghost">← Back</button>
+      </div>
+
+
+      <!-- ══ FORGOT PASSWORD STEP ══ -->
+      <div id="forgotStep" style="display:none">
+        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Reset Password</p>
+        <p style="font-size:12px;color:#94a3b8;margin:0 0 12px;text-align:center;line-height:1.5">
+          Enter your registered email ID. We'll send a reset link to your inbox.
+        </p>
+        <input id="forgotEmailInput" type="email" placeholder="Registered Email ID" class="auth-input" autocomplete="email"/>
+        <button id="forgotSendBtn" class="btn-primary-auth" style="background:#7c3aed">📧 Send Reset Link</button>
+        <button id="backFromForgot" class="btn-ghost">← Back to Login</button>
+        <div id="forgotSuccessBox" style="display:none;margin-top:12px;background:#064e3b;border:1px solid #10b981;border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:28px;margin-bottom:6px">📬</div>
+          <p style="color:#10b981;font-size:13px;font-weight:700;margin:0 0 4px">Reset link sent!</p>
+          <p style="color:#6ee7b7;font-size:11px;margin:0;line-height:1.5">Check your inbox and click the link to set a new password. Check spam folder if not received.</p>
+        </div>
       </div>
 
       <p class="footer-note" id="loginFooter">Only registered users can access the app</p>
