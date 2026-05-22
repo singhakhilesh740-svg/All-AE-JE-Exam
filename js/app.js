@@ -5,7 +5,7 @@
 //   PYQ:      Home → pyqExamsScreen → pyqSubjectsScreen → quizScreen (topic chips)
 //   Bookmarks:Home → bookmarksScreen → quizScreen
 
-import { watchAuth, loginWithGoogle, loginWithEmail, loginWithMobile, registerWithEmail, sendPasswordResetLink, logout, saveUserProfile } from './auth.js';
+import { watchAuth, loginWithGoogle, loginWithEmail, loginWithMobile, registerWithEmail, linkGoogleToCurrentUser, sendPasswordResetLink, logout, saveUserProfile } from './auth.js';
 import {
   fetchQuestions,
   fetchPracticeQuestions,
@@ -175,7 +175,7 @@ function authMsg(msg, color='#f59e0b') {
 }
 function showAuthStep(stepId) {
   ['authChoice','loginOptions','loginEmailStep','loginMobileStep',
-   'regStep1','forgotStep'].forEach(id => {
+   'regStep1','forgotStep','linkGoogleStep'].forEach(id => {
     const el = $(id);
     if (el) el.style.display = (id === stepId) ? 'block' : 'none';
   });
@@ -207,12 +207,54 @@ on('googleLoginBtn', async () => {
   } catch(e) {
     if (e.message === 'NOT_REGISTERED') {
       authMsg('⚠️ This Google account is not registered. Please register first.', '#ef4444');
+      showAuthStep('loginOptions');
+    } else if (e.message && e.message.startsWith('LINK_REQUIRED:')) {
+      // Same email exists under email+password — ask for password to link
+      const email = e.message.split('LINK_REQUIRED:')[1];
+      showLinkGooglePrompt(email);
     } else {
       authMsg('Login failed: ' + e.message, '#ef4444');
+      showAuthStep('loginOptions');
     }
-    showAuthStep('loginOptions');
   }
 });
+
+// ── Link Google Prompt ────────────────────────────────────────────────────
+// Shown when user tries Google login but same email is registered with password
+function showLinkGooglePrompt(email) {
+  showAuthStep('linkGoogleStep');
+  $('linkGoogleEmail').textContent = email;
+  $('linkGooglePasswordInput').value = '';
+  authMsg('');
+}
+
+on('linkGoogleConfirmBtn', async () => {
+  const email    = $('linkGoogleEmail').textContent.trim();
+  const password = $('linkGooglePasswordInput').value;
+  if (!password) { authMsg('Enter your password to continue', '#ef4444'); return; }
+  authMsg('Verifying password…');
+  try {
+    // Step 1: Login with email+password
+    await loginWithEmail(email, password);
+    authMsg('Linking Google account…');
+    // Step 2: Link Google to this account
+    await linkGoogleToCurrentUser();
+    authMsg('✅ Google linked! You can now login with either method.', '#10b981');
+    // watchAuth fires and shows homeScreen
+  } catch(e) {
+    if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+      authMsg('⚠️ Incorrect password.', '#ef4444');
+    } else if (e.code === 'auth/credential-already-in-use') {
+      // Google account already linked to another account — just log in normally
+      authMsg('Logging in…');
+      try { await loginWithGoogle(); } catch(e2) { authMsg('Login failed: ' + e2.message, '#ef4444'); }
+    } else {
+      authMsg('Failed: ' + e.message, '#ef4444');
+    }
+  }
+});
+
+on('backFromLinkGoogle', () => showAuthStep('loginOptions'));
 
 // ── Email login button → show email step ──────────────────────────────────
 on('loginEmailBtn', () => showAuthStep('loginEmailStep'));
@@ -228,12 +270,16 @@ on('loginEmailBtn2', async () => {
     await loginWithEmail(email, password);
     // watchAuth fires and shows homeScreen
   } catch(e) {
-    if (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential' || e.message === 'NOT_REGISTERED') {
-      authMsg('⚠️ Email not registered or password incorrect.', '#ef4444');
-    } else if (e.code === 'auth/wrong-password') {
-      authMsg('⚠️ Incorrect password. Try again.', '#ef4444');
+    if (e.message === 'NOT_REGISTERED') {
+      authMsg('⚠️ Email not registered. Please register first.', '#ef4444');
+    } else if (e.code === 'auth/user-not-found') {
+      authMsg('⚠️ Email not registered. Please register first.', '#ef4444');
+    } else if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+      authMsg('⚠️ Incorrect password. Use Forgot Password to reset.', '#ef4444');
     } else if (e.code === 'auth/too-many-requests') {
-      authMsg('⚠️ Too many attempts. Please wait and try again.', '#ef4444');
+      authMsg('⚠️ Too many attempts. Please wait a few minutes.', '#ef4444');
+    } else if (e.code === 'auth/invalid-email') {
+      authMsg('⚠️ Invalid email format.', '#ef4444');
     } else {
       authMsg('Login failed: ' + e.message, '#ef4444');
     }

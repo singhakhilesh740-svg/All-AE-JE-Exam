@@ -100,6 +100,23 @@
       </div>
 
 
+
+      <!-- ══ LINK GOOGLE STEP ══ -->
+      <!-- Shown when user tries Google login but same email has email+password account -->
+      <div id="linkGoogleStep" style="display:none">
+        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">🔗 Link Google Account</p>
+        <div style="background:#1e3a5f;border:1px solid #3b82f6;border-radius:10px;padding:12px;margin-bottom:14px;font-size:12px;color:#93c5fd;line-height:1.5;text-align:center">
+          Your Google account (<strong id="linkGoogleEmail" style="color:#60a5fa"></strong>) is already registered with email &amp; password.<br/>
+          Enter your password below to link both — after this you can login with either.
+        </div>
+        <div class="password-row">
+          <input id="linkGooglePasswordInput" type="password" placeholder="Your current password" class="auth-input" autocomplete="current-password" style="margin-bottom:0"/>
+          <button type="button" class="toggle-pw" data-target="linkGooglePasswordInput">👁</button>
+        </div>
+        <button id="linkGoogleConfirmBtn" class="btn-primary-auth" style="background:#1e40af">🔗 Link & Login</button>
+        <button id="backFromLinkGoogle" class="btn-ghost">← Back</button>
+      </div>
+
       <!-- ══ FORGOT PASSWORD STEP ══ -->
       <div id="forgotStep" style="display:none">
         <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Reset Password</p>
