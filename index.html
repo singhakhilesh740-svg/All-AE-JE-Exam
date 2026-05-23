@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#0f172a" />
   <title>All AE/JE Civil Exams</title>
   <link rel="manifest" href="manifest.json" />
@@ -13,7 +13,6 @@
 <body>
 
   <!-- ===== LOGIN SCREEN ===== -->
-  <!-- ===== LOGIN SCREEN ===== -->
   <div id="loginScreen" class="screen active">
     <div class="login-card">
       <div class="logo">📘</div>
@@ -21,7 +20,6 @@
       <p class="tagline">All State AE/JE Civil Engineering Exams</p>
       <p class="subtitle">PYQ · Practice · Notes · Bookmarks</p>
 
-      <!-- Step 1: Enter mobile -->
       <div id="loginPhoneStep">
         <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Login with Mobile OTP</p>
         <div class="phone-input-row">
@@ -30,7 +28,6 @@
             placeholder="10-digit mobile number" autocomplete="tel"/>
         </div>
         <button id="loginSendOtpBtn" class="btn-primary-auth">Send OTP</button>
-
         <div class="divider"><span>or</span></div>
         <button id="googleLoginBtn" class="btn-google">
           <svg width="18" height="18" viewBox="0 0 18 18">
@@ -43,7 +40,6 @@
         </button>
       </div>
 
-      <!-- Step 2: Verify OTP -->
       <div id="loginOtpStep" style="display:none">
         <p class="auth-step-label">OTP sent to <strong id="loginOtpSentTo" style="color:#60a5fa"></strong></p>
         <div class="otp-row">
@@ -65,7 +61,7 @@
     <header class="app-header">
       <div class="header-left">
         <h2>🏠 Home</h2>
-        <span class="header-sub">All State AE/JE Civil Exams</span>
+        <span class="header-sub">Select Exam Category</span>
       </div>
       <div class="header-right">
         <button id="editProfileBtn" class="btn-icon" title="My Profile">👤</button>
@@ -76,43 +72,24 @@
       <p>Welcome, <span id="userName">student</span> 👋</p>
     </div>
     <main class="home-main">
-      <!-- 4 big feature tiles -->
       <div class="home-grid">
 
-        <button class="home-tile tile-notes" id="homeNotes">
-          <div class="tile-icon">📝</div>
-          <div class="tile-title">Notes</div>
-          <div class="tile-sub">Subject-wise study material</div>
+        <button class="home-tile tile-civil" id="homeCivil">
+          <div class="tile-icon">🏗️</div>
+          <div class="tile-title">AE/JE Civil</div>
+          <div class="tile-sub">Notes · Practice · PYQ · Bookmarks</div>
         </button>
 
-        <button class="home-tile tile-practice" id="homePractice">
-          <div class="tile-icon">✏️</div>
-          <div class="tile-title">Imp Practice</div>
-          <div class="tile-sub">Important questions by subject</div>
+        <button class="home-tile tile-pcb" id="homePCB">
+          <div class="tile-icon">🌿</div>
+          <div class="tile-title">Pollution Control Board</div>
+          <div class="tile-sub">Notes · Practice · PYQ · Bookmarks</div>
         </button>
 
-        <button class="home-tile tile-pyq" id="homePYQ">
-          <div class="tile-icon">📜</div>
-          <div class="tile-title">PYQ</div>
-          <div class="tile-sub">Exam → Subject → Questions</div>
-        </button>
-
-        <button class="home-tile tile-bookmarks" id="homeBookmarks">
-          <div class="tile-icon">⭐</div>
-          <div class="tile-title">Bookmarks</div>
-          <div class="tile-sub">Your saved questions</div>
-        </button>
-
-        <button class="home-tile tile-gs" id="homeGS">
-          <div class="tile-icon">🌍</div>
-          <div class="tile-title">General Studies</div>
-          <div class="tile-sub">Polity · History · Geography · Science</div>
-        </button>
-
-        <button class="home-tile tile-hindi" id="homeHindi">
-          <div class="tile-icon">📖</div>
-          <div class="tile-title">Hindi</div>
-          <div class="tile-sub">व्याकरण · साहित्य · कवि</div>
+        <button class="home-tile tile-nontech" id="homeNonTech">
+          <div class="tile-icon">📚</div>
+          <div class="tile-title">Non-Tech</div>
+          <div class="tile-sub">GS · Hindi · Practice · PYQ</div>
         </button>
 
       </div>
@@ -133,21 +110,124 @@
     <main class="home-main">
       <div class="login-card" style="max-width:420px;margin:20px auto">
         <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin-bottom:4px">Mobile Number</p>
-        <input id="profileMobile" type="text" class="auth-input" disabled
-          style="opacity:0.7;cursor:not-allowed"/>
-
+        <input id="profileMobile" type="text" class="auth-input" disabled style="opacity:0.7;cursor:not-allowed"/>
         <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Full Name</p>
-        <input id="profileName" type="text" placeholder="Enter your full name"
-          maxlength="60" class="auth-input"/>
-
+        <input id="profileName" type="text" placeholder="Enter your full name" maxlength="60" class="auth-input"/>
         <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Email ID</p>
-        <input id="profileEmail" type="email" placeholder="Enter your email"
-          class="auth-input"/>
-
-        <button id="saveProfileBtn" class="btn-primary-auth" style="background:#065f46;margin-top:16px">
-          💾 Save Details
-        </button>
+        <input id="profileEmail" type="email" placeholder="Enter your email" class="auth-input"/>
+        <button id="saveProfileBtn" class="btn-primary-auth" style="background:#065f46;margin-top:16px">💾 Save Details</button>
         <div id="profileMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===================================================
+       AE/JE CIVIL — SECTION HOME
+       =================================================== -->
+  <div id="civilHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🏗️ AE/JE Civil</h2>
+        <span class="header-sub">Choose a section</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-notes" id="civilNotes">
+          <div class="tile-icon">📝</div>
+          <div class="tile-title">Notes</div>
+          <div class="tile-sub">Subject-wise study material</div>
+        </button>
+        <button class="home-tile tile-practice" id="civilPractice">
+          <div class="tile-icon">✏️</div>
+          <div class="tile-title">Imp Practice</div>
+          <div class="tile-sub">Important questions by subject</div>
+        </button>
+        <button class="home-tile tile-pyq" id="civilPYQ">
+          <div class="tile-icon">📜</div>
+          <div class="tile-title">PYQ</div>
+          <div class="tile-sub">Previous year questions</div>
+        </button>
+        <button class="home-tile tile-bookmarks" id="civilBookmarks">
+          <div class="tile-icon">⭐</div>
+          <div class="tile-title">Bookmarks</div>
+          <div class="tile-sub">Your saved questions</div>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===================================================
+       PCB — SECTION HOME
+       =================================================== -->
+  <div id="pcbHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🌿 Pollution Control Board</h2>
+        <span class="header-sub">Choose a section</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-notes" id="pcbNotes">
+          <div class="tile-icon">📝</div>
+          <div class="tile-title">Notes</div>
+          <div class="tile-sub">Subject-wise study material</div>
+        </button>
+        <button class="home-tile tile-practice" id="pcbPractice">
+          <div class="tile-icon">✏️</div>
+          <div class="tile-title">Imp Practice</div>
+          <div class="tile-sub">Important questions by subject</div>
+        </button>
+        <button class="home-tile tile-pyq" id="pcbPYQ">
+          <div class="tile-icon">📜</div>
+          <div class="tile-title">PYQ</div>
+          <div class="tile-sub">Previous year questions</div>
+        </button>
+        <button class="home-tile tile-bookmarks" id="pcbBookmarks">
+          <div class="tile-icon">⭐</div>
+          <div class="tile-title">Bookmarks</div>
+          <div class="tile-sub">Your saved questions</div>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===================================================
+       NON-TECH — SECTION HOME
+       =================================================== -->
+  <div id="nonTechHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>📚 Non-Tech</h2>
+        <span class="header-sub">Choose a section</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-gs" id="nonTechGS">
+          <div class="tile-icon">🌍</div>
+          <div class="tile-title">General Studies</div>
+          <div class="tile-sub">Polity · History · Geography · Science</div>
+        </button>
+        <button class="home-tile tile-hindi" id="nonTechHindi">
+          <div class="tile-icon">📖</div>
+          <div class="tile-title">Hindi</div>
+          <div class="tile-sub">व्याकरण · साहित्य · कवि</div>
+        </button>
+        <button class="home-tile tile-practice" id="nonTechPractice">
+          <div class="tile-icon">✏️</div>
+          <div class="tile-title">Practice Questions</div>
+          <div class="tile-sub">GS · Reasoning · Aptitude</div>
+        </button>
+        <button class="home-tile tile-pyq" id="nonTechPYQ">
+          <div class="tile-icon">📜</div>
+          <div class="tile-title">PYQ</div>
+          <div class="tile-sub">Previous year questions</div>
+        </button>
       </div>
     </main>
   </div>
@@ -155,8 +235,8 @@
   <!-- ===== NOTES: SUBJECT LIST ===== -->
   <div id="notesSubjectsScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <button class="btn-icon" id="notesSubjectsBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2>📝 Notes</h2>
         <span class="header-sub">Pick a subject</span>
       </div>
@@ -169,8 +249,8 @@
   <!-- ===== NOTES: CONTENT SCREEN ===== -->
   <div id="notesContentScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="notesSubjectsScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <button class="btn-icon" id="notesContentBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2 id="notesContentTitle">Notes</h2>
         <span class="header-sub" id="notesContentSub">Subject notes</span>
       </div>
@@ -188,8 +268,8 @@
   <!-- ===== PRACTICE: SUBJECT LIST ===== -->
   <div id="practiceSubjectsScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <button class="btn-icon" id="practiceSubjectsBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2>✏️ Imp Practice</h2>
         <span class="header-sub">Pick a subject</span>
       </div>
@@ -202,8 +282,8 @@
   <!-- ===== PYQ: EXAM LIST ===== -->
   <div id="pyqExamsScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <button class="btn-icon" id="pyqExamsBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2>📜 PYQ</h2>
         <span class="header-sub">Pick an exam</span>
       </div>
@@ -213,11 +293,11 @@
     </main>
   </div>
 
-  <!-- ===== PYQ: MODE SELECT (Year-wise / Subject-wise) ===== -->
+  <!-- ===== PYQ: MODE SELECT ===== -->
   <div id="pyqModeScreen" class="screen">
     <header class="app-header">
       <button class="btn-icon back-btn" data-back="pyqExamsScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2 id="pyqModeTitle">📜 PYQ</h2>
         <span class="header-sub">How do you want to browse?</span>
       </div>
@@ -242,8 +322,8 @@
   <div id="pyqYearsScreen" class="screen">
     <header class="app-header">
       <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
-        <h2 id="pyqYearsTitle">📅 PYQ — Exam & Year-wise</h2>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="pyqYearsTitle">📅 PYQ — Year-wise</h2>
         <span class="header-sub" id="pyqYearsSub">Pick an exam paper</span>
       </div>
     </header>
@@ -256,7 +336,7 @@
   <div id="pyqSubjectsScreen" class="screen">
     <header class="app-header">
       <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2 id="pyqSubjectsTitle">PYQ</h2>
         <span class="header-sub" id="pyqSubjectsSub">Pick a subject</span>
       </div>
@@ -269,8 +349,8 @@
   <!-- ===== BOOKMARKS SCREEN ===== -->
   <div id="bookmarksScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <button class="btn-icon" id="bookmarksBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2>⭐ Bookmarks</h2>
         <span class="header-sub">Your saved questions</span>
       </div>
@@ -298,10 +378,7 @@
       </div>
       <button id="quizBookmarkBtn" class="btn-icon" title="Bookmark" data-marked="0">☆</button>
     </header>
-
-    <!-- Topic chips in quiz -->
     <div id="quizTopicBar" class="topic-bar-scroll"></div>
-
     <main class="quiz-main">
       <div class="quiz-meta-row">
         <div class="quiz-meta">
@@ -319,7 +396,6 @@
         <p id="quizExplanationText"></p>
       </div>
     </main>
-
     <footer class="quiz-footer">
       <button id="quizPrevBtn" class="btn-secondary">← Prev</button>
       <button id="quizNextBtn" class="btn-primary">Next →</button>
@@ -337,12 +413,11 @@
     </div>
   </div>
 
-
-  <!-- ===== GENERAL STUDIES: SUBJECT LIST ===== -->
+  <!-- ===== GS: SUBJECT LIST ===== -->
   <div id="gsSubjectsScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2>🌍 General Studies</h2>
         <span class="header-sub">Pick a subject</span>
       </div>
@@ -352,12 +427,11 @@
     </main>
   </div>
 
-
-  <!-- ===== GS: SUB-SUBJECT LIST (e.g. History → Ancient, Medieval…) ===== -->
+  <!-- ===== GS: SUB-SUBJECT LIST ===== -->
   <div id="gsSubSubjectsScreen" class="screen">
     <header class="app-header">
       <button class="btn-icon back-btn" data-back="gsSubjectsScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2 id="gsSubSubjectTitle">History</h2>
         <span class="header-sub" id="gsSubSubjectSub">Choose a period</span>
       </div>
@@ -371,7 +445,7 @@
   <div id="gsNotesScreen" class="screen">
     <header class="app-header">
       <button class="btn-icon" id="gsNotesBackBtn">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2 id="gsNotesTitle">General Studies</h2>
         <span class="header-sub" id="gsNotesSub">Notes</span>
       </div>
@@ -388,8 +462,8 @@
   <!-- ===== HINDI: SUBJECT LIST ===== -->
   <div id="hindiSubjectsScreen" class="screen">
     <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2>📖 Hindi</h2>
         <span class="header-sub">Pick a section</span>
       </div>
@@ -403,7 +477,7 @@
   <div id="hindiNotesScreen" class="screen">
     <header class="app-header">
       <button class="btn-icon back-btn" data-back="hindiSubjectsScreen">←</button>
-      <div class="header-left" style="flex:1; margin-left:8px;">
+      <div class="header-left" style="flex:1;margin-left:8px;">
         <h2 id="hindiNotesTitle">Hindi</h2>
         <span class="header-sub" id="hindiNotesSub">Notes</span>
       </div>

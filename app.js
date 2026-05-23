@@ -1,11 +1,11 @@
-// app.js — v10 Orchestrator
-// Flow: Login → Home → [Notes | Practice | PYQ | Bookmarks]
-//   Notes:    Home → notesSubjectsScreen → notesContentScreen (topic chips)
-//   Practice: Home → practiceSubjectsScreen → quizScreen (topic chips)
-//   PYQ:      Home → pyqExamsScreen → pyqSubjectsScreen → quizScreen (topic chips)
-//   Bookmarks:Home → bookmarksScreen → quizScreen
+// app.js — v12
+// Flow:
+//   Login → Home → [AE/JE Civil | PCB | Non-Tech]
+//   AE/JE Civil  → Notes | Practice | PYQ | Bookmarks
+//   PCB          → Notes | Practice | PYQ | Bookmarks
+//   Non-Tech     → GS | Hindi | Practice | PYQ
 
-import { watchAuth, logout, sendOTP, verifyOTP, saveUserProfile, getUserProfile } from './auth.js';
+import { watchAuth, logout, sendOTP, verifyOTP, saveUserProfile, getUserProfile, loginWithGoogle } from './auth.js';
 import {
   fetchQuestions,
   fetchPracticeQuestions,
@@ -22,70 +22,75 @@ import { renderNotesContent, loadNotesForSubject } from './notes.js';
 import { loadGSNotes, loadHindiNotes, renderGSNotesContent, getSubSubjects, getSubSubjectData } from './gs-notes.js';
 
 // ── State ──────────────────────────────────────────────────────────────────
-let currentUser         = null;
-let currentSubject      = null;    // selected subject object
-let currentTopic        = 'all';   // active topic chip
-let currentExam         = null;    // selected exam (PYQ)
-let allBookmarks        = [];
-let quizSource          = 'home';  // where to go back from quiz
-let quizRoute           = null;    // 'practice' | 'pyq' | 'bookmarks'
+let currentUser     = null;
+let currentSubject  = null;
+let currentTopic    = 'all';
+let currentExam     = null;
+let allBookmarks    = [];
+let quizSource      = 'homeScreen';
+let quizRoute       = null;
+// Which category section we're in: 'civil' | 'pcb' | 'nontech'
+let activeSection   = 'civil';
 
-// ── General Studies Subjects ───────────────────────────────────────────────
-// Sub-subject definitions for each GS subject
+// ── GS Subjects & Sub-subjects ─────────────────────────────────────────────
 const GS_SUB_SUBJECTS = {
   'history': [
-    { id: 'ancient',          icon: '🏺', name: 'Ancient India',          description: 'Prehistoric, Indus Valley, Vedic, Maurya, Gupta' },
-    { id: 'medieval',         icon: '🏰', name: 'Medieval India',          description: 'Delhi Sultanate, Vijayanagara, Mughal, Bhakti-Sufi' },
-    { id: 'modern',           icon: '🏛️', name: 'Modern India',            description: 'European arrival, British rule, Social reforms, 1857' },
-    { id: 'freedom',          icon: '🇮🇳', name: 'Freedom Struggle',        description: 'Moderates, Extremists, Gandhi era, Quit India, INA' },
-    { id: 'post-independence',icon: '🗺️', name: 'Post-Independence',        description: 'Integration, Constitution, Wars, Five Year Plans' },
-    { id: 'culture',          icon: '🎭', name: 'Art & Culture',           description: 'Architecture, Painting, Dance, Music, Literature' },
+    { id: 'ancient',           icon: '🏺', name: 'Ancient India',        description: 'Prehistoric, Indus Valley, Vedic, Maurya, Gupta' },
+    { id: 'medieval',          icon: '🏰', name: 'Medieval India',        description: 'Delhi Sultanate, Vijayanagara, Mughal, Bhakti-Sufi' },
+    { id: 'modern',            icon: '🏛️', name: 'Modern India',          description: 'European arrival, British rule, Social reforms, 1857' },
+    { id: 'freedom',           icon: '🇮🇳', name: 'Freedom Struggle',      description: 'Moderates, Extremists, Gandhi era, Quit India, INA' },
+    { id: 'post-independence', icon: '🗺️', name: 'Post-Independence',      description: 'Integration, Constitution, Wars, Five Year Plans' },
+    { id: 'culture',           icon: '🎭', name: 'Art & Culture',         description: 'Architecture, Painting, Dance, Music, Literature' },
   ],
   'polity': [
-    { id: 'constitution',     icon: '📜', name: 'Constitution',            description: 'Making, Preamble, Schedules, Features borrowed' },
-    { id: 'fundamental-rights', icon: '⚖️', name: 'Fundamental Rights',   description: 'Articles 12-35, Writs, Restrictions' },
-    { id: 'dpsp',             icon: '📋', name: 'DPSP & Duties',           description: 'Directive Principles, Fundamental Duties' },
-    { id: 'parliament',       icon: '🏛️', name: 'Parliament',              description: 'Lok Sabha, Rajya Sabha, Sessions, Bills' },
-    { id: 'executive',        icon: '👤', name: 'Executive',               description: 'President, PM, Council of Ministers, Governor' },
-    { id: 'judiciary',        icon: '⚔️', name: 'Judiciary',              description: 'Supreme Court, High Courts, Writs, Doctrines' },
-    { id: 'federalism',       icon: '🗺️', name: 'Federalism',              description: 'Centre-State, Three Lists, Finance Commission' },
-    { id: 'elections',        icon: '🗳️', name: 'Elections & Bodies',      description: 'ECI, CAG, UPSC, Constitutional Commissions' },
-    { id: 'amendments',       icon: '✏️', name: 'Amendments',              description: 'Key amendments 1st to 105th' },
-    { id: 'emergency',        icon: '🚨', name: 'Emergency Provisions',    description: 'National, President Rule, Financial Emergency' },
+    { id: 'constitution',      icon: '📜', name: 'Constitution',          description: 'Making, Preamble, Schedules, Features borrowed' },
+    { id: 'fundamental-rights',icon: '⚖️', name: 'Fundamental Rights',   description: 'Articles 12-35, Writs, Restrictions' },
+    { id: 'dpsp',              icon: '📋', name: 'DPSP & Duties',         description: 'Directive Principles, Fundamental Duties' },
+    { id: 'parliament',        icon: '🏛️', name: 'Parliament',            description: 'Lok Sabha, Rajya Sabha, Sessions, Bills' },
+    { id: 'executive',         icon: '👤', name: 'Executive',             description: 'President, PM, Council of Ministers, Governor' },
+    { id: 'judiciary',         icon: '⚔️', name: 'Judiciary',            description: 'Supreme Court, High Courts, Writs, Doctrines' },
+    { id: 'federalism',        icon: '🗺️', name: 'Federalism',            description: 'Centre-State, Three Lists, Finance Commission' },
+    { id: 'elections',         icon: '🗳️', name: 'Elections & Bodies',    description: 'ECI, CAG, UPSC, Constitutional Commissions' },
+    { id: 'amendments',        icon: '✏️', name: 'Amendments',            description: 'Key amendments 1st to 105th' },
+    { id: 'emergency',         icon: '🚨', name: 'Emergency Provisions',  description: 'National, President Rule, Financial Emergency' },
   ],
   'geography': [
-    { id: 'physical',         icon: '⛰️', name: 'Physical Features',       description: 'Mountains, Plateaus, Plains, Passes' },
-    { id: 'climate',          icon: '🌦️', name: 'Climate',                 description: 'Monsoon, Climate zones, El Nino, Seasons' },
-    { id: 'rivers',           icon: '🌊', name: 'Rivers & Drainage',       description: 'Himalayan rivers, Peninsular rivers, Lakes' },
-    { id: 'soils',            icon: '🌱', name: 'Soils & Vegetation',      description: 'Soil types, Natural vegetation zones' },
-    { id: 'resources',        icon: '⛏️', name: 'Natural Resources',       description: 'Minerals, Energy, Forest resources' },
-    { id: 'agriculture',      icon: '🌾', name: 'Agriculture',             description: 'Crops, Seasons, Revolutions, MSP' },
-    { id: 'industry',         icon: '🏭', name: 'Industry',                description: 'Major industries, Industrial corridors' },
-    { id: 'population',       icon: '👥', name: 'Population & Census',     description: 'Census 2011, Density, Sex ratio, Literacy' },
-    { id: 'world',            icon: '🌍', name: 'World Geography',         description: 'Continents, Oceans, International boundaries' },
+    { id: 'physical',   icon: '⛰️', name: 'Physical Features',  description: 'Mountains, Plateaus, Plains, Passes' },
+    { id: 'climate',    icon: '🌦️', name: 'Climate',             description: 'Monsoon, Climate zones, El Nino, Seasons' },
+    { id: 'rivers',     icon: '🌊', name: 'Rivers & Drainage',  description: 'Himalayan rivers, Peninsular rivers, Lakes' },
+    { id: 'soils',      icon: '🌱', name: 'Soils & Vegetation', description: 'Soil types, Natural vegetation zones' },
+    { id: 'resources',  icon: '⛏️', name: 'Natural Resources',  description: 'Minerals, Energy, Forest resources' },
+    { id: 'agriculture',icon: '🌾', name: 'Agriculture',         description: 'Crops, Seasons, Revolutions, MSP' },
+    { id: 'industry',   icon: '🏭', name: 'Industry',            description: 'Major industries, Industrial corridors' },
+    { id: 'population', icon: '👥', name: 'Population & Census', description: 'Census 2011, Density, Sex ratio, Literacy' },
+    { id: 'world',      icon: '🌍', name: 'World Geography',     description: 'Continents, Oceans, International boundaries' },
   ],
   'general-science': [
-    { id: 'physics',          icon: '⚡', name: 'Physics',                 description: 'Laws of motion, Light, Electricity, Sound' },
-    { id: 'chemistry',        icon: '🧪', name: 'Chemistry',               description: 'Periodic table, Acids-Bases, Compounds' },
-    { id: 'biology',          icon: '🧬', name: 'Biology',                 description: 'Cell, Human body, Classification, Plants' },
-    { id: 'technology',       icon: '🚀', name: 'Science & Technology',    description: 'ISRO missions, Inventions, Defence' },
-    { id: 'health',           icon: '🏥', name: 'Health & Disease',        description: 'Vitamins, Deficiencies, Communicable diseases' },
-    { id: 'space',            icon: '🌌', name: 'Space Science',           description: 'Solar system, Planets, Space missions' },
+    { id: 'physics',    icon: '⚡', name: 'Physics',             description: 'Laws of motion, Light, Electricity, Sound' },
+    { id: 'chemistry',  icon: '🧪', name: 'Chemistry',           description: 'Periodic table, Acids-Bases, Compounds' },
+    { id: 'biology',    icon: '🧬', name: 'Biology',             description: 'Cell, Human body, Classification, Plants' },
+    { id: 'technology', icon: '🚀', name: 'Science & Technology',description: 'ISRO missions, Inventions, Defence' },
+    { id: 'health',     icon: '🏥', name: 'Health & Disease',    description: 'Vitamins, Deficiencies, Communicable diseases' },
+    { id: 'space',      icon: '🌌', name: 'Space Science',       description: 'Solar system, Planets, Space missions' },
   ],
 };
 
 const GS_SUBJECTS = [
-  { id: 'polity',          icon: '⚖️',  name: 'Polity',           description: 'Constitution, Parliament, Judiciary, Elections' },
-  { id: 'geography',       icon: '🗺️',  name: 'Geography',        description: 'Physical, Climate, Rivers, Resources, World' },
-  { id: 'history',         icon: '🏛️',  name: 'History',          description: 'Ancient, Medieval, Modern, Freedom Struggle, Culture' },
-  { id: 'general-science', icon: '🔬',  name: 'General Science',  description: 'Physics, Chemistry, Biology, Technology, Health' },
+  { id: 'polity',         icon: '⚖️',  name: 'Polity',          description: 'Constitution, Parliament, Judiciary, Elections' },
+  { id: 'geography',      icon: '🗺️',  name: 'Geography',       description: 'Physical, Climate, Rivers, Resources, World' },
+  { id: 'history',        icon: '🏛️',  name: 'History',         description: 'Ancient, Medieval, Modern, Freedom Struggle, Culture' },
+  { id: 'general-science',icon: '🔬',  name: 'General Science', description: 'Physics, Chemistry, Biology, Technology, Health' },
 ];
 
-// ── Hindi Subjects ─────────────────────────────────────────────────────────
 const HINDI_SUBJECTS = [
-  { id: 'hindi-grammar',  icon: '📝', name: 'Hindi Grammar (व्याकरण)',  description: 'वर्णमाला · संधि · समास · कारक · काल · अलंकार · रस' },
-  { id: 'hindi-sahitya',  icon: '📚', name: 'Hindi Literature (साहित्य)', description: 'भक्तिकाल · रीतिकाल · आधुनिककाल · कवि · उपन्यास' },
+  { id: 'hindi-grammar', icon: '📝', name: 'Hindi Grammar (व्याकरण)',    description: 'वर्णमाला · संधि · समास · कारक · काल · अलंकार · रस' },
+  { id: 'hindi-sahitya', icon: '📚', name: 'Hindi Literature (साहित्य)', description: 'भक्तिकाल · रीतिकाल · आधुनिककाल · कवि · उपन्यास' },
 ];
+
+// ── Subjects per section ────────────────────────────────────────────────────
+// Civil uses SUBJECTS_UPPSC_MAINS (imported from subjects.js)
+// PCB — reuse same list for now; swap with PCB-specific subjects when ready
+const SUBJECTS_PCB = SUBJECTS_UPPSC_MAINS; // replace with PCB subject list when available
 
 // ── DOM helper ─────────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
@@ -109,7 +114,7 @@ function escapeHtml(str) {
   return d.innerHTML;
 }
 
-// ── Back buttons (declarative via data-back attribute) ──────────────────────
+// ── Declarative back buttons ───────────────────────────────────────────────
 document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
   btn.addEventListener('click', () => showScreen(btn.dataset.back));
 });
@@ -117,17 +122,19 @@ document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
 // ── Auth ───────────────────────────────────────────────────────────────────
 watchAuth(
   async user => {
-    console.log('[Auth] watchAuth fired, uid:', user.uid, 'hasProfile:', user.hasProfile);
     currentUser = user;
-    // Show first name if set, else fall back to mobile number
-    const displayName = user.name ? user.name.split(' ')[0] : (user.mobile || 'Student');
-    $('userName').textContent = displayName;
-
-    if (!user.hasProfile) {
-      // First-time login — no name yet. Send them to fill profile.
-      toast('Welcome! Please add your details');
-      openProfileScreen();
-    } else {
+    try {
+      const displayName = user.name ? user.name.split(' ')[0] : (user.mobile || 'Student');
+      const nameEl = $('userName');
+      if (nameEl) nameEl.textContent = displayName;
+      if (!user.hasProfile) {
+        toast('Welcome! Please add your details');
+        await openProfileScreen();
+      } else {
+        showScreen('homeScreen');
+      }
+    } catch (e) {
+      console.error('[Auth] routing error:', e);
       showScreen('homeScreen');
     }
   },
@@ -138,108 +145,97 @@ watchAuth(
   }
 );
 
-// ── Auth UI helpers ────────────────────────────────────────────────────────
-function authMsg(msg, color='#f59e0b') {
+function authMsg(msg, color = '#f59e0b') {
   const el = $('authMsg');
   if (!el) return;
   el.textContent = msg;
   el.style.color = color;
 }
+
 function showAuthStep(stepId) {
-  ['loginPhoneStep','loginOtpStep'].forEach(id => {
+  ['loginPhoneStep', 'loginOtpStep'].forEach(id => {
     const el = $(id);
     if (el) el.style.display = (id === stepId) ? 'block' : 'none';
   });
   authMsg('');
 }
 
-// ── Safely attach click with null check ────────────────────────────────────
 function on(id, fn) {
   const el = $(id);
   if (el) el.addEventListener('click', fn);
 }
 
-// ── Login: Send OTP ──────────────────────────────────────────────────────
+// ── Login: OTP ─────────────────────────────────────────────────────────────
 on('loginSendOtpBtn', async () => {
   const mobile = $('loginMobileInput').value.trim();
   if (!/^\d{10}$/.test(mobile)) { authMsg('Enter valid 10-digit mobile number', '#ef4444'); return; }
-  const full = '+91' + mobile;
   authMsg('Sending OTP…');
-  const btn = $('loginSendOtpBtn');
-  btn.disabled = true;
+  const btn = $('loginSendOtpBtn'); btn.disabled = true;
   try {
-    await sendOTP(full);
+    await sendOTP('+91' + mobile);
     $('loginOtpSentTo').textContent = '+91 ' + mobile;
     showAuthStep('loginOtpStep');
     authMsg('OTP sent ✓', '#10b981');
   } catch(e) {
-    if (e.code === 'auth/too-many-requests') {
-      authMsg('Too many attempts. Please wait a few minutes.', '#ef4444');
-    } else if (e.code === 'auth/invalid-phone-number') {
-      authMsg('Invalid phone number.', '#ef4444');
-    } else {
-      authMsg('Failed to send OTP: ' + (e.message || e.code), '#ef4444');
-    }
-  } finally {
-    btn.disabled = false;
-  }
+    authMsg(e.code === 'auth/too-many-requests' ? 'Too many attempts. Wait a few minutes.'
+          : e.code === 'auth/invalid-phone-number' ? 'Invalid phone number.'
+          : 'Failed: ' + (e.message || e.code), '#ef4444');
+  } finally { btn.disabled = false; }
 });
 
-// ── Login: Verify OTP ────────────────────────────────────────────────────
 on('loginVerifyOtpBtn', async () => {
   const otp = $('loginOtpInput').value.trim();
   if (otp.length !== 6) { authMsg('Enter 6-digit OTP', '#ef4444'); return; }
   authMsg('Verifying OTP…');
-  const btn = $('loginVerifyOtpBtn');
-  btn.disabled = true;
+  const btn = $('loginVerifyOtpBtn'); btn.disabled = true;
   try {
     await verifyOTP(otp);
     authMsg('Login successful! 🎉', '#10b981');
-    // watchAuth fires and routes to home or profile
   } catch(e) {
-    if (e.code === 'auth/invalid-verification-code') {
-      authMsg('Incorrect OTP. Please try again.', '#ef4444');
-    } else if (e.code === 'auth/code-expired') {
-      authMsg('OTP expired. Please resend.', '#ef4444');
-    } else {
-      authMsg('Verification failed: ' + (e.message || e.code), '#ef4444');
-    }
-  } finally {
-    btn.disabled = false;
-  }
+    authMsg(e.code === 'auth/invalid-verification-code' ? 'Incorrect OTP. Try again.'
+          : e.code === 'auth/code-expired' ? 'OTP expired. Resend.'
+          : 'Verification failed: ' + (e.message || e.code), '#ef4444');
+  } finally { btn.disabled = false; }
 });
 
-// ── Login: Resend OTP ────────────────────────────────────────────────────
 on('loginResendOtpBtn', async () => {
   const mobile = $('loginMobileInput').value.trim();
   if (!mobile) { showAuthStep('loginPhoneStep'); return; }
   authMsg('Resending OTP…');
-  try {
-    await sendOTP('+91' + mobile);
-    authMsg('OTP resent ✓', '#10b981');
-  } catch(e) { authMsg('Failed: ' + (e.message || e.code), '#ef4444'); }
+  try { await sendOTP('+91' + mobile); authMsg('OTP resent ✓', '#10b981'); }
+  catch(e) { authMsg('Failed: ' + (e.message || e.code), '#ef4444'); }
 });
 
 on('backToLoginPhone', () => showAuthStep('loginPhoneStep'));
 
-// ══════════════════════════════════════════════════════════════════════════
-// PROFILE — view & edit name/email
-// ══════════════════════════════════════════════════════════════════════════
+on('googleLoginBtn', async () => {
+  authMsg('Opening Google sign-in…');
+  try {
+    await loginWithGoogle();
+    authMsg('Login successful! 🎉', '#10b981');
+  } catch(e) {
+    authMsg(e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request'
+          ? 'Google sign-in cancelled.'
+          : e.code === 'auth/popup-blocked' ? 'Popup blocked. Allow popups and retry.'
+          : 'Google login failed: ' + (e.message || e.code), '#ef4444');
+  }
+});
 
-function profileMsg(msg, color='#10b981') {
+// ── Profile ────────────────────────────────────────────────────────────────
+function profileMsg(msg, color = '#10b981') {
   const el = $('profileMsg');
   if (!el) return;
-  el.textContent = msg;
-  el.style.color = color;
+  el.textContent = msg; el.style.color = color;
 }
 
 async function openProfileScreen() {
   if (!currentUser) return;
-  // Load latest profile from Firestore
-  const profile = await getUserProfile(currentUser.uid);
-  $('profileMobile').value = profile?.mobile || currentUser.mobile || '';
-  $('profileName').value   = profile?.name  || '';
-  $('profileEmail').value  = profile?.email || '';
+  let profile = null;
+  try { profile = await getUserProfile(currentUser.uid); } catch(e) {}
+  const mEl = $('profileMobile'), nEl = $('profileName'), eEl = $('profileEmail');
+  if (mEl) mEl.value = profile?.mobile || currentUser.mobile || '';
+  if (nEl) nEl.value = profile?.name   || currentUser.name   || '';
+  if (eEl) eEl.value = profile?.email  || currentUser.email  || '';
   profileMsg('');
   showScreen('profileScreen');
 }
@@ -250,80 +246,129 @@ on('saveProfileBtn', async () => {
   if (!currentUser) return;
   const name  = $('profileName').value.trim();
   const email = $('profileEmail').value.trim();
-
   if (!name) { profileMsg('Please enter your name', '#ef4444'); return; }
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     profileMsg('Please enter a valid email ID', '#ef4444'); return;
   }
-
   profileMsg('Saving…', '#f59e0b');
-  const btn = $('saveProfileBtn');
-  btn.disabled = true;
+  const btn = $('saveProfileBtn'); btn.disabled = true;
   try {
-    await saveUserProfile({
-      uid:    currentUser.uid,
-      name,
-      email,
-      mobile: currentUser.mobile
-    });
-    // Update in-memory state + header
-    currentUser.name = name;
-    currentUser.email = email;
-    currentUser.hasProfile = true;
+    await saveUserProfile({ uid: currentUser.uid, name, email, mobile: currentUser.mobile });
+    currentUser.name = name; currentUser.email = email; currentUser.hasProfile = true;
     $('userName').textContent = name.split(' ')[0];
     profileMsg('Saved! ✓', '#10b981');
     toast('Details saved');
     setTimeout(() => showScreen('homeScreen'), 800);
-  } catch(e) {
-    profileMsg('Save failed: ' + (e.message || e.code), '#ef4444');
-  } finally {
-    btn.disabled = false;
-  }
+  } catch(e) { profileMsg('Save failed: ' + (e.message || e.code), '#ef4444'); }
+  finally { btn.disabled = false; }
 });
 
-$('logoutBtn').addEventListener('click', async () => {
-  await logout();
-  toast('Logged out');
+$('logoutBtn').addEventListener('click', async () => { await logout(); toast('Logged out'); });
+
+// ══════════════════════════════════════════════════════════════════════════════
+// HOME — 3 category tiles
+// ══════════════════════════════════════════════════════════════════════════════
+
+on('homeCivil', () => {
+  activeSection = 'civil';
+  showScreen('civilHomeScreen');
+});
+
+on('homePCB', () => {
+  activeSection = 'pcb';
+  showScreen('pcbHomeScreen');
+});
+
+on('homeNonTech', () => {
+  activeSection = 'nontech';
+  showScreen('nonTechHomeScreen');
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// HOME — 4 tiles
+// CIVIL — 4 tiles
 // ══════════════════════════════════════════════════════════════════════════════
 
-$('homeNotes').addEventListener('click', () => {
+on('civilNotes', () => {
+  $('notesSubjectsBackBtn').onclick = () => showScreen('civilHomeScreen');
   renderSubjectList('notesSubjectList', SUBJECTS_UPPSC_MAINS, openNotesSubject);
   showScreen('notesSubjectsScreen');
 });
 
-$('homePractice').addEventListener('click', () => {
+on('civilPractice', () => {
+  $('practiceSubjectsBackBtn').onclick = () => showScreen('civilHomeScreen');
   renderSubjectList('practiceSubjectList', SUBJECTS_UPPSC_MAINS, openPracticeSubject);
   showScreen('practiceSubjectsScreen');
 });
 
-$('homePYQ').addEventListener('click', () => {
-  renderExamList();
+on('civilPYQ', () => {
+  $('pyqExamsBackBtn').onclick = () => showScreen('civilHomeScreen');
+  renderExamList('civil');
   showScreen('pyqExamsScreen');
 });
 
-$('homeBookmarks').addEventListener('click', async () => {
+on('civilBookmarks', async () => {
+  $('bookmarksBackBtn').onclick = () => showScreen('civilHomeScreen');
   await loadAndShowBookmarks();
   showScreen('bookmarksScreen');
 });
 
-// ── GS tile ────────────────────────────────────────────────────────────────
-$('homeGS').addEventListener('click', () => {
+// ══════════════════════════════════════════════════════════════════════════════
+// PCB — 4 tiles (same flow, different subjects/exams)
+// ══════════════════════════════════════════════════════════════════════════════
+
+on('pcbNotes', () => {
+  $('notesSubjectsBackBtn').onclick = () => showScreen('pcbHomeScreen');
+  renderSubjectList('notesSubjectList', SUBJECTS_PCB, openNotesSubject);
+  showScreen('notesSubjectsScreen');
+});
+
+on('pcbPractice', () => {
+  $('practiceSubjectsBackBtn').onclick = () => showScreen('pcbHomeScreen');
+  renderSubjectList('practiceSubjectList', SUBJECTS_PCB, openPracticeSubject);
+  showScreen('practiceSubjectsScreen');
+});
+
+on('pcbPYQ', () => {
+  $('pyqExamsBackBtn').onclick = () => showScreen('pcbHomeScreen');
+  renderExamList('pcb');
+  showScreen('pyqExamsScreen');
+});
+
+on('pcbBookmarks', async () => {
+  $('bookmarksBackBtn').onclick = () => showScreen('pcbHomeScreen');
+  await loadAndShowBookmarks();
+  showScreen('bookmarksScreen');
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// NON-TECH — 4 tiles
+// ══════════════════════════════════════════════════════════════════════════════
+
+on('nonTechGS', () => {
   renderGSSubjectList('gsSubjectList', GS_SUBJECTS, openGSSubject);
   showScreen('gsSubjectsScreen');
 });
 
-// ── Hindi tile ─────────────────────────────────────────────────────────────
-$('homeHindi').addEventListener('click', () => {
+on('nonTechHindi', () => {
   renderGSSubjectList('hindiSubjectList', HINDI_SUBJECTS, openHindiSubject);
   showScreen('hindiSubjectsScreen');
 });
 
+on('nonTechPractice', () => {
+  $('practiceSubjectsBackBtn').onclick = () => showScreen('nonTechHomeScreen');
+  // Non-tech practice uses GS subjects
+  renderSubjectList('practiceSubjectList', GS_SUBJECTS, openPracticeSubject);
+  showScreen('practiceSubjectsScreen');
+});
+
+on('nonTechPYQ', () => {
+  $('pyqExamsBackBtn').onclick = () => showScreen('nonTechHomeScreen');
+  renderExamList('nontech');
+  showScreen('pyqExamsScreen');
+});
+
 // ══════════════════════════════════════════════════════════════════════════════
-// SUBJECT LIST RENDERER (shared by Notes + Practice)
+// SHARED: SUBJECT LIST RENDERER
 // ══════════════════════════════════════════════════════════════════════════════
 
 function renderSubjectList(containerId, subjects, onSelect) {
@@ -351,12 +396,12 @@ function renderSubjectList(containerId, subjects, onSelect) {
 
 async function openNotesSubject(subj) {
   currentSubject = subj;
-
   $('notesContentTitle').textContent = subj.name + ' — Notes';
   $('notesContentSub').textContent   = 'Topic-wise study material';
 
-  // notes.js owns the topic bar (#notesTopicBar) + content (#notesMain)
-  // It reads topics from the JSON (numeric IDs: 0,1,2...) not from subjects.js
+  // Wire back button to go back to subject list (already at notesSubjectsScreen)
+  $('notesContentBackBtn').onclick = () => showScreen('notesSubjectsScreen');
+
   const data = await loadNotesForSubject(subj.id);
   if (!data) {
     const old = $('notesRendered');
@@ -366,14 +411,12 @@ async function openNotesSubject(subj) {
     showScreen('notesContentScreen');
     return;
   }
-
-  // renderNotesContent: builds chips in #notesTopicBar + renders cards in #notesMain
   renderNotesContent(data, null);
   showScreen('notesContentScreen');
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// PRACTICE FLOW (subject-wise important questions)
+// PRACTICE FLOW
 // ══════════════════════════════════════════════════════════════════════════════
 
 async function openPracticeSubject(subj) {
@@ -383,11 +426,7 @@ async function openPracticeSubject(subj) {
   quizSource     = 'practiceSubjectsScreen';
 
   let questions = await fetchPracticeQuestions({ subject: subj.id, maxCount: 10000 });
-
-  if (!questions || questions.length === 0) {
-    toast('No practice questions for this subject yet');
-    return;
-  }
+  if (!questions || !questions.length) { toast('No practice questions for this subject yet'); return; }
 
   Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
   Quiz.startQuiz(questions);
@@ -404,13 +443,20 @@ async function openPracticeSubject(subj) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// PYQ FLOW  →  Exam  →  Subject  →  Quiz
+// PYQ FLOW
 // ══════════════════════════════════════════════════════════════════════════════
 
-function renderExamList() {
+function renderExamList(section) {
+  // Filter exams by section tag when you add that field to exams.js
+  // For now show all exams — filter by section === 'civil' / 'pcb' / 'nontech'
   const container = $('pyqExamList');
   container.innerHTML = '';
-  EXAMS.forEach(exam => {
+  const filtered = EXAMS.filter(e => !e.section || e.section === section || section === 'civil');
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">📜</div><h3>No exams yet</h3><p>Exams will appear here.</p></div>';
+    return;
+  }
+  filtered.forEach(exam => {
     const btn = document.createElement('button');
     btn.className = 'exam-card';
     btn.innerHTML = `
@@ -432,63 +478,45 @@ function openPyqExam(exam) {
   showScreen('pyqModeScreen');
 }
 
-// ── PYQ Mode buttons ────────────────────────────────────────────────────────
 $('pyqModeYear').addEventListener('click', () => {
-  $('pyqYearsTitle').textContent = '📅 ' + currentExam.name + ' — Exam & Year-wise';
+  $('pyqYearsTitle').textContent = '📅 ' + currentExam.name + ' — Year-wise';
   $('pyqYearsSub').textContent   = 'Pick an exam paper';
   renderYearList();
   showScreen('pyqYearsScreen');
 });
 
 $('pyqModeSubject').addEventListener('click', () => {
+  const subjectList = activeSection === 'pcb' ? SUBJECTS_PCB : SUBJECTS_UPPSC_MAINS;
   $('pyqSubjectsTitle').textContent = currentExam.name + ' — Subject-wise';
   $('pyqSubjectsSub').textContent   = 'Pick a subject';
-  renderSubjectList('pyqSubjectList', SUBJECTS_UPPSC_MAINS, openPyqSubject);
+  renderSubjectList('pyqSubjectList', subjectList, openPyqSubject);
   showScreen('pyqSubjectsScreen');
 });
 
-// ── Exam & Year-wise PYQ ───────────────────────────────────────────────────
 async function renderYearList() {
   const container = $('pyqYearList');
   container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim)">Loading...</div>';
-
   try {
     const questions = await fetchQuestions({ exam: currentExam.id, type: 'pyq', maxCount: 10000 });
-
     if (!questions.length) {
       container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><h3>No PYQ uploaded yet</h3><p>Upload questions via admin panel first.</p></div>';
       return;
     }
-
-    // Group by exam_name + year (for exams with multiple papers/codes per year)
     const groups = {};
     questions.forEach(q => {
       const examLabel = q.exam_name || q.exam_code || `${currentExam.name} ${q.year}`;
       const key = `${q.year}__${examLabel}`;
-      if (!groups[key]) {
-        groups[key] = {
-          examLabel,
-          year: q.year || '—',
-          exam_code: q.exam_code || '',
-          exam_date: q.exam_date || '',
-          questions: []
-        };
-      }
+      if (!groups[key]) groups[key] = { examLabel, year: q.year || '—', exam_code: q.exam_code || '', exam_date: q.exam_date || '', questions: [] };
       groups[key].questions.push(q);
     });
-
-    // Sort: latest year first, then by exam_name alphabetically
     const sorted = Object.values(groups).sort((a, b) =>
-      (b.year || 0) - (a.year || 0) || a.examLabel.localeCompare(b.examLabel)
-    );
-
+      (b.year || 0) - (a.year || 0) || a.examLabel.localeCompare(b.examLabel));
     container.innerHTML = '';
     sorted.forEach(g => {
       const dateStr = g.exam_date
         ? new Date(g.exam_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
         : g.year;
       const codeTag = g.exam_code ? ` · ${g.exam_code}` : '';
-
       const btn = document.createElement('button');
       btn.className = 'subject-card';
       btn.innerHTML = `
@@ -503,9 +531,8 @@ async function renderYearList() {
       btn.addEventListener('click', () => openPyqYear(g.examLabel, g.questions));
       container.appendChild(btn);
     });
-
   } catch(e) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Error loading</h3><p>' + e.message + '</p></div>';
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Error loading</h3><p>${e.message}</p></div>`;
   }
 }
 
@@ -513,16 +540,10 @@ async function openPyqYear(examLabel, questions) {
   currentTopic = 'all';
   quizRoute    = 'pyq';
   quizSource   = 'pyqYearsScreen';
-
-  if (!questions || !questions.length) { toast('No questions for this paper'); return; }
-
-  // Sort by subject then q_num
+  if (!questions?.length) { toast('No questions for this paper'); return; }
   questions.sort((a,b) => (a.subject||'').localeCompare(b.subject||'') || (a.q_num||0)-(b.q_num||0));
-
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
-
-  // Build subject chips for year-wise view (subjects as filter)
   buildYearSubjectChips(questions);
   renderQuiz();
 }
@@ -531,15 +552,11 @@ function buildYearSubjectChips(allQs) {
   const bar = $('quizTopicBar');
   bar.innerHTML = '';
   const subjects = [...new Set(allQs.map(q => q.subject).filter(Boolean))];
-
-  // Use data-topic consistently (same as buildTopicChips) to avoid conflicts
-  // Value prefix 'subj:' distinguishes from regular topic IDs
   const allChip = document.createElement('button');
   allChip.className = 'topic-chip active';
   allChip.textContent = 'All Subjects';
   allChip.dataset.topic = 'subj:all';
   bar.appendChild(allChip);
-
   subjects.forEach(subjId => {
     const subj = SUBJECTS_UPPSC_MAINS.find(s => s.id === subjId);
     const chip = document.createElement('button');
@@ -548,14 +565,11 @@ function buildYearSubjectChips(allQs) {
     chip.dataset.topic = 'subj:' + subjId;
     bar.appendChild(chip);
   });
-
   bar.querySelectorAll('.topic-chip').forEach(chip => {
     chip.addEventListener('click', () => {
-      // Only update chips inside this bar (not global selector)
       bar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
-      const val = chip.dataset.topic; // 'subj:all' or 'subj:fluid-mechanics' etc
-      const subjId = val.replace('subj:', '');
+      const subjId = chip.dataset.topic.replace('subj:', '');
       const filtered = subjId === 'all' ? allQs : allQs.filter(q => q.subject === subjId);
       if (!filtered.length) { toast('No questions for this subject'); return; }
       Quiz.resetToQuestions(filtered);
@@ -569,56 +583,40 @@ async function openPyqSubject(subj) {
   currentTopic   = 'all';
   quizRoute      = 'pyq';
   quizSource     = 'pyqSubjectsScreen';
-
-  let questions = await fetchQuestions({
-    exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 10000
-  });
-
-  if (!questions || questions.length === 0) {
-    toast('No PYQ for this subject yet');
-    return;
-  }
-
-  // Sort: latest year first
-  questions.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
-
+  let questions = await fetchQuestions({ exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 10000 });
+  if (!questions?.length) { toast('No PYQ for this subject yet'); return; }
+  questions.sort((a,b) => (b.year||0)-(a.year||0) || (a.q_num||0)-(b.q_num||0));
   Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
-
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
     let qs = await fetchQuestions({ exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 10000 });
     if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
-    qs.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.q_num || 0) - (b.q_num || 0));
+    qs.sort((a,b) => (b.year||0)-(a.year||0) || (a.q_num||0)-(b.q_num||0));
     Quiz.resetToQuestions(qs);
     renderQuiz();
   });
-
   renderQuiz();
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// TOPIC CHIPS BUILDER
+// TOPIC CHIPS
 // ══════════════════════════════════════════════════════════════════════════════
 
 function buildTopicChips(containerId, subjectId, onSelect) {
   const container = $(containerId);
   if (!container) return;
-  const topics = getTopicsFor(subjectId); // always starts with {id:'all', label:'All'}
-
+  const topics = getTopicsFor(subjectId);
   container.innerHTML = topics.map(t =>
     `<button class="topic-chip${t.id === currentTopic ? ' active' : ''}" data-topic="${t.id}">${escapeHtml(t.label)}</button>`
   ).join('');
-
   container.querySelectorAll('.topic-chip').forEach(chip => {
     chip.addEventListener('click', () => {
-      // Only sync chips in same bar (avoid interfering with year-subject chips)
       const bar = chip.closest('.topic-bar-scroll');
       if (bar) bar.querySelectorAll('.topic-chip').forEach(c =>
-        c.classList.toggle('active', c.dataset.topic === chip.dataset.topic)
-      );
+        c.classList.toggle('active', c.dataset.topic === chip.dataset.topic));
       currentTopic = chip.dataset.topic;
       if (onSelect) onSelect(currentTopic);
     });
@@ -636,29 +634,19 @@ async function loadAndShowBookmarks() {
 }
 
 function renderBookmarksList() {
-  const list    = $('bookmarksList');
-  const empty   = $('bookmarksEmpty');
-  const practiceBtn = $('practiceBookmarksBtn');
-
+  const list = $('bookmarksList'), empty = $('bookmarksEmpty'), practiceBtn = $('practiceBookmarksBtn');
   list.innerHTML = '';
-
-  if (!allBookmarks || allBookmarks.length === 0) {
-    list.classList.add('hidden');
-    empty.classList.remove('hidden');
-    practiceBtn.classList.add('hidden');
+  if (!allBookmarks?.length) {
+    list.classList.add('hidden'); empty.classList.remove('hidden'); practiceBtn.classList.add('hidden');
     return;
   }
-
-  list.classList.remove('hidden');
-  empty.classList.add('hidden');
+  list.classList.remove('hidden'); empty.classList.add('hidden');
   practiceBtn.classList.remove('hidden');
   practiceBtn.textContent = `Practice all (${allBookmarks.length})`;
-
   allBookmarks.forEach((q, idx) => {
     const preview = q.question.length > 100 ? q.question.substring(0, 100) + '…' : q.question;
     const subjectLabel = q.subject ? q.subject.replace(/-/g, ' ') : '';
     const examLabel = q.examId ? q.examId.replace(/-/g, ' ').toUpperCase() : '';
-
     const card = document.createElement('button');
     card.className = 'bookmark-card';
     card.innerHTML = `
@@ -673,7 +661,6 @@ function renderBookmarksList() {
       quizSource = 'bookmarksScreen';
       quizRoute  = 'bookmarks';
       Quiz.startQuiz(allBookmarks);
-      // Jump to clicked question
       for (let i = 0; i < idx; i++) Quiz.next();
       showScreen('quizScreen');
       $('quizTopicBar').innerHTML = '';
@@ -694,7 +681,7 @@ $('practiceBookmarksBtn').addEventListener('click', () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// GS & HINDI SUBJECT LIST + NOTES FLOW
+// GS & HINDI NOTES FLOW
 // ══════════════════════════════════════════════════════════════════════════════
 
 function renderGSSubjectList(containerId, subjects, onSelect) {
@@ -716,25 +703,18 @@ function renderGSSubjectList(containerId, subjects, onSelect) {
   });
 }
 
-// Current GS subject and sub-subject state
 let _currentGSSubject = null;
-let _currentGSSubId   = null;
 
 async function openGSSubject(subj) {
   _currentGSSubject = subj;
-
-  // Load the subject's data first
   const data = await loadGSNotes(subj.id);
   const subSubs = data ? getSubSubjects(data) : GS_SUB_SUBJECTS[subj.id];
-
   if (subSubs && subSubs.length) {
-    // Show sub-subject list screen
     $('gsSubSubjectTitle').textContent = subj.icon + ' ' + subj.name;
     $('gsSubSubjectSub').textContent   = 'Choose a section';
     renderGSSubjectList('gsSubSubjectList', subSubs, (sub) => openGSSubSubject(subj, sub, data));
     showScreen('gsSubSubjectsScreen');
   } else if (data) {
-    // No sub-subjects — render notes directly
     await _loadAndShowGSNotes(subj.id, subj.icon + ' ' + subj.name, 'gsSubjectsScreen', null, data);
   } else {
     toast('Notes not available yet');
@@ -742,14 +722,7 @@ async function openGSSubject(subj) {
 }
 
 async function openGSSubSubject(parentSubj, sub, preloadedData) {
-  _currentGSSubId = sub.id;
-  await _loadAndShowGSNotes(
-    parentSubj.id,
-    sub.icon + ' ' + sub.name,
-    'gsSubSubjectsScreen',
-    sub.id,
-    preloadedData
-  );
+  await _loadAndShowGSNotes(parentSubj.id, sub.icon + ' ' + sub.name, 'gsSubSubjectsScreen', sub.id, preloadedData);
 }
 
 async function _loadAndShowGSNotes(subjectId, title, backScreen, subSubjectId, preloadedData) {
@@ -757,31 +730,19 @@ async function _loadAndShowGSNotes(subjectId, title, backScreen, subSubjectId, p
   $('gsNotesSub').textContent   = 'Topic-wise detailed notes';
   $('gsPlaceholder').style.display = 'block';
   $('gsPlaceholder').querySelector('h3').textContent = 'Loading…';
-
   const oldEl = document.getElementById('gsNotesMain-rendered');
   if (oldEl) oldEl.remove();
   $('gsTopicBar').innerHTML = '';
-
-  // Wire back button dynamically
   const backBtn = $('gsNotesBackBtn');
   if (backBtn) backBtn.onclick = () => showScreen(backScreen);
-
   showScreen('gsNotesScreen');
-
-  // Load full data if not preloaded
   const fullData = preloadedData || await loadGSNotes(subjectId);
-  if (!fullData) {
-    $('gsPlaceholder').querySelector('h3').textContent = 'Notes coming soon';
-    return;
-  }
-
-  // If sub-subject requested, get that slice of data
+  if (!fullData) { $('gsPlaceholder').querySelector('h3').textContent = 'Notes coming soon'; return; }
   let notesData = fullData;
   if (subSubjectId) {
     const sub = getSubSubjectData(fullData, subSubjectId);
     if (sub) notesData = sub;
   }
-
   $('gsPlaceholder').style.display = 'none';
   renderGSNotesContent(notesData, 'gsNotesMain', 'gsTopicBar', 'gsPlaceholder');
 }
@@ -791,18 +752,12 @@ async function openHindiSubject(subj) {
   $('hindiNotesSub').textContent   = 'Topic-wise notes';
   $('hindiPlaceholder').style.display = 'block';
   $('hindiPlaceholder').querySelector('h3').textContent = 'Loading…';
-
   const old = document.getElementById('hindiNotesMain-rendered');
   if (old) old.remove();
   $('hindiTopicBar').innerHTML = '';
-
   showScreen('hindiNotesScreen');
-
   const data = await loadHindiNotes(subj.id);
-  if (!data) {
-    $('hindiPlaceholder').querySelector('h3').textContent = 'Notes coming soon';
-    return;
-  }
+  if (!data) { $('hindiPlaceholder').querySelector('h3').textContent = 'Notes coming soon'; return; }
   $('hindiPlaceholder').style.display = 'none';
   renderGSNotesContent(data, 'hindiNotesMain', 'hindiTopicBar', 'hindiPlaceholder');
 }
@@ -811,46 +766,28 @@ async function openHindiSubject(subj) {
 // QUIZ RENDERER
 // ══════════════════════════════════════════════════════════════════════════════
 
-// Track answered state for jump panel colours
-const quizAnswerMap = {}; // index → 'correct' | 'wrong'
+const quizAnswerMap = {};
 
 async function renderQuiz() {
   const q = Quiz.getCurrent();
-  if (!q) {
-    toast('No question to show');
-    goBackFromQuiz();
-    return;
-  }
+  if (!q) { toast('No question to show'); goBackFromQuiz(); return; }
 
   const { current, total } = Quiz.getProgress();
   $('quizProgress').textContent = `${current} / ${total}`;
-
-  // Sr No
   $('quizSrNo').textContent = `Q.${current}`;
-
-  // Progress bar fill
   const fill = $('quizProgressFill');
   if (fill) fill.style.width = `${(current / total) * 100}%`;
 
-  // Meta tags
   $('quizSubjectTag').textContent = q.subject
     ? q.subject.replace(/-/g, ' ').split(' ').map(w => w[0].toUpperCase() + w.slice(1)).join(' ')
     : 'General';
-
   $('quizYearTag').textContent = q.year ? `${q.year}` : '—';
 
   const examTag = $('quizExamTag');
   if (quizRoute === 'pyq') {
-    // exam_name from question data, fallback to currentExam name
-    const examLabel = q.exam_name
-      || (currentExam ? (currentExam.fullName || currentExam.name) : null)
-      || null;
-    if (examLabel) {
-      examTag.textContent = examLabel;
-      examTag.classList.remove('hidden');
-    } else {
-      examTag.classList.add('hidden');
-    }
+    const examLabel = q.exam_name || (currentExam ? (currentExam.fullName || currentExam.name) : null) || null;
+    if (examLabel) { examTag.textContent = examLabel; examTag.classList.remove('hidden'); }
+    else examTag.classList.add('hidden');
   } else {
     examTag.classList.add('hidden');
   }
@@ -872,44 +809,32 @@ async function renderQuiz() {
   await updateBookmarkBtn(q);
 }
 
-// ── Jump Panel ─────────────────────────────────────────────────────────────
 function openJumpPanel() {
-  const { total } = Quiz.getProgress();
-  const { current } = Quiz.getProgress();
+  const { total, current } = Quiz.getProgress();
   const grid = $('jumpGrid');
   grid.innerHTML = '';
-
   for (let i = 1; i <= total; i++) {
     const btn = document.createElement('button');
     btn.className = 'jump-btn';
     btn.textContent = i;
     const state = quizAnswerMap[i - 1];
-    if (i === current)        btn.classList.add('current');
+    if (i === current)            btn.classList.add('current');
     else if (state === 'correct') btn.classList.add('answered');
     else if (state === 'wrong')   btn.classList.add('wrong');
-    btn.addEventListener('click', () => {
-      Quiz.jumpTo(i - 1);
-      closeJumpPanel();
-      renderQuiz();
-    });
+    btn.addEventListener('click', () => { Quiz.jumpTo(i - 1); closeJumpPanel(); renderQuiz(); });
     grid.appendChild(btn);
   }
   $('jumpPanel').classList.remove('hidden');
 }
 
-function closeJumpPanel() {
-  $('jumpPanel').classList.add('hidden');
-}
+function closeJumpPanel() { $('jumpPanel').classList.add('hidden'); }
 
 $('quizGridBtn').addEventListener('click', openJumpPanel);
 $('jumpCloseBtn').addEventListener('click', closeJumpPanel);
-$('jumpPanel').addEventListener('click', e => {
-  if (e.target === $('jumpPanel')) closeJumpPanel();
-});
+$('jumpPanel').addEventListener('click', e => { if (e.target === $('jumpPanel')) closeJumpPanel(); });
 
 async function updateBookmarkBtn(q) {
   if (!currentUser) { $('quizBookmarkBtn').textContent = '☆'; return; }
-  // attach examId to question for bookmark lookup
   const qWithExam = { ...q, examId: q.examId || (currentExam ? currentExam.id : 'practice') };
   const marked = await isQuestionBookmarked(currentUser.uid, qWithExam);
   $('quizBookmarkBtn').textContent = marked ? '★' : '☆';
@@ -919,24 +844,18 @@ async function updateBookmarkBtn(q) {
 function onOptionClick(index) {
   const result = Quiz.selectOption(index);
   if (!result) return;
-
   const q = Quiz.getCurrent();
   const { current } = Quiz.getProgress();
-
-  // Track answer for jump panel colours
   quizAnswerMap[current - 1] = result.isCorrect ? 'correct' : 'wrong';
-
   document.querySelectorAll('.quiz-option').forEach((b, i) => {
     b.disabled = true;
     if (i === result.correctIndex) b.classList.add('correct');
     if (i === index && !result.isCorrect) b.classList.add('wrong');
   });
-
   if (q.explanation) {
     $('quizExplanationText').textContent = q.explanation;
     $('quizExplanation').classList.remove('hidden');
   }
-
   if (currentUser) {
     const examId = q.examId || (currentExam ? currentExam.id : 'practice');
     saveAttempt(currentUser.uid, examId, q.id, index, result.isCorrect);
@@ -944,47 +863,34 @@ function onOptionClick(index) {
 }
 
 $('quizNextBtn').addEventListener('click', () => {
-  if (Quiz.next()) {
-    renderQuiz();
-  } else {
-    toast('Quiz complete! 🎉');
-    setTimeout(goBackFromQuiz, 800);
-  }
+  if (Quiz.next()) renderQuiz();
+  else { toast('Quiz complete! 🎉'); setTimeout(goBackFromQuiz, 800); }
 });
 
-$('quizPrevBtn').addEventListener('click', () => {
-  if (Quiz.prev()) renderQuiz();
-});
-
+$('quizPrevBtn').addEventListener('click', () => { if (Quiz.prev()) renderQuiz(); });
 $('quizBackBtn').addEventListener('click', goBackFromQuiz);
 
-function goBackFromQuiz() {
-  showScreen(quizSource || 'homeScreen');
-}
+function goBackFromQuiz() { showScreen(quizSource || 'homeScreen'); }
 
 $('quizBookmarkBtn').addEventListener('click', async () => {
   const q = Quiz.getCurrent();
   if (!q || !currentUser) { toast('Sign in to bookmark'); return; }
   if (!q.id) { toast('Cannot bookmark this question'); return; }
-
   const qWithExam = { ...q, examId: q.examId || (currentExam ? currentExam.id : 'practice') };
   const marked = $('quizBookmarkBtn').dataset.marked === '1';
-
   if (marked) {
     const ok = await removeBookmark(currentUser.uid, qWithExam);
     if (ok) {
-      $('quizBookmarkBtn').textContent = '☆';
-      $('quizBookmarkBtn').dataset.marked = '0';
+      $('quizBookmarkBtn').textContent = '☆'; $('quizBookmarkBtn').dataset.marked = '0';
       allBookmarks = allBookmarks.filter(b => b.id !== q.id);
       toast('Removed from bookmarks');
-    } else { toast('Failed to remove bookmark'); }
+    } else toast('Failed to remove bookmark');
   } else {
     const ok = await addBookmark(currentUser.uid, qWithExam);
     if (ok) {
-      $('quizBookmarkBtn').textContent = '★';
-      $('quizBookmarkBtn').dataset.marked = '1';
+      $('quizBookmarkBtn').textContent = '★'; $('quizBookmarkBtn').dataset.marked = '1';
       allBookmarks.unshift(qWithExam);
       toast('Bookmarked ★');
-    } else { toast('Failed to bookmark'); }
+    } else toast('Failed to bookmark');
   }
 });
