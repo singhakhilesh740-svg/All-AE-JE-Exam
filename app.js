@@ -263,7 +263,7 @@ on('saveProfileBtn', async () => {
   finally { btn.disabled = false; }
 });
 
-$('logoutBtn').addEventListener('click', async () => { await logout(); toast('Logged out'); });
+on('logoutBtn', async () => { await logout(); toast('Logged out'); });
 
 // ══════════════════════════════════════════════════════════════════════════════
 // HOME — 3 category tiles
@@ -478,14 +478,14 @@ function openPyqExam(exam) {
   showScreen('pyqModeScreen');
 }
 
-$('pyqModeYear').addEventListener('click', () => {
+on('pyqModeYear', () => {
   $('pyqYearsTitle').textContent = '📅 ' + currentExam.name + ' — Year-wise';
   $('pyqYearsSub').textContent   = 'Pick an exam paper';
   renderYearList();
   showScreen('pyqYearsScreen');
 });
 
-$('pyqModeSubject').addEventListener('click', () => {
+on('pyqModeSubject', () => {
   const subjectList = activeSection === 'pcb' ? SUBJECTS_PCB : SUBJECTS_UPPSC_MAINS;
   $('pyqSubjectsTitle').textContent = currentExam.name + ' — Subject-wise';
   $('pyqSubjectsSub').textContent   = 'Pick a subject';
@@ -670,7 +670,7 @@ function renderBookmarksList() {
   });
 }
 
-$('practiceBookmarksBtn').addEventListener('click', () => {
+on('practiceBookmarksBtn', () => {
   if (!allBookmarks.length) { toast('No bookmarks to practice'); return; }
   quizSource = 'bookmarksScreen';
   quizRoute  = 'bookmarks';
@@ -829,9 +829,9 @@ function openJumpPanel() {
 
 function closeJumpPanel() { $('jumpPanel').classList.add('hidden'); }
 
-$('quizGridBtn').addEventListener('click', openJumpPanel);
-$('jumpCloseBtn').addEventListener('click', closeJumpPanel);
-$('jumpPanel').addEventListener('click', e => { if (e.target === $('jumpPanel')) closeJumpPanel(); });
+on('quizGridBtn', openJumpPanel);
+on('jumpCloseBtn', closeJumpPanel);
+on('jumpPanel', e => { if (e.target === $('jumpPanel')) closeJumpPanel(); });
 
 async function updateBookmarkBtn(q) {
   if (!currentUser) { $('quizBookmarkBtn').textContent = '☆'; return; }
@@ -862,17 +862,17 @@ function onOptionClick(index) {
   }
 }
 
-$('quizNextBtn').addEventListener('click', () => {
+on('quizNextBtn', () => {
   if (Quiz.next()) renderQuiz();
   else { toast('Quiz complete! 🎉'); setTimeout(goBackFromQuiz, 800); }
 });
 
-$('quizPrevBtn').addEventListener('click', () => { if (Quiz.prev()) renderQuiz(); });
-$('quizBackBtn').addEventListener('click', goBackFromQuiz);
+on('quizPrevBtn', () => { if (Quiz.prev()) renderQuiz(); });
+on('quizBackBtn', goBackFromQuiz);
 
 function goBackFromQuiz() { showScreen(quizSource || 'homeScreen'); }
 
-$('quizBookmarkBtn').addEventListener('click', async () => {
+on('quizBookmarkBtn', async () => {
   const q = Quiz.getCurrent();
   if (!q || !currentUser) { toast('Sign in to bookmark'); return; }
   if (!q.id) { toast('Cannot bookmark this question'); return; }
