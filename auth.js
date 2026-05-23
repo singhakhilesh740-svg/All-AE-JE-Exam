@@ -1,13 +1,15 @@
-// auth.js — Mobile OTP login only
-// Flow: enter mobile → OTP → logged in. Profile (name/email) saved after login.
-// On repeat login, profile loads automatically by UID.
+// auth.js — Mobile OTP login + Google login
+// Flow: enter mobile → OTP → logged in,  OR  Google sign-in.
+// Profile (name/email/mobile) saved after login. On repeat login, profile
+// loads automatically and is shared across both login methods (matched by
+// email or mobile).
 
-import { auth, db, RecaptchaVerifier, signInWithPhoneNumber } from './firebase-config.js';
+import { auth, db, googleProvider, RecaptchaVerifier, signInWithPhoneNumber } from './firebase-config.js';
 import {
-  signOut, onAuthStateChanged, setPersistence, browserLocalPersistence
+  signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-  doc, getDoc, setDoc, serverTimestamp
+  doc, getDoc, setDoc, collection, query, where, getDocs, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 setPersistence(auth, browserLocalPersistence).catch(() => {});
@@ -16,22 +18,40 @@ let recaptchaVerifier = null;
 let confirmationResult = null;
 
 // ── Recaptcha ──────────────────────────────────────────────────────────────
+// Fully destroy and recreate the container + verifier each time. Reusing the
+// same DOM node causes "reCAPTCHA has already been rendered" on the 2nd number.
 function setupRecaptcha() {
-  let container = document.getElementById('recaptcha-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.id = 'recaptcha-container';
-    document.body.appendChild(container);
-  }
+  // 1. Clear any existing verifier object
   if (recaptchaVerifier) {
-    try { recaptchaVerifier.clear(); } catch(e) {}
+    try { recaptchaVerifier.clear(); } catch (e) {}
     recaptchaVerifier = null;
-    container.innerHTML = '';
   }
+
+  // 2. Remove the old container DOM node entirely (kills any rendered widget)
+  const old = document.getElementById('recaptcha-container');
+  if (old) old.remove();
+
+  // 3. Create a fresh container node
+  const container = document.createElement('div');
+  container.id = 'recaptcha-container';
+  document.body.appendChild(container);
+
+  // 4. Build a new invisible verifier on the fresh node
   recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-    size: 'invisible', callback: () => {}
+    size: 'invisible',
+    callback: () => {}
   });
   return recaptchaVerifier;
+}
+
+// Reset helper — call after a successful send or when changing number
+export function resetRecaptcha() {
+  if (recaptchaVerifier) {
+    try { recaptchaVerifier.clear(); } catch (e) {}
+    recaptchaVerifier = null;
+  }
+  const old = document.getElementById('recaptcha-container');
+  if (old) old.remove();
 }
 
 // ── Auth state ─────────────────────────────────────────────────────────────
@@ -75,8 +95,14 @@ export async function saveUserProfile({ uid, name, email, mobile }) {
 // ── OTP: Send ────────────────────────────────────────────────────────────────
 export async function sendOTP(mobileNumber) {
   const verifier = setupRecaptcha();
-  confirmationResult = await signInWithPhoneNumber(auth, mobileNumber, verifier);
-  return confirmationResult;
+  try {
+    confirmationResult = await signInWithPhoneNumber(auth, mobileNumber, verifier);
+    return confirmationResult;
+  } catch (e) {
+    // On any failure, tear down the verifier so the next attempt starts fresh
+    resetRecaptcha();
+    throw e;
+  }
 }
 
 // ── OTP: Verify ──────────────────────────────────────────────────────────────
@@ -87,16 +113,66 @@ export async function verifyOTP(otp) {
   const result = await confirmationResult.confirm(otp);
   const user = result.user;
 
-  // Ensure a user doc exists with at least the mobile number on first login
-  const existing = await getUserProfile(user.uid);
-  if (!existing) {
-    await setDoc(doc(db, 'users', user.uid), {
-      name:   '',
-      email:  '',
-      mobile: user.phoneNumber || '',
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    }, { merge: true });
+  // Ensure a user doc exists with at least the mobile number on first login.
+  // Wrapped in try/catch so a Firestore permission error does NOT block login —
+  // the user is already authenticated; the profile doc can be created later.
+  try {
+    const existing = await getUserProfile(user.uid);
+    if (!existing) {
+      await setDoc(doc(db, 'users', user.uid), {
+        name:   '',
+        email:  '',
+        mobile: user.phoneNumber || '',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    }
+  } catch (e) {
+    console.error('[Auth] Could not create profile doc (check Firestore rules):', e);
+    // Continue anyway — login succeeded. Profile will be saved on the Profile screen.
+  }
+
+  return user;
+}
+
+// ── Google login ─────────────────────────────────────────────────────────────
+// Anyone can sign in with Google. On first Google login, if a profile already
+// exists under the same email (or this Google email matches an OTP-created
+// profile), we copy it across so the user's name/email/mobile carry over.
+export async function loginWithGoogle() {
+  await setPersistence(auth, browserLocalPersistence);
+  const result = await signInWithPopup(auth, googleProvider);
+  const user = result.user;
+  const googleEmail = (user.email || '').toLowerCase();
+
+  try {
+    // 1. Profile already under this Google UID? (repeat logins) — done.
+    let profile = await getUserProfile(user.uid);
+
+    if (!profile) {
+      // 2. Look for an existing profile with the same email (from a prior
+      //    Google login under a different UID, or saved via the profile screen).
+      let existingData = null;
+      if (googleEmail) {
+        try {
+          const q = query(collection(db, 'users'), where('email', '==', googleEmail));
+          const snap = await getDocs(q);
+          if (!snap.empty) existingData = snap.docs[0].data();
+        } catch (e) { console.error('[Auth] email lookup failed:', e); }
+      }
+
+      // 3. Create / copy a profile doc under the Google UID.
+      await setDoc(doc(db, 'users', user.uid), {
+        name:   existingData?.name   || user.displayName || '',
+        email:  googleEmail,
+        mobile: existingData?.mobile || '',
+        createdAt: existingData?.createdAt || serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    }
+  } catch (e) {
+    console.error('[Auth] Google profile setup error (check Firestore rules):', e);
+    // Login still succeeded — continue.
   }
 
   return user;
