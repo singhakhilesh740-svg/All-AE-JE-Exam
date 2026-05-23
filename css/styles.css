@@ -727,3 +727,49 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
 /* Tile tile-gs hover color */
 .tile-gs:active   { border-color: rgba(6,182,212,0.5); }
 .tile-hindi:active { border-color: rgba(244,63,94,0.5); }
+
+/* ════════════════════════════════════════════════════════════════════
+   ANDROID APP FIXES (safe-area, reCAPTCHA badge, larger back button)
+   ════════════════════════════════════════════════════════════════════ */
+
+/* 1. Hide the reCAPTCHA badge — not needed in the native app */
+.grecaptcha-badge {
+  visibility: hidden !important;
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* 2. Keep the Prev/Next quiz footer above Android's system nav bar.
+      env(safe-area-inset-bottom) is the height of the gesture/nav bar. */
+.quiz-footer {
+  /* Guaranteed clearance: at least 24px, plus the system nav bar height.
+     The max() ensures buttons clear the nav bar even if env() reports 0. */
+  padding-bottom: max(24px, calc(12px + env(safe-area-inset-bottom, 0px))) !important;
+}
+
+/* Also lift the floating toast above the nav bar */
+.toast {
+  bottom: calc(30px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+/* 3. Make the top-left back button (and other header icons) larger
+      and easier to tap */
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+}
+
+/* The back button specifically — make it stand out a bit more */
+.back-btn {
+  width: 46px;
+  height: 46px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* 4. Give the whole app a little breathing room at the very bottom on
+      screens that scroll, so content never hides under the nav bar */
+body {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}

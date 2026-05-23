@@ -1,0 +1,23 @@
+
+/* ── v12: New home tiles ───────────────────────────────────────────────── */
+.tile-civil {
+  background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+  border: 1px solid #2563eb44;
+}
+.tile-pcb {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  border: 1px solid #10b98144;
+}
+.tile-nontech {
+  background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
+  border: 1px solid #7c3aed44;
+}
+#homeScreen .home-grid {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 480px) {
+  #homeScreen .home-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
