@@ -1,5 +1,5 @@
-// service-worker.js — PWA caching v15-3section
-const CACHE_NAME = 'ae-civil-v15-3section';
+// service-worker.js — PWA caching v16-pcb-notes
+const CACHE_NAME = 'ae-civil-v16-pcb-notes';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -23,7 +23,19 @@ const NETWORK_FIRST = [
   '/js/notes.js',
   '/js/gs-notes.js',
   '/js/subjects.js',
-  '/js/exams.js'
+  '/js/exams.js',
+  '/js/pcb-notes.js',
+  'data/pcb/unit1.html',
+  'data/pcb/unit2.html',
+  'data/pcb/unit3.html',
+  'data/pcb/unit4.html',
+  'data/pcb/unit5.html',
+  'data/pcb/unit6.html',
+  'data/pcb/unit7.html',
+  'data/pcb/unit8.html',
+  'data/pcb/unit9.html',
+  'data/pcb/unit10.html',
+  'data/pcb/unit11.html',
 ];
 
 self.addEventListener('install', (e) => {

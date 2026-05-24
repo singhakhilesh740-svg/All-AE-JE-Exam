@@ -1,5 +1,6 @@
 // pcb-notes.js — loads unit HTML files for PCB Exam notes screen
 
+// ── PCB Subjects list (Part A, Units 1–11 from syllabus) ──────────────────
 export const SUBJECTS_PCB_NOTES = [
   { id: 'unit1',  file: 'data/pcb/unit1.html',  icon: '💧', name: 'Unit 1 — Water Supply Engineering',         description: '~15–18 Qs · Water quality, Treatment, Distribution' },
   { id: 'unit2',  file: 'data/pcb/unit2.html',  icon: '🚰', name: 'Unit 2 — Wastewater Treatment',             description: '~13–16 Qs · BOD, ASP, Trickling filter, Sludge' },
@@ -14,13 +15,17 @@ export const SUBJECTS_PCB_NOTES = [
   { id: 'unit11', file: 'data/pcb/unit11.html', icon: '🌊', name: 'Unit 11 — Fluid Mechanics & Hydraulics',   description: '~3–5 Qs · Reynolds, Darcy-Weisbach, Manning, Pumps' },
 ];
 
-// Units that use div.section-header instead of <h2> for topics
-const SECTION_HEADER_UNITS = ['unit7', 'unit11'];
-
+// Cache loaded HTML per unit id
 const _cache = {};
 
+/**
+ * Load a PCB unit's HTML file and return its body content + extracted sections.
+ * @param {string} unitId  e.g. 'unit1'
+ * @returns {{ bodyHtml: string, sections: {id, label}[] } | null}
+ */
 export async function loadPCBUnit(unitId) {
   if (_cache[unitId]) return _cache[unitId];
+
   const subj = SUBJECTS_PCB_NOTES.find(s => s.id === unitId);
   if (!subj) return null;
 
@@ -29,48 +34,39 @@ export async function loadPCBUnit(unitId) {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const html = await res.text();
 
+    // Parse and extract body content only (strip <head>, <html> etc.)
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
+
+    // Remove scripts from the fetched doc
     doc.querySelectorAll('script').forEach(s => s.remove());
 
+    // Get the inner content (prefer .container div, else body)
     const container = doc.querySelector('.container') || doc.body;
+    // Remove the big h1 title — we already show it in the app header
     const h1 = container.querySelector('h1');
     if (h1) h1.remove();
     const subtitle = container.querySelector('.subtitle');
     if (subtitle) subtitle.remove();
 
-    const sections = [{ id: 'all', label: 'All Topics' }];
-    const usesDivHeaders = SECTION_HEADER_UNITS.includes(unitId);
-
-    if (usesDivHeaders) {
-      // Units 7 & 11: extract div.section-header WITHOUT a color class as main sections
-      const allHeaders = container.querySelectorAll('div.section-header');
-      allHeaders.forEach((div, i) => {
-        // Only pick ones without extra color classes (these are top-level)
-        const cls = div.className.trim();
-        if (cls === 'section-header') {
-          const label = div.textContent.trim();
-          const sectionId = 'pcb-sh-' + i;
-          div.setAttribute('data-pcb-section-id', sectionId);
-          sections.push({ id: sectionId, label, isDivHeader: true });
-        }
-      });
-    } else {
-      // Units 1–6, 8–10: extract <h2> tags
-      container.querySelectorAll('h2').forEach((h2, i) => {
-        const rawText = h2.textContent.trim();
-        const label = rawText
-          .replace(/^SECTION\s+\d+:\s*/i, '')
-          .replace(/^HIGH-YIELD\s+/i, '⭐ ')
-          .split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-        const sectionId = 'pcb-h2-' + i;
-        h2.setAttribute('data-pcb-section-id', sectionId);
-        sections.push({ id: sectionId, label });
-      });
-    }
-
     const bodyHtml = container.innerHTML;
-    const result = { bodyHtml, sections, usesDivHeaders };
+
+    // Extract sections from <h2> tags for topic chips
+    const sections = [];
+    sections.push({ id: 'all', label: 'All Topics' });
+    doc.querySelectorAll('h2').forEach((h2, i) => {
+      const rawText = h2.textContent.trim();
+      // Convert "SECTION 1: WATER QUALITY PARAMETERS" → readable label
+      const label = rawText
+        .replace(/^SECTION\s+\d+:\s*/i, '')
+        .replace(/^HIGH-YIELD\s+/i, '⭐ ')
+        .split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+      const sectionId = 'pcb-section-' + i;
+      h2.id = sectionId; // will be set in rendered DOM separately
+      sections.push({ id: sectionId, label, rawId: i });
+    });
+
+    const result = { bodyHtml, sections };
     _cache[unitId] = result;
     return result;
   } catch (e) {
@@ -79,29 +75,42 @@ export async function loadPCBUnit(unitId) {
   }
 }
 
+/**
+ * Render a PCB unit into the notes screen.
+ * @param {object} data   result from loadPCBUnit()
+ * @param {string} mainId  container element id
+ * @param {string} topicBarId  topic chip bar element id
+ * @param {string} placeholderId  placeholder element id
+ */
 export function renderPCBNotesContent(data, mainId, topicBarId, placeholderId) {
   const main        = document.getElementById(mainId);
   const topicBar    = document.getElementById(topicBarId);
   const placeholder = document.getElementById(placeholderId);
+
   if (!main || !data) return;
 
+  // Remove old rendered content
   const old = document.getElementById('pcb-notes-rendered');
   if (old) old.remove();
+
+  // Hide placeholder
   if (placeholder) placeholder.style.display = 'none';
 
+  // Create content wrapper
   const wrapper = document.createElement('div');
   wrapper.id = 'pcb-notes-rendered';
   wrapper.className = 'pcb-notes-content';
   wrapper.innerHTML = data.bodyHtml;
 
-  // Re-assign IDs from data-pcb-section-id attributes to actual ids for scroll
-  wrapper.querySelectorAll('[data-pcb-section-id]').forEach(el => {
-    el.id = el.getAttribute('data-pcb-section-id');
+  // Re-assign IDs to h2 elements so scroll works
+  const h2s = wrapper.querySelectorAll('h2');
+  h2s.forEach((h2, i) => {
+    h2.id = 'pcb-section-' + i;
   });
 
   main.appendChild(wrapper);
 
-  // Build topic chip bar
+  // Build topic chips
   if (topicBar) {
     topicBar.innerHTML = '';
     data.sections.forEach(sec => {
@@ -113,10 +122,15 @@ export function renderPCBNotesContent(data, mainId, topicBarId, placeholderId) {
         topicBar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         if (sec.id === 'all') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Scroll to top of notes
+          main.scrollTop = 0;
+          window.scrollTo(0, 0);
         } else {
+          // Scroll to the h2 with matching id
           const target = wrapper.querySelector('#' + sec.id);
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
       });
       topicBar.appendChild(chip);

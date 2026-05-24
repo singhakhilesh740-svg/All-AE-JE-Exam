@@ -19,6 +19,7 @@ import * as Quiz from './quiz.js';
 import { EXAMS, getExamById } from './exams.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from './subjects.js';
 import { renderNotesContent, loadNotesForSubject } from './notes.js';
+import { SUBJECTS_PCB_NOTES, loadPCBUnit, renderPCBNotesContent } from './pcb-notes.js';
 import { loadGSNotes, loadHindiNotes, renderGSNotesContent, getSubSubjects, getSubSubjectData } from './gs-notes.js';
 
 // ── State ──────────────────────────────────────────────────────────────────
@@ -317,9 +318,8 @@ on('civilBookmarks', async () => {
 // ══════════════════════════════════════════════════════════════════════════════
 
 on('pcbNotes', () => {
-  $('notesSubjectsBackBtn').onclick = () => showScreen('pcbHomeScreen');
-  renderSubjectList('notesSubjectList', SUBJECTS_PCB, openNotesSubject);
-  showScreen('notesSubjectsScreen');
+  renderSubjectList('pcbNotesSubjectList', SUBJECTS_PCB_NOTES, openPCBNotesUnit);
+  showScreen('pcbNotesSubjectsScreen');
 });
 
 on('pcbPractice', () => {
@@ -413,6 +413,31 @@ async function openNotesSubject(subj) {
   }
   renderNotesContent(data, null);
   showScreen('notesContentScreen');
+}
+
+// ── PCB Notes ──────────────────────────────────────────────────────────────
+
+async function openPCBNotesUnit(subj) {
+  // Show the PCB notes screen
+  $('pcbNotesContentTitle').textContent = subj.name;
+  $('pcbNotesContentSub').textContent   = subj.description || 'Topic-wise notes';
+
+  // Clear old content and show loading state
+  const old = document.getElementById('pcb-notes-rendered');
+  if (old) old.remove();
+  $('pcbNotesTopicBar').innerHTML = '';
+  $('pcbNotesPlaceholder').style.display = '';
+  $('pcbNotesPlaceholder').querySelector('h3').textContent = 'Loading…';
+
+  showScreen('pcbNotesContentScreen');
+
+  const data = await loadPCBUnit(subj.id);
+  if (!data) {
+    $('pcbNotesPlaceholder').querySelector('h3').textContent = 'Notes coming soon';
+    $('pcbNotesPlaceholder').querySelector('p').textContent  = 'This unit will be added shortly.';
+    return;
+  }
+  renderPCBNotesContent(data, 'pcbNotesMain', 'pcbNotesTopicBar', 'pcbNotesPlaceholder');
 }
 
 // ══════════════════════════════════════════════════════════════════════════════

@@ -232,6 +232,39 @@
     </main>
   </div>
 
+  <!-- ===== PCB NOTES: SUBJECT LIST ===== -->
+  <div id="pcbNotesSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pcbHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>📝 PCB Notes</h2>
+        <span class="header-sub">Select a unit</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pcbNotesSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== PCB NOTES: CONTENT SCREEN ===== -->
+  <div id="pcbNotesContentScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pcbNotesSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="pcbNotesContentTitle">Notes</h2>
+        <span class="header-sub" id="pcbNotesContentSub">Unit notes</span>
+      </div>
+    </header>
+    <div id="pcbNotesTopicBar" class="notes-topic-bar"></div>
+    <main class="notes-main" id="pcbNotesMain">
+      <div id="pcbNotesPlaceholder" class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>Loading…</h3>
+        <p>Please wait</p>
+      </div>
+    </main>
+  </div>
+
   <!-- ===== NOTES: SUBJECT LIST ===== -->
   <div id="notesSubjectsScreen" class="screen">
     <header class="app-header">
@@ -502,6 +535,7 @@
   <script type="module" src="js/exams.js"></script>
   <script type="module" src="js/notes.js"></script>
   <script type="module" src="js/gs-notes.js"></script>
+  <script type="module" src="js/pcb-notes.js"></script>
   <script type="module" src="js/app.js"></script>
 
   <script>
