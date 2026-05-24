@@ -402,7 +402,7 @@ table code {
 <!-- TAB 1: FUNDAMENTALS -->
 <div id="fundamentals" class="tab-content active">
 
-<div class="section-header">Fluid Properties & Hydrostatics</div>
+        <h2>SECTION 1: FLUID PROPERTIES & HYDROSTATICS</h2>
 
 <div class="box definition">
   <strong>Fluid:</strong> Substance that continuously deforms under shear stress; includes liquids and gases
@@ -1205,7 +1205,7 @@ Hydraulic jump is visually striking and frequently tested. Recognize it in diagr
 <!-- TAB 6: QUICK REFERENCE -->
 <div id="quick" class="tab-content">
 
-<div class="section-header" style="background: linear-gradient(135deg, #1a237e 0%, #283593 100%);">⚡ Must-Memorise Constants & Formulas</div>
+        <h2>SECTION 2: MUST-MEMORISE CONSTANTS & FORMULAS</h2>
 
 <table>
   <thead>
@@ -1284,7 +1284,7 @@ Hydraulic jump is visually striking and frequently tested. Recognize it in diagr
   </tbody>
 </table>
 
-<div class="section-header" style="background: linear-gradient(135deg, #e65100 0%, #bf360c 100%);">🔧 Quick Design Checklist</div>
+        <h2>SECTION 3: QUICK DESIGN CHECKLIST</h2>
 
 <ul class="bullet-list">
   <li><strong>Pipe Design:</strong> Check Re (laminar/turbulent) → find f (Moody chart or correlation) → calculate hf (Darcy) → add minor losses → total head loss</li>
@@ -1294,7 +1294,7 @@ Hydraulic jump is visually striking and frequently tested. Recognize it in diagr
   <li><strong>Water Hammer:</strong> Rapid valve closure → pressure surge → install relief valve or surge tank if needed</li>
 </ul>
 
-<div class="section-header" style="background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);">📋 Exam Strategies for Unit 11</div>
+        <h2>SECTION 4: EXAM STRATEGIES</h2>
 
 <ol class="bullet-list" style="list-style: decimal;">
   <li><strong>Formulas to Drill:</strong> Reynolds, Continuity, Darcy-Weisbach, Manning, Froude, Pump Power. Know derivations + numerical patterns.</li>
@@ -1316,44 +1316,6 @@ Hydraulic jump is visually striking and frequently tested. Recognize it in diagr
 ❌ Forgetting + signs in continuity for networks (inflow = outflow at junctions)
 </div>
 
-<div class="section-header" style="background: linear-gradient(135deg, #00838f 0%, #00695c 100%);">💡 High-Yield Numerical Patterns</div>
-
-<ul class="bullet-list">
-  <li><strong>Type 1 — Darcy Loss:</strong> Given L, D, V, f → find hf. Vary one parameter, predict loss change (hf ∝ L/D × V²).</li>
-  <li><strong>Type 2 — Pump Affinity:</strong> Speed change N₁ → N₂ → find new Q, H, P using (N₂/N₁) ratios.</li>
-  <li><strong>Type 3 — Manning Flow:</strong> Given Q, n, slope, geometry → find depth D iteratively (or vice versa).</li>
-  <li><strong>Type 4 — Froude & Jump:</strong> Calculate F; if &gt; 1 (supercritical) and transitions abruptly, hydraulic jump forms.</li>
-  <li><strong>Type 5 — NPSH:</strong> Atmospheric pressure − vapor pressure − suction losses = NPSH_a; compare with NPSH_r.</li>
-</ul>
-
-</div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  ✅ Revision notes compiled for UPPCB AEE 2026 | Unit 11: Fluid Mechanics & Hydraulics<br>
-  📚 Source: Civil Engineering Fluid Mechanics texts, ASCE, CPCB water supply/sewerage codes | Last updated: April 2026
-</div>
-
-</body>
-
-<script>
-function showTab(tabName) {
-  // Hide all tabs
-  const tabs = document.querySelectorAll('.tab-content');
-  tabs.forEach(tab => tab.classList.remove('active'));
-  
-  // Hide all buttons (remove active state)
-  const buttons = document.querySelectorAll('.tab-btn');
-  buttons.forEach(btn => btn.classList.remove('active'));
-  
-  // Show selected tab
-  document.getElementById(tabName).classList.add('active');
-  
-  // Highlight selected button
-  event.target.classList.add('active');
-}
-</script>
-
+    </div>
+  </body>
 </html>

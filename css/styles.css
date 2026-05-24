@@ -911,3 +911,8 @@ body {
   max-width: 100% !important;
 }
 .pcb-notes-content .subtitle { display: none; }
+
+/* Unit 7 & 11: section-header divs as scroll targets */
+.pcb-notes-content div.section-header {
+  scroll-margin-top: 120px;
+}
