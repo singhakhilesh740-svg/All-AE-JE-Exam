@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPPCB AEE Unit 4 - Solid Waste & Hazardous Waste Management</title>
+    <title>UPPCB AEE Unit 3 - Air Pollution & Control Technology</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #212121; background: #f5f5f5; padding: 20px; }
@@ -33,603 +33,760 @@
 </head>
 <body>
     <div class="container">
-        <h1>UNIT 4: SOLID WASTE &amp; HAZARDOUS WASTE MANAGEMENT</h1>
-        <div class="subtitle">UPPCB AEE 2026 | 8-10 Questions | 32-40 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
+        <h1>UNIT 3: AIR POLLUTION &amp; CONTROL TECHNOLOGY</h1>
+        <div class="subtitle">UPPCB AEE 2026 | 10-13 Questions | 40-52 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
 
-        <h2>SECTION 1: MUNICIPAL SOLID WASTE (MSW)</h2>
+        <h2>SECTION 1: FUNDAMENTALS OF AIR POLLUTION</h2>
         <div class="section-intro">
-            Definition, sources, composition, characterisation, and SWM Rules 2016. Foundation for all SWM-related questions.
+            Structure of atmosphere, classification of pollutants, sources, and criteria pollutants. Conceptual base for dispersion, control, and standards.
         </div>
 
-        <h3>1.1 DEFINITION &amp; SOURCES</h3>
+        <h3>1.1 STRUCTURE OF ATMOSPHERE</h3>
         <div class="content">
-            <strong>MSW (per SWM Rules 2016):</strong> solid or semi-solid domestic, sanitary, commercial, institutional, catering and market waste — and other non-residential waste; street sweepings, silt removed/collected from surface drains, horticulture waste, agriculture &amp; dairy waste; <strong>excludes</strong> industrial hazardous waste, biomedical waste, e-waste, lead-acid batteries, radioactive waste.
+            <strong>Layers (bottom to top):</strong>
+            <ul>
+                <li><strong>Troposphere</strong> (0–12 km): T <span class="key-point">decreases</span> with altitude (DALR ≈ 6.5°C/km); ~75% of atmospheric mass; weather phenomena; air pollution mostly here</li>
+                <li><strong>Stratosphere</strong> (12–50 km): T <span class="key-point">increases</span> with altitude (UV absorption by O₃); contains ozone layer (peak 20–25 km); stable, no vertical mixing</li>
+                <li><strong>Mesosphere</strong> (50–85 km): T decreases; coldest layer (~ −90°C at mesopause)</li>
+                <li><strong>Thermosphere</strong> (85–600 km): T rises sharply; ionosphere; auroras</li>
+                <li><strong>Exosphere</strong> (&gt; 600 km): merges with outer space</li>
+            </ul>
+            <strong>Dry air composition (by volume):</strong> N₂ = 78.09%, O₂ = 20.95%, Ar = 0.93%, CO₂ ≈ 0.042% (420 ppm, 2024), trace Ne, He, CH₄, Kr, H₂, N₂O, Xe, O₃.
         </div>
         <div class="standard">
-            <strong>India MSW generation (CPCB 2023):</strong>
-            <ul>
-                <li>Total: ~1,70,000 TPD (~62 MT/year)</li>
-                <li>Per capita: 200–600 g/day (urban); 100–200 (rural)</li>
-                <li>Collection efficiency: ~95%; Processed: ~50%; Landfilled: ~22%; Unaccounted: ~28%</li>
-                <li>Largest generators: Maharashtra, Tamil Nadu, UP, Karnataka, Delhi</li>
-            </ul>
+            <strong>Ozone layer:</strong> Peak O₃ = 2–8 ppm at 20–25 km; absorbs 97–99% of UV-B/UV-C; "good ozone" in stratosphere vs "bad ozone" (smog) in troposphere.
         </div>
 
-        <h3>1.2 COMPOSITION OF INDIAN MSW</h3>
-        <table>
-            <tr><th>Component</th><th>% by weight (typical)</th><th>Range</th></tr>
-            <tr><td>Organic / biodegradable (food, garden)</td><td>50–55%</td><td>40–60%</td></tr>
-            <tr><td>Paper &amp; cardboard</td><td>5–10%</td><td>3–15%</td></tr>
-            <tr><td>Plastic</td><td>8–12%</td><td>5–15%</td></tr>
-            <tr><td>Glass</td><td>1–3%</td><td>0.5–4%</td></tr>
-            <tr><td>Metals (ferrous + non-ferrous)</td><td>1–2%</td><td>0.5–3%</td></tr>
-            <tr><td>Textiles, rubber, leather</td><td>2–5%</td><td>1–7%</td></tr>
-            <tr><td>Inerts (sand, silt, grit, C&amp;D)</td><td>15–25%</td><td>10–35%</td></tr>
-            <tr><td>Moisture content</td><td>40–60%</td><td>30–65%</td></tr>
-        </table>
+        <h3>1.2 CLASSIFICATION OF POLLUTANTS</h3>
+        <div class="content">
+            <strong>By origin:</strong>
+            <ul>
+                <li><strong>Primary:</strong> emitted directly — SO₂, NOₓ (as NO), CO, PM, VOCs, Pb, NH₃</li>
+                <li><strong>Secondary:</strong> formed in atmosphere — O₃ (ground-level), PAN, H₂SO₄/HNO₃, sulphate &amp; nitrate aerosols, formaldehyde</li>
+            </ul>
+            <strong>By state:</strong> Gaseous (SO₂, NOₓ, CO, CO₂, O₃, VOCs, H₂S); Particulate (dust, fumes, mist, smoke, fly ash, smog).
+        </div>
         <div class="highlight">
-            <strong>Key observation:</strong> Indian MSW has high organic + high moisture + high inerts → <span class="key-point">low calorific value</span> (800–1500 kcal/kg) → makes mass-burn incineration difficult; favours composting + RDF + biomethanation.
+            <strong>Criteria pollutants — India NAAQS 2009 lists 12:</strong><br/>
+            PM₁₀, PM₂.₅, SO₂, NO₂, O₃, CO, Pb, NH₃, Benzene, BaP, As, Ni.<br/>
+            (USEPA list = 6: PM, O₃, SO₂, NO₂, CO, Pb)
         </div>
 
-        <h3>1.3 CHARACTERISATION</h3>
+        <h3>1.3 PARTICULATE MATTER CLASSIFICATION</h3>
         <div class="content">
-            <strong>Physical properties:</strong>
             <ul>
-                <li><strong>Density:</strong> Loose 100–200 kg/m³; in compactor truck 350–500; in landfill (compacted) 600–900 kg/m³</li>
-                <li><strong>Moisture content:</strong> M = (W<sub>wet</sub> − W<sub>dry</sub>)/W<sub>wet</sub> × 100%; affects calorific value &amp; biological treatment</li>
-                <li><strong>Particle size distribution:</strong> for shredding, screening</li>
-            </ul>
-            <strong>Chemical properties:</strong>
-            <ul>
-                <li><strong>Proximate analysis:</strong> moisture, volatile combustible matter, fixed carbon, ash</li>
-                <li><strong>Ultimate analysis:</strong> C, H, O, N, S, ash (used to compute calorific value, theoretical air for combustion)</li>
-                <li><strong>Calorific value:</strong> bomb calorimeter (HHV vs LHV)</li>
-                <li><strong>C:N ratio:</strong> &lt; 25 = inadequate C; &gt; 35 = N-deficient (slow composting); optimum <strong>25–30:1</strong></li>
+                <li><strong>Dust:</strong> solid, 1–200 µm; from mechanical disintegration (crushing, grinding)</li>
+                <li><strong>Fumes:</strong> solid, 0.03–0.3 µm; from condensation of vapours (metallurgy)</li>
+                <li><strong>Mist:</strong> liquid &lt; 10 µm; condensation/atomization</li>
+                <li><strong>Smoke:</strong> 0.01–1 µm; incomplete combustion of carbonaceous fuels</li>
+                <li><strong>Fog:</strong> liquid &gt; 10 µm; visibility &lt; 1 km</li>
+                <li><strong>Aerosol:</strong> general term — solid/liquid suspension in gas</li>
             </ul>
         </div>
-        <div class="formula">
-            <strong>Modified Dulong's formula (HHV):</strong><br/>
-            HHV (kJ/kg) = 337C + 1419(H − O/8) + 93S + 23N<br/>
-            (C, H, O, S, N in % by mass, dry basis)<br/><br/>
-            <strong>Tchobanoglous LHV (kJ/kg):</strong><br/>
-            LHV = HHV − 24.42 × (9H + W)  where W = moisture %
-        </div>
-
-        <h3>1.4 SWM RULES 2016 — KEY PROVISIONS</h3>
         <div class="standard">
-            <strong>SWM Rules 2016 (notified by MoEFCC, 8 April 2016):</strong>
+            <strong>Size-based PM:</strong><br/>
+            <strong>TSP</strong> &lt; 100 µm; <strong>PM₁₀</strong> ≤ 10 µm (inhalable, upper airway); <strong>PM₂.₅</strong> ≤ 2.5 µm (respirable, alveoli); <strong>PM₁</strong> ≤ 1 µm (ultrafine, can enter bloodstream)
+        </div>
+
+        <h3>1.4 SOURCES OF POLLUTION</h3>
+        <div class="content">
             <ul>
-                <li><strong>Source segregation mandatory:</strong> 3 streams</li>
-                <li>&nbsp;&nbsp;• <span style="color: green;"><strong>Green bin</strong></span> = wet/biodegradable</li>
-                <li>&nbsp;&nbsp;• <span style="color: blue;"><strong>Blue bin</strong></span> = dry/recyclable</li>
-                <li>&nbsp;&nbsp;• <span style="color: black;"><strong>Black bin</strong></span> = domestic hazardous (sanitary, expired meds)</li>
-                <li><strong>Generator responsibility:</strong> segregation at source, user fee, no littering</li>
-                <li><strong>Bulk generators (&gt; 100 kg/day OR housing &gt; 5000 m²):</strong> on-site composting/biomethanation</li>
-                <li><strong>Local body responsibility:</strong> door-to-door collection, transport, processing, scientific landfill</li>
-                <li><strong>Waste-to-Energy (WtE):</strong> non-recyclable high CV (&gt; 1500 kcal/kg) waste shall be used as RDF or for power generation</li>
-                <li><strong>Landfilling:</strong> only inert &amp; pre-treated rejects (residual after processing); &lt; 20% of total waste</li>
-                <li><strong>Buffer zone for landfills:</strong> 100 m from habitation; not within 200 m of water bodies, 200 m of HFL, 20 km from airport (or 10 km with DGCA NOC)</li>
-                <li><strong>Disposal of legacy waste:</strong> bio-mining within 5 years</li>
+                <li><strong>Point source:</strong> identifiable, localised (thermal stack, refinery vent)</li>
+                <li><strong>Line source:</strong> linear (highways, railways)</li>
+                <li><strong>Area source:</strong> spread (residential colony, landfill, brick kiln cluster)</li>
+                <li><strong>Mobile source:</strong> vehicles, aircraft, ships</li>
+                <li><strong>Fugitive emissions:</strong> unintentional leaks (valves, flanges, tanks)</li>
+            </ul>
+            <strong>Emission factor (EF):</strong> mass of pollutant / unit activity (e.g., kg SO₂ per t coal). Used when stack data is absent. USEPA <strong>AP-42</strong> is the standard reference.
+        </div>
+
+        <div class="gate-add">
+            <strong>GATE ADD — Atmospheric sinks &amp; residence times:</strong>
+            <ul>
+                <li><strong>Wet deposition:</strong> rainout (within cloud) + washout (below cloud)</li>
+                <li><strong>Dry deposition:</strong> gravitational settling + surface impaction</li>
+                <li><strong>Chemical transformation:</strong> OH• oxidation, photolysis</li>
+            </ul>
+            Residence times: SO₂ ≈ 2–4 d; NOₓ ≈ 1 d; CH₄ ≈ 12 yr; N₂O ≈ 114 yr; CO₂ ≈ 100–1000 yr; CFCs 50–100 yr.
+        </div>
+
+        <h3>1.5 INDOOR AIR POLLUTION <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="content">
+            <ul>
+                <li><strong>Sources:</strong> biomass burning (chulha), tobacco smoke, paints/solvents (VOCs), plywood (HCHO), soil (Rn-222), asbestos, mould</li>
+                <li><strong>Key pollutants:</strong> PM₂.₅, CO, NO₂, formaldehyde, radon, VOCs</li>
+                <li><strong>Sick Building Syndrome (SBS):</strong> headache, irritation, fatigue — poor ventilation, low humidity, VOCs</li>
+                <li>WHO: household air pollution causes ~3.2 million premature deaths/year globally</li>
+                <li><strong>PMUY (Ujjwala):</strong> Indian scheme providing LPG to reduce indoor biomass burning</li>
             </ul>
         </div>
 
-        <h3>1.5 3R HIERARCHY &amp; INTEGRATED SWM <span style="color:#673ab7;">(GATE ADD)</span></h3>
-        <div class="content">
-            <strong>Waste hierarchy (most preferred to least):</strong>
-            <ol>
-                <li><strong>Prevention</strong> (avoid generation)</li>
-                <li><strong>Minimisation</strong> (reduce at source)</li>
-                <li><strong>Reuse</strong> (without reprocessing)</li>
-                <li><strong>Recycling</strong> (process into new product)</li>
-                <li><strong>Recovery</strong> (energy / composting / biogas)</li>
-                <li><strong>Disposal</strong> (sanitary landfill — last resort)</li>
-            </ol>
-            <strong>3R = Reduce, Reuse, Recycle</strong> (extended: 5R = + Recover, Refuse / Rot).
-        </div>
-
-        <h2>SECTION 2: COLLECTION &amp; TRANSPORT</h2>
-
-        <h3>2.1 COLLECTION SYSTEMS</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Door-to-door:</strong> primary; tricycle / pushcart / mini-truck; coverage indicator under SBM</li>
-                <li><strong>Community bin (DCC — Direct Container Collection):</strong> drum/skip system; older, less hygienic</li>
-                <li><strong>Vacuum / pneumatic collection:</strong> underground pipes (Stockholm, parts of Singapore)</li>
-            </ul>
-            <strong>Transport vehicles:</strong> Hopper tipper (1.5–7 t), compactor truck (4:1 to 6:1 compaction), refuse collector (RC) trucks.<br/>
-            <strong>Transfer station:</strong> small primary vehicles → large secondary vehicles (long-haul to landfill); economical when haul distance &gt; 20 km.
-        </div>
-
-        <h3>2.2 ROUTE OPTIMISATION</h3>
-        <div class="content">
-            <strong>Heuristic rules (McGhee):</strong>
-            <ul>
-                <li>Routes should not fragment or overlap</li>
-                <li>Start route at top of hill (loaded truck downhill)</li>
-                <li>Heavily travelled streets serviced in early morning</li>
-                <li>For one-way streets, start at upper end</li>
-                <li>U-turns and dead-end streets minimised</li>
-            </ul>
-        </div>
-
-        <h2>SECTION 3: TREATMENT &amp; DISPOSAL</h2>
+        <h2>SECTION 2: SPECIFIC POLLUTANTS &amp; HEALTH EFFECTS</h2>
         <div class="section-intro">
-            Heart of SWM — composting, anaerobic digestion, RDF, incineration, sanitary landfill. Multiple Qs from this section.
+            Properties, sources, chemistry and health/environment impacts of each criteria pollutant. High-frequency MCQ area (3–4 Qs).
         </div>
 
-        <h3>3.1 COMPOSTING</h3>
+        <h3>2.1 PARTICULATE MATTER (PM)</h3>
         <div class="content">
-            <strong>Definition:</strong> aerobic biological decomposition of organic waste under controlled conditions to produce a stable, humus-like product (compost).
+            <strong>Sources:</strong> coal/diesel/biomass combustion, road dust, construction, cement &amp; steel, secondary aerosols (sulphate, nitrate, organic).<br/>
+            <strong>Health:</strong>
+            <ul>
+                <li>PM₁₀ → upper airway: bronchitis, cough</li>
+                <li>PM₂.₅ → alveoli → bloodstream; IARC <span class="key-point">Group 1 carcinogen</span>; lung cancer, CVD, stroke, premature mortality</li>
+                <li>AQLI 2023: long-term PM₂.₅ reduces life expectancy — India ~5.3 yr; Delhi ~11.9 yr</li>
+            </ul>
+            <strong>Environmental:</strong> reduced visibility (Rayleigh &amp; Mie scattering), building soiling, global dimming, cloud nucleation.
+        </div>
+
+        <h3>2.2 SULPHUR DIOXIDE (SO₂)</h3>
+        <div class="content">
+            <strong>Sources:</strong> coal/oil combustion (thermal power, refineries), Cu/Zn/Pb smelting, H₂SO₄ plants, volcanoes.
         </div>
         <div class="formula">
-            <strong>Generic reaction:</strong><br/>
-            Organic + O₂ + microbes → CO₂ + H₂O + Heat + Compost (humus) + new microbial cells
+            SO₂ + OH• → HSO₃•<br/>
+            HSO₃• + O₂ → HO₂• + SO₃<br/>
+            SO₃ + H₂O → H₂SO₄ (acid rain)<br/>
+            Residence time ≈ 2–4 days
         </div>
-        <div class="standard">
-            <strong>Optimal conditions:</strong>
+        <div class="content">
+            <strong>Health:</strong> bronchoconstriction, asthma, eye/throat irritation. Olfactory threshold ≈ 0.5 ppm.<br/>
+            <strong>Environmental:</strong> acid rain (pH &lt; 5.6); Taj Mahal damage → <span class="key-point">Taj Trapezium Zone</span> (10,400 km², SC 1996 order); vegetation injury &gt; 0.3 ppm.
+        </div>
+
+        <h3>2.3 OXIDES OF NITROGEN (NOₓ)</h3>
+        <div class="content">
+            NOₓ = NO + NO₂. NO is primary emission; NO₂ formed by oxidation.<br/>
+            <strong>Formation mechanisms:</strong>
             <ul>
-                <li><strong>C:N ratio:</strong> 25–30:1 (initial); final compost ~10–15:1</li>
-                <li><strong>Moisture:</strong> 50–60% (squeeze test: should hold shape but not drip)</li>
-                <li><strong>Temperature stages:</strong> Mesophilic (20–45°C, 1–2 days) → <strong>Thermophilic (45–70°C, 1–2 weeks; pathogen kill)</strong> → Cooling (40–25°C) → Maturation (ambient, weeks)</li>
-                <li><strong>pH:</strong> initial 5.5–6.5 (acidic); rises to 8.0–8.5 (alkaline) at maturity</li>
-                <li><strong>Particle size:</strong> 25–75 mm</li>
-                <li><strong>O₂:</strong> &gt; 5–10% in pile (turn / aerate)</li>
-                <li><strong>Pathogen kill:</strong> 55°C × 3 days OR 60°C × 1 day (US EPA Class A biosolids)</li>
+                <li><strong>Thermal NOₓ (Zeldovich):</strong> N₂ + O₂ → 2NO at &gt; 1500°C (dominant in combustion)</li>
+                <li><strong>Fuel NOₓ:</strong> N bound in fuel (coal) oxidises</li>
+                <li><strong>Prompt NOₓ (Fenimore):</strong> rapid, in flame front via HCN intermediate</li>
+            </ul>
+            <strong>Sources:</strong> vehicles (~40% urban), thermal power, industrial boilers, lightning.<br/>
+            <strong>Health:</strong> NO₂ ~4× more toxic than NO; pulmonary oedema at high conc; chronic bronchitis.<br/>
+            <strong>Environmental:</strong> HNO₃ (acid rain), precursor to tropospheric O₃ &amp; PAN, brown haze.
+        </div>
+
+        <h3>2.4 CARBON MONOXIDE (CO)</h3>
+        <div class="content">
+            <strong>Sources:</strong> incomplete combustion — vehicles (50–60%), biomass burning, tobacco smoke. Highest during cold starts.
+        </div>
+        <div class="formula">
+            Hb + CO → COHb (carboxyhaemoglobin)<br/>
+            Hb affinity for CO is <strong>~240× that for O₂</strong><br/>
+            Effect: hypoxia (tissue O₂ starvation)
+        </div>
+        <div class="content">
+            <strong>Health by COHb%:</strong>
+            <ul>
+                <li>2–5%: impaired judgment, reduced exercise capacity (smokers)</li>
+                <li>10–20%: headache, fatigue, dizziness</li>
+                <li>30–50%: nausea, confusion, loss of consciousness</li>
+                <li>&gt; 60%: death</li>
+            </ul>
+            <strong>Environmental:</strong> not a direct GHG but oxidises to CO₂ and depletes OH• radical (indirect warming).
+        </div>
+
+        <h3>2.5 VOCs &amp; HYDROCARBONS</h3>
+        <div class="content">
+            <strong>Definition (CPCB):</strong> organics with vapour pressure &gt; 0.01 kPa at 20°C or boiling point ≤ 250°C.<br/>
+            <strong>Key VOCs:</strong>
+            <ul>
+                <li><strong>Benzene (C₆H₆):</strong> IARC Group 1; causes leukaemia (AML); NAAQS annual = 5 µg/m³</li>
+                <li><strong>Formaldehyde (HCHO):</strong> irritant, carcinogen, from plywood/paints</li>
+                <li><strong>1,3-Butadiene:</strong> carcinogen, from vehicles &amp; tyre industry</li>
+                <li><strong>PAHs:</strong> 16 priority PAHs (USEPA); Benzo[a]pyrene — IARC Group 1</li>
+            </ul>
+            <strong>Role in smog:</strong> VOCs + NOₓ + sunlight → O₃ + PAN.
+        </div>
+
+        <h3>2.6 LEAD (Pb)</h3>
+        <div class="content">
+            <ul>
+                <li>Historical source: tetraethyl lead in petrol; India phased out <strong>April 2000</strong></li>
+                <li>Current: Pb-acid battery manufacture/recycling, smelting, paints</li>
+                <li>Health: affects CNS in children (reduced IQ), anaemia (inhibits haem synthesis), kidney damage</li>
+                <li>Bioaccumulates in bone (half-life 20–30 yr)</li>
+                <li>WHO BLL of concern: &gt; 5 µg/dL</li>
+                <li>NAAQS: 0.5 µg/m³ (annual)</li>
             </ul>
         </div>
 
-        <h3>3.2 TYPES OF COMPOSTING</h3>
+        <h3>2.7 GHGs &amp; GLOBAL WARMING POTENTIAL (GWP, 100-yr, IPCC AR6)</h3>
         <table>
-            <tr><th>Method</th><th>Description</th><th>Time</th><th>Use</th></tr>
-            <tr><td><strong>Windrow (open)</strong></td><td>Long piles 1.5–2 m H × 3–4 m W; turned periodically</td><td>4–8 weeks</td><td>Large MSW plants</td></tr>
-            <tr><td><strong>Aerated Static Pile (ASP)</strong></td><td>Pile on perforated pipes; forced air; no turning</td><td>3–6 weeks</td><td>Medium scale</td></tr>
-            <tr><td><strong>In-vessel</strong></td><td>Enclosed reactor; controlled T, O₂; tunnel/drum/silo</td><td>1–3 weeks</td><td>High-volume, odour-free</td></tr>
-            <tr><td><strong>Vermicomposting</strong></td><td>Earthworms (<em>Eisenia fetida, E. eugeniae</em>) digest organic waste</td><td>6–12 weeks</td><td>Decentralised; high quality</td></tr>
-            <tr><td><strong>Bangalore method</strong></td><td>Pit composting; anaerobic-facultative; alternate layers waste &amp; soil</td><td>4–6 months</td><td>Rural India, traditional</td></tr>
-            <tr><td><strong>Indore method</strong></td><td>Above-ground heap; turning at 4 weeks &amp; 8 weeks</td><td>3–4 months</td><td>Rural India (Howard, 1925)</td></tr>
+            <tr><th>Gas</th><th>Formula</th><th>GWP (100 yr)</th><th>Lifetime</th><th>Main source</th></tr>
+            <tr><td>Carbon dioxide</td><td>CO₂</td><td>1 (ref)</td><td>~100–1000 yr</td><td>Fossil fuel combustion</td></tr>
+            <tr><td>Methane</td><td>CH₄</td><td>~28</td><td>~12 yr</td><td>Paddy, livestock, landfill, NG leaks</td></tr>
+            <tr><td>Nitrous oxide</td><td>N₂O</td><td>~273</td><td>~114 yr</td><td>Fertilizers, combustion</td></tr>
+            <tr><td>HFC-134a</td><td>CH₂FCF₃</td><td>~1530</td><td>~14 yr</td><td>Refrigerants</td></tr>
+            <tr><td>SF₆</td><td>SF₆</td><td>~25200</td><td>~3200 yr</td><td>Electrical insulation</td></tr>
+            <tr><td>CFC-12</td><td>CCl₂F₂</td><td>~10200</td><td>~100 yr</td><td>Old refrigerants (banned)</td></tr>
         </table>
 
-        <h3>3.3 ANAEROBIC DIGESTION (BIOMETHANATION) OF MSW</h3>
+        <h3>2.8 ACID RAIN</h3>
         <div class="content">
+            <strong>Definition:</strong> pH &lt; 5.6 (pure rain ≈ 5.6 due to dissolved CO₂ → H₂CO₃).
+        </div>
+        <div class="formula">
+            2SO₂ + O₂ → 2SO₃;  SO₃ + H₂O → H₂SO₄<br/>
+            4NO₂ + O₂ + 2H₂O → 4HNO₃<br/>
+            ~65–70% acidity from H₂SO₄; ~30–35% from HNO₃
+        </div>
+        <div class="content">
+            <strong>Effects:</strong>
             <ul>
-                <li>Organic fraction → biogas (CH₄ 50–65%, CO₂ 30–40%) under anaerobic conditions</li>
-                <li>4 stages: hydrolysis → acidogenesis → acetogenesis → methanogenesis</li>
-                <li>Mesophilic (35°C) or thermophilic (55°C) reactors</li>
-                <li>HRT: 15–30 days (mesophilic); 10–20 days (thermophilic)</li>
-                <li><strong>Biogas yield:</strong> 100–150 m³/t MSW; ~600 kWh/t electricity</li>
-                <li>Indian examples: Pune, Indore, Mahindra World City, Mumbai</li>
+                <li>Aquatic: fish kills at pH &lt; 5; release of toxic Al³⁺ from soils into lakes</li>
+                <li>Soil: leaching of Ca²⁺, Mg²⁺, K⁺; mobilisation of Al, Hg</li>
+                <li>Forests: Waldsterben (forest dieback) — Germany; needle damage</li>
+                <li>Buildings: marble/limestone corrosion — Taj Mahal, Parliament House</li>
+                <li>Reaction: CaCO₃ + H₂SO₄ → CaSO₄ + CO₂ + H₂O</li>
             </ul>
         </div>
 
-        <h3>3.4 INCINERATION</h3>
-        <div class="content">
-            <strong>Definition:</strong> controlled combustion of waste at high temperature (850–1200°C) with excess air. Reduces volume by 80–90%, mass by 70–75%.
+        <h3>2.9 PHOTOCHEMICAL SMOG</h3>
+        <table>
+            <tr><th>Feature</th><th>London (classical) smog</th><th>Los Angeles (photochemical) smog</th></tr>
+            <tr><td>Main pollutants</td><td>SO₂ + PM + fog</td><td>NOₓ + VOCs + O₃ + PAN</td></tr>
+            <tr><td>Nature</td><td>Reducing</td><td>Oxidising</td></tr>
+            <tr><td>Occurs</td><td>Cold, damp mornings (winter)</td><td>Hot, sunny afternoons (summer)</td></tr>
+            <tr><td>Temperature</td><td>Low (&lt; 4°C)</td><td>High (&gt; 24°C)</td></tr>
+            <tr><td>Visibility</td><td>Very low</td><td>Low-moderate, brownish</td></tr>
+            <tr><td>Health</td><td>Bronchitis, heart disease</td><td>Eye irritation, asthma</td></tr>
+            <tr><td>Famous event</td><td>London 1952 (~12000 deaths)</td><td>LA 1940s onwards</td></tr>
+        </table>
+        <div class="formula">
+            <strong>Photochemical smog chemistry:</strong><br/>
+            (1) NO₂ + hν (λ &lt; 430 nm) → NO + O•<br/>
+            (2) O• + O₂ + M → O₃ + M<br/>
+            (3) O₃ + NO → NO₂ + O₂ (recycles)<br/>
+            (4) RH + OH• → R• → RO₂• → RO• → aldehydes + PAN (CH₃COO-O-NO₂)<br/>
+            <em>PAN is a powerful eye irritant and plant toxin.</em>
+        </div>
+
+        <div class="gate-add">
+            <strong>GATE ADD — Stratospheric ozone depletion (Rowland-Molina):</strong>
+            <div class="formula">
+                CFCl₃ + hν (UV) → CFCl₂• + Cl•<br/>
+                Cl• + O₃ → ClO• + O₂<br/>
+                ClO• + O• → Cl• + O₂   [Cl• regenerated — chain reaction]<br/>
+                Net: O₃ + O• → 2O₂; 1 Cl destroys ~100,000 O₃ molecules
+            </div>
+            <strong>ODP:</strong> CFC-11 = 1.0 (ref); CFC-12 = 1.0; Halon-1301 ≈ 10; HCFCs = 0.02–0.11; HFCs = 0.<br/>
+            <strong>Montreal Protocol (1987):</strong> phase-out CFCs, halons. <strong>Kigali Amendment (2016):</strong> adds HFCs (high GWP).
+        </div>
+
+        <h2>SECTION 3: METEOROLOGY &amp; DISPERSION</h2>
+        <div class="section-intro">
+            Core numerical area. Gaussian plume, plume rise, stability classes. Expect 1–2 calculation Qs.
+        </div>
+
+        <h3>3.1 LAPSE RATES &amp; STABILITY</h3>
+        <div class="formula">
+            <strong>Dry Adiabatic Lapse Rate (DALR):</strong><br/>
+            Γ<sub>d</sub> = g/c<sub>p</sub> = 9.81 / 1005 ≈ <strong>9.8 °C/km ≈ 1°C / 100 m</strong><br/>
+            (rate at which dry air parcel cools as it rises with no heat exchange)<br/><br/>
+            <strong>Environmental Lapse Rate (ELR):</strong> actual measured profile; ISA avg ≈ 6.5 °C/km<br/>
+            <strong>Saturated ALR:</strong> ~5–6 °C/km (latent heat released during condensation)
         </div>
         <div class="standard">
+            <strong>Stability criteria:</strong>
+            <ul>
+                <li><strong>Super-adiabatic</strong> (ELR &gt; DALR): <span class="key-point">UNSTABLE</span> — strong vertical mixing, good dispersion</li>
+                <li><strong>Adiabatic/neutral</strong> (ELR = DALR): NEUTRAL</li>
+                <li><strong>Sub-adiabatic</strong> (ELR &lt; DALR): STABLE — restricted mixing</li>
+                <li><strong>Isothermal</strong> (dT/dz = 0): very stable</li>
+                <li><strong>Inversion</strong> (dT/dz &gt; 0, T rises with height): <span class="key-point">extremely stable</span> — traps pollutants</li>
+            </ul>
+        </div>
+
+        <h3>3.2 PLUME BEHAVIOUR</h3>
+        <table>
+            <tr><th>Plume shape</th><th>Condition</th><th>Stability</th><th>Dispersion</th></tr>
+            <tr><td><strong>Looping</strong></td><td>Super-adiabatic (strong sun)</td><td>Unstable</td><td>Erratic; possible high ground conc.</td></tr>
+            <tr><td><strong>Coning</strong></td><td>Neutral / slightly stable</td><td>Neutral</td><td>Normal Gaussian spread</td></tr>
+            <tr><td><strong>Fanning</strong></td><td>Inversion above &amp; below</td><td>Very stable</td><td>Horizontal only; no vertical mixing</td></tr>
+            <tr><td><strong>Fumigation</strong></td><td>Inversion above, unstable below</td><td>Mixed</td><td>Worst case — high ground conc.</td></tr>
+            <tr><td><strong>Lofting</strong></td><td>Inversion below, unstable above</td><td>Mixed</td><td>Favourable — plume rises, not down</td></tr>
+            <tr><td><strong>Trapping</strong></td><td>Inversions above &amp; below</td><td>Very stable</td><td>Plume confined; very poor dispersion</td></tr>
+        </table>
+
+        <h3>3.3 PASQUILL STABILITY CLASSES</h3>
+        <div class="content">
+            Six classes based on surface wind, daytime insolation, night cloud cover:
+            <ul>
+                <li><strong>A</strong> — extremely unstable (strong sun, light wind)</li>
+                <li><strong>B</strong> — moderately unstable</li>
+                <li><strong>C</strong> — slightly unstable</li>
+                <li><strong>D</strong> — neutral (cloudy day or night)</li>
+                <li><strong>E</strong> — slightly stable (night)</li>
+                <li><strong>F</strong> — moderately stable (clear night, light wind)</li>
+            </ul>
+            Used to select dispersion coefficients σ<sub>y</sub>, σ<sub>z</sub> in the Gaussian equation.
+        </div>
+
+        <h3>3.4 INVERSIONS &amp; MIXING HEIGHT</h3>
+        <div class="content">
             <strong>Types:</strong>
             <ul>
-                <li><strong>Mass-burn:</strong> unsorted MSW; moving grate; needs CV &gt; 1700 kcal/kg</li>
-                <li><strong>Modular incinerator:</strong> small scale (5–100 t/d); 2-chamber controlled-air</li>
-                <li><strong>Fluidised Bed Combustor (FBC):</strong> sand bed at 800–900°C; uniform combustion; low NOₓ</li>
-                <li><strong>Rotary kiln:</strong> hazardous &amp; biomedical waste; long residence time</li>
+                <li><strong>Radiation inversion:</strong> ground cools rapidly on clear nights (most common; winter mornings in N. India)</li>
+                <li><strong>Subsidence inversion:</strong> sinking air warms adiabatically (high-pressure systems)</li>
+                <li><strong>Frontal inversion:</strong> warm air overrides cold along a front</li>
+                <li><strong>Advection inversion:</strong> warm air moves over cold surface</li>
             </ul>
-            <strong>Key combustion conditions:</strong>
-            <ul>
-                <li>Primary chamber: 850–950°C; residence time 1–2 s</li>
-                <li>Secondary chamber: <strong>≥ 1050°C; residence time ≥ 2 s</strong> (BMW Rules); destroys dioxins/furans</li>
-                <li>Excess air: 50–100%</li>
-                <li>Rapid quenching of flue gas from 850 → 200°C to prevent dioxin re-formation (de novo synthesis at 250–400°C)</li>
-            </ul>
-        </div>
-        <div class="highlight">
-            <strong>Dioxins &amp; furans (PCDD/PCDF):</strong> formed from chlorinated organics + Cu/Fe catalyst at 250–450°C; extremely toxic; <strong>2,3,7,8-TCDD</strong> is most toxic; emission limit: <strong>0.1 ng TEQ/Nm³</strong>.
+            <strong>Mixing height (H<sub>mix</sub>):</strong> height to which pollutants can disperse vertically.<br/>
+            Delhi winter H<sub>mix</sub> ≈ 100–200 m (severe) vs summer ≈ 2000–3000 m — explains winter AQI spikes.
         </div>
 
-        <h3>3.5 REFUSE-DERIVED FUEL (RDF)</h3>
+        <h3>3.5 GAUSSIAN PLUME MODEL</h3>
         <div class="content">
-            <strong>Process:</strong> shredding → screening → magnetic separation → air classifier → drying → pelletisation. Removes inerts, moisture, metals.<br/>
-            <strong>Specifications:</strong> CV 3000–4500 kcal/kg; moisture &lt; 25%; ash &lt; 20%; chlorine &lt; 0.8%.<br/>
-            <strong>Uses:</strong> co-firing in cement kilns (most common in India), dedicated WtE plants, industrial boilers.<br/>
-            <strong>Indian RDF projects:</strong> Delhi (Okhla, Ghazipur, Narela-Bawana), Hyderabad (Jawahar Nagar), Indore.
-        </div>
-
-        <h3>3.6 MATERIALS RECOVERY FACILITY (MRF)</h3>
-        <div class="content">
-            Sorts and separates recyclables: paper, cardboard, plastic (PET, HDPE, PP, LDPE), glass, ferrous (magnetic), non-ferrous (eddy current). Outputs are baled and sold to recyclers. SWM Rules 2016 mandate MRF in every ULB.
-        </div>
-
-        <h3>3.7 SANITARY LANDFILL</h3>
-        <div class="content">
-            <strong>Definition:</strong> engineered facility for disposal of solid waste with environmental safeguards (liner, leachate collection, gas extraction, daily cover, post-closure monitoring).
-        </div>
-        <div class="standard">
-            <strong>Methods:</strong>
-            <ul>
-                <li><strong>Trench method:</strong> excavated trench; suitable for flat terrain with deep groundwater</li>
-                <li><strong>Area method:</strong> waste placed on natural surface; cells built up; for high water table or rocky terrain</li>
-                <li><strong>Ramp method:</strong> hybrid; partial excavation + ramp build-up</li>
-            </ul>
-            <strong>Components (CPCB / SWM Rules 2016):</strong>
-            <ol>
-                <li><strong>Liner system (composite):</strong> bottom up — compacted clay (≥ 90 cm, k ≤ 10⁻⁷ cm/s) + HDPE geomembrane (≥ 1.5 mm) + protective geotextile</li>
-                <li><strong>Leachate collection &amp; removal system (LCRS):</strong> drainage layer (gravel/geonet) + perforated pipes; slope 1–2%</li>
-                <li><strong>Daily cover:</strong> 15 cm soil at end of day (controls vectors, odour, fire)</li>
-                <li><strong>Intermediate cover:</strong> 30 cm soil if cell inactive &gt; 7 days</li>
-                <li><strong>Final cover:</strong> ≥ 60 cm clay + drainage + topsoil + vegetation</li>
-                <li><strong>Gas collection &amp; venting/flare/utilisation:</strong> mandatory if &gt; 1 lakh tonnes</li>
-                <li><strong>Stormwater drainage</strong> &amp; <strong>monitoring wells</strong> (upstream + downstream)</li>
-                <li><strong>Buffer zone:</strong> 100 m from habitation; 200 m from water body</li>
-                <li><strong>Post-closure monitoring:</strong> 15–30 years</li>
-            </ol>
-        </div>
-
-        <h3>3.8 LEACHATE</h3>
-        <div class="content">
-            <strong>Definition:</strong> liquid that percolates through waste, picking up dissolved &amp; suspended contaminants.<br/>
-            <strong>Generation rate:</strong> depends on rainfall, infiltration, waste moisture, cover; typical 10–30% of rainfall.<br/>
-            <strong>Composition (highly variable, age-dependent):</strong>
-        </div>
-        <table>
-            <tr><th>Parameter</th><th>Young (&lt; 2 yr) — acidogenic</th><th>Old (&gt; 10 yr) — methanogenic</th></tr>
-            <tr><td>pH</td><td>4.5–7.5</td><td>7.5–9.0</td></tr>
-            <tr><td>BOD₅ (mg/L)</td><td>4000–40000</td><td>20–550</td></tr>
-            <tr><td>COD (mg/L)</td><td>6000–60000</td><td>500–4500</td></tr>
-            <tr><td>BOD/COD ratio</td><td>0.5–0.8 (biodegradable)</td><td>&lt; 0.1 (refractory)</td></tr>
-            <tr><td>NH₄-N (mg/L)</td><td>500–2000</td><td>100–2000</td></tr>
-            <tr><td>TDS (mg/L)</td><td>10000–30000</td><td>1000–10000</td></tr>
-            <tr><td>Heavy metals</td><td>High (low pH dissolves)</td><td>Low</td></tr>
-        </table>
-        <div class="content">
-            <strong>Leachate treatment options:</strong>
-            <ul>
-                <li><strong>Young leachate</strong> (high BOD): biological — SBR, MBR, UASB</li>
-                <li><strong>Old leachate</strong> (high refractory COD, NH₄): physico-chemical — coagulation, RO, AOPs (Fenton, ozonation)</li>
-                <li><strong>Combined treatment:</strong> co-treatment with municipal STP (limited to 1–5%)</li>
-                <li><strong>CPCB treated leachate discharge limit:</strong> BOD &lt; 100 mg/L; COD &lt; 250 mg/L; TSS &lt; 100 mg/L</li>
-            </ul>
-        </div>
-
-        <h3>3.9 LANDFILL GAS (LFG)</h3>
-        <div class="content">
-            <strong>Composition (mature landfill):</strong> CH₄ 45–60%; CO₂ 40–55%; N₂ 2–5%; trace H₂S, NMOCs.<br/>
-            <strong>5 phases of LFG generation:</strong>
-            <ol>
-                <li>Aerobic (hours to days) — O₂ depleted, CO₂ rises</li>
-                <li>Anaerobic non-methanogenic — H₂, CO₂, organic acids</li>
-                <li>Anaerobic methanogenic unsteady — CH₄ rises, CO₂ falls</li>
-                <li>Anaerobic methanogenic steady — CH₄ ~50%, CO₂ ~50%; lasts 20–30 yr</li>
-                <li>Maturation — gas production declines</li>
-            </ol>
+            Assumes steady state, Gaussian distribution in y (cross-wind) and z (vertical).
         </div>
         <div class="formula">
-            <strong>USEPA LandGEM model (1st-order decay):</strong><br/>
-            Q<sub>CH4</sub> = Σ k·L₀·M<sub>i</sub>·e<sup>−k·t</sup><br/>
-            k = methane generation rate (yr⁻¹); L₀ = methane potential (m³/Mg); M = mass; t = age<br/><br/>
-            <strong>Theoretical LFG yield (Buswell):</strong><br/>
-            Substrate C<sub>n</sub>H<sub>a</sub>O<sub>b</sub> + (n − a/4 − b/2)H₂O → (n/2 + a/8 − b/4)CH₄ + (n/2 − a/8 + b/4)CO₂
+            <strong>General Gaussian equation (continuous point source):</strong><br/>
+            C(x,y,z) = [Q / (2π·σ<sub>y</sub>·σ<sub>z</sub>·u)] × exp[−y²/(2σ<sub>y</sub>²)] × { exp[−(z−H)²/(2σ<sub>z</sub>²)] + exp[−(z+H)²/(2σ<sub>z</sub>²)] }<br/><br/>
+            <strong>Ground-level centreline (y=0, z=0):</strong><br/>
+            C(x,0,0) = [Q / (π·σ<sub>y</sub>·σ<sub>z</sub>·u)] × exp[−H²/(2σ<sub>z</sub>²)]<br/><br/>
+            <strong>Maximum ground-level concentration</strong> (occurs at σ<sub>z</sub> = H/√2):<br/>
+            C<sub>max</sub> = 2Q / (π·e·u·H²) × (σ<sub>y</sub>/σ<sub>z</sub>)<br/><br/>
+            Q = emission rate (g/s); u = wind at stack (m/s); H = effective stack height (m)<br/>
+            σ<sub>y</sub>, σ<sub>z</sub> = dispersion coefficients (m) from Pasquill-Gifford curves
+        </div>
+
+        <h3>3.6 PLUME RISE — HOLLAND'S FORMULA</h3>
+        <div class="formula">
+            Δh = (v<sub>s</sub>·d / u) × [1.5 + 2.68×10⁻³ · P · (T<sub>s</sub> − T<sub>a</sub>)/T<sub>s</sub> · d]<br/><br/>
+            Δh = plume rise (m); v<sub>s</sub> = exit velocity (m/s); d = stack dia (m); u = wind (m/s)<br/>
+            P = atm. pressure (kPa, ≈ 101.3); T<sub>s</sub>, T<sub>a</sub> = stack &amp; ambient T (K)<br/><br/>
+            <strong>Effective stack height:</strong> H = h<sub>s</sub> + Δh
         </div>
         <div class="highlight">
-            <strong>Methane is 28× more potent GHG than CO₂.</strong> Indian large landfills (&gt; 1 lakh t) must collect &amp; flare/utilise LFG (SWM Rules 2016). CDM/CER projects historically big.
+            <strong>Plume rise insight:</strong> Δh ↑ with exit velocity, stack diameter, (T<sub>s</sub>−T<sub>a</sub>); Δh ↓ with wind speed. Holland's formula is <span class="key-point">conservative</span> (underpredicts rise). Briggs' formula more accurate for tall stacks.
         </div>
 
-        <h3>3.10 WASTE-TO-ENERGY (WtE)</h3>
-        <table>
-            <tr><th>Technology</th><th>Feed</th><th>Energy output (per tonne MSW)</th></tr>
-            <tr><td>Mass-burn incineration</td><td>Mixed MSW (CV &gt; 1700)</td><td>500–600 kWh</td></tr>
-            <tr><td>RDF combustion</td><td>Sorted high-CV fraction</td><td>700–800 kWh</td></tr>
-            <tr><td>Anaerobic digestion (biogas)</td><td>Wet organic fraction</td><td>200–400 kWh</td></tr>
-            <tr><td>Pyrolysis / Gasification</td><td>Dried, sorted waste</td><td>500–800 kWh + char</td></tr>
-            <tr><td>Plasma arc</td><td>Mixed (hazardous incl.)</td><td>~300 kWh; vitrified slag</td></tr>
-        </table>
+        <h3>3.7 WIND ROSE DIAGRAM</h3>
         <div class="content">
-            <strong>Tipping fee / gate fee:</strong> charge paid by ULB to WtE operator per tonne of waste delivered (₹500–2500/t in India). Plus power purchase tariff (₹6–7.50/kWh under MNRE).
+            Graphical tool showing frequency of wind <strong>direction</strong> and <strong>speed</strong>. Uses:
+            <ul>
+                <li>Siting of industries (locate downwind of city)</li>
+                <li>Design of air monitoring networks</li>
+                <li>Inputs for dispersion models</li>
+            </ul>
+            <strong>Convention:</strong> wind rose shows direction wind is blowing FROM (not TO).
         </div>
 
-        <h2>SECTION 4: HAZARDOUS WASTE</h2>
+        <div class="gate-add">
+            <strong>GATE ADD — Topographic &amp; urban effects:</strong>
+            <ul>
+                <li><strong>Urban Heat Island (UHI):</strong> city 2–8°C warmer; concrete/asphalt thermal mass, low vegetation, anthropogenic heat; local circulation traps pollutants</li>
+                <li><strong>Valley effects:</strong> cold air drainage at night traps pollutants (Dehradun, Shimla)</li>
+                <li><strong>Coastal effects:</strong> sea breeze (day), land breeze (night) — fumigation common</li>
+                <li><strong>Building downwash:</strong> rule of thumb — stack height &gt; 2.5× tallest building nearby</li>
+            </ul>
+        </div>
+
+        <h2>SECTION 4: AIR POLLUTION CONTROL EQUIPMENT</h2>
         <div class="section-intro">
-            Hazardous &amp; Other Wastes (Management &amp; Transboundary Movement) Rules 2016. High exam weightage — multiple factual Qs.
+            Most important numerical section. Deutsch-Anderson (ESP), cyclone cut-size, efficiency calcs. Expect 2–3 Qs including ≥ 1 numerical.
         </div>
 
-        <h3>4.1 DEFINITION &amp; CLASSIFICATION</h3>
+        <h3>4.1 GRAVITY SETTLING CHAMBER</h3>
         <div class="content">
-            <strong>Hazardous waste (HOWM Rules 2016):</strong> waste which by reason of its physical, chemical, biological, reactive, toxic, flammable, explosive or corrosive characteristics causes danger or is likely to cause danger to health or environment, whether alone or with other waste/substance.
+            <strong>Principle:</strong> large particles settle by gravity at low horizontal gas velocity. Used for &gt; 50 µm as <strong>pre-cleaner</strong> before ESP/bag filter.
+        </div>
+        <div class="formula">
+            Stokes' settling velocity: v<sub>s</sub> = g(ρ<sub>p</sub> − ρ<sub>g</sub>)d² / (18µ)<br/><br/>
+            Minimum diameter collected (100% efficiency):<br/>
+            d<sub>min</sub> = √[18µ·H / (g·ρ<sub>p</sub>·t)]  where t = residence time<br/>
+            Also: d<sub>min</sub> = √[18µ·H·V<sub>h</sub> / (g·ρ<sub>p</sub>·L)]<br/><br/>
+            Efficiency: η = v<sub>s</sub>·L / (H·V<sub>h</sub>); η = 1 when v<sub>s</sub>·t<sub>res</sub> ≥ H
+        </div>
+        <div class="highlight">
+            Typical efficiency 50–70% for PM &gt; 50 µm; very poor for &lt; 10 µm. ΔP &lt; 1 cm H₂O.
+        </div>
+
+        <h3>4.2 CYCLONE SEPARATOR</h3>
+        <div class="content">
+            <strong>Principle:</strong> centrifugal force throws particles outward; clean gas spirals upward. Best for <strong>5–50 µm</strong>; ~80–95% for &gt; 10 µm.
+        </div>
+        <div class="formula">
+            Centrifugal acceleration ≈ 5 to 2500× gravity<br/><br/>
+            <strong>Cut-size (Lapple):</strong><br/>
+            d<sub>pc</sub> = √[9µ·W / (2π·N·V·(ρ<sub>p</sub> − ρ<sub>g</sub>))]<br/>
+            W = inlet width; N = effective turns (~5); V = inlet gas velocity<br/>
+            d<sub>pc</sub> = particle size collected at <strong>50% efficiency</strong>
+        </div>
+        <div class="content">
+            <strong>Advantages:</strong> no moving parts, low cost, high T / abrasive dust OK.<br/>
+            <strong>Limitations:</strong> poor for &lt; 10 µm; ΔP = 5–15 cm H₂O.<br/>
+            <strong>Multi-cyclone:</strong> parallel array of small cyclones — higher efficiency.
+        </div>
+
+        <h3>4.3 ELECTROSTATIC PRECIPITATOR (ESP)</h3>
+        <div class="content">
+            <strong>Principle:</strong> particles pass through high-voltage corona (20–100 kV DC) → acquire negative charge → attracted to grounded collection plates → dislodged by rappers into hopper.<br/>
+            <strong>Used for:</strong> fly ash (mandatory on Indian thermal plants), cement, steel. Handles huge volumes.
+        </div>
+        <div class="formula">
+            <strong>Deutsch-Anderson equation:</strong><br/>
+            η = 1 − exp(−wA/Q)<br/><br/>
+            w = drift velocity (m/s); typical 0.03–0.15 m/s<br/>
+            A = total plate area (m²); Q = gas flow (m³/s)<br/><br/>
+            <strong>SCA (Specific Collection Area):</strong> SCA = A/Q (m² per m³/s); typical 50–120 for 99%<br/><br/>
+            <strong>Modified D-A with non-ideality (Matts-Öhnfeldt):</strong><br/>
+            η = 1 − exp[−(wA/Q)^k]; k ≈ 0.5
+        </div>
+        <div class="tip">
+            <strong>Key ESP insights:</strong>
+            <ul>
+                <li>Efficiency &gt; 99% for PM₁₀; ~95% for PM₂.₅</li>
+                <li>Resistivity optimum: 10⁴ to 10¹⁰ Ω·cm</li>
+                <li>High-resistivity fly ash (low-S coal) hardest to collect → needs SO₃ flue gas conditioning</li>
+                <li>Low ΔP (1–2 cm H₂O) — energy efficient</li>
+                <li>High CAPEX, low OPEX; mandatory on Indian coal plants</li>
+            </ul>
+        </div>
+
+        <h3>4.4 FABRIC FILTER / BAG HOUSE</h3>
+        <div class="content">
+            <strong>Principle:</strong> dust-laden gas passes through woven/felted bags; dust cake forms on surface &amp; itself acts as filter. Efficiency &gt; 99.9% for PM down to 0.3 µm.
         </div>
         <div class="standard">
-            <strong>Characteristics (USEPA "ICRT" + Indian schedules):</strong>
+            <strong>Cleaning mechanisms:</strong>
             <ul>
-                <li><strong>Ignitability (I):</strong> flash point &lt; 60°C</li>
-                <li><strong>Corrosivity (C):</strong> pH &lt; 2 or &gt; 12.5; corrodes steel &gt; 6.35 mm/year</li>
-                <li><strong>Reactivity (R):</strong> unstable; reacts violently with water; explosive</li>
-                <li><strong>Toxicity (T):</strong> TCLP (Toxicity Characteristic Leaching Procedure) — leachate exceeds limits for 8 metals + 6 pesticides + 14 organics</li>
+                <li><strong>Mechanical shaking:</strong> simplest, low A/C</li>
+                <li><strong>Reverse air:</strong> reverse airflow collapses bag</li>
+                <li><strong>Pulse-jet:</strong> high-pressure air pulse (0.5–0.7 MPa); highest A/C; most common modern</li>
             </ul>
-            <strong>HOWM Rules schedules:</strong>
+        </div>
+        <div class="formula">
+            <strong>Air-to-cloth ratio (A/C, filtration velocity):</strong><br/>
+            A/C = Q / A<sub>fabric</sub> (m/min)<br/>
+            Shaker: 0.5–1 | Reverse-air: 0.5–2 | Pulse-jet: 2–5<br/><br/>
+            <strong>Pressure drop:</strong> ΔP = ΔP<sub>fabric</sub> + K<sub>2</sub>·W·V<br/>
+            W = dust loading (kg/m²); V = filtration velocity
+        </div>
+        <div class="content">
+            <strong>Bag materials &amp; temperature limits:</strong>
             <ul>
-                <li><strong>Schedule I:</strong> 36 process-based hazardous wastes (e.g., petroleum refining, pesticide manufacturing, electroplating)</li>
-                <li><strong>Schedule II:</strong> waste constituents with concentration limits (heavy metals, organics)</li>
-                <li><strong>Schedule III:</strong> Part A (waste prohibited for import), Part B (allowed with permission), Part C (allowed without permission for recycling — 25 categories)</li>
-                <li><strong>Schedule IV:</strong> recyclable hazardous wastes</li>
-                <li><strong>Schedule VI:</strong> Annexure for transboundary movement (Basel)</li>
+                <li>Cotton &lt; 80°C</li>
+                <li>Polyester &lt; 135°C</li>
+                <li>Nomex (aramid) &lt; 200°C</li>
+                <li>Fibreglass &lt; 260°C</li>
+                <li>PTFE / Teflon &lt; 260°C (acid resistant)</li>
+                <li>P84 &lt; 240°C</li>
+            </ul>
+            <strong>Limitations:</strong> temperature, moist/sticky dust causes blinding, ΔP 10–20 cm H₂O.
+        </div>
+
+        <h3>4.5 WET SCRUBBERS</h3>
+        <div class="content">
+            <strong>Principle:</strong> liquid (water) contacts dust or gas; removes both PM and soluble gases (SO₂, HCl, NH₃).<br/>
+            <strong>Types:</strong>
+            <ul>
+                <li><strong>Spray tower:</strong> simplest; PM &gt; 10 µm; low efficiency, low ΔP</li>
+                <li><strong>Packed tower:</strong> gas absorption; Raschig rings / Pall rings / structured packing</li>
+                <li><strong>Venturi scrubber:</strong> gas through throat at 60–150 m/s; water injected; &gt; 99% for PM &gt; 1 µm; ΔP 50–200 cm H₂O</li>
+                <li><strong>Cyclonic scrubber, impingement-plate scrubber</strong></li>
+            </ul>
+        </div>
+        <div class="formula">
+            <strong>Contact power theory (Semrau):</strong><br/>
+            N<sub>t</sub> = α · P<sub>T</sub>^β (transfer units vs contact power)<br/>
+            Higher ΔP → higher efficiency for fine PM
+        </div>
+        <div class="highlight">
+            <strong>Wet scrubber</strong> handles sticky/flammable dust and does simultaneous gas + PM removal, but generates wastewater (needs treatment), visible plume, corrosion, freezing.
+        </div>
+
+        <h3>4.6 COMPARISON OF PM CONTROL EQUIPMENT</h3>
+        <table>
+            <tr><th>Device</th><th>PM size range</th><th>Efficiency</th><th>ΔP (cm H₂O)</th><th>Application</th></tr>
+            <tr><td>Settling chamber</td><td>&gt; 50 µm</td><td>50–70%</td><td>&lt; 1</td><td>Pre-cleaner</td></tr>
+            <tr><td>Cyclone</td><td>5–50 µm</td><td>80–95%</td><td>5–15</td><td>Pre-cleaner, sawmills</td></tr>
+            <tr><td>ESP</td><td>&gt; 0.1 µm</td><td>95–99.9%</td><td>1–2</td><td>Power, cement</td></tr>
+            <tr><td>Bag filter</td><td>&gt; 0.3 µm</td><td>99.5–99.99%</td><td>10–20</td><td>Cement, boilers</td></tr>
+            <tr><td>Venturi scrubber</td><td>&gt; 1 µm</td><td>95–99%</td><td>50–200</td><td>Sticky dust, acid gas</td></tr>
+        </table>
+
+        <h3>4.7 GASEOUS POLLUTANT CONTROL</h3>
+        <div class="content">
+            <strong>(a) Absorption (gas-liquid):</strong> soluble gas transferred from gas to liquid in packed/tray column.
+        </div>
+        <div class="formula">
+            Fick's law: N = −D · (dc/dx)<br/>
+            Two-film theory: 1/K<sub>G</sub> = 1/k<sub>g</sub> + H/k<sub>L</sub><br/>
+            Henry's law: p = H·x
+        </div>
+        <div class="content">
+            <strong>(b) Adsorption (gas-solid):</strong> VOCs, H₂S, odours. Activated carbon most common (surface area 500–1500 m²/g). Silica gel, alumina, zeolites for specific gases.
+            <ul>
+                <li>Langmuir isotherm (monolayer): q = q<sub>m</sub>·K·c / (1 + K·c)</li>
+                <li>Freundlich isotherm: q = K<sub>f</sub>·c^(1/n)</li>
+            </ul>
+            <strong>(c) Condensation:</strong> cool gas below dew point → liquid; used for high-conc VOCs.<br/>
+            <strong>(d) Combustion / Afterburners:</strong>
+            <ul>
+                <li><strong>Thermal oxidiser:</strong> direct combustion at 700–980°C; VOC destruction &gt; 99%</li>
+                <li><strong>Catalytic oxidiser:</strong> Pt/Pd catalyst; operates at 300–500°C; lower fuel cost</li>
+                <li><strong>Regenerative Thermal Oxidiser (RTO):</strong> ceramic heat recovery, efficiency &gt; 95%</li>
             </ul>
         </div>
 
-        <h3>4.2 COMMON HAZARDOUS WASTES IN INDIA</h3>
+        <h3>4.8 FLUE GAS DESULPHURISATION (FGD)</h3>
+        <div class="content">
+            <strong>Purpose:</strong> removes SO₂ from flue gas (thermal power plants).<br/>
+            <strong>Wet limestone FGD</strong> (most common, ~85% of world capacity):
+        </div>
+        <div class="formula">
+            CaCO₃ + SO₂ + ½O₂ + 2H₂O → CaSO₄·2H₂O (gypsum) + CO₂<br/>
+            SO₂ removal efficiency: &gt; 95%<br/>
+            L/G ratio: 5–20 L/m³; Ca/S molar ratio: 1.02–1.05<br/>
+            Byproduct: marketable gypsum (wallboard, cement)
+        </div>
+        <div class="content">
+            <strong>Other FGD types:</strong> dry/semi-dry lime (spray dryer absorber), seawater FGD (coastal plants), ammonia scrubbing, regenerable processes (Wellman-Lord).<br/>
+            <strong>Indian context:</strong> MoEFCC 2015 norms made FGD mandatory for all thermal plants; deadlines extended multiple times; &lt; 40% capacity fitted as of 2025.
+        </div>
+
+        <h3>4.9 NOₓ CONTROL</h3>
+        <div class="content">
+            <strong>Combustion modifications (in-furnace):</strong>
+            <ul>
+                <li>Low-NOₓ burners (staged combustion)</li>
+                <li>Flue Gas Recirculation (FGR): reduces flame T → less thermal NOₓ</li>
+                <li>Over-Fire Air (OFA): two-stage combustion</li>
+                <li>Water/steam injection</li>
+            </ul>
+            <strong>Post-combustion:</strong>
+            <ul>
+                <li><strong>SCR (Selective Catalytic Reduction):</strong> NH₃ + NO + ¼O₂ → N₂ + 1.5H₂O on V₂O₅/TiO₂ catalyst at 300–400°C; efficiency 80–95%</li>
+                <li><strong>SNCR (Selective Non-Catalytic Reduction):</strong> NH₃ or urea at 870–1100°C; no catalyst; efficiency 30–70%; cheaper but lower efficiency</li>
+            </ul>
+        </div>
+
+        <h3>4.10 AUTOMOTIVE EMISSION CONTROLS <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="content">
+            <strong>Three-Way Catalyst (TWC)</strong> for petrol vehicles (stoichiometric operation):
+            <ul>
+                <li>Simultaneously oxidises CO, HC and reduces NOₓ on Pt/Pd/Rh catalyst</li>
+                <li>Requires λ (excess air ratio) close to 1.0 — controlled by O₂ sensor</li>
+                <li>Needs unleaded petrol (Pb poisons catalyst)</li>
+            </ul>
+            <strong>Diesel controls:</strong>
+            <ul>
+                <li><strong>DOC (Diesel Oxidation Catalyst):</strong> oxidises CO, HC</li>
+                <li><strong>DPF (Diesel Particulate Filter):</strong> traps soot, regenerates by burning at high T</li>
+                <li><strong>SCR:</strong> NOₓ reduction with AdBlue (urea 32.5%)</li>
+                <li><strong>EGR (Exhaust Gas Recirculation):</strong> reduces combustion T</li>
+            </ul>
+            <strong>Fuel quality (BS-VI, since April 2020):</strong> sulphur &lt; 10 ppm (vs 50 ppm BS-IV); enables TWC/DPF.
+        </div>
+
+        <h2>SECTION 5: STANDARDS &amp; MONITORING</h2>
+        <div class="section-intro">
+            Factual section — pure recall. Essential for UPPCB AEE (guaranteed 2–3 Qs).
+        </div>
+
+        <h3>5.1 NAAQS 2009 (MoEFCC, India)</h3>
+        <div class="standard">
+            <strong>National Ambient Air Quality Standards — 12 pollutants:</strong>
+            <table>
+                <tr><th>Pollutant</th><th>Averaging time</th><th>Industrial/Residential/Rural</th><th>Ecologically sensitive</th></tr>
+                <tr><td>SO₂ (µg/m³)</td><td>Annual</td><td>50</td><td>20</td></tr>
+                <tr><td>SO₂ (µg/m³)</td><td>24-hr</td><td>80</td><td>80</td></tr>
+                <tr><td>NO₂ (µg/m³)</td><td>Annual</td><td>40</td><td>30</td></tr>
+                <tr><td>NO₂ (µg/m³)</td><td>24-hr</td><td>80</td><td>80</td></tr>
+                <tr><td>PM₁₀ (µg/m³)</td><td>Annual</td><td>60</td><td>60</td></tr>
+                <tr><td>PM₁₀ (µg/m³)</td><td>24-hr</td><td>100</td><td>100</td></tr>
+                <tr><td>PM₂.₅ (µg/m³)</td><td>Annual</td><td>40</td><td>40</td></tr>
+                <tr><td>PM₂.₅ (µg/m³)</td><td>24-hr</td><td>60</td><td>60</td></tr>
+                <tr><td>O₃ (µg/m³)</td><td>8-hr</td><td>100</td><td>100</td></tr>
+                <tr><td>O₃ (µg/m³)</td><td>1-hr</td><td>180</td><td>180</td></tr>
+                <tr><td>CO (mg/m³)</td><td>8-hr</td><td>2</td><td>2</td></tr>
+                <tr><td>CO (mg/m³)</td><td>1-hr</td><td>4</td><td>4</td></tr>
+                <tr><td>Pb (µg/m³)</td><td>Annual</td><td>0.5</td><td>0.5</td></tr>
+                <tr><td>NH₃ (µg/m³)</td><td>Annual</td><td>100</td><td>100</td></tr>
+                <tr><td>Benzene (µg/m³)</td><td>Annual</td><td>5</td><td>5</td></tr>
+                <tr><td>BaP (ng/m³)</td><td>Annual</td><td>1</td><td>1</td></tr>
+                <tr><td>As (ng/m³)</td><td>Annual</td><td>6</td><td>6</td></tr>
+                <tr><td>Ni (ng/m³)</td><td>Annual</td><td>20</td><td>20</td></tr>
+            </table>
+        </div>
+
+        <h3>5.2 AIR QUALITY INDEX (AQI)</h3>
+        <div class="content">
+            CPCB AQI launched 2014 under Swachh Bharat. Uses 8 pollutants: PM₁₀, PM₂.₅, SO₂, NO₂, O₃, CO, NH₃, Pb.
+        </div>
+        <table>
+            <tr><th>AQI</th><th>Category</th><th>Colour</th><th>Health impact</th></tr>
+            <tr><td>0–50</td><td>Good</td><td>Green</td><td>Minimal</td></tr>
+            <tr><td>51–100</td><td>Satisfactory</td><td>Light green</td><td>Minor discomfort for sensitive</td></tr>
+            <tr><td>101–200</td><td>Moderate</td><td>Yellow</td><td>Breathing discomfort for sensitive</td></tr>
+            <tr><td>201–300</td><td>Poor</td><td>Orange</td><td>Breathing discomfort on prolonged exposure</td></tr>
+            <tr><td>301–400</td><td>Very Poor</td><td>Red</td><td>Respiratory illness on prolonged exposure</td></tr>
+            <tr><td>401–500</td><td>Severe</td><td>Maroon</td><td>Affects healthy; serious for diseased</td></tr>
+        </table>
+        <div class="formula">
+            AQI calculation: sub-index I<sub>p</sub> for each pollutant; AQI = max(I<sub>p</sub>); reported only if ≥ 3 pollutants measured (min 1 of PM₁₀ or PM₂.₅).
+        </div>
+
+        <h3>5.3 BS-VI VEHICLE EMISSION NORMS (April 2020)</h3>
+        <table>
+            <tr><th>Parameter</th><th>BS-IV</th><th>BS-VI</th></tr>
+            <tr><td>Fuel sulphur (petrol/diesel)</td><td>50 ppm</td><td>10 ppm</td></tr>
+            <tr><td>Diesel PM (car)</td><td>25 mg/km</td><td>4.5 mg/km</td></tr>
+            <tr><td>Diesel NOₓ (car)</td><td>0.25 g/km</td><td>0.08 g/km</td></tr>
+            <tr><td>Petrol NOₓ (car)</td><td>0.08 g/km</td><td>0.06 g/km</td></tr>
+            <tr><td>Enabling tech</td><td>DOC</td><td>DPF + SCR + TWC</td></tr>
+            <tr><td>New requirement</td><td>—</td><td>RDE (Real Driving Emissions), OBD-II</td></tr>
+        </table>
+        <div class="highlight">
+            India skipped BS-V and jumped from BS-IV (2017) to BS-VI (April 2020) — a 3-year fuel quality leap.
+        </div>
+
+        <h3>5.4 CPCB STACK EMISSION STANDARDS (examples)</h3>
         <ul>
-            <li><strong>Fly ash from thermal power:</strong> 270 MT/yr; 90% utilisation target by Fly Ash Utilisation Rules 2009</li>
-            <li><strong>ETP sludge:</strong> from textile, tannery, electroplating units</li>
-            <li><strong>Spent solvents:</strong> from pharma, paint, dye industries</li>
-            <li><strong>Spent acids/alkalis:</strong> from electroplating, batteries</li>
-            <li><strong>Heavy metal sludges:</strong> Cr, Ni, Cd, Pb from electroplating</li>
-            <li><strong>Phenolic wastes:</strong> from refineries, plastics</li>
-            <li><strong>Oil contaminated soil/cotton waste:</strong> from refineries, garages</li>
+            <li><strong>Thermal power (installed before 2003):</strong> PM 100 mg/Nm³; SO₂ 600/200 (&lt;500/&gt;500 MW); NOₓ 600 mg/Nm³</li>
+            <li><strong>Thermal power (installed 2017 onwards):</strong> PM 30 mg/Nm³; SO₂ 100; NOₓ 100; Hg 0.03 mg/Nm³</li>
+            <li><strong>Cement plant:</strong> PM 30 mg/Nm³; NOₓ 600; SO₂ 100–700 (depends on feed)</li>
+            <li><strong>Diesel generator set (&gt; 800 kW):</strong> PM 0.2 g/kWh; NOₓ 3.5–9.2 g/kWh</li>
+            <li><strong>Brick kiln (zigzag/VSBK):</strong> PM 250 mg/Nm³</li>
         </ul>
 
-        <h3>4.3 BASEL CONVENTION (1989; in force 1992)</h3>
+        <h3>5.5 MONITORING NETWORKS</h3>
         <div class="content">
-            <strong>Full name:</strong> Basel Convention on the Control of Transboundary Movements of Hazardous Wastes and their Disposal.<br/>
-            <strong>Key principles:</strong>
             <ul>
-                <li><strong>PIC (Prior Informed Consent):</strong> exporting country must obtain written consent of importing country before shipment</li>
-                <li><strong>ESM (Environmentally Sound Management):</strong> mandates waste managed to protect human health &amp; environment</li>
-                <li>Ban on export of hazardous waste from OECD to non-OECD (Ban Amendment, in force Dec 2019)</li>
-                <li>India ratified in 1992; lead implementation by MoEFCC</li>
-            </ul>
-            Related: <strong>Rotterdam Convention</strong> (1998) — PIC for chemicals/pesticides trade; <strong>Stockholm Convention</strong> (2001) — POPs (initial 12 — "dirty dozen": aldrin, chlordane, DDT, dieldrin, endrin, heptachlor, mirex, toxaphene, HCB, PCBs, dioxins, furans).
-        </div>
-
-        <h3>4.4 HAZARDOUS WASTE TREATMENT &amp; DISPOSAL</h3>
-        <div class="content">
-            <strong>Treatment options:</strong>
-            <ul>
-                <li><strong>Physical:</strong> sedimentation, filtration, distillation, solvent extraction</li>
-                <li><strong>Chemical:</strong> neutralisation, oxidation/reduction (Cr⁶⁺ → Cr³⁺ by NaHSO₃), precipitation (heavy metals as hydroxides at pH 8–10)</li>
-                <li><strong>Biological:</strong> bioreactors, bioaugmentation (specialised microbes)</li>
-                <li><strong>Thermal:</strong> incineration in rotary kiln (1100–1400°C); cement kiln co-processing (most common in India — 45+ cement plants accept HW)</li>
-                <li><strong>Stabilisation/Solidification:</strong> mix with cement, lime, fly ash to immobilise contaminants</li>
-                <li><strong>Vitrification:</strong> melt with glass-formers at 1200–1500°C → glass-like inert solid (for radioactive HLW)</li>
+                <li><strong>NAMP (National Air quality Monitoring Programme):</strong> manual monitoring of 4 pollutants (SO₂, NO₂, PM₁₀, PM₂.₅); ~830 stations in 344 cities (2023)</li>
+                <li><strong>CAAQMS (Continuous Ambient AQ Monitoring Stations):</strong> real-time monitoring of 12 pollutants + meteorology; ~530 stations (2024)</li>
+                <li><strong>SAFAR (System of Air quality &amp; weather Forecasting):</strong> IITM Pune — Delhi, Mumbai, Pune, Ahmedabad</li>
+                <li>Sampling height: 3–10 m above ground</li>
+                <li>Sampling duration: 24-hr (manual); continuous for CAAQMS</li>
+                <li>Minimum monitoring: 104 days/yr (NAMP)</li>
             </ul>
         </div>
 
-        <h3>4.5 SECURE LANDFILL (HW LANDFILL) &amp; TSDF</h3>
-        <div class="standard">
-            <strong>Secure landfill (HW landfill) — additional requirements over MSW landfill:</strong>
-            <ul>
-                <li><strong>Double composite liner:</strong> 2 HDPE geomembranes (each ≥ 2 mm) with leakage detection between</li>
-                <li><strong>Double clay layer:</strong> ≥ 90 cm each</li>
-                <li><strong>Leachate collection &amp; leak detection:</strong> primary + secondary LCRS</li>
-                <li><strong>Cover:</strong> ≥ 60 cm clay + geomembrane + drainage + topsoil</li>
-                <li><strong>Buffer:</strong> ≥ 500 m from habitation; ≥ 1000 m from National Park / Wildlife Sanctuary</li>
-                <li><strong>Pre-treatment</strong> (stabilisation) compulsory for liquid &amp; reactive wastes</li>
-                <li><strong>Restricted access:</strong> fenced, manned, weighbridge, manifest system</li>
-                <li><strong>Post-closure monitoring:</strong> 30 years</li>
-            </ul>
-            <strong>TSDF (Treatment, Storage &amp; Disposal Facility):</strong> Common facility for cluster of HW generators; concept introduced in HW Rules 2003. India has ~40 CHWTSDFs (e.g., Vapi, Ankleshwar, Hyderabad, Chennai, Roorkee, Taloja).
-        </div>
-
-        <h3>4.6 GROUNDWATER CONTAMINATION FROM HW <span style="color:#673ab7;">(GATE ADD)</span></h3>
-        <div class="content">
-            <strong>NAPLs (Non-Aqueous Phase Liquids):</strong>
-            <ul>
-                <li><strong>LNAPLs (Light NAPLs, density &lt; 1):</strong> petroleum products (gasoline, diesel, jet fuel, BTEX); float on water table; form a thin layer on top of saturated zone</li>
-                <li><strong>DNAPLs (Dense NAPLs, density &gt; 1):</strong> chlorinated solvents (TCE, PCE, carbon tet, PCBs); sink to bottom of aquifer; very difficult to remediate; pool on aquitards</li>
-            </ul>
-            <strong>Fate &amp; transport:</strong> advection, dispersion, sorption (Koc), volatilisation, biodegradation (half-lives), retardation factor R = 1 + (ρ<sub>b</sub>·K<sub>d</sub>/n).<br/>
-            <strong>Remediation:</strong>
-            <ul>
-                <li>Pump &amp; treat (oldest, slow)</li>
-                <li>Air sparging + SVE (volatile contaminants)</li>
-                <li>In-situ chemical oxidation (ISCO) — H₂O₂, KMnO₄, persulphate</li>
-                <li>Bioremediation (intrinsic, enhanced, bioaugmentation)</li>
-                <li>Permeable reactive barriers (zero-valent iron for DNAPLs, U)</li>
-                <li>Phytoremediation (slow; metals, organics)</li>
-            </ul>
-        </div>
-
-        <h2>SECTION 5: BIO-MEDICAL WASTE (BMW)</h2>
-        <div class="section-intro">
-            BMW Management Rules 2016 (amended 2018, 2019) — high probability factual Qs (colour codes, treatment).
-        </div>
-
-        <h3>5.1 BMW DEFINITION &amp; CATEGORIES</h3>
-        <div class="content">
-            <strong>BMW:</strong> any waste generated during diagnosis, treatment, or immunisation of humans/animals, in research, or in production/testing of biologicals — including sharps, body fluids, expired drugs, microbiological cultures, animal carcasses, anatomical waste.<br/>
-            <strong>India BMW generation:</strong> ~743 TPD (CPCB 2023); ~2 lakh HCFs.
-        </div>
-
-        <h3>5.2 COLOUR CODING (BMW Rules 2016 — 4 categories)</h3>
+        <h3>5.6 AIR MONITORING INSTRUMENTS</h3>
         <table>
-            <tr><th>Category</th><th>Colour</th><th>Type of bag/container</th><th>Waste type</th><th>Treatment</th></tr>
-            <tr><td>1</td><td><span style="color: #FFD700; background: black; padding: 2px 6px;">YELLOW</span></td><td>Non-chlorinated plastic bag</td><td>Human anatomical waste, animal anatomical waste, soiled (blood/body fluids), expired meds, microbiology &amp; biotech waste, chemical liquid (in separate container)</td><td><strong>Incineration</strong> @ ≥ 1050°C secondary chamber; deep burial only in towns &lt; 5 lakh population</td></tr>
-            <tr><td>2</td><td><span style="color: white; background: red; padding: 2px 6px;">RED</span></td><td>Non-chlorinated plastic bag/container</td><td>Contaminated recyclable waste (tubing, bottles, IV sets, syringes without needles, urine bags, gloves, catheters)</td><td>Autoclaving / microwaving / hydroclaving + shredding → recycling (NOT incineration)</td></tr>
-            <tr><td>3</td><td><span style="background: white; padding: 2px 6px; border: 1px solid black;">WHITE (translucent)</span></td><td>Puncture-proof, leak-proof, tamper-proof container</td><td>Sharps — needles, syringes WITH needles, scalpels, blades, broken metallic implants</td><td>Autoclave/dry heat sterilise + mutilate/shred → encapsulation in metal container/cement → secured landfill</td></tr>
-            <tr><td>4</td><td><span style="color: white; background: blue; padding: 2px 6px;">BLUE</span></td><td>Cardboard box with blue marking</td><td>Glassware (broken/discarded), metallic body implants</td><td>Disinfection (1% NaOCl) → autoclave/microwave → recycling</td></tr>
+            <tr><th>Pollutant</th><th>Method</th><th>Principle</th></tr>
+            <tr><td>TSP / PM₁₀</td><td>High-Volume Sampler (HVS)</td><td>Gravimetric; 24 hr</td></tr>
+            <tr><td>PM₂.₅</td><td>FRM gravimetric, beta attenuation, TEOM</td><td>Mass-based</td></tr>
+            <tr><td>SO₂</td><td>West-Gaeke (pararosaniline)</td><td>Colorimetric; impinger</td></tr>
+            <tr><td>NOₓ</td><td>Saltzman (Jacobs-Hochheiser)</td><td>Colorimetric; azo-dye</td></tr>
+            <tr><td>CO / CO₂</td><td>NDIR (non-dispersive IR)</td><td>IR absorption</td></tr>
+            <tr><td>O₃</td><td>UV photometric</td><td>UV absorption at 254 nm</td></tr>
+            <tr><td>NO / NOₓ</td><td>Chemiluminescence</td><td>NO + O₃ → NO₂* → hν</td></tr>
+            <tr><td>VOCs</td><td>GC-FID, GC-MS</td><td>Chromatography</td></tr>
+            <tr><td>Heavy metals</td><td>HVS + AAS / ICP-MS</td><td>Collect on filter, digest, analyse</td></tr>
         </table>
-
-        <h3>5.3 BMW TREATMENT TECHNOLOGIES</h3>
-        <div class="standard">
-            <ul>
-                <li><strong>Autoclaving:</strong> <span class="key-point">121°C, 15 psi, 30–60 min</span> (steam sterilisation); for Red &amp; White category</li>
-                <li><strong>Microwaving:</strong> microwave heating with moisture; faster than autoclave</li>
-                <li><strong>Hydroclaving:</strong> rotating chamber + steam (more efficient than autoclave)</li>
-                <li><strong>Incineration:</strong> primary chamber 800–900°C; <span class="key-point">secondary chamber ≥ 1050°C, residence ≥ 2 s</span>; for Yellow category; PM 50 mg/Nm³, dioxins/furans 0.1 ng TEQ/Nm³</li>
-                <li><strong>Shredding:</strong> mandatory after autoclave for Red &amp; White (prevents reuse)</li>
-                <li><strong>Deep burial:</strong> only allowed in towns &lt; 5 lakh population &amp; rural areas; ≥ 2 m depth + 50 cm soil cover + lime layer + fenced</li>
-            </ul>
-        </div>
-        <div class="content">
-            <strong>CBWTF (Common Bio-Medical Waste Treatment Facility):</strong> common facility for cluster of HCFs (max 75 km radius); GPS tracking, bar-coding mandatory; one CBWTF per district per BMW Rules 2016.<br/>
-            <strong>India:</strong> ~200 CBWTFs operational (CPCB 2023).
-        </div>
-
-        <h3>5.4 BMW EMISSION STANDARDS (Incinerator)</h3>
-        <table>
-            <tr><th>Parameter</th><th>Limit</th></tr>
-            <tr><td>PM</td><td>50 mg/Nm³</td></tr>
-            <tr><td>HCl</td><td>50 mg/Nm³</td></tr>
-            <tr><td>SO₂</td><td>200 mg/Nm³</td></tr>
-            <tr><td>CO</td><td>100 mg/Nm³</td></tr>
-            <tr><td>Total dioxins &amp; furans</td><td>0.1 ng TEQ/Nm³</td></tr>
-            <tr><td>Hg + Cd + Tl + their compounds</td><td>0.05 mg/Nm³</td></tr>
-            <tr><td>Stack height</td><td>≥ 30 m above ground</td></tr>
-        </table>
-
-        <h2>SECTION 6: E-WASTE &amp; PLASTIC WASTE</h2>
-
-        <h3>6.1 E-WASTE (MANAGEMENT) RULES 2022</h3>
-        <div class="content">
-            <strong>Notified:</strong> 2 November 2022; effective 1 April 2023; supersedes E-Waste Rules 2016.<br/>
-            <strong>Coverage:</strong> 21 categories of EEE (extended from 21 to 106 in Schedule I).<br/>
-            <strong>Key features:</strong>
-            <ul>
-                <li><strong>EPR (Extended Producer Responsibility):</strong> producer responsible for end-of-life collection &amp; recycling</li>
-                <li><strong>EPR Targets:</strong> 60% (2023–24), 70% (2024–25), 80% (2026–27 onwards) of quantity placed on market</li>
-                <li><strong>EPR certificates:</strong> tradable; issued by registered recyclers; producers must obtain &amp; surrender certificates equal to target</li>
-                <li><strong>Centralised online portal</strong> by CPCB for registration &amp; reporting</li>
-                <li><strong>Mandatory authorisation</strong> for manufacturers, producers, refurbishers, recyclers</li>
-                <li><strong>Restrictions on hazardous substances</strong> in EEE: Pb, Hg, Cd, Cr⁶⁺, PBB, PBDE (similar to EU RoHS)</li>
-            </ul>
-            <strong>India e-waste generation:</strong> ~1.6 MT/year (2022); ~95% handled by informal sector historically.
-        </div>
-
-        <h3>6.2 PLASTIC WASTE MANAGEMENT RULES 2016 (amended 2021, 2022)</h3>
-        <div class="standard">
-            <ul>
-                <li><strong>Carry bag thickness:</strong> minimum <strong>120 microns</strong> (raised from 75 µm in Sep 2021; from 50 µm originally)</li>
-                <li><strong>Single-Use Plastics (SUP) ban (1 July 2022):</strong> 19 items including straws, cutlery, plates, ear buds, balloons sticks, candy/ice-cream sticks, thermocol decorations, plastic flags, cigarette packets film, plastic banners &lt; 100 µm</li>
-                <li><strong>EPR for plastic packaging:</strong> 4 categories (rigid, flexible, multilayered, compostable); targets phased</li>
-                <li><strong>Compostable plastic:</strong> certified by CPCB (IS/ISO 17088)</li>
-                <li><strong>No littering of plastic waste</strong>; segregation at source</li>
-                <li><strong>Municipal authority responsible</strong> for collection, segregation, recycling, disposal</li>
-                <li>Use of plastic in road construction (CPCB / Ministry of Road Transport guideline)</li>
-            </ul>
-        </div>
-
-        <h3>6.3 C&amp;D WASTE MANAGEMENT RULES 2016</h3>
-        <div class="content">
-            <ul>
-                <li>Generators (&gt; 20 t in single load OR &gt; 300 t/month) must submit waste mgmt plan to ULB</li>
-                <li>Segregation into 4 categories: concrete, soil, steel/wood/plastics, bricks/masonry</li>
-                <li>ULB must set up C&amp;D processing facility within 1 km radius of every 50 km² OR for cities &gt; 1 million population</li>
-                <li>Use of recycled aggregates: ≥ 10% in non-structural applications mandated</li>
-                <li>India C&amp;D waste: ~150–500 MT/year (estimated; under-reported)</li>
-            </ul>
-        </div>
 
         <h2>HIGH-YIELD MCQ REVISION LIST</h2>
         <div class="exam-strategy">
             <h3>MUST-KNOW FACTS (High Probability Qs):</h3>
             <ul>
-                <li>✓ <strong>SWM Rules 2016 — bin colours:</strong> Green (wet), Blue (dry), Black (domestic hazardous)</li>
-                <li>✓ <strong>BMW Rules 2016 — bag colours:</strong> Yellow (anatomical/incinerable), Red (recyclable plastic), White translucent (sharps), Blue (glass/metal)</li>
-                <li>✓ <strong>BMW autoclave conditions:</strong> 121°C, 15 psi, 30–60 min</li>
-                <li>✓ <strong>BMW incinerator secondary chamber:</strong> ≥ 1050°C, residence ≥ 2 s</li>
-                <li>✓ <strong>Composting C:N optimum:</strong> 25–30:1; moisture 50–60%</li>
-                <li>✓ <strong>Composting temperature stages:</strong> mesophilic → thermophilic (45–70°C, pathogen kill) → cooling → maturation</li>
-                <li>✓ <strong>Sanitary landfill liner:</strong> ≥ 90 cm clay (k ≤ 10⁻⁷ cm/s) + ≥ 1.5 mm HDPE geomembrane</li>
-                <li>✓ <strong>Landfill buffer:</strong> 100 m from habitation; 200 m from water body; 20 km from airport</li>
-                <li>✓ <strong>Landfill gas composition:</strong> CH₄ 45–60%; CO₂ 40–55%</li>
-                <li>✓ <strong>HOWM Rules 2016 — Schedule I (process), II (constituents), III (transboundary), IV (recyclable)</strong></li>
-                <li>✓ <strong>Hazardous characteristics — ICRT:</strong> Ignitability, Corrosivity, Reactivity, Toxicity (TCLP)</li>
-                <li>✓ <strong>Basel Convention 1989:</strong> PIC for transboundary HW movement; India ratified 1992</li>
-                <li>✓ <strong>Stockholm Convention 2001:</strong> POPs ("dirty dozen" — 12 initial)</li>
-                <li>✓ <strong>Plastic carry bag thickness:</strong> ≥ 120 microns (since Sep 2021)</li>
-                <li>✓ <strong>SUP ban:</strong> 1 July 2022 — 19 items</li>
-                <li>✓ <strong>E-Waste Rules 2022:</strong> EPR with tradable certificates; 60% target FY 2023-24, 80% by FY 2026-27</li>
-                <li>✓ <strong>Dioxin emission limit:</strong> 0.1 ng TEQ/Nm³</li>
-                <li>✓ <strong>Bulk waste generator:</strong> &gt; 100 kg/day OR housing &gt; 5000 m²</li>
-                <li>✓ <strong>RDF specifications:</strong> CV 3000–4500 kcal/kg; moisture &lt; 25%; chlorine &lt; 0.8%</li>
-                <li>✓ <strong>Indian MSW characteristics:</strong> 50–55% organic, 40–60% moisture, CV 800–1500 kcal/kg</li>
-                <li>✓ <strong>Earthworm species (vermicomposting):</strong> Eisenia fetida, E. eugeniae</li>
+                <li>✓ <strong>Atmosphere layers order:</strong> Tropo (T ↓) → Strato (T ↑, O₃) → Meso (T ↓) → Thermo (T ↑)</li>
+                <li>✓ <strong>DALR = 9.8°C/km</strong>; ISA ELR ≈ 6.5°C/km</li>
+                <li>✓ <strong>Primary vs secondary pollutants:</strong> O₃, PAN, H₂SO₄, HNO₃ = secondary</li>
+                <li>✓ <strong>PM size cutoffs:</strong> PM₁₀ = 10 µm; PM₂.₅ = 2.5 µm (aerodynamic)</li>
+                <li>✓ <strong>NAAQS PM₂.₅:</strong> 60 µg/m³ (24-hr); 40 µg/m³ (annual)</li>
+                <li>✓ <strong>NAAQS PM₁₀:</strong> 100 (24-hr); 60 (annual)</li>
+                <li>✓ <strong>NAAQS SO₂:</strong> 80 (24-hr); 50 (annual); 20 (annual ecologically sensitive)</li>
+                <li>✓ <strong>NAAQS NO₂:</strong> 80 (24-hr); 40 (annual)</li>
+                <li>✓ <strong>CO NAAQS:</strong> 2 mg/m³ (8-hr); 4 mg/m³ (1-hr)</li>
+                <li>✓ <strong>Hb affinity for CO ≈ 240× that for O₂</strong></li>
+                <li>✓ <strong>Zeldovich mechanism:</strong> thermal NOₓ &gt; 1500°C</li>
+                <li>✓ <strong>Deutsch-Anderson:</strong> η = 1 − exp(−wA/Q)</li>
+                <li>✓ <strong>Cyclone cut-size (Lapple):</strong> d<sub>pc</sub> = √[9µW / (2πNV(ρ<sub>p</sub>−ρ))]</li>
+                <li>✓ <strong>Holland's plume rise formula</strong></li>
+                <li>✓ <strong>Pasquill stability classes A–F</strong></li>
+                <li>✓ <strong>Acid rain pH &lt; 5.6;</strong> H₂SO₄ 65–70%, HNO₃ 30–35%</li>
+                <li>✓ <strong>Taj Trapezium Zone:</strong> 10,400 km²; SC order 1996</li>
+                <li>✓ <strong>BS-VI launched April 2020;</strong> sulphur &lt; 10 ppm</li>
+                <li>✓ <strong>AQI: 8 pollutants, 6 categories</strong> (Good to Severe); launched 2014</li>
+                <li>✓ <strong>Benzene NAAQS:</strong> 5 µg/m³ annual</li>
+                <li>✓ <strong>FGD reaction:</strong> CaCO₃ + SO₂ + ½O₂ + 2H₂O → CaSO₄·2H₂O + CO₂</li>
+                <li>✓ <strong>SCR catalyst:</strong> V₂O₅/TiO₂ at 300–400°C with NH₃</li>
+                <li>✓ <strong>TWC for petrol:</strong> Pt/Pd/Rh; needs λ ≈ 1.0; unleaded fuel</li>
             </ul>
         </div>
 
         <div class="exam-strategy">
             <h3>MEDIUM-YIELD TOPICS:</h3>
             <ul>
-                <li>• Modified Dulong's formula for HHV</li>
-                <li>• Compaction ratios (compactor 4:1 to 6:1)</li>
-                <li>• Bangalore vs Indore composting methods</li>
-                <li>• Pathogen kill: 55°C × 3 d or 60°C × 1 d (USEPA Class A)</li>
-                <li>• Leachate young vs old composition (BOD/COD ratio shift)</li>
-                <li>• 5 phases of LFG generation</li>
-                <li>• LandGEM model (1st-order decay)</li>
-                <li>• DNAPL vs LNAPL (TCE/PCE vs gasoline/BTEX)</li>
-                <li>• Cement kiln co-processing (HW disposal in India)</li>
-                <li>• Vitrification for radioactive waste</li>
-                <li>• Secure landfill double liner system</li>
-                <li>• Tipping fee / gate fee economics</li>
-                <li>• EU RoHS substances (Pb, Hg, Cd, Cr⁶⁺, PBB, PBDE)</li>
-                <li>• Heavy metal precipitation pH (8–10 as hydroxides)</li>
-                <li>• POPs initial 12 (dirty dozen)</li>
+                <li>• Inversion types (radiation, subsidence, frontal, advection)</li>
+                <li>• Mixing height &amp; seasonal variation in Delhi</li>
+                <li>• Plume types (looping, coning, fanning, fumigation, lofting, trapping)</li>
+                <li>• GWP of key GHGs: CH₄ ≈ 28, N₂O ≈ 273, SF₆ ≈ 25200</li>
+                <li>• ODP: CFC-11 = 1.0 (ref); HCFCs 0.02–0.11; HFCs = 0</li>
+                <li>• London 1952 smog (~12000 deaths); reducing vs oxidising smog</li>
+                <li>• Urban Heat Island: 2–8°C differential</li>
+                <li>• Air monitoring methods (West-Gaeke, Saltzman, NDIR, chemiluminescence)</li>
+                <li>• NAMP vs CAAQMS</li>
+                <li>• Bag filter temperature limits by material</li>
+                <li>• Wet vs dry FGD comparison</li>
+                <li>• Indoor air quality &amp; PMUY</li>
+                <li>• Wind rose convention (FROM not TO)</li>
             </ul>
         </div>
 
         <div class="exam-strategy">
             <h3>GATE ES ADDITIONS (High Weight in GATE):</h3>
             <ul>
-                <li>✓ <strong>Integrated SWM concept &amp; waste hierarchy</strong> (6 levels: prevention → disposal)</li>
-                <li>✓ <strong>Biological methods &amp; energy recovery</strong> (anaerobic digestion, RDF, biomethanation)</li>
-                <li>✓ <strong>Soil contamination &amp; leaching</strong> from landfills (retardation factor R = 1 + ρ<sub>b</sub>K<sub>d</sub>/n)</li>
-                <li>✓ <strong>NAPLs:</strong> LNAPL float (gasoline, BTEX); DNAPL sink (TCE, PCE, PCBs)</li>
-                <li>✓ <strong>Fate of hazardous materials:</strong> advection-dispersion-sorption-degradation</li>
-                <li>✓ <strong>Buswell's equation</strong> for theoretical biogas yield</li>
-                <li>✓ <strong>Plastic waste management practices:</strong> storage, collection, transfer; mechanical/chemical recycling</li>
-                <li>✓ <strong>E-waste management practices:</strong> dismantling, segregation, hydro/pyrometallurgy for metal recovery</li>
-                <li>✓ <strong>Remediation technologies:</strong> pump-and-treat, ISCO, bioremediation, PRBs, phytoremediation</li>
+                <li>✓ <strong>Stratospheric O₃ depletion (Rowland-Molina):</strong> Cl• chain reaction; 1 Cl atom destroys ~100,000 O₃</li>
+                <li>✓ <strong>Atmospheric sinks &amp; residence times:</strong> SO₂ 2–4 d, CH₄ 12 yr, CFC 50–100 yr, CO₂ 100–1000 yr</li>
+                <li>✓ <strong>Two-film theory, Henry's law</strong> for gas absorption</li>
+                <li>✓ <strong>Langmuir &amp; Freundlich isotherms</strong> for adsorption</li>
+                <li>✓ <strong>Thermal/Fuel/Prompt NOₓ mechanisms</strong> (Zeldovich, Fenimore)</li>
+                <li>✓ <strong>DOC / DPF / EGR / SCR</strong> for diesel emission control</li>
+                <li>✓ <strong>Fick's law</strong> in diffusion-limited scrubbing</li>
+                <li>✓ <strong>Indoor air pollutants</strong> (HCHO, radon, VOCs, SBS)</li>
+                <li>✓ <strong>Monitoring network design</strong> for NAMP/CAAQMS</li>
             </ul>
         </div>
 
         <div class="tip">
             <h3>CRITICAL EXAM-DAY TIPS:</h3>
             <ul>
-                <li><strong>✓ BMW colour codes:</strong> Yellow = burn it; Red = autoclave + recycle; White = sharps; Blue = glass. Easy mnemonic.</li>
-                <li><strong>✓ SWM bins:</strong> Green = wet (life), Blue = dry (sky/recyclable), Black = hazardous (danger).</li>
-                <li><strong>✓ Autoclave numbers:</strong> 121-15-30 (°C-psi-min) — comes up frequently.</li>
-                <li><strong>✓ Incineration secondary chamber:</strong> 1050°C + 2 s (BMW); some sources also cite for HW; mention BMW Rules 2016.</li>
-                <li><strong>✓ Composting numbers:</strong> C:N = 25–30; moisture 50–60%; thermophilic 45–70°C; pathogen kill 55°C × 3 d.</li>
-                <li><strong>✓ Landfill buffer:</strong> 100 m hab / 200 m water / 20 km airport — these 3 are commonly asked together.</li>
-                <li><strong>✓ Liner thickness:</strong> clay ≥ 90 cm + HDPE ≥ 1.5 mm (MSW); double liner with 2 mm HDPE for HW (secure landfill).</li>
-                <li><strong>✓ Plastic ≥ 120 microns:</strong> raised from 75 µm in Sept 2021; before that 50 µm. Always cite 120 µm in current answer.</li>
-                <li><strong>✓ Dioxin formation T:</strong> 250–450°C (de novo synthesis) — quench fast to avoid.</li>
-                <li><strong>✓ India MSW CV LOW</strong> (~800–1500): hence mass-burn struggles; favour composting + RDF + biomethanation.</li>
-                <li><strong>✓ EPR + tradable certificate:</strong> NEW concept under E-Waste Rules 2022 &amp; Plastic 2022 amendment; common framing.</li>
-                <li><strong>✓ Marking strategy:</strong> Unit 4 = 8–10 Qs; Rules-based factual Qs are the bulk — memorise rule names &amp; key thresholds.</li>
-                <li><strong>✓ Trap:</strong> SUP ban "19 items" vs "26 items" — official notification (Aug 2021, effective 1 July 2022) lists 19. Do not confuse.</li>
+                <li><strong>✓ Unit check in Deutsch-Anderson:</strong> w (m/s), A (m²), Q (m³/s) — if Q given in m³/hr, convert.</li>
+                <li><strong>✓ Gaussian plume:</strong> Q in g/s; u in m/s; concentration in µg/m³ requires factor of 10⁶.</li>
+                <li><strong>✓ Holland's Δh:</strong> T in Kelvin; u at stack top (not ground); P ≈ 101.3 kPa unless stated.</li>
+                <li><strong>✓ NAAQS memory:</strong> PM₁₀ annual = 60 &amp; 24-hr = 100; PM₂.₅ = 40 &amp; 60; SO₂ = 50 &amp; 80; NO₂ = 40 &amp; 80.</li>
+                <li><strong>✓ Stokes' settling:</strong> valid only for Re &lt; 1 (small particles); for large particles use intermediate/Newton regime.</li>
+                <li><strong>✓ Pasquill class:</strong> daytime + strong sun + low wind = A (most unstable); clear night + low wind = F.</li>
+                <li><strong>✓ Plume traps:</strong> fumigation (worst ground conc) — inversion ABOVE, unstable below.</li>
+                <li><strong>✓ DALR vs SALR:</strong> dry = 9.8°C/km; saturated &lt; dry because latent heat release slows cooling.</li>
+                <li><strong>✓ ESP resistivity:</strong> too high = back-corona; too low = particle re-entrainment; optimum 10⁴–10¹⁰ Ω·cm.</li>
+                <li><strong>✓ FGD products:</strong> wet limestone → gypsum (marketable); dry lime → mix (waste).</li>
+                <li><strong>✓ Smog ID:</strong> reducing (SO₂ + PM, winter, cold) = London; oxidising (O₃ + PAN, summer, hot) = LA.</li>
+                <li><strong>✓ Marking:</strong> Unit 3 = 10–13 Qs (~15% of paper). Factual (NAAQS, standards) are guaranteed marks — prioritise.</li>
+                <li><strong>✓ Common trap:</strong> criteria pollutants count = 12 (India NAAQS) vs 6 (USEPA) — read question carefully.</li>
             </ul>
         </div>
 
         <div class="standard">
-            <h3>MUST-MEMORISE STANDARDS &amp; RULES SUMMARY:</h3>
+            <h3>MUST-MEMORISE STANDARDS SUMMARY (NAAQS 2009 India):</h3>
             <table>
-                <tr><th>Item</th><th>Value / Rule</th></tr>
-                <tr><td>BMW autoclave</td><td>121°C / 15 psi / 30–60 min</td></tr>
-                <tr><td>BMW incinerator secondary</td><td>≥ 1050°C, ≥ 2 s</td></tr>
-                <tr><td>BMW PM emission</td><td>50 mg/Nm³</td></tr>
-                <tr><td>Dioxins &amp; furans (TEQ)</td><td>0.1 ng/Nm³</td></tr>
-                <tr><td>SWM bin colours</td><td>Green / Blue / Black</td></tr>
-                <tr><td>BMW bag colours</td><td>Yellow / Red / White / Blue</td></tr>
-                <tr><td>Plastic carry bag thickness</td><td>≥ 120 microns</td></tr>
-                <tr><td>SUP ban date</td><td>1 July 2022 (19 items)</td></tr>
-                <tr><td>Landfill clay liner</td><td>≥ 90 cm; k ≤ 10⁻⁷ cm/s</td></tr>
-                <tr><td>Landfill HDPE membrane</td><td>≥ 1.5 mm (MSW); ≥ 2 mm (HW)</td></tr>
-                <tr><td>Landfill buffer (habitation)</td><td>100 m (MSW) / 500 m (HW)</td></tr>
-                <tr><td>Composting C:N</td><td>25–30:1</td></tr>
-                <tr><td>Composting moisture</td><td>50–60%</td></tr>
-                <tr><td>Composting thermophilic T</td><td>45–70°C</td></tr>
-                <tr><td>Treated leachate BOD</td><td>&lt; 100 mg/L</td></tr>
-                <tr><td>Bulk MSW generator</td><td>&gt; 100 kg/d or &gt; 5000 m²</td></tr>
-                <tr><td>E-waste EPR target FY 26-27</td><td>80%</td></tr>
-                <tr><td>RDF calorific value</td><td>3000–4500 kcal/kg</td></tr>
-                <tr><td>Biogas CH₄ content</td><td>50–65%</td></tr>
-                <tr><td>Indian MSW organic</td><td>50–55%</td></tr>
-                <tr><td>Indian MSW CV</td><td>800–1500 kcal/kg</td></tr>
+                <tr><th>Pollutant</th><th>Averaging</th><th>Indl/Res/Rural</th><th>Ecol. sensitive</th></tr>
+                <tr><td>PM₁₀</td><td>24-hr / Annual</td><td>100 / 60</td><td>100 / 60</td></tr>
+                <tr><td>PM₂.₅</td><td>24-hr / Annual</td><td>60 / 40</td><td>60 / 40</td></tr>
+                <tr><td>SO₂</td><td>24-hr / Annual</td><td>80 / 50</td><td>80 / 20</td></tr>
+                <tr><td>NO₂</td><td>24-hr / Annual</td><td>80 / 40</td><td>80 / 30</td></tr>
+                <tr><td>O₃</td><td>1-hr / 8-hr</td><td>180 / 100</td><td>180 / 100</td></tr>
+                <tr><td>CO (mg/m³)</td><td>1-hr / 8-hr</td><td>4 / 2</td><td>4 / 2</td></tr>
+                <tr><td>Pb</td><td>Annual</td><td>0.5</td><td>0.5</td></tr>
+                <tr><td>NH₃</td><td>Annual</td><td>100</td><td>100</td></tr>
+                <tr><td>Benzene</td><td>Annual</td><td>5</td><td>5</td></tr>
+                <tr><td>BaP (ng/m³)</td><td>Annual</td><td>1</td><td>1</td></tr>
+                <tr><td>As (ng/m³)</td><td>Annual</td><td>6</td><td>6</td></tr>
+                <tr><td>Ni (ng/m³)</td><td>Annual</td><td>20</td><td>20</td></tr>
             </table>
+            All units µg/m³ unless specified. Source: CPCB NAAQS notification 16 Nov 2009.
         </div>
 
         <div class="footer">
-            <p><strong>UPPCB AEE Unit 4 Revision Notes | Solid Waste &amp; Hazardous Waste Management | Generated April 2026</strong></p>
-            <p>Focus on SWM Rules 2016, BMW Rules 2016, HOWM Rules 2016, E-Waste Rules 2022, Plastic Waste Rules (with 2021/22 amendments), composting, landfilling, leachate &amp; LFG, and HW treatment.</p>
-            <p>Standards referenced from CPCB notifications, MoEFCC SWM/BMW/HOWM/E-Waste Rules, Basel/Rotterdam/Stockholm Conventions.</p>
-            <p>Includes GATE ES 2026 additions: integrated SWM hierarchy, biological recovery, NAPLs, soil contamination &amp; remediation technologies.</p>
+            <p><strong>UPPCB AEE Unit 3 Revision Notes | Air Pollution &amp; Control Technology | Generated April 2026</strong></p>
+            <p>Focus on fundamentals, criteria pollutants, dispersion meteorology, control equipment (ESP/bag filter/cyclone/scrubber/FGD/SCR), and NAAQS standards.</p>
+            <p>Standards referenced from NAAQS 2009, CPCB stack emission standards 2015/2017, BS-VI norms (April 2020), Montreal Protocol + Kigali Amendment, and CPHEEO.</p>
+            <p>Includes GATE ES 2026 additions: atmospheric chemistry, ozone depletion, automotive emission controls, absorption/adsorption theory.</p>
         </div>
     </div>
 </body>

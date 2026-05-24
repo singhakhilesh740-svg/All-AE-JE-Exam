@@ -1,157 +1,103 @@
-// payment.js — Razorpay subscription + premium status management
-import { db } from './firebase-config.js';
-import {
-  doc, getDoc, setDoc, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// exams.js — Exam definitions for PYQ section
 
-// ── Config ─────────────────────────────────────────────────────────────────
-// Replace with your actual Razorpay Key ID from dashboard.razorpay.com
-const RAZORPAY_KEY_ID = 'rzp_live_XXXXXXXXXXXXXXXX';
-
-const PLANS = {
-  monthly: {
-    id: 'monthly',
-    label: 'Monthly',
-    price: 99,
-    duration_days: 30,
-    badge: '',
-    description: '₹99 / month',
-    razorpay_amount: 9900,  // in paise
+export const EXAMS = [
+  // ── AE/JE Civil ──────────────────────────────────────────────────────────
+  {
+    id: 'uppsc-ae',
+    name: 'UPPSC AE',
+    fullName: 'UP Public Service Commission – Assistant Engineer',
+    icon: '🏛️',
+    state: 'Uttar Pradesh',
+    section: 'civil',
   },
-  yearly: {
-    id: 'yearly',
-    label: 'Yearly',
-    price: 499,
-    duration_days: 365,
-    badge: '🔥 Save 58%',
-    description: '₹499 / year',
-    razorpay_amount: 49900, // in paise
-  }
-};
+  {
+    id: 'uppsc-polytechnic',
+    name: 'UPPSC Polytechnic Lecturer',
+    fullName: 'UPPSC Polytechnic Lecturer – Civil Engineering',
+    icon: '🎓',
+    state: 'Uttar Pradesh',
+    section: 'civil',
+  },
+  {
+    id: 'bpsc-ae',
+    name: 'BPSC AE',
+    fullName: 'Bihar PSC – Assistant Engineer',
+    icon: '🏢',
+    state: 'Bihar',
+    section: 'civil',
+  },
+  {
+    id: 'cgpsc-ae',
+    name: 'CGPSC AE',
+    fullName: 'Chhattisgarh PSC – Assistant Engineer',
+    icon: '🏗️',
+    state: 'Chhattisgarh',
+    section: 'civil',
+  },
+  {
+    id: 'gpsc-ae',
+    name: 'GPSC Civil Engineering Exam',
+    fullName: 'Gujarat Engineering Service (Civil) Class-1 & Class-2',
+    icon: '🏬',
+    state: 'Gujarat',
+    section: 'civil',
+  },
+  {
+    id: 'tspsc-ae',
+    name: 'TSPSC AE',
+    fullName: 'Telangana PSC – Assistant Engineer',
+    icon: '🏘️',
+    state: 'Telangana',
+    section: 'civil',
+  },
 
-export { PLANS };
+  // ── Pollution Control Board ───────────────────────────────────────────────
+  {
+    id: 'uppcb-aee',
+    name: 'UPPCB AEE',
+    fullName: 'UP Pollution Control Board – Assistant Environmental Engineer',
+    icon: '🌿',
+    state: 'Uttar Pradesh',
+    section: 'pcb',
+  },
+  {
+    id: 'gpcb-aee',
+    name: 'GPCB AEE',
+    fullName: 'Gujarat Pollution Control Board – Assistant Environmental Engineer',
+    icon: '🌱',
+    state: 'Gujarat',
+    section: 'pcb',
+  },
+  {
+    id: 'cpcb-scientist',
+    name: 'CPCB Scientist-B',
+    fullName: 'Central Pollution Control Board – Scientist B (Environmental)',
+    icon: '🔬',
+    state: 'Central',
+    section: 'pcb',
+  },
+  {
+    id: 'rspcb-aee',
+    name: 'RSPCB AEE/JEE',
+    fullName: 'Rajasthan State Pollution Control Board – AEE/JEE',
+    icon: '🏜️',
+    state: 'Rajasthan',
+    section: 'pcb',
+  },
+  {
+    id: 'bpsc-aee',
+    name: 'BPSC AEE',
+    fullName: 'Bihar PSC – Assistant Environmental Engineer',
+    icon: '🌊',
+    state: 'Bihar',
+    section: 'pcb',
+  },
+];
 
-// ── Premium check ──────────────────────────────────────────────────────────
-
-export async function isPremiumUser(uid) {
-  if (!uid) return false;
-  try {
-    const snap = await getDoc(doc(db, 'users', uid));
-    if (!snap.exists()) return false;
-    const data = snap.data();
-    if (!data.premiumExpiry) return false;
-    // premiumExpiry is a Firestore Timestamp or ISO string
-    const expiry = data.premiumExpiry.toDate
-      ? data.premiumExpiry.toDate()
-      : new Date(data.premiumExpiry);
-    return expiry > new Date();
-  } catch (e) {
-    console.error('[Payment] isPremiumUser error:', e);
-    return false;
-  }
+export function getExamById(id) {
+  return EXAMS.find(e => e.id === id) || null;
 }
 
-export async function getPremiumExpiry(uid) {
-  if (!uid) return null;
-  try {
-    const snap = await getDoc(doc(db, 'users', uid));
-    if (!snap.exists()) return null;
-    const data = snap.data();
-    if (!data.premiumExpiry) return null;
-    return data.premiumExpiry.toDate
-      ? data.premiumExpiry.toDate()
-      : new Date(data.premiumExpiry);
-  } catch { return null; }
-}
-
-// ── Save premium after payment ─────────────────────────────────────────────
-// Called after Razorpay payment success
-async function activatePremium(uid, planId, paymentId, orderId) {
-  const plan = PLANS[planId];
-  if (!plan) throw new Error('Invalid plan');
-
-  const now = new Date();
-  const expiry = new Date(now.getTime() + plan.duration_days * 24 * 60 * 60 * 1000);
-
-  await setDoc(doc(db, 'users', uid), {
-    isPremium: true,
-    premiumPlan: planId,
-    premiumActivatedAt: serverTimestamp(),
-    premiumExpiry: expiry,
-    lastPaymentId: paymentId || null,
-    lastOrderId: orderId || null,
-    updatedAt: serverTimestamp()
-  }, { merge: true });
-
-  console.log('[Payment] Premium activated:', planId, 'expires:', expiry);
-  return expiry;
-}
-
-// ── Load Razorpay script ────────────────────────────────────────────────────
-function loadRazorpayScript() {
-  return new Promise((resolve, reject) => {
-    if (window.Razorpay) { resolve(); return; }
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload = resolve;
-    script.onerror = () => reject(new Error('Failed to load Razorpay'));
-    document.head.appendChild(script);
-  });
-}
-
-// ── Main: open Razorpay checkout ───────────────────────────────────────────
-export async function openPayment({ uid, name, email, mobile, planId, onSuccess, onFailure }) {
-  const plan = PLANS[planId];
-  if (!plan) { onFailure?.('Invalid plan selected'); return; }
-
-  try {
-    await loadRazorpayScript();
-  } catch (e) {
-    onFailure?.('Payment gateway failed to load. Check your internet connection.');
-    return;
-  }
-
-  const options = {
-    key: RAZORPAY_KEY_ID,
-    amount: plan.razorpay_amount,
-    currency: 'INR',
-    name: 'AE/JE Civil Exams',
-    description: `Premium ${plan.label} Plan`,
-    image: '', // optional: your app logo URL
-    prefill: {
-      name: name || '',
-      email: email || '',
-      contact: mobile ? `+91${mobile}` : '',
-    },
-    theme: { color: '#3b82f6' },
-    modal: {
-      backdropclose: false,
-      escape: true,
-      animation: true,
-    },
-    handler: async function (response) {
-      // response.razorpay_payment_id, response.razorpay_order_id, response.razorpay_signature
-      try {
-        const expiry = await activatePremium(
-          uid,
-          planId,
-          response.razorpay_payment_id,
-          response.razorpay_order_id || null
-        );
-        onSuccess?.({ expiry, paymentId: response.razorpay_payment_id, planId });
-      } catch (e) {
-        console.error('[Payment] activatePremium error:', e);
-        // Payment succeeded but DB write failed — still show success to user
-        // and retry saving
-        onSuccess?.({ expiry: null, paymentId: response.razorpay_payment_id, planId });
-      }
-    },
-  };
-
-  const rzp = new window.Razorpay(options);
-  rzp.on('payment.failed', function (response) {
-    console.error('[Payment] Failed:', response.error);
-    onFailure?.(response.error?.description || 'Payment failed. Please try again.');
-  });
-  rzp.open();
+export function getExamsBySection(section) {
+  return EXAMS.filter(e => e.section === section);
 }
