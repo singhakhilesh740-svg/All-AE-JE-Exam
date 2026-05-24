@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPPCB AEE 2026 — Unit 11: Fluid Mechanics & Hydraulics Revision Notes</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --header: #1a237e;
+  --header2: #283593;
+  --accent: #0d47a1;
+  --bg: #f0f2f5;
+  --panel: #ffffff;
+  
+  --blue: #0d47a1;
+  --blue-bg: #e3f2fd;
+  --green: #2e7d32;
+  --green-bg: #e8f5e9;
+  --red: #c62828;
+  --red-bg: #ffebee;
+  --orange: #e65100;
+  --orange-bg: #fff3e0;
+  --purple: #4a148c;
+  --purple-bg: #f3e5f5;
+  --cyan: #00838f;
+  --cyan-bg: #e0f2f1;
+  --teal: #00695c;
+  --teal-bg: #b2dfdb;
+  
+  --text: #212121;
+  --text2: #616161;
+  --border: #e0e0e0;
+  --radius: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, var(--header) 0%, var(--header2) 100%);
+  color: white;
+  padding: 20px 30px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.header .subtitle {
+  font-size: 13px;
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+/* ===== TABS ===== */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  border: 2px solid var(--border);
+  background: white;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text2);
+  transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+}
+
+.tab-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-header {
+  background: linear-gradient(135deg, var(--blue) 0%, #1565c0 100%);
+  color: white;
+  padding: 15px 20px;
+  margin: 25px 0 15px 0;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 700;
+  border-left: 5px solid #0d47a1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-header.green {
+  background: linear-gradient(135deg, var(--green) 0%, #1b5e20 100%);
+  border-left-color: var(--green);
+}
+
+.section-header.red {
+  background: linear-gradient(135deg, var(--red) 0%, #ad1457 100%);
+  border-left-color: var(--red);
+}
+
+.section-header.orange {
+  background: linear-gradient(135deg, var(--orange) 0%, #bf360c 100%);
+  border-left-color: var(--orange);
+}
+
+.section-header.purple {
+  background: linear-gradient(135deg, var(--purple) 0%, #6a1b9a 100%);
+  border-left-color: var(--purple);
+}
+
+.section-header.cyan {
+  background: linear-gradient(135deg, var(--cyan) 0%, #00695c 100%);
+  border-left-color: var(--cyan);
+}
+
+.section-header.teal {
+  background: linear-gradient(135deg, var(--teal) 0%, #004d40 100%);
+  border-left-color: var(--teal);
+}
+
+.section-header::before {
+  content: "▶";
+  font-size: 14px;
+}
+
+/* ===== BOXES ===== */
+.box {
+  padding: 16px;
+  margin: 12px 0;
+  border-radius: var(--radius);
+  border-left: 4px solid;
+}
+
+.box.formula {
+  background: var(--orange-bg);
+  border-left-color: var(--orange);
+}
+
+.box.formula strong {
+  color: var(--orange);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.box.formula code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(230, 81, 0, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.box.definition {
+  background: var(--blue-bg);
+  border-left-color: var(--blue);
+}
+
+.box.definition strong {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.box.standard {
+  background: var(--purple-bg);
+  border-left-color: var(--purple);
+}
+
+.box.standard strong {
+  color: var(--purple);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.box.standard code {
+  background: rgba(74, 20, 140, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--purple);
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.box.tip {
+  background: var(--green-bg);
+  border-left-color: var(--green);
+}
+
+.box.tip::before {
+  content: "💡 EXAM TIP: ";
+  color: var(--green);
+  font-weight: 700;
+}
+
+.box.warning {
+  background: var(--red-bg);
+  border-left-color: var(--red);
+}
+
+.box.warning::before {
+  content: "⚠ IMPORTANT: ";
+  color: var(--red);
+  font-weight: 700;
+}
+
+.box.cyan {
+  background: var(--cyan-bg);
+  border-left-color: var(--cyan);
+}
+
+.box.cyan strong {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+/* ===== TABLE ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+table thead {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--header2) 100%);
+  color: white;
+}
+
+table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+table tr:hover {
+  background: var(--blue-bg);
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table code {
+  background: var(--orange-bg);
+  color: var(--orange);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+/* ===== LISTS ===== */
+.bullet-list {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.bullet-list li {
+  margin: 8px 0;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.bullet-list li strong {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+/* ===== GRID ===== */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.grid.three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-item {
+  background: white;
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.grid-item h4 {
+  margin-bottom: 8px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.grid-item code {
+  background: var(--orange-bg);
+  color: var(--orange);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--panel);
+  border-top: 2px solid var(--border);
+  padding: 20px 30px;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .container { padding: 20px; }
+  .grid { grid-template-columns: 1fr; }
+  .grid.three { grid-template-columns: 1fr; }
+  .header h1 { font-size: 18px; }
+  table { font-size: 12px; }
+  table th, table td { padding: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>💧 UNIT 11: FLUID MECHANICS & HYDRAULICS</h1>
+  <div class="subtitle">UPPCB AEE 2026 Revision Notes | ~3–5 MCQs Expected | High-Frequency Formula Topics</div>
+</div>
+
+<div class="container">
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('fundamentals')">Fundamentals</button>
+  <button class="tab-btn" onclick="showTab('flow')">Flow & Pipe Networks</button>
+  <button class="tab-btn" onclick="showTab('pumps')">Pumps & Hydraulics</button>
+  <button class="tab-btn" onclick="showTab('channels')">Channels & Flow Control</button>
+  <button class="tab-btn" onclick="showTab('numericals')">Formula & Numericals</button>
+  <button class="tab-btn" onclick="showTab('quick')">Quick Reference</button>
+</div>
+
+<!-- TAB 1: FUNDAMENTALS -->
+<div id="fundamentals" class="tab-content active">
+
+<div class="section-header">Fluid Properties & Hydrostatics</div>
+
+<div class="box definition">
+  <strong>Fluid:</strong> Substance that continuously deforms under shear stress; includes liquids and gases
+</div>
+
+<div class="section-header green">Key Fluid Properties</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Symbol</th>
+      <th>SI Unit</th>
+      <th>Definition / Significance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Density</strong></td>
+      <td>ρ</td>
+      <td>kg/m³</td>
+      <td>Mass per unit volume; water ≈ 1000 kg/m³ @ 4°C</td>
+    </tr>
+    <tr>
+      <td><strong>Specific Weight</strong></td>
+      <td>γ = ρg</td>
+      <td>N/m³</td>
+      <td>Weight per unit volume; γwater ≈ 9810 N/m³</td>
+    </tr>
+    <tr>
+      <td><strong>Relative Density</strong></td>
+      <td>d = ρfluid/ρwater</td>
+      <td>Dimensionless</td>
+      <td>Density ratio; d=1 for water</td>
+    </tr>
+    <tr>
+      <td><strong>Viscosity (Dynamic)</strong></td>
+      <td>μ</td>
+      <td>Pa·s (N·s/m²)</td>
+      <td>Resistance to flow; water @ 20°C ≈ 0.001 Pa·s</td>
+    </tr>
+    <tr>
+      <td><strong>Viscosity (Kinematic)</strong></td>
+      <td>ν = μ/ρ</td>
+      <td>m²/s</td>
+      <td>Dynamic viscosity / density; affects flow patterns</td>
+    </tr>
+    <tr>
+      <td><strong>Surface Tension</strong></td>
+      <td>σ</td>
+      <td>N/m</td>
+      <td>Force per unit length at liquid surface; capillarity effect</td>
+    </tr>
+    <tr>
+      <td><strong>Bulk Modulus</strong></td>
+      <td>K</td>
+      <td>Pa</td>
+      <td>Resistance to compression; water ≈ 2.1×10⁹ Pa</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box tip">
+Water @ 20°C: ρ = 1000 kg/m³, γ = 9810 N/m³, μ = 10⁻³ Pa·s, ν = 10⁻⁶ m²/s. These are high-yield constants for numericals.
+</div>
+
+<div class="section-header green">Pascal's Law & Manometers</div>
+
+<div class="box formula">
+  <strong>Pascal's Law:</strong> Pressure at a point in static fluid is same in all directions
+  <div style="margin-top: 8px;">
+    <code>P = ρgh</code><br>
+    where ρ = density (kg/m³) | g = 9.81 m/s² | h = depth (m)
+  </div>
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Hydrostatic Pressure:</strong> Only vertical component matters; horizontal pressure = 0</li>
+  <li><strong>Absolute Pressure:</strong> P_abs = P_atm + P_gauge</li>
+  <li><strong>Gauge Pressure:</strong> P_gauge = P_abs − P_atm (pressure above atmospheric)</li>
+  <li><strong>Vacuum Pressure:</strong> Negative gauge pressure (below atmospheric)</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Manometer Type</th>
+      <th>Application</th>
+      <th>Pressure Range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>U-tube Manometer</strong></td>
+      <td>Pressure difference measurement; simple</td>
+      <td>0–50 kPa</td>
+    </tr>
+    <tr>
+      <td><strong>Single-leg Manometer</strong></td>
+      <td>Low pressures; gauge pressure only</td>
+      <td>0–10 kPa</td>
+    </tr>
+    <tr>
+      <td><strong>Inclined Manometer</strong></td>
+      <td>Very low pressures; enhanced readability</td>
+      <td>0–1 kPa</td>
+    </tr>
+    <tr>
+      <td><strong>Mercury Barometer</strong></td>
+      <td>Atmospheric pressure; reference (101.325 kPa = 760 mmHg)</td>
+      <td>Atmospheric only</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="section-header green">Buoyancy & Metacentric Height</div>
+
+<div class="box formula">
+  <strong>Archimedes' Principle:</strong>
+  <code>Buoyant Force = Weight of Displaced Fluid = ρgV</code><br>
+  where V = volume of object submerged (m³)
+</div>
+
+<ul class="bullet-list">
+  <li><strong>For Floating Objects:</strong> Buoyant force = Weight of object (equilibrium)</li>
+  <li><strong>Metacentric Height (GM):</strong> Distance between center of gravity (G) and metacenter (M); determines vessel stability</li>
+  <li><strong>Stable if:</strong> GM > 0 (M above G) → vessel returns to upright after tilt</li>
+  <li><strong>Unstable if:</strong> GM < 0 (M below G) → vessel capsizes</li>
+  <li><strong>Formula:</strong> <code>GM = BM – BG</code> where BM = metacentric radius, BG = distance from buoyancy center to gravity</li>
+</ul>
+
+<div class="box tip">
+High-yield for floating structures (docks, boats, water treatment tanks). If a question asks about stability of storage tanks, check metacentric height.
+</div>
+
+</div>
+
+<!-- TAB 2: FLOW & PIPE NETWORKS -->
+<div id="flow" class="tab-content">
+
+<div class="section-header orange">Flow Classification</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Classification</th>
+      <th>Type 1</th>
+      <th>Type 2</th>
+      <th>Significance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>By Time</strong></td>
+      <td>Steady Flow</td>
+      <td>Unsteady Flow</td>
+      <td>Properties don't change (steady) vs change (unsteady) with time</td>
+    </tr>
+    <tr>
+      <td><strong>By Space</strong></td>
+      <td>Uniform Flow</td>
+      <td>Non-uniform Flow</td>
+      <td>Velocity same (uniform) vs different (non-uniform) across section</td>
+    </tr>
+    <tr>
+      <td><strong>By Reynolds Number</strong></td>
+      <td>Laminar (Re &lt; 2300)</td>
+      <td>Turbulent (Re &gt; 4000)</td>
+      <td>Smooth/parallel layers vs chaotic eddies</td>
+    </tr>
+    <tr>
+      <td><strong>By Energy Grade</strong></td>
+      <td>Ideal Flow</td>
+      <td>Real Flow</td>
+      <td>No friction losses (ideal) vs friction losses (real)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="section-header orange">Reynolds Number & Flow Regime</div>
+
+<div class="box formula">
+  <strong>Reynolds Number:</strong>
+  <code>Re = ρvD/μ = vD/ν</code><br>
+  where ρ = density | v = velocity | D = diameter | μ = dynamic viscosity | ν = kinematic viscosity
+</div>
+
+<div class="grid">
+  <div class="grid-item">
+    <h4>Laminar</h4>
+    <code>Re &lt; 2300</code><br>
+    Smooth layers; parabolic velocity profile; f = 64/Re
+  </div>
+  <div class="grid-item">
+    <h4>Transition</h4>
+    <code>2300 ≤ Re ≤ 4000</code><br>
+    Unstable; neither fully laminar nor turbulent
+  </div>
+  <div class="grid-item">
+    <h4>Turbulent</h4>
+    <code>Re &gt; 4000</code><br>
+    Chaotic; rough velocity profile; f from Moody chart
+  </div>
+</div>
+
+<div class="box tip">
+For water in pipes (D &lt; 100 mm, v ≈ 1–2 m/s), typical Re ≈ 10,000–100,000 (turbulent). Laminar rare in practice.
+</div>
+
+<div class="section-header orange">Continuity Equation</div>
+
+<div class="box formula">
+  <strong>Continuity (Conservation of Mass):</strong>
+  <code>Q = A₁V₁ = A₂V₂ = constant</code><br>
+  where Q = discharge (m³/s) | A = area (m²) | V = velocity (m/s)
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Principle:</strong> If pipe narrows, velocity increases (to maintain constant flow)
+  </div>
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Discharge Q:</strong> Volume of fluid passing per unit time; Q = A × V</li>
+  <li><strong>If A↓ → V↑</strong> (narrower section = faster flow)</li>
+  <li><strong>If A↑ → V↓</strong> (wider section = slower flow)</li>
+</ul>
+
+<div class="section-header orange">Darcy-Weisbach Equation (Friction Losses)</div>
+
+<div class="box formula">
+  <strong>Head Loss (Major Loss):</strong>
+  <code>hf = f × (L/D) × (V²/2g)</code><br>
+  where f = Darcy friction factor | L = pipe length (m) | D = diameter (m) | V = velocity (m/s) | g = 9.81 m/s²
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Head Loss increases with:</strong> Pipe length L, velocity V², friction factor f</li>
+  <li><strong>Head Loss decreases with:</strong> Larger diameter D</li>
+  <li><strong>Friction Factor f:</strong> Depends on Reynolds number & pipe roughness (ε)</li>
+  <li><strong>Laminar (Re &lt; 2300):</strong> <code>f = 64/Re</code> (independent of roughness)</li>
+  <li><strong>Turbulent (Re &gt; 4000):</strong> f from <strong>Moody Chart</strong> (depends on Re & relative roughness ε/D)</li>
+</ul>
+
+<div class="box definition">
+  <strong>Moody Chart:</strong> Graphical plot of Darcy friction factor vs Reynolds number for different relative roughness (ε/D). High-yield for locating f values; may be provided in exam.
+</div>
+
+<div class="section-header orange">Minor Losses (Local Losses)</div>
+
+<div class="box formula">
+  <strong>Minor Loss Formula:</strong>
+  <code>hm = K × (V²/2g)</code><br>
+  where K = loss coefficient (dimensionless); depends on fitting type
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fitting Type</th>
+      <th>K Value</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sudden Expansion</td>
+      <td>0.3–0.5</td>
+      <td>Dependent on area ratio; highest loss</td>
+    </tr>
+    <tr>
+      <td>Sudden Contraction</td>
+      <td>0.04–0.5</td>
+      <td>Varies with contraction ratio</td>
+    </tr>
+    <tr>
+      <td>90° Elbow (flanged)</td>
+      <td>0.27–0.3</td>
+      <td>Smooth turns reduce K; threaded = higher</td>
+    </tr>
+    <tr>
+      <td>45° Elbow (flanged)</td>
+      <td>0.16</td>
+      <td>Less loss than 90°</td>
+    </tr>
+    <tr>
+      <td>Gate Valve (open)</td>
+      <td>0.2</td>
+      <td>Fully open; partially closed → much higher K</td>
+    </tr>
+    <tr>
+      <td>Check Valve</td>
+      <td>2.0–2.5</td>
+      <td>High loss; prevents backflow</td>
+    </tr>
+    <tr>
+      <td>Exit (pipe to reservoir)</td>
+      <td>1.0</td>
+      <td>Full kinetic energy lost</td>
+    </tr>
+    <tr>
+      <td>Entrance (reservoir to pipe)</td>
+      <td>0.5 (sharp) to 0.05 (rounded)</td>
+      <td>Rounded inlets reduce loss</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box tip">
+Total head loss = Major loss (Darcy) + Minor loss (local). In short pipes with many fittings, minor losses can dominate. Always account for both in design.
+</div>
+
+<div class="section-header orange">Pipe Networks & Hardy Cross Method</div>
+
+<ul class="bullet-list">
+  <li><strong>Pipe Network:</strong> System of interconnected pipes; water distribution systems are networks</li>
+  <li><strong>Hardy Cross Method:</strong> Iterative solution for unknown flows in looped networks</li>
+  <li><strong>Principle:</strong> At each junction, inflow = outflow (continuity); around each loop, sum of head losses = 0</li>
+  <li><strong>Process:</strong> Assume initial flows → calculate head losses → correct flows → repeat until convergence</li>
+  <li><strong>Applications:</strong> Water supply distribution, sewage collection, industrial process piping</li>
+</ul>
+
+<div class="box definition">
+  <strong>Branching Network:</strong> Tree-like structure (one path between points); simpler than looped networks; only continuity equations needed
+  <br><br>
+  <strong>Looped (Grid) Network:</strong> Multiple paths between points (loops); more complex; Hardy Cross or matrix methods required
+</div>
+
+</div>
+
+<!-- TAB 3: PUMPS & HYDRAULICS -->
+<div id="pumps" class="tab-content">
+
+<div class="section-header red">Centrifugal Pump Fundamentals</div>
+
+<ul class="bullet-list">
+  <li><strong>Type:</strong> Positive displacement pump; uses rotating impeller to impart kinetic energy to fluid</li>
+  <li><strong>Components:</strong> Impeller, casing, suction port, discharge port, shaft, bearings</li>
+  <li><strong>Operating Principle:</strong> Impeller rotates → throws fluid radially outward → pressure build-up → discharge through outlet</li>
+  <li><strong>Advantages:</strong> High discharge, suitable for high flow rates, smooth operation, low maintenance</li>
+  <li><strong>Disadvantages:</strong> Cannot self-prime (needs priming), low discharge head for small pumps</li>
+</ul>
+
+<div class="section-header red">Pump Performance Characteristics</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Symbol</th>
+      <th>Definition / Formula</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Head (Discharge Head)</strong></td>
+      <td>H</td>
+      <td>Energy per unit weight added by pump (m); measured from discharge minus suction (gauge)</td>
+    </tr>
+    <tr>
+      <td><strong>Discharge</strong></td>
+      <td>Q</td>
+      <td>Volume of fluid pumped per unit time (m³/s or l/s)</td>
+    </tr>
+    <tr>
+      <td><strong>Power (Hydraulic)</strong></td>
+      <td>P_h</td>
+      <td><code>P_h = ρgQH</code> (Watts); power transferred to fluid</td>
+    </tr>
+    <tr>
+      <td><strong>Power (Brake/Shaft)</strong></td>
+      <td>P_brake</td>
+      <td>Actual input power from motor; P_brake = P_h / η</td>
+    </tr>
+    <tr>
+      <td><strong>Efficiency (Overall)</strong></td>
+      <td>η</td>
+      <td><code>η = P_h / P_brake</code> (typically 0.7–0.85 for centrifugal pumps)</td>
+    </tr>
+    <tr>
+      <td><strong>Specific Speed</strong></td>
+      <td>Ns</td>
+      <td><code>Ns = (N × Q^0.5) / H^0.75</code> (N in rpm, Q in m³/s, H in m); pump classification</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box formula">
+  <strong>Specific Speed (Ns):</strong>
+  <code>Ns = (N√Q) / H^0.75</code><br>
+  where N = pump speed (rpm) | Q = discharge (m³/s) | H = head (m)
+  <div style="margin-top: 8px;">
+    <strong>Ns &lt; 50:</strong> Centrifugal (high head, low Q)<br>
+    <strong>Ns = 50–300:</strong> Mixed flow<br>
+    <strong>Ns &gt; 300:</strong> Axial flow (low head, high Q)
+  </div>
+</div>
+
+<div class="section-header red">NPSH & Cavitation</div>
+
+<div class="box formula">
+  <strong>Net Positive Suction Head (NPSH):</strong>
+  <code>NPSH_available = (P_atm – P_vapor)/ρg – h_f,suction</code><br>
+  where P_atm = atmospheric pressure | P_vapor = vapor pressure of liquid | h_f,suction = suction line losses
+</div>
+
+<ul class="bullet-list">
+  <li><strong>NPSH Required (NPSHR):</strong> Minimum suction head required by pump (given by manufacturer)</li>
+  <li><strong>NPSH Available (NPSha):</strong> Actual suction head available at site</li>
+  <li><strong>Cavitation Criterion:</strong> NPSH_a > NPSH_r (if violated → cavitation occurs)</li>
+  <li><strong>Cavitation:</strong> Vapor bubbles form in suction → collapse near impeller → noise, vibration, erosion, performance drop</li>
+  <li><strong>Prevention:</strong> Reduce suction lift, minimize suction losses, increase inlet pressure, cool liquid</li>
+</ul>
+
+<div class="box warning">
+Cavitation is destructive. Always ensure NPSH_available ≥ NPSH_required with safety margin (typically 0.5 m minimum).
+</div>
+
+<div class="section-header red">Pump Operating Conditions & Affinity Laws</div>
+
+<ul class="bullet-list">
+  <li><strong>Operating Point:</strong> Intersection of pump curve (H vs Q) and system curve (friction losses)</li>
+  <li><strong>Best Efficiency Point (BEP):</strong> Optimal discharge on pump curve; highest efficiency</li>
+  <li><strong>Throttling:</strong> Reducing flow by closing discharge valve; moves operating point, reduces efficiency</li>
+  <li><strong>Variable Speed Drive:</strong> Efficient method to vary flow; adjusts entire pump curve</li>
+</ul>
+
+<div class="box formula">
+  <strong>Affinity Laws (for geometrically similar pumps):</strong><br>
+  When speed changes from N₁ to N₂:<br>
+  <code>Q₂/Q₁ = N₂/N₁</code> (Discharge proportional to speed)<br>
+  <code>H₂/H₁ = (N₂/N₁)²</code> (Head proportional to speed squared)<br>
+  <code>P₂/P₁ = (N₂/N₁)³</code> (Power proportional to speed cubed)
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Key insight:</strong> Small speed changes dramatically affect power (cubic relationship).
+  </div>
+</div>
+
+<div class="box tip">
+Affinity laws are high-yield for numericals. If pump speed doubles, discharge doubles, head quadruples, power increases 8×. Practice 3–4 problems on this.
+</div>
+
+<div class="section-header red">Pumps in Series & Parallel</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Configuration</th>
+      <th>Effect on Head</th>
+      <th>Effect on Discharge</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Series</strong></td>
+      <td>H_total = H₁ + H₂ (heads add)</td>
+      <td>Q_total = Q₁ = Q₂ (same flow)</td>
+      <td>High head requirement; same discharge</td>
+    </tr>
+    <tr>
+      <td><strong>Parallel</strong></td>
+      <td>H_total = H₁ = H₂ (same head)</td>
+      <td>Q_total = Q₁ + Q₂ (flows add)</td>
+      <td>High discharge requirement; same head</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box definition">
+  <strong>Series Pumps:</strong> Output of first pump is input to second; useful for very high heads (ex: booster pumps in long distribution lines)
+  <br><br>
+  <strong>Parallel Pumps:</strong> Both pump to same header; useful for high discharge (ex: water supply from multiple sources)
+</div>
+
+</div>
+
+<!-- TAB 4: CHANNELS & FLOW CONTROL -->
+<div id="channels" class="tab-content">
+
+<div class="section-header teal">Open Channel Flow Fundamentals</div>
+
+<ul class="bullet-list">
+  <li><strong>Open Channel:</strong> Flow with free surface exposed to atmosphere (rivers, canals, sewers with partial flow)</li>
+  <li><strong>Contrast to Closed Pipes:</strong> Pressure at surface = atmospheric (constant); slope drives flow</li>
+  <li><strong>Uniform Flow:</strong> Depth & velocity constant along channel (Chezy/Manning apply)</li>
+  <li><strong>Non-uniform Flow:</strong> Depth/velocity changes; more complex analysis needed</li>
+</ul>
+
+<div class="section-header teal">Manning's Equation (Open Channels)</div>
+
+<div class="box formula">
+  <strong>Manning's Equation:</strong>
+  <code>V = (1/n) × R^(2/3) × S^(1/2)</code><br>
+  Or: <code>Q = (A/n) × R^(2/3) × S^(1/2)</code><br>
+  where n = Manning's roughness coefficient | R = hydraulic radius = A/P | A = cross-sectional area | P = wetted perimeter | S = bed slope
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Channel Type</th>
+      <th>Manning's n</th>
+      <th>Condition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Concrete (smooth)</td>
+      <td>0.012–0.015</td>
+      <td>New, clean</td>
+    </tr>
+    <tr>
+      <td>Concrete (rough)</td>
+      <td>0.018–0.025</td>
+      <td>Old, algae growth</td>
+    </tr>
+    <tr>
+      <td>Natural earth channel</td>
+      <td>0.025–0.035</td>
+      <td>Straight, clean</td>
+    </tr>
+    <tr>
+      <td>Natural earth (with weeds)</td>
+      <td>0.035–0.050</td>
+      <td>Dense vegetation</td>
+    </tr>
+    <tr>
+      <td>River (clean)</td>
+      <td>0.030–0.040</td>
+      <td>Straight reach</td>
+    </tr>
+    <tr>
+      <td>River (meandering)</td>
+      <td>0.040–0.060</td>
+      <td>Bends, vegetation</td>
+    </tr>
+    <tr>
+      <td>Sewer (concrete pipe)</td>
+      <td>0.011–0.015</td>
+      <td>Clean; gravity flow</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box tip">
+Manning's n is high-yield parameter. For exam numericals, expect n values given or standard (concrete = 0.015, earth = 0.03). Practice 5 problems on Manning's equation.
+</div>
+
+<div class="section-header teal">Chezy's Formula (Alternative)</div>
+
+<div class="box formula">
+  <strong>Chezy's Equation:</strong>
+  <code>V = C × √(R × S)</code><br>
+  where C = Chezy's roughness coefficient; relationship with Manning: <code>C = R^(1/6) / n</code>
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Chezy vs Manning:</strong> Both empirical for uniform flow; Manning preferred in practice (n values well-documented)</li>
+  <li><strong>Hydraulic Radius R:</strong> For rectangular channel: R = (B × D) / (B + 2D) where B = width, D = depth</li>
+</ul>
+
+<div class="section-header teal">Critical Flow & Froude Number</div>
+
+<div class="box formula">
+  <strong>Froude Number:</strong>
+  <code>F = V / √(g × D_m)</code><br>
+  where V = velocity | g = 9.81 m/s² | D_m = hydraulic depth = A/B (mean depth for rectangular channel)
+</div>
+
+<div class="grid">
+  <div class="grid-item">
+    <h4>Subcritical (F &lt; 1)</h4>
+    <code>Slower flow</code><br>
+    Depth > critical; gravity dominates; upstream disturbances propagate downstream
+  </div>
+  <div class="grid-item">
+    <h4>Critical (F = 1)</h4>
+    <code>Transition point</code><br>
+    Depth = critical depth; specific energy minimum
+  </div>
+  <div class="grid-item">
+    <h4>Supercritical (F &gt; 1)</h4>
+    <code>Faster flow</code><br>
+    Depth &lt; critical; inertia dominates; upstream disturbances CANNOT travel upstream
+  </div>
+</div>
+
+<div class="box formula">
+  <strong>Critical Depth (Rectangular Channel):</strong>
+  <code>D_c = (q²/g)^(1/3)</code><br>
+  where q = discharge per unit width = Q/B
+</div>
+
+<div class="section-header teal">Hydraulic Jump</div>
+
+<div class="box definition">
+  <strong>Hydraulic Jump:</strong> Sudden transition from supercritical to subcritical flow; violent, turbulent; significant energy loss
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Occurs when:</strong> Supercritical flow (F &gt; 1) transitions to subcritical (F &lt; 1)</li>
+  <li><strong>Common causes:</strong> Spillway toe, downstream constriction, sudden slope change</li>
+  <li><strong>Characteristics:</strong> Rapid rise in water surface, large surface waves, air entrainment, noise</li>
+  <li><strong>Energy Loss:</strong> Significant; used in dissipators to protect downstream channel</li>
+  <li><strong>Applications:</strong> Stilling basin design, spillway energy dissipation, channel protection</li>
+</ul>
+
+<div class="box formula">
+  <strong>Conjugate Depths (Hydraulic Jump Relation):</strong><br>
+  For rectangular channel: <code>y₂/y₁ = [√(1 + 8F₁²) – 1] / 2</code><br>
+  where y₁ = upstream depth, y₂ = downstream depth, F₁ = upstream Froude number
+</div>
+
+<div class="box tip">
+Hydraulic jump is visually striking and frequently tested. Recognize it in diagrams; know it occurs when supercritical → subcritical; causes energy loss (useful for design).
+</div>
+
+<div class="section-header teal">Water Hammer & Surge Tanks</div>
+
+<div class="box definition">
+  <strong>Water Hammer (Surge):</strong> Sudden pressure rise/fall due to rapid valve closure or pump shutdown; can damage pipes (explosion or implosion)
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Cause:</strong> Rapid deceleration of water column → momentum transfer → pressure spike</li>
+  <li><strong>Magnitude:</strong> Can exceed 2× system pressure; depends on velocity change & closure time</li>
+  <li><strong>Prevention Methods:</strong> Slow valve closure, surge tanks, relief valves, air chambers</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Protection Device</th>
+      <th>Principle</th>
+      <th>Application</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Surge Tank</strong></td>
+      <td>Open reservoir on pipeline; water level rises/falls to absorb pressure changes</td>
+      <td>Hydropower penstocks, long transmission lines</td>
+    </tr>
+    <tr>
+      <td><strong>Air Chamber</strong></td>
+      <td>Sealed tank with trapped air; air compresses to absorb surge</td>
+      <td>Pump discharge lines, household water systems</td>
+    </tr>
+    <tr>
+      <td><strong>Relief Valve</strong></td>
+      <td>Opens automatically when pressure exceeds threshold; diverts flow</td>
+      <td>Pressure systems, pump discharge</td>
+    </tr>
+    <tr>
+      <td><strong>Slow Closure</strong></td>
+      <td>Gradual valve closure (motorized operators); reduces rate of momentum change</td>
+      <td>Check valves, isolation valves on critical systems</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<!-- TAB 5: NUMERICALS & FORMULAS -->
+<div id="numericals" class="tab-content">
+
+<div class="section-header cyan">High-Frequency Formulae</div>
+
+<div class="box formula">
+  <strong>1. Reynolds Number</strong>
+  <code>Re = ρvD/μ = vD/ν</code>
+  <strong>Example:</strong> Water (ν = 10⁻⁶ m²/s) in pipe D = 0.1 m, v = 1 m/s:
+  <code>Re = 1 × 0.1 / 10⁻⁶ = 100,000 (Turbulent)</code>
+</div>
+
+<div class="box formula">
+  <strong>2. Continuity Equation</strong>
+  <code>Q = A × V</code><br>
+  <strong>Example:</strong> Pipe A = 0.01 m², V = 2 m/s:
+  <code>Q = 0.01 × 2 = 0.02 m³/s = 20 l/s</code>
+</div>
+
+<div class="box formula">
+  <strong>3. Darcy-Weisbach (Major Loss)</strong>
+  <code>hf = f × (L/D) × (V²/2g)</code>
+  <strong>Example:</strong> Pipe: L = 1000 m, D = 0.5 m, V = 1 m/s, f = 0.02, g = 9.81 m/s²:
+  <code>hf = 0.02 × (1000/0.5) × (1²/(2×9.81)) = 0.02 × 2000 × 0.051 = 2.04 m</code>
+</div>
+
+<div class="box formula">
+  <strong>4. Minor Loss</strong>
+  <code>hm = K × (V²/2g)</code>
+  <strong>Example:</strong> 90° elbow (K = 0.3), V = 2 m/s:
+  <code>hm = 0.3 × (4/(2×9.81)) = 0.3 × 0.204 = 0.061 m</code>
+</div>
+
+<div class="box formula">
+  <strong>5. Pump Hydraulic Power</strong>
+  <code>P_h = ρ × g × Q × H</code><br>
+  where ρ = 1000 kg/m³, g = 9.81 m/s², Q in m³/s, H in m
+  <div style="margin-top: 8px;">
+    <strong>Example:</strong> Q = 0.05 m³/s, H = 50 m:
+    <code>P_h = 1000 × 9.81 × 0.05 × 50 = 24,525 W ≈ 24.5 kW</code>
+  </div>
+</div>
+
+<div class="box formula">
+  <strong>6. Affinity Laws</strong>
+  <code>Q₂ = Q₁ × (N₂/N₁)</code><br>
+  <code>H₂ = H₁ × (N₂/N₁)²</code><br>
+  <code>P₂ = P₁ × (N₂/N₁)³</code>
+  <div style="margin-top: 8px;">
+    <strong>Example:</strong> Pump @ 1000 rpm: Q = 0.1 m³/s, H = 20 m, P = 20 kW. At 1500 rpm:
+    <code>Q₂ = 0.1 × (1500/1000) = 0.15 m³/s</code><br>
+    <code>H₂ = 20 × (1.5)² = 45 m</code><br>
+    <code>P₂ = 20 × (1.5)³ = 67.5 kW</code>
+  </div>
+</div>
+
+<div class="box formula">
+  <strong>7. Manning's Equation</strong>
+  <code>V = (1/n) × R^(2/3) × S^(1/2)</code><br>
+  <strong>Example:</strong> Concrete channel n = 0.015, R = 1 m, S = 0.001:
+  <code>V = (1/0.015) × 1^(2/3) × √0.001 = 66.67 × 1 × 0.0316 = 2.1 m/s</code>
+</div>
+
+<div class="box formula">
+  <strong>8. Froude Number</strong>
+  <code>F = V / √(g × D_m)</code><br>
+  <strong>Example:</strong> Rectangular channel: B = 5 m, D = 1 m, Q = 10 m³/s:
+  <code>V = Q / (B×D) = 10 / 5 = 2 m/s</code><br>
+  <code>D_m = A/B = (5×1)/5 = 1 m</code><br>
+  <code>F = 2 / √(9.81 × 1) = 2 / 3.13 = 0.64 (Subcritical)</code>
+</div>
+
+<div class="section-header cyan">Sample Numericals</div>
+
+<div class="box cyan">
+  <strong>Q1: Darcy-Weisbach with Multiple Losses</strong><br>
+  Water flows through a 100 m steel pipe (D = 0.1 m) @ v = 1.5 m/s. Pipe includes one 90° elbow (K=0.3) and entrance loss (K=0.5). Assume f = 0.025. Find total head loss.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    Major loss: hf = 0.025 × (100/0.1) × (1.5²/(2×9.81)) = 0.025 × 1000 × 0.1145 = 2.86 m<br>
+    Elbow: hm1 = 0.3 × (1.5²/(2×9.81)) = 0.3 × 0.1145 = 0.034 m<br>
+    Entrance: hm2 = 0.5 × 0.1145 = 0.057 m<br>
+    <strong>Total = 2.86 + 0.034 + 0.057 = 2.95 m</strong>
+  </div>
+</div>
+
+<div class="box cyan">
+  <strong>Q2: Affinity Laws</strong><br>
+  A centrifugal pump at 1200 rpm delivers Q = 0.08 m³/s and H = 30 m. If speed is increased to 1800 rpm, find new discharge, head, and power ratio. Original power was 25 kW.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    Speed ratio = 1800/1200 = 1.5<br>
+    Q₂ = 0.08 × 1.5 = <strong>0.12 m³/s</strong><br>
+    H₂ = 30 × (1.5)² = 30 × 2.25 = <strong>67.5 m</strong><br>
+    P₂ = 25 × (1.5)³ = 25 × 3.375 = <strong>84.4 kW</strong>
+  </div>
+</div>
+
+<div class="box cyan">
+  <strong>Q3: Manning's Equation (Trapezoidal Channel)</strong><br>
+  A trapezoidal concrete channel (n = 0.015) with bottom width B = 3 m, side slope 1:1, depth D = 1.5 m, and bed slope S = 0.0005. Find discharge.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    Area A = (B + mD) × D = (3 + 1.5) × 1.5 = 6.75 m² (for 1:1 slope, m = 1)<br>
+    Perimeter P = B + 2D√(1+m²) = 3 + 2×1.5×√2 = 3 + 4.24 = 7.24 m<br>
+    R = A/P = 6.75 / 7.24 = 0.932 m<br>
+    V = (1/0.015) × 0.932^(2/3) × √0.0005 = 66.67 × 0.953 × 0.0224 = 1.42 m/s<br>
+    Q = A × V = 6.75 × 1.42 = <strong>9.57 m³/s</strong>
+  </div>
+</div>
+
+<div class="box cyan">
+  <strong>Q4: Froude Number & Critical Depth</strong><br>
+  In a rectangular channel (B = 4 m), water flows @ Q = 12 m³/s with depth D = 0.8 m. Is flow subcritical or supercritical? Find critical depth.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    V = Q / (B×D) = 12 / (4×0.8) = 3.75 m/s<br>
+    D_m = 0.8 m<br>
+    F = 3.75 / √(9.81×0.8) = 3.75 / 2.8 = 1.34 > 1 → <strong>SUPERCRITICAL</strong><br>
+    q = Q/B = 12/4 = 3 m³/s per m width<br>
+    D_c = (q²/g)^(1/3) = (9/9.81)^(1/3) = 0.945^(1/3) = <strong>0.98 m</strong><br>
+    Since D = 0.8 m &lt; D_c, flow is supercritical (confirmed).
+  </div>
+</div>
+
+<div class="box cyan">
+  <strong>Q5: Pump Efficiency</strong><br>
+  A pump delivers Q = 0.05 m³/s against H = 40 m. Motor input power is 22 kW. Find overall efficiency and hydraulic power.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    P_h = ρgQH = 1000 × 9.81 × 0.05 × 40 = 19,620 W = 19.62 kW<br>
+    η = P_h / P_brake = 19.62 / 22 = <strong>0.892 = 89.2%</strong> (excellent efficiency)
+  </div>
+</div>
+
+</div>
+
+<!-- TAB 6: QUICK REFERENCE -->
+<div id="quick" class="tab-content">
+
+<div class="section-header" style="background: linear-gradient(135deg, #1a237e 0%, #283593 100%);">⚡ Must-Memorise Constants & Formulas</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Value / Formula</th>
+      <th>SI Unit / Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background: #fff3e0;">
+      <td><strong>Water Density (20°C)</strong></td>
+      <td><code>ρ = 1000</code></td>
+      <td>kg/m³</td>
+    </tr>
+    <tr style="background: #fff3e0;">
+      <td><strong>Gravity</strong></td>
+      <td><code>g = 9.81</code></td>
+      <td>m/s²</td>
+    </tr>
+    <tr style="background: #fff3e0;">
+      <td><strong>Kinematic Viscosity (water @ 20°C)</strong></td>
+      <td><code>ν = 10⁻⁶</code></td>
+      <td>m²/s</td>
+    </tr>
+    <tr style="background: #e3f2fd;">
+      <td><strong>Laminar Limit</strong></td>
+      <td><code>Re &lt; 2300</code></td>
+      <td>Dimensionless</td>
+    </tr>
+    <tr style="background: #e3f2fd;">
+      <td><strong>Turbulent Start</strong></td>
+      <td><code>Re &gt; 4000</code></td>
+      <td>Dimensionless</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+      <td><strong>Manning's n (Concrete)</strong></td>
+      <td><code>0.012–0.015</code></td>
+      <td>Smooth; most common for engineering</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+      <td><strong>Manning's n (Earth)</strong></td>
+      <td><code>0.025–0.035</code></td>
+      <td>Natural channels</td>
+    </tr>
+    <tr style="background: #f3e5f5;">
+      <td><strong>Pump Efficiency (Centrifugal)</strong></td>
+      <td><code>0.70–0.85</code></td>
+      <td>Typical operating range</td>
+    </tr>
+    <tr style="background: #f3e5f5;">
+      <td><strong>Hydraulic Power</strong></td>
+      <td><code>P_h = ρgQH</code></td>
+      <td>Watts; Q in m³/s, H in m</td>
+    </tr>
+    <tr style="background: #ffe0b2;">
+      <td><strong>Darcy-Weisbach</strong></td>
+      <td><code>hf = f(L/D)(V²/2g)</code></td>
+      <td>Major loss in pipes</td>
+    </tr>
+    <tr style="background: #ffe0b2;">
+      <td><strong>Manning's Equation</strong></td>
+      <td><code>V = (1/n)R^(2/3)S^(1/2)</code></td>
+      <td>Open channel flow</td>
+    </tr>
+    <tr style="background: #c8e6c9;">
+      <td><strong>Froude Number</strong></td>
+      <td><code>F = V/√(gD_m)</code></td>
+      <td>F &lt; 1 = subcritical; F &gt; 1 = supercritical</td>
+    </tr>
+    <tr style="background: #b3e5fc;">
+      <td><strong>Critical Depth (Rectangular)</strong></td>
+      <td><code>D_c = (q²/g)^(1/3)</code></td>
+      <td>q = Q/B (discharge per width)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="section-header" style="background: linear-gradient(135deg, #e65100 0%, #bf360c 100%);">🔧 Quick Design Checklist</div>
+
+<ul class="bullet-list">
+  <li><strong>Pipe Design:</strong> Check Re (laminar/turbulent) → find f (Moody chart or correlation) → calculate hf (Darcy) → add minor losses → total head loss</li>
+  <li><strong>Pump Selection:</strong> Required Q and H → read pump curve → check operating point on system curve → verify NPSH available &gt; NPSH required</li>
+  <li><strong>Open Channel:</strong> Given Q, slope, Manning's n → solve Manning iteratively for depth D or use nomographs</li>
+  <li><strong>Hydraulic Jump:</strong> Check Froude number; if F₁ &gt; 1 and abrupt transition, jump occurs → major energy loss</li>
+  <li><strong>Water Hammer:</strong> Rapid valve closure → pressure surge → install relief valve or surge tank if needed</li>
+</ul>
+
+<div class="section-header" style="background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);">📋 Exam Strategies for Unit 11</div>
+
+<ol class="bullet-list" style="list-style: decimal;">
+  <li><strong>Formulas to Drill:</strong> Reynolds, Continuity, Darcy-Weisbach, Manning, Froude, Pump Power. Know derivations + numerical patterns.</li>
+  <li><strong>Moody Chart:</strong> Understand how to use it; may be provided in exam. Know relative roughness concept.</li>
+  <li><strong>Affinity Laws:</strong> High-frequency numerical topic. Practice speed change scenarios (1.5×, 2×, 0.8×).</li>
+  <li><strong>Pipe vs Channel:</strong> Closed pipes use Darcy; open channels use Manning. Don't mix formulas.</li>
+  <li><strong>NPSH & Cavitation:</strong> Critical for pump questions. NPSH_a &gt; NPSH_r always required.</li>
+  <li><strong>Hardy Cross:</strong> Conceptual; may ask principle but unlikely to solve in exam time.</li>
+  <li><strong>Hydraulic Jump:</strong> Recognize by F₁ &gt; 1 → F₂ &lt; 1 transition; causes energy loss; used in stilling basins.</li>
+</ol>
+
+<div class="box warning">
+<strong>Common Mistakes to Avoid:</strong><br>
+❌ Confusing laminar (f = 64/Re) with turbulent (f from Moody)<br>
+❌ Forgetting units in hydraulic power (ρ in kg/m³, g in m/s², Q in m³/s, H in m → Watts)<br>
+❌ Using Manning's n for closed pipes (use Darcy only)<br>
+❌ Assuming NPSH available without calculating suction losses<br>
+❌ Mixing up affinity laws (power cubes; head squares; discharge linear)<br>
+❌ Forgetting + signs in continuity for networks (inflow = outflow at junctions)
+</div>
+
+<div class="section-header" style="background: linear-gradient(135deg, #00838f 0%, #00695c 100%);">💡 High-Yield Numerical Patterns</div>
+
+<ul class="bullet-list">
+  <li><strong>Type 1 — Darcy Loss:</strong> Given L, D, V, f → find hf. Vary one parameter, predict loss change (hf ∝ L/D × V²).</li>
+  <li><strong>Type 2 — Pump Affinity:</strong> Speed change N₁ → N₂ → find new Q, H, P using (N₂/N₁) ratios.</li>
+  <li><strong>Type 3 — Manning Flow:</strong> Given Q, n, slope, geometry → find depth D iteratively (or vice versa).</li>
+  <li><strong>Type 4 — Froude & Jump:</strong> Calculate F; if &gt; 1 (supercritical) and transitions abruptly, hydraulic jump forms.</li>
+  <li><strong>Type 5 — NPSH:</strong> Atmospheric pressure − vapor pressure − suction losses = NPSH_a; compare with NPSH_r.</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  ✅ Revision notes compiled for UPPCB AEE 2026 | Unit 11: Fluid Mechanics & Hydraulics<br>
+  📚 Source: Civil Engineering Fluid Mechanics texts, ASCE, CPCB water supply/sewerage codes | Last updated: April 2026
+</div>
+
+</body>
+
+<script>
+function showTab(tabName) {
+  // Hide all tabs
+  const tabs = document.querySelectorAll('.tab-content');
+  tabs.forEach(tab => tab.classList.remove('active'));
+  
+  // Hide all buttons (remove active state)
+  const buttons = document.querySelectorAll('.tab-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  
+  // Show selected tab
+  document.getElementById(tabName).classList.add('active');
+  
+  // Highlight selected button
+  event.target.classList.add('active');
+}
+</script>
+
+</html>

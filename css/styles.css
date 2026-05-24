@@ -773,3 +773,146 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
 body {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+
+/* ── v12: New home tiles ───────────────────────────────────────────────── */
+.tile-civil {
+  background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+  border: 1px solid #2563eb44;
+}
+.tile-pcb {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  border: 1px solid #10b98144;
+}
+.tile-nontech {
+  background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
+  border: 1px solid #7c3aed44;
+}
+/* Make 3 tiles fill nicely on home */
+#homeScreen .home-grid {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 480px) {
+  #homeScreen .home-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── PCB Notes rendered HTML content ─────────────────────────────────────── */
+.pcb-notes-content {
+  padding: 12px 4px 40px;
+  color: #e2e8f0;
+}
+.pcb-notes-content h2 {
+  color: #fff;
+  background: #1e3a5f;
+  padding: 10px 14px;
+  margin: 24px 0 12px;
+  border-left: 4px solid #60a5fa;
+  font-size: 14px;
+  border-radius: 0 6px 6px 0;
+  scroll-margin-top: 120px;
+}
+.pcb-notes-content h3 {
+  color: #93c5fd;
+  font-size: 13px;
+  margin: 16px 0 8px;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 4px;
+}
+.pcb-notes-content h4 {
+  color: #bfdbfe;
+  font-size: 13px;
+  margin: 12px 0 6px;
+}
+.pcb-notes-content p,
+.pcb-notes-content li,
+.pcb-notes-content .content {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #cbd5e1;
+  margin-bottom: 8px;
+}
+.pcb-notes-content ul,
+.pcb-notes-content ol {
+  padding-left: 18px;
+  margin-bottom: 10px;
+}
+.pcb-notes-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 12px;
+}
+.pcb-notes-content th {
+  background: #1e3a5f;
+  color: #e2e8f0;
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #334155;
+}
+.pcb-notes-content td {
+  border: 1px solid #334155;
+  padding: 7px 8px;
+  color: #cbd5e1;
+  background: #0f172a;
+}
+.pcb-notes-content tr:nth-child(even) td {
+  background: #1e293b;
+}
+.pcb-notes-content .highlight,
+.pcb-notes-content .exam-tip {
+  background: #422006;
+  border-left: 4px solid #f59e0b;
+  padding: 10px 12px;
+  border-radius: 0 6px 6px 0;
+  margin: 10px 0;
+  font-size: 13px;
+  color: #fde68a;
+}
+.pcb-notes-content .formula-box,
+.pcb-notes-content .formula {
+  background: #0c1a2e;
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #93c5fd;
+  margin: 10px 0;
+  overflow-x: auto;
+}
+.pcb-notes-content .important,
+.pcb-notes-content .key-point {
+  background: #064e3b;
+  border-left: 4px solid #10b981;
+  padding: 8px 12px;
+  border-radius: 0 6px 6px 0;
+  margin: 8px 0;
+  font-size: 13px;
+  color: #6ee7b7;
+}
+.pcb-notes-content .warning,
+.pcb-notes-content .note {
+  background: #1e1b4b;
+  border-left: 4px solid #818cf8;
+  padding: 8px 12px;
+  border-radius: 0 6px 6px 0;
+  margin: 8px 0;
+  font-size: 13px;
+  color: #c7d2fe;
+}
+/* Override any light background from original HTML */
+.pcb-notes-content .container,
+.pcb-notes-content > div {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+.pcb-notes-content .subtitle { display: none; }
+
+/* Unit 7 & 11: section-header divs as scroll targets */
+.pcb-notes-content div.section-header {
+  scroll-margin-top: 120px;
+}

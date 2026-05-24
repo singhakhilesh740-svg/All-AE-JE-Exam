@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPPCB AEE Unit 1 - Water Supply Engineering</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #212121;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        
+        h1 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        h2 {
+            color: white;
+            background: #283593;
+            padding: 12px;
+            margin: 30px 0 15px 0;
+            border-left: 4px solid #1a237e;
+        }
+        
+        h3 {
+            color: #1a237e;
+            margin: 20px 0 10px 0;
+            font-size: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        
+        .content {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+        }
+        
+        th {
+            background: #283593;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .standard {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .formula {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+        .tip {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        li { margin-bottom: 5px; }
+        
+        .section-intro {
+            background: #f0f2f5;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .key-point {
+            color: #c62828;
+            font-weight: 600;
+        }
+        
+        .exam-strategy {
+            background: #fff8e1;
+            border: 2px solid #fbc02d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>UNIT 1: WATER SUPPLY ENGINEERING</h1>
+        <div class="subtitle">UPPCB AEE 2026 | 15-18 Questions | 60-72 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
+
+        <!-- SECTION 1 -->
+        <h2>SECTION 1: WATER QUALITY PARAMETERS</h2>
+        <div class="section-intro">
+            Physical, chemical, and biological parameters that define drinking water quality. Focus on IS 10500:2012 limits, measurement methods, and health significance.
+        </div>
+
+        <h3>1.1 PHYSICAL PARAMETERS</h3>
+        <div class="content">
+            <strong>Turbidity:</strong> Caused by suspended clay, silt, algae, colloidal organics. Measured <strong>nephelometrically in NTU</strong> (Nephelometric Turbidity Units). High turbidity <span class="key-point">shields pathogens from disinfection</span> (UV, Cl₂).<br/>
+
+            <strong>Colour:</strong>
+            <ul>
+                <li><strong>True colour</strong> = measured after filtering through 0.45 micron membrane (removes suspended matter)</li>
+                <li><strong>Apparent colour</strong> = includes colour from suspended particles</li>
+                <li>Measured in TCU (True Colour Units) by visual comparison with platinum-cobalt standard or spectrophotometry at 456 nm</li>
+            </ul>
+
+            <strong>Odour - Threshold Odour Number (TON):</strong>
+            <ul>
+                <li>TON = (Volume sample + Volume odour-free water) / Volume sample at minimum dilution where odour just detectable to 50% of trained panel</li>
+                <li>TON = 50 means 50× dilution needed before odour disappears; higher TON = more objectionable</li>
+                <li>IS 10500:2012 requires taste and odour to be <strong>'agreeable'</strong> - no numerical limit</li>
+            </ul>
+
+            <strong>Temperature effects:</strong> Palatability (cold water preferred &lt;15°C), decreases DO solubility, increases microbial growth rate, decreases CT values (faster kill), increases reaction rates, makes taste/odour more perceptible.
+        </div>
+
+        <div class="standard">
+            <strong>IS 10500:2012 Physical Limits:</strong><br/>
+            Turbidity: Desirable = <strong>1 NTU</strong>; Permissible (no alternative source) = <strong>5 NTU</strong><br/>
+            Colour: Desirable = <strong>5 TCU</strong>; Permissible = 15 TCU<br/>
+            Taste & Odour: 'Agreeable' (no numerical limit)
+        </div>
+
+        <h3>1.2 CHEMICAL PARAMETERS</h3>
+        <div class="content">
+            <strong>pH:</strong> IS 10500 range = <strong>6.5 to 8.5</strong> (no relaxation permitted).
+            <ul>
+                <li>pH &lt; 6.5 → corrosion of pipes, leaching of heavy metals</li>
+                <li>pH &gt; 8.5 → reduces chlorination efficiency (HOCl → OCl⁻, which is 80× less germicidal)</li>
+                <li>Optimal disinfection pH: <strong>7.0-7.5</strong> (HOCl dominates)</li>
+            </ul>
+
+            <strong>Hardness:</strong>
+            <ul>
+                <li><strong>Temporary hardness:</strong> Ca(HCO₃)₂ and Mg(HCO₃)₂ - removed by boiling → CaCO₃ ↓ + H₂O + CO₂</li>
+                <li><strong>Permanent hardness:</strong> CaSO₄, MgSO₄, CaCl₂, MgCl₂ - requires lime-soda or ion exchange softening</li>
+                <li><strong>Hardness as CaCO₃ = (ion mg/L ÷ equivalent weight) × 50</strong></li>
+            </ul>
+
+            <strong>Alkalinity interpretation (P = phenolphthalein, M = methyl orange):</strong>
+            <ul>
+                <li>P = 0, M &gt; 0 → HCO₃⁻ only = M</li>
+                <li>P = M → OH⁻ only</li>
+                <li>P = M/2 → CO₃²⁻ only</li>
+                <li>P &lt; M/2 → CO₃²⁻ + HCO₃⁻</li>
+                <li>P &gt; M/2 → CO₃²⁻ + OH⁻</li>
+            </ul>
+
+            <strong>Dissolved Oxygen (DO):</strong> Measured by <strong>Winkler iodometric method</strong> (azide modification removes NO₂⁻ interference). Field: membrane electrode (Clark-type polarographic sensor).
+        </div>
+
+        <div class="standard">
+            <strong>IS 10500:2012 Chemical Limits:</strong><br/>
+            pH = <strong>6.5-8.5</strong> | Total Hardness: Desirable 200, Permissible 600 mg/L as CaCO₃<br/>
+            TDS: Desirable 500, Permissible 2000 mg/L | Chloride: 250/1000 mg/L<br/>
+            Sulphate: 200/400 mg/L | Iron: 0.3/no relaxation | Fluoride: 1.0/1.5 mg/L<br/>
+            Nitrate: 45 mg/L (no relaxation) | Arsenic: 0.01/0.05 mg/L | Lead: 0.01/0.05 mg/L
+        </div>
+
+        <h3>1.3 BIOLOGICAL PARAMETERS</h3>
+        <div class="content">
+            <strong>Coliform Bacteria:</strong> Used as indicator organisms. <span class="key-point">E. coli</span> is chosen over pathogens because:
+            <ul>
+                <li>Abundant: 10⁸-10⁹ per gram of human feces</li>
+                <li>Simple, inexpensive detection (MPN, MF technique)</li>
+                <li>Survival similar to most enteric pathogens</li>
+                <li>Does not multiply in treated water</li>
+                <li>Thermotolerant coliforms at 44.5°C = fecal indicator</li>
+            </ul>
+
+            <strong>MPN Test (3-stage procedure):</strong>
+            <ol>
+                <li><strong>Presumptive:</strong> Lactose broth with inverted Durham tube. Gas production (CO₂ + H₂) within 24-48 h at 35°C = positive</li>
+                <li><strong>Confirmed:</strong> Brilliant Green Bile Broth (BGBB)</li>
+                <li><strong>Completed:</strong> Plated on EMB agar - <strong>metallic sheen on dark colonies = E. coli</strong></li>
+            </ol>
+
+            <strong>BOD₅ Test:</strong>
+            <ul>
+                <li>5 days at <strong>20°C ± 1°C in DARK</strong> (darkness prevents algal photosynthesis producing O₂ which would give falsely low BOD)</li>
+                <li>Bottles must be completely full (no air space) and sealed</li>
+                <li>DO depletion should be 2-6 mg/L; residual DO &gt; 1 mg/L after 5 days</li>
+            </ul>
+
+            <strong>COD Test (Standard APHA):</strong>
+            <ul>
+                <li>Oxidant: <strong>K₂Cr₂O₇ in concentrated H₂SO₄</strong></li>
+                <li>Catalyst: Ag₂SO₄ (oxidises straight-chain hydrocarbons)</li>
+                <li>Conditions: 150°C for 2 hours (reflux)</li>
+                <li>Chloride interference removed by HgSO₄ (ratio 10:1 HgSO₄:Cl⁻)</li>
+                <li>Excess Cr₂O₇²⁻ back-titrated with FAS (ferrous ammonium sulphate)</li>
+            </ul>
+        </div>
+
+        <div class="formula">
+            <strong>BOD/COD Ratio Interpretation:</strong><br/>
+            &gt; 0.5 = Readily biodegradable (domestic sewage 0.5-0.6)<br/>
+            0.3-0.5 = Moderately biodegradable<br/>
+            &lt; 0.3 = Poorly biodegradable (industrial with solvents, dyes - needs physico-chemical/AOP)<br/>
+            <strong>Coliform standard:</strong> ABSENT (0 MPN/100 mL) in drinking water
+        </div>
+
+        <h3>1.4 IS 10500:2012 vs WHO GUIDELINES</h3>
+        <div class="content">
+            <strong>WHO GDWQ Framework:</strong> Health-based targets derived from risk assessment:
+            <ul>
+                <li><strong>Carcinogens:</strong> 10⁻⁶ additional lifetime cancer risk</li>
+                <li><strong>Non-carcinogens:</strong> 1 μDALY/person/year tolerable health burden using TDI</li>
+                <li>Non-mandatory international benchmarks; national standards adapt them</li>
+            </ul>
+
+            <strong>WHO Water Safety Plan (WSP):</strong> Multi-barrier preventive approach adapted from HACCP:
+            <ol>
+                <li>Catchment characterisation</li>
+                <li>Treatment barrier adequacy</li>
+                <li>Distribution safeguards</li>
+                <li>Verification monitoring</li>
+                <li>Management procedures</li>
+            </ol>
+
+            <strong>Key WHO vs IS differences:</strong>
+            <ul>
+                <li>WHO free chlorine residual at tap: min 0.1 mg/L, max 5 mg/L (CPHEEO India: min 0.2 mg/L)</li>
+                <li>WHO PM₂.₅ annual (2021): <strong>5 μg/m³</strong> (India NAAQS: 40 μg/m³ - 8× higher)</li>
+                <li>WHO uranium: 0.03 mg/L (basis: kidney nephrotoxicity, not radiation)</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 2 -->
+        <h2>SECTION 2: SOURCES, QUANTITY & POPULATION FORECASTING</h2>
+        <div class="section-intro">
+            Estimation of water demand based on population forecasts, design periods, and fire demand. Foundation for water supply scheme design.
+        </div>
+
+        <h3>2.1 SURFACE WATER vs GROUNDWATER SOURCES</h3>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Surface Water</th>
+                <th>Groundwater</th>
+            </tr>
+            <tr>
+                <td>Turbidity</td>
+                <td>High (seasonal variation)</td>
+                <td>Low (natural filtration through soil)</td>
+            </tr>
+            <tr>
+                <td>Microbial load</td>
+                <td>High</td>
+                <td>Low</td>
+            </tr>
+            <tr>
+                <td>Hardness</td>
+                <td>Moderate</td>
+                <td>Often high (Ca²⁺, Mg²⁺ from rock)</td>
+            </tr>
+            <tr>
+                <td>Iron/Manganese</td>
+                <td>Low</td>
+                <td>Often high (Fe²⁺, Mn²⁺ from anoxic conditions)</td>
+            </tr>
+            <tr>
+                <td>Dissolved Oxygen</td>
+                <td>Good (near saturation)</td>
+                <td>Low/anaerobic</td>
+            </tr>
+            <tr>
+                <td>Special contaminants</td>
+                <td>Agricultural runoff, pollution</td>
+                <td>High F⁻, As, NO₃⁻ possible (geogenic)</td>
+            </tr>
+            <tr>
+                <td>Treatment required</td>
+                <td>Full treatment train</td>
+                <td>Mainly disinfection + Fe/Mn removal</td>
+            </tr>
+        </table>
+
+        <div class="content">
+            <strong>Aquifer Types:</strong>
+            <ul>
+                <li><strong>Unconfined (phreatic):</strong> Water table at atmospheric pressure; specific yield Sy = 0.05-0.30 (drains by gravity)</li>
+                <li><strong>Confined (artesian):</strong> Sandwiched between aquitards; piezometric head &gt; aquifer top; storativity 10⁻⁵ to 10⁻³ (elastic storage)</li>
+                <li><strong>Artesian well:</strong> Piezometric surface above ground → water flows without pumping</li>
+            </ul>
+
+            <strong>Rippl's Mass Curve Method:</strong> Determines reservoir storage capacity. Cumulative inflow plotted vs time; demand line at constant slope. <strong>Maximum vertical gap between tangent demand lines and mass curve = required storage.</strong> Critical period = longest stretch where cumulative demand exceeds supply.
+
+            <strong>Perennial rivers</strong> maintained by groundwater baseflow (gaining streams). Overextraction of groundwater reduces baseflow (seen in Rajasthan, Gujarat).
+        </div>
+
+        <h3>2.2 POPULATION FORECASTING METHODS</h3>
+        <div class="formula">
+            <strong>1. Arithmetic Method:</strong> P<sub>n</sub> = P₀ + n × K<sub>a</sub><br/>
+            K<sub>a</sub> = average decadal arithmetic increase | Suitable for large established cities | Gives LOWEST projection<br/><br/>
+
+            <strong>2. Geometric Method:</strong> P<sub>n</sub> = P₀ × (1 + r)<sup>n</sup><br/>
+            r = average decadal growth rate (fraction) | Suitable for rapidly growing cities | Gives HIGHEST projection<br/><br/>
+
+            <strong>3. Incremental Increase:</strong> P<sub>n</sub> = P₀ + n·K<sub>a</sub> + [n(n+1)/2]·K<sub>s</sub><br/>
+            K<sub>s</sub> = average of second differences (change in increment) | Captures acceleration/deceleration<br/><br/>
+
+            <strong>4. Logistic (S-curve) Method:</strong> P = P<sub>s</sub> / (1 + m·e<sup>-rn</sup>)<br/>
+            P<sub>s</sub> = saturation population (carrying capacity) | Most realistic long-term model | Requires 3 census data points
+        </div>
+
+        <div class="highlight">
+            <strong>WORKED EXAMPLE - Geometric Method:</strong><br/>
+            Given: 1991=1,00,000; 2001=1,30,000; 2011=1,69,000<br/>
+            r₁ = (130-100)/100 = 30%; r₂ = (169-130)/130 = 30% → Average r = 30%<br/>
+            P(2021) = 169,000 × 1.30 = <strong>2,19,700</strong>
+        </div>
+
+        <h3>2.3 PER CAPITA DEMAND & VARIATIONS (CPHEEO)</h3>
+        <div class="content">
+            <strong>Recommended Per Capita Supply:</strong>
+            <ul>
+                <li>Jal Jeevan Mission rural target (FHTC): <strong>55 LPCD</strong></li>
+                <li>CPHEEO domestic urban: <strong>135 LPCD</strong></li>
+                <li>Total (including commercial, fire, losses): <strong>200-250 LPCD</strong> for large cities</li>
+                <li>Delhi actual supply: ~220 LPCD average (unequal - planned 300+, slums &lt;50)</li>
+            </ul>
+
+            <strong>Demand Variation Factors:</strong>
+            <ul>
+                <li>Maximum daily demand = <strong>1.8 × average daily</strong></li>
+                <li>Maximum hourly demand = 1.5 × maximum daily = <strong>2.7 × average daily</strong></li>
+                <li>Small towns peak factor: up to 3.5×; large metros: ~2.5× (averaging effect)</li>
+                <li>Peak hour: typically 7-9 AM and 6-8 PM</li>
+            </ul>
+
+            <strong>Seasonal variation:</strong> Summer (April-June) is peak demand due to higher consumption, cooling, irrigation. Maximum daily factor (1.8×) applied to summer consumption.
+
+            <strong>Coincident Draft (design peak):</strong> = Maximum daily demand + Fire demand (simultaneous). Governs service reservoir capacity and distribution main sizing. Maximum hourly demand (without fire) governs pumping station capacity.
+        </div>
+
+        <h3>2.4 DESIGN PERIOD & FIRE DEMAND</h3>
+        <div class="standard">
+            <strong>CPHEEO Design Periods:</strong><br/>
+            Civil infrastructure (dams, WTPs, mains, reservoirs): <strong>30 years</strong><br/>
+            Mechanical/electrical equipment (pumps, motors): <strong>15 years</strong> (replaced mid-project)<br/>
+            Rationale: Civil has 50-100 yr physical life; buried pipe replacement is disruptive; matches 25-30 yr loan financing
+        </div>
+
+        <div class="formula">
+            <strong>Fire Demand Formulae (Q in L/min, P in thousands):</strong><br/>
+            <strong>Kuichling:</strong> Q = 3182 × √P (simpler, predominantly used in India per CPHEEO)<br/>
+            <strong>Freeman:</strong> Q = 4637 × √P × (1 - 0.01√P) (includes correction factor)<br/>
+            <strong>NBFU:</strong> Q = 4637 × √P (simplified Freeman)<br/><br/>
+
+            <strong>Example:</strong> P = 250,000 (250 thousand):<br/>
+            Kuichling: Q = 3182 × √250 = 3182 × 15.81 = <strong>50,325 L/min</strong><br/><br/>
+
+            <strong>Fire Reserve Volume = Q × Duration</strong> (typically 4-8 hours)<br/>
+            Example: Q = 20,000 L/min × 4 hr × 60 min = <strong>4,800,000 L = 4,800 kL</strong>
+        </div>
+
+        <div class="content">
+            <strong>Fire Hydrant Design (CPHEEO):</strong>
+            <ul>
+                <li>Residential/commercial: max 150 m spacing (hose length limitation)</li>
+                <li>Congested areas: 120 m | Industrial: 250 m</li>
+                <li>Connected to main of minimum <strong>100 mm diameter</strong></li>
+                <li>Minimum flow: 1000-1500 L/min at 10.5 m residual pressure (1.5 kg/cm²)</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 3 -->
+        <h2>SECTION 3: WATER TREATMENT PROCESSES</h2>
+        <div class="section-intro">
+            Sequential treatment processes converting raw water to potable quality. Covers screening, sedimentation, coagulation-flocculation, filtration, and disinfection.
+        </div>
+
+        <h3>3.1 SCREENING & PLAIN SEDIMENTATION</h3>
+        <div class="content">
+            <strong>Bar Screens (intake):</strong>
+            <ul>
+                <li>Coarse: 25-75 mm spacing (logs, fish, large solids)</li>
+                <li>Fine: 1-10 mm (drum/band type) - algae mats, leaves</li>
+                <li>Purpose: Protect pumps, valves, pipelines from damage</li>
+            </ul>
+
+            <strong>Plain Sedimentation:</strong> Gravity settling of coarse SS without coagulants. Removes 30-60% SS, 10-25% BOD. Pre-treatment for high-turbidity sources.
+        </div>
+
+        <div class="formula">
+            <strong>Hazen's Ideal Sedimentation Theory:</strong><br/>
+            <strong>Surface Overflow Rate (SOR) = Q/A</strong> (m³/m²/day = m/day)<br/>
+            Physically equals upward water velocity in tank<br/><br/>
+
+            <strong>Particle Removal:</strong><br/>
+            Particles with V<sub>s</sub> ≥ SOR: <strong>100% removed</strong><br/>
+            Particles with V<sub>s</sub> &lt; SOR: Fraction removed = V<sub>s</sub>/SOR<br/><br/>
+
+            <strong>Detention Time:</strong> t = H/SOR = V/Q<br/>
+            Example: SOR = 20 m/day, H = 3 m → t = 3/(20/24) = 3.6 hr
+        </div>
+
+        <div class="standard">
+            <strong>Typical SOR Values:</strong><br/>
+            Plain sedimentation: 15-30 m/day | Primary clarifier: 30-50 m/day<br/>
+            Secondary clarifier: 15-25 m/day | Tube settler: 50-200 m/day<br/>
+            <strong>Detention Times:</strong> Plain sedim. 2-8 hr | Primary/Secondary clarifier 1.5-2.5 hr
+        </div>
+
+        <div class="content">
+            <strong>Weir Loading Rate (WLR):</strong> = Q/L<sub>weir</sub> (m³/m/day). Prevents excessive upward velocity near weir (short-circuiting, floc carry-over). Primary clarifier max: 125-250 m³/m/day.
+
+            <strong>Tube/Plate Settlers (Lamella):</strong>
+            <ul>
+                <li>Inclined plates at 55-60° to horizontal with 50-100 mm spacing</li>
+                <li>Particle settles only across plate spacing (not full depth)</li>
+                <li>Effective SOR: 3-10× higher for same footprint</li>
+                <li>Cut-size reduction: d<sub>50</sub> ∝ √(H/L); H from 3 m to 0.05 m = 7.7× better</li>
+                <li>Flow regime: Laminar (Re &lt; 100)</li>
+            </ul>
+        </div>
+
+        <h3>3.2 COAGULATION & FLOCCULATION</h3>
+        <div class="content">
+            <strong>Colloidal Stability:</strong> Natural colloids have negative <span class="key-point">zeta potential (-15 to -30 mV)</span>. Electrostatic repulsion prevents aggregation. Coagulation goal: reduce |ZP| to ~0 (isoelectric point).
+
+            <strong>Alum Coagulation Mechanisms:</strong>
+            <ol>
+                <li><strong>Charge neutralisation:</strong> Al³⁺ and hydrolysis products (Al(OH)²⁺, Al₈(OH)₂₀⁴⁺) compress electrical double layer</li>
+                <li><strong>Sweep floc:</strong> Al(OH)₃ gelatinous precipitate enmeshes colloids</li>
+                <li><strong>Adsorption-bridging:</strong> Polymer-like Al species bridge particles</li>
+            </ol>
+
+            <strong>Jar Test Procedure (Standard):</strong>
+            <ol>
+                <li><strong>Rapid mix:</strong> 60-100 rpm for 1-2 min (coagulation phase - disperses coagulant)</li>
+                <li><strong>Slow mix:</strong> 20-40 rpm for 15-20 min (flocculation phase - forms settleable floc)</li>
+                <li><strong>Settle:</strong> 30 min</li>
+                <li>Measure supernatant turbidity; plot vs dose → minimum = optimum dose</li>
+            </ol>
+
+            <strong>Typical Alum Doses:</strong>
+            <ul>
+                <li>Low turbidity (&lt;10 NTU): 5-10 mg/L</li>
+                <li>Moderate (50-200 NTU): 10-50 mg/L</li>
+                <li>High (&gt;500 NTU): 20-80 mg/L</li>
+                <li>High colour: up to 100 mg/L</li>
+            </ul>
+
+            <strong>Coagulant Aids:</strong>
+            <ul>
+                <li><strong>Synthetic polymers</strong> (polyacrylamide - anionic/cationic/non-ionic): 0.1-2 mg/L; bridging</li>
+                <li><strong>Activated silica:</strong> anionic, strong bonds in floc</li>
+                <li><strong>Bentonite clay:</strong> added to very low-turbidity water to provide nuclei for floc</li>
+            </ul>
+
+            <strong>Optimal pH for alum:</strong> 6.5-7.5 | Ferric: 4-7 | PAC: wider range
+        </div>
+
+        <h3>3.3 FILTRATION (SSF, RSF, Pressure Filter)</h3>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Slow Sand Filter (SSF)</th>
+                <th>Rapid Sand Filter (RSF)</th>
+            </tr>
+            <tr>
+                <td>Filtration rate</td>
+                <td>0.1-0.4 m/hr</td>
+                <td>4-8 m/hr (high-rate: 12-15)</td>
+            </tr>
+            <tr>
+                <td>Mechanism</td>
+                <td>Biological (schmutzdecke)</td>
+                <td>Physical (straining, adsorption)</td>
+            </tr>
+            <tr>
+                <td>Pre-treatment</td>
+                <td>None needed (turbidity &lt;5 NTU)</td>
+                <td>Coagulation-flocculation MANDATORY</td>
+            </tr>
+            <tr>
+                <td>Media effective size</td>
+                <td>0.15-0.35 mm</td>
+                <td>0.45-0.55 mm</td>
+            </tr>
+            <tr>
+                <td>Media depth</td>
+                <td>0.6-1.2 m</td>
+                <td>0.6-0.75 m</td>
+            </tr>
+            <tr>
+                <td>Cleaning</td>
+                <td>Scrape top 1-2 cm every 1-3 months</td>
+                <td>Backwash every 24-72 hours</td>
+            </tr>
+            <tr>
+                <td>Pathogen removal</td>
+                <td>&gt;3-log Giardia/Crypto; 99% bacteria</td>
+                <td>Moderate (depends on coagulation)</td>
+            </tr>
+        </table>
+
+        <div class="content">
+            <strong>Schmutzdecke ("dirt layer"):</strong> Biological film on top 1-2 cm of SSF sand - algae, protozoa, bacteria, rotifers. Responsible for predation and biological degradation.
+
+            <strong>Filter Media Specifications:</strong>
+            <ul>
+                <li><strong>Effective Size (ES) = d₁₀</strong> (sieve size passing 10% by weight)</li>
+                <li><strong>Uniformity Coefficient (UC) = d₆₀/d₁₀</strong>; RSF needs UC &lt; 1.7</li>
+                <li>UC close to 1.0 = uniform; UC &gt; 2.0 = stratification problem</li>
+            </ul>
+
+            <strong>Dual-media Filter:</strong> Anthracite (SG ~1.5, ES 1.0-1.5 mm) on top + sand (SG ~2.65, ES 0.45-0.55 mm) below. After backwash, natural stratification (lighter stays on top). Benefits: coarser anthracite penetrates floc deeper, longer runs (2-3×), higher throughput. Triple-media adds garnet (SG ~4.0) at bottom.
+
+            <strong>Pressure Filter:</strong> Enclosed vessel (3-5 bar), pump-pressurised flow, rates 10-20 m/hr. Advantages: compact, installable at any elevation, no gravity head needed. Common in industrial water supply.
+        </div>
+
+        <h3>3.4 BACKWASHING & FILTER RUNS</h3>
+        <div class="content">
+            <strong>Backwash Parameters:</strong>
+            <ul>
+                <li>Target: <strong>20-50% bed expansion</strong></li>
+                <li>Water rate: 25-50 L/m²/min (0.025-0.050 m/s upward)</li>
+                <li>Air scour: 15-20 L/m²/min (vigorous scrubbing)</li>
+                <li>Duration: 5-10 minutes</li>
+                <li>Sequence: Air first, then water wash</li>
+            </ul>
+
+            <strong>Terminal Head Loss (THL) - Backwash Trigger:</strong>
+            <ul>
+                <li>Clean filter head loss: 0.3-0.6 m</li>
+                <li>THL trigger: <strong>1.5-3 m</strong></li>
+                <li>Turbidity breakthrough: 0.5-1 NTU in filtered water</li>
+                <li>Filter run: typically 24-48 hours</li>
+            </ul>
+
+            <strong>Filter Ripening Period:</strong> 15-60 min post-backwash with elevated turbidity. Initial filtrate has: (1) Fines from backwash water, (2) Unstable forming floc. <strong>Filter-to-Waste (FTW):</strong> divert initial filtrate to waste until turbidity &lt; 0.3 NTU. Critical for Cryptosporidium oocyst removal (USEPA LT2ESWTR).
+
+            <strong>Mudballs:</strong> Coagulated floc + media aggregates (1-5 cm) from inadequate backwash. Remediation: increase backwash rate, add air scour, surface wash (rotary nozzles 0.5-1.5 m/s), manual raking, media replacement.
+        </div>
+
+        <h3>3.5 DISINFECTION (Chlorination, Ozone, UV)</h3>
+        <div class="content">
+            <strong>Chlorine Chemistry:</strong><br/>
+            Cl₂ + H₂O → HOCl + HCl | HOCl ⇌ H⁺ + OCl⁻ (pKa ~7.5)
+            <ul>
+                <li>At pH 6.5: ~90% HOCl (germicidal)</li>
+                <li>At pH 7.5: 50% HOCl, 50% OCl⁻</li>
+                <li>At pH 8.5: ~10% HOCl, 90% OCl⁻</li>
+                <li><strong>HOCl is 80× more germicidal than OCl⁻</strong> (neutral vs charged)</li>
+            </ul>
+
+            <strong>Breakpoint Chlorination Curve:</strong>
+            <ol>
+                <li>Phase 1: Chloramines form with NH₃ (combined residual)</li>
+                <li>Phase 2: Chloramines oxidised by excess Cl₂ → residual drops to MINIMUM (breakpoint)</li>
+                <li>Phase 3: Beyond breakpoint, free residual (HOCl + OCl⁻) increases linearly</li>
+            </ol>
+            Breakpoint dose: <strong>~7.6 mg Cl₂ per mg NH₃-N</strong>
+        </div>
+
+        <div class="formula">
+            <strong>CT Concept (Chick-Watson model):</strong> Inactivation = f(C × T)<br/>
+            C = residual disinfectant (mg/L); T = contact time (min)<br/>
+            <strong>CT = 15 mg·min/L</strong> can be achieved by: 1.5 mg/L × 10 min OR 3 mg/L × 5 min OR 0.5 mg/L × 30 min<br/><br/>
+
+            <strong>CT Values for 3-log Inactivation (at 5°C, pH 7):</strong><br/>
+            Giardia (free Cl₂): ~165 mg·min/L<br/>
+            Cryptosporidium (free Cl₂): <strong>&gt;7200 mg·min/L (impractical!)</strong><br/>
+            Cryptosporidium (Ozone): 5-10 mg·min/L<br/>
+            Cryptosporidium (UV): 10-12 mJ/cm² for 3-log
+        </div>
+
+        <div class="content">
+            <strong>Pre- vs Post-Chlorination:</strong>
+            <ul>
+                <li><strong>Pre-chlorination:</strong> Kills algae, controls taste/odour; BUT forms THMs/HAAs with NOM (carcinogenic DBPs)</li>
+                <li><strong>Post-chlorination:</strong> Minimal THM formation (NOM removed); provides distribution residual</li>
+                <li>Best practice: O₃/UV as primary disinfectant + Cl₂ only for residual</li>
+            </ul>
+
+            <strong>UV Disinfection (254 nm):</strong>
+            <ul>
+                <li>Mechanism: Pyrimidine dimer formation in DNA/RNA → replication blocked</li>
+                <li>Giardia/Crypto: very sensitive (3-log at 10-12 mJ/cm²)</li>
+                <li>Adenovirus: resistant (&gt;186 mJ/cm² for 4-log)</li>
+                <li><strong>Limitations:</strong> No residual (Cl₂ still needed); turbidity interference (&lt;0.5-1 NTU); photoreactivation</li>
+            </ul>
+
+            <strong>Ozonation:</strong>
+            <ul>
+                <li>Half-life: 10-30 min at 20°C, pH 7</li>
+                <li>Must be generated on-site</li>
+                <li>No distribution residual</li>
+                <li><strong>Bromate (BrO₃⁻) issue:</strong> O₃ + Br⁻ → HOBr → BrO₃⁻ (suspected carcinogen, IS limit 0.01 mg/L)</li>
+                <li>Control: ammonia addition, pH reduction, H₂O₂ quenching</li>
+            </ul>
+
+            <strong>Advanced Oxidation Processes (AOP):</strong> O₃+H₂O₂, UV+H₂O₂, O₃/UV → generates <strong>hydroxyl radicals (OH•, E⁰ = 2.8 V)</strong> - non-selective destruction of micropollutants (pharmaceuticals, pesticides, endocrine disruptors). Essential for potable reuse.
+        </div>
+
+        <h3>3.6 SOFTENING (Lime-Soda, Zeolite, Ion Exchange)</h3>
+        <div class="formula">
+            <strong>Lime-Soda Softening Reactions:</strong><br/>
+            Temp. Ca: Ca(HCO₃)₂ + Ca(OH)₂ → 2CaCO₃↓ + 2H₂O (lime only)<br/>
+            Temp. Mg: Mg(HCO₃)₂ + 2Ca(OH)₂ → 2CaCO₃↓ + Mg(OH)₂↓ + 2H₂O<br/>
+            Perm. Ca: CaSO₄ + Na₂CO₃ → CaCO₃↓ + Na₂SO₄ <strong>(SODA ASH needed)</strong><br/>
+            Perm. Mg: MgSO₄ + Ca(OH)₂ → Mg(OH)₂↓ + CaSO₄ (then treat as above)<br/><br/>
+
+            <strong>Residual hardness limit:</strong> 50-85 mg/L as CaCO₃<br/>
+            (Limited by CaCO₃ Ksp = 3.3×10⁻⁹ and Mg(OH)₂ Ksp = 5.6×10⁻¹²)
+        </div>
+
+        <div class="content">
+            <strong>Recarbonation:</strong> Excess lime removal by CO₂:
+            <ul>
+                <li>Stage 1: Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O (removes excess lime, pH 11→10)</li>
+                <li>Stage 2: CaCO₃ + CO₂ + H₂O → Ca(HCO₃)₂ (stabilisation, pH 8.3-8.5)</li>
+            </ul>
+
+            <strong>Split Treatment:</strong> Treat portion (60%) with full excess lime; bypass remainder (40%) untreated. Blend to achieve target hardness. Saves lime, sludge, cost.
+
+            <strong>Zeolite/Ion Exchange Softening:</strong><br/>
+            Softening: Ca²⁺ + Na₂Ze → CaZe + 2Na⁺<br/>
+            Regeneration: CaZe + 2NaCl (10% brine) → Na₂Ze + CaCl₂
+            <ul>
+                <li>Advantages: removes both temporary AND permanent hardness completely; no sludge</li>
+                <li>Disadvantages: adds Na⁺ (hypertension concern); turbidity/iron fouls resin; brine disposal</li>
+            </ul>
+        </div>
+
+        <h3>3.7 AERATION & IRON/MANGANESE REMOVAL</h3>
+        <div class="content">
+            <strong>Purpose of Aeration:</strong>
+            <ol>
+                <li>Oxidise Fe²⁺ (soluble) to Fe³⁺ → Fe(OH)₃ ↓ (brown precipitate, filterable)</li>
+                <li>Strip CO₂ (raises pH, reduces corrosivity)</li>
+                <li>Remove H₂S, CH₄, VOCs (taste/odour)</li>
+                <li>Raise DO from near-zero (anaerobic groundwater) to saturation</li>
+            </ol>
+
+            <strong>Aerator Types:</strong>
+            <ul>
+                <li><strong>Cascade:</strong> Best for CO₂, H₂S removal (gravity, no moving parts); less effective for DO</li>
+                <li><strong>Spray:</strong> Fine droplets (1-3 mm), large SA; effective for DO addition; issues: wind drift, nozzle clogging</li>
+                <li><strong>Diffused air:</strong> Compressed air through porous diffusers; controlled DO addition</li>
+            </ul>
+
+            <strong>Iron Removal (Fe²⁺ oxidation):</strong> Rate ∝ [Fe²⁺][O₂][OH⁻]². EXTREMELY pH-dependent - doubling pH = 100× faster.
+            <ul>
+                <li>pH 6: slow (hours) | pH 7: minutes | pH 8: seconds</li>
+                <li>Minimum <strong>pH 6.5</strong> required; desirable pH &gt; 7.0</li>
+            </ul>
+
+            <strong>Manganese Removal:</strong> Much harder than Fe. O₂ oxidation of Mn²⁺ is negligible below pH 9.5.
+            <ul>
+                <li><strong>KMnO₄ oxidation:</strong> 1.92 mg KMnO₄ per mg Mn → MnO₂ ppt</li>
+                <li><strong>Cl₂ oxidation:</strong> 1.3 mg Cl₂/mg Mn at pH &gt; 7.5</li>
+                <li><strong>Greensand filter:</strong> MnO₂-coated media (autocatalytic)</li>
+                <li><strong>Biological oxidation:</strong> Mn-oxidising bacteria (most cost-effective)</li>
+            </ul>
+        </div>
+
+        <h3>3.8 FLUORIDATION & DEFLUORIDATION</h3>
+        <div class="content">
+            <strong>Fluoride Health Thresholds:</strong>
+            <ul>
+                <li>&lt; 0.5 mg/L: Dental caries risk</li>
+                <li>0.5-1.5 mg/L: Dental protection (optimal 0.6-1.0 mg/L, climate-adjusted)</li>
+                <li>&gt; 1.5 mg/L: <strong>Dental fluorosis</strong> (IS 10500 permissible limit)</li>
+                <li>&gt; 3.0 mg/L: Severe dental fluorosis (pitting, brown staining)</li>
+                <li>&gt; 3-6 mg/L: <strong>Skeletal fluorosis</strong> (joint pain, spine deformity)</li>
+                <li>&gt; 10 mg/L: Crippling skeletal fluorosis</li>
+            </ul>
+            <em>India: 17 states have endemic fluorosis from naturally high-F groundwater.</em>
+
+            <strong>Nalgonda Technique (NEERI Nagpur):</strong>
+            <ol>
+                <li>Add lime (raises pH, adds alkalinity)</li>
+                <li>Add alum (200-800 mg/L large dose) + bleaching powder</li>
+                <li>Al(OH)₃ floc forms → F⁻ adsorbs on floc</li>
+                <li>Sedimentation → Filtration</li>
+            </ol>
+            Efficiency: 70-90% removal. Limitations: large alum dose (residual Al³⁺), high sulphate, sludge disposal, ineffective for F &gt; 10 mg/L.
+
+            <strong>Alternative Methods:</strong>
+            <ul>
+                <li>Activated alumina adsorption: 92-97% efficient</li>
+                <li>Reverse osmosis: 90-98% rejection</li>
+                <li>Fluoride measurement: <strong>SPADNS colorimetric</strong> (Zr-dye bleaching) or Ion-Selective Electrode</li>
+            </ul>
+        </div>
+
+        <h3>3.9 DESALINATION (RO, Electrodialysis)</h3>
+        <div class="formula">
+            <strong>Osmotic Pressure:</strong> π = MRT (Van't Hoff)<br/>
+            Seawater (35,000 mg/L TDS): π ≈ 25-27 bar<br/>
+            Brackish water (3,000 mg/L): π ≈ 2.5 bar<br/>
+            <strong>RO Operating Pressure:</strong> SWRO 55-80 bar | BWRO 10-20 bar
+        </div>
+
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>SWRO (Seawater)</th>
+                <th>BWRO (Brackish)</th>
+            </tr>
+            <tr>
+                <td>TDS feed</td>
+                <td>35,000-45,000 mg/L</td>
+                <td>1,000-8,000 mg/L</td>
+            </tr>
+            <tr>
+                <td>Operating pressure</td>
+                <td>55-80 bar</td>
+                <td>10-20 bar</td>
+            </tr>
+            <tr>
+                <td>Recovery rate</td>
+                <td>35-50%</td>
+                <td>75-85%</td>
+            </tr>
+            <tr>
+                <td>Energy</td>
+                <td>3-5 kWh/m³ (with ERD)</td>
+                <td>0.5-1.5 kWh/m³</td>
+            </tr>
+            <tr>
+                <td>Salt rejection</td>
+                <td>&gt;99.5%</td>
+                <td>&gt;99%</td>
+            </tr>
+        </table>
+
+        <div class="content">
+            <strong>Electrodialysis (ED):</strong> DC electric field drives ions through alternating cation/anion-exchange membranes. Economical for brackish water (1000-5000 mg/L TDS). Advantages: less pre-treatment, higher recovery (85-95%), handles variable TDS. Disadvantages: inefficient for high TDS; doesn't remove uncharged species (organics, silica, bacteria).
+
+            <strong>Multi-Stage Flash (MSF):</strong> Seawater heated to 90-120°C; flashed through stages at progressively lower pressure. Energy: 10-20 kWh/m³ (vs RO 3-5). Used in Middle East; 100,000-500,000 m³/day plants.
+        </div>
+
+        <!-- SECTION 4 -->
+        <h2>SECTION 4: DISTRIBUTION SYSTEM</h2>
+        <div class="section-intro">
+            Pipe networks, reservoirs, valves, hydrants, and leakage management. Covers Hardy Cross analysis and EPANET modelling.
+        </div>
+
+        <h3>4.1 PIPE NETWORKS & HARDY CROSS METHOD</h3>
+        <div class="formula">
+            <strong>Hardy Cross Iterative Correction:</strong><br/>
+            ΔQ = -Σh<sub>L</sub> / (n × Σ|h<sub>L</sub>/Q|)<br/>
+            n = 1.852 (Hazen-Williams) or n = 2 (Darcy-Weisbach)<br/>
+            Sign convention: Clockwise (+), Counter-clockwise (-)<br/>
+            Iterate until |ΔQ| &lt; 0.01 L/s (3-5 iterations typically)<br/><br/>
+
+            <strong>Hazen-Williams Equation:</strong><br/>
+            h<sub>L</sub> = 10.67 × L × Q<sup>1.852</sup> / (C<sup>1.852</sup> × D<sup>4.87</sup>)<br/>
+            C values: New CI/steel 130-140 | Old corroded 80-100 | PVC/HDPE 140-150 | AC 120-140<br/><br/>
+
+            <strong>Darcy-Weisbach:</strong> h<sub>L</sub> = fLV²/(2gD)
+        </div>
+
+        <div class="content">
+            <strong>Dead-end vs Grid Networks:</strong>
+            <ul>
+                <li><strong>Dead-end (tree):</strong> Single path; pipe failure cuts all downstream supply; stagnation causes chlorine depletion & bacterial regrowth</li>
+                <li><strong>Grid/Loop:</strong> Multiple paths; redundancy; more uniform pressure; <strong>CPHEEO recommended</strong> for towns/cities</li>
+            </ul>
+
+            <strong>EPANET (US EPA):</strong> Solves simultaneously:
+            <ol>
+                <li>Nodal continuity: Σ inflows = Σ outflows + demand at every node</li>
+                <li>Energy equation: Σh<sub>L</sub> around every loop = 0</li>
+            </ol>
+            Uses Global Gradient Algorithm (sparse matrix). Also simulates chlorine decay, water age, pump curves, PRVs, storage tanks, pressure-dependent demand.
+        </div>
+
+        <div class="standard">
+            <strong>CPHEEO/IS 1172 Minimum Residual Pressure:</strong><br/>
+            Single-storey: 7 m (0.7 bar) | Two-storey: 12 m | Three-storey: 17 m<br/>
+            Maximum in mains: 70 m (to limit leakage/stress)<br/>
+            Fire hydrant: minimum 10.5 m (1.5 kg/cm²) during firefighting
+        </div>
+
+        <h3>4.2 SERVICE RESERVOIRS (ESR & GLSR)</h3>
+        <div class="content">
+            <strong>Elevated Storage Reservoir (ESR / Overhead Tank):</strong>
+            <ul>
+                <li>Equalisation: pump operates at constant rate, ESR supplements peak</li>
+                <li>Gravity supply: constant pressure independent of pump operation</li>
+                <li>Emergency storage during pump failure</li>
+                <li>Capacity = Equalisation (⅓ max daily) + Fire + Emergency + Operational</li>
+                <li>Height: designed for min 7 m residual pressure at farthest/lowest point</li>
+            </ul>
+
+            <strong>Ground Level Service Reservoir (GLSR/Clear Water Reservoir):</strong>
+            <ul>
+                <li>Chlorine contact chamber (30+ min CT requirement, serpentine baffling)</li>
+                <li>Balancing storage between WTP output and variable distribution pumping</li>
+                <li>Emergency reserve + suction source for distribution pumps</li>
+                <li>Capacity: 1-2 days average daily demand</li>
+                <li>Dual compartments for maintenance without supply interruption</li>
+            </ul>
+
+            <strong>Economic Velocity in Water Mains:</strong> 0.6-1.5 m/s (optimal 0.9-1.2 m/s)
+            <ul>
+                <li>Below 0.6 m/s: sedimentation, biological growth, staleness</li>
+                <li>Above 1.5-3 m/s: high head losses, pipe erosion, water hammer</li>
+                <li>Large transmission mains: up to 3 m/s acceptable</li>
+            </ul>
+
+            <strong>Minimum Distribution Main Diameter (CPHEEO/IS 1742): 100 mm (4 inches)</strong>
+            <ul>
+                <li>Sub-mains: 150-200 mm | Trunk mains: 300-600+ mm</li>
+                <li>Service connections (laterals): 12.5-25 mm</li>
+            </ul>
+        </div>
+
+        <h3>4.3 VALVES, METERS & HYDRANTS</h3>
+        <div class="content">
+            <strong>Valve Types & Applications:</strong>
+            <ul>
+                <li><strong>Gate (sluice):</strong> Full bore open, full obstruction closed. NOT for throttling. Isolation use.</li>
+                <li><strong>Butterfly:</strong> Quarter-turn disc. Suitable for throttling. Flow control in large mains.</li>
+                <li><strong>Globe:</strong> Excellent throttling, higher head loss</li>
+                <li><strong>Check (non-return):</strong> Prevents reverse flow</li>
+                <li><strong>Pressure Reducing Valve (PRV):</strong> Pressure management in DMAs</li>
+            </ul>
+
+            <strong>Scour/Blow-off Valve:</strong> Installed at LOW points (valleys). Drains main for maintenance, flushes sediment, emergency dewatering. Size: ¼ to ⅓ of main diameter. Discharges to storm drain (NOT sewer).
+
+            <strong>Air Valve:</strong> Installed at HIGH points. Releases trapped air during filling (prevents air lock, water hammer).
+
+            <strong>Water Meters:</strong>
+            <ul>
+                <li><strong>Positive Displacement (PD):</strong> Nutating disc/oscillating piston; accurate at low flows; domestic 15-25 mm (most common)</li>
+                <li><strong>Turbine/Velocity:</strong> Propeller speed ∝ velocity; for 50-100 mm connections</li>
+                <li><strong>Electromagnetic:</strong> No moving parts; industrial/bulk metering (DN &gt; 50 mm)</li>
+                <li>Smart meters: AMR with pulse transmitters + telemetry</li>
+                <li>Standard: IS 779</li>
+            </ul>
+
+            <strong>Venturi Meter Discharge:</strong> Q = Cd × A₂/√(1-(A₂/A₁)²) × √(2gh)
+        </div>
+
+        <h3>4.4 LEAKAGE DETECTION & NRW</h3>
+        <div class="content">
+            <strong>Non-Revenue Water (NRW) - IWA Water Balance:</strong>
+            <ul>
+                <li>Apparent losses: meter under-registration, billing errors, illegal connections</li>
+                <li>Real losses: pipe leakage (main breaks + background seepage + reservoir overflow)</li>
+                <li>Unbilled authorised: firefighting, flushing, parks</li>
+                <li>India NRW: typically 30-55% (target &lt;15-20%); Delhi ~35-40%</li>
+            </ul>
+
+            <strong>Minimum Night Flow (MNF) Analysis:</strong> Measure DMA inlet flow at 2-4 AM (minimum demand). MNF minus night use = background leakage. DMA = District Metered Area (5000-7000 connections, single metered inlet).
+
+            <strong>Acoustic Leak Detection:</strong> Two sensors on valves/hydrants. Cross-correlation of signals → time delay Δt → leak distance: x = (L - c·Δt)/2. Sound speed c ~1000-1500 m/s in pipes. Effective for metal pipes; harder for plastic.
+
+            <strong>Hydrostatic Pressure Testing (IS 2065/CPHEEO):</strong>
+            <ul>
+                <li>Test pressure: <strong>1.5 × working pressure</strong> (min 6 kg/cm² for class B-C)</li>
+                <li>Duration: 30-60 minutes</li>
+                <li>Essentially zero visible leakage allowed</li>
+                <li>Escaping water test: L = ND√P / 125,000 (L = L/hr, N = joints, D = mm, P = m)</li>
+            </ul>
+
+            <strong>Pressure-Leakage Relationship:</strong> L = L₀ × (P/P₀)<sup>N1</sup>
+            <ul>
+                <li>N1 = 0.5 for orifice leaks; 1.0-1.5 for elastic pipe cracks</li>
+                <li>Reducing pressure 20% → leakage reduction 20-30%</li>
+                <li>30-40% NRW reduction possible with pressure management</li>
+            </ul>
+
+            <strong>Cathodic Protection:</strong> Prevents galvanic corrosion of buried CI/DI/steel pipes.
+            <ul>
+                <li>Sacrificial anode: Mg, Zn, Al connected to pipe (pipe becomes cathode)</li>
+                <li>Impressed current: DC rectifier (10-30 mA/m²)</li>
+                <li>PVC/PE: no CP needed (non-metallic)</li>
+            </ul>
+        </div>
+
+        <!-- GATE ADDITIONS -->
+        <h2>SECTION 5: GATE ES 2026 ADDITIONS (Purple Section)</h2>
+        <div class="section-intro">
+            GATE-specific topics not in UPPCB syllabus but valuable foundation. Covers hydrology, groundwater, oxygen sag, lake dynamics, and reactor design.
+        </div>
+
+        <h3>5.1 HYDROLOGICAL CYCLE & WATER BALANCE</h3>
+        <div class="formula">
+            <strong>Water Balance:</strong> P = R + ET + ΔS + GW recharge<br/>
+            Example: P=800, R=300, ET=420 → ΔS = +80 mm (storage increase)<br/><br/>
+
+            <strong>Rational Method (Peak Runoff):</strong> Q = C·i·A/360 (A in hectares, i in mm/hr)<br/>
+            C = runoff coefficient: impervious 0.85-0.95 | forest 0.1-0.3 | agricultural 0.2-0.5<br/><br/>
+
+            <strong>Rating Curve:</strong> Q = a(h - h₀)<sup>b</sup> (power function; loop curves show flood hysteresis)
+        </div>
+
+        <div class="content">
+            <strong>Hydrological Processes:</strong>
+            <ul>
+                <li><strong>Interception loss:</strong> Rainfall caught on vegetation that evaporates directly</li>
+                <li><strong>Transpiration:</strong> Water via plant roots → stomata</li>
+                <li><strong>Evapotranspiration (ET) = transpiration + soil evaporation + interception</strong></li>
+                <li>PET estimated by Penman-Monteith or Thornthwaite</li>
+            </ul>
+
+            <strong>Unit Hydrograph (Sherman 1932) - 3 principles:</strong>
+            <ol>
+                <li>Linearity: DRH proportional to effective rainfall depth</li>
+                <li>Superposition: Multiple-period DRH can be summed</li>
+                <li>Time invariance: Same UH for same-duration storms</li>
+            </ol>
+
+            <strong>Base Flow Separation Methods:</strong>
+            <ul>
+                <li>Constant slope method</li>
+                <li>N-day method: N = A^0.2 (A in km²)</li>
+                <li>Straight-line method</li>
+                <li>Base flow recession: Q(t) = Q₀·e^(-kt)</li>
+            </ul>
+        </div>
+
+        <h3>5.2 GROUNDWATER HYDRAULICS</h3>
+        <div class="formula">
+            <strong>Darcy's Law:</strong> Q = K·i·A (K = hydraulic conductivity)<br/>
+            Darcy velocity (flux): v = K·i | Seepage velocity = v/n (n = porosity)<br/>
+            Valid for laminar flow (Re &lt; 1-10 in porous media)<br/><br/>
+
+            <strong>K typical values:</strong> Gravel 10⁻² to 10² m/day | Sand 10⁻³ to 10⁰ | Clay &lt;10⁻⁴<br/><br/>
+
+            <strong>Transmissivity:</strong> T = K × b (b = saturated thickness; units m²/day)<br/>
+            <strong>Storage Coefficient:</strong> S = S<sub>s</sub> × b (10⁻⁵ to 10⁻³ for confined)<br/>
+            <strong>Specific Yield:</strong> S<sub>y</sub> = 0.1-0.3 for unconfined<br/><br/>
+
+            <strong>Thiem Equation (steady-state, confined):</strong><br/>
+            Q = 2π·T·(h₂-h₁) / ln(r₂/r₁)<br/><br/>
+
+            <strong>Unconfined (steady-state):</strong> Q = π·K·(h₂² - h₁²) / ln(r₂/r₁)<br/>
+            <strong>Transient (Theis):</strong> Q = (4πT·s) / W(u)
+        </div>
+
+        <div class="content">
+            <strong>Specific Capacity (Well):</strong> S<sub>c</sub> = Q/s (m³/hr/m or L/s/m)
+            <ul>
+                <li>Higher S<sub>c</sub> = better-performing well</li>
+                <li>Rough field approximation: T ≈ S<sub>c</sub> × 2000</li>
+                <li>Declining S<sub>c</sub> over time → biofouling, incrustation, screen clogging</li>
+                <li>Well efficiency = theoretical drawdown / actual drawdown × 100%</li>
+            </ul>
+        </div>
+
+        <h3>5.3 OXYGEN SAG CURVE (Streeter-Phelps)</h3>
+        <div class="formula">
+            <strong>Streeter-Phelps Equation:</strong><br/>
+            D(t) = [k<sub>d</sub>·L₀/(k<sub>r</sub>-k<sub>d</sub>)]·(e^(-k<sub>d</sub>t) - e^(-k<sub>r</sub>t)) + D₀·e^(-k<sub>r</sub>t)<br/><br/>
+
+            <strong>At Critical Point (Sag):</strong> dD/dt = 0 → k<sub>d</sub>·L<sub>c</sub> = k<sub>r</sub>·D<sub>c</sub><br/>
+            D<sub>c</sub> = k<sub>d</sub>·L<sub>c</sub>/k<sub>r</sub><br/>
+            t<sub>c</sub> = [1/(k<sub>r</sub>-k<sub>d</sub>)] · ln[(k<sub>r</sub>/k<sub>d</sub>)·(1 - D₀·(k<sub>r</sub>-k<sub>d</sub>)/(k<sub>d</sub>·L₀))]<br/><br/>
+
+            <strong>O'Connor-Dobbins Reaeration:</strong> k<sub>r</sub> = (D<sub>L</sub>·u)^0.5 / H^1.5<br/>
+            Temperature correction: k<sub>r</sub>(T) = k<sub>r</sub>(20) × 1.024^(T-20)
+        </div>
+
+        <div class="content">
+            <strong>Self-Purification Zones (downstream order):</strong>
+            <ol>
+                <li><strong>Zone of Degradation:</strong> Turbid, DO drops, BOD high, H₂S, fish absent</li>
+                <li><strong>Zone of Active Decomposition:</strong> Lowest DO (critical point), fungi, sludgeworms, no fish</li>
+                <li><strong>Zone of Recovery:</strong> DO rising, algae appear, rough fish return</li>
+                <li><strong>Clean Zone:</strong> DO restored to saturation, diverse biota</li>
+            </ol>
+
+            <strong>DO Saturation vs Temperature:</strong>
+            <ul>
+                <li>15°C: 10.1 mg/L | 20°C: 9.1 mg/L | 25°C: 8.3 mg/L | 30°C: 7.5 mg/L</li>
+                <li>Decreases with salinity and altitude</li>
+            </ul>
+
+            <strong>Initial Deficit:</strong> D₀ = DO<sub>sat</sub> - DO<sub>actual</sub>
+        </div>
+
+        <h3>5.4 EUTROPHICATION & LAKE STRATIFICATION</h3>
+        <div class="content">
+            <strong>Limiting Nutrient (Liebig's Law):</strong> <span class="key-point">Phosphorus in freshwater; Nitrogen in marine</span>
+            <ul>
+                <li>Redfield ratio C:N:P = 106:16:1 by atoms</li>
+                <li>N:P &gt; 16 → P limiting | N:P &lt; 16 → N limiting</li>
+                <li>Carlson TSI uses Secchi depth, Chl-a, Total P</li>
+            </ul>
+
+            <strong>Thermal Stratification (3 layers):</strong>
+            <ol>
+                <li><strong>Epilimnion:</strong> Warm, wind-mixed, high DO (surface)</li>
+                <li><strong>Thermocline (metalimnion):</strong> Steepest T gradient (&gt;1°C/m) - density barrier</li>
+                <li><strong>Hypolimnion:</strong> Cold, stagnant, DO depletion in productive lakes</li>
+            </ol>
+            Seasonal turnover (spring/autumn) mixes layers.
+
+            <strong>Secchi Disk (20 cm white):</strong> Depth at which disk just disappears. <strong>TSI(SD) = 60 - 14.41·ln(SD in m)</strong>
+            <ul>
+                <li>Oligotrophic: SD &gt; 4 m (clear, nutrient-poor)</li>
+                <li>Mesotrophic: 2-4 m</li>
+                <li>Eutrophic: &lt; 2 m (algal blooms, low DO, fish kills)</li>
+            </ul>
+
+            <strong>Internal Loading (Legacy P):</strong> Under anoxic hypolimnion, Fe(III)-P reduces to Fe(II), releasing dissolved P. Perpetuates eutrophication even after external loading control.
+            <ul>
+                <li>Control: Alum treatment, hypolimnetic aeration, dredging, Phoslock (lanthanum-bentonite)</li>
+            </ul>
+        </div>
+
+        <h3>5.5 REACTOR DESIGN & KINETICS</h3>
+        <div class="formula">
+            <strong>First-Order Reaction (-r = k·C):</strong><br/><br/>
+
+            <strong>Batch Reactor:</strong> -ln(C/C₀) = k·t<br/>
+            <strong>Plug Flow Reactor (PFR):</strong> τ = -ln(C/C₀)/k (same as batch)<br/>
+            <strong>Continuous-Mixed Flow Reactor (CMFR/CSTR):</strong> τ = (C₀-C)/(k·C)<br/>
+            Rearranged: <strong>C/C₀ = 1/(1 + k·τ)</strong><br/><br/>
+
+            <strong>For 90% conversion:</strong> CMFR needs τ = 9/k | PFR needs τ = 2.3/k (4× smaller!)<br/><br/>
+
+            <strong>Damköhler Number:</strong> Da = k·τ<br/>
+            Da &gt;&gt; 1 → high conversion (reaction dominates)<br/>
+            CMFR: C/C₀ = 1/(1+Da) | PFR: C/C₀ = e^(-Da)
+        </div>
+
+        <div class="highlight">
+            <strong>WORKED EXAMPLE - CMFR vs PFR:</strong><br/>
+            C₀ = 200 mg/L BOD, effluent = 20 mg/L, k = 0.25/hr<br/>
+            <strong>CMFR:</strong> τ = (200-20)/(0.25 × 20) = 180/5 = <strong>36 hr</strong><br/>
+            <strong>PFR:</strong> τ = -ln(20/200)/0.25 = ln(10)/0.25 = <strong>9.2 hr</strong><br/>
+            CMFR needs 4× larger volume! PFR preferred for high removal.
+        </div>
+
+        <div class="content">
+            <strong>Mass Balance (CMFR Steady State):</strong><br/>
+            Rate in - Rate out - Rate consumed = 0<br/>
+            Q·C₀ - Q·C - k·C·V = 0 → C = C₀/(1 + k·τ)
+
+            <strong>Second-Order Reaction (-r = k·C²):</strong>
+            <ul>
+                <li>Batch/PFR: τ = (1/k)·(1/C - 1/C₀)</li>
+                <li>CMFR: τ = (C₀ - C)/(k·C²)</li>
+                <li>Performance gap widens for higher-order reactions</li>
+            </ul>
+
+            <strong>RTD Tracer Studies:</strong> Inject conservative tracer (NaCl, rhodamine B, fluoride).
+            <ul>
+                <li>Ideal CMFR: E(t) = (1/τ)·e^(-t/τ) (exponential decay)</li>
+                <li>Ideal PFR: Dirac delta at t = τ</li>
+                <li>Early peak = short-circuiting | Long tail = dead zones</li>
+            </ul>
+        </div>
+
+        <h3>5.6 ENVIRONMENTAL HYDRAULICS</h3>
+        <div class="formula">
+            <strong>Manning's Equation:</strong> V = (1/n)·R^(2/3)·S^(1/2)<br/>
+            R = A/P (hydraulic radius)<br/>
+            <strong>Half-full circular pipe:</strong> R = D/4 (same as full pipe!)<br/>
+            Max velocity at 93% full; max discharge at 94% full<br/><br/>
+
+            <strong>Froude Number:</strong> Fr = V/√(g·y)<br/>
+            Fr &lt; 1 subcritical | Fr = 1 critical (E<sub>min</sub>) | Fr &gt; 1 supercritical<br/>
+            Critical depth: y<sub>c</sub> = (q²/g)^(1/3) for rectangular<br/>
+            Hydraulic jump: y₂/y₁ = (√(1+8Fr₁²) - 1)/2<br/><br/>
+
+            <strong>Weir Formulae:</strong><br/>
+            Broad-crested: Q = 1.71·L·H^1.5 (SI)<br/>
+            Sharp-crested (Francis): Q = 1.84·L·H^1.5<br/>
+            V-notch: Q = (8/15)·Cd·tan(θ/2)·√(2g)·H^2.5
+        </div>
+
+        <div class="content">
+            <strong>Channel Design Velocities:</strong>
+            <ul>
+                <li>Non-silting (minimum): &gt; 0.6 m/s</li>
+                <li>Non-scouring (maximum): earthen 0.6-0.9 | grassed 1.2-1.5 | stone/brick 1.5-2.0 | concrete 2.5-6 m/s</li>
+            </ul>
+
+            <strong>Regime Theory (Lacey):</strong>
+            <ul>
+                <li>P = 4.75·√Q | R = 0.47·(Q/f)^(1/3) | S = f^(5/3) / (3340·Q^(1/6))</li>
+                <li>Used for unlined alluvial channels</li>
+            </ul>
+
+            <strong>Muskingum Channel Routing:</strong> S = K[x·I + (1-x)·O]
+            <ul>
+                <li>K = travel time of flood wave (hr)</li>
+                <li>x = weighting factor (0 = pure attenuation; 0.5 = pure translation)</li>
+                <li>Natural streams: x = 0.2-0.3</li>
+            </ul>
+
+            <strong>SCS Curve Number Method:</strong> Q = (P - I<sub>a</sub>)² / (P - I<sub>a</sub> + S)
+            <ul>
+                <li>S = 25400/CN - 254 (mm) | I<sub>a</sub> = 0.2S</li>
+                <li>Depends on land use, Hydrological Soil Group (A to D), AMC</li>
+                <li>CWC India uses for design floods</li>
+            </ul>
+        </div>
+
+        <!-- KEY FORMULAE & STRATEGY -->
+        <h2>SECTION 6: KEY FORMULAE & EXAM STRATEGY</h2>
+
+        <div class="exam-strategy">
+            <h3>TOP 15 FORMULAE TO MEMORISE:</h3>
+            <ol>
+                <li><strong>SOR = Q/A</strong> | Surface overflow rate = primary sedimentation design parameter</li>
+                <li><strong>Detention time t = V/Q = H/SOR</strong> | Plug-flow tank</li>
+                <li><strong>Particle removal = V<sub>s</sub>/SOR</strong> (if V<sub>s</sub> &lt; SOR; else 100%)</li>
+                <li><strong>Hardness as CaCO₃ = (ion mg/L / EW) × 50</strong> | EW of CaCO₃ = 50</li>
+                <li><strong>CT = C × T</strong> | Chick-Watson disinfection</li>
+                <li><strong>P<sub>n</sub> = P₀ + n·K<sub>a</sub></strong> | Arithmetic population forecast</li>
+                <li><strong>P<sub>n</sub> = P₀(1+r)<sup>n</sup></strong> | Geometric forecast</li>
+                <li><strong>Q = 3182·√P L/min</strong> | Kuichling fire demand (P in thousands)</li>
+                <li><strong>Max daily = 1.8 × average | Max hourly = 2.7 × average</strong></li>
+                <li><strong>Hazen-Williams:</strong> h<sub>L</sub> = 10.67·L·Q^1.852 / (C^1.852·D^4.87)</li>
+                <li><strong>Hardy Cross:</strong> ΔQ = -Σh<sub>L</sub> / (n·Σ|h<sub>L</sub>/Q|)</li>
+                <li><strong>Darcy's Law:</strong> Q = K·i·A | T = K·b (transmissivity)</li>
+                <li><strong>CMFR:</strong> C/C₀ = 1/(1+k·τ) | <strong>PFR:</strong> τ = -ln(C/C₀)/k</li>
+                <li><strong>Stokes Law:</strong> V<sub>s</sub> = g·(ρ<sub>p</sub>-ρ<sub>w</sub>)·d² / (18μ)</li>
+                <li><strong>Manning:</strong> V = (1/n)·R^(2/3)·S^(1/2) | Froude: Fr = V/√(gy)</li>
+            </ol>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>HIGHEST PROBABILITY QUESTIONS (Memorise These Topics):</h3>
+            <ul>
+                <li>✓ <strong>IS 10500:2012 Standards (Q16-Q20):</strong> Turbidity 1/5 NTU, pH 6.5-8.5, F⁻ 1.0/1.5, NO₃⁻ 45, Hardness 200/600, TDS 500/2000, As 0.01/0.05, Pb 0.01/0.05</li>
+                <li>✓ <strong>Hardness Types (Q6):</strong> Temp (bicarbonates) vs Permanent (SO₄²⁻, Cl⁻, NO₃⁻)</li>
+                <li>✓ <strong>MPN Procedure (Q11):</strong> 3-stage (Presumptive → Confirmed → Completed); Lactose + Durham tube → BGBB → EMB (metallic sheen)</li>
+                <li>✓ <strong>BOD₅ Test Conditions (Q12):</strong> 20°C, 5 days, DARK (prevents algal O₂), sealed bottle</li>
+                <li>✓ <strong>Population Forecasting (Q31-Q35):</strong> Arithmetic, Geometric, Incremental, Logistic - know when to use each</li>
+                <li>✓ <strong>Fire Demand Formulae (Q41-Q45):</strong> Kuichling Q = 3182√P; CPHEEO design periods 30/15 years</li>
+                <li>✓ <strong>Sedimentation (Q47-Q50):</strong> SOR = Q/A; removal = V<sub>s</sub>/SOR; DT = H/SOR</li>
+                <li>✓ <strong>Jar Test (Q52):</strong> Rapid (60-100 rpm, 1-2 min) → Slow (20-40 rpm, 15-20 min) → Settle 30 min</li>
+                <li>✓ <strong>Filtration Comparison (Q61-Q64):</strong> SSF (0.1-0.4 m/hr, biological) vs RSF (4-8 m/hr, physical)</li>
+                <li>✓ <strong>Chlorine pH Effect (Q73):</strong> HOCl pKa 7.5; HOCl 80× more germicidal than OCl⁻</li>
+                <li>✓ <strong>Breakpoint Chlorination (Q71):</strong> ~7.6 mg Cl₂/mg NH₃-N</li>
+                <li>✓ <strong>Lime-Soda (Q81-Q83):</strong> Lime for temp, soda for permanent; residual 50-85 mg/L</li>
+                <li>✓ <strong>Fluoride (Q91-Q95):</strong> Optimal 0.6-1.0 mg/L; 1.5 fluorosis; 3-6 skeletal; Nalgonda technique (lime+alum+bleach)</li>
+                <li>✓ <strong>Hardy Cross (Q101-Q103):</strong> ΔQ formula, sign convention, Hazen-Williams</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>MEDIUM-YIELD TOPICS (Important but Less Frequent):</h3>
+            <ul>
+                <li>• Ozonation limitations & bromate formation (Q78-Q79)</li>
+                <li>• UV mechanism: pyrimidine dimers (Q76-Q77)</li>
+                <li>• RO vs Electrodialysis comparison (Q96-Q100)</li>
+                <li>• Desalination energy: SWRO 3-5 kWh/m³, BWRO 0.5-1.5 (Q100)</li>
+                <li>• Aquifer types: confined vs unconfined (Q27)</li>
+                <li>• Rippl's mass curve for reservoir sizing (Q29)</li>
+                <li>• CPHEEO per capita: 135 LPCD urban, 55 LPCD rural JJM (Q37)</li>
+                <li>• NRW & MNF analysis (Q116-Q117)</li>
+                <li>• Pressure-leakage relationship (Q120)</li>
+                <li>• Manganese removal difficulty vs Iron (Q89)</li>
+                <li>• Tube/Lamella settlers (Q50, Q60)</li>
+                <li>• WHO vs IS 10500 differences (Q21-Q25)</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>GATE ES ADDITIONS (High Weight in GATE, Skip if UPPCB-only):</h3>
+            <ul>
+                <li>✓ <strong>Streeter-Phelps oxygen sag:</strong> Critical point, O'Connor-Dobbins reaeration</li>
+                <li>✓ <strong>Reactor design:</strong> CMFR vs PFR performance for first-order; Damköhler number</li>
+                <li>✓ <strong>Darcy's law & well hydraulics:</strong> Thiem equation, specific capacity, transmissivity</li>
+                <li>✓ <strong>Eutrophication:</strong> Liebig's limiting nutrient (P in freshwater), Carlson TSI</li>
+                <li>✓ <strong>Thermal stratification:</strong> 3 layers, seasonal turnover, internal loading</li>
+                <li>✓ <strong>Hydrological cycle:</strong> Water balance, unit hydrograph, rational method, SCS-CN</li>
+                <li>✓ <strong>Environmental hydraulics:</strong> Manning's, Froude, critical flow, hydraulic jump</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <h3>CRITICAL EXAM-DAY TIPS:</h3>
+            <ul>
+                <li><strong>✓ Turbidity Units:</strong> Always NTU (Nephelometric Turbidity Units), NOT FTU or JTU. Desirable = 1, Permissible = 5.</li>
+                <li><strong>✓ Hardness Conversion:</strong> Always convert to CaCO₃ equivalent. Multiply by (50/EW) where EW = atomic wt ÷ valency.</li>
+                <li><strong>✓ SOR vs Detention Time:</strong> SOR is the PRIMARY design parameter for settling tanks. Don't confuse Q/A with Q/V.</li>
+                <li><strong>✓ Population Methods:</strong> Arithmetic = lowest; Geometric = highest; Logistic = most realistic long-term. Select based on growth pattern in data.</li>
+                <li><strong>✓ Fire Demand:</strong> P must be in THOUSANDS for Kuichling/Freeman formulae. Check units carefully!</li>
+                <li><strong>✓ Chlorine pH:</strong> Remember pKa of HOCl ≈ 7.5. Operating at pH &lt; 7.5 gives better disinfection (more HOCl).</li>
+                <li><strong>✓ Filter Comparison:</strong> SSF vs RSF - mechanism (biological vs physical), pre-treatment (none vs coagulation), rate (0.1 vs 4 m/hr).</li>
+                <li><strong>✓ Hardy Cross:</strong> Sign convention matters! CW flows positive, CCW negative. Apply correction with same sign convention.</li>
+                <li><strong>✓ CMFR vs PFR:</strong> For same conversion, CMFR always needs LARGER volume (4-10× for high conversions). Exception: zero-order reactions.</li>
+                <li><strong>✓ Time Management:</strong> Unit 1 is HIGHEST weight (15-18 Qs, ~25% of paper). Allocate 25-30 min here.</li>
+                <li><strong>✓ Marking Strategy:</strong> Skip if &lt; 60% confident. +4 correct, -1 wrong → risk/reward 1:4, so mark confidently or skip.</li>
+                <li><strong>✓ Unit Verification:</strong> BEFORE finalising, check units. Common traps: m/day vs m/hr for SOR; mg/L vs μg/L; thousands vs actual for population.</li>
+            </ul>
+        </div>
+
+        <div class="standard">
+            <h3>MUST-MEMORISE STANDARDS SUMMARY (IS 10500:2012):</h3>
+            <table>
+                <tr><th>Parameter</th><th>Desirable</th><th>Permissible</th></tr>
+                <tr><td>pH</td><td>6.5-8.5</td><td>No relaxation</td></tr>
+                <tr><td>Turbidity (NTU)</td><td>1</td><td>5</td></tr>
+                <tr><td>Colour (TCU)</td><td>5</td><td>15</td></tr>
+                <tr><td>TDS (mg/L)</td><td>500</td><td>2000</td></tr>
+                <tr><td>Total Hardness (mg/L as CaCO₃)</td><td>200</td><td>600</td></tr>
+                <tr><td>Chloride (mg/L)</td><td>250</td><td>1000</td></tr>
+                <tr><td>Sulphate (mg/L)</td><td>200</td><td>400</td></tr>
+                <tr><td>Fluoride (mg/L)</td><td>1.0</td><td>1.5</td></tr>
+                <tr><td>Nitrate (mg/L as NO₃⁻)</td><td>45</td><td>No relaxation</td></tr>
+                <tr><td>Iron (mg/L)</td><td>0.3</td><td>No relaxation</td></tr>
+                <tr><td>Arsenic (mg/L)</td><td>0.01</td><td>0.05</td></tr>
+                <tr><td>Lead (mg/L)</td><td>0.01</td><td>No relaxation</td></tr>
+                <tr><td>Coliform</td><td>Absent/100 mL</td><td>Absent</td></tr>
+                <tr><td>E. coli</td><td>Absent/100 mL</td><td>Absent</td></tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p><strong>UPPCB AEE Unit 1 Revision Notes | Water Supply Engineering | Generated April 2026</strong></p>
+            <p>Focus on water quality parameters, treatment processes, distribution systems, and population/demand estimation.</p>
+            <p>Standards referenced from IS 10500:2012, CPHEEO Manual, IS 1172, IS 1742, IS 2065, and WHO GDWQ.</p>
+            <p>Includes GATE ES 2026 additions for Section 4 (Environmental Hydraulics) and Section 5 (Reactor Design).</p>
+        </div>
+    </div>
+</body>
+</html>

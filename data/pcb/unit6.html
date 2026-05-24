@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPPCB AEE Unit 6 - EIA, EMS & Environmental Indices</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #212121; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #1a237e; text-align: center; margin-bottom: 10px; font-size: 28px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
+        h2 { color: white; background: #283593; padding: 12px; margin: 30px 0 15px 0; border-left: 4px solid #1a237e; }
+        h3 { color: #1a237e; margin: 20px 0 10px 0; font-size: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
+        .content { line-height: 1.8; margin-bottom: 15px; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+        th { background: #283593; color: white; padding: 10px; text-align: left; font-weight: 600; }
+        td { border: 1px solid #ddd; padding: 10px; font-size: 14px; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .highlight { background: #fff3cd; border-left: 4px solid #ff9800; padding: 10px; margin: 10px 0; font-size: 14px; }
+        .standard { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin: 10px 0; font-size: 14px; font-weight: 500; }
+        .formula { background: #f3e5f5; border-left: 4px solid #9c27b0; padding: 10px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 13px; }
+        .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px; margin: 10px 0; font-size: 13px; }
+        .gate-add { background: #ede7f6; border-left: 4px solid #673ab7; padding: 10px; margin: 10px 0; font-size: 14px; }
+        ul, ol { margin-left: 20px; margin-bottom: 10px; }
+        li { margin-bottom: 5px; }
+        .section-intro { background: #f0f2f5; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd; color: #666; font-size: 12px; }
+        .key-point { color: #c62828; font-weight: 600; }
+        .exam-strategy { background: #fff8e1; border: 2px solid #fbc02d; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        @media print { body { background: white; } .container { box-shadow: none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>UNIT 6: EIA, EMS &amp; ENVIRONMENTAL INDICES</h1>
+        <div class="subtitle">UPPCB AEE 2026 | 5-7 Questions | 20-28 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
+
+        <h2>SECTION 1: EIA — CONCEPT, HISTORY &amp; PROCESS</h2>
+        <div class="section-intro">
+            Environmental Impact Assessment is the formal process to predict the environmental consequences of a proposed project, recommend mitigation, and decide on clearance. Largest section in this unit — expect 2–3 Qs.
+        </div>
+
+        <h3>1.1 DEFINITION &amp; OBJECTIVES</h3>
+        <div class="content">
+            <strong>EIA (definition):</strong> a systematic, reproducible, multidisciplinary procedure for identifying, predicting, evaluating and mitigating biophysical, social and other relevant effects of development proposals before major decisions are made and commitments given.<br/>
+            <strong>Objectives:</strong>
+            <ul>
+                <li>Identify foreseeable environmental impacts (positive &amp; negative) of a project</li>
+                <li>Predict magnitude, extent and significance of impacts</li>
+                <li>Suggest mitigation measures &amp; alternatives</li>
+                <li>Inform decision-makers and the public</li>
+                <li>Ensure compliance with environmental regulations &amp; standards</li>
+                <li>Promote sustainable development</li>
+            </ul>
+        </div>
+
+        <h3>1.2 HISTORICAL EVOLUTION</h3>
+        <table>
+            <tr><th>Year</th><th>Milestone</th></tr>
+            <tr><td>1969</td><td>USA — <strong>NEPA (National Environmental Policy Act)</strong>; first EIA framework in the world</td></tr>
+            <tr><td>1972</td><td>Stockholm Conference recommends EIA-like process internationally</td></tr>
+            <tr><td>1977–78</td><td>India — first informal EIA for river valley projects (Planning Commission)</td></tr>
+            <tr><td>1986</td><td>India — E(P) Act 1986 enacted; provides legal basis for future EIA notification</td></tr>
+            <tr><td>1992</td><td>Rio Declaration — <strong>Principle 17:</strong> EIA shall be undertaken for proposed activities likely to have significant adverse impact</td></tr>
+            <tr><td>1994</td><td>India — first <strong>EIA Notification, 27 January 1994</strong> under E(P) Act 1986</td></tr>
+            <tr><td>2006</td><td>India — comprehensive <strong>EIA Notification, 14 September 2006</strong> (currently in force)</td></tr>
+            <tr><td>2020</td><td>Draft EIA Notification 2020 — heavily criticised; not finalised</td></tr>
+        </table>
+
+        <h3>1.3 EIA NOTIFICATION 2006 — STRUCTURE</h3>
+        <div class="standard">
+            <strong>Project categorisation:</strong>
+            <ul>
+                <li><strong>Category A:</strong> appraised by <strong>EAC (Expert Appraisal Committee)</strong> at central level (MoEFCC); EC issued by MoEFCC</li>
+                <li><strong>Category B:</strong> appraised by <strong>SEAC (State EAC)</strong> at state level; EC issued by <strong>SEIAA</strong>; further split into:
+                    <ul>
+                        <li><strong>B1:</strong> full EIA + public hearing required</li>
+                        <li><strong>B2:</strong> no EIA, no public hearing — only EMP &amp; basic data</li>
+                    </ul>
+                </li>
+            </ul>
+            <strong>Coverage:</strong> 8 sectors / 39 categories of projects (mining, thermal/nuclear power, river valley, infrastructure, manufacturing, building &amp; construction, township, etc.).
+        </div>
+
+        <h3>1.4 EIA PROCESS — 4 STAGES</h3>
+        <div class="formula">
+            <strong>Stage 1: SCREENING</strong><br/>
+            ↓ (Determine: Cat A, B1, or B2 by reference to Schedule of EIA Notification 2006)<br/><br/>
+            <strong>Stage 2: SCOPING</strong><br/>
+            ↓ (EAC/SEAC issues <strong>Terms of Reference (ToR)</strong> within 60 days of Form 1 submission)<br/><br/>
+            <strong>Stage 3: PUBLIC CONSULTATION</strong><br/>
+            ↓ (Public hearing by SPCB at site within 45 days; written comments via website 30 days)<br/><br/>
+            <strong>Stage 4: APPRAISAL</strong><br/>
+            ↓ (EAC/SEAC examines Final EIA + public hearing proceedings; recommends grant/reject within 60 days)<br/><br/>
+            <strong>Decision:</strong> by MoEFCC (Cat A) / SEIAA (Cat B) within 45 days of EAC/SEAC recommendation
+        </div>
+
+        <h3>1.5 SCREENING DETAILS</h3>
+        <div class="content">
+            <ul>
+                <li>Promoter submits <strong>Form 1</strong> + pre-feasibility report (and <strong>Form 1A</strong> additionally for buildings/area development/townships)</li>
+                <li>Determines if EIA is required and category (A/B1/B2)</li>
+                <li>Threshold criteria from Schedule (e.g., thermal power &gt; 500 MW = A; &lt; 500 MW = B; mining &gt; 50 ha = A; 5–50 ha = B)</li>
+                <li>Cat B projects within 5 km of protected area / critically polluted area / inter-state or international boundary are <strong>upgraded to Cat A</strong> ("General Condition")</li>
+            </ul>
+        </div>
+
+        <h3>1.6 SCOPING — TERMS OF REFERENCE (ToR)</h3>
+        <div class="content">
+            <ul>
+                <li>EAC/SEAC determines the scope of EIA study</li>
+                <li>ToR specifies what impacts to study, baseline data, methods, modelling required, alternatives, public hearing locations</li>
+                <li>Standard ToR available for many sectors</li>
+                <li>For Cat B2 — no scoping needed</li>
+                <li>Validity of ToR: 4 years (extendable by 2 years)</li>
+            </ul>
+        </div>
+
+        <h3>1.7 BASELINE DATA &amp; IMPACT PREDICTION</h3>
+        <div class="content">
+            <strong>Baseline study (3 seasons mandatory excluding monsoon, for at least 1 yr):</strong>
+            <ul>
+                <li>Air quality (NAAQS pollutants); meteorology (wind rose, mixing height)</li>
+                <li>Water quality (surface &amp; groundwater); hydrogeology</li>
+                <li>Soil quality (heavy metals, fertility)</li>
+                <li>Noise (Leq, day/night by zone)</li>
+                <li>Land use, topography (Survey of India toposheet)</li>
+                <li>Biological environment (flora, fauna, threatened species, protected areas within 10 km)</li>
+                <li>Socio-economic (population, occupation, infrastructure, R&amp;R if applicable)</li>
+                <li>Traffic, archaeology, geology</li>
+            </ul>
+            <strong>Study area:</strong> usually 10 km radius from project boundary (5 km for buildings).
+        </div>
+
+        <h3>1.8 IMPACT PREDICTION METHODS</h3>
+        <table>
+            <tr><th>Method</th><th>Description</th><th>Use</th></tr>
+            <tr><td><strong>Ad hoc</strong></td><td>Expert opinion, no formal structure</td><td>Quick scoping; less rigorous</td></tr>
+            <tr><td><strong>Checklist</strong></td><td>List of impact categories; tick &amp; assess</td><td>Easy, comprehensive coverage</td></tr>
+            <tr><td><strong>Matrix (Leopold matrix, 1971)</strong></td><td>Project actions on X-axis × env components on Y-axis (100 × 88 cells); each cell rated for magnitude (1–10) &amp; importance (1–10)</td><td>Most widely used; visual; identifies cause-effect</td></tr>
+            <tr><td><strong>Network</strong></td><td>Cause-condition-effect chains; flow charts</td><td>Captures secondary &amp; tertiary impacts</td></tr>
+            <tr><td><strong>Overlay</strong></td><td>Transparent maps stacked (now GIS); spatial analysis</td><td>Land use, route alignment</td></tr>
+            <tr><td><strong>Battelle Environmental Evaluation System (EES)</strong></td><td>78 parameters in 4 categories (ecology, env pollution, aesthetics, human interest); converted to Environmental Quality (EQ) units 0–1; weighted</td><td>Quantitative; for water resource projects</td></tr>
+            <tr><td><strong>Modelling</strong></td><td>Mathematical/physical models — Gaussian plume, Streeter-Phelps, MIKE 21, AERMOD, ISCST3</td><td>Dispersion of pollutants</td></tr>
+        </table>
+
+        <div class="highlight">
+            <strong>Leopold matrix size:</strong> 100 columns (project actions) × 88 rows (env components) = 8800 possible interactions. In practice only relevant cells are filled. Each cell: magnitude (numerator) and importance (denominator), both on 1–10 scale.
+        </div>
+
+        <h3>1.9 EIS &amp; EMP</h3>
+        <div class="content">
+            <strong>EIS (Environmental Impact Statement)</strong> — final document submitted to authority. Standard contents (per EIA Notification 2006, Appendix III):
+            <ol>
+                <li>Project description</li>
+                <li>Description of environment (baseline)</li>
+                <li>Anticipated environmental impacts &amp; mitigation</li>
+                <li>Analysis of alternatives (technology &amp; site)</li>
+                <li>Environmental Monitoring Programme</li>
+                <li>Additional studies (Risk &amp; Disaster Mgmt, public consultation)</li>
+                <li>Project benefits</li>
+                <li>Environment Cost Benefit Analysis</li>
+                <li><strong>EMP — Environment Management Plan</strong> (the most important section)</li>
+                <li>Summary &amp; conclusion</li>
+                <li>Disclosure of consultants engaged (NABET-accredited mandatory since 2010)</li>
+            </ol>
+            <strong>EMP components:</strong> mitigation measures (with cost &amp; schedule); monitoring plan (parameters, frequency, locations); institutional arrangements; reporting protocols; budgetary allocations; emergency preparedness; CSR/CER provisions.
+        </div>
+
+        <h3>1.10 PUBLIC CONSULTATION</h3>
+        <div class="content">
+            <ul>
+                <li>Conducted by SPCB / UTPCC at project site within <strong>45 days</strong> of receiving Draft EIA</li>
+                <li>Two components: (a) public hearing on-site, (b) written responses via website (30 days)</li>
+                <li>Notice in 1 major national newspaper + 1 regional language newspaper at least 30 days in advance</li>
+                <li><strong>Exempt categories:</strong> all Cat B2; modernisation of irrigation projects (&lt; 10% increase); units in industrial estates with prior EC; expansion of roads &amp; highways; building &amp; construction (defined small projects); offshore oil &amp; gas; defence &amp; strategic projects</li>
+                <li>Proceedings recorded; transmitted to EAC/SEAC with Final EIA</li>
+            </ul>
+        </div>
+
+        <h3>1.11 APPRAISAL &amp; EC VALIDITY</h3>
+        <div class="standard">
+            <strong>Validity of Environmental Clearance:</strong>
+            <ul>
+                <li>River valley projects: <strong>13 years</strong> (project life of construction)</li>
+                <li>Mining projects: <strong>30 years</strong> (or as per mining lease, max 50 yr)</li>
+                <li>Area development &amp; townships: <strong>10 years</strong></li>
+                <li>All other projects (industries, infrastructure): <strong>5 years</strong></li>
+            </ul>
+            <strong>Post-EC compliance:</strong> 6-monthly compliance report to MoEFCC/SEIAA; uploaded on company &amp; ministry website.
+        </div>
+
+        <h3>1.12 STRATEGIC ENVIRONMENTAL ASSESSMENT (SEA) <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="content">
+            <strong>SEA</strong> = systematic process for evaluating environmental consequences of <strong>policies, plans and programmes (PPP)</strong> at higher level than individual projects. EIA is for projects; SEA is for PPPs.
+            <ul>
+                <li>Originated EU Directive 2001/42/EC (in force 2004)</li>
+                <li>Applied to land use plans, transport plans, energy plans, sectoral policies</li>
+                <li>Advantages over EIA: deals with cumulative impacts; allows alternatives at strategic level; integrates environment early in decision-making</li>
+                <li>India: not formally adopted; some states use it for industrial corridor planning</li>
+            </ul>
+        </div>
+
+        <h3>1.13 LIFE CYCLE ASSESSMENT (LCA) <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="standard">
+            <strong>LCA (ISO 14040:2006 &amp; 14044:2006):</strong> "cradle-to-grave" analysis of environmental aspects &amp; potential impacts of a product / process / service across its entire life cycle.
+            <ul>
+                <li><strong>Stages:</strong> raw material extraction → processing → manufacture → distribution → use → end-of-life (reuse/recycle/disposal)</li>
+                <li><strong>4 phases (ISO 14040):</strong>
+                    <ol>
+                        <li><strong>Goal &amp; Scope definition</strong> (system boundary, functional unit, e.g., 1 kg cement, 1 km travelled)</li>
+                        <li><strong>Inventory analysis (LCI)</strong> — inputs (energy, materials) &amp; outputs (emissions, waste) at each stage</li>
+                        <li><strong>Impact Assessment (LCIA)</strong> — characterise impacts (GWP, AP, EP, ODP, HTP); methods: CML, ReCiPe, TRACI</li>
+                        <li><strong>Interpretation</strong> — sensitivity analysis; conclusions; recommendations</li>
+                    </ol>
+                </li>
+                <li><strong>Variants:</strong> Cradle-to-gate, Cradle-to-cradle (closed loop), Well-to-Wheel (transport fuels)</li>
+                <li><strong>Software tools:</strong> SimaPro, GaBi, OpenLCA, Umberto</li>
+                <li>Used by businesses for product comparison, eco-labels (Type III EPDs), green procurement</li>
+            </ul>
+        </div>
+
+        <h3>1.14 HUMAN HEALTH RISK ASSESSMENT (HHRA) <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="content">
+            <strong>HHRA</strong> = process to estimate the nature &amp; probability of adverse health effects in humans exposed to chemicals in environmental media.
+            <strong>4 steps (USEPA framework):</strong>
+            <ol>
+                <li><strong>Hazard Identification:</strong> determine if a chemical is causally linked to adverse health effect (carcinogenic / non-carcinogenic)</li>
+                <li><strong>Dose-Response Assessment:</strong> quantify relationship between exposure dose &amp; severity. Outputs:
+                    <ul>
+                        <li>Carcinogens: Slope Factor (SF) [(mg/kg-d)⁻¹]</li>
+                        <li>Non-carcinogens: Reference Dose (RfD) [mg/kg-d]</li>
+                    </ul>
+                </li>
+                <li><strong>Exposure Assessment:</strong> magnitude, frequency, duration of exposure for each pathway (ingestion, inhalation, dermal). CDI = Chronic Daily Intake (mg/kg-d)</li>
+                <li><strong>Risk Characterisation:</strong>
+                    <ul>
+                        <li>Cancer Risk = CDI × SF (target: 10⁻⁶ to 10⁻⁴)</li>
+                        <li>Non-cancer Hazard Quotient HQ = CDI / RfD; HQ ≤ 1 = safe; &gt; 1 = potential risk</li>
+                        <li>Hazard Index (HI) = ΣHQ (multiple chemicals/pathways)</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        <div class="formula">
+            <strong>Standard CDI for ingestion:</strong><br/>
+            CDI = (C × IR × EF × ED) / (BW × AT)<br/>
+            C = concentration in medium (mg/L water, mg/kg soil/food)<br/>
+            IR = intake rate (L/d, kg/d)<br/>
+            EF = exposure frequency (d/yr); ED = exposure duration (yr)<br/>
+            BW = body weight (kg, default adult 70 kg, child 15 kg)<br/>
+            AT = averaging time (d) — for cancer = 70 yr × 365; for non-cancer = ED × 365
+        </div>
+
+        <h2>SECTION 2: ENVIRONMENTAL MANAGEMENT SYSTEMS (EMS)</h2>
+        <div class="section-intro">
+            ISO 14000 series — voluntary international standards for organisations to manage environmental responsibilities. Expect 1 Q.
+        </div>
+
+        <h3>2.1 ISO 14000 SERIES — OVERVIEW</h3>
+        <table>
+            <tr><th>Standard</th><th>Subject</th><th>Notes</th></tr>
+            <tr><td><strong>ISO 14001:2015</strong></td><td>EMS — Requirements</td><td>Most widely certified; ~3.5 lakh certifications globally</td></tr>
+            <tr><td>ISO 14004</td><td>EMS — General guidelines</td><td>Implementation guidance</td></tr>
+            <tr><td>ISO 14006</td><td>Eco-design guidelines</td><td>For product design</td></tr>
+            <tr><td>ISO 14015</td><td>Environmental assessment of sites &amp; organisations</td><td>Due diligence</td></tr>
+            <tr><td><strong>ISO 14020/21/24/25</strong></td><td>Environmental labels (Types I, II, III)</td><td>Eco-labelling</td></tr>
+            <tr><td><strong>ISO 14040 / 14044</strong></td><td>LCA — principles &amp; requirements</td><td>Life cycle assessment</td></tr>
+            <tr><td>ISO 14046</td><td>Water footprint</td><td>Quantification &amp; reporting</td></tr>
+            <tr><td><strong>ISO 14064-1/2/3</strong></td><td>GHG accounting at organisation/project level</td><td>Basis for carbon credits</td></tr>
+            <tr><td>ISO 14065</td><td>Validation/verification of GHG assertions</td><td>For certification bodies</td></tr>
+            <tr><td>ISO 14067</td><td>Carbon footprint of products</td><td>Product GHG</td></tr>
+            <tr><td><strong>ISO 50001</strong></td><td>Energy Management System</td><td>(separate from 14000 series; commonly clubbed)</td></tr>
+        </table>
+
+        <h3>2.2 ISO 14001:2015 — EMS REQUIREMENTS</h3>
+        <div class="standard">
+            <strong>Built on PDCA (Plan-Do-Check-Act) cycle</strong> — also called "Deming cycle".
+            <ul>
+                <li><strong>PLAN:</strong> establish environmental policy, identify aspects &amp; impacts, set objectives &amp; targets, identify legal requirements</li>
+                <li><strong>DO:</strong> implement controls (training, communication, document control, operational control, emergency preparedness)</li>
+                <li><strong>CHECK:</strong> monitor, measure, evaluate compliance, internal audit, corrective &amp; preventive action</li>
+                <li><strong>ACT:</strong> management review; continual improvement</li>
+            </ul>
+            <strong>2015 revision changes:</strong> High Level Structure (Annex SL — common for ISO 9001/45001/27001); risk-based thinking; leadership &amp; commitment from top management; consideration of <strong>life cycle perspective</strong>; broader focus on context of organisation &amp; stakeholders.
+        </div>
+
+        <h3>2.3 ENVIRONMENTAL ASPECT vs IMPACT</h3>
+        <div class="content">
+            <ul>
+                <li><strong>Aspect:</strong> element of an organisation's activities/products/services that <strong>can interact</strong> with the environment (e.g., emission of SO₂, generation of solid waste, water consumption)</li>
+                <li><strong>Impact:</strong> any change to environment (adverse or beneficial) <strong>resulting</strong> from an aspect (e.g., acid rain, soil contamination, depletion of water table)</li>
+            </ul>
+            Significance criteria for ranking: severity, frequency, duration, regulatory exposure, stakeholder concern.
+        </div>
+
+        <h3>2.4 ENVIRONMENTAL AUDIT</h3>
+        <div class="standard">
+            <strong>Definition:</strong> systematic, documented, periodic and objective evaluation of how well the organisation, management &amp; equipment are performing with the aim of contributing to safeguarding the environment (ICC, 1989).
+            <ul>
+                <li><strong>Compliance audit:</strong> against legal requirements (e.g., consent conditions, NAAQS, NGT orders)</li>
+                <li><strong>Management system audit:</strong> ISO 14001 conformance</li>
+                <li><strong>Process / operational audit:</strong> energy, water, waste, raw material efficiency</li>
+                <li><strong>Site audit (Phase I/II):</strong> contamination assessment; due diligence in M&amp;A</li>
+                <li><strong>Supplier audit:</strong> supply chain ESG</li>
+            </ul>
+            <strong>Audit frequency:</strong> 1st party (internal): quarterly to annual; 2nd party (customer): annual; 3rd party (certification): annual surveillance, 3-yearly recertification.<br/>
+            <strong>Indian regulation:</strong> <strong>Environmental Statement (Form V)</strong> mandatory under Environment (Protection) Rules 1986 — every industry holding CTO must submit by <strong>30 September each year</strong> to SPCB for previous financial year.
+        </div>
+
+        <h3>2.5 BENEFITS &amp; LIMITATIONS OF EMS</h3>
+        <table>
+            <tr><th>Benefits</th><th>Limitations</th></tr>
+            <tr><td>Regulatory compliance, fewer notices/fines</td><td>Voluntary; no guarantee of better env performance</td></tr>
+            <tr><td>Cost savings (energy/water/waste reduction)</td><td>Documentation burden; "paper compliance"</td></tr>
+            <tr><td>Brand value, customer/investor confidence</td><td>Certification cost (₹2–10 lakh)</td></tr>
+            <tr><td>Risk reduction (insurance, liability)</td><td>Doesn't address sustainability of products</td></tr>
+            <tr><td>Improved stakeholder relations</td><td>Can be reduced to bureaucratic exercise</td></tr>
+        </table>
+
+        <h2>SECTION 3: ENVIRONMENTAL INDICES</h2>
+        <div class="section-intro">
+            Composite indices simplify complex environmental data into single comparable values. WQI &amp; AQI are most asked.
+        </div>
+
+        <h3>3.1 WATER QUALITY INDEX (WQI)</h3>
+        <div class="content">
+            <strong>Definition:</strong> single dimensionless number expressing overall water quality based on selected parameters &amp; their weights.<br/>
+            <strong>Common WQI methods:</strong>
+            <ul>
+                <li><strong>NSF-WQI (National Sanitation Foundation, USA, 1970):</strong> 9 parameters — DO, FC, pH, BOD₅, NO₃, PO₄, ΔT, turbidity, TS</li>
+                <li><strong>CCME WQI (Canadian Council)</strong></li>
+                <li><strong>CPCB WQI (India):</strong> uses subset of parameters</li>
+            </ul>
+        </div>
+        <div class="formula">
+            <strong>NSF-WQI (weighted arithmetic):</strong><br/>
+            WQI = Σ (w<sub>i</sub> · q<sub>i</sub>) / Σ w<sub>i</sub><br/><br/>
+            w<sub>i</sub> = unit weight (DO 0.17, FC 0.16, pH 0.11, BOD 0.11, NO₃ 0.10, PO₄ 0.10, ΔT 0.10, turbidity 0.08, TS 0.07)<br/>
+            q<sub>i</sub> = quality rating sub-index (0–100) from rating curve<br/><br/>
+            <strong>NSF-WQI categories:</strong><br/>
+            91–100 = Excellent | 71–90 = Good | 51–70 = Medium | 26–50 = Bad | 0–25 = Very Bad<br/><br/>
+            <strong>Geometric form (Bhargava, used in India):</strong><br/>
+            WQI = Π q<sub>i</sub><sup>w<sub>i</sub></sup>  (sensitive to low single values)
+        </div>
+
+        <h3>3.2 AIR QUALITY INDEX (AQI) — INDIA</h3>
+        <div class="content">
+            CPCB AQI launched <strong>17 September 2014</strong> under Swachh Bharat Mission. Reports air quality on a 0–500 scale with 6 categories.<br/>
+            Uses <strong>8 pollutants:</strong> PM₁₀, PM₂.₅, SO₂, NO₂, O₃, CO, NH₃, Pb.
+        </div>
+        <table>
+            <tr><th>AQI</th><th>Category</th><th>Colour</th><th>Health implications</th></tr>
+            <tr><td>0–50</td><td>Good</td><td>Dark green</td><td>Minimal impact</td></tr>
+            <tr><td>51–100</td><td>Satisfactory</td><td>Light green</td><td>Minor breathing discomfort to sensitive</td></tr>
+            <tr><td>101–200</td><td>Moderate</td><td>Yellow</td><td>Breathing discomfort to people with lung/heart disease, children &amp; older adults</td></tr>
+            <tr><td>201–300</td><td>Poor</td><td>Orange</td><td>Breathing discomfort on prolonged exposure</td></tr>
+            <tr><td>301–400</td><td>Very Poor</td><td>Red</td><td>Respiratory illness on prolonged exposure</td></tr>
+            <tr><td>401–500</td><td>Severe</td><td>Maroon</td><td>Affects healthy people; serious health impact for those with diseases</td></tr>
+        </table>
+        <div class="formula">
+            <strong>AQI calculation (sub-index method):</strong><br/>
+            For each pollutant compute sub-index I<sub>p</sub> using linear interpolation between breakpoints:<br/>
+            I<sub>p</sub> = [(I<sub>HI</sub> − I<sub>LO</sub>)/(BP<sub>HI</sub> − BP<sub>LO</sub>)] × (C<sub>p</sub> − BP<sub>LO</sub>) + I<sub>LO</sub><br/><br/>
+            <strong>AQI = max(I<sub>p</sub>)</strong>  [worst-of-pollutants approach]<br/><br/>
+            Reported only if data for ≥ 3 pollutants available with mandatory inclusion of one of PM₁₀ or PM₂.₅.
+        </div>
+
+        <h3>3.3 ECOLOGICAL FOOTPRINT &amp; CARRYING CAPACITY</h3>
+        <div class="content">
+            <strong>Ecological Footprint (Wackernagel &amp; Rees, 1990s):</strong> measure of human demand on Earth's ecosystems — area of biologically productive land &amp; water needed to provide resources consumed and absorb wastes generated.
+            <ul>
+                <li>Unit: <strong>global hectares (gha) per capita</strong></li>
+                <li>India: ~1.2 gha/cap (2022); World avg: ~2.7 gha/cap</li>
+                <li>Earth's biocapacity: 1.6 gha/cap (decreasing)</li>
+                <li><strong>Earth Overshoot Day:</strong> when humanity has used up nature's "annual budget" — 2024 was 1 August</li>
+            </ul>
+            <strong>Carrying capacity:</strong> maximum population an environment can sustainably support given food, habitat, water and other resources. Logistic growth model: dN/dt = rN(1 − N/K).
+        </div>
+
+        <h3>3.4 OTHER ENVIRONMENTAL INDICES</h3>
+        <ul>
+            <li><strong>EPI (Environmental Performance Index):</strong> Yale-Columbia; 180 countries; 40 indicators in 11 categories. India ranked 176/180 in 2024 EPI.</li>
+            <li><strong>NDVI (Normalised Difference Vegetation Index):</strong> remote sensing — (NIR − RED)/(NIR + RED); range −1 to +1; vegetation density</li>
+            <li><strong>HDI (Human Development Index):</strong> UNDP — life expectancy + education + income (geometric mean)</li>
+            <li><strong>SDG Index:</strong> by SDSN; tracks 17 SDGs; India ranked 109/166 in 2024</li>
+            <li><strong>Climate Change Performance Index (CCPI):</strong> Germanwatch</li>
+            <li><strong>UV Index (UVI):</strong> WHO; 0–11+; risk of UV exposure</li>
+            <li><strong>Sustainability Index, Genuine Progress Indicator</strong></li>
+        </ul>
+
+        <h2>SECTION 4: CSR, EPR &amp; GREEN INITIATIVES</h2>
+        <div class="section-intro">
+            Sustainability instruments &amp; certifications. Mostly factual recall.
+        </div>
+
+        <h3>4.1 CORPORATE SOCIAL RESPONSIBILITY (CSR)</h3>
+        <div class="standard">
+            <strong>India's first mandatory CSR law in the world — Section 135, Companies Act 2013</strong> (in force April 2014).
+            <ul>
+                <li>Applies to companies with: net worth ≥ ₹500 cr OR turnover ≥ ₹1000 cr OR net profit ≥ ₹5 cr (in immediately preceding FY)</li>
+                <li>Spend: <strong>2% of average net profit of preceding 3 years</strong></li>
+                <li>Must constitute CSR Committee of board</li>
+                <li><strong>Schedule VII activities:</strong> eradicating hunger/poverty, education, gender equality, env sustainability, art/culture, armed forces veterans, sports, PM National Relief Fund, technology incubators in academic institutions, rural development, slum development, disaster relief</li>
+                <li>Unspent amount to be transferred to fund (e.g., PM CARES, Swachh Bharat Kosh) within 30 days; if for ongoing project, to "Unspent CSR Account" within 30 days &amp; spent in 3 years</li>
+                <li><strong>2021 amendment:</strong> impact assessment mandatory for CSR projects ≥ ₹1 cr (if total CSR ≥ ₹10 cr)</li>
+            </ul>
+            <strong>CER (Corporate Environmental Responsibility):</strong> additional spend mandated by EAC/SEAC during EIA appraisal — typically 0.5–2.5% of project cost based on size; conditions of EC.
+        </div>
+
+        <h3>4.2 EXTENDED PRODUCER RESPONSIBILITY (EPR)</h3>
+        <div class="content">
+            <strong>EPR:</strong> producer responsible for end-of-life management of product placed on market. Reverses "polluter pays" — producer pays for collection, recycling, disposal.
+            <ul>
+                <li><strong>Plastic Waste Mgmt Rules 2016 (amended 2022):</strong> EPR for 4 categories of plastic packaging (rigid, flexible, multilayered, compostable); tradable EPR certificates issued by CPCB; targets phased</li>
+                <li><strong>E-Waste Mgmt Rules 2022:</strong> EPR with tradable certificates; 60% (FY 2023-24) → 80% (FY 2026-27 onward)</li>
+                <li><strong>Battery Waste Mgmt Rules 2022:</strong> EPR with tradable certificates; targets up to 90% by FY 2026-27</li>
+                <li><strong>Used Oil / Lubricants:</strong> EPR through HOWM Rules</li>
+                <li>EPR may be implemented as: take-back schemes, deposit-refund, recycling fees, PRO (Producer Responsibility Organisation)</li>
+            </ul>
+        </div>
+
+        <h3>4.3 GREEN BUILDING RATING SYSTEMS</h3>
+        <table>
+            <tr><th>System</th><th>Country / Origin</th><th>Levels</th><th>Categories assessed</th></tr>
+            <tr><td><strong>GRIHA</strong> (Green Rating for Integrated Habitat Assessment)</td><td>India (TERI + MNRE, 2007); national rating system</td><td>1★ to 5★ stars (50 → 91+ points)</td><td>34 criteria; sustainable site, energy, water, materials, air quality, social aspects</td></tr>
+            <tr><td><strong>LEED India</strong> (Leadership in Energy &amp; Environmental Design)</td><td>USGBC (USA, 1998); India operated by IGBC (CII)</td><td>Certified, Silver, Gold, Platinum</td><td>Sustainable sites, water efficiency, energy &amp; atmosphere, materials &amp; resources, IEQ, innovation</td></tr>
+            <tr><td><strong>IGBC Green Homes / Green Factory etc.</strong></td><td>India (CII–IGBC)</td><td>Certified, Silver, Gold, Platinum</td><td>Multiple variants (homes, factory, township, school, SEZ)</td></tr>
+            <tr><td>BREEAM</td><td>UK (1990, BRE)</td><td>Pass to Outstanding</td><td>10 categories; oldest globally</td></tr>
+            <tr><td>EDGE</td><td>IFC (World Bank); emerging markets</td><td>EDGE certified, Advanced, Zero Carbon</td><td>20% reduction in energy, water, embodied energy in materials</td></tr>
+        </table>
+
+        <h3>4.4 CARBON FOOTPRINT &amp; SCOPE EMISSIONS (GHG PROTOCOL)</h3>
+        <div class="standard">
+            <strong>GHG Protocol (WRI &amp; WBCSD, 1998)</strong> — most widely used GHG accounting framework for organisations.
+            <ul>
+                <li><strong>Scope 1 (Direct):</strong> emissions from sources owned/controlled by organisation — boilers, furnaces, vehicles, fugitive HFC leaks, process emissions (cement clinker)</li>
+                <li><strong>Scope 2 (Indirect — energy):</strong> emissions from purchased electricity, steam, heating, cooling — generated off-site but used by organisation</li>
+                <li><strong>Scope 3 (Indirect — value chain):</strong> 15 categories — purchased goods/services, capital goods, business travel, employee commuting, upstream/downstream transport, use of sold products, end-of-life of sold products, investments, franchises (often largest in services/finance)</li>
+            </ul>
+            <strong>Carbon footprint unit:</strong> tonnes of CO₂-equivalent (tCO₂e) using GWP factors (IPCC AR6).
+        </div>
+
+        <h3>4.5 ECO-LABELLING (ISO 14020 series)</h3>
+        <ul>
+            <li><strong>Type I (ISO 14024):</strong> third-party certified, multi-criteria — <strong>Ecomark</strong> (India, BIS 1991, lotus logo); EU Ecolabel (flower); Blue Angel (Germany); Green Seal (USA)</li>
+            <li><strong>Type II (ISO 14021):</strong> self-declared (e.g., "recyclable", "biodegradable") — manufacturer's claim</li>
+            <li><strong>Type III (ISO 14025):</strong> Environmental Product Declaration (EPD); LCA-based; quantitative</li>
+        </ul>
+
+        <h3>4.6 INDIAN GREEN POLICY INITIATIVES</h3>
+        <ul>
+            <li><strong>National Action Plan on Climate Change (NAPCC, 2008):</strong> 8 missions — Solar, Enhanced Energy Efficiency (NMEEE), Sustainable Habitat, Water, Sustaining Himalayan Ecosystem, Green India, Sustainable Agriculture, Strategic Knowledge for Climate Change</li>
+            <li><strong>State Action Plans on Climate Change (SAPCC):</strong> all states</li>
+            <li><strong>PAT Scheme (Perform, Achieve, Trade):</strong> under NMEEE; energy efficiency targets for designated consumers; tradable ESCerts</li>
+            <li><strong>Carbon Credit Trading Scheme (CCTS) 2023:</strong> notified June 2023; India's domestic carbon market under EC (Amendment) Act 2022</li>
+            <li><strong>Mission LiFE (Lifestyle for Environment):</strong> launched at COP27 (2022) by India; pro-planet behaviour change</li>
+            <li><strong>Swachh Bharat Mission</strong> (2014); <strong>Namami Gange</strong> (2014); <strong>Smart Cities Mission</strong> (2015)</li>
+            <li><strong>Atal Mission for Rejuvenation &amp; Urban Transformation (AMRUT)</strong> 2015</li>
+            <li><strong>National Solar Mission:</strong> 500 GW non-fossil by 2030</li>
+        </ul>
+
+        <h2>HIGH-YIELD MCQ REVISION LIST</h2>
+        <div class="exam-strategy">
+            <h3>MUST-KNOW FACTS (High Probability Qs):</h3>
+            <ul>
+                <li>✓ <strong>NEPA 1969 (USA)</strong> = first EIA framework in world</li>
+                <li>✓ <strong>EIA Notification India:</strong> 1994 (first), <strong>2006 (current)</strong> — under E(P) Act 1986</li>
+                <li>✓ <strong>EIA categories:</strong> Cat A (EAC at MoEFCC), Cat B (SEAC at SEIAA); B further B1 (full EIA) &amp; B2 (no EIA)</li>
+                <li>✓ <strong>4 stages of EIA:</strong> Screening → Scoping (ToR) → Public Consultation → Appraisal</li>
+                <li>✓ <strong>Form 1 + Form 1A</strong> for buildings/area development</li>
+                <li>✓ <strong>EC validity:</strong> 5 yr (general); 10 yr (area dev); 13 yr (river valley); 30–50 yr (mining)</li>
+                <li>✓ <strong>Public hearing:</strong> conducted by SPCB within 45 days of receiving Draft EIA</li>
+                <li>✓ <strong>Leopold matrix (1971):</strong> 100 actions × 88 components; magnitude/importance 1–10</li>
+                <li>✓ <strong>EIA methods:</strong> ad hoc, checklist, matrix (Leopold), network, overlay, Battelle EES, modelling</li>
+                <li>✓ <strong>Battelle EES:</strong> 78 parameters; 4 categories; EQ units 0–1</li>
+                <li>✓ <strong>NABET</strong> accreditation mandatory for EIA consultants (since 2010)</li>
+                <li>✓ <strong>3 baseline seasons</strong> mandatory (excluding monsoon); study area 10 km</li>
+                <li>✓ <strong>EMP</strong> = most important section of EIS</li>
+                <li>✓ <strong>ISO 14001:2015</strong> = EMS; PDCA cycle (Plan-Do-Check-Act, Deming)</li>
+                <li>✓ <strong>ISO 14040/14044</strong> = LCA; 4 phases (Goal &amp; Scope → LCI → LCIA → Interpretation)</li>
+                <li>✓ <strong>ISO 50001</strong> = Energy Management</li>
+                <li>✓ <strong>Aspect</strong> (cause) vs <strong>Impact</strong> (effect)</li>
+                <li>✓ <strong>Form V (Environmental Statement):</strong> due <strong>30 September</strong> annually under Env Rules 1986</li>
+                <li>✓ <strong>WQI parameters (NSF):</strong> 9 — DO, FC, pH, BOD, NO₃, PO₄, ΔT, turbidity, TS</li>
+                <li>✓ <strong>AQI:</strong> launched 17 Sept 2014; 8 pollutants; 6 categories; max(sub-indices); needs ≥ 3 pollutants incl. PM₁₀ or PM₂.₅</li>
+                <li>✓ <strong>CSR — Section 135, Companies Act 2013;</strong> 2% of avg 3-yr net profit; Schedule VII activities</li>
+                <li>✓ <strong>CSR thresholds:</strong> NW ≥ 500 cr OR T/O ≥ 1000 cr OR NP ≥ 5 cr</li>
+                <li>✓ <strong>EPR:</strong> Plastic, E-Waste, Battery — tradable certificates issued by CPCB</li>
+                <li>✓ <strong>Green Buildings:</strong> GRIHA (India), LEED (USA/IGBC), BREEAM (UK), EDGE (IFC)</li>
+                <li>✓ <strong>GHG Scopes:</strong> 1 (direct), 2 (purchased electricity), 3 (value chain — 15 categories)</li>
+                <li>✓ <strong>Ecomark India:</strong> BIS 1991; lotus logo</li>
+                <li>✓ <strong>NAPCC 2008:</strong> 8 missions</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>MEDIUM-YIELD TOPICS:</h3>
+            <ul>
+                <li>• "General Condition" — Cat B upgraded to A within 5 km of protected/critical area</li>
+                <li>• Threshold for thermal power: 500 MW boundary between A &amp; B</li>
+                <li>• Mining area threshold: 50 ha for A vs B</li>
+                <li>• ToR validity: 4 yr + 2 yr extension</li>
+                <li>• Public hearing exemptions (modernisation, industrial estates, defence)</li>
+                <li>• MoU between SPCB &amp; State Govt for hearing</li>
+                <li>• Brundtland Report 1987 — sustainable development</li>
+                <li>• Compensatory afforestation 2× degraded forest area + NPV</li>
+                <li>• ISO 14001 vs ISO 9001 vs ISO 45001 (Annex SL common structure)</li>
+                <li>• Ecological footprint India: ~1.2 gha/cap; world: 2.7 gha/cap</li>
+                <li>• Earth Overshoot Day concept</li>
+                <li>• EPI 2024 ranking (India bottom — 176/180)</li>
+                <li>• PAT Scheme — ESCerts</li>
+                <li>• CCTS 2023 — Indian carbon market</li>
+                <li>• Mission LiFE COP27 (2022)</li>
+                <li>• NSF-WQI weights (DO highest 0.17)</li>
+                <li>• Battery Waste Rules 2022 EPR — 90% target</li>
+                <li>• Type I/II/III eco-labels (ISO 14024/14021/14025)</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>GATE ES ADDITIONS (High Weight in GATE):</h3>
+            <ul>
+                <li>✓ <strong>Strategic Environmental Assessment (SEA):</strong> for policies/plans/programmes (PPP)</li>
+                <li>✓ <strong>LCA detailed:</strong> ISO 14040/14044; 4 phases; cradle-to-grave; functional unit; LCIA methods (CML, ReCiPe)</li>
+                <li>✓ <strong>HHRA framework:</strong> 4 steps — Hazard ID, Dose-Response, Exposure, Risk Characterisation</li>
+                <li>✓ <strong>HHRA formulae:</strong> CDI = (C × IR × EF × ED) / (BW × AT); HQ = CDI/RfD; Cancer Risk = CDI × SF</li>
+                <li>✓ <strong>HQ ≤ 1 = safe;</strong> Cancer risk target 10⁻⁶ to 10⁻⁴</li>
+                <li>✓ <strong>Cradle-to-cradle, well-to-wheel</strong> LCA variants</li>
+                <li>✓ <strong>NDVI:</strong> (NIR − RED)/(NIR + RED); range −1 to +1</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <h3>CRITICAL EXAM-DAY TIPS:</h3>
+            <ul>
+                <li><strong>✓ EIA stage mnemonic:</strong> S-S-P-A (Screen-Scope-Public-Appraise). Comes up every year.</li>
+                <li><strong>✓ Cat A vs B:</strong> A = central (EAC/MoEFCC); B = state (SEAC/SEIAA). B2 = no EIA. Don't confuse.</li>
+                <li><strong>✓ EC validity:</strong> remember 5/10/13/30 yr for general/area/river/mining.</li>
+                <li><strong>✓ EIA methods:</strong> Leopold = matrix; Battelle = quantitative scoring (0–1).</li>
+                <li><strong>✓ Form 1 vs Form 1A:</strong> Form 1 always; Form 1A only for buildings/area development.</li>
+                <li><strong>✓ Form V (Env Statement) due 30 Sept</strong> — common factual Q.</li>
+                <li><strong>✓ ISO 14001 = EMS; ISO 14040/44 = LCA; ISO 50001 = Energy</strong> — don't mix.</li>
+                <li><strong>✓ AQI = MAX of sub-indices</strong> (worst pollutant decides) — not average.</li>
+                <li><strong>✓ AQI launch year = 2014; 8 pollutants; 6 categories.</strong></li>
+                <li><strong>✓ NSF-WQI uses 9 parameters with DO having highest weight (0.17).</strong></li>
+                <li><strong>✓ CSR = 2% of avg 3-yr profit;</strong> Schedule VII has the eligible activities. Section 135 Companies Act 2013.</li>
+                <li><strong>✓ Scope 2 = electricity ONLY, not all energy</strong> (steam/cooling included; on-site fuel = Scope 1).</li>
+                <li><strong>✓ HHRA HQ:</strong> ≤ 1 safe, &gt; 1 risk. Cancer Risk acceptable 10⁻⁶ to 10⁻⁴.</li>
+                <li><strong>✓ Marking strategy:</strong> Unit 6 = 5–7 Qs. Mostly factual (rules/year-based) — easy yield. EIA process &amp; EMS guaranteed.</li>
+                <li><strong>✓ Common trap:</strong> EIA is for projects; SEA is for policies/plans — don't confuse.</li>
+            </ul>
+        </div>
+
+        <div class="standard">
+            <h3>MUST-MEMORISE SUMMARY (UNIT 6):</h3>
+            <table>
+                <tr><th>Item</th><th>Value / Year</th></tr>
+                <tr><td>NEPA (USA — first EIA law)</td><td>1969</td></tr>
+                <tr><td>India first EIA Notification</td><td>1994</td></tr>
+                <tr><td>India current EIA Notification</td><td>14 September 2006 (under E(P) Act 1986)</td></tr>
+                <tr><td>EIA stages</td><td>Screening → Scoping (ToR) → Public Consultation → Appraisal</td></tr>
+                <tr><td>Cat A appraisal</td><td>EAC (central, MoEFCC)</td></tr>
+                <tr><td>Cat B appraisal</td><td>SEAC + SEIAA (state)</td></tr>
+                <tr><td>Public hearing time</td><td>Within 45 days; 30-day notice</td></tr>
+                <tr><td>EC validity (general)</td><td>5 years</td></tr>
+                <tr><td>EC validity (mining)</td><td>30 years (max 50)</td></tr>
+                <tr><td>EC validity (river valley)</td><td>13 years</td></tr>
+                <tr><td>EC validity (area development)</td><td>10 years</td></tr>
+                <tr><td>Leopold matrix</td><td>100 × 88 cells (1971)</td></tr>
+                <tr><td>Battelle EES parameters</td><td>78</td></tr>
+                <tr><td>Baseline study seasons</td><td>3 (excluding monsoon); 10 km radius</td></tr>
+                <tr><td>EIA consultant accreditation</td><td>NABET (since 2010)</td></tr>
+                <tr><td>ISO 14001 cycle</td><td>PDCA (Plan-Do-Check-Act)</td></tr>
+                <tr><td>ISO 14040/14044</td><td>LCA — 4 phases</td></tr>
+                <tr><td>ISO 50001</td><td>Energy Management</td></tr>
+                <tr><td>Form V (Env Statement)</td><td>Due 30 September annually</td></tr>
+                <tr><td>NSF-WQI parameters</td><td>9 (DO weight 0.17 — highest)</td></tr>
+                <tr><td>AQI launch</td><td>17 Sept 2014; 8 pollutants; 6 categories</td></tr>
+                <tr><td>AQI formula</td><td>AQI = max(sub-index I<sub>p</sub>)</td></tr>
+                <tr><td>CSR Act</td><td>Section 135, Companies Act 2013</td></tr>
+                <tr><td>CSR spend</td><td>2% of avg net profit (3 yrs)</td></tr>
+                <tr><td>CSR threshold</td><td>NW ≥ 500 cr OR T/O ≥ 1000 cr OR NP ≥ 5 cr</td></tr>
+                <tr><td>GHG Scopes</td><td>1 (direct), 2 (electricity), 3 (value chain — 15 cat.)</td></tr>
+                <tr><td>Ecomark India</td><td>BIS 1991; lotus logo</td></tr>
+                <tr><td>GRIHA</td><td>India (TERI/MNRE 2007); 5-star scale</td></tr>
+                <tr><td>LEED levels</td><td>Certified, Silver, Gold, Platinum (USGBC; IGBC India)</td></tr>
+                <tr><td>NAPCC missions</td><td>8 (2008)</td></tr>
+                <tr><td>Mission LiFE</td><td>Launched at COP27 (2022)</td></tr>
+                <tr><td>HHRA formula (CDI)</td><td>(C × IR × EF × ED) / (BW × AT)</td></tr>
+                <tr><td>HHRA HQ &amp; cancer risk</td><td>HQ ≤ 1 safe; Cancer Risk 10⁻⁶ to 10⁻⁴ acceptable</td></tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p><strong>UPPCB AEE Unit 6 Revision Notes | EIA, EMS &amp; Environmental Indices | Generated April 2026</strong></p>
+            <p>Focus on EIA Notification 2006 process, EIA methods (Leopold/Battelle), EMS (ISO 14001 PDCA), environmental indices (WQI, AQI), CSR (Section 135), EPR, green building rating systems &amp; carbon footprint (Scope 1/2/3).</p>
+            <p>Standards referenced from EIA Notification 2006 (MoEFCC), ISO 14000 series, IS 10500, CPCB AQI 2014, Companies Act 2013, GHG Protocol (WRI/WBCSD), and NAPCC 2008.</p>
+            <p>Includes GATE ES 2026 additions: SEA (policies/plans), detailed LCA methodology (ISO 14040/44), and HHRA framework (4 steps + CDI/HQ formulae).</p>
+        </div>
+    </div>
+</body>
+</html>
