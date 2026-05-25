@@ -1,5 +1,5 @@
 // service-worker.js — PWA caching v16-pcb-notes
-const CACHE_NAME = 'ae-civil-v16-pcb-notes';
+const CACHE_NAME = 'ae-civil-v17-section-fix';
 const STATIC_ASSETS = [
   './',
   './index.html',
