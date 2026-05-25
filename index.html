@@ -1,549 +1,188 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#0f172a" />
-  <title>All AE/JE Civil Exams</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/png" href="icon-192.png" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
-<body>
+// auth.js — NATIVE auth (Path B) via @capacitor-firebase/authentication
+// Google + Phone OTP run through native Android SDKs (no WebView popup, no
+// reCAPTCHA). We then bridge the credential into the Firebase JS SDK so that
+// Firestore (profiles) keeps working with the same signed-in user.
+//
+// Falls back to web methods automatically when running in a normal browser.
 
-  <!-- ===== LOGIN SCREEN ===== -->
-  <div id="loginScreen" class="screen active">
-    <div class="login-card">
-      <div class="logo">📘</div>
-      <h1>All AE/JE Civil Exams</h1>
-      <p class="tagline">All State AE/JE Civil Engineering Exams</p>
-      <p class="subtitle">PYQ · Practice · Notes · Bookmarks</p>
+import { auth, db, googleProvider, RecaptchaVerifier, signInWithPhoneNumber } from './firebase-config.js';
+import {
+  signInWithPopup, signInWithCredential, GoogleAuthProvider, PhoneAuthProvider,
+  signOut, onAuthStateChanged, setPersistence, browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  doc, getDoc, setDoc, collection, query, where, getDocs, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      <div id="loginPhoneStep">
-        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Login with Mobile OTP</p>
-        <div class="phone-input-row">
-          <span class="country-code">+91</span>
-          <input id="loginMobileInput" type="tel" inputmode="numeric" maxlength="10"
-            placeholder="10-digit mobile number" autocomplete="tel"/>
-        </div>
-        <button id="loginSendOtpBtn" class="btn-primary-auth">Send OTP</button>
-        <div class="divider"><span>or</span></div>
-        <button id="googleLoginBtn" class="btn-google">
-          <svg width="18" height="18" viewBox="0 0 18 18">
-            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
-            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
-            <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
-            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
-          </svg>
-          Login with Google
-        </button>
-      </div>
+// Capacitor native plugin — accessed via the runtime GLOBAL (window.Capacitor)
+// instead of `import`. Bare-module imports like '@capacitor-firebase/...' do NOT
+// resolve in a plain WebView without a bundler, which crashes the whole script.
+// Capacitor injects these globals at runtime, so this works in the app and is
+// simply undefined (harmless) in a normal browser.
+const Capacitor = window.Capacitor || { isNativePlatform: () => false };
+const isNative = Capacitor.isNativePlatform && Capacitor.isNativePlatform();
+// The plugin is registered on window.Capacitor.Plugins.FirebaseAuthentication
+const FirebaseAuthentication =
+  (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.FirebaseAuthentication) || null;
 
-      <div id="loginOtpStep" style="display:none">
-        <p class="auth-step-label">OTP sent to <strong id="loginOtpSentTo" style="color:#60a5fa"></strong></p>
-        <div class="otp-row">
-          <input id="loginOtpInput" type="tel" inputmode="numeric" maxlength="6"
-            placeholder="6-digit OTP" autocomplete="one-time-code"/>
-        </div>
-        <button id="loginVerifyOtpBtn" class="btn-primary-auth">Verify & Login</button>
-        <button id="loginResendOtpBtn" class="btn-ghost" style="font-size:12px">Resend OTP</button>
-        <button id="backToLoginPhone" class="btn-ghost">← Change Number</button>
-      </div>
+setPersistence(auth, browserLocalPersistence).catch(() => {});
 
-      <p class="footer-note" id="loginFooter">Login with your mobile number</p>
-      <div id="authMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
-    </div>
-  </div>
+// ── Web reCAPTCHA (only used in browser fallback) ───────────────────────────
+let recaptchaVerifier = null;
+let confirmationResult = null;        // web OTP
+let nativeVerificationId = null;      // native OTP
 
-  <!-- ===== HOME SCREEN ===== -->
-  <div id="homeScreen" class="screen">
-    <header class="app-header">
-      <div class="header-left">
-        <h2>🏠 Home</h2>
-        <span class="header-sub">Select Exam Category</span>
-      </div>
-      <div class="header-right">
-        <button id="editProfileBtn" class="btn-icon" title="My Profile">👤</button>
-        <button id="logoutBtn" class="btn-icon" title="Logout">⏻</button>
-      </div>
-    </header>
-    <div class="welcome-strip">
-      <p>Welcome, <span id="userName">student</span> 👋</p>
-    </div>
-    <main class="home-main">
-      <div class="home-grid">
+function setupRecaptcha() {
+  if (recaptchaVerifier) { try { recaptchaVerifier.clear(); } catch(e){} recaptchaVerifier = null; }
+  const old = document.getElementById('recaptcha-container');
+  if (old) old.remove();
+  const container = document.createElement('div');
+  container.id = 'recaptcha-container';
+  document.body.appendChild(container);
+  recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible', callback: () => {} });
+  return recaptchaVerifier;
+}
+export function resetRecaptcha() {
+  if (recaptchaVerifier) { try { recaptchaVerifier.clear(); } catch(e){} recaptchaVerifier = null; }
+  const old = document.getElementById('recaptcha-container');
+  if (old) old.remove();
+}
 
-        <button class="home-tile tile-civil" id="homeCivil">
-          <div class="tile-icon">🏗️</div>
-          <div class="tile-title">AE/JE Civil</div>
-          <div class="tile-sub">Notes · Practice · PYQ · Bookmarks</div>
-        </button>
-
-        <button class="home-tile tile-pcb" id="homePCB">
-          <div class="tile-icon">🌿</div>
-          <div class="tile-title">Pollution Control Board</div>
-          <div class="tile-sub">Notes · Practice · PYQ · Bookmarks</div>
-        </button>
-
-        <button class="home-tile tile-nontech" id="homeNonTech">
-          <div class="tile-icon">📚</div>
-          <div class="tile-title">Non-Tech</div>
-          <div class="tile-sub">GS · Hindi · Practice · PYQ</div>
-        </button>
-
-      </div>
-    </main>
-  </div>
-
-  <!-- ===== PROFILE SCREEN ===== -->
-  <div id="profileScreen" class="screen">
-    <header class="app-header">
-      <div class="header-left">
-        <h2>👤 My Profile</h2>
-        <span class="header-sub">Your account details</span>
-      </div>
-      <div class="header-right">
-        <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      </div>
-    </header>
-    <main class="home-main">
-      <div class="login-card" style="max-width:420px;margin:20px auto">
-        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin-bottom:4px">Mobile Number</p>
-        <input id="profileMobile" type="text" class="auth-input" disabled style="opacity:0.7;cursor:not-allowed"/>
-        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Full Name</p>
-        <input id="profileName" type="text" placeholder="Enter your full name" maxlength="60" class="auth-input"/>
-        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Email ID</p>
-        <input id="profileEmail" type="email" placeholder="Enter your email" class="auth-input"/>
-        <button id="saveProfileBtn" class="btn-primary-auth" style="background:#065f46;margin-top:16px">💾 Save Details</button>
-        <div id="profileMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===================================================
-       AE/JE CIVIL — SECTION HOME
-       =================================================== -->
-  <div id="civilHomeScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>🏗️ AE/JE Civil</h2>
-        <span class="header-sub">Choose a section</span>
-      </div>
-    </header>
-    <main class="home-main">
-      <div class="home-grid">
-        <button class="home-tile tile-notes" id="civilNotes">
-          <div class="tile-icon">📝</div>
-          <div class="tile-title">Notes</div>
-          <div class="tile-sub">Subject-wise study material</div>
-        </button>
-        <button class="home-tile tile-practice" id="civilPractice">
-          <div class="tile-icon">✏️</div>
-          <div class="tile-title">Imp Practice</div>
-          <div class="tile-sub">Important questions by subject</div>
-        </button>
-        <button class="home-tile tile-pyq" id="civilPYQ">
-          <div class="tile-icon">📜</div>
-          <div class="tile-title">PYQ</div>
-          <div class="tile-sub">Previous year questions</div>
-        </button>
-        <button class="home-tile tile-bookmarks" id="civilBookmarks">
-          <div class="tile-icon">⭐</div>
-          <div class="tile-title">Bookmarks</div>
-          <div class="tile-sub">Your saved questions</div>
-        </button>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===================================================
-       PCB — SECTION HOME
-       =================================================== -->
-  <div id="pcbHomeScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>🌿 Pollution Control Board</h2>
-        <span class="header-sub">Choose a section</span>
-      </div>
-    </header>
-    <main class="home-main">
-      <div class="home-grid">
-        <button class="home-tile tile-notes" id="pcbNotes">
-          <div class="tile-icon">📝</div>
-          <div class="tile-title">Notes</div>
-          <div class="tile-sub">Subject-wise study material</div>
-        </button>
-        <button class="home-tile tile-practice" id="pcbPractice">
-          <div class="tile-icon">✏️</div>
-          <div class="tile-title">Imp Practice</div>
-          <div class="tile-sub">Important questions by subject</div>
-        </button>
-        <button class="home-tile tile-pyq" id="pcbPYQ">
-          <div class="tile-icon">📜</div>
-          <div class="tile-title">PYQ</div>
-          <div class="tile-sub">Previous year questions</div>
-        </button>
-        <button class="home-tile tile-bookmarks" id="pcbBookmarks">
-          <div class="tile-icon">⭐</div>
-          <div class="tile-title">Bookmarks</div>
-          <div class="tile-sub">Your saved questions</div>
-        </button>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===================================================
-       NON-TECH — SECTION HOME
-       =================================================== -->
-  <div id="nonTechHomeScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>📚 Non-Tech</h2>
-        <span class="header-sub">Choose a section</span>
-      </div>
-    </header>
-    <main class="home-main">
-      <div class="home-grid">
-        <button class="home-tile tile-gs" id="nonTechGS">
-          <div class="tile-icon">🌍</div>
-          <div class="tile-title">General Studies</div>
-          <div class="tile-sub">Polity · History · Geography · Science</div>
-        </button>
-        <button class="home-tile tile-hindi" id="nonTechHindi">
-          <div class="tile-icon">📖</div>
-          <div class="tile-title">Hindi</div>
-          <div class="tile-sub">व्याकरण · साहित्य · कवि</div>
-        </button>
-        <button class="home-tile tile-practice" id="nonTechPractice">
-          <div class="tile-icon">✏️</div>
-          <div class="tile-title">Practice Questions</div>
-          <div class="tile-sub">GS · Reasoning · Aptitude</div>
-        </button>
-        <button class="home-tile tile-pyq" id="nonTechPYQ">
-          <div class="tile-icon">📜</div>
-          <div class="tile-title">PYQ</div>
-          <div class="tile-sub">Previous year questions</div>
-        </button>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===== PCB NOTES: SUBJECT LIST ===== -->
-  <div id="pcbNotesSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="pcbHomeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>📝 PCB Notes</h2>
-        <span class="header-sub">Select a unit</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="pcbNotesSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== PCB NOTES: CONTENT SCREEN ===== -->
-  <div id="pcbNotesContentScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="pcbNotesSubjectsScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="pcbNotesContentTitle">Notes</h2>
-        <span class="header-sub" id="pcbNotesContentSub">Unit notes</span>
-      </div>
-    </header>
-    <div id="pcbNotesTopicBar" class="notes-topic-bar"></div>
-    <main class="notes-main" id="pcbNotesMain">
-      <div id="pcbNotesPlaceholder" class="empty-state">
-        <div class="empty-icon">📝</div>
-        <h3>Loading…</h3>
-        <p>Please wait</p>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===== NOTES: SUBJECT LIST ===== -->
-  <div id="notesSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon" id="notesSubjectsBackBtn">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>📝 Notes</h2>
-        <span class="header-sub">Pick a subject</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="notesSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== NOTES: CONTENT SCREEN ===== -->
-  <div id="notesContentScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon" id="notesContentBackBtn">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="notesContentTitle">Notes</h2>
-        <span class="header-sub" id="notesContentSub">Subject notes</span>
-      </div>
-    </header>
-    <main class="notes-main" id="notesMain">
-      <div id="notesTopicBar" class="notes-topic-bar"></div>
-      <div id="notesPlaceholder" class="empty-state">
-        <div class="empty-icon">📝</div>
-        <h3>Notes coming soon</h3>
-        <p>Notes for this subject will be added here.</p>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===== PRACTICE: SUBJECT LIST ===== -->
-  <div id="practiceSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon" id="practiceSubjectsBackBtn">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>✏️ Imp Practice</h2>
-        <span class="header-sub">Pick a subject</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="practiceSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== PYQ: EXAM LIST ===== -->
-  <div id="pyqExamsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon" id="pyqExamsBackBtn">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>📜 PYQ</h2>
-        <span class="header-sub">Pick an exam</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="pyqExamList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== PYQ: MODE SELECT ===== -->
-  <div id="pyqModeScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="pyqExamsScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="pyqModeTitle">📜 PYQ</h2>
-        <span class="header-sub">How do you want to browse?</span>
-      </div>
-    </header>
-    <main class="home-main">
-      <div class="home-grid">
-        <button class="home-tile tile-pyq" id="pyqModeYear">
-          <div class="tile-icon">📅</div>
-          <div class="tile-title">Exam & Year-wise</div>
-          <div class="tile-sub">Browse by exam year</div>
-        </button>
-        <button class="home-tile tile-notes" id="pyqModeSubject">
-          <div class="tile-icon">📖</div>
-          <div class="tile-title">Subject-wise</div>
-          <div class="tile-sub">Browse by subject</div>
-        </button>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===== PYQ: YEAR LIST ===== -->
-  <div id="pyqYearsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="pyqYearsTitle">📅 PYQ — Year-wise</h2>
-        <span class="header-sub" id="pyqYearsSub">Pick an exam paper</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="pyqYearList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== PYQ: SUBJECT LIST ===== -->
-  <div id="pyqSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="pyqSubjectsTitle">PYQ</h2>
-        <span class="header-sub" id="pyqSubjectsSub">Pick a subject</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="pyqSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== BOOKMARKS SCREEN ===== -->
-  <div id="bookmarksScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon" id="bookmarksBackBtn">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>⭐ Bookmarks</h2>
-        <span class="header-sub">Your saved questions</span>
-      </div>
-    </header>
-    <main class="bookmarks-main">
-      <button id="practiceBookmarksBtn" class="practice-all-btn hidden">Practice all bookmarks</button>
-      <div id="bookmarksList" class="bookmarks-list"></div>
-      <div id="bookmarksEmpty" class="empty-state hidden">
-        <div class="empty-icon">⭐</div>
-        <h3>No bookmarks yet</h3>
-        <p>Tap the ☆ icon during a quiz to save questions here.</p>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===== QUIZ SCREEN ===== -->
-  <div id="quizScreen" class="screen">
-    <header class="quiz-header">
-      <button id="quizBackBtn" class="btn-icon">←</button>
-      <div class="quiz-header-center">
-        <div class="quiz-progress-bar">
-          <div id="quizProgressFill" class="quiz-progress-fill"></div>
-        </div>
-        <span id="quizProgress" class="quiz-progress-text">0 / 0</span>
-      </div>
-      <button id="quizBookmarkBtn" class="btn-icon" title="Bookmark" data-marked="0">☆</button>
-    </header>
-    <div id="quizTopicBar" class="topic-bar-scroll"></div>
-    <main class="quiz-main">
-      <div class="quiz-meta-row">
-        <div class="quiz-meta">
-          <span id="quizExamTag" class="hidden">—</span>
-          <span id="quizSubjectTag">—</span>
-          <span id="quizYearTag">—</span>
-        </div>
-        <button id="quizGridBtn" class="btn-grid" title="Jump to question">⊞</button>
-      </div>
-      <div id="quizSrNo" class="quiz-sr-no">Q.1</div>
-      <h2 id="quizQuestion" class="quiz-question">Loading...</h2>
-      <div id="quizOptions" class="quiz-options"></div>
-      <div id="quizExplanation" class="quiz-explanation hidden">
-        <h4>Explanation</h4>
-        <p id="quizExplanationText"></p>
-      </div>
-    </main>
-    <footer class="quiz-footer">
-      <button id="quizPrevBtn" class="btn-secondary">← Prev</button>
-      <button id="quizNextBtn" class="btn-primary">Next →</button>
-    </footer>
-  </div>
-
-  <!-- QUESTION JUMP PANEL -->
-  <div id="jumpPanel" class="jump-panel hidden">
-    <div class="jump-panel-inner">
-      <div class="jump-panel-header">
-        <span class="jump-panel-title">Jump to Question</span>
-        <button id="jumpCloseBtn" class="btn-icon">✕</button>
-      </div>
-      <div id="jumpGrid" class="jump-grid"></div>
-    </div>
-  </div>
-
-  <!-- ===== GS: SUBJECT LIST ===== -->
-  <div id="gsSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>🌍 General Studies</h2>
-        <span class="header-sub">Pick a subject</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="gsSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== GS: SUB-SUBJECT LIST ===== -->
-  <div id="gsSubSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="gsSubjectsScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="gsSubSubjectTitle">History</h2>
-        <span class="header-sub" id="gsSubSubjectSub">Choose a period</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="gsSubSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== GS NOTES CONTENT ===== -->
-  <div id="gsNotesScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon" id="gsNotesBackBtn">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="gsNotesTitle">General Studies</h2>
-        <span class="header-sub" id="gsNotesSub">Notes</span>
-      </div>
-    </header>
-    <main class="notes-main" id="gsNotesMain">
-      <div id="gsTopicBar" class="notes-topic-bar"></div>
-      <div id="gsPlaceholder" class="empty-state">
-        <div class="empty-icon">🌍</div>
-        <h3>Notes loading…</h3>
-      </div>
-    </main>
-  </div>
-
-  <!-- ===== HINDI: SUBJECT LIST ===== -->
-  <div id="hindiSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>📖 Hindi</h2>
-        <span class="header-sub">Pick a section</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="hindiSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== HINDI NOTES CONTENT ===== -->
-  <div id="hindiNotesScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="hindiSubjectsScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="hindiNotesTitle">Hindi</h2>
-        <span class="header-sub" id="hindiNotesSub">Notes</span>
-      </div>
-    </header>
-    <main class="notes-main" id="hindiNotesMain">
-      <div id="hindiTopicBar" class="notes-topic-bar"></div>
-      <div id="hindiPlaceholder" class="empty-state">
-        <div class="empty-icon">📖</div>
-        <h3>Notes loading…</h3>
-      </div>
-    </main>
-  </div>
-
-  <!-- TOAST -->
-  <div id="toast" class="toast"></div>
-
-  <script type="module" src="js/firebase-config.js"></script>
-  <script type="module" src="js/auth.js"></script>
-  <script type="module" src="js/db.js"></script>
-  <script type="module" src="js/quiz.js"></script>
-  <script type="module" src="js/subjects.js"></script>
-  <script type="module" src="js/exams.js"></script>
-  <script type="module" src="js/notes.js"></script>
-  <script type="module" src="js/gs-notes.js"></script>
-  <script type="module" src="js/pcb-notes.js"></script>
-  <script type="module" src="js/app.js"></script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js').catch(() => {});
+// ── Auth state ─────────────────────────────────────────────────────────────
+// On native, the JS SDK's onAuthStateChanged still fires because we bridge the
+// credential in via signInWithCredential. So one listener covers both.
+export function watchAuth(onLoggedIn, onLoggedOut) {
+  onAuthStateChanged(auth, async user => {
+    if (user) {
+      const profile = await getUserProfile(user.uid);
+      onLoggedIn({
+        uid:     user.uid,
+        name:    profile?.name  || '',
+        email:   profile?.email || user.email || '',
+        mobile:  profile?.mobile || user.phoneNumber || '',
+        hasProfile: !!(profile && profile.name)
       });
+    } else {
+      onLoggedOut();
     }
-  </script>
-</body>
-</html>
+  });
+}
+
+// ── Profile helpers ─────────────────────────────────────────────────────────
+export async function getUserProfile(uid) {
+  try {
+    const snap = await getDoc(doc(db, 'users', uid));
+    return snap.exists() ? snap.data() : null;
+  } catch { return null; }
+}
+
+export async function saveUserProfile({ uid, name, email, mobile }) {
+  await setDoc(doc(db, 'users', uid), {
+    name:   (name || '').trim(),
+    email:  (email || '').toLowerCase().trim(),
+    mobile: mobile || '',
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+}
+
+// Shared: ensure a profile doc exists right after first sign-in
+async function ensureProfileDoc(user, { email, mobile } = {}) {
+  try {
+    const existing = await getUserProfile(user.uid);
+    if (!existing) {
+      // For Google, try to carry over an existing profile matched by email
+      let carry = null;
+      const e = (email || user.email || '').toLowerCase();
+      if (e) {
+        try {
+          const q = query(collection(db, 'users'), where('email', '==', e));
+          const snap = await getDocs(q);
+          if (!snap.empty) carry = snap.docs[0].data();
+        } catch (err) { console.error('[Auth] email lookup failed:', err); }
+      }
+      await setDoc(doc(db, 'users', user.uid), {
+        name:   carry?.name   || user.displayName || '',
+        email:  e,
+        mobile: carry?.mobile || mobile || user.phoneNumber || '',
+        createdAt: carry?.createdAt || serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+    }
+  } catch (e) {
+    console.error('[Auth] ensureProfileDoc error (check Firestore rules):', e);
+  }
+}
+
+// ── Google login ─────────────────────────────────────────────────────────────
+export async function loginWithGoogle() {
+  if (isNative) {
+    if (!FirebaseAuthentication) throw new Error('Native auth plugin not available');
+    // Native Google sign-in → get idToken → bridge into JS SDK
+    const result = await FirebaseAuthentication.signInWithGoogle();
+    const idToken = result.credential?.idToken;
+    if (!idToken) throw new Error('No Google idToken returned');
+    const credential = GoogleAuthProvider.credential(idToken);
+    const userCred = await signInWithCredential(auth, credential);
+    await ensureProfileDoc(userCred.user, { email: result.user?.email });
+    return userCred.user;
+  } else {
+    // Web fallback — popup
+    await setPersistence(auth, browserLocalPersistence);
+    const result = await signInWithPopup(auth, googleProvider);
+    await ensureProfileDoc(result.user, { email: result.user.email });
+    return result.user;
+  }
+}
+
+// ── OTP: Send ────────────────────────────────────────────────────────────────
+export async function sendOTP(mobileNumber) {
+  if (isNative) {
+    // Native phone auth — no reCAPTCHA needed. Returns a verificationId.
+    return new Promise((resolve, reject) => {
+      let settled = false;
+      // Listener fires when SMS auto-retrieved OR when code is ready to enter
+      FirebaseAuthentication.addListener('phoneCodeSent', (event) => {
+        nativeVerificationId = event.verificationId;
+        if (!settled) { settled = true; resolve({ verificationId: event.verificationId }); }
+      });
+      FirebaseAuthentication.signInWithPhoneNumber({ phoneNumber: mobileNumber })
+        .catch(err => { if (!settled) { settled = true; reject(err); } });
+    });
+  } else {
+    // Web fallback — reCAPTCHA flow
+    const verifier = setupRecaptcha();
+    try {
+      confirmationResult = await signInWithPhoneNumber(auth, mobileNumber, verifier);
+      return confirmationResult;
+    } catch (e) {
+      resetRecaptcha();
+      throw e;
+    }
+  }
+}
+
+// ── OTP: Verify ──────────────────────────────────────────────────────────────
+export async function verifyOTP(otp) {
+  if (isNative) {
+    if (!nativeVerificationId) throw new Error('No OTP sent. Please try again.');
+    // Build a phone credential and bridge into the JS SDK
+    const credential = PhoneAuthProvider.credential(nativeVerificationId, otp);
+    const userCred = await signInWithCredential(auth, credential);
+    nativeVerificationId = null;
+    await ensureProfileDoc(userCred.user, { mobile: userCred.user.phoneNumber });
+    return userCred.user;
+  } else {
+    if (!confirmationResult) throw new Error('No OTP sent. Please try again.');
+    const result = await confirmationResult.confirm(otp);
+    await ensureProfileDoc(result.user, { mobile: result.user.phoneNumber });
+    return result.user;
+  }
+}
+
+// ── Logout ─────────────────────────────────────────────────────────────────
+export async function logout() {
+  if (isNative) {
+    try { await FirebaseAuthentication.signOut(); } catch(e) {}
+  }
+  await signOut(auth);
+}

@@ -1,719 +1,1321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPPCB AEE Unit 2 - Wastewater Treatment Engineering</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #212121;
-            background: #f5f5f5;
-            padding: 20px;
-        }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        h1 { color: #1a237e; text-align: center; margin-bottom: 10px; font-size: 28px; }
-        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
-        h2 { color: white; background: #283593; padding: 12px; margin: 30px 0 15px 0; border-left: 4px solid #1a237e; }
-        h3 { color: #1a237e; margin: 20px 0 10px 0; font-size: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
-        .content { line-height: 1.8; margin-bottom: 15px; text-align: justify; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
-        th { background: #283593; color: white; padding: 10px; text-align: left; font-weight: 600; }
-        td { border: 1px solid #ddd; padding: 10px; font-size: 14px; }
-        tr:nth-child(even) { background: #f9f9f9; }
-        .highlight { background: #fff3cd; border-left: 4px solid #ff9800; padding: 10px; margin: 10px 0; font-size: 14px; }
-        .standard { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin: 10px 0; font-size: 14px; font-weight: 500; }
-        .formula { background: #f3e5f5; border-left: 4px solid #9c27b0; padding: 10px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 13px; }
-        .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px; margin: 10px 0; font-size: 13px; }
-        .gate-add { background: #ede7f6; border-left: 4px solid #673ab7; padding: 10px; margin: 10px 0; font-size: 14px; }
-        ul, ol { margin-left: 20px; margin-bottom: 10px; }
-        li { margin-bottom: 5px; }
-        .section-intro { background: #f0f2f5; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd; color: #666; font-size: 12px; }
-        .key-point { color: #c62828; font-weight: 600; }
-        .exam-strategy { background: #fff8e1; border: 2px solid #fbc02d; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        @media print { body { background: white; } .container { box-shadow: none; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPPCB AEE 2026 — Unit 11: Fluid Mechanics & Hydraulics Revision Notes</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --header: #1a237e;
+  --header2: #283593;
+  --accent: #0d47a1;
+  --bg: #f0f2f5;
+  --panel: #ffffff;
+  
+  --blue: #0d47a1;
+  --blue-bg: #e3f2fd;
+  --green: #2e7d32;
+  --green-bg: #e8f5e9;
+  --red: #c62828;
+  --red-bg: #ffebee;
+  --orange: #e65100;
+  --orange-bg: #fff3e0;
+  --purple: #4a148c;
+  --purple-bg: #f3e5f5;
+  --cyan: #00838f;
+  --cyan-bg: #e0f2f1;
+  --teal: #00695c;
+  --teal-bg: #b2dfdb;
+  
+  --text: #212121;
+  --text2: #616161;
+  --border: #e0e0e0;
+  --radius: 6px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, var(--header) 0%, var(--header2) 100%);
+  color: white;
+  padding: 20px 30px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.header .subtitle {
+  font-size: 13px;
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+/* ===== TABS ===== */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  border: 2px solid var(--border);
+  background: white;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text2);
+  transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+}
+
+.tab-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-header {
+  background: linear-gradient(135deg, var(--blue) 0%, #1565c0 100%);
+  color: white;
+  padding: 15px 20px;
+  margin: 25px 0 15px 0;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 700;
+  border-left: 5px solid #0d47a1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-header.green {
+  background: linear-gradient(135deg, var(--green) 0%, #1b5e20 100%);
+  border-left-color: var(--green);
+}
+
+.section-header.red {
+  background: linear-gradient(135deg, var(--red) 0%, #ad1457 100%);
+  border-left-color: var(--red);
+}
+
+.section-header.orange {
+  background: linear-gradient(135deg, var(--orange) 0%, #bf360c 100%);
+  border-left-color: var(--orange);
+}
+
+.section-header.purple {
+  background: linear-gradient(135deg, var(--purple) 0%, #6a1b9a 100%);
+  border-left-color: var(--purple);
+}
+
+.section-header.cyan {
+  background: linear-gradient(135deg, var(--cyan) 0%, #00695c 100%);
+  border-left-color: var(--cyan);
+}
+
+.section-header.teal {
+  background: linear-gradient(135deg, var(--teal) 0%, #004d40 100%);
+  border-left-color: var(--teal);
+}
+
+.section-header::before {
+  content: "▶";
+  font-size: 14px;
+}
+
+/* ===== BOXES ===== */
+.box {
+  padding: 16px;
+  margin: 12px 0;
+  border-radius: var(--radius);
+  border-left: 4px solid;
+}
+
+.box.formula {
+  background: var(--orange-bg);
+  border-left-color: var(--orange);
+}
+
+.box.formula strong {
+  color: var(--orange);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.box.formula code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(230, 81, 0, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.box.definition {
+  background: var(--blue-bg);
+  border-left-color: var(--blue);
+}
+
+.box.definition strong {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.box.standard {
+  background: var(--purple-bg);
+  border-left-color: var(--purple);
+}
+
+.box.standard strong {
+  color: var(--purple);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.box.standard code {
+  background: rgba(74, 20, 140, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--purple);
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.box.tip {
+  background: var(--green-bg);
+  border-left-color: var(--green);
+}
+
+.box.tip::before {
+  content: "💡 EXAM TIP: ";
+  color: var(--green);
+  font-weight: 700;
+}
+
+.box.warning {
+  background: var(--red-bg);
+  border-left-color: var(--red);
+}
+
+.box.warning::before {
+  content: "⚠ IMPORTANT: ";
+  color: var(--red);
+  font-weight: 700;
+}
+
+.box.cyan {
+  background: var(--cyan-bg);
+  border-left-color: var(--cyan);
+}
+
+.box.cyan strong {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+/* ===== TABLE ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+table thead {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--header2) 100%);
+  color: white;
+}
+
+table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+table tr:hover {
+  background: var(--blue-bg);
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table code {
+  background: var(--orange-bg);
+  color: var(--orange);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+/* ===== LISTS ===== */
+.bullet-list {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.bullet-list li {
+  margin: 8px 0;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.bullet-list li strong {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+/* ===== GRID ===== */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.grid.three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-item {
+  background: white;
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.grid-item h4 {
+  margin-bottom: 8px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.grid-item code {
+  background: var(--orange-bg);
+  color: var(--orange);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--panel);
+  border-top: 2px solid var(--border);
+  padding: 20px 30px;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .container { padding: 20px; }
+  .grid { grid-template-columns: 1fr; }
+  .grid.three { grid-template-columns: 1fr; }
+  .header h1 { font-size: 18px; }
+  table { font-size: 12px; }
+  table th, table td { padding: 8px; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>UNIT 2: WASTEWATER TREATMENT ENGINEERING</h1>
-        <div class="subtitle">UPPCB AEE 2026 | 13-16 Questions | 52-64 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
 
-        <h2>SECTION 1: SEWAGE CHARACTERISTICS</h2>
-        <div class="section-intro">
-            Physical, chemical, and biological characteristics of domestic and industrial wastewater. Focus on BOD/COD/TOC relationships, nutrient forms, and kinetics.
-        </div>
+<!-- HEADER -->
+<div class="header">
+  <h1>💧 UNIT 11: FLUID MECHANICS & HYDRAULICS</h1>
+  <div class="subtitle">UPPCB AEE 2026 Revision Notes | ~3–5 MCQs Expected | High-Frequency Formula Topics</div>
+</div>
 
-        <h3>1.1 PHYSICAL CHARACTERISTICS</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Colour:</strong> fresh sewage = grey; stale/septic = black (H₂S + Fe → FeS)</li>
-                <li><strong>Odour:</strong> fresh = musty (mild); septic = rotten eggs (H₂S)</li>
-                <li><strong>Temperature:</strong> typically 15–25°C; higher than water supply due to warm water from houses</li>
-                <li><strong>Turbidity:</strong> due to SS; typical 100–300 NTU in raw sewage</li>
-                <li><strong>Total Solids (TS) = TSS + TDS</strong>; TSS = Volatile SS (VSS, organic) + Fixed SS (FSS, inorganic)</li>
-            </ul>
-            Typical raw sewage: TS ≈ 700–1200 mg/L, TSS ≈ 200–350 mg/L, VSS/TSS ≈ 0.75–0.85
-        </div>
+<div class="container">
 
-        <h3>1.2 CHEMICAL OXYGEN DEMAND (COD) &amp; BOD &amp; TOC</h3>
-        <div class="content">
-            <strong>BOD (Biochemical Oxygen Demand):</strong> O₂ required by microbes to oxidise biodegradable organics over specified time (usually 5 days at 20°C) under aerobic conditions.<br/>
-            <strong>COD (Chemical Oxygen Demand):</strong> O₂ equivalent to oxidise all organics (biodegradable + non-biodegradable) using strong oxidant (K₂Cr₂O₇ in acidic medium at 150°C for 2 hrs).<br/>
-            <strong>TOC (Total Organic Carbon):</strong> mass of carbon in organics; measured by catalytic combustion at 680–900°C, detection as CO₂.<br/>
-            <strong>ThOD (Theoretical OD):</strong> stoichiometric O₂ for complete oxidation.
-        </div>
-        <div class="standard">
-            <strong>Typical relationships:</strong><br/>
-            COD &gt; BOD<sub>U</sub> &gt; BOD₅ &gt; TOC<br/>
-            For domestic sewage: BOD₅/COD ≈ <strong>0.4–0.6</strong> (biodegradable)<br/>
-            BOD<sub>U</sub>/COD ≈ 0.65–0.75<br/>
-            BOD<sub>U</sub>/BOD₅ ≈ 1.46 (for k=0.23/day, natural log)<br/>
-            Industrial wastewaters with BOD/COD &lt; 0.3 are <span class="key-point">poorly biodegradable</span>
-        </div>
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('fundamentals')">Fundamentals</button>
+  <button class="tab-btn" onclick="showTab('flow')">Flow & Pipe Networks</button>
+  <button class="tab-btn" onclick="showTab('pumps')">Pumps & Hydraulics</button>
+  <button class="tab-btn" onclick="showTab('channels')">Channels & Flow Control</button>
+  <button class="tab-btn" onclick="showTab('numericals')">Formula & Numericals</button>
+  <button class="tab-btn" onclick="showTab('quick')">Quick Reference</button>
+</div>
 
-        <h3>1.3 BOD KINETICS (First-order)</h3>
-        <div class="formula">
-            <strong>BOD remaining at time t:</strong> L<sub>t</sub> = L₀·e<sup>−kt</sup> (base e)<br/>
-            or L<sub>t</sub> = L₀·10<sup>−Kt</sup> (base 10); k = 2.303·K<br/><br/>
-            <strong>BOD exerted at time t:</strong><br/>
-            y<sub>t</sub> = L₀·(1 − e<sup>−kt</sup>) = L₀·(1 − 10<sup>−Kt</sup>)<br/><br/>
-            <strong>Temperature correction:</strong> k<sub>T</sub> = k₂₀·θ<sup>(T−20)</sup><br/>
-            θ = 1.047 for BOD rate; 1.135 for river reaeration
-        </div>
-        <div class="content">
-            <strong>Typical k values (base e, 20°C):</strong>
-            <ul>
-                <li>Raw domestic sewage: 0.23/day (K = 0.1/day)</li>
-                <li>Treated effluent: 0.10–0.15/day</li>
-                <li>Polluted river water: 0.05–0.10/day</li>
-            </ul>
-            <strong>BOD₅ at 20°C ≈ 68% of BOD<sub>U</sub></strong> for k=0.23/day.
-        </div>
+<!-- TAB 1: FUNDAMENTALS -->
+<div id="fundamentals" class="tab-content active">
 
-        <h3>1.4 BOD TEST PROCEDURE (IS 3025 / APHA 5210)</h3>
-        <div class="content">
-            <ul>
-                <li>Incubate sample + dilution water in sealed BOD bottle (300 mL)</li>
-                <li>Temperature: <strong>20 ± 1°C</strong></li>
-                <li>Duration: <strong>5 days</strong>, in DARK (to prevent photosynthetic O₂ release by algae)</li>
-                <li>Dilution water seeded with microbes (from sewage effluent or commercial seed)</li>
-                <li>Add nitrification inhibitor (ATU or TCMP) if CBOD only desired</li>
-                <li>Formula: BOD₅ = (DO₀ − DO₅ − B_correction) × Dilution Factor</li>
-            </ul>
-        </div>
-        <div class="highlight">
-            <strong>Why 5 days?</strong> Historically chosen (UK) as the maximum time water takes to reach open sea from any UK river. <strong>Why 20°C?</strong> Average stream temperature in temperate regions. <strong>Why dark?</strong> Prevents algal photosynthesis producing O₂ which would underestimate BOD.
-        </div>
+        <h2>SECTION 1: FLUID PROPERTIES & HYDROSTATICS</h2>
 
-        <h3>1.5 NITROGEN FORMS IN WASTEWATER</h3>
-        <div class="content">
-            <strong>Sequence of decomposition:</strong>
-            <div class="formula">
-                Organic N (proteins, urea) → NH₃/NH₄⁺ (ammonification)<br/>
-                NH₄⁺ + 1.5 O₂ → NO₂⁻ + H₂O + 2H⁺  [<em>Nitrosomonas</em>]<br/>
-                NO₂⁻ + 0.5 O₂ → NO₃⁻  [<em>Nitrobacter</em>]<br/>
-                Combined: NH₄⁺ + 2 O₂ → NO₃⁻ + H₂O + 2H⁺  (nitrification)<br/>
-                <strong>O₂ required: 4.57 g O₂ per g NH₄⁺-N</strong>
-            </div>
-            <strong>Denitrification (anoxic):</strong> NO₃⁻ → NO₂⁻ → NO → N₂O → N₂ (gas)
-        </div>
-        <div class="standard">
-            <strong>Nitrogen reporting:</strong>
-            <ul>
-                <li><strong>TKN</strong> (Total Kjeldahl Nitrogen) = Organic-N + NH₄⁺-N (reduced forms)</li>
-                <li><strong>Total N</strong> = TKN + NO₂⁻-N + NO₃⁻-N</li>
-                <li>Typical raw sewage: TKN = 30–80 mg/L; 60% as NH₄⁺-N</li>
-            </ul>
-        </div>
+<div class="box definition">
+  <strong>Fluid:</strong> Substance that continuously deforms under shear stress; includes liquids and gases
+</div>
 
-        <h3>1.6 PHOSPHORUS IN WASTEWATER</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Sources:</strong> detergents (historically STPP), human waste, food waste</li>
-                <li><strong>Forms:</strong> orthophosphate (PO₄³⁻), polyphosphate, organic phosphorus</li>
-                <li>Typical raw sewage: Total P = 5–15 mg/L</li>
-                <li><strong>Significance:</strong> limiting nutrient in freshwater → causes eutrophication</li>
-                <li>Removal: chemical (alum, FeCl₃, lime) or biological (EBPR — Bio-P; PAO organisms)</li>
-                <li>Redfield ratio in algae: C:N:P = 106:16:1 (by atoms)</li>
-            </ul>
-        </div>
+<div class="section-header green">Key Fluid Properties</div>
 
-        <div class="gate-add">
-            <strong>GATE ADD — Point vs non-point sources:</strong>
-            <ul>
-                <li><strong>Point sources</strong> (regulated): STP outfalls, industrial discharge pipes, CETPs</li>
-                <li><strong>Non-point sources</strong> (diffuse, hard to regulate): agricultural runoff (nitrate, pesticide), urban stormwater, atmospheric deposition</li>
-                <li>Non-point sources contribute ~60% of nutrient load to Indian rivers</li>
-            </ul>
-        </div>
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Symbol</th>
+      <th>SI Unit</th>
+      <th>Definition / Significance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Density</strong></td>
+      <td>ρ</td>
+      <td>kg/m³</td>
+      <td>Mass per unit volume; water ≈ 1000 kg/m³ @ 4°C</td>
+    </tr>
+    <tr>
+      <td><strong>Specific Weight</strong></td>
+      <td>γ = ρg</td>
+      <td>N/m³</td>
+      <td>Weight per unit volume; γwater ≈ 9810 N/m³</td>
+    </tr>
+    <tr>
+      <td><strong>Relative Density</strong></td>
+      <td>d = ρfluid/ρwater</td>
+      <td>Dimensionless</td>
+      <td>Density ratio; d=1 for water</td>
+    </tr>
+    <tr>
+      <td><strong>Viscosity (Dynamic)</strong></td>
+      <td>μ</td>
+      <td>Pa·s (N·s/m²)</td>
+      <td>Resistance to flow; water @ 20°C ≈ 0.001 Pa·s</td>
+    </tr>
+    <tr>
+      <td><strong>Viscosity (Kinematic)</strong></td>
+      <td>ν = μ/ρ</td>
+      <td>m²/s</td>
+      <td>Dynamic viscosity / density; affects flow patterns</td>
+    </tr>
+    <tr>
+      <td><strong>Surface Tension</strong></td>
+      <td>σ</td>
+      <td>N/m</td>
+      <td>Force per unit length at liquid surface; capillarity effect</td>
+    </tr>
+    <tr>
+      <td><strong>Bulk Modulus</strong></td>
+      <td>K</td>
+      <td>Pa</td>
+      <td>Resistance to compression; water ≈ 2.1×10⁹ Pa</td>
+    </tr>
+  </tbody>
+</table>
 
-        <h2>SECTION 2: SEWER SYSTEM DESIGN</h2>
-        <div class="section-intro">
-            Hydraulic design of sewers, Manning's equation, self-cleansing velocity, and sewer appurtenances. Expect 1–2 MCQs.
-        </div>
+<div class="box tip">
+Water @ 20°C: ρ = 1000 kg/m³, γ = 9810 N/m³, μ = 10⁻³ Pa·s, ν = 10⁻⁶ m²/s. These are high-yield constants for numericals.
+</div>
 
-        <h3>2.1 TYPES OF SEWER SYSTEMS</h3>
-        <table>
-            <tr><th>Type</th><th>Description</th><th>Suitability</th></tr>
-            <tr><td><strong>Separate</strong></td><td>Sanitary sewer + separate storm sewer</td><td>New cities; avoids overflow of sewage during rains; preferred</td></tr>
-            <tr><td><strong>Combined</strong></td><td>One pipe carries both sewage &amp; stormwater</td><td>Old cities (e.g., London, parts of Delhi); cheaper initial; needs CSO structures</td></tr>
-            <tr><td><strong>Partially separate</strong></td><td>Roof/courtyard drainage joins sanitary sewer; street runoff in separate storm sewer</td><td>Compromise system</td></tr>
-        </table>
+<div class="section-header green">Pascal's Law & Manometers</div>
 
-        <h3>2.2 SEWAGE FLOW ESTIMATION</h3>
-        <div class="content">
-            <ul>
-                <li>Per capita sewage = <strong>80% of water supply</strong> (industry typical; 70–90% range)</li>
-                <li>CPHEEO: urban 80% of 135 LPCD = 108 LPCD typical</li>
-                <li>Dry Weather Flow (DWF) = average of daily sewage flow</li>
-                <li>Peak factor = peak flow / average flow; depends on population served</li>
-            </ul>
-        </div>
-        <div class="formula">
-            <strong>Harmon's peak factor:</strong> PF = 1 + 14/(4 + √P)<br/>
-            where P = population in thousands<br/>
-            For P = 10,000: PF = 1 + 14/(4+√10) ≈ 2.96<br/>
-            For P = 1,000,000: PF ≈ 2.17<br/><br/>
-            <strong>Babbitt's formula:</strong> PF = 5/P^0.2<br/>
-            <strong>CPHEEO design:</strong><br/>
-            • Lateral sewers: peak factor = 3.0<br/>
-            • Main/branch sewers: 2.5<br/>
-            • Trunk sewers: 2.0
-        </div>
+<div class="box formula">
+  <strong>Pascal's Law:</strong> Pressure at a point in static fluid is same in all directions
+  <div style="margin-top: 8px;">
+    <code>P = ρgh</code><br>
+    where ρ = density (kg/m³) | g = 9.81 m/s² | h = depth (m)
+  </div>
+</div>
 
-        <h3>2.3 HYDRAULIC DESIGN — MANNING'S EQUATION</h3>
-        <div class="formula">
-            <strong>Manning's equation (open channel flow):</strong><br/>
-            V = (1/n) · R<sup>2/3</sup> · S<sup>1/2</sup><br/>
-            Q = A·V = (1/n) · A · R<sup>2/3</sup> · S<sup>1/2</sup><br/><br/>
-            V = velocity (m/s), n = Manning's roughness coefficient<br/>
-            R = hydraulic radius = A/P (m), S = slope (m/m), A = cross-section area, P = wetted perimeter<br/><br/>
-            <strong>Typical n values:</strong><br/>
-            • Vitrified clay / brick sewer: 0.013<br/>
-            • RCC pipe: 0.013–0.015<br/>
-            • Cast iron: 0.012<br/>
-            • HDPE/PVC: 0.010–0.011
-        </div>
+<ul class="bullet-list">
+  <li><strong>Hydrostatic Pressure:</strong> Only vertical component matters; horizontal pressure = 0</li>
+  <li><strong>Absolute Pressure:</strong> P_abs = P_atm + P_gauge</li>
+  <li><strong>Gauge Pressure:</strong> P_gauge = P_abs − P_atm (pressure above atmospheric)</li>
+  <li><strong>Vacuum Pressure:</strong> Negative gauge pressure (below atmospheric)</li>
+</ul>
 
-        <h3>2.4 SELF-CLEANSING VELOCITY (SCV)</h3>
-        <div class="content">
-            <strong>Definition:</strong> minimum velocity at which organic &amp; inorganic solids are kept in suspension and transported without deposition.
-        </div>
-        <div class="formula">
-            <strong>Shield's equation:</strong><br/>
-            V<sub>s</sub> = (1/n) · R<sup>1/6</sup> · √[K<sub>s</sub>·(S<sub>s</sub> − 1)·d]<br/><br/>
-            K<sub>s</sub> = 0.04 (clean) to 0.06 (sticky organic); S<sub>s</sub> = specific gravity (2.65 for sand, 1.2 for organic); d = particle size
-        </div>
-        <div class="standard">
-            <strong>Design SCV values (CPHEEO):</strong>
-            <ul>
-                <li>At peak flow: V &gt; <strong>0.6 m/s</strong> (preferably 0.75 m/s)</li>
-                <li>At minimum flow (night): V &gt; <strong>0.3 m/s</strong></li>
-                <li>Maximum velocity: &lt; 3.0 m/s (to prevent pipe erosion)</li>
-                <li>Minimum diameter: 150 mm (laterals), 200 mm (main)</li>
-                <li>Depth of flow: 50–80% of diameter (not flowing full for ventilation)</li>
-            </ul>
-        </div>
+<table>
+  <thead>
+    <tr>
+      <th>Manometer Type</th>
+      <th>Application</th>
+      <th>Pressure Range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>U-tube Manometer</strong></td>
+      <td>Pressure difference measurement; simple</td>
+      <td>0–50 kPa</td>
+    </tr>
+    <tr>
+      <td><strong>Single-leg Manometer</strong></td>
+      <td>Low pressures; gauge pressure only</td>
+      <td>0–10 kPa</td>
+    </tr>
+    <tr>
+      <td><strong>Inclined Manometer</strong></td>
+      <td>Very low pressures; enhanced readability</td>
+      <td>0–1 kPa</td>
+    </tr>
+    <tr>
+      <td><strong>Mercury Barometer</strong></td>
+      <td>Atmospheric pressure; reference (101.325 kPa = 760 mmHg)</td>
+      <td>Atmospheric only</td>
+    </tr>
+  </tbody>
+</table>
 
-        <h3>2.5 SEWER APPURTENANCES</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Manholes:</strong> spacing 30 m (laterals) to 300 m (large sewers); at every change in direction, gradient, diameter, or junction</li>
-                <li><strong>Drop manhole:</strong> when invert level difference &gt; 0.6 m</li>
-                <li><strong>Catch basins / gully traps:</strong> intercept stormwater, trap solids</li>
-                <li><strong>Inverted siphons:</strong> carry sewer under obstacle (river, metro)</li>
-                <li><strong>Flushing tanks:</strong> for flat sewers with low velocity</li>
-                <li><strong>Lamp holes:</strong> for cleaning; where manholes impractical</li>
-                <li><strong>Storm regulators, CSO structures:</strong> for combined systems</li>
-            </ul>
-        </div>
+<div class="section-header green">Buoyancy & Metacentric Height</div>
 
-        <h3>2.6 PUMPING STATIONS</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Wet well:</strong> collects sewage; sized for 5–30 min detention</li>
-                <li><strong>Dry well:</strong> houses pumps, motors (separate from sewage)</li>
-                <li><strong>Submersible pumps:</strong> simpler, single wet well; preferred for small-medium STPs</li>
-                <li>At least 2 pumps (1 duty + 1 standby), often 3 (2 duty + 1 standby) for large stations</li>
-                <li>Non-clog impellers or grinder pumps for raw sewage</li>
-            </ul>
-        </div>
+<div class="box formula">
+  <strong>Archimedes' Principle:</strong>
+  <code>Buoyant Force = Weight of Displaced Fluid = ρgV</code><br>
+  where V = volume of object submerged (m³)
+</div>
 
-        <div class="gate-add">
-            <strong>GATE ADD — Storm sewer design:</strong>
-            <div class="formula">
-                Rational formula: Q = C·i·A<br/>
-                Q in m³/s, C = runoff coefficient (0.15 lawn to 0.95 roof)<br/>
-                i = rainfall intensity (mm/hr) for T<sub>c</sub><br/>
-                A = drainage area (hectares, if Q in m³/s use factor)<br/><br/>
-                Time of concentration T<sub>c</sub> = t<sub>inlet</sub> + t<sub>flow in sewer</sub>
-            </div>
-            Design return period: residential 2 yr; commercial 5 yr; critical infrastructure 10–25 yr.
-        </div>
+<ul class="bullet-list">
+  <li><strong>For Floating Objects:</strong> Buoyant force = Weight of object (equilibrium)</li>
+  <li><strong>Metacentric Height (GM):</strong> Distance between center of gravity (G) and metacenter (M); determines vessel stability</li>
+  <li><strong>Stable if:</strong> GM > 0 (M above G) → vessel returns to upright after tilt</li>
+  <li><strong>Unstable if:</strong> GM < 0 (M below G) → vessel capsizes</li>
+  <li><strong>Formula:</strong> <code>GM = BM – BG</code> where BM = metacentric radius, BG = distance from buoyancy center to gravity</li>
+</ul>
 
-        <h2>SECTION 3: WASTEWATER TREATMENT PROCESSES</h2>
-        <div class="section-intro">
-            Flowchart: Preliminary → Primary → Secondary → Tertiary → Disinfection. Largest section — 4-5 MCQs likely including kinetics &amp; reactor sizing.
-        </div>
+<div class="box tip">
+High-yield for floating structures (docks, boats, water treatment tanks). If a question asks about stability of storage tanks, check metacentric height.
+</div>
 
-        <h3>3.1 PRELIMINARY TREATMENT</h3>
-        <div class="content">
-            <strong>Screens:</strong>
-            <ul>
-                <li><strong>Coarse screens (bar racks):</strong> 25–100 mm spacing; removes rags, wood, plastics</li>
-                <li><strong>Medium screens:</strong> 6–25 mm</li>
-                <li><strong>Fine screens:</strong> &lt; 6 mm; rotary drum, band screens</li>
-                <li>Velocity through screen: 0.6–1.2 m/s (prevents deposition &amp; screen damage)</li>
-                <li>Head loss through clean bar rack (Kirschmer): h_L = β·(w/b)^(4/3)·h_v·sinθ</li>
-            </ul>
-            <strong>Grit chamber:</strong>
-            <ul>
-                <li>Removes inorganic particles &gt; 0.2 mm (sand, gravel, eggshells)</li>
-                <li>Horizontal flow: V ≈ 0.3 m/s; settling velocity for 0.2 mm sand ≈ 2.3 cm/s</li>
-                <li>Aerated grit chamber: air lifts organics, grit settles; detention 2–5 min</li>
-                <li>Vortex grit chamber: compact, modern STPs</li>
-            </ul>
-            <strong>Skimming tank:</strong> removes oil &amp; grease; detention 3–5 min.
-        </div>
+</div>
 
-        <h3>3.2 PRIMARY SEDIMENTATION</h3>
-        <div class="content">
-            <strong>Design basis:</strong> surface overflow rate (SOR/SLR) and detention time.
-        </div>
-        <div class="formula">
-            SOR = Q/A (m³/m²/day); typical 30–50 m³/m²/d<br/>
-            Detention time td = V/Q = 1.5–2.5 hr<br/>
-            Weir loading rate &lt; 200 m³/m/d
-        </div>
-        <div class="standard">
-            <strong>Typical primary clarifier removals:</strong>
-            <ul>
-                <li>TSS removal: 50–70%</li>
-                <li>BOD removal: 25–40%</li>
-                <li>COD removal: 30–40%</li>
-                <li>Phosphorus: 10–15%; Nitrogen: 10–20%</li>
-            </ul>
-        </div>
+<!-- TAB 2: FLOW & PIPE NETWORKS -->
+<div id="flow" class="tab-content">
 
-        <h3>3.3 ACTIVATED SLUDGE PROCESS (ASP)</h3>
-        <div class="content">
-            <strong>Principle:</strong> aerobic suspended-growth process where microbial flocs (MLSS) consume organics and are separated in secondary clarifier; a fraction is returned (RAS) and excess wasted (WAS).
-        </div>
-        <div class="formula">
-            <strong>Key parameters:</strong><br/>
-            <strong>MLSS</strong> = Mixed Liquor Suspended Solids (mg/L); typical 2000–4000 for conventional<br/>
-            <strong>MLVSS</strong> = Volatile fraction (active biomass); MLVSS/MLSS ≈ 0.7–0.85<br/><br/>
-            <strong>F:M ratio</strong> = Q·BOD<sub>in</sub> / (V·MLVSS)  [kg BOD / kg MLVSS·day]<br/>
-            Conventional: 0.2–0.4; Extended aeration: 0.05–0.15; High rate: 0.4–1.5<br/><br/>
-            <strong>HRT</strong> = V/Q  (hrs)<br/>
-            <strong>SRT / MCRT / θ<sub>c</sub></strong> = (V·MLSS) / (Q<sub>w</sub>·X<sub>w</sub> + Q<sub>e</sub>·X<sub>e</sub>)<br/>
-            Conventional SRT: 4–10 days; Nitrifying: &gt; 10 days; Extended aeration: 20–30 days<br/><br/>
-            <strong>SVI</strong> = (settled volume after 30 min in mL/L × 1000) / MLSS (mg/L)<br/>
-            Good settling: SVI = 80–150 mL/g; bulking: &gt; 200 mL/g<br/><br/>
-            <strong>Return sludge ratio:</strong> R = X / (X<sub>R</sub> − X); typical R = 0.25–1.0
-        </div>
+<div class="section-header orange">Flow Classification</div>
 
-        <h3>3.4 VARIATIONS OF ACTIVATED SLUDGE</h3>
-        <table>
-            <tr><th>Process</th><th>F:M</th><th>SRT (d)</th><th>HRT (hr)</th><th>MLSS</th><th>Use</th></tr>
-            <tr><td>Conventional plug-flow</td><td>0.2–0.4</td><td>4–10</td><td>4–8</td><td>1500–3000</td><td>Standard</td></tr>
-            <tr><td>Extended aeration</td><td>0.05–0.15</td><td>20–30</td><td>18–36</td><td>3000–5000</td><td>Small, no primary clar.</td></tr>
-            <tr><td>Step aeration</td><td>0.2–0.4</td><td>5–15</td><td>3–5</td><td>2000–3500</td><td>Distributes O₂ load</td></tr>
-            <tr><td>Contact stabilisation</td><td>0.2–0.6</td><td>5–10</td><td>0.5 + 3</td><td>1000–3000 / 4000–10000</td><td>Small footprint</td></tr>
-            <tr><td>Oxidation ditch</td><td>0.05–0.15</td><td>20–30</td><td>18–36</td><td>3000–5000</td><td>Small towns; simultaneous N</td></tr>
-            <tr><td>SBR</td><td>0.05–0.3</td><td>10–30</td><td>Variable</td><td>1500–5000</td><td>Compact, fill-draw</td></tr>
-            <tr><td>MBBR</td><td>N/A</td><td>N/A</td><td>2–5</td><td>Biofilm on media</td><td>Upgrading old STPs</td></tr>
-            <tr><td>MBR</td><td>0.1–0.4</td><td>10–50</td><td>4–8</td><td>8000–18000</td><td>High quality effluent, reuse</td></tr>
-        </table>
+<table>
+  <thead>
+    <tr>
+      <th>Classification</th>
+      <th>Type 1</th>
+      <th>Type 2</th>
+      <th>Significance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>By Time</strong></td>
+      <td>Steady Flow</td>
+      <td>Unsteady Flow</td>
+      <td>Properties don't change (steady) vs change (unsteady) with time</td>
+    </tr>
+    <tr>
+      <td><strong>By Space</strong></td>
+      <td>Uniform Flow</td>
+      <td>Non-uniform Flow</td>
+      <td>Velocity same (uniform) vs different (non-uniform) across section</td>
+    </tr>
+    <tr>
+      <td><strong>By Reynolds Number</strong></td>
+      <td>Laminar (Re &lt; 2300)</td>
+      <td>Turbulent (Re &gt; 4000)</td>
+      <td>Smooth/parallel layers vs chaotic eddies</td>
+    </tr>
+    <tr>
+      <td><strong>By Energy Grade</strong></td>
+      <td>Ideal Flow</td>
+      <td>Real Flow</td>
+      <td>No friction losses (ideal) vs friction losses (real)</td>
+    </tr>
+  </tbody>
+</table>
 
-        <h3>3.5 OXYGEN &amp; POWER REQUIREMENT</h3>
-        <div class="formula">
-            <strong>O₂ demand:</strong> O₂ (kg/d) = Q(BOD_in − BOD_out)·a' + 1.42·P<sub>x</sub> + 4.57·NH₄-N·(Q)<br/>
-            a' ≈ 0.5–0.6 (carbonaceous);  1.42 = O₂/cell (endogenous); 4.57 = O₂/g NH₄-N for nitrification<br/><br/>
-            <strong>Aerator performance:</strong><br/>
-            SOTE (Standard Oxygen Transfer Efficiency): diffused ≈ 20–35% (fine bubble); mechanical ≈ 1.0–2.0 kg O₂/kWh<br/>
-            Actual O₂ transfer: OTR = SOTR × α × (β·C<sub>S,T</sub> − C<sub>L</sub>)/C<sub>S,20</sub> × 1.024^(T−20)
-        </div>
+<div class="section-header orange">Reynolds Number & Flow Regime</div>
 
-        <h3>3.6 TRICKLING FILTER (TF)</h3>
-        <div class="content">
-            <strong>Principle:</strong> attached-growth; wastewater sprays over rock/plastic media; biofilm on media oxidises organics.
-        </div>
-        <div class="formula">
-            <strong>NRC formula (low-rate TF, stone media):</strong><br/>
-            E₁ = 100 / [1 + 0.4432·√(W/(V·F))]<br/>
-            Two-stage: E₂ = 100 / [1 + {0.4432/(1−E₁)}·√(W'/(V·F))]<br/><br/>
-            W = BOD load (kg/d), V = media volume (m³), F = recirculation factor<br/>
-            F = (1+R) / (1 + 0.1R)², R = recirculation ratio<br/><br/>
-            <strong>Eckenfelder formula (plastic media):</strong><br/>
-            S<sub>e</sub>/S<sub>i</sub> = exp[−k·A·D / Q^n]
-        </div>
-        <table>
-            <tr><th>Type</th><th>Hydraulic loading (m³/m²·d)</th><th>Organic loading (kg BOD/m³·d)</th><th>BOD removal</th></tr>
-            <tr><td>Low-rate (standard)</td><td>1–4</td><td>0.08–0.40</td><td>80–90%</td></tr>
-            <tr><td>High-rate</td><td>10–40</td><td>0.40–4.8</td><td>65–85%</td></tr>
-            <tr><td>Super-rate (plastic media)</td><td>40–200</td><td>0.8–6.0</td><td>65–80%</td></tr>
-            <tr><td>Roughing</td><td>40–200</td><td>&gt; 1.6</td><td>40–65%</td></tr>
-        </table>
+<div class="box formula">
+  <strong>Reynolds Number:</strong>
+  <code>Re = ρvD/μ = vD/ν</code><br>
+  where ρ = density | v = velocity | D = diameter | μ = dynamic viscosity | ν = kinematic viscosity
+</div>
 
-        <h3>3.7 STABILISATION PONDS (WSP)</h3>
-        <div class="content">
-            <strong>Types:</strong>
-            <ul>
-                <li><strong>Anaerobic pond:</strong> depth 2.5–5 m; BOD load 100–400 g/m³·d; BOD removal 40–60%; no O₂; removes settleable solids + high BOD reduction</li>
-                <li><strong>Facultative pond:</strong> depth 1–2 m; aerobic top (algal photosynthesis O₂) + anaerobic bottom; BOD load 100–400 kg/ha·d; BOD removal 70–80%</li>
-                <li><strong>Maturation pond:</strong> depth 1–1.5 m; aerobic throughout; mainly for pathogen removal (&gt; 4-log coliform); BOD removal 15–25%</li>
-            </ul>
-            <strong>Typical WSP series:</strong> Anaerobic → Facultative → Maturation(s). Total retention: 20–50 days.
-        </div>
-        <div class="formula">
-            <strong>Facultative pond BOD removal (Marais):</strong><br/>
-            S<sub>e</sub>/S<sub>i</sub> = 1/(1 + k·t)  [complete mix]<br/>
-            k (20°C) ≈ 0.3/day for facultative; k<sub>T</sub> = k<sub>20</sub>·1.085^(T−20)<br/><br/>
-            <strong>Coliform removal:</strong> N<sub>e</sub>/N<sub>i</sub> = 1/(1 + k<sub>b</sub>·t)<br/>
-            k<sub>b</sub> (20°C) ≈ 2.6/day; k<sub>b,T</sub> = 2.6 · 1.19^(T−20)
-        </div>
+<div class="grid">
+  <div class="grid-item">
+    <h4>Laminar</h4>
+    <code>Re &lt; 2300</code><br>
+    Smooth layers; parabolic velocity profile; f = 64/Re
+  </div>
+  <div class="grid-item">
+    <h4>Transition</h4>
+    <code>2300 ≤ Re ≤ 4000</code><br>
+    Unstable; neither fully laminar nor turbulent
+  </div>
+  <div class="grid-item">
+    <h4>Turbulent</h4>
+    <code>Re &gt; 4000</code><br>
+    Chaotic; rough velocity profile; f from Moody chart
+  </div>
+</div>
 
-        <h3>3.8 ROTATING BIOLOGICAL CONTACTOR (RBC)</h3>
-        <div class="content">
-            <ul>
-                <li>Plastic discs (3–4 m dia) on shaft rotating at 1–2 rpm; 40% submerged</li>
-                <li>Biofilm alternately exposed to air (O₂ uptake) and wastewater (substrate uptake)</li>
-                <li>Hydraulic load 0.04–0.08 m³/m²·d (disc area)</li>
-                <li>BOD removal 80–90%; can be staged for N-removal</li>
-                <li>Pros: low energy, simple; Cons: shaft failures, weather sensitive</li>
-            </ul>
-        </div>
+<div class="box tip">
+For water in pipes (D &lt; 100 mm, v ≈ 1–2 m/s), typical Re ≈ 10,000–100,000 (turbulent). Laminar rare in practice.
+</div>
 
-        <h3>3.9 UPFLOW ANAEROBIC SLUDGE BLANKET (UASB)</h3>
-        <div class="content">
-            <strong>Principle:</strong> anaerobic reactor where sewage enters bottom, passes through dense sludge blanket, gas-liquid-solid (GLS) separator at top separates biogas. Best for medium-strength wastewater (COD 1000–30000 mg/L).
-        </div>
-        <div class="standard">
-            <strong>Typical UASB design (sewage):</strong>
-            <ul>
-                <li>Upflow velocity: 0.5–1.5 m/hr</li>
-                <li>HRT: 6–10 hr for domestic sewage (&gt; 20°C)</li>
-                <li>OLR: 2–10 kg COD/m³·d</li>
-                <li>Biogas yield: 0.35 m³ CH₄ per kg COD removed (theoretical)</li>
-                <li>COD removal: 60–80% (sewage); BOD removal needs post-treatment polishing (FAL, filter)</li>
-                <li>No energy input for aeration → very low O&amp;M cost</li>
-                <li><strong>Indian application:</strong> Yamuna Action Plan, Ganga — many STPs are UASB-based</li>
-            </ul>
-        </div>
+<div class="section-header orange">Continuity Equation</div>
 
-        <h3>3.10 TERTIARY TREATMENT</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Biological nutrient removal (BNR):</strong> A/O (anoxic-oxic for N); A²/O (for N+P); Bardenpho (5-stage); UCT process</li>
-                <li><strong>Nitrification:</strong> NH₄⁺ → NO₃⁻ under aerobic; requires DO &gt; 2 mg/L, pH 7.5–8.5, SRT &gt; 10 days, alkalinity (consumes 7.14 mg CaCO₃ / mg NH₄-N)</li>
-                <li><strong>Denitrification:</strong> NO₃⁻ → N₂ under anoxic with organic C source; recovers half the alkalinity (3.57 mg CaCO₃/mg N)</li>
-                <li><strong>Chemical P removal:</strong> Alum (Al₂(SO₄)₃·18H₂O) or FeCl₃ → AlPO₄ / FePO₄ ppt</li>
-                <li><strong>Filtration:</strong> rapid sand, dual media, disc filter</li>
-                <li><strong>Advanced:</strong> activated carbon, membrane (UF/NF/RO), ozonation, AOPs</li>
-            </ul>
-        </div>
+<div class="box formula">
+  <strong>Continuity (Conservation of Mass):</strong>
+  <code>Q = A₁V₁ = A₂V₂ = constant</code><br>
+  where Q = discharge (m³/s) | A = area (m²) | V = velocity (m/s)
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Principle:</strong> If pipe narrows, velocity increases (to maintain constant flow)
+  </div>
+</div>
 
-        <h3>3.11 DISINFECTION</h3>
-        <table>
-            <tr><th>Method</th><th>Mechanism</th><th>Pros</th><th>Cons</th></tr>
-            <tr><td>Chlorination</td><td>HOCl oxidises cell</td><td>Cheap, residual</td><td>DBPs (THMs, HAAs)</td></tr>
-            <tr><td>UV</td><td>DNA pyrimidine dimers</td><td>No chemicals, no DBPs</td><td>No residual; needs clear effluent</td></tr>
-            <tr><td>Ozonation</td><td>Oxidation</td><td>Powerful, removes colour/odour</td><td>Expensive; bromate (if Br⁻)</td></tr>
-            <tr><td>Chlorine dioxide</td><td>Oxidation</td><td>Less DBPs than Cl₂</td><td>Chlorite byproduct</td></tr>
-        </table>
-        <div class="formula">
-            CT concept: CT = C × t (mg·min/L) — required dose for desired log removal<br/>
-            For 2-log Giardia at pH 7, 10°C: CT ≈ 48 mg·min/L (free Cl₂)
-        </div>
+<ul class="bullet-list">
+  <li><strong>Discharge Q:</strong> Volume of fluid passing per unit time; Q = A × V</li>
+  <li><strong>If A↓ → V↑</strong> (narrower section = faster flow)</li>
+  <li><strong>If A↑ → V↓</strong> (wider section = slower flow)</li>
+</ul>
 
-        <div class="gate-add">
-            <strong>GATE ADD — Reactor design &amp; kinetics:</strong>
-            <div class="formula">
-                <strong>Batch reactor:</strong> t = − ∫(dC/r) from C₀ to C<br/>
-                <strong>CMFR (steady state):</strong> V = Q(C₀ − C)/(−r)<br/>
-                For 1st order: V/Q = τ = (C₀−C)/(k·C)<br/><br/>
-                <strong>PFR (steady state):</strong> V = Q · ∫(dC/(−r)) from C to C₀<br/>
-                For 1st order: τ = (1/k)·ln(C₀/C)<br/><br/>
-                <strong>Key result:</strong> For same 1st-order conversion, V<sub>CMFR</sub> &gt; V<sub>PFR</sub>
-            </div>
-            <strong>Monod growth model:</strong>
-            <div class="formula">
-                µ = µ<sub>max</sub> · S / (K<sub>s</sub> + S)<br/>
-                µ = specific growth rate (1/d)<br/>
-                µ<sub>max</sub>, K<sub>s</sub> = Monod constants<br/><br/>
-                In chemostat: S<sub>ss</sub> = K<sub>s</sub>/(µ<sub>max</sub>·θ − 1); washout when θ &lt; 1/µ<sub>max</sub><br/><br/>
-                <strong>Yield:</strong> Y = −dX/dS; typical 0.4–0.6 mg VSS/mg BOD
-            </div>
-        </div>
+<div class="section-header orange">Darcy-Weisbach Equation (Friction Losses)</div>
 
-        <h2>SECTION 4: SLUDGE TREATMENT &amp; DISPOSAL</h2>
-        <div class="section-intro">
-            Sludge volume = small but costs up to 50% of STP O&amp;M. Thickening → stabilisation → dewatering → disposal.
-        </div>
+<div class="box formula">
+  <strong>Head Loss (Major Loss):</strong>
+  <code>hf = f × (L/D) × (V²/2g)</code><br>
+  where f = Darcy friction factor | L = pipe length (m) | D = diameter (m) | V = velocity (m/s) | g = 9.81 m/s²
+</div>
 
-        <h3>4.1 SLUDGE CHARACTERISTICS</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Primary sludge:</strong> 3–6% solids; mostly settleable organics</li>
-                <li><strong>WAS (from ASP):</strong> 0.5–1.5% solids; biological flocs</li>
-                <li><strong>Digested sludge:</strong> 3–8% solids; stabilised</li>
-                <li><strong>Chemical sludge:</strong> from alum/FeCl₃ coagulation; gelatinous</li>
-            </ul>
-        </div>
-        <div class="formula">
-            <strong>Sludge volume:</strong> V = M<sub>s</sub> / (ρ<sub>w</sub> · S<sub>s</sub> · P<sub>s</sub>)<br/>
-            where P<sub>s</sub> = solids fraction, S<sub>s</sub> = specific gravity<br/><br/>
-            <strong>Volume change with moisture change:</strong><br/>
-            V₁/V₂ = (100 − P₂)/(100 − P₁)<br/>
-            Example: P₁ = 95% (moist), P₂ = 90% (thickened) → V₂ = V₁/2
-        </div>
+<ul class="bullet-list">
+  <li><strong>Head Loss increases with:</strong> Pipe length L, velocity V², friction factor f</li>
+  <li><strong>Head Loss decreases with:</strong> Larger diameter D</li>
+  <li><strong>Friction Factor f:</strong> Depends on Reynolds number & pipe roughness (ε)</li>
+  <li><strong>Laminar (Re &lt; 2300):</strong> <code>f = 64/Re</code> (independent of roughness)</li>
+  <li><strong>Turbulent (Re &gt; 4000):</strong> f from <strong>Moody Chart</strong> (depends on Re & relative roughness ε/D)</li>
+</ul>
 
-        <h3>4.2 THICKENING</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Gravity thickener:</strong> SOR = 20–30 m³/m²·d; solids loading 30–150 kg/m²·d; achieves 3–10% solids</li>
-                <li><strong>Dissolved Air Flotation (DAF):</strong> for WAS; air saturated water releases bubbles that float solids; achieves 3–6%</li>
-                <li><strong>Centrifugal thickening:</strong> 4–8% solids</li>
-                <li><strong>Gravity Belt Thickener (GBT):</strong> 4–8% solids</li>
-            </ul>
-        </div>
+<div class="box definition">
+  <strong>Moody Chart:</strong> Graphical plot of Darcy friction factor vs Reynolds number for different relative roughness (ε/D). High-yield for locating f values; may be provided in exam.
+</div>
 
-        <h3>4.3 DIGESTION</h3>
-        <table>
-            <tr><th>Feature</th><th>Anaerobic digestion</th><th>Aerobic digestion</th></tr>
-            <tr><td>Biology</td><td>Hydrolysis → Acidogenesis → Acetogenesis → Methanogenesis</td><td>Endogenous respiration</td></tr>
-            <tr><td>Product</td><td>Biogas (60–70% CH₄, 30–40% CO₂)</td><td>CO₂ + H₂O</td></tr>
-            <tr><td>Heating</td><td>Required (mesophilic 35°C / thermophilic 55°C)</td><td>Not needed</td></tr>
-            <tr><td>Energy</td><td>Net producer (biogas)</td><td>Net consumer (aeration)</td></tr>
-            <tr><td>SRT</td><td>15–30 d (mesophilic)</td><td>10–20 d</td></tr>
-            <tr><td>VS reduction</td><td>45–55%</td><td>40–50%</td></tr>
-            <tr><td>Odour</td><td>H₂S, mercaptans (risk)</td><td>Mild</td></tr>
-            <tr><td>Scale</td><td>Large STPs (economy of scale)</td><td>Small STPs</td></tr>
-        </table>
-        <div class="formula">
-            <strong>Biogas yield:</strong><br/>
-            Theoretical: 0.35 m³ CH₄ / kg COD destroyed (STP)<br/>
-            Typical practical: 0.75–1.12 m³ biogas / kg VS destroyed<br/><br/>
-            <strong>Heating value:</strong> biogas ≈ 21–25 MJ/m³ (vs natural gas 37 MJ/m³)
-        </div>
-        <div class="highlight">
-            <strong>Anaerobic digestion stages &amp; organisms:</strong>
-            <ol>
-                <li>Hydrolysis: polymers → monomers (enzymes)</li>
-                <li>Acidogenesis: → VFAs, H₂, CO₂ (acidogens)</li>
-                <li>Acetogenesis: VFAs → acetate + H₂ (acetogens)</li>
-                <li>Methanogenesis: acetate → CH₄ + CO₂; H₂ + CO₂ → CH₄ (methanogens, strict anaerobes; slowest, rate-limiting)</li>
-            </ol>
-            Optimum pH: 6.8–7.4 (methanogens sensitive); C:N optimum 20–30:1.
-        </div>
+<div class="section-header orange">Minor Losses (Local Losses)</div>
 
-        <h3>4.4 DEWATERING</h3>
-        <table>
-            <tr><th>Device</th><th>Cake solids</th><th>Notes</th></tr>
-            <tr><td>Drying beds (sand)</td><td>30–50%</td><td>Simple, land-intensive, Indian STPs</td></tr>
-            <tr><td>Vacuum filter</td><td>15–30%</td><td>Older tech</td></tr>
-            <tr><td>Belt filter press</td><td>18–30%</td><td>Continuous; polymer conditioning</td></tr>
-            <tr><td>Plate &amp; frame press</td><td>35–50%</td><td>Batch; highest cake %</td></tr>
-            <tr><td>Centrifuge (decanter)</td><td>22–35%</td><td>Enclosed, less odour</td></tr>
-            <tr><td>Screw press</td><td>18–30%</td><td>Low energy</td></tr>
-        </table>
+<div class="box formula">
+  <strong>Minor Loss Formula:</strong>
+  <code>hm = K × (V²/2g)</code><br>
+  where K = loss coefficient (dimensionless); depends on fitting type
+</div>
 
-        <h3>4.5 SLUDGE DISPOSAL</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Land application:</strong> as biosolids fertiliser; check heavy metals (USEPA Part 503; CPCB limits)</li>
-                <li><strong>Composting:</strong> windrow, aerated static pile; produces soil conditioner</li>
-                <li><strong>Incineration:</strong> autogenous if VS &gt; 50%; multiple hearth, fluidised bed; ash to landfill</li>
-                <li><strong>Landfilling:</strong> decreasing option; needs dewatered cake &gt; 20%</li>
-                <li><strong>Sea disposal:</strong> banned under London Convention (1972)</li>
-            </ul>
-        </div>
+<table>
+  <thead>
+    <tr>
+      <th>Fitting Type</th>
+      <th>K Value</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sudden Expansion</td>
+      <td>0.3–0.5</td>
+      <td>Dependent on area ratio; highest loss</td>
+    </tr>
+    <tr>
+      <td>Sudden Contraction</td>
+      <td>0.04–0.5</td>
+      <td>Varies with contraction ratio</td>
+    </tr>
+    <tr>
+      <td>90° Elbow (flanged)</td>
+      <td>0.27–0.3</td>
+      <td>Smooth turns reduce K; threaded = higher</td>
+    </tr>
+    <tr>
+      <td>45° Elbow (flanged)</td>
+      <td>0.16</td>
+      <td>Less loss than 90°</td>
+    </tr>
+    <tr>
+      <td>Gate Valve (open)</td>
+      <td>0.2</td>
+      <td>Fully open; partially closed → much higher K</td>
+    </tr>
+    <tr>
+      <td>Check Valve</td>
+      <td>2.0–2.5</td>
+      <td>High loss; prevents backflow</td>
+    </tr>
+    <tr>
+      <td>Exit (pipe to reservoir)</td>
+      <td>1.0</td>
+      <td>Full kinetic energy lost</td>
+    </tr>
+    <tr>
+      <td>Entrance (reservoir to pipe)</td>
+      <td>0.5 (sharp) to 0.05 (rounded)</td>
+      <td>Rounded inlets reduce loss</td>
+    </tr>
+  </tbody>
+</table>
 
-        <h2>SECTION 5: EFFLUENT STANDARDS &amp; INDUSTRIAL WASTEWATER</h2>
-        <div class="section-intro">
-            Regulatory standards and industrial effluent management. High weightage for UPPCB AEE (factual recall).
-        </div>
+<div class="box tip">
+Total head loss = Major loss (Darcy) + Minor loss (local). In short pipes with many fittings, minor losses can dominate. Always account for both in design.
+</div>
 
-        <h3>5.1 CPCB GENERAL EFFLUENT STANDARDS (Schedule VI, E(P) Rules 1986)</h3>
-        <table>
-            <tr><th>Parameter</th><th>Inland surface water</th><th>Public sewer</th><th>Land for irrigation</th><th>Marine coastal</th></tr>
-            <tr><td>pH</td><td>5.5–9.0</td><td>5.5–9.0</td><td>5.5–9.0</td><td>5.5–9.0</td></tr>
-            <tr><td>BOD (mg/L)</td><td>30</td><td>350</td><td>100</td><td>100</td></tr>
-            <tr><td>COD (mg/L)</td><td>250</td><td>—</td><td>—</td><td>250</td></tr>
-            <tr><td>TSS (mg/L)</td><td>100</td><td>600</td><td>200</td><td>100</td></tr>
-            <tr><td>Oil &amp; grease (mg/L)</td><td>10</td><td>20</td><td>10</td><td>20</td></tr>
-            <tr><td>Total residual Cl₂</td><td>1.0</td><td>—</td><td>—</td><td>1.0</td></tr>
-            <tr><td>NH₄-N (mg/L)</td><td>50</td><td>50</td><td>—</td><td>50</td></tr>
-            <tr><td>Total N (mg/L)</td><td>100</td><td>—</td><td>—</td><td>100</td></tr>
-            <tr><td>Fluoride (mg/L)</td><td>2.0</td><td>15</td><td>—</td><td>15</td></tr>
-            <tr><td>Total Cr (mg/L)</td><td>2.0</td><td>2.0</td><td>—</td><td>2.0</td></tr>
-            <tr><td>Hexavalent Cr⁶⁺</td><td>0.1</td><td>2.0</td><td>—</td><td>1.0</td></tr>
-            <tr><td>Cyanide</td><td>0.2</td><td>2.0</td><td>0.2</td><td>0.2</td></tr>
-        </table>
+<div class="section-header orange">Pipe Networks & Hardy Cross Method</div>
 
-        <h3>5.2 STP EFFLUENT STANDARDS (NGT-revised / MoEFCC 2017)</h3>
-        <div class="standard">
-            <strong>New STPs (all) – NGT January 2019 order as adopted in 2021 notification:</strong><br/>
-            pH 6.5–9.0 | BOD: &lt; 10 mg/L (metro), &lt; 20 mg/L (other) | TSS &lt; 20 mg/L<br/>
-            COD &lt; 50 mg/L | NH₄-N &lt; 5 mg/L | TN &lt; 10 mg/L<br/>
-            Faecal coliform &lt; 100 MPN/100 mL<br/><br/>
-            Existing STPs: BOD &lt; 30, TSS &lt; 50, FC &lt; 230 MPN/100 mL (transition).
-        </div>
+<ul class="bullet-list">
+  <li><strong>Pipe Network:</strong> System of interconnected pipes; water distribution systems are networks</li>
+  <li><strong>Hardy Cross Method:</strong> Iterative solution for unknown flows in looped networks</li>
+  <li><strong>Principle:</strong> At each junction, inflow = outflow (continuity); around each loop, sum of head losses = 0</li>
+  <li><strong>Process:</strong> Assume initial flows → calculate head losses → correct flows → repeat until convergence</li>
+  <li><strong>Applications:</strong> Water supply distribution, sewage collection, industrial process piping</li>
+</ul>
 
-        <h3>5.3 INDUSTRIAL-SPECIFIC STANDARDS (examples)</h3>
-        <ul>
-            <li><strong>Pulp &amp; paper (large):</strong> BOD 30 mg/L, COD 250, AOX 1.0 kg/t product</li>
-            <li><strong>Sugar:</strong> BOD 30, COD 250, TSS 100 mg/L</li>
-            <li><strong>Tannery:</strong> BOD 30, COD 250, Cr 2.0, Cr⁶⁺ 0.1, sulphide 2.0</li>
-            <li><strong>Textile (dyeing):</strong> BOD 30, COD 250, TDS 2100, colour &lt; 400 Hazen</li>
-            <li><strong>Distillery:</strong> BOD 30 inland; ZLD mandated 2015</li>
-            <li><strong>Thermal power:</strong> TSS 100, oil &amp; grease 20, free residual Cl 0.5 mg/L</li>
-        </ul>
+<div class="box definition">
+  <strong>Branching Network:</strong> Tree-like structure (one path between points); simpler than looped networks; only continuity equations needed
+  <br><br>
+  <strong>Looped (Grid) Network:</strong> Multiple paths between points (loops); more complex; Hardy Cross or matrix methods required
+</div>
 
-        <h3>5.4 ZERO LIQUID DISCHARGE (ZLD)</h3>
-        <div class="content">
-            <strong>Concept:</strong> no liquid discharge outside factory; all water recovered.<br/>
-            <strong>Typical ZLD train:</strong> Biological/Chemical → UF → RO → MEE (multiple-effect evaporator) → ATFD/crystalliser → Salt recovery.<br/>
-            <strong>Mandated by CPCB for:</strong> textile dyeing units (Tirupur); distilleries; Ganga basin highly polluting industries; tanneries (Kanpur CETP cluster).<br/>
-            Energy intensive: 20–30 kWh/m³ wastewater (vs 1–2 for conventional ETP).
-        </div>
+</div>
 
-        <h3>5.5 CETP (Common Effluent Treatment Plant)</h3>
-        <div class="content">
-            <ul>
-                <li>Collective treatment for cluster of small/medium industries where individual ETPs uneconomical</li>
-                <li>Typical flow: 2–50 MLD; BOD 500–3000 mg/L, COD 1000–8000 mg/L</li>
-                <li>Treatment: equalization → neutralization → primary settle → secondary bio → tertiary</li>
-                <li>Indian examples: Vapi, Ankleshwar, Panipat, Tirupur, Kanpur</li>
-                <li>CPCB guidelines: 2016; each unit must meet pre-treatment standards before discharge to CETP</li>
-            </ul>
-        </div>
+<!-- TAB 3: PUMPS & HYDRAULICS -->
+<div id="pumps" class="tab-content">
 
-        <div class="gate-add">
-            <strong>GATE ADD — Sources &amp; characteristics of industrial effluents:</strong>
-            <table>
-                <tr><th>Industry</th><th>Key pollutants</th><th>BOD/COD ratio</th></tr>
-                <tr><td>Pulp &amp; paper</td><td>Lignin, AOX, colour, high SS</td><td>0.3–0.5</td></tr>
-                <tr><td>Sugar / distillery</td><td>Spent wash; COD 80000–100000</td><td>0.5–0.7 (high)</td></tr>
-                <tr><td>Tannery</td><td>Cr³⁺/⁶⁺, sulphide, high SS, colour</td><td>0.3–0.5</td></tr>
-                <tr><td>Textile</td><td>Dyes, TDS, high pH</td><td>0.2–0.4 (low)</td></tr>
-                <tr><td>Dairy</td><td>Fat, lactose, protein</td><td>0.6–0.8 (high)</td></tr>
-                <tr><td>Electroplating</td><td>Cr, Ni, Cd, Zn, CN⁻</td><td>Very low (inorganic)</td></tr>
-                <tr><td>Pharmaceutical</td><td>Complex organics, solvents, TDS</td><td>0.2–0.5</td></tr>
-                <tr><td>Thermal power</td><td>TSS, oil, boiler blowdown, fly ash slurry</td><td>Very low</td></tr>
-            </table>
-            <strong>Wastewater recycling hierarchy:</strong> segregation → in-plant recovery → reuse after treatment (cooling, flushing, gardening) → ZLD.
-        </div>
+<div class="section-header red">Centrifugal Pump Fundamentals</div>
 
-        <h2>HIGH-YIELD MCQ REVISION LIST</h2>
-        <div class="exam-strategy">
-            <h3>MUST-KNOW FACTS (High Probability Qs):</h3>
-            <ul>
-                <li>✓ <strong>BOD₅ conditions:</strong> 20°C, 5 days, DARK, sealed bottle (300 mL)</li>
-                <li>✓ <strong>BOD₅/BOD<sub>U</sub> ratio ≈ 0.68</strong> for k = 0.23/day (natural log)</li>
-                <li>✓ <strong>Peak factor (Harmon):</strong> 1 + 14/(4+√P), P in thousands</li>
-                <li>✓ <strong>Self-cleansing velocity:</strong> 0.6 m/s peak, 0.3 m/s min</li>
-                <li>✓ <strong>Manning's n:</strong> 0.013 (RCC), 0.010 (HDPE)</li>
-                <li>✓ <strong>Primary clarifier:</strong> SOR 30–50 m³/m²/d; TSS removal 50–70%; BOD 25–40%</li>
-                <li>✓ <strong>ASP parameters:</strong> MLSS 2000–4000; F:M 0.2–0.4; SRT 4–10 d; SVI 80–150</li>
-                <li>✓ <strong>Nitrification O₂ demand:</strong> 4.57 g O₂/g NH₄-N; alkalinity 7.14 mg CaCO₃/mg N</li>
-                <li>✓ <strong>Denitrification:</strong> recovers 3.57 mg CaCO₃/mg N; needs organic C</li>
-                <li>✓ <strong>SVI formula:</strong> (settled vol after 30 min, mL/L × 1000) / MLSS (mg/L); bulking &gt; 200</li>
-                <li>✓ <strong>Trickling filter NRC:</strong> E = 100 / [1 + 0.4432 √(W/VF)]</li>
-                <li>✓ <strong>UASB:</strong> upflow 0.5–1.5 m/hr; HRT 6–10 hr; 60–80% COD removal</li>
-                <li>✓ <strong>WSP types &amp; depths:</strong> anaerobic 2.5–5 m, facultative 1–2 m, maturation 1–1.5 m</li>
-                <li>✓ <strong>Biogas composition:</strong> 60–70% CH₄, 30–40% CO₂, trace H₂S; CV ≈ 21–25 MJ/m³</li>
-                <li>✓ <strong>Anaerobic digestion 4 stages:</strong> hydrolysis → acidogenesis → acetogenesis → methanogenesis</li>
-                <li>✓ <strong>CPCB inland discharge:</strong> BOD 30, COD 250, TSS 100, pH 5.5–9.0</li>
-                <li>✓ <strong>NGT STP standards:</strong> BOD &lt; 10 (metro); FC &lt; 100 MPN/100 mL</li>
-                <li>✓ <strong>C:N for digestion/composting:</strong> 20–30:1 optimum</li>
-            </ul>
-        </div>
+<ul class="bullet-list">
+  <li><strong>Type:</strong> Positive displacement pump; uses rotating impeller to impart kinetic energy to fluid</li>
+  <li><strong>Components:</strong> Impeller, casing, suction port, discharge port, shaft, bearings</li>
+  <li><strong>Operating Principle:</strong> Impeller rotates → throws fluid radially outward → pressure build-up → discharge through outlet</li>
+  <li><strong>Advantages:</strong> High discharge, suitable for high flow rates, smooth operation, low maintenance</li>
+  <li><strong>Disadvantages:</strong> Cannot self-prime (needs priming), low discharge head for small pumps</li>
+</ul>
 
-        <div class="exam-strategy">
-            <h3>MEDIUM-YIELD TOPICS:</h3>
-            <ul>
-                <li>• Sludge volume with moisture change: V₁/V₂ = (100−P₂)/(100−P₁)</li>
-                <li>• Kirschmer's head loss for bar screens</li>
-                <li>• Harmon vs Babbitt peak factor difference</li>
-                <li>• RBC rpm (1–2), submergence (40%)</li>
-                <li>• MBR MLSS range (8000–18000)</li>
-                <li>• Extended aeration: no primary clarifier, SRT 20–30 d</li>
-                <li>• Contact stabilisation two-tank concept</li>
-                <li>• TOC/BOD/COD relationships</li>
-                <li>• Primary vs secondary vs tertiary removal efficiencies</li>
-                <li>• Nitrogen mass balance (TKN vs Total N)</li>
-                <li>• Typical sludge solids concentrations at each stage</li>
-                <li>• Dewatering device cake solids comparison</li>
-            </ul>
-        </div>
+<div class="section-header red">Pump Performance Characteristics</div>
 
-        <div class="exam-strategy">
-            <h3>GATE ES ADDITIONS (High Weight in GATE):</h3>
-            <ul>
-                <li>✓ <strong>Monod model:</strong> µ = µ<sub>max</sub>·S/(K<sub>s</sub>+S); washout θ<sub>c</sub> &lt; 1/µ<sub>max</sub></li>
-                <li>✓ <strong>Chemostat steady state:</strong> S<sub>ss</sub> = K<sub>s</sub>/(µ<sub>max</sub>θ − 1)</li>
-                <li>✓ <strong>PFR vs CMFR:</strong> V<sub>CMFR</sub> &gt; V<sub>PFR</sub> for same 1st-order conversion</li>
-                <li>✓ <strong>Yield coefficient Y ≈ 0.4–0.6</strong> mg VSS/mg BOD for sewage</li>
-                <li>✓ <strong>Rational formula (storm sewer):</strong> Q = CiA</li>
-                <li>✓ <strong>Redfield ratio:</strong> C:N:P = 106:16:1 (algae)</li>
-                <li>✓ <strong>BOD/COD ratios by industry</strong> (low for textile/electroplating, high for dairy/sugar)</li>
-                <li>✓ <strong>AOPs:</strong> Fenton, UV/H₂O₂, O₃/UV — OH• radical generation</li>
-            </ul>
-        </div>
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Symbol</th>
+      <th>Definition / Formula</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Head (Discharge Head)</strong></td>
+      <td>H</td>
+      <td>Energy per unit weight added by pump (m); measured from discharge minus suction (gauge)</td>
+    </tr>
+    <tr>
+      <td><strong>Discharge</strong></td>
+      <td>Q</td>
+      <td>Volume of fluid pumped per unit time (m³/s or l/s)</td>
+    </tr>
+    <tr>
+      <td><strong>Power (Hydraulic)</strong></td>
+      <td>P_h</td>
+      <td><code>P_h = ρgQH</code> (Watts); power transferred to fluid</td>
+    </tr>
+    <tr>
+      <td><strong>Power (Brake/Shaft)</strong></td>
+      <td>P_brake</td>
+      <td>Actual input power from motor; P_brake = P_h / η</td>
+    </tr>
+    <tr>
+      <td><strong>Efficiency (Overall)</strong></td>
+      <td>η</td>
+      <td><code>η = P_h / P_brake</code> (typically 0.7–0.85 for centrifugal pumps)</td>
+    </tr>
+    <tr>
+      <td><strong>Specific Speed</strong></td>
+      <td>Ns</td>
+      <td><code>Ns = (N × Q^0.5) / H^0.75</code> (N in rpm, Q in m³/s, H in m); pump classification</td>
+    </tr>
+  </tbody>
+</table>
 
-        <div class="tip">
-            <h3>CRITICAL EXAM-DAY TIPS:</h3>
-            <ul>
-                <li><strong>✓ Unit Check for F:M:</strong> kg BOD / kg MLVSS·day — always check both numerator &amp; denominator units.</li>
-                <li><strong>✓ SVI Units:</strong> mL/g. Common trap: some texts use mL/L directly; divide by MLSS (g/L) to get SVI.</li>
-                <li><strong>✓ BOD Temperature Correction:</strong> k<sub>T</sub> = k₂₀·θ^(T−20); θ=1.047 for BOD, 1.024 for O₂ transfer, 1.085 for WSP, 1.19 for coliform.</li>
-                <li><strong>✓ SRT vs HRT:</strong> SRT is for biomass; HRT for liquid. In ASP, SRT (4–10 d) &gt;&gt; HRT (4–8 hr).</li>
-                <li><strong>✓ Sewer design:</strong> Always design for PEAK flow; check velocity at MIN flow for self-cleansing.</li>
-                <li><strong>✓ Nitrification:</strong> needs SRT &gt; 10 d (Nitrosomonas slow growth); DO &gt; 2; alkalinity buffer.</li>
-                <li><strong>✓ UASB for Indian conditions:</strong> works well because T &gt; 20°C year-round; major cost savings vs ASP.</li>
-                <li><strong>✓ Sludge digestion:</strong> methanogens are pH &amp; T sensitive; VFA buildup &gt; 2000 mg/L signals upset.</li>
-                <li><strong>✓ Anaerobic vs aerobic:</strong> anaerobic = less sludge produced, biogas recovered, no aeration, slower; aerobic = faster, more sludge, high O&amp;M.</li>
-                <li><strong>✓ Marking strategy:</strong> Unit 2 has 13–16 Qs. Factual Qs (standards, ranges) are guaranteed marks — prioritise these first.</li>
-                <li><strong>✓ Formula approach:</strong> For NRC, SVI, Monod, always write formula first, identify variables, then substitute — avoids unit errors.</li>
-                <li><strong>✓ Common trap:</strong> BOD in mg/L vs kg/day — always check if flow rate is being multiplied correctly.</li>
-            </ul>
-        </div>
+<div class="box formula">
+  <strong>Specific Speed (Ns):</strong>
+  <code>Ns = (N√Q) / H^0.75</code><br>
+  where N = pump speed (rpm) | Q = discharge (m³/s) | H = head (m)
+  <div style="margin-top: 8px;">
+    <strong>Ns &lt; 50:</strong> Centrifugal (high head, low Q)<br>
+    <strong>Ns = 50–300:</strong> Mixed flow<br>
+    <strong>Ns &gt; 300:</strong> Axial flow (low head, high Q)
+  </div>
+</div>
 
-        <div class="standard">
-            <h3>MUST-MEMORISE STANDARDS SUMMARY (CPCB Inland Discharge):</h3>
-            <table>
-                <tr><th>Parameter</th><th>Limit</th><th>Notes</th></tr>
-                <tr><td>pH</td><td>5.5–9.0</td><td>Schedule VI Gen.</td></tr>
-                <tr><td>BOD₅ (20°C)</td><td>30 mg/L</td><td>Inland surface water</td></tr>
-                <tr><td>COD</td><td>250 mg/L</td><td>Inland surface water</td></tr>
-                <tr><td>TSS</td><td>100 mg/L</td><td>Schedule VI Gen.</td></tr>
-                <tr><td>Oil &amp; Grease</td><td>10 mg/L</td><td>Inland</td></tr>
-                <tr><td>NH₄-N</td><td>50 mg/L</td><td>Inland</td></tr>
-                <tr><td>Total N</td><td>100 mg/L</td><td>Inland</td></tr>
-                <tr><td>Total P</td><td>5 mg/L</td><td>Sensitive lakes</td></tr>
-                <tr><td>Total Cr</td><td>2.0 mg/L</td><td>Inland</td></tr>
-                <tr><td>Cr⁶⁺</td><td>0.1 mg/L</td><td>Inland — very strict</td></tr>
-                <tr><td>Cyanide</td><td>0.2 mg/L</td><td>Inland</td></tr>
-                <tr><td>Total residual Cl</td><td>1.0 mg/L</td><td>Inland</td></tr>
-                <tr><td>Fluoride</td><td>2.0 mg/L</td><td>Inland</td></tr>
-                <tr><td>FC (new STPs — metro)</td><td>&lt; 100 MPN/100mL</td><td>NGT 2019</td></tr>
-                <tr><td>BOD (new STPs — metro)</td><td>&lt; 10 mg/L</td><td>NGT 2019</td></tr>
-                <tr><td>BOD (new STPs — other)</td><td>&lt; 20 mg/L</td><td>NGT 2019</td></tr>
-            </table>
-        </div>
+<div class="section-header red">NPSH & Cavitation</div>
 
-        <div class="footer">
-            <p><strong>UPPCB AEE Unit 2 Revision Notes | Wastewater Treatment Engineering | Generated April 2026</strong></p>
-            <p>Focus on sewage characteristics, sewer design, ASP/TF/UASB/WSP processes, sludge handling, and effluent standards.</p>
-            <p>Standards referenced from CPCB Schedule VI (E(P) Rules 1986), NGT January 2019 order, CPHEEO Manual 2013, IS 3025, and APHA Standard Methods.</p>
-            <p>Includes GATE ES 2026 additions: Monod kinetics, PFR/CMFR design, Redfield ratio, industrial effluent characterisation.</p>
-        </div>
+<div class="box formula">
+  <strong>Net Positive Suction Head (NPSH):</strong>
+  <code>NPSH_available = (P_atm – P_vapor)/ρg – h_f,suction</code><br>
+  where P_atm = atmospheric pressure | P_vapor = vapor pressure of liquid | h_f,suction = suction line losses
+</div>
+
+<ul class="bullet-list">
+  <li><strong>NPSH Required (NPSHR):</strong> Minimum suction head required by pump (given by manufacturer)</li>
+  <li><strong>NPSH Available (NPSha):</strong> Actual suction head available at site</li>
+  <li><strong>Cavitation Criterion:</strong> NPSH_a > NPSH_r (if violated → cavitation occurs)</li>
+  <li><strong>Cavitation:</strong> Vapor bubbles form in suction → collapse near impeller → noise, vibration, erosion, performance drop</li>
+  <li><strong>Prevention:</strong> Reduce suction lift, minimize suction losses, increase inlet pressure, cool liquid</li>
+</ul>
+
+<div class="box warning">
+Cavitation is destructive. Always ensure NPSH_available ≥ NPSH_required with safety margin (typically 0.5 m minimum).
+</div>
+
+<div class="section-header red">Pump Operating Conditions & Affinity Laws</div>
+
+<ul class="bullet-list">
+  <li><strong>Operating Point:</strong> Intersection of pump curve (H vs Q) and system curve (friction losses)</li>
+  <li><strong>Best Efficiency Point (BEP):</strong> Optimal discharge on pump curve; highest efficiency</li>
+  <li><strong>Throttling:</strong> Reducing flow by closing discharge valve; moves operating point, reduces efficiency</li>
+  <li><strong>Variable Speed Drive:</strong> Efficient method to vary flow; adjusts entire pump curve</li>
+</ul>
+
+<div class="box formula">
+  <strong>Affinity Laws (for geometrically similar pumps):</strong><br>
+  When speed changes from N₁ to N₂:<br>
+  <code>Q₂/Q₁ = N₂/N₁</code> (Discharge proportional to speed)<br>
+  <code>H₂/H₁ = (N₂/N₁)²</code> (Head proportional to speed squared)<br>
+  <code>P₂/P₁ = (N₂/N₁)³</code> (Power proportional to speed cubed)
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Key insight:</strong> Small speed changes dramatically affect power (cubic relationship).
+  </div>
+</div>
+
+<div class="box tip">
+Affinity laws are high-yield for numericals. If pump speed doubles, discharge doubles, head quadruples, power increases 8×. Practice 3–4 problems on this.
+</div>
+
+<div class="section-header red">Pumps in Series & Parallel</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Configuration</th>
+      <th>Effect on Head</th>
+      <th>Effect on Discharge</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Series</strong></td>
+      <td>H_total = H₁ + H₂ (heads add)</td>
+      <td>Q_total = Q₁ = Q₂ (same flow)</td>
+      <td>High head requirement; same discharge</td>
+    </tr>
+    <tr>
+      <td><strong>Parallel</strong></td>
+      <td>H_total = H₁ = H₂ (same head)</td>
+      <td>Q_total = Q₁ + Q₂ (flows add)</td>
+      <td>High discharge requirement; same head</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box definition">
+  <strong>Series Pumps:</strong> Output of first pump is input to second; useful for very high heads (ex: booster pumps in long distribution lines)
+  <br><br>
+  <strong>Parallel Pumps:</strong> Both pump to same header; useful for high discharge (ex: water supply from multiple sources)
+</div>
+
+</div>
+
+<!-- TAB 4: CHANNELS & FLOW CONTROL -->
+<div id="channels" class="tab-content">
+
+<div class="section-header teal">Open Channel Flow Fundamentals</div>
+
+<ul class="bullet-list">
+  <li><strong>Open Channel:</strong> Flow with free surface exposed to atmosphere (rivers, canals, sewers with partial flow)</li>
+  <li><strong>Contrast to Closed Pipes:</strong> Pressure at surface = atmospheric (constant); slope drives flow</li>
+  <li><strong>Uniform Flow:</strong> Depth & velocity constant along channel (Chezy/Manning apply)</li>
+  <li><strong>Non-uniform Flow:</strong> Depth/velocity changes; more complex analysis needed</li>
+</ul>
+
+<div class="section-header teal">Manning's Equation (Open Channels)</div>
+
+<div class="box formula">
+  <strong>Manning's Equation:</strong>
+  <code>V = (1/n) × R^(2/3) × S^(1/2)</code><br>
+  Or: <code>Q = (A/n) × R^(2/3) × S^(1/2)</code><br>
+  where n = Manning's roughness coefficient | R = hydraulic radius = A/P | A = cross-sectional area | P = wetted perimeter | S = bed slope
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Channel Type</th>
+      <th>Manning's n</th>
+      <th>Condition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Concrete (smooth)</td>
+      <td>0.012–0.015</td>
+      <td>New, clean</td>
+    </tr>
+    <tr>
+      <td>Concrete (rough)</td>
+      <td>0.018–0.025</td>
+      <td>Old, algae growth</td>
+    </tr>
+    <tr>
+      <td>Natural earth channel</td>
+      <td>0.025–0.035</td>
+      <td>Straight, clean</td>
+    </tr>
+    <tr>
+      <td>Natural earth (with weeds)</td>
+      <td>0.035–0.050</td>
+      <td>Dense vegetation</td>
+    </tr>
+    <tr>
+      <td>River (clean)</td>
+      <td>0.030–0.040</td>
+      <td>Straight reach</td>
+    </tr>
+    <tr>
+      <td>River (meandering)</td>
+      <td>0.040–0.060</td>
+      <td>Bends, vegetation</td>
+    </tr>
+    <tr>
+      <td>Sewer (concrete pipe)</td>
+      <td>0.011–0.015</td>
+      <td>Clean; gravity flow</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box tip">
+Manning's n is high-yield parameter. For exam numericals, expect n values given or standard (concrete = 0.015, earth = 0.03). Practice 5 problems on Manning's equation.
+</div>
+
+<div class="section-header teal">Chezy's Formula (Alternative)</div>
+
+<div class="box formula">
+  <strong>Chezy's Equation:</strong>
+  <code>V = C × √(R × S)</code><br>
+  where C = Chezy's roughness coefficient; relationship with Manning: <code>C = R^(1/6) / n</code>
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Chezy vs Manning:</strong> Both empirical for uniform flow; Manning preferred in practice (n values well-documented)</li>
+  <li><strong>Hydraulic Radius R:</strong> For rectangular channel: R = (B × D) / (B + 2D) where B = width, D = depth</li>
+</ul>
+
+<div class="section-header teal">Critical Flow & Froude Number</div>
+
+<div class="box formula">
+  <strong>Froude Number:</strong>
+  <code>F = V / √(g × D_m)</code><br>
+  where V = velocity | g = 9.81 m/s² | D_m = hydraulic depth = A/B (mean depth for rectangular channel)
+</div>
+
+<div class="grid">
+  <div class="grid-item">
+    <h4>Subcritical (F &lt; 1)</h4>
+    <code>Slower flow</code><br>
+    Depth > critical; gravity dominates; upstream disturbances propagate downstream
+  </div>
+  <div class="grid-item">
+    <h4>Critical (F = 1)</h4>
+    <code>Transition point</code><br>
+    Depth = critical depth; specific energy minimum
+  </div>
+  <div class="grid-item">
+    <h4>Supercritical (F &gt; 1)</h4>
+    <code>Faster flow</code><br>
+    Depth &lt; critical; inertia dominates; upstream disturbances CANNOT travel upstream
+  </div>
+</div>
+
+<div class="box formula">
+  <strong>Critical Depth (Rectangular Channel):</strong>
+  <code>D_c = (q²/g)^(1/3)</code><br>
+  where q = discharge per unit width = Q/B
+</div>
+
+<div class="section-header teal">Hydraulic Jump</div>
+
+<div class="box definition">
+  <strong>Hydraulic Jump:</strong> Sudden transition from supercritical to subcritical flow; violent, turbulent; significant energy loss
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Occurs when:</strong> Supercritical flow (F &gt; 1) transitions to subcritical (F &lt; 1)</li>
+  <li><strong>Common causes:</strong> Spillway toe, downstream constriction, sudden slope change</li>
+  <li><strong>Characteristics:</strong> Rapid rise in water surface, large surface waves, air entrainment, noise</li>
+  <li><strong>Energy Loss:</strong> Significant; used in dissipators to protect downstream channel</li>
+  <li><strong>Applications:</strong> Stilling basin design, spillway energy dissipation, channel protection</li>
+</ul>
+
+<div class="box formula">
+  <strong>Conjugate Depths (Hydraulic Jump Relation):</strong><br>
+  For rectangular channel: <code>y₂/y₁ = [√(1 + 8F₁²) – 1] / 2</code><br>
+  where y₁ = upstream depth, y₂ = downstream depth, F₁ = upstream Froude number
+</div>
+
+<div class="box tip">
+Hydraulic jump is visually striking and frequently tested. Recognize it in diagrams; know it occurs when supercritical → subcritical; causes energy loss (useful for design).
+</div>
+
+<div class="section-header teal">Water Hammer & Surge Tanks</div>
+
+<div class="box definition">
+  <strong>Water Hammer (Surge):</strong> Sudden pressure rise/fall due to rapid valve closure or pump shutdown; can damage pipes (explosion or implosion)
+</div>
+
+<ul class="bullet-list">
+  <li><strong>Cause:</strong> Rapid deceleration of water column → momentum transfer → pressure spike</li>
+  <li><strong>Magnitude:</strong> Can exceed 2× system pressure; depends on velocity change & closure time</li>
+  <li><strong>Prevention Methods:</strong> Slow valve closure, surge tanks, relief valves, air chambers</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Protection Device</th>
+      <th>Principle</th>
+      <th>Application</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Surge Tank</strong></td>
+      <td>Open reservoir on pipeline; water level rises/falls to absorb pressure changes</td>
+      <td>Hydropower penstocks, long transmission lines</td>
+    </tr>
+    <tr>
+      <td><strong>Air Chamber</strong></td>
+      <td>Sealed tank with trapped air; air compresses to absorb surge</td>
+      <td>Pump discharge lines, household water systems</td>
+    </tr>
+    <tr>
+      <td><strong>Relief Valve</strong></td>
+      <td>Opens automatically when pressure exceeds threshold; diverts flow</td>
+      <td>Pressure systems, pump discharge</td>
+    </tr>
+    <tr>
+      <td><strong>Slow Closure</strong></td>
+      <td>Gradual valve closure (motorized operators); reduces rate of momentum change</td>
+      <td>Check valves, isolation valves on critical systems</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<!-- TAB 5: NUMERICALS & FORMULAS -->
+<div id="numericals" class="tab-content">
+
+<div class="section-header cyan">High-Frequency Formulae</div>
+
+<div class="box formula">
+  <strong>1. Reynolds Number</strong>
+  <code>Re = ρvD/μ = vD/ν</code>
+  <strong>Example:</strong> Water (ν = 10⁻⁶ m²/s) in pipe D = 0.1 m, v = 1 m/s:
+  <code>Re = 1 × 0.1 / 10⁻⁶ = 100,000 (Turbulent)</code>
+</div>
+
+<div class="box formula">
+  <strong>2. Continuity Equation</strong>
+  <code>Q = A × V</code><br>
+  <strong>Example:</strong> Pipe A = 0.01 m², V = 2 m/s:
+  <code>Q = 0.01 × 2 = 0.02 m³/s = 20 l/s</code>
+</div>
+
+<div class="box formula">
+  <strong>3. Darcy-Weisbach (Major Loss)</strong>
+  <code>hf = f × (L/D) × (V²/2g)</code>
+  <strong>Example:</strong> Pipe: L = 1000 m, D = 0.5 m, V = 1 m/s, f = 0.02, g = 9.81 m/s²:
+  <code>hf = 0.02 × (1000/0.5) × (1²/(2×9.81)) = 0.02 × 2000 × 0.051 = 2.04 m</code>
+</div>
+
+<div class="box formula">
+  <strong>4. Minor Loss</strong>
+  <code>hm = K × (V²/2g)</code>
+  <strong>Example:</strong> 90° elbow (K = 0.3), V = 2 m/s:
+  <code>hm = 0.3 × (4/(2×9.81)) = 0.3 × 0.204 = 0.061 m</code>
+</div>
+
+<div class="box formula">
+  <strong>5. Pump Hydraulic Power</strong>
+  <code>P_h = ρ × g × Q × H</code><br>
+  where ρ = 1000 kg/m³, g = 9.81 m/s², Q in m³/s, H in m
+  <div style="margin-top: 8px;">
+    <strong>Example:</strong> Q = 0.05 m³/s, H = 50 m:
+    <code>P_h = 1000 × 9.81 × 0.05 × 50 = 24,525 W ≈ 24.5 kW</code>
+  </div>
+</div>
+
+<div class="box formula">
+  <strong>6. Affinity Laws</strong>
+  <code>Q₂ = Q₁ × (N₂/N₁)</code><br>
+  <code>H₂ = H₁ × (N₂/N₁)²</code><br>
+  <code>P₂ = P₁ × (N₂/N₁)³</code>
+  <div style="margin-top: 8px;">
+    <strong>Example:</strong> Pump @ 1000 rpm: Q = 0.1 m³/s, H = 20 m, P = 20 kW. At 1500 rpm:
+    <code>Q₂ = 0.1 × (1500/1000) = 0.15 m³/s</code><br>
+    <code>H₂ = 20 × (1.5)² = 45 m</code><br>
+    <code>P₂ = 20 × (1.5)³ = 67.5 kW</code>
+  </div>
+</div>
+
+<div class="box formula">
+  <strong>7. Manning's Equation</strong>
+  <code>V = (1/n) × R^(2/3) × S^(1/2)</code><br>
+  <strong>Example:</strong> Concrete channel n = 0.015, R = 1 m, S = 0.001:
+  <code>V = (1/0.015) × 1^(2/3) × √0.001 = 66.67 × 1 × 0.0316 = 2.1 m/s</code>
+</div>
+
+<div class="box formula">
+  <strong>8. Froude Number</strong>
+  <code>F = V / √(g × D_m)</code><br>
+  <strong>Example:</strong> Rectangular channel: B = 5 m, D = 1 m, Q = 10 m³/s:
+  <code>V = Q / (B×D) = 10 / 5 = 2 m/s</code><br>
+  <code>D_m = A/B = (5×1)/5 = 1 m</code><br>
+  <code>F = 2 / √(9.81 × 1) = 2 / 3.13 = 0.64 (Subcritical)</code>
+</div>
+
+<div class="section-header cyan">Sample Numericals</div>
+
+<div class="box cyan">
+  <strong>Q1: Darcy-Weisbach with Multiple Losses</strong><br>
+  Water flows through a 100 m steel pipe (D = 0.1 m) @ v = 1.5 m/s. Pipe includes one 90° elbow (K=0.3) and entrance loss (K=0.5). Assume f = 0.025. Find total head loss.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    Major loss: hf = 0.025 × (100/0.1) × (1.5²/(2×9.81)) = 0.025 × 1000 × 0.1145 = 2.86 m<br>
+    Elbow: hm1 = 0.3 × (1.5²/(2×9.81)) = 0.3 × 0.1145 = 0.034 m<br>
+    Entrance: hm2 = 0.5 × 0.1145 = 0.057 m<br>
+    <strong>Total = 2.86 + 0.034 + 0.057 = 2.95 m</strong>
+  </div>
+</div>
+
+<div class="box cyan">
+  <strong>Q2: Affinity Laws</strong><br>
+  A centrifugal pump at 1200 rpm delivers Q = 0.08 m³/s and H = 30 m. If speed is increased to 1800 rpm, find new discharge, head, and power ratio. Original power was 25 kW.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    Speed ratio = 1800/1200 = 1.5<br>
+    Q₂ = 0.08 × 1.5 = <strong>0.12 m³/s</strong><br>
+    H₂ = 30 × (1.5)² = 30 × 2.25 = <strong>67.5 m</strong><br>
+    P₂ = 25 × (1.5)³ = 25 × 3.375 = <strong>84.4 kW</strong>
+  </div>
+</div>
+
+<div class="box cyan">
+  <strong>Q3: Manning's Equation (Trapezoidal Channel)</strong><br>
+  A trapezoidal concrete channel (n = 0.015) with bottom width B = 3 m, side slope 1:1, depth D = 1.5 m, and bed slope S = 0.0005. Find discharge.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    Area A = (B + mD) × D = (3 + 1.5) × 1.5 = 6.75 m² (for 1:1 slope, m = 1)<br>
+    Perimeter P = B + 2D√(1+m²) = 3 + 2×1.5×√2 = 3 + 4.24 = 7.24 m<br>
+    R = A/P = 6.75 / 7.24 = 0.932 m<br>
+    V = (1/0.015) × 0.932^(2/3) × √0.0005 = 66.67 × 0.953 × 0.0224 = 1.42 m/s<br>
+    Q = A × V = 6.75 × 1.42 = <strong>9.57 m³/s</strong>
+  </div>
+</div>
+
+<div class="box cyan">
+  <strong>Q4: Froude Number & Critical Depth</strong><br>
+  In a rectangular channel (B = 4 m), water flows @ Q = 12 m³/s with depth D = 0.8 m. Is flow subcritical or supercritical? Find critical depth.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    V = Q / (B×D) = 12 / (4×0.8) = 3.75 m/s<br>
+    D_m = 0.8 m<br>
+    F = 3.75 / √(9.81×0.8) = 3.75 / 2.8 = 1.34 > 1 → <strong>SUPERCRITICAL</strong><br>
+    q = Q/B = 12/4 = 3 m³/s per m width<br>
+    D_c = (q²/g)^(1/3) = (9/9.81)^(1/3) = 0.945^(1/3) = <strong>0.98 m</strong><br>
+    Since D = 0.8 m &lt; D_c, flow is supercritical (confirmed).
+  </div>
+</div>
+
+<div class="box cyan">
+  <strong>Q5: Pump Efficiency</strong><br>
+  A pump delivers Q = 0.05 m³/s against H = 40 m. Motor input power is 22 kW. Find overall efficiency and hydraulic power.
+  <div style="margin-top: 8px; font-size: 12px;">
+    <strong>Solution:</strong><br>
+    P_h = ρgQH = 1000 × 9.81 × 0.05 × 40 = 19,620 W = 19.62 kW<br>
+    η = P_h / P_brake = 19.62 / 22 = <strong>0.892 = 89.2%</strong> (excellent efficiency)
+  </div>
+</div>
+
+</div>
+
+<!-- TAB 6: QUICK REFERENCE -->
+<div id="quick" class="tab-content">
+
+        <h2>SECTION 2: MUST-MEMORISE CONSTANTS & FORMULAS</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Value / Formula</th>
+      <th>SI Unit / Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background: #fff3e0;">
+      <td><strong>Water Density (20°C)</strong></td>
+      <td><code>ρ = 1000</code></td>
+      <td>kg/m³</td>
+    </tr>
+    <tr style="background: #fff3e0;">
+      <td><strong>Gravity</strong></td>
+      <td><code>g = 9.81</code></td>
+      <td>m/s²</td>
+    </tr>
+    <tr style="background: #fff3e0;">
+      <td><strong>Kinematic Viscosity (water @ 20°C)</strong></td>
+      <td><code>ν = 10⁻⁶</code></td>
+      <td>m²/s</td>
+    </tr>
+    <tr style="background: #e3f2fd;">
+      <td><strong>Laminar Limit</strong></td>
+      <td><code>Re &lt; 2300</code></td>
+      <td>Dimensionless</td>
+    </tr>
+    <tr style="background: #e3f2fd;">
+      <td><strong>Turbulent Start</strong></td>
+      <td><code>Re &gt; 4000</code></td>
+      <td>Dimensionless</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+      <td><strong>Manning's n (Concrete)</strong></td>
+      <td><code>0.012–0.015</code></td>
+      <td>Smooth; most common for engineering</td>
+    </tr>
+    <tr style="background: #e8f5e9;">
+      <td><strong>Manning's n (Earth)</strong></td>
+      <td><code>0.025–0.035</code></td>
+      <td>Natural channels</td>
+    </tr>
+    <tr style="background: #f3e5f5;">
+      <td><strong>Pump Efficiency (Centrifugal)</strong></td>
+      <td><code>0.70–0.85</code></td>
+      <td>Typical operating range</td>
+    </tr>
+    <tr style="background: #f3e5f5;">
+      <td><strong>Hydraulic Power</strong></td>
+      <td><code>P_h = ρgQH</code></td>
+      <td>Watts; Q in m³/s, H in m</td>
+    </tr>
+    <tr style="background: #ffe0b2;">
+      <td><strong>Darcy-Weisbach</strong></td>
+      <td><code>hf = f(L/D)(V²/2g)</code></td>
+      <td>Major loss in pipes</td>
+    </tr>
+    <tr style="background: #ffe0b2;">
+      <td><strong>Manning's Equation</strong></td>
+      <td><code>V = (1/n)R^(2/3)S^(1/2)</code></td>
+      <td>Open channel flow</td>
+    </tr>
+    <tr style="background: #c8e6c9;">
+      <td><strong>Froude Number</strong></td>
+      <td><code>F = V/√(gD_m)</code></td>
+      <td>F &lt; 1 = subcritical; F &gt; 1 = supercritical</td>
+    </tr>
+    <tr style="background: #b3e5fc;">
+      <td><strong>Critical Depth (Rectangular)</strong></td>
+      <td><code>D_c = (q²/g)^(1/3)</code></td>
+      <td>q = Q/B (discharge per width)</td>
+    </tr>
+  </tbody>
+</table>
+
+        <h2>SECTION 3: QUICK DESIGN CHECKLIST</h2>
+
+<ul class="bullet-list">
+  <li><strong>Pipe Design:</strong> Check Re (laminar/turbulent) → find f (Moody chart or correlation) → calculate hf (Darcy) → add minor losses → total head loss</li>
+  <li><strong>Pump Selection:</strong> Required Q and H → read pump curve → check operating point on system curve → verify NPSH available &gt; NPSH required</li>
+  <li><strong>Open Channel:</strong> Given Q, slope, Manning's n → solve Manning iteratively for depth D or use nomographs</li>
+  <li><strong>Hydraulic Jump:</strong> Check Froude number; if F₁ &gt; 1 and abrupt transition, jump occurs → major energy loss</li>
+  <li><strong>Water Hammer:</strong> Rapid valve closure → pressure surge → install relief valve or surge tank if needed</li>
+</ul>
+
+        <h2>SECTION 4: EXAM STRATEGIES</h2>
+
+<ol class="bullet-list" style="list-style: decimal;">
+  <li><strong>Formulas to Drill:</strong> Reynolds, Continuity, Darcy-Weisbach, Manning, Froude, Pump Power. Know derivations + numerical patterns.</li>
+  <li><strong>Moody Chart:</strong> Understand how to use it; may be provided in exam. Know relative roughness concept.</li>
+  <li><strong>Affinity Laws:</strong> High-frequency numerical topic. Practice speed change scenarios (1.5×, 2×, 0.8×).</li>
+  <li><strong>Pipe vs Channel:</strong> Closed pipes use Darcy; open channels use Manning. Don't mix formulas.</li>
+  <li><strong>NPSH & Cavitation:</strong> Critical for pump questions. NPSH_a &gt; NPSH_r always required.</li>
+  <li><strong>Hardy Cross:</strong> Conceptual; may ask principle but unlikely to solve in exam time.</li>
+  <li><strong>Hydraulic Jump:</strong> Recognize by F₁ &gt; 1 → F₂ &lt; 1 transition; causes energy loss; used in stilling basins.</li>
+</ol>
+
+<div class="box warning">
+<strong>Common Mistakes to Avoid:</strong><br>
+❌ Confusing laminar (f = 64/Re) with turbulent (f from Moody)<br>
+❌ Forgetting units in hydraulic power (ρ in kg/m³, g in m/s², Q in m³/s, H in m → Watts)<br>
+❌ Using Manning's n for closed pipes (use Darcy only)<br>
+❌ Assuming NPSH available without calculating suction losses<br>
+❌ Mixing up affinity laws (power cubes; head squares; discharge linear)<br>
+❌ Forgetting + signs in continuity for networks (inflow = outflow at junctions)
+</div>
+
     </div>
-</body>
+  </body>
 </html>

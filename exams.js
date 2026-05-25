@@ -1,1303 +1,1291 @@
 {
-  "sub_subjects": [
-    {
-      "id": "physics",
-      "icon": "⚡",
-      "name": "Physics",
-      "description": "Motion · Force · Work · Energy · Light · Sound · Electricity"
-    },
-    {
-      "id": "chemistry",
-      "icon": "🧪",
-      "name": "Chemistry",
-      "description": "Matter · Atoms · Acids-Bases · Metals · Carbon · Periodic Table"
-    },
-    {
-      "id": "biology",
-      "icon": "🧬",
-      "name": "Biology",
-      "description": "Cell · Nutrition · Respiration · Circulatory · Nervous · Genetics"
-    },
-    {
-      "id": "technology",
-      "icon": "🚀",
-      "name": "Science and Technology",
-      "description": "Space · Defence · Biotech · IT · Nuclear · Recent developments"
-    },
-    {
-      "id": "health",
-      "icon": "🏥",
-      "name": "Health and Disease",
-      "description": "Diseases · Vitamins · Vaccines · Nutrition · Public health"
-    },
-    {
-      "id": "space",
-      "icon": "🌌",
-      "name": "Space Science",
-      "description": "Solar system · ISRO · Satellites · Missions · Universe"
-    }
-  ],
-  "physics": {
+  "polity": {
     "topics": [
-      {
-        "id": "motion",
-        "name": "Motion and Laws of Motion"
-      },
-      {
-        "id": "work-energy",
-        "name": "Work, Energy and Power"
-      },
-      {
-        "id": "light",
-        "name": "Light and Optics"
-      },
-      {
-        "id": "sound",
-        "name": "Sound and Waves"
-      },
-      {
-        "id": "electricity",
-        "name": "Electricity and Magnetism"
-      },
-      {
-        "id": "modern",
-        "name": "Modern Physics — Nuclear and Radioactivity"
-      }
+      { "id": "constitution", "name": "Constitution" },
+      { "id": "fundamental-rights", "name": "Fundamental Rights" },
+      { "id": "dpsp", "name": "DPSP & Duties" },
+      { "id": "parliament", "name": "Parliament" },
+      { "id": "executive", "name": "Executive" },
+      { "id": "judiciary", "name": "Judiciary" },
+      { "id": "federalism", "name": "Federalism" },
+      { "id": "elections", "name": "Elections & Bodies" },
+      { "id": "amendments", "name": "Amendments" },
+      { "id": "emergency", "name": "Emergency Provisions" }
     ],
     "notes": [
       {
-        "topic_id": "motion",
-        "topic_name": "Motion and Newton's Laws",
+        "topic_id": "constitution",
+        "topic_name": "Constitution of India",
         "cards": [
           {
-            "heading": "Newton's Laws of Motion — Complete",
+            "heading": "Key Facts About Indian Constitution",
             "color": "blue",
             "points": [
-              "1st Law (Law of Inertia): A body at rest stays at rest; a body in motion continues in motion at constant velocity — UNLESS acted upon by external force. Inertia = tendency to resist change in state. Example: Passenger falls forward when bus brakes suddenly (inertia of motion); Dust falls off shaken carpet (inertia of rest)",
-              "2nd Law (F = ma): Force = mass × acceleration. Net force on a body = rate of change of momentum. Larger mass = larger force needed for same acceleration. Example: Catching a fast cricket ball hurts more than a slow one (greater impulse); Hitting with palm not fingertip hurts less (longer time → less force)",
-              "3rd Law (Action-Reaction): Every action has an equal and opposite reaction. Forces act on DIFFERENT bodies. Example: Rocket propulsion (gas pushed back → rocket pushed forward); Recoil of gun; Swimmer pushes water backward → moves forward",
-              "Momentum = mass × velocity (p = mv); unit = kg·m/s; vector quantity",
-              "Impulse = Force × time = Change in momentum; explains why airbags save lives (longer collision time → less force)",
-              "Friction: Static friction (> kinetic friction); Rolling friction (least); Friction opposes motion but enables walking and driving. Ball bearings reduce friction. Lubricants reduce friction"
+              "Adopted on 26 November 1949 — celebrated as Constitution Day (Samvidhan Divas)",
+              "Came into effect on 26 January 1950 — Republic Day",
+              "Drafted by Constituent Assembly under Dr. B.R. Ambedkar (Chairman, Drafting Committee)",
+              "Original constitution: 395 Articles, 8 Schedules, 22 Parts",
+              "Currently: 448 Articles, 12 Schedules, 25 Parts (after amendments)",
+              "Longest written constitution in the world",
+              "Borrowed features from multiple countries (see table below)"
             ],
-            "alert": "⭐ EXAM TRICK: 1st Law = Inertia; 2nd Law = F=ma (quantitative); 3rd Law = Action-Reaction. Common examples: Rocket = 3rd law; Car crash airbag = impulse (2nd law); Tablecloth pulled quickly = 1st law (inertia). Gravitational acceleration on Moon = g/6 = 1.63 m/s² (so you weigh 1/6 on Moon but your mass is same everywhere)."
+            "alert": "⭐ EXAM TRICK: 26 Nov = Constitution Day | 26 Jan = Republic Day. Both dates are frequently asked!"
           },
           {
-            "heading": "Gravitation, Pressure and Buoyancy",
+            "heading": "Features Borrowed from Other Countries",
+            "color": "purple",
+            "table": {
+              "headers": ["Country", "Feature Borrowed"],
+              "rows": [
+                ["UK (Britain)", "Parliamentary system, Rule of Law, Single Citizenship, Writs"],
+                ["USA", "Fundamental Rights, Judicial Review, Preamble, President as Executive head"],
+                ["Ireland", "DPSP, Nomination of Rajya Sabha members, Emergency provisions"],
+                ["Canada", "Federation with strong Centre, Residuary powers with Centre"],
+                ["Australia", "Joint sitting of Parliament, Concurrent List"],
+                ["Germany (Weimar)", "Suspension of Fundamental Rights during Emergency"],
+                ["South Africa", "Amendment procedure (Article 368), Election of President"],
+                ["Japan", "Procedure established by Law"]
+              ]
+            }
+          },
+          {
+            "heading": "Preamble — Key Words",
             "color": "green",
             "points": [
-              "Newton's Law of Gravitation: F = Gm₁m₂/r² ; G = 6.67 × 10⁻¹¹ N·m²/kg² (universal gravitational constant); gravitational force is weakest of four fundamental forces",
-              "g = 9.8 m/s² at Earth's surface; g is maximum at poles (Earth is flatter → poles closer to centre); g is minimum at equator; g decreases with altitude and depth",
-              "Escape velocity from Earth = 11.2 km/s; from Moon = 2.4 km/s (low → Moon has no atmosphere); Orbital velocity of satellite = 7.9 km/s (for low Earth orbit)",
-              "Pressure = Force/Area (P = F/A); unit = Pascal (Pa) or N/m²; atmospheric pressure at sea level = 101,325 Pa = 1 atm = 760 mm Hg (torr)",
-              "Pascal's Law: Pressure applied to enclosed liquid is transmitted equally in all directions. Application: Hydraulic brakes, hydraulic lift, hydraulic press",
-              "Archimedes' Principle: Buoyant force = weight of fluid displaced. Object floats when buoyant force ≥ weight. Ship floats because it displaces water weighing more than ship's weight. Submarine: fills tanks with water to sink; pumps water out to surface",
-              "Bernoulli's Principle: Faster moving fluid has lower pressure. Application: Aircraft wing (lift), Venturi meter, Pitot tube (measures aircraft speed), spinning ball curves (Magnus effect)"
-            ]
+              "SOVEREIGN — India is not dependent on any external authority",
+              "SOCIALIST — Added by 42nd Amendment 1976 — equitable distribution of wealth",
+              "SECULAR — Added by 42nd Amendment 1976 — no state religion",
+              "DEMOCRATIC — Government by the people, for the people, of the people",
+              "REPUBLIC — Elected head of state (President), not hereditary",
+              "JUSTICE — Social, Economic, Political",
+              "LIBERTY — Of thought, expression, belief, faith, worship",
+              "EQUALITY — Of status and opportunity",
+              "FRATERNITY — Brotherhood + Dignity of individual + Unity of Nation"
+            ],
+            "alert": "⭐ Preamble is NOT justiciable (cannot be enforced in court). SC held it is part of Constitution in Kesavananda Bharati case (1973)"
+          },
+          {
+            "heading": "Schedules of the Constitution",
+            "color": "orange",
+            "table": {
+              "headers": ["Schedule", "Subject"],
+              "rows": [
+                ["1st", "Names of States and UTs + territories"],
+                ["2nd", "Salaries of President, Governors, Judges, CAG, etc."],
+                ["3rd", "Forms of Oaths and Affirmations"],
+                ["4th", "Allocation of seats in Rajya Sabha"],
+                ["5th", "Administration of Scheduled Areas and Tribes"],
+                ["6th", "Administration of Tribal Areas in NE states"],
+                ["7th", "Division of powers — Union, State, Concurrent Lists"],
+                ["8th", "Official Languages (22 languages)"],
+                ["9th", "Land reform laws (added by 1st Amendment 1951)"],
+                ["10th", "Anti-Defection Law (added by 52nd Amendment 1985)"],
+                ["11th", "Powers of Panchayats (73rd Amendment)"],
+                ["12th", "Powers of Municipalities (74th Amendment)"]
+              ]
+            }
           }
         ]
       },
       {
-        "topic_id": "work-energy",
-        "topic_name": "Work, Energy and Power",
+        "topic_id": "fundamental-rights",
+        "topic_name": "Fundamental Rights (Articles 12–35)",
         "cards": [
           {
-            "heading": "Work, Energy, Power and Simple Machines",
+            "heading": "Six Fundamental Rights at a Glance",
+            "color": "blue",
+            "table": {
+              "headers": ["Right", "Articles", "Key Content"],
+              "rows": [
+                ["Right to Equality", "14–18", "Equality before law, No discrimination, Abolition of untouchability & titles"],
+                ["Right to Freedom", "19–22", "6 Freedoms (speech, assembly, movement etc.), Protection against arrest"],
+                ["Right Against Exploitation", "23–24", "Prohibition of human trafficking, Forced labour, Child labour (< 14 yrs)"],
+                ["Right to Freedom of Religion", "25–28", "Freedom of conscience, religious practice, manage religious affairs"],
+                ["Cultural & Educational Rights", "29–30", "Protection of minority languages & culture, Right to establish institutions"],
+                ["Right to Constitutional Remedies", "32", "Dr. Ambedkar called it 'Heart & Soul of Constitution' — Writs"]
+              ]
+            },
+            "alert": "⭐ Right to Property (Art. 31) was removed as Fundamental Right by 44th Amendment 1978 — now a legal right under Art. 300A"
+          },
+          {
+            "heading": "Five Constitutional Writs (HMCQP)",
             "color": "purple",
             "points": [
-              "Work = Force × displacement in direction of force (W = F·d·cosθ); unit = Joule (J); Work done is zero if force ⊥ displacement (e.g. carrying bag horizontally — no work by gravity)",
-              "Kinetic Energy = ½mv²; Potential Energy (gravitational) = mgh; Total Mechanical Energy = KE + PE = constant (conservation of energy)",
-              "Power = Work/Time = Force × velocity; unit = Watt (W); 1 Horsepower = 746 W",
-              "Efficiency = (Useful output energy/Total input energy) × 100%",
-              "Simple Machines: Lever (Fulcrum-Effort-Load; 3 classes); Pulley; Inclined Plane; Wheel and Axle; Screw; Wedge. All work on principle of mechanical advantage = Load/Effort",
-              "1st class lever: Fulcrum between effort and load (seesaw, scissors, pliers); 2nd class lever: Load between fulcrum and effort (wheelbarrow, nutcracker); 3rd class lever: Effort between fulcrum and load (tweezers, broom, tongs)",
-              "Conservation of Energy: Energy cannot be created or destroyed; only converted from one form to another. Total energy of universe is constant. Example: Pendulum → PE↔KE; Power plant → Chemical/Nuclear → Thermal → Mechanical → Electrical"
+              "HABEAS CORPUS — 'Produce the body' — against illegal detention; available against private individuals too",
+              "MANDAMUS — 'We command' — issued against public officials/bodies to perform duty; NOT against President/Governor",
+              "CERTIORARI — 'To be certified' — quash orders of lower courts/tribunals (both Art 32 & Art 226)",
+              "PROHIBITION — Prevents lower court from exceeding jurisdiction (only preventive, not curative)",
+              "QUO WARRANTO — 'By what authority' — against unlawful occupation of public office"
             ],
-            "alert": "⭐ Unit conversions: 1 kWh (kilowatt-hour) = 3.6 × 10⁶ J = unit of electrical energy used in billing. 1 erg = 10⁻⁷ J (CGS unit). Joule = SI unit of energy/work. Watt = SI unit of power. Renewable energy sources: Solar, Wind, Hydro, Tidal, Geothermal, Biomass — do NOT deplete over time. Non-renewable: Coal, Petroleum, Natural gas, Nuclear (uranium)."
-          }
-        ]
-      },
-      {
-        "topic_id": "light",
-        "topic_name": "Light and Optics",
-        "cards": [
+            "alert": "⭐ TRICK: H-M-C-P-Q. Art. 32 (SC) = Right to move SC for enforcement. Art. 226 (HC) has WIDER scope — can issue writs for other purposes too"
+          },
           {
-            "heading": "Light — Reflection, Refraction, Lenses and Mirrors",
-            "color": "orange",
+            "heading": "Article 19 — Six Freedoms",
+            "color": "green",
             "points": [
-              "Speed of light: 3 × 10⁸ m/s (in vacuum); light slows down in denser media. Light is electromagnetic radiation. Visible spectrum: VIBGYOR (Violet 400nm to Red 700nm)",
-              "Reflection: Angle of incidence = angle of reflection; both angles with normal. Plane mirror: image is virtual, erect, same size, laterally inverted, as far behind mirror as object in front",
-              "Concave mirror (converging): Used in torches, headlights, doctor's head mirror, solar furnaces, shaving mirror. Forms real inverted image (except when object is within focal length → virtual erect magnified image)",
-              "Convex mirror (diverging): Always forms virtual, erect, diminished image. Used as rear-view mirror in vehicles (wider field of view). Image always between pole and focus",
-              "Refraction: Bending of light when it passes from one medium to another. Caused by change in speed. Snell's Law: n₁sinθ₁ = n₂sinθ₂. Refractive index of glass ≈ 1.5; water ≈ 1.33; diamond ≈ 2.42 (highest — causes total internal reflection → sparkle)",
-              "Total Internal Reflection: When light goes from denser to rarer medium at angle > critical angle; all light reflects back. Applications: Optical fibre (internet cables), Endoscope, Diamond sparkle, Mirage (hot desert/road)",
-              "Convex lens (converging): Used in magnifying glass, camera, projector, telescope objective, microscope objective, hypermetropia (far-sightedness) correction",
-              "Concave lens (diverging): Used in myopia (near-sightedness) correction; forms virtual, erect, diminished image on same side as object",
-              "Dispersion: White light splits into VIBGYOR on passing through prism (violet bends most, red least). Rainbow = natural dispersion (raindrops act as prisms). Scattering: Blue sky (Rayleigh scattering — shorter wavelengths scatter more); Red sunset (longer path → blue scattered away → red remains)"
-            ],
-            "alert": "⭐ EXAM TRICK: Concave mirror and Convex lens = CONVERGING (useful for focusing); Convex mirror and Concave lens = DIVERGING (spread out light). Eye defects: Myopia (near-sightedness) = concave lens; Hypermetropia (far-sightedness) = convex lens; Presbyopia (old age, both) = bifocal lens; Astigmatism = cylindrical lens. Human eye's near point = 25 cm (Least Distance of Distinct Vision)."
-          }
-        ]
-      },
-      {
-        "topic_id": "sound",
-        "topic_name": "Sound and Waves",
-        "cards": [
-          {
-            "heading": "Sound — Properties, Speed and Applications",
-            "color": "blue",
-            "points": [
-              "Sound: Longitudinal mechanical wave; requires medium to travel (cannot travel in vacuum — unlike light). Consists of compressions and rarefactions",
-              "Speed of sound: In air at 0°C = 332 m/s; at 20°C ≈ 343 m/s; in water = 1480 m/s; in steel = 5960 m/s. Sound travels faster in denser/more elastic media. Speed increases with temperature",
-              "Frequency ranges: Infrasound < 20 Hz (below human hearing; felt by elephants, whales, before earthquakes); Audible = 20 Hz to 20,000 Hz; Ultrasound > 20,000 Hz (bats, dolphins echolocation; SONAR; medical ultrasound; cleaning jewelry)",
-              "Pitch = frequency (high frequency = shrill/high pitch; low frequency = deep/low pitch). Loudness = amplitude (energy of wave). Timbre = quality (distinguishes instruments at same pitch)",
-              "Decibel (dB): Unit of loudness. 0 dB = threshold of hearing; 60 dB = normal conversation; 120 dB = threshold of pain. Noise pollution limit = 45 dB (day) and 35 dB (night) for residential areas per WHO",
-              "Doppler Effect: Apparent change in frequency when source or observer moves. Source approaching = higher frequency (pitch rises); Source receding = lower frequency (pitch falls). Applications: Speed gun (traffic), Radar, SONAR, Doppler echocardiography, Red-shift (recession of galaxies)",
-              "Echo: Reflected sound; minimum distance for echo = 17 m (sound must travel 34 m in 0.1 second = minimum persistence of hearing). SONAR uses echoes to detect submarines and measure ocean depth",
-              "Resonance: Vibration at natural frequency; resonating frequency of human ear canal = 3000-4000 Hz (most sensitive). Resonance can break glass (opera singer); Tacoma Bridge collapse (resonance with wind)"
+              "19(1)(a) — Freedom of Speech and Expression",
+              "19(1)(b) — Freedom to assemble peaceably and without arms",
+              "19(1)(c) — Freedom to form associations or unions",
+              "19(1)(d) — Freedom to move freely throughout the territory of India",
+              "19(1)(e) — Freedom to reside and settle in any part of India",
+              "19(1)(g) — Freedom to practice any profession or trade",
+              "NOTE: Originally 7 freedoms — 19(1)(f) (right to property) removed by 44th Amendment 1978"
             ]
           }
         ]
       },
       {
-        "topic_id": "electricity",
-        "topic_name": "Electricity and Magnetism",
+        "topic_id": "dpsp",
+        "topic_name": "DPSP and Fundamental Duties",
         "cards": [
           {
-            "heading": "Electricity — Key Concepts and Formulas",
+            "heading": "Directive Principles of State Policy (Art. 36–51)",
+            "color": "orange",
+            "points": [
+              "Non-justiciable — cannot be enforced in court (unlike Fundamental Rights)",
+              "Borrowed from Irish Constitution",
+              "Socialistic Principles: Equal pay, maternity relief, living wage, child care",
+              "Gandhian Principles: Panchayati Raj, cottage industries, prohibition of cow slaughter",
+              "Liberal-Intellectual Principles: Uniform Civil Code (Art.44), free legal aid, separation of judiciary from executive",
+              "International Principles: Promote international peace (Art. 51)"
+            ],
+            "alert": "⭐ Art. 44 — Uniform Civil Code: Often in news. State shall endeavour to secure UCC for all citizens"
+          },
+          {
+            "heading": "Fundamental Duties (Art. 51A) — 11 Duties",
+            "color": "blue",
+            "points": [
+              "Respect the Constitution, National Flag, National Anthem",
+              "Follow ideals of freedom struggle",
+              "Uphold and protect sovereignty, unity, integrity of India",
+              "Defend the country — render national service",
+              "Promote harmony — transcend religious, linguistic differences",
+              "Preserve rich heritage of composite culture",
+              "Protect and improve natural environment (forests, lakes, rivers, wildlife)",
+              "Develop scientific temper, humanism, spirit of inquiry",
+              "Safeguard public property; abjure violence",
+              "Strive for excellence in all spheres",
+              "Provide education to child — 6 to 14 years (added by 86th Amendment 2002)"
+            ],
+            "alert": "⭐ Originally 10 duties — 11th added by 86th Amendment. Borrowed from USSR Constitution. Sardar Swaran Singh Committee recommended them"
+          }
+        ]
+      },
+      {
+        "topic_id": "parliament",
+        "topic_name": "Parliament of India",
+        "cards": [
+          {
+            "heading": "Parliament — Structure & Key Facts",
+            "color": "blue",
+            "points": [
+              "Parliament = President + Rajya Sabha + Lok Sabha",
+              "Rajya Sabha (Upper House) — Permanent body, cannot be dissolved; 250 members (238 elected + 12 nominated by President)",
+              "Lok Sabha (Lower House) — 552 members max (530 States + 20 UTs + 2 nominated Anglo-Indians)",
+              "Current Lok Sabha: 543 elected seats (2 Anglo-Indian nomination abolished by 104th Amendment 2020)",
+              "Rajya Sabha term: 6 years (1/3 retire every 2 years)",
+              "Lok Sabha term: 5 years (can be dissolved by President on PM's advice)"
+            ],
+            "table": {
+              "headers": ["Feature", "Lok Sabha", "Rajya Sabha"],
+              "rows": [
+                ["Presiding Officer", "Speaker", "Vice President (ex-officio Chairman)"],
+                ["Money Bills", "Introduced here only", "Can only delay 14 days"],
+                ["Confidence Vote", "Only here (Art. 75)", "No vote of confidence"],
+                ["Election", "Direct election", "Indirect — by state legislatures"],
+                ["Quorum", "1/10th (55)", "1/10th (25)"]
+              ]
+            }
+          },
+          {
+            "heading": "Parliamentary Sessions & Special Provisions",
             "color": "green",
             "points": [
-              "Electric current (I) = charge/time; unit = Ampere (A); conventional current flows positive to negative; electrons flow negative to positive",
-              "Ohm's Law: V = IR (Voltage = Current × Resistance); unit of resistance = Ohm (Ω); applicable to metallic conductors at constant temperature",
-              "Series circuit: Total resistance = R₁+R₂+R₃; same current through all; voltage divides. Parallel circuit: 1/R_total = 1/R₁+1/R₂+1/R₃; same voltage across all; current divides. Parallel → lower total resistance",
-              "Power = VI = I²R = V²/R; unit = Watt; electrical energy = Power × time = VIt; unit = Joule or Watt-hour",
-              "Heating effect: Joule's Law → H = I²Rt; used in electric heater, bulb, iron, toaster, electric kettle. Resistance wire = Nichrome (high resistance, high melting point)",
-              "Fuse: Thin wire of low melting point alloy; melts and breaks circuit when current exceeds safe limit; protects appliances. MCB (Miniature Circuit Breaker) = modern alternative; can be reset",
-              "Magnetic effect: Current-carrying conductor produces magnetic field (Oersted's discovery 1820). Electromagnet = coil of wire wound on soft iron core carrying current. Applications: Electric bell, Loudspeaker, DC motor, MRI machine",
-              "Electromagnetic Induction (Faraday 1831): Changing magnetic field produces EMF (electromotive force). Applications: Generator (AC generator = alternator; DC generator = dynamo), Transformer, Induction cooker, Credit card reader"
+              "Three sessions: Budget (Feb-May), Monsoon (Jul-Aug), Winter (Nov-Dec)",
+              "Maximum gap between sessions: 6 months",
+              "Joint Sitting (Art. 108): Presided by Lok Sabha Speaker — for ordinary bills only; NOT for Money Bills or Constitution Amendment Bills",
+              "Money Bill (Art. 110): Certified by Speaker, passed by Lok Sabha alone — Rajya Sabha can only delay 14 days",
+              "Financial Bill: Different from Money Bill — both Houses have equal powers",
+              "Question Hour: First hour of sitting — Starred (oral), Unstarred (written), Short Notice questions",
+              "Zero Hour: Immediately after Question Hour — matters of urgent public importance"
             ],
-            "alert": "⭐ India's power supply: 220-240V AC at 50 Hz. USA = 110V at 60 Hz. Difference: Transformers STEP UP or STEP DOWN voltage; work on AC only; used for long-distance transmission (high voltage → less current → less heat loss). DC cannot be transformed — that's why AC is used for transmission. Solar cells produce DC → inverter converts to AC for household use."
+            "alert": "⭐ Budget presented on 1 February (changed from last working day of Feb in 2017 by Arun Jaitley)"
+          }
+        ]
+      },
+      {
+        "topic_id": "executive",
+        "topic_name": "Executive — President, PM & Council of Ministers",
+        "cards": [
+          {
+            "heading": "President of India — Key Points",
+            "color": "blue",
+            "points": [
+              "Art. 52: There shall be a President of India",
+              "Art. 53: Executive power vested in President",
+              "Elected by Electoral College = Elected MPs (both Houses) + Elected MLAs of States + Delhi & Puducherry",
+              "Term: 5 years; can be re-elected any number of times",
+              "Impeachment: Art. 61 — By Parliament for violation of Constitution (2/3 majority of total membership)",
+              "Oath administered by Chief Justice of India",
+              "Salary: ₹5 lakh per month (revised 2018)"
+            ],
+            "alert": "⭐ President can return a bill ONCE (except Money Bill & Constitution Amendment Bill). If returned bill is passed again, President MUST give assent — Pocket Veto possible (indefinitely withhold assent)"
+          },
+          {
+            "heading": "Prime Minister & Council of Ministers",
+            "color": "purple",
+            "points": [
+              "Art. 74: Council of Ministers with PM as head to aid & advise President",
+              "Art. 75: Ministers appointed by President on advice of PM; collectively responsible to Lok Sabha",
+              "PM need not be MP at time of appointment but must become MP within 6 months",
+              "Cabinet Committees: Parliamentary Affairs, CCS (Cabinet Committee on Security), CCEA, CCPA",
+              "Categories: Cabinet Ministers > Ministers of State > Deputy Ministers > Parliamentary Secretaries"
+            ]
+          },
+          {
+            "heading": "Governor — State Executive",
+            "color": "orange",
+            "points": [
+              "Appointed by President; holds office at pleasure of President (no fixed term in practice)",
+              "Nominal term: 5 years",
+              "Not elected — bridges Union-State relationship",
+              "Can give assent, withhold assent, or reserve bill for President's consideration",
+              "Art. 163: Council of Ministers headed by CM to aid & advise Governor (EXCEPT discretionary functions)",
+              "Art. 356: President's Rule on Governor's report (or otherwise)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "judiciary",
+        "topic_name": "Judiciary",
+        "cards": [
+          {
+            "heading": "Supreme Court of India",
+            "color": "blue",
+            "points": [
+              "Art. 124: Establishment — originally 8 judges including CJI; currently 34 judges (CJI + 33)",
+              "Jurisdiction: Original, Appellate, Advisory (Art. 143), Writ (Art. 32)",
+              "Original jurisdiction (Art. 131): Centre vs State, State vs State disputes — EXCLUSIVELY",
+              "Appointment: CJI appointed by President; judges on advice of CJI (Collegium system)",
+              "Removal: Art. 124(4) — by Address of Parliament — 2/3 majority present and voting + majority of total membership (Impeachment)",
+              "Doctrine of Basic Structure: Kesavananda Bharati v. State of Kerala (1973) — Parliament cannot amend basic structure"
+            ],
+            "alert": "⭐ Basic Structure includes: Supremacy of Constitution, Republic/Democratic form, Secular character, Separation of powers, Federal character, Judicial review, Free and fair elections, Rule of Law"
+          },
+          {
+            "heading": "High Courts & Key Judicial Doctrines",
+            "color": "green",
+            "points": [
+              "Art. 214: HC for each state; Art. 216: Judges appointed by President",
+              "Art. 226: HC can issue writs for Fundamental Rights AND other legal rights (wider than Art. 32)",
+              "Judicial Review: Power to examine constitutionality of legislative and executive actions",
+              "PIL (Public Interest Litigation): Liberalized locus standi — any citizen can approach court",
+              "Doctrine of Severability: If part of law is unconstitutional, only that part is struck down",
+              "Doctrine of Eclipse: Pre-constitutional laws inconsistent with FR remain valid against non-citizens"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "federalism",
+        "topic_name": "Federalism & Centre-State Relations",
+        "cards": [
+          {
+            "heading": "Three Lists — Seventh Schedule",
+            "color": "orange",
+            "points": [
+              "UNION LIST (List I): 100 subjects — Defence, Foreign affairs, Atomic energy, Railways, Banking, Currency",
+              "STATE LIST (List II): 61 subjects — Law & order, Agriculture, Health, Local government, Police",
+              "CONCURRENT LIST (List III): 52 subjects — Education, Forest, Trade unions, Marriage, Criminal law",
+              "RESIDUARY POWERS: With Centre (unlike USA where with States) — Art. 248",
+              "Conflict: Central law prevails over State law on Concurrent list subjects"
+            ],
+            "alert": "⭐ Originally: Union 97, State 66, Concurrent 47 subjects. After amendments they have changed. Education moved from State to Concurrent List by 42nd Amendment"
+          },
+          {
+            "heading": "Inter-State Bodies",
+            "color": "blue",
+            "points": [
+              "Finance Commission (Art. 280): Constituted every 5 years — recommends tax sharing Centre-State",
+              "Inter-State Council (Art. 263): Investigates disputes between states; promotes cooperation",
+              "GST Council (Art. 279A): Added by 101st Amendment 2016 — decides GST rates",
+              "Zonal Councils: Statutory bodies (not constitutional) — 5 zones for cooperation",
+              "National Development Council: PM as Chairman — state CMs, Union Cabinet ministers"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "elections",
+        "topic_name": "Elections & Constitutional Bodies",
+        "cards": [
+          {
+            "heading": "Election Commission of India",
+            "color": "blue",
+            "points": [
+              "Art. 324: Superintendence, direction and control of elections to Parliament & State Legislatures",
+              "Multi-member body since 1989: Chief Election Commissioner + 2 Election Commissioners",
+              "CEC cannot be removed except by impeachment process (like SC judge) — security of tenure",
+              "Election Commissioners can be removed on advice of CEC",
+              "Model Code of Conduct comes into force with announcement of elections"
+            ]
+          },
+          {
+            "heading": "Other Constitutional Bodies",
+            "color": "purple",
+            "table": {
+              "headers": ["Body", "Article", "Key Function"],
+              "rows": [
+                ["CAG (Comptroller & Auditor General)", "148", "Audits all accounts of Union and States"],
+                ["Attorney General", "76", "Chief law officer of Government of India"],
+                ["Finance Commission", "280", "Recommends Centre-State tax sharing"],
+                ["UPSC", "315", "Recruitment to civil services of the Union"],
+                ["National Commission for SCs", "338", "Safeguard interests of Scheduled Castes"],
+                ["National Commission for STs", "338A", "Safeguard interests of Scheduled Tribes"]
+              ]
+            },
+            "alert": "⭐ UPSC Chairman removed same way as SC Judge. State PSCs come under Art. 315–323"
+          }
+        ]
+      },
+      {
+        "topic_id": "amendments",
+        "topic_name": "Important Constitutional Amendments",
+        "cards": [
+          {
+            "heading": "Must-Know Amendments",
+            "color": "orange",
+            "table": {
+              "headers": ["Amendment", "Year", "Key Change"],
+              "rows": [
+                ["1st Amendment", "1951", "Land reform laws in 9th Schedule; restricted free speech (Art.19)"],
+                ["7th Amendment", "1956", "Reorganisation of states on linguistic basis"],
+                ["24th Amendment", "1971", "Parliament has power to amend any part of Constitution"],
+                ["42nd Amendment", "1976", "Added Socialist, Secular, Integrity to Preamble; made DPSPs superior to FRs"],
+                ["44th Amendment", "1978", "Restored Art. 19 rights; Right to Property removed from FRs"],
+                ["52nd Amendment", "1985", "Anti-Defection Law — 10th Schedule added"],
+                ["61st Amendment", "1988", "Voting age reduced from 21 to 18 years"],
+                ["73rd Amendment", "1992", "Panchayati Raj — Part IX + 11th Schedule"],
+                ["74th Amendment", "1992", "Urban Local Bodies (Municipalities) — Part IXA + 12th Schedule"],
+                ["86th Amendment", "2002", "Free & compulsory education Art. 21A for 6–14 years (RTE)"],
+                ["101st Amendment", "2016", "GST — Art. 246A, 269A, 279A"],
+                ["103rd Amendment", "2019", "10% EWS (Economically Weaker Section) reservation"]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "topic_id": "emergency",
+        "topic_name": "Emergency Provisions",
+        "cards": [
+          {
+            "heading": "Three Types of Emergency",
+            "color": "blue",
+            "table": {
+              "headers": ["Type", "Article", "Grounds", "Effect"],
+              "rows": [
+                ["National Emergency", "352", "War, External Aggression, Armed Rebellion", "FRs under Art.19 suspended; Centre can legislate on State list"],
+                ["President's Rule", "356", "Failure of constitutional machinery in State", "State legislature suspended; Centre governs state"],
+                ["Financial Emergency", "360", "Threat to financial stability of India", "President can give directions on financial matters to states"]
+              ]
+            },
+            "alert": "⭐ National Emergency declared thrice: 1962 (China war), 1971 (Pakistan war), 1975 (Internal disturbance — Indira Gandhi). President's Rule imposed most in Punjab. Financial Emergency never imposed."
+          },
+          {
+            "heading": "National Emergency — Procedural Details",
+            "color": "purple",
+            "points": [
+              "Proclaimed by President on written advice of Cabinet (not just PM) — 44th Amendment safeguard",
+              "Approved by BOTH Houses by Special Majority (2/3 members present & voting + majority of total membership) within ONE month",
+              "Duration: 6 months; can be extended by 6 months each time with fresh approval",
+              "Revocation: Lok Sabha can pass simple majority resolution to revoke — introduced by 1/10th members",
+              "During National Emergency: Art. 19 freedoms suspended, but Art. 20 & 21 cannot be suspended (44th Amendment)"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "geography": {
+    "topics": [
+      { "id": "physical", "name": "Physical Features" },
+      { "id": "climate", "name": "Climate" },
+      { "id": "rivers", "name": "Rivers & Drainage" },
+      { "id": "soils", "name": "Soils & Vegetation" },
+      { "id": "resources", "name": "Natural Resources" },
+      { "id": "agriculture", "name": "Agriculture" },
+      { "id": "industry", "name": "Industry" },
+      { "id": "population", "name": "Population & Census" },
+      { "id": "world", "name": "World Geography" }
+    ],
+    "notes": [
+      {
+        "topic_id": "physical",
+        "topic_name": "Physical Features of India",
+        "cards": [
+          {
+            "heading": "Major Physiographic Divisions of India",
+            "color": "green",
+            "points": [
+              "1. Himalayan Mountains — Northern boundary; fold mountains; 3 parallel ranges",
+              "2. Northern Plains — Formed by alluvial deposits of Indus, Ganga, Brahmaputra",
+              "3. Peninsular Plateau — Oldest landmass; hard rock; Deccan Plateau dominant",
+              "4. Coastal Plains — Eastern (broader, deltaic) and Western (narrow, straight)",
+              "5. Islands — Andaman & Nicobar (Bay of Bengal) + Lakshadweep (Arabian Sea)"
+            ],
+            "table": {
+              "headers": ["Range", "Highest Peak", "Significance"],
+              "rows": [
+                ["Greater Himalayas (Himadri)", "Mt. Everest (8848.86 m)", "Perennial snow, source of rivers"],
+                ["Middle Himalayas (Himachal)", "—", "Hill stations — Shimla, Mussoorie, Nainital"],
+                ["Outer Himalayas (Shivalik)", "—", "Terai region; highly fertile"],
+                ["Karakoram Range", "K2/Godwin Austen (8611m)", "Second highest peak in world; in PoK"],
+                ["Aravalli Range", "Guru Shikhar (1722 m)", "Oldest fold mountains in India"]
+              ]
+            },
+            "alert": "⭐ Highest peak of India: Godwin Austen (K2) — 8611m, in PoK. Highest peak in Indian territory: Kangchenjunga — 8586m (Sikkim)"
+          },
+          {
+            "heading": "Passes Through Himalayas",
+            "color": "blue",
+            "points": [
+              "Zoji La — J&K — connects Srinagar to Leh (Ladakh)",
+              "Banihal Pass — J&K — Jawaharlal Tunnel passes through it",
+              "Shipki La — Himachal Pradesh — Sutlej enters India",
+              "Nathu La — Sikkim — India-China trade; silk route",
+              "Bomdi La — Arunachal Pradesh",
+              "Bara Lacha La — Himachal Pradesh — connects Manali to Leh",
+              "Lipulekh Pass — Uttarakhand — Kailash Mansarovar route"
+            ]
+          },
+          {
+            "heading": "Deccan Plateau & Other Plateaus",
+            "color": "orange",
+            "points": [
+              "Deccan Plateau: Triangular; bounded by Western & Eastern Ghats; slopes east",
+              "Western Ghats (Sahyadri): Continuous; highest point Anamudi (2695m) — in Kerala",
+              "Eastern Ghats: Discontinuous; dissected by rivers; highest Jindhagada (1690m)",
+              "Malwa Plateau: North of Vindhyas; black soil; MP & Rajasthan",
+              "Chota Nagpur Plateau: Jharkhand — mineral rich; Damodar river valley",
+              "Meghalaya Plateau: Assam; Shillong peak (1966m)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "climate",
+        "topic_name": "Climate of India",
+        "cards": [
+          {
+            "heading": "Factors Affecting India's Climate",
+            "color": "blue",
+            "points": [
+              "Latitude: Tropic of Cancer (23½°N) passes through middle — tropical south, subtropical north",
+              "Altitude: Himalayan barrier — prevents cold winds from Central Asia",
+              "Distance from Sea (Continentality): Interior India has extreme temperatures",
+              "Western Disturbances: Extra-tropical cyclones from Mediterranean — winter rains in NW India",
+              "El Niño: Warm waters in Pacific — causes drought in India",
+              "La Niña: Cold waters in Pacific — above normal monsoon in India"
+            ]
+          },
+          {
+            "heading": "Indian Monsoon — Key Points",
+            "color": "green",
+            "points": [
+              "SW Monsoon arrives Kerala: 1st June (typically); retreats from NW India: September",
+              "Two branches: Arabian Sea branch (west coast + NW India) & Bay of Bengal branch (NE India)",
+              "Cherrapunji/Mawsynram (Meghalaya): Highest rainfall — windward side of Meghalaya Plateau",
+              "Jaisalmer, Rajasthan: Least rainfall in India",
+              "North-East Monsoon (Retreating Monsoon): Brings rain to Tamil Nadu (Oct-Dec)",
+              "Burst of Monsoon: Sudden onset with thunder and lightning"
+            ],
+            "alert": "⭐ Mawsynram (11,871 mm/year) has displaced Cherrapunji as wettest place. Both in Meghalaya"
+          },
+          {
+            "heading": "Climate Zones of India (Köppen)",
+            "color": "purple",
+            "table": {
+              "headers": ["Zone", "Region", "Characteristics"],
+              "rows": [
+                ["Tropical Monsoon (Am)", "Western Ghats, NE India", "Heavy rainfall, no dry season"],
+                ["Tropical Savanna (Aw)", "Peninsular India interior", "Wet summer, dry winter"],
+                ["Semi-Arid (BSh)", "Rajasthan, interior Deccan", "Less rainfall, high temperature"],
+                ["Arid/Desert (BWh)", "W. Rajasthan", "< 25 cm rainfall, extreme heat"],
+                ["Humid Subtropical (Cwa)", "Indo-Gangetic Plain", "Hot summer, mild winter with rain"],
+                ["Alpine/Tundra (ET/EF)", "High Himalayas", "Very cold, snowbound"]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "topic_id": "rivers",
+        "topic_name": "Rivers & Drainage",
+        "cards": [
+          {
+            "heading": "Himalayan Rivers — Key Facts",
+            "color": "blue",
+            "points": [
+              "Indus (Sindhu): Originates Tibet (Mansarovar); flows through J&K; enters Pakistan",
+              "Ganga: Gangotri glacier (Bhagirathi) + Alaknanda meet at Devprayag → Ganga",
+              "Tributaries of Ganga: Yamuna, Ghaghara, Gandak, Kosi (Right bank: Son)",
+              "Yamuna: Yamunotri glacier; meets Ganga at Prayagraj (Triveni Sangam + Saraswati invisible)",
+              "Brahmaputra: Longest river in Himalayan system; rises in Tibet as Tsangpo; enters India at Arunachal",
+              "Brahmaputra makes largest delta (Sundarbans) with Ganga; crosses Himalayas through gorge (antecedent river)"
+            ]
+          },
+          {
+            "heading": "Peninsular Rivers",
+            "color": "green",
+            "table": {
+              "headers": ["River", "Origin", "Flows Into"],
+              "rows": [
+                ["Mahanadi", "Amarkantak, MP", "Bay of Bengal; Hirakud Dam"],
+                ["Godavari", "Trimbakeshwar, Maharashtra", "Bay of Bengal; Longest peninsular river"],
+                ["Krishna", "Mahabaleshwar, Maharashtra", "Bay of Bengal"],
+                ["Kaveri", "Brahmagiri Hills, Coorg", "Bay of Bengal; Mettur Dam"],
+                ["Narmada", "Amarkantak, MP", "Arabian Sea; flows in rift valley W-E"],
+                ["Tapti (Tapi)", "Satpura Range, MP", "Arabian Sea; flows W like Narmada"]
+              ]
+            },
+            "alert": "⭐ Narmada & Tapti flow WESTWARD into Arabian Sea — unique among peninsular rivers. Godavari = 'Vriddha Ganga' — Longest peninsular river"
+          },
+          {
+            "heading": "Important Lakes of India",
+            "color": "orange",
+            "points": [
+              "Wular Lake — J&K — largest freshwater lake in India",
+              "Dal Lake — Srinagar — famous tourist lake",
+              "Chilika Lake — Odisha — largest coastal lagoon; largest wintering ground for migratory birds",
+              "Pulicat Lake — Andhra Pradesh/Tamil Nadu — 2nd largest lagoon",
+              "Sambhar Lake — Rajasthan — largest saltwater lake; salt production",
+              "Loktak Lake — Manipur — floating islands (phumdis); Sangai deer habitat",
+              "Bhimtal — Uttarakhand — largest natural lake in Kumaon"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "soils",
+        "topic_name": "Soils & Natural Vegetation",
+        "cards": [
+          {
+            "heading": "Types of Soils in India",
+            "color": "orange",
+            "table": {
+              "headers": ["Soil Type", "Region", "Crops"],
+              "rows": [
+                ["Alluvial Soil", "Indo-Gangetic Plain, river deltas", "Wheat, rice, sugarcane, cotton"],
+                ["Black (Regur) Soil", "Deccan Plateau, Maharashtra, MP", "Cotton (self-ploughing, moisture-retaining)"],
+                ["Red & Yellow Soil", "Eastern & Southern India", "Wheat, rice, cotton, tobacco"],
+                ["Laterite Soil", "High rainfall areas — Kerala, NE", "Tea, coffee, cashew (leached of nutrients)"],
+                ["Desert Soil", "Rajasthan, Gujarat", "Bajra, drought-resistant crops"],
+                ["Mountain Soil", "Himalayan slopes", "Tea, coffee, fruits, spices"],
+                ["Saline/Alkaline", "Rajasthan, UP, Punjab", "Needs reclamation — usar/reh/kallar"]
+              ]
+            },
+            "alert": "⭐ Black soil = Best for cotton. Alluvial soil covers 43% of India's land — most widespread. Laterite soil is acidic due to leaching"
+          },
+          {
+            "heading": "Natural Vegetation Zones",
+            "color": "green",
+            "points": [
+              "Tropical Evergreen Forest: Rainfall >200cm; Western Ghats, NE India; ebony, rosewood, mahogany",
+              "Tropical Deciduous (Monsoon) Forest: 70–200cm rainfall; most widespread; teak, sal, bamboo",
+              "Tropical Thorn Forest: <70cm rainfall; Rajasthan, Gujarat; khejri, babool, keekar",
+              "Mangrove Forest: Coastal — Sundarbans (largest), Bhitarkanika; Sundari tree",
+              "Temperate (Himalayan) Forest: 150–250cm; oak, chestnut, deodar, pine",
+              "Alpine/Tundra: Above tree line; mosses, lichens, rhododendron"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "resources",
+        "topic_name": "Natural Resources & Minerals",
+        "cards": [
+          {
+            "heading": "Mineral Resources of India",
+            "color": "blue",
+            "table": {
+              "headers": ["Mineral", "Leading State", "Key Mines"],
+              "rows": [
+                ["Iron Ore", "Odisha, Chhattisgarh", "Bailadila, Kudremukh, Bolani"],
+                ["Coal", "Jharkhand, Odisha, MP", "Dhanbad, Jharia, Singrauli, Korba"],
+                ["Bauxite (Aluminium)", "Odisha, Andhra Pradesh", "Koraput, Visakhapatnam"],
+                ["Copper", "Rajasthan, MP", "Khetri (Rajasthan), Malanjkhand (MP)"],
+                ["Manganese", "Odisha, Karnataka", "Used in steel making"],
+                ["Mica", "Jharkhand, Rajasthan", "Koderma — Mica capital"],
+                ["Petroleum", "Assam, Gujarat, Offshore", "Digboi (1st oil field), Mumbai High"],
+                ["Gold", "Karnataka", "Kolar Gold Fields (KGF)"]
+              ]
+            }
+          },
+          {
+            "heading": "Energy Resources",
+            "color": "purple",
+            "points": [
+              "Thermal Power: Largest source in India (~60% electricity) — coal-based",
+              "Hydro Power: Bhakra Nangal (Punjab), Tehri (Uttarakhand), Sardar Sarovar (Gujarat)",
+              "Nuclear Power: Tarapur (1st, Maharashtra), Rawatbhata (Rajasthan), Kudankulam (TN)",
+              "Solar Energy: Rajasthan leads; Bhadla Solar Park (world's largest)",
+              "Wind Energy: Tamil Nadu, Gujarat, Rajasthan lead",
+              "India's target: 500 GW renewable by 2030"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "agriculture",
+        "topic_name": "Agriculture",
+        "cards": [
+          {
+            "heading": "Crop Seasons & Major Crops",
+            "color": "green",
+            "table": {
+              "headers": ["Season", "Crops", "Sown/Harvested"],
+              "rows": [
+                ["Kharif", "Rice, maize, cotton, bajra, jowar, groundnut", "Sown: June; Harvested: Sep-Oct"],
+                ["Rabi", "Wheat, barley, mustard, peas, gram", "Sown: Oct-Nov; Harvested: Mar-Apr"],
+                ["Zaid", "Watermelon, cucumber, muskmelon, vegetables", "Summer crops (Apr-Jul)"]
+              ]
+            },
+            "alert": "⭐ India is largest producer of: milk (Operation Flood success), spices, jute, tea (2nd after China). Wheat: UP largest producer. Rice: WB largest producer"
+          },
+          {
+            "heading": "Green Revolution & Agricultural Programmes",
+            "color": "orange",
+            "points": [
+              "Green Revolution (1960s): M.S. Swaminathan — HYV seeds for wheat (Punjab, Haryana) & rice",
+              "White Revolution (Operation Flood 1970): Dr. Verghese Kurien — dairy development",
+              "Blue Revolution: Fish production",
+              "Yellow Revolution: Oilseeds production",
+              "Golden Revolution: Fruits & horticulture; also sericulture",
+              "Rainbow Revolution: Overall agricultural development",
+              "MSP (Minimum Support Price): CACP recommends; Government guarantees minimum price"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "industry",
+        "topic_name": "Industries of India",
+        "cards": [
+          {
+            "heading": "Major Industries & Locations",
+            "color": "blue",
+            "table": {
+              "headers": ["Industry", "Leading State/City", "Note"],
+              "rows": [
+                ["Cotton Textile", "Gujarat, Maharashtra (Mumbai)", "Mumbai = Manchester of India"],
+                ["Jute", "West Bengal (Hugli River belt)", "Kolkata = Manchester of East"],
+                ["Iron & Steel", "Jharkhand (Jamshedpur), Odisha", "TISCO — 1st private; SAIL — govt"],
+                ["Automobile", "TN (Chennai), Maharashtra, Haryana", "Chennai = Detroit of India"],
+                ["Software/IT", "Bangalore, Hyderabad, Pune", "Bangalore = Silicon Valley of India"],
+                ["Petrochemicals", "Gujarat (Jamnagar, Vadodara)", "Reliance — world's largest refinery at Jamnagar"],
+                ["Pharmaceuticals", "Hyderabad, Ahmedabad, Mumbai", "India = Pharmacy of the World"]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "topic_id": "population",
+        "topic_name": "Population & Census",
+        "cards": [
+          {
+            "heading": "Census 2011 — Key Data",
+            "color": "purple",
+            "points": [
+              "Total Population: 121.09 crore (2nd largest after China; 17.5% of world population)",
+              "Population Growth Rate (2001-2011): 17.7% (declining trend)",
+              "Sex Ratio: 943 females per 1000 males (improved from 933 in 2001)",
+              "Child Sex Ratio (0-6 yrs): 919 per 1000 males — serious concern",
+              "Literacy Rate: 74.04% (Males: 82.14%, Females: 65.46%)",
+              "Most Populous State: Uttar Pradesh (19.98 crore)",
+              "Least Populous State: Sikkim",
+              "Highest Density: Bihar (1102 per sq km)",
+              "Highest Sex Ratio: Kerala (1084)",
+              "Highest Literacy: Kerala (94%)",
+              "Lowest Literacy: Bihar (61.8%)"
+            ],
+            "alert": "⭐ Next Census (2021) postponed due to COVID. India surpassed China in 2023 as world's most populous country (UN estimate: 1.43 billion)"
+          }
+        ]
+      },
+      {
+        "topic_id": "world",
+        "topic_name": "World Geography",
+        "cards": [
+          {
+            "heading": "World — Key Geographic Facts",
+            "color": "green",
+            "points": [
+              "Largest continent: Asia | Smallest: Australia",
+              "Longest river: Nile (Africa) — 6650 km | Amazon carries most water",
+              "Highest mountain: Mt. Everest — 8848.86 m (Nepal-China border)",
+              "Deepest ocean trench: Mariana Trench (Pacific) — 11,034 m",
+              "Largest country by area: Russia | By population: India (2023)",
+              "Smallest country: Vatican City",
+              "Largest desert: Antarctica (cold desert) | Largest hot desert: Sahara (Africa)",
+              "Largest ocean: Pacific | Deepest: Pacific",
+              "Largest freshwater lake: Lake Superior (North America)",
+              "Deepest lake: Lake Baikal (Russia)"
+            ]
+          },
+          {
+            "heading": "International Boundaries — India",
+            "color": "orange",
+            "table": {
+              "headers": ["Country", "Boundary Name", "Length"],
+              "rows": [
+                ["Bangladesh", "—", "4156 km (longest with any country)"],
+                ["China", "McMahon Line (unofficial)", "3488 km"],
+                ["Pakistan", "Radcliffe Line", "3323 km"],
+                ["Nepal", "—", "1751 km"],
+                ["Myanmar", "—", "1643 km"],
+                ["Bhutan", "—", "699 km"],
+                ["Afghanistan", "Durand Line", "106 km (via PoK)"]
+              ]
+            },
+            "alert": "⭐ India shares border with 7 countries. Coastline: 7516.6 km (including islands). Tropic of Cancer passes through: Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, WB, Tripura, Mizoram (8 states)"
+          }
+        ]
+      }
+    ]
+  },
+  "history": {
+    "topics": [
+      { "id": "ancient", "name": "Ancient India" },
+      { "id": "medieval", "name": "Medieval India" },
+      { "id": "modern", "name": "Modern India" },
+      { "id": "freedom", "name": "Freedom Struggle" },
+      { "id": "post-independence", "name": "Post-Independence" },
+      { "id": "culture", "name": "Art & Culture" }
+    ],
+    "notes": [
+      {
+        "topic_id": "ancient",
+        "topic_name": "Ancient India",
+        "cards": [
+          {
+            "heading": "Indus Valley Civilization (2500–1750 BCE)",
+            "color": "orange",
+            "points": [
+              "Also called Harappan Civilization; discovered by Dayaram Sahni (1921)",
+              "Major sites: Harappa (Punjab, Pak), Mohenjo-daro (Sindh, Pak), Kalibangan (Raj), Lothal (Gujarat), Dholavira (Gujarat)",
+              "Dholavira & Lothal — only sites fully within India's current territory",
+              "Lothal: Had a dockyard — evidence of sea trade",
+              "Town planning: Grid pattern; Great Bath at Mohenjo-daro; underground drainage",
+              "Script: Not yet deciphered (pictographic script); written right to left",
+              "Decline theories: Aryan invasion, floods, climate change, epidemic"
+            ],
+            "alert": "⭐ IVC was contemporary to Mesopotamia & Egypt. No evidence of temples or weapons of warfare. Wheel discovered; no horse bones found initially"
+          },
+          {
+            "heading": "Vedic Period & Later Vedic",
+            "color": "blue",
+            "points": [
+              "Rig Vedic Period (1500–1000 BCE): Pastoral; Sapta Sindhu region; tribal society",
+              "Four Vedas: Rigveda (hymns), Samaveda (music), Yajurveda (rituals), Atharvaveda (magic/medicine)",
+              "Later Vedic (1000–600 BCE): Agriculture dominant; Varna system rigid; Ashvamedha yajna",
+              "Upanishads (108): Philosophical texts; Brahman-Atman concept",
+              "Mahabharata: Vyasa; Ramayana: Valmiki",
+              "Six Vedangas: Shiksha, Kalpa, Vyakarana, Nirukta, Chandas, Jyotisha"
+            ]
+          },
+          {
+            "heading": "Maurya Empire (321–185 BCE)",
+            "color": "green",
+            "points": [
+              "Founded by Chandragupta Maurya with help of Chanakya (Kautilya)",
+              "Arthashastra: Written by Kautilya — statecraft, economics, military",
+              "Bindusara (298–272 BCE): 'Amitraghat' — slayer of enemies; son of Chandragupta",
+              "Ashoka (268–232 BCE): Greatest Mauryan; converted to Buddhism after Kalinga War (261 BCE)",
+              "Ashoka's Dhamma: Non-violence, tolerance, compassion, respect for all religions",
+              "Rock Edicts, Pillar Edicts, Cave Inscriptions — spread Ashoka's messages",
+              "Megasthenes: Greek ambassador in Chandragupta's court; wrote Indica",
+              "Last Mauryan: Brihadratha (killed by Pushyamitra Shunga)"
+            ]
+          },
+          {
+            "heading": "Gupta Empire (320–550 CE) — Golden Age",
+            "color": "purple",
+            "points": [
+              "Founded by Sri Gupta; Chandragupta I took title 'Maharajadhiraja'",
+              "Samudragupta: 'Napoleon of India' — military conquests; poet (Allahabad Pillar inscription)",
+              "Chandragupta II (Vikramaditya): Nine gems (Navratna) including Kalidasa",
+              "Kalidasa: Shakuntalam, Meghadutam, Raghuvamsham, Kumarasambhavam",
+              "Aryabhata: Zero, decimal system, Earth rotates on axis, solar system",
+              "Varahamihira: Panchasiddhantika — astronomy; Brihatsamhita",
+              "Fa Hien: Chinese Buddhist traveler visited Gupta empire (399–414 CE)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "medieval",
+        "topic_name": "Medieval India",
+        "cards": [
+          {
+            "heading": "Delhi Sultanate (1206–1526)",
+            "color": "blue",
+            "table": {
+              "headers": ["Dynasty", "Period", "Important Rulers"],
+              "rows": [
+                ["Slave/Mamluk", "1206–1290", "Qutb-ud-din Aibak, Iltutmish, Razia Sultana, Balban"],
+                ["Khilji", "1290–1320", "Alauddin Khilji (market reforms, Mongol defeat)"],
+                ["Tughlaq", "1320–1414", "Muhammad bin Tughlaq (shifting capital), Firoz Shah Tughlaq"],
+                ["Sayyid", "1414–1451", "Weak rulers"],
+                ["Lodi", "1451–1526", "Bahlul Lodi, Ibrahim Lodi (defeated at Panipat 1526)"]
+              ]
+            },
+            "alert": "⭐ Qutb Minar: Started by Aibak, completed by Iltutmish. First woman sultan: Razia Sultan. Alauddin Khilji introduced market control system (4 markets)"
+          },
+          {
+            "heading": "Mughal Empire (1526–1857)",
+            "color": "purple",
+            "points": [
+              "Babur: 1st Battle of Panipat 1526 — defeated Ibrahim Lodi; introduced Gunpowder to India",
+              "Humayun: Lost to Sher Shah Suri (Battle of Chausa 1539, Kanauj 1540); regained throne 1555",
+              "Sher Shah Suri: Built Grand Trunk Road; reformed revenue (Zabti system); postal system",
+              "Akbar: Din-i-Ilahi; Navratnas (Birbal, Todar Mal, Tansen, Abul Fazl, etc.); Infallibility Decree",
+              "Jahangir: Paintings (Mansur); married Nur Jahan; Thomas Roe's embassy",
+              "Shah Jahan: Taj Mahal (in memory of Mumtaz Mahal); Peacock Throne; Red Fort",
+              "Aurangzeb: Re-imposed Jizyah; annexed Bijapur & Golconda; conflict with Marathas"
+            ]
+          },
+          {
+            "heading": "Bhakti & Sufi Movements",
+            "color": "orange",
+            "points": [
+              "Adi Shankaracharya (8th CE): Advaita Vedanta; established 4 mathas",
+              "Ramanuja (11th CE): Vishishtadvaita; devotion to Vishnu",
+              "Kabir: Hindi poet; unity of Hinduism-Islam; disciple of Ramananda",
+              "Mirabai: Devotee of Krishna; Rajput princess",
+              "Guru Nanak (1469–1539): Founded Sikhism; concept of one God (Ik Onkar)",
+              "Tukaram: Maharashtra; Abhangas (devotional songs) in Marathi",
+              "Sufi Orders: Chishti (Ajmer), Suhrawardi, Qadiri, Naqshbandi",
+              "Khwaja Moinuddin Chishti: Founded Chishti order in India; Dargah at Ajmer"
+            ]
           }
         ]
       },
       {
         "topic_id": "modern",
-        "topic_name": "Modern Physics — Nuclear and Radioactivity",
+        "topic_name": "Modern India — British Rule",
         "cards": [
           {
-            "heading": "Atomic Structure, Radioactivity and Nuclear Energy",
-            "color": "purple",
-            "points": [
-              "Atom: Nucleus (protons + neutrons) + electrons orbiting outside. Proton = +1 charge, 1 amu; Neutron = no charge, 1 amu; Electron = -1 charge, negligible mass (1/1836 amu)",
-              "Atomic number (Z) = number of protons = number of electrons (in neutral atom). Mass number (A) = protons + neutrons. Isotopes = same atomic number, different mass number (e.g., U-235 and U-238)",
-              "Radioactivity (Henri Becquerel 1896; Marie and Pierre Curie): Spontaneous emission of radiation from unstable nuclei. Types: Alpha (α = ²₄He nucleus; least penetrating; stopped by paper; +2 charge); Beta (β = fast electron; stopped by aluminium; -1 charge); Gamma (γ = electromagnetic wave; most penetrating; stopped by thick lead; no charge)",
-              "Half-life: Time for half of radioactive atoms to decay. C-14 half-life = 5,730 years (used in carbon dating for organic materials up to ~50,000 years old). U-238 half-life = 4.5 billion years",
-              "Nuclear Fission: Heavy nucleus splits into smaller nuclei releasing enormous energy. U-235 + neutron → Ba + Kr + 3 neutrons + energy (chain reaction). Used in nuclear bombs and nuclear power plants",
-              "Nuclear Fusion: Light nuclei combine to form heavier nucleus releasing MORE energy than fission. H + H → He + energy. Occurs in stars (Sun's energy source). Hydrogen bomb (thermonuclear bomb) uses fusion. Fusion reactor (TOKAMAK) = future clean energy — India part of ITER project (France)",
-              "E = mc²: Einstein's mass-energy equivalence. A tiny mass converts to enormous energy. Basis of all nuclear energy"
-            ],
-            "alert": "⭐ Difference between Nuclear Power and Nuclear Bomb: Power plant uses controlled chain reaction (subcritical); Bomb uses uncontrolled chain reaction (supercritical). Moderator in nuclear reactor: slows down neutrons to maintain controlled reaction. Heavy water (D₂O) and graphite used as moderators. India's nuclear reactors: PHWR (Pressurized Heavy Water Reactor) type, using natural uranium. BARC (Bhabha Atomic Research Centre) = main nuclear research centre, Mumbai."
-          }
-        ]
-      }
-    ]
-  },
-  "chemistry": {
-    "topics": [
-      {
-        "id": "matter",
-        "name": "Matter, Elements and Periodic Table"
-      },
-      {
-        "id": "acids-bases",
-        "name": "Acids, Bases and Salts"
-      },
-      {
-        "id": "metals",
-        "name": "Metals, Non-metals and Metallurgy"
-      },
-      {
-        "id": "carbon",
-        "name": "Carbon and Its Compounds"
-      },
-      {
-        "id": "reactions",
-        "name": "Chemical Reactions and Equations"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "matter",
-        "topic_name": "Matter, Elements and Periodic Table",
-        "cards": [
-          {
-            "heading": "States of Matter, Elements and Periodic Table",
+            "heading": "Entry of Europeans & East India Company",
             "color": "blue",
             "points": [
-              "States of matter: Solid (fixed shape+volume; particles close, strong forces); Liquid (fixed volume, variable shape; particles close but can move); Gas (variable shape+volume; particles far apart, weak forces); Plasma (4th state; ionized gas; in stars, fluorescent lights, lightning)",
-              "Mixtures vs Pure substances: Mixture = two or more substances mixed physically (can be separated); Pure substance = element or compound (fixed composition)",
-              "Elements: 118 known elements; 94 naturally occurring; others man-made. Lightest = Hydrogen (H); Densest = Osmium (Os); Most abundant in Earth's crust = Oxygen (46%); Most abundant in human body = Oxygen (65%); Most abundant in universe = Hydrogen (75%); Most abundant metal = Aluminium",
-              "Modern Periodic Table: Elements arranged by increasing atomic number; 18 groups (vertical columns) + 7 periods (horizontal rows); Groups 1-2 = s-block; Groups 3-12 = d-block (transition metals); Groups 13-18 = p-block; Lanthanides+Actinides = f-block",
-              "Key groups: Group 1 = Alkali metals (Li, Na, K, Rb, Cs, Fr — very reactive; react with water); Group 2 = Alkaline earth metals (Be, Mg, Ca, Sr, Ba, Ra); Group 17 = Halogens (F, Cl, Br, I, At — very reactive non-metals); Group 18 = Noble gases (He, Ne, Ar, Kr, Xe, Rn — inert/unreactive)",
-              "Periodic trends: Atomic radius decreases → (left to right in period), increases ↓ (top to bottom in group); Electronegativity increases → ; Metallic character decreases → ; Ionization energy increases →"
-            ],
-            "alert": "⭐ Mendeleev's Periodic Law (1869): Properties of elements are periodic function of their ATOMIC WEIGHT. Modern Periodic Law (Moseley 1913): Properties are periodic function of ATOMIC NUMBER. Dobereiner's Triads → Newlands' Law of Octaves → Mendeleev → Moseley = evolution of periodic table. Noble gases were NOT in Mendeleev's table (discovered later). Gallium, Germanium, Scandium = elements Mendeleev predicted (eka-aluminium etc.) before discovery."
-          }
-        ]
-      },
-      {
-        "topic_id": "acids-bases",
-        "topic_name": "Acids, Bases and Salts",
-        "cards": [
-          {
-            "heading": "Acids, Bases, pH and Important Salts",
-            "color": "green",
-            "points": [
-              "Acid: Produces H⁺ ions in water; sour taste; turns blue litmus red; pH < 7. Examples: HCl (hydrochloric — stomach acid), H₂SO₄ (sulphuric — car battery, fertilizers), HNO₃ (nitric — explosives), CH₃COOH (acetic — vinegar), H₂CO₃ (carbonic — fizzy drinks)",
-              "Base: Produces OH⁻ ions in water; bitter taste; slippery feel; turns red litmus blue; pH > 7. Examples: NaOH (caustic soda — soap making), KOH (caustic potash), Ca(OH)₂ (slaked lime — whitewash, water treatment), NH₃ (ammonia — fertilizers)",
-              "pH scale: 0–14; pH 7 = neutral (pure water); pH < 7 = acidic; pH > 7 = basic/alkaline. Stomach = pH 1.5-3.5 (very acidic — HCl); Blood = pH 7.35-7.45 (slightly alkaline); Milk = pH 6.6 (slightly acidic); Lemon juice = pH 2; Toothpaste = pH 8-9",
-              "Neutralization: Acid + Base → Salt + Water (H⁺ + OH⁻ → H₂O). Used in antacids (milk of magnesia for acidity)",
-              "Important salts: NaCl (common salt — electrolysis gives Cl₂+H₂+NaOH); NaHCO₃ (baking soda — used in baking, fire extinguisher, antacid); Na₂CO₃ (washing soda — cleaning, water softening); CaCO₃ (limestone, chalk, marble — same chemical formula!); CaSO₄·½H₂O (Plaster of Paris — sets with water to form hard cast); Na₂SO₄·10H₂O (Glauber's salt); MgSO₄·7H₂O (Epsom salt — laxative)",
-              "Bleaching powder: Ca(OCl)Cl; made from slaked lime + Cl₂; used for disinfecting water, bleaching cloth; loses strength on exposure to air"
-            ],
-            "alert": "⭐ Plaster of Paris: CaSO₄·½H₂O + H₂O → CaSO₄·2H₂O (Gypsum) + heat; EXPANDS slightly on setting (unlike cement which shrinks) — that's why used for dental casts and sculptures. Baking soda vs Baking powder: Baking soda = NaHCO₃ (needs acid to activate); Baking powder = NaHCO₃ + tartaric acid (self-activating). Hard water: contains Ca²⁺ and Mg²⁺ ions — doesn't lather well with soap; softened by adding washing soda or ion-exchange resins."
-          }
-        ]
-      },
-      {
-        "topic_id": "metals",
-        "topic_name": "Metals, Non-metals and Metallurgy",
-        "cards": [
-          {
-            "heading": "Metals and Non-metals — Properties and Uses",
-            "color": "purple",
-            "points": [
-              "Properties of Metals: Lustrous (shiny); Good conductors of heat and electricity; Malleable (can be beaten into sheets); Ductile (can be drawn into wires); Sonorous (produce sound when struck); Solid at room temperature (except Mercury = liquid; Gallium = melts in hand at 30°C)",
-              "Reactivity Series (decreasing activity): K > Na > Ca > Mg > Al > Zn > Fe > Ni > Sn > Pb > H > Cu > Hg > Ag > Au > Pt. Metals above H displace H from dilute acids. Metals above Cu cannot be found free in nature (too reactive)",
-              "Non-metals: Poor conductors; not malleable/ductile; generally gases or brittle solids at room temp. Examples: C, N, O, S, P, Cl, Br, I. Exceptions: Graphite (carbon) is a good conductor; Iodine is lustrous",
-              "Corrosion: Slow destruction of metals by reaction with environment. Rusting of iron: 4Fe + 3O₂ + 6H₂O → 4Fe₂O₃·3H₂O (rust); requires both water AND oxygen. Prevention: Painting, oiling/greasing, galvanizing (zinc coating), electroplating, alloying (stainless steel)",
-              "Galvanization: Coating iron with zinc; zinc acts as sacrificial anode (corrodes instead of iron). Used for: Iron pipes, buckets, roofing sheets, nails",
-              "Alloys: Mixture of metals (or metal + non-metal) to get improved properties. Steel = Fe+C; Stainless steel = Fe+Cr+Ni; Bronze = Cu+Sn; Brass = Cu+Zn; German silver = Cu+Zn+Ni; Solder = Pb+Sn (low melting point); Amalgam = mercury + metal (used in dentistry); Duralumin = Al+Cu+Mn+Mg (aircraft bodies)"
-            ],
-            "alert": "⭐ Most abundant metal in Earth's crust = Aluminium (8%); 2nd = Iron (5%). Most ductile metal = Gold. Best conductor of electricity = Silver (but too expensive; Copper used practically). Diamond = hardest natural substance (Carbon); Graphite = softest allotrope of Carbon (used as lubricant and pencil). Allotropes of Carbon: Diamond, Graphite, Fullerene (C₆₀/Buckminsterfullerene), Graphene (single layer graphite — Nobel Prize 2010)."
-          }
-        ]
-      },
-      {
-        "topic_id": "carbon",
-        "topic_name": "Carbon and Its Compounds",
-        "cards": [
-          {
-            "heading": "Carbon Compounds — Organic Chemistry Basics",
-            "color": "orange",
-            "points": [
-              "Carbon's special properties: Tetravalency (4 bonds); Catenation (long chains of C-C bonds — basis of organic chemistry); forms millions of compounds — organic chemistry",
-              "Hydrocarbons: Compounds of C and H only. Alkanes (CₙH₂ₙ₊₂ — saturated; single bonds; methane CH₄, ethane C₂H₆, propane C₃H₈, butane C₄H₁₀); Alkenes (CₙH₂ₙ — unsaturated; double bond; ethylene C₂H₄); Alkynes (CₙH₂ₙ₋₂ — unsaturated; triple bond; acetylene C₂H₂)",
-              "Important organic compounds: Methanol (CH₃OH — methyl alcohol; poisonous; used as fuel); Ethanol (C₂H₅OH — ethyl alcohol; drinks; fuel; antiseptic); Acetic acid/Ethanoic acid (CH₃COOH — vinegar); Formaldehyde (HCHO — preservative for biological specimens, formalin = 40% formaldehyde solution)",
-              "Polymers: Long chains of repeating units (monomers). Natural: Rubber (latex), Cotton (cellulose), Wool (protein), Silk (protein). Synthetic: Polythene (polyethylene — packaging), PVC (pipes, wire insulation), Nylon (fibres, ropes — first fully synthetic fibre), Teflon (non-stick coating — PTFE), Bakelite (electrical switches — first thermosetting plastic), Polystyrene (thermocol)",
-              "Soap: Made from fats/oils + NaOH (saponification). Soap molecule has hydrophilic (water-loving, polar) head and hydrophobic (water-hating, non-polar) tail. Works by surrounding oil/grease droplets (micelle) and pulling them into water. Does NOT work in hard water (forms scum with Ca²⁺/Mg²⁺)",
-              "Detergents: Synthetic; work in hard water; from petroleum products. LAS (Linear Alkyl Benzene Sulphonate) = most common. Biodegradable detergents preferred (branched ones are non-biodegradable)"
-            ],
-            "alert": "⭐ CNG = Compressed Natural Gas = mainly methane (CH₄); LPG = Liquefied Petroleum Gas = mainly propane+butane (C₃H₈+C₄H₁₀); both cleaner than petrol/diesel. Fullerene (C₆₀): Soccer ball shape; discovered 1985 (Nobel Prize 1996 — Curl, Kroto, Smalley). Graphene: strongest material known; single layer; conductor; potential in electronics+medicine. Both discovered at molecular level using STM (Scanning Tunneling Microscope)."
-          }
-        ]
-      },
-      {
-        "topic_id": "reactions",
-        "topic_name": "Chemical Reactions and Equations",
-        "cards": [
-          {
-            "heading": "Types of Chemical Reactions",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Reaction Type",
-                "Definition",
-                "Example",
-                "Application"
-              ],
-              "rows": [
-                [
-                  "Combination",
-                  "Two or more substances combine → one product",
-                  "2H₂+O₂→2H₂O; CaO+H₂O→Ca(OH)₂",
-                  "Quicklime + water = slaked lime; used in construction"
-                ],
-                [
-                  "Decomposition",
-                  "One substance breaks into two or more",
-                  "2H₂O→2H₂+O₂ (electrolysis); 2HgO→2Hg+O₂ (heat)",
-                  "Electrolysis of water to get hydrogen fuel"
-                ],
-                [
-                  "Single Displacement",
-                  "More reactive element displaces less reactive",
-                  "Fe+CuSO₄→FeSO₄+Cu; Zn+H₂SO₄→ZnSO₄+H₂",
-                  "Test for reactivity; industrial metal extraction"
-                ],
-                [
-                  "Double Displacement",
-                  "Exchange of ions between two compounds",
-                  "NaCl+AgNO₃→AgCl↓+NaNO₃",
-                  "Precipitation reactions; water purification"
-                ],
-                [
-                  "Oxidation-Reduction (Redox)",
-                  "Simultaneous oxidation (lose electrons) and reduction (gain electrons)",
-                  "Fe₂O₃+3CO→2Fe+3CO₂ (in blast furnace)",
-                  "Iron extraction; fuel burning; corrosion"
-                ],
-                [
-                  "Exothermic",
-                  "Release energy (heat) to surroundings",
-                  "Combustion: CH₄+2O₂→CO₂+2H₂O+heat; Respiration",
-                  "Burning fuels; hand warmers; setting of cement"
-                ],
-                [
-                  "Endothermic",
-                  "Absorb energy from surroundings",
-                  "Photosynthesis: 6CO₂+6H₂O→C₆H₁₂O₆+6O₂; Dissolving NH₄NO₃",
-                  "Cooking; cold packs; thermal decomposition"
-                ],
-                [
-                  "Precipitation",
-                  "Insoluble product (precipitate) forms",
-                  "Pb(NO₃)₂+2KI→PbI₂↓(yellow)+2KNO₃",
-                  "Testing for ions; water purification"
-                ]
-              ]
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "biology": {
-    "topics": [
-      {
-        "id": "cell",
-        "name": "Cell — Structure and Division"
-      },
-      {
-        "id": "nutrition",
-        "name": "Nutrition and Digestive System"
-      },
-      {
-        "id": "respiration",
-        "name": "Respiration and Excretion"
-      },
-      {
-        "id": "circulatory",
-        "name": "Circulatory and Nervous System"
-      },
-      {
-        "id": "reproduction",
-        "name": "Reproduction and Genetics"
-      },
-      {
-        "id": "ecology",
-        "name": "Ecology and Environment"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "cell",
-        "topic_name": "Cell — Structure and Division",
-        "cards": [
-          {
-            "heading": "Cell Biology — Complete Coverage",
-            "color": "blue",
-            "points": [
-              "Cell = basic structural and functional unit of life. Robert Hooke (1665) — first observed cells in cork under microscope. Leeuwenhoek — first observed living cells (bacteria, protists). Cell Theory: Schleiden (plants) + Schwann (animals) 1838-39 → 'all living things are made of cells'; Rudolf Virchow added 'omnis cellula e cellula' (every cell from pre-existing cell)",
-              "Prokaryotic cells (no membrane-bound nucleus): Bacteria, Blue-green algae (Cyanobacteria). Simple; smaller (1-10 μm); no membrane-bound organelles; DNA is circular, in cytoplasm",
-              "Eukaryotic cells (membrane-bound nucleus): All plants, animals, fungi, protists. Complex; larger (10-100 μm); membrane-bound organelles",
-              "Key organelles: Nucleus (control centre; contains DNA; nuclear membrane; nucleolus); Mitochondria ('powerhouse of cell'; site of cellular respiration; ATP production; has own DNA — evidence of endosymbiosis); Chloroplast (photosynthesis; green plants; has own DNA); Ribosome (protein synthesis; found in all cells; no membrane); Endoplasmic Reticulum (transport system); Golgi apparatus ('post office' of cell; packages and ships proteins); Lysosomes ('suicide bags' — contain digestive enzymes; destroy old organelles and bacteria; programmed cell death/apoptosis)",
-              "Cell Wall: Present in plants (cellulose), bacteria (peptidoglycan), fungi (chitin); NOT in animal cells. Gives rigidity and shape. Cell membrane (plasma membrane) = present in all cells; selectively permeable; phospholipid bilayer",
-              "Cell division: Mitosis (somatic/body cells; 2 identical daughter cells; for growth+repair); Meiosis (reproductive cells; 4 genetically different cells; gamete formation; halves chromosome number)"
-            ],
-            "alert": "⭐ Largest cell: Ostrich egg (single cell). Longest cell: Neuron (nerve cell — can be 1 metre long). Smallest cells: Mycoplasma (PPLO). Mitochondria and Chloroplasts have their own DNA = evidence they were once free-living bacteria (Endosymbiosis Theory — Lynn Margulis). ATP (Adenosine Triphosphate) = 'energy currency' of the cell. Osmosis = movement of water through semi-permeable membrane from low solute to high solute concentration."
-          }
-        ]
-      },
-      {
-        "topic_id": "nutrition",
-        "topic_name": "Nutrition and Digestive System",
-        "cards": [
-          {
-            "heading": "Digestive System and Nutrition",
-            "color": "green",
-            "points": [
-              "Types of nutrition: Autotrophic (make own food — plants by photosynthesis); Heterotrophic (consume other organisms — animals); Saprophytic (fungi, decomposers — dead matter); Parasitic (on/in host — tapeworm, lice)",
-              "Photosynthesis: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂; occurs in chloroplasts; chlorophyll absorbs red and blue light (reflects green → leaves appear green); C3 plants (most crops), C4 plants (maize, sugarcane — more efficient in hot+dry conditions, less photorespiration)",
-              "Human digestive system: Mouth (salivary amylase — starch→maltose) → Oesophagus (peristalsis — wave-like contraction) → Stomach (HCl — kills bacteria; Pepsin — protein digestion; Gastric lipase — fat) → Small intestine (main digestion+absorption; bile from liver — emulsifies fats; Pancreatic juice — amylase, lipase, trypsin; intestinal enzymes) → Large intestine (water absorption; bacterial synthesis of vitamin K and B12; formation of faeces) → Rectum → Anus",
-              "Liver functions: Bile production; glycogen storage; detoxification; urea production (from amino acids); synthesis of blood proteins; old RBC destruction; regulation of blood glucose",
-              "Pancreas: Endocrine function (insulin — lowers blood glucose; glucagon — raises blood glucose); Exocrine function (pancreatic juice into small intestine containing digestive enzymes)",
-              "Macronutrients: Carbohydrates (energy; 4 kcal/g); Proteins (growth+repair; 4 kcal/g; essential amino acids must come from diet); Fats (energy reserve, hormones, insulation; 9 kcal/g); Water"
-            ],
-            "table": {
-              "headers": [
-                "Vitamin",
-                "Type",
-                "Deficiency Disease",
-                "Food Source"
-              ],
-              "rows": [
-                [
-                  "A (Retinol)",
-                  "Fat-soluble",
-                  "Night blindness; Xerophthalmia",
-                  "Carrot, leafy vegetables, egg, dairy"
-                ],
-                [
-                  "B1 (Thiamine)",
-                  "Water-soluble",
-                  "Beri-beri (nerve damage, leg weakness)",
-                  "Whole grains, legumes"
-                ],
-                [
-                  "B2 (Riboflavin)",
-                  "Water-soluble",
-                  "Ariboflavinosis (cracked lips, tongue sores)",
-                  "Milk, eggs, leafy vegetables"
-                ],
-                [
-                  "B3 (Niacin)",
-                  "Water-soluble",
-                  "Pellagra (4 Ds: Dermatitis, Diarrhoea, Dementia, Death)",
-                  "Meat, fish, legumes"
-                ],
-                [
-                  "B9 (Folic Acid)",
-                  "Water-soluble",
-                  "Neural tube defect in foetus; Megaloblastic anaemia",
-                  "Leafy vegetables, legumes"
-                ],
-                [
-                  "B12 (Cobalamin)",
-                  "Water-soluble",
-                  "Pernicious anaemia; nerve damage",
-                  "Meat, dairy, eggs (not in plants — vegans at risk)"
-                ],
-                [
-                  "C (Ascorbic Acid)",
-                  "Water-soluble",
-                  "Scurvy (bleeding gums, joint pain)",
-                  "Citrus fruits, guava, amla"
-                ],
-                [
-                  "D (Calciferol)",
-                  "Fat-soluble",
-                  "Rickets (children); Osteomalacia (adults)",
-                  "Sunlight, fish oil, egg; synthesized in skin with sunlight"
-                ],
-                [
-                  "E (Tocopherol)",
-                  "Fat-soluble",
-                  "Infertility; muscle weakness; haemolytic anaemia in infants",
-                  "Nuts, seeds, vegetable oils"
-                ],
-                [
-                  "K (Phylloquinone)",
-                  "Fat-soluble",
-                  "Excessive bleeding (clotting impaired)",
-                  "Green leafy vegetables, synthesized by gut bacteria"
-                ]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "respiration",
-        "topic_name": "Respiration and Excretion",
-        "cards": [
-          {
-            "heading": "Cellular Respiration and Human Excretion",
-            "color": "purple",
-            "points": [
-              "Cellular Respiration: Breakdown of glucose to release energy (ATP). Aerobic: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + 38 ATP; occurs in mitochondria; complete oxidation",
-              "Anaerobic respiration (in absence of oxygen): In muscles during intense exercise → lactic acid (causes muscle fatigue/cramp); In yeast → ethanol + CO₂ (fermentation — used in brewing, bread-making)",
-              "Human respiratory system: Nose→Pharynx→Larynx (voice box)→Trachea (windpipe)→Bronchi→Bronchioles→Alveoli (air sacs — actual gas exchange occurs here); Lungs covered by pleura (double membrane)",
-              "Gas exchange in alveoli: O₂ diffuses from alveoli → blood; CO₂ diffuses from blood → alveoli; alveoli have: thin walls (one cell thick), large surface area (300 million alveoli = 70 sq.m.), moist surface, rich blood supply",
-              "Breathing: Inspiration (diaphragm contracts+flattens, ribs move up+out → lung volume increases → pressure decreases → air rushes in); Expiration (diaphragm relaxes, ribs move down+in → lung volume decreases → pressure increases → air pushed out)",
-              "Excretion in humans: Kidneys (main — urine contains urea, excess salts, water); Lungs (CO₂ and water vapour); Skin (sweat — water, salts, small amount urea); Liver (bile — contains bilirubin from old RBCs)",
-              "Kidney function: Ultrafiltration in Bowman's capsule → selective reabsorption in nephron tubules → urine formation; urine = 95% water + urea + creatinine + salts. Dialysis (kidney machine) = artificial filtration for kidney failure patients. ADH (Anti-Diuretic Hormone) = controls water reabsorption (secreted when dehydrated → concentrated urine)"
+              "Vasco da Gama: Reached Calicut 1498 — opened sea route to India",
+              "Portuguese: First Europeans; Goa (1510), Diu (1535)",
+              "British EIC: Founded 1600; first factory at Surat 1608",
+              "French EIC: Founded 1664; conflict with British in Carnatic Wars",
+              "Battle of Plassey 1757: Clive vs Siraj-ud-Daulah; British control of Bengal",
+              "Battle of Buxar 1764: Decisive — British against Mughal, Nawab of Awadh, Nawab of Bengal",
+              "Subsidiary Alliance (Wellesley): Native rulers kept British troops; gave money",
+              "Doctrine of Lapse (Dalhousie): Annexed states without heir — Jhansi, Satara, Nagpur"
             ]
-          }
-        ]
-      },
-      {
-        "topic_id": "circulatory",
-        "topic_name": "Circulatory and Nervous System",
-        "cards": [
-          {
-            "heading": "Blood, Heart and Circulatory System",
-            "color": "orange",
-            "points": [
-              "Blood composition: Plasma (55% — water + proteins + nutrients + hormones + waste); Red Blood Cells/RBC/Erythrocytes (45% — haemoglobin = iron-containing protein that carries O₂; no nucleus in mature human RBC; life span 120 days; made in red bone marrow); White Blood Cells/WBC/Leukocytes (immunity; phagocytosis of bacteria; antibody production; 5 types — neutrophil most common); Platelets/Thrombocytes (clotting)",
-              "Blood groups (ABO system): A, B, AB, O. AB = universal recipient; O = universal donor. Rh factor: Rh+ (85% population) and Rh- (15%). Rh incompatibility in pregnancy can cause haemolytic disease of newborn",
-              "Heart: Double-pump; 4 chambers (2 atria + 2 ventricles); Left side = oxygenated blood (systemic circulation); Right side = deoxygenated blood (pulmonary circulation); Heart beats 70-72 times/minute; 4 valves prevent backflow (tricuspid, bicuspid/mitral, pulmonary, aortic)",
-              "Blood vessels: Arteries (carry blood AWAY from heart; thick walls; high pressure; usually oxygenated except pulmonary artery); Veins (carry blood TO heart; thin walls; low pressure; have valves; usually deoxygenated except pulmonary vein); Capillaries (one cell thick; actual exchange of O₂/CO₂/nutrients/waste with tissues)",
-              "Lymphatic system: Lymph = fluid from tissues; lymph nodes = filter bacteria (immune function); Spleen = filters blood, destroys old RBCs; Tonsils, Thymus, Lymph nodes = immune organs",
-              "Blood pressure: Systolic (ventricles contract) / Diastolic (ventricles relax); normal = 120/80 mmHg. Hypertension (>140/90) = 'silent killer'. Hypotension = too low. Measured by sphygmomanometer"
-            ],
-            "alert": "⭐ Pacemaker: SAN (Sino-Atrial Node) in right atrium = natural pacemaker; electrical impulses coordinate heartbeat. Artificial pacemaker = device implanted for arrhythmia. ECG (Electrocardiogram) = records electrical activity of heart. Blood clotting factors: vitamin K essential; fibrinogen → fibrin (mesh that traps blood cells). Haemophilia = X-linked genetic disorder; clotting factor VIII deficient; mostly in males."
           },
           {
-            "heading": "Nervous System and Endocrine System",
-            "color": "blue",
-            "points": [
-              "Neuron (nerve cell): Cell body (soma) + dendrites (receive signals) + axon (transmit signals) + myelin sheath (insulation; speeds transmission) + synaptic terminals",
-              "Types of neurons: Sensory (afferent — from sense organs to brain); Motor (efferent — from brain to muscles/glands); Interneuron/relay (within CNS — connect sensory to motor)",
-              "CNS = Brain + Spinal Cord; PNS = Cranial nerves (12 pairs) + Spinal nerves (31 pairs)",
-              "Brain: Cerebrum (largest; voluntary actions, consciousness, intelligence, memory, speech, personality); Cerebellum (balance and coordination — damaged in Parkinson's disease); Medulla Oblongata (involuntary actions — breathing, heartbeat, swallowing); Hypothalamus (body temperature, hunger, thirst, sleep, hormones — 'master regulator')",
-              "Endocrine glands and hormones: Pituitary (master gland; GH/growth hormone; TSH; FSH; LH; ADH; oxytocin); Thyroid (thyroxine — metabolism; T3 and T4; iodine needed; deficiency = goitre/cretinism); Adrenal (adrenaline — 'fight or flight'; cortisol — stress response; aldosterone — salt balance); Pancreas (insulin — lowers blood glucose → diabetes if deficient; glucagon — raises blood glucose); Testes (testosterone — male characteristics); Ovaries (oestrogen + progesterone — female characteristics)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "reproduction",
-        "topic_name": "Reproduction and Genetics",
-        "cards": [
-          {
-            "heading": "Genetics — DNA, Genes and Heredity",
-            "color": "purple",
-            "points": [
-              "DNA (Deoxyribonucleic Acid): Double helix discovered by Watson and Crick (1953; based on Franklin's X-ray crystallography); made of nucleotides (sugar+phosphate+nitrogenous base); A pairs with T; C pairs with G; in nucleus",
-              "Gene: Segment of DNA that codes for a protein; controls a specific trait. Human genome = ~3 billion base pairs; ~20,000-25,000 genes; Human Genome Project (completed 2003)",
-              "Mendel's Laws: 1.Law of Dominance — dominant allele expressed over recessive (Tt = same as TT for tall pea plant); 2.Law of Segregation — alleles separate during gamete formation; 3.Law of Independent Assortment — different gene pairs assort independently (this has exceptions — linked genes)",
-              "Dominant and Recessive: If Tt = Tall, then T=dominant, t=recessive; TT = homozygous dominant; tt = homozygous recessive; Tt = heterozygous",
-              "Sex determination: Females = XX; Males = XY; Sex determined by father (provides X or Y). Boy gets Y from father, X from mother",
-              "X-linked disorders (carried on X chromosome): Colour blindness; Haemophilia; Duchenne muscular dystrophy. Males more affected (only one X chromosome; no second X to mask recessive allele)",
-              "Mutation: Change in DNA sequence; spontaneous or caused by mutagens (X-rays, UV, chemicals). Sickle cell anaemia = mutation in haemoglobin gene (HbS instead of HbA); malaria protection in heterozygous carriers"
-            ],
-            "alert": "⭐ Gregor Mendel = 'Father of Genetics' (pea plant experiments 1860s); rediscovered 1900 by de Vries, Correns, Tschermak. Chromosomes: Humans = 46 chromosomes (23 pairs); Down's Syndrome = 47 (trisomy 21). DNA replication is semi-conservative (each new DNA has one old + one new strand). PCR (Polymerase Chain Reaction) = amplifies small DNA samples; used in forensics, COVID testing, paternity tests. CRISPR-Cas9 = revolutionary gene editing tool (Nobel Prize 2020 — Jennifer Doudna and Emmanuelle Charpentier)."
-          }
-        ]
-      },
-      {
-        "topic_id": "ecology",
-        "topic_name": "Ecology and Environment",
-        "cards": [
-          {
-            "heading": "Ecology — Food Chains, Cycles and Environmental Issues",
+            "heading": "Economic Impact of British Rule",
             "color": "orange",
             "points": [
-              "Ecosystem: Community of living organisms + their non-living environment interacting together. Biotic (living) + Abiotic (non-living — soil, water, air, temperature, light)",
-              "Food chain: Producer → Primary Consumer → Secondary Consumer → Tertiary Consumer. 10% rule: Only 10% of energy transferred to next level (90% lost as heat). Therefore: Eating lower in food chain = more efficient",
-              "Food web: Multiple interconnected food chains; more stable than single food chain (redundancy)",
-              "Biogeochemical cycles: Carbon cycle (CO₂ → photosynthesis → plant carbon → food chains → respiration/decomposition → CO₂); Nitrogen cycle (N₂ → nitrogen-fixing bacteria → nitrates → plants → animals → decomposers → N₂); Water cycle (evaporation → condensation → precipitation → runoff → evaporation)",
-              "Ecological Pyramids: Pyramid of numbers (individuals); Pyramid of biomass (mass); Pyramid of energy (always upright — energy always decreases). Exception: Inverted pyramid of numbers possible (one large tree supports many insects)",
-              "Biodiversity: India = mega diverse country; 4 biodiversity hotspots (Western Ghats, Eastern Himalayas, Indo-Burma, Sundaland); 12th in endemic species; 47,000 plant species; 90,000 animal species",
-              "Environmental issues: Global warming (CO₂, CH₄, N₂O, CFCs = greenhouse gases); Ozone depletion (CFCs destroy ozone — O₃ — in stratosphere; UV-B reaches Earth → skin cancer); Acid rain (SO₂+NOₓ+water = H₂SO₄+HNO₃; damages forests, buildings, aquatic life); Eutrophication (excess nutrients in water → algal bloom → oxygen depletion → death of aquatic life)"
+              "Drain of Wealth theory: Dadabhai Naoroji ('Grand Old Man of India') — Poverty and Un-British Rule",
+              "De-industrialization: Decline of Indian handicrafts/textiles due to machine-made British goods",
+              "Land Revenue systems: Zamindari (Bengal — Cornwallis 1793), Ryotwari (Bombay, Madras), Mahalwari (NW India)",
+              "Railways introduced 1853: First line Bombay to Thane (34 km); helped British trade not India",
+              "British education policy: Macaulay's Minute 1835 — English medium education; created 'clerks'"
             ]
+          }
+        ]
+      },
+      {
+        "topic_id": "freedom",
+        "topic_name": "Freedom Struggle",
+        "cards": [
+          {
+            "heading": "1857 Revolt — First War of Independence",
+            "color": "blue",
+            "points": [
+              "Immediate cause: Enfield rifle cartridges greased with cow & pig fat",
+              "Started: 10 May 1857, Meerut",
+              "Leaders: Mangal Pandey (Barrackpore), Rani Lakshmibai (Jhansi), Tantia Tope (Kanpur), Nana Sahib, Begum Hazrat Mahal (Lucknow), Bahadur Shah Zafar (Delhi — nominal leader)",
+              "Suppressed by: British; Bahadur Shah Zafar exiled to Rangoon",
+              "Result: End of EIC rule; Crown rule began 1858; Secretary of State for India created"
+            ],
+            "alert": "⭐ V.D. Savarkar called it '1st War of Independence'. British historians called it 'Sepoy Mutiny'. Oudh (Awadh) was its epicenter"
+          },
+          {
+            "heading": "Indian National Congress — Early Nationalism",
+            "color": "green",
+            "points": [
+              "INC founded: 28 Dec 1885; First session: Bombay; First President: W.C. Bonnerjee",
+              "A.O. Hume (retired ICS officer) — instrumental in founding INC",
+              "Moderates (1885–1905): Prayers, petitions; Dadabhai Naoroji, Gokhale, Pherozeshah Mehta",
+              "Extremists/Bal-Pal-Lal: Bal Gangadhar Tilak, Bipin Chandra Pal, Lala Lajpat Rai",
+              "Partition of Bengal 1905 (Curzon): Led to Swadeshi Movement & boycott of British goods",
+              "Muslim League: Founded 1906, Dhaka; Morley-Minto Reforms 1909 — separate electorate for Muslims"
+            ]
+          },
+          {
+            "heading": "Gandhian Era & Major Movements",
+            "color": "purple",
+            "points": [
+              "Champaran Satyagraha 1917: Against indigo planters (Tinkathia system) — Gandhi's 1st in India",
+              "Kheda Satyagraha 1918: Against tax during famine — Gujarat",
+              "Rowlatt Act 1919: Black Act; Jallianwala Bagh Massacre — Gen. Dyer (13 April 1919)",
+              "Non-Cooperation Movement 1920: Boycott of government; Chauri Chaura violence — withdrawn 1922",
+              "Simon Commission 1927: All-British — 'Simon Go Back'; Lala Lajpat Rai lathi-charged, died",
+              "Poorna Swaraj Resolution: 31 Dec 1929, Lahore session, Nehru; 26 Jan 1930 — Independence Day",
+              "Civil Disobedience / Dandi March: 12 March – 6 April 1930; 241 miles; broke salt law",
+              "Quit India Movement: 8 August 1942; 'Do or Die'; Gandhi arrested; underground leaders",
+              "Cabinet Mission 1946: Plan for undivided India; INC accepted, Muslim League rejected",
+              "Independence: 15 August 1947; Lord Mountbatten — last Viceroy"
+            ]
+          },
+          {
+            "heading": "Revolutionary Nationalism",
+            "color": "orange",
+            "points": [
+              "Bal Gangadhar Tilak: 'Swaraj is my birthright'; Home Rule League 1916",
+              "Bhagat Singh, Rajguru, Sukhdev: Executed 23 March 1931; HSRA (Hindustan Socialist Republican Association)",
+              "Netaji Subhas Chandra Bose: INA (Indian National Army); 'Tum mujhe khoon do, main tumhe azadi dunga'",
+              "V.D. Savarkar: Hindutva; imprisoned in Cellular Jail (Kala Pani), Andaman",
+              "Chandrashekhar Azad: Died 27 Feb 1931 at Alfred Park, Allahabad — never arrested alive"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "post-independence",
+        "topic_name": "Post-Independence India",
+        "cards": [
+          {
+            "heading": "Key Post-Independence Events",
+            "color": "blue",
+            "points": [
+              "Integration of Princely States: Sardar Vallabhbhai Patel (Iron Man) — 562 states merged",
+              "Hyderabad: Police action 'Operation Polo' (1948); accession by force",
+              "States Reorganisation Act 1956: Linguistic basis; Fazl Ali Commission",
+              "First General Election: 1951-52; 489 seats; INC won 364 seats; Jawaharlal Nehru — 1st PM",
+              "Planning Commission: 1950; Five Year Plans (discontinued 2017); replaced by NITI Aayog 2015",
+              "Green Revolution (1960s): M.S. Swaminathan — food self-sufficiency",
+              "Indo-Pak War 1965 & 1971; 1971 — Bangladesh liberation; Simla Agreement 1972"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "culture",
+        "topic_name": "Art & Culture",
+        "cards": [
+          {
+            "heading": "Classical Dance Forms of India",
+            "color": "purple",
+            "table": {
+              "headers": ["Dance Form", "State", "Key Feature"],
+              "rows": [
+                ["Bharatanatyam", "Tamil Nadu", "Oldest; Natya Shastra basis"],
+                ["Kathak", "UP/Rajasthan/Lucknow", "Mughal influence; footwork emphasis"],
+                ["Kathakali", "Kerala", "Elaborate costumes & makeup; stories of Ramayana/Mahabharata"],
+                ["Odissi", "Odisha", "Graceful; temple sculptures inspiration"],
+                ["Kuchipudi", "Andhra Pradesh", "Drama + dance combined"],
+                ["Manipuri", "Manipur", "Gentle movements; Radha-Krishna themes"],
+                ["Mohiniyattam", "Kerala", "Graceful; female dancer; white costume"],
+                ["Sattriya", "Assam", "Introduced by Shankaradeva (15th CE)"]
+              ]
+            }
+          },
+          {
+            "heading": "Important UNESCO World Heritage Sites in India",
+            "color": "green",
+            "points": [
+              "Taj Mahal (Agra, UP) — 1983",
+              "Ajanta Caves (Maharashtra) — 1983",
+              "Ellora Caves (Maharashtra) — 1983",
+              "Qutb Minar (Delhi) — 1993",
+              "Humayun's Tomb (Delhi) — 1993",
+              "Mahabodhi Temple (Bodh Gaya, Bihar) — 2002",
+              "Khajuraho Group (MP) — 1986",
+              "Hampi (Karnataka) — 1986",
+              "Sundarbans National Park (WB) — 1987",
+              "Hoysala Temples (Karnataka) — 2023 (latest)"
+            ],
+            "alert": "⭐ India has 42 UNESCO World Heritage Sites (2023) — 34 Cultural, 7 Natural, 1 Mixed. 'Hoysala Sacred Ensembles' is the latest addition"
           }
         ]
       }
     ]
   },
-  "technology": {
+  "general-science": {
     "topics": [
-      {
-        "id": "defence",
-        "name": "Defence Technology"
-      },
-      {
-        "id": "biotech",
-        "name": "Biotechnology"
-      },
-      {
-        "id": "it",
-        "name": "Information Technology and AI"
-      },
-      {
-        "id": "nuclear-tech",
-        "name": "Nuclear Technology"
-      },
-      {
-        "id": "recent",
-        "name": "Recent Science and Tech Developments"
-      }
+      { "id": "physics", "name": "Physics" },
+      { "id": "chemistry", "name": "Chemistry" },
+      { "id": "biology", "name": "Biology" },
+      { "id": "technology", "name": "Science & Technology" },
+      { "id": "health", "name": "Health & Disease" },
+      { "id": "space", "name": "Space Science" }
     ],
     "notes": [
       {
-        "topic_id": "defence",
-        "topic_name": "Defence Technology",
+        "topic_id": "physics",
+        "topic_name": "Physics — Key Concepts",
         "cards": [
           {
-            "heading": "India's Defence Technology — Missiles and Systems",
+            "heading": "Laws of Motion (Newton)",
+            "color": "blue",
+            "points": [
+              "1st Law (Inertia): A body at rest stays at rest; in motion stays in motion — unless acted upon by force",
+              "2nd Law: F = ma (Force = mass × acceleration) — basis of measurement of force",
+              "3rd Law: Every action has equal and opposite reaction",
+              "Momentum: p = mv (mass × velocity); conserved in closed systems",
+              "Inertia: Resistance to change in state of motion; proportional to mass"
+            ],
+            "alert": "⭐ Rocket propulsion works on Newton's 3rd Law. Seat belts work on Newton's 1st Law (inertia)"
+          },
+          {
+            "heading": "Light & Optics",
+            "color": "green",
+            "points": [
+              "Speed of light: 3 × 10⁸ m/s in vacuum",
+              "Reflection: Angle of incidence = Angle of reflection",
+              "Refraction: Light bends when passing from one medium to another; Snell's Law",
+              "Total Internal Reflection: When angle exceeds critical angle — optical fibre works on this",
+              "Convex lens: Converging; used in camera, projector, magnifying glass",
+              "Concave lens: Diverging; used for correcting myopia (short-sightedness)",
+              "VIBGYOR: Violet, Indigo, Blue, Green, Yellow, Orange, Red — spectrum of white light",
+              "Rainbow: Total internal reflection + dispersion of sunlight in water droplets"
+            ]
+          },
+          {
+            "heading": "Electricity & Magnetism",
+            "color": "purple",
+            "points": [
+              "Ohm's Law: V = IR (Voltage = Current × Resistance)",
+              "Series circuit: Same current; different voltages; total R = R1+R2+R3",
+              "Parallel circuit: Same voltage; different currents; 1/R = 1/R1+1/R2+1/R3",
+              "Electric Power: P = VI = I²R = V²/R (watts)",
+              "Fuse: Made of low melting point alloy; protects from overcurrent",
+              "Magnetic effect of current: Discovered by Oersted",
+              "Transformer: AC only; step-up (increases voltage), step-down (decreases voltage)",
+              "Generator: Converts mechanical energy to electrical energy (Faraday's law)"
+            ]
+          },
+          {
+            "heading": "Sound & Heat",
+            "color": "orange",
+            "points": [
+              "Sound: Longitudinal wave; needs medium; cannot travel in vacuum",
+              "Speed of sound: 343 m/s in air at 20°C; faster in solids > liquids > gases",
+              "Ultrasound (>20,000 Hz): Used in SONAR, medical imaging (USG)",
+              "Infrasound (<20 Hz): Earthquakes, volcanoes, tsunamis produce infrasound",
+              "Frequency range of human ear: 20 Hz to 20,000 Hz",
+              "Heat transfer: Conduction (solids), Convection (fluids), Radiation (no medium needed)",
+              "Specific Heat: Water has highest specific heat (4200 J/kg°C) — moderates climate"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "chemistry",
+        "topic_name": "Chemistry — Key Concepts",
+        "cards": [
+          {
+            "heading": "Periodic Table — Key Groups",
             "color": "blue",
             "table": {
-              "headers": [
-                "Missile/System",
-                "Type",
-                "Range",
-                "Key Facts"
-              ],
+              "headers": ["Group", "Name", "Elements"],
               "rows": [
-                [
-                  "Agni-V",
-                  "ICBM (Inter-Continental Ballistic Missile)",
-                  "5,000-8,000+ km",
-                  "Can reach most of China and Europe; MIRV capable; nuclear-capable"
-                ],
-                [
-                  "Agni-IV",
-                  "IRBM (Intermediate Range Ballistic Missile)",
-                  "3,500-4,000 km",
-                  "Nuclear-capable; road mobile"
-                ],
-                [
-                  "Brahmos",
-                  "Supersonic cruise missile",
-                  "290-800 km",
-                  "Joint India-Russia; Mach 2.8-3; fastest operational cruise missile in world; Army+Navy+Air Force versions"
-                ],
-                [
-                  "Brahmos-NG/Brahmos-II (hypersonic)",
-                  "Hypersonic cruise missile",
-                  "Under development",
-                  "Mach 6-7; to be operational soon"
-                ],
-                [
-                  "Prithvi-I/II",
-                  "Surface-to-Surface Ballistic Missile",
-                  "150-350 km",
-                  "Nuclear-capable; first indigenously developed ballistic missile under IGMDP"
-                ],
-                [
-                  "Akash",
-                  "Surface-to-Air Missile (SAM)",
-                  "25-30 km",
-                  "Anti-aircraft+anti-cruise missile; inducted into Air Force and Army; indigenously developed"
-                ],
-                [
-                  "Nag",
-                  "Anti-Tank Guided Missile",
-                  "4-7 km",
-                  "Tank destroyer; fire-and-forget; Helina = helicopter-launched version"
-                ],
-                [
-                  "Astra",
-                  "Air-to-Air Missile",
-                  "80-100 km",
-                  "Beyond Visual Range (BVR) missile; for fighter aircraft; first indigenously developed AAM"
-                ],
-                [
-                  "Nirbhay",
-                  "Subsonic cruise missile",
-                  "1,000+ km",
-                  "Long-range; stealth; terrain-following; nuclear-capable potential"
-                ],
-                [
-                  "S-400 Triumf",
-                  "Air Defence System",
-                  "400 km",
-                  "Purchased from Russia; can engage aircraft+missiles+drones; CAATSA controversy with USA"
-                ]
+                ["Group 1", "Alkali Metals", "Li, Na, K, Rb, Cs, Fr — highly reactive"],
+                ["Group 2", "Alkaline Earth Metals", "Be, Mg, Ca, Sr, Ba, Ra"],
+                ["Group 17", "Halogens", "F, Cl, Br, I, At — most reactive non-metals"],
+                ["Group 18", "Noble/Inert Gases", "He, Ne, Ar, Kr, Xe, Rn — non-reactive"],
+                ["Group 11", "Coinage Metals", "Cu (Copper), Ag (Silver), Au (Gold)"]
               ]
             },
-            "alert": "⭐ IGMDP (Integrated Guided Missile Development Programme): Launched 1983; Dr. A.P.J. Abdul Kalam led; developed Prithvi, Agni, Akash, Trishul, Nag. DRDO (Defence Research and Development Organisation) = India's defence R&D agency. Tejas = indigenously developed Light Combat Aircraft (LCA); inducted into IAF. INS Vikrant = India's first indigenously built aircraft carrier (commissioned September 2022)."
-          }
-        ]
-      },
-      {
-        "topic_id": "biotech",
-        "topic_name": "Biotechnology",
-        "cards": [
+            "alert": "⭐ Most electronegative element: Fluorine (F). Most metallic: Caesium/Francium. Hardest natural substance: Diamond (Carbon allotrope)"
+          },
           {
-            "heading": "Biotechnology — Key Concepts and Applications",
+            "heading": "Acids, Bases & Salts",
             "color": "green",
             "points": [
-              "Biotechnology: Use of biological systems and living organisms (or their derivatives) to produce products or processes of industrial or commercial value",
-              "Recombinant DNA Technology (Genetic Engineering): Cutting DNA with restriction enzymes + inserting into vector (plasmid) + cloning in host cell. Applications: Insulin production (human insulin from bacteria — replaced pig/cow insulin); Vaccines (Hepatitis B vaccine from yeast); Bt crops; Gene therapy",
-              "PCR (Polymerase Chain Reaction): Amplifies specific DNA sequences billions of times from tiny samples; Applications: COVID-19 diagnosis; forensics (DNA fingerprinting); paternity testing; archaeological DNA",
-              "GM Crops (Genetically Modified): Bt cotton (Bacillus thuringiensis gene; produces toxin against bollworm; India approved 2002 — only approved GM crop in India); Golden Rice (Vitamin A producing rice — not yet approved in India); Bt Brinjal (proposed but moratorium in India)",
-              "Biofertilizers: Rhizobium (fixes atmospheric N₂ in legume root nodules); Azotobacter+Azospirillum (free-living N-fixers); Blue-green algae/Cyanobacteria (paddy fields); Mycorrhiza (fungi+roots — enhance phosphorus uptake)",
-              "Stem Cells: Undifferentiated cells that can develop into any cell type; Embryonic stem cells = pluripotent (can become any cell); Adult stem cells = multipotent (limited types); iPS cells (induced Pluripotent Stem cells — adult cells reprogrammed to embryonic-like state; Nobel Prize 2012 — Yamanaka); Applications: Treating leukaemia, replacing damaged heart cells",
-              "CRISPR-Cas9: Precise gene editing tool; uses guide RNA to target specific DNA sequence; Cas9 enzyme cuts DNA; can add/delete/replace genes; Revolution in medicine and agriculture; Nobel Prize 2020"
+              "Acid: pH < 7; sour taste; turns blue litmus red; donates H⁺",
+              "Base: pH > 7; bitter taste; turns red litmus blue; accepts H⁺",
+              "Neutral: pH = 7 (pure water)",
+              "Strong acids: HCl, H₂SO₄, HNO₃ | Weak: CH₃COOH (vinegar), H₂CO₃ (soda)",
+              "Common acids in daily life: Lemon — Citric acid; Vinegar — Acetic acid; Curd — Lactic acid",
+              "Antacids: Neutralize excess acid in stomach — Mg(OH)₂, NaHCO₃",
+              "Baking soda: NaHCO₃ | Washing soda: Na₂CO₃·10H₂O | Plaster of Paris: CaSO₄·½H₂O"
             ]
-          }
-        ]
-      },
-      {
-        "topic_id": "it",
-        "topic_name": "Information Technology and AI",
-        "cards": [
+          },
           {
-            "heading": "IT, AI, and Emerging Technologies",
-            "color": "purple",
-            "points": [
-              "Internet: ARPANET (1969) → World Wide Web invented by Tim Berners-Lee (1989); HTTP (Hypertext Transfer Protocol); IP address; DNS (Domain Name System); IPv4 (32-bit; 4 billion addresses) → IPv6 (128-bit; virtually unlimited)",
-              "5G Technology: 5th generation mobile network; speed up to 20 Gbps (20x faster than 4G); ultra-low latency (<1 ms); enables IoT, autonomous vehicles, remote surgery; spectrum bands: sub-6GHz and mmWave; India launched 5G October 2022",
-              "Artificial Intelligence (AI): Machine learning (computers learn from data); Deep learning (neural networks); Natural Language Processing (NLP — chatbots, translation); Computer Vision (image recognition); Generative AI (ChatGPT, DALL-E, Midjourney)",
-              "Blockchain: Distributed ledger technology; each block contains data + previous block's hash; immutable (cannot alter without changing all subsequent blocks); used in: cryptocurrency (Bitcoin, Ethereum), supply chain, digital voting, NFTs (Non-Fungible Tokens)",
-              "Cloud Computing: Delivery of computing services over internet; IaaS (Infrastructure as a Service), PaaS (Platform), SaaS (Software); providers: AWS (Amazon), Azure (Microsoft), Google Cloud; India: DigiYatra, UMANG on cloud",
-              "Cybersecurity: Malware (virus, ransomware, spyware, trojan); Phishing; DoS/DDoS attacks; Encryption (AES, RSA); VPN; Firewall; Zero-day vulnerability; India's CERT-In (Computer Emergency Response Team) handles cyber incidents",
-              "Key Indian IT initiatives: Digital India; Aadhaar (world's largest biometric database — 130 crore enrolled; UIDAI); UPI (Unified Payments Interface) — real-time payment; NPCI; CoWIN (COVID vaccination); GeM (Government e-Marketplace)"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "nuclear-tech",
-        "topic_name": "Nuclear Technology",
-        "cards": [
-          {
-            "heading": "India's Nuclear Programme",
+            "heading": "Important Chemical Compounds",
             "color": "orange",
-            "points": [
-              "Three-stage nuclear power programme (Homi Bhabha's plan): Stage 1 = Natural uranium fuel in Pressurized Heavy Water Reactors (PHWR) — India has large thorium but limited uranium; Stage 2 = Fast Breeder Reactors using Pu-239 (produced in Stage 1) + thorium → converts Th-232 to U-233; Stage 3 = Advanced Heavy Water Reactors using U-233 from thorium — India has world's largest thorium reserves",
-              "Nuclear tests: Smiling Buddha (18 May 1974) — first test; Pokhran-II / Operation Shakti (11-13 May 1998) — 5 tests; India declared nuclear weapons state after 1998",
-              "Key nuclear institutions: BARC (Bhabha Atomic Research Centre) — Trombay, Mumbai; founded 1954; NPCIL (Nuclear Power Corporation of India) — operates nuclear plants; DAE (Department of Atomic Energy); AERB (Atomic Energy Regulatory Board) — safety regulator",
-              "Nuclear plants: Tarapur (Maharashtra — 1969, first; BOILING water reactor, US-supplied); Rawatbhata (Rajasthan — PHWR, Canadian collaboration CANDU type); Kalpakkam (Tamil Nadu — PHWR + FBR under construction — PFBR = Prototype Fast Breeder Reactor); Narora (UP); Kakrapar (Gujarat); Kaiga (Karnataka); Kudankulam (Tamil Nadu — Russian VVER type; largest plant, 6×1000MW; Unit 1 & 2 operational)",
-              "NSG (Nuclear Suppliers Group) waiver: India got waiver in 2008; allowed civilian nuclear deals with foreign countries despite not signing NPT (Non-Proliferation Treaty); Indo-US Nuclear Deal (123 Agreement) was catalyst; allowed India to import nuclear technology"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "recent",
-        "topic_name": "Recent Science and Technology Developments",
-        "cards": [
-          {
-            "heading": "Important Recent Developments (2020–2024)",
-            "color": "blue",
             "table": {
-              "headers": [
-                "Development",
-                "Year",
-                "Significance"
-              ],
+              "headers": ["Compound", "Formula", "Use/Fact"],
               "rows": [
-                [
-                  "Chandrayaan-3",
-                  "2023",
-                  "India's 3rd Moon mission; Vikram lander + Pragyan rover; soft-landed on Moon's south pole (first country to do so); made India 4th country to land on Moon"
-                ],
-                [
-                  "Aditya-L1",
-                  "2023",
-                  "India's first solar mission; ISRO; placed at Lagrange Point 1 (L1) between Earth and Sun; studies solar corona and solar wind"
-                ],
-                [
-                  "GSLV Mk III / LVM3",
-                  "2022",
-                  "Launched OneWeb satellites; heaviest payload; 'fat boy' of ISRO rockets; used for commercial launches"
-                ],
-                [
-                  "INS Vikrant",
-                  "2022",
-                  "India's first indigenously built aircraft carrier; 45,000 tonnes; commissioned September 2022; named after 1971 war hero"
-                ],
-                [
-                  "5G Launch in India",
-                  "2022",
-                  "Launched October 2022; Airtel and Jio; 13 cities initially; Telecom Regulatory Authority of India (TRAI)"
-                ],
-                [
-                  "CRISPR Nobel Prize",
-                  "2020",
-                  "Jennifer Doudna (USA) + Emmanuelle Charpentier (France) won Nobel Prize in Chemistry for CRISPR-Cas9 gene editing"
-                ],
-                [
-                  "COVID-19 Vaccines (India)",
-                  "2021",
-                  "Covaxin (Bharat Biotech + ICMR — whole-inactivated virus); Covishield (Serum Institute — Oxford-AstraZeneca adenovirus vector); ZyCov-D (Zydus Cadila — DNA vaccine); Sputnik V (Gamaleya Institute Russia)"
-                ],
-                [
-                  "James Webb Space Telescope",
-                  "2022",
-                  "NASA+ESA+CSA; launched December 2021; operational July 2022; infrared telescope; 100x more powerful than Hubble; images from 13.5 billion years ago (early universe)"
-                ],
-                [
-                  "GPT-4 / Generative AI",
-                  "2023",
-                  "OpenAI released GPT-4; marks dawn of Generative AI era; large language models; India working on BharatGPT"
-                ],
-                [
-                  "Gaganyaan",
-                  "2024-25",
-                  "India's first crewed space mission (delayed); 3 astronauts ('Vyomnauts'); 400 km LEO orbit; ISRO + DRDO; test flights ongoing"
-                ]
-              ]
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "health": {
-    "topics": [
-      {
-        "id": "diseases",
-        "name": "Communicable and Non-communicable Diseases"
-      },
-      {
-        "id": "vaccines",
-        "name": "Vaccines and Immunization"
-      },
-      {
-        "id": "nutrition-health",
-        "name": "Nutrition and Public Health"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "diseases",
-        "topic_name": "Communicable and Non-communicable Diseases",
-        "cards": [
-          {
-            "heading": "Major Diseases — Causes and Symptoms",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Disease",
-                "Causative Agent",
-                "Transmission",
-                "Symptoms/Key Facts"
-              ],
-              "rows": [
-                [
-                  "Malaria",
-                  "Plasmodium (protozoan — P.falciparum = most dangerous)",
-                  "Female Anopheles mosquito",
-                  "Cyclic fever+chills (every 48-72 hrs); Treatment: Chloroquine (resistance rising), Artemisinin; Prevention: DEET, mosquito nets, DDT (controversial)"
-                ],
-                [
-                  "Dengue",
-                  "Dengue virus (4 serotypes)",
-                  "Aedes aegypti mosquito (bites in daytime)",
-                  "High fever, severe headache, body pain ('breakbone fever'); rash; platelet count drops; no specific treatment; NS1 antigen test"
-                ],
-                [
-                  "Tuberculosis (TB)",
-                  "Mycobacterium tuberculosis (bacteria)",
-                  "Airborne (coughing, sneezing)",
-                  "Persistent cough (>2 weeks), blood in sputum, weight loss, night sweats; BCG vaccine (preventive); DOTS (Directly Observed Treatment Short-course); India = highest TB burden; Nikshay Poshan Yojana"
-                ],
-                [
-                  "Cholera",
-                  "Vibrio cholerae (bacteria)",
-                  "Contaminated water/food",
-                  "Profuse watery diarrhoea ('rice water stools'); dehydration; ORS (Oral Rehydration Solution) = treatment; proper sanitation"
-                ],
-                [
-                  "Typhoid",
-                  "Salmonella typhi (bacteria)",
-                  "Contaminated food/water; faecal-oral",
-                  "Sustained fever (rose spots on abdomen); Widal test; antibiotic treatment; vaccine available"
-                ],
-                [
-                  "COVID-19",
-                  "SARS-CoV-2 (coronavirus)",
-                  "Airborne/droplets",
-                  "Fever, cough, loss of smell/taste (anosmia); severe = pneumonia; RT-PCR test; vaccines: mRNA (Pfizer, Moderna), Vector (Covishield, Sputnik V), Inactivated (Covaxin)"
-                ],
-                [
-                  "AIDS",
-                  "HIV (Human Immunodeficiency Virus — retrovirus)",
-                  "Blood, sexual contact, mother-to-child",
-                  "Destroys CD4+ T cells; opportunistic infections; ELISA test; Western Blot confirmatory; ART (Antiretroviral Therapy); no cure; prevention by ABCD"
-                ],
-                [
-                  "Diabetes Type 1",
-                  "Autoimmune (insulin deficiency)",
-                  "Genetic/autoimmune",
-                  "Insulin injections required; juvenile onset; ketoacidosis if untreated"
-                ],
-                [
-                  "Diabetes Type 2",
-                  "Insulin resistance",
-                  "Lifestyle + genetic",
-                  "Metformin + lifestyle changes; epidemic in India; associated with obesity"
-                ],
-                [
-                  "Cancer",
-                  "Uncontrolled cell division (mutations)",
-                  "Varies — some genetic, some environmental",
-                  "Carcinogens: tobacco, radiation, certain viruses (HPV → cervical cancer); Treatment: Surgery, Chemotherapy, Radiotherapy, Immunotherapy"
-                ],
-                [
-                  "Hepatitis B",
-                  "Hepatitis B virus (HBV)",
-                  "Blood, sexual contact, mother-to-child",
-                  "Liver inflammation; cirrhosis; liver cancer; vaccine available (part of Universal Immunization Programme)"
-                ],
-                [
-                  "Filariasis (Elephantiasis)",
-                  "Wuchereria bancrofti (worm)",
-                  "Culex mosquito",
-                  "Blockage of lymph vessels; swelling of legs/genitals; DEC (Diethylcarbamazine) treatment; Mass Drug Administration annually"
-                ]
+                ["Water", "H₂O", "Universal solvent; boils 100°C, freezes 0°C"],
+                ["Common Salt", "NaCl", "Table salt; electrolyte"],
+                ["Quicklime", "CaO", "Used in cement; reacts vigorously with water"],
+                ["Slaked Lime", "Ca(OH)₂", "White washing; water treatment"],
+                ["Bleaching Powder", "CaOCl₂", "Disinfecting water; bleaching fabric"],
+                ["Chloroform", "CHCl₃", "Anaesthetic; solvent"],
+                ["Laughing Gas", "N₂O", "Anaesthetic; oxide of nitrogen"],
+                ["Marsh Gas", "CH₄ (Methane)", "Main component of natural gas; biogas"],
+                ["LPG", "Propane + Butane", "Cooking gas; Mercaptan added (smell)"]
               ]
             }
           }
         ]
       },
       {
-        "topic_id": "vaccines",
-        "topic_name": "Vaccines and Immunization",
+        "topic_id": "biology",
+        "topic_name": "Biology — Key Concepts",
         "cards": [
           {
-            "heading": "India's Universal Immunization Programme (UIP) and Key Vaccines",
+            "heading": "Cell Biology — Basics",
             "color": "green",
             "points": [
-              "UIP (Universal Immunization Programme): Launched 1985; one of world's largest public health programmes; provides free vaccines to all children; Mission Indradhanush (2014) to reach unvaccinated children; Intensified Mission Indradhanush",
-              "Vaccines under UIP: BCG (TB — at birth); Hepatitis B (birth, 6, 10, 14 weeks); OPV (Oral Polio — birth, 6, 10, 14 weeks, booster); IPV (Injectable Polio — 6 weeks); Pentavalent (DPT+HepB+Hib — 6, 10, 14 weeks); Rotavirus (diarrhoea); PCV (Pneumococcal — pneumonia); MR/MMR (Measles-Rubella/Measles-Mumps-Rubella); JE (Japanese Encephalitis — endemic areas); DPT boosters; TT (Tetanus Toxoid)",
-              "Polio eradication: India declared polio-free 27 March 2014; last case was in 2011 (Howrah WB); Pulse Polio programme (launched 1995) was key; OPV (oral, live-attenuated) + IPV (injectable, inactivated) used",
-              "Types of vaccines: Live attenuated (BCG, OPV, MMR, Varicella — weakened live organism); Killed/inactivated (IPV, Hepatitis A, Rabies, Influenza); Toxoid (DPT — inactivated toxin); Subunit (Hepatitis B, HPV, Acellular pertussis component); mRNA (Pfizer-BioNTech, Moderna — COVID); Vector (Covishield, Sputnik V — COVID); DNA (ZyCov-D — COVID, world's first DNA vaccine)",
-              "Herd Immunity: When enough of a population is immune (by vaccination or natural infection) that disease cannot spread easily; threshold varies (Measles = 95%, Polio = 80-85%, COVID = debated)",
-              "Cold Chain: Vaccines must be stored at 2-8°C throughout distribution; broken cold chain = ineffective vaccines; biggest challenge in rural India"
+              "Cell: Basic unit of life; discovered by Robert Hooke (1665)",
+              "Prokaryotic cells: No nucleus (bacteria, blue-green algae)",
+              "Eukaryotic cells: True nucleus (plants, animals, fungi)",
+              "Largest cell: Ostrich egg | Smallest cell: Mycoplasma",
+              "Longest cell in human body: Nerve cell (neuron)",
+              "Cell organelles: Mitochondria (energy/ATP — powerhouse), Chloroplast (photosynthesis — in plants), Ribosome (protein synthesis), Nucleus (control centre)",
+              "DNA is double helix — discovered by Watson & Crick 1953"
             ]
-          }
-        ]
-      },
-      {
-        "topic_id": "nutrition-health",
-        "topic_name": "Nutrition and Public Health",
-        "cards": [
+          },
           {
-            "heading": "Malnutrition, Public Health and Government Programmes",
+            "heading": "Human Body Systems",
+            "color": "blue",
+            "table": {
+              "headers": ["System", "Key Function", "Key Fact"],
+              "rows": [
+                ["Digestive", "Breaks food; absorbs nutrients", "Longest part: Small intestine (6-7m)"],
+                ["Circulatory", "Pumps blood; delivers O₂", "Heart beats ~72/min; blood = 5-6 L"],
+                ["Respiratory", "Gas exchange (O₂/CO₂)", "Breathing rate: 12-16/min"],
+                ["Nervous", "Controls body functions", "Brain + spinal cord = CNS"],
+                ["Excretory", "Removes waste", "Kidneys filter 180L blood/day"],
+                ["Skeletal", "Support, protection", "206 bones; smallest: stapes (ear)"],
+                ["Endocrine", "Hormone secretion", "Pituitary = master gland"]
+              ]
+            }
+          },
+          {
+            "heading": "Classification of Living Organisms",
             "color": "purple",
             "points": [
-              "Malnutrition types: Undernutrition (inadequate intake); Overnutrition (excess → obesity); Micronutrient deficiency (specific vitamin/mineral deficiency)",
-              "Key nutritional deficiency disorders: Iron deficiency anaemia (most common; especially women+children); Iodine deficiency (goitre, cretinism — India adds iodine to salt mandatorily); Vitamin A deficiency (night blindness, xerophthalmia — leading cause of preventable blindness in children); Vitamin D deficiency (rickets in children, osteomalacia in adults); Protein-Energy Malnutrition: Kwashiorkor (protein deficiency; oedema, pot-belly, reddish hair) vs Marasmus (both protein+calorie; extreme wasting, old-man face)",
-              "BMI (Body Mass Index) = weight(kg)/height(m)²; Underweight <18.5; Normal 18.5-24.9; Overweight 25-29.9; Obese ≥30",
-              "Government health programmes: Pradhan Mantri Jan Arogya Yojana (PM-JAY/Ayushman Bharat) — health insurance up to ₹5 lakh/year for poor families; National Health Mission (NHM) — NRHM+NUHM; Janani Suraksha Yojana — cash incentive for institutional delivery; Mission Poshan 2.0 — nutrition mission; Eat Right India (FSSAI); National Tobacco Control Programme",
-              "Key health indices (India): Life expectancy = 69.4 years (2021); Infant Mortality Rate = 28 per 1000 live births (2022); Maternal Mortality Rate = 97 per lakh live births (2020); Total Fertility Rate = 2.0 (2020) — at replacement level",
-              "Antimicrobial Resistance (AMR): Bacteria evolve resistance to antibiotics; major global health threat; WHO's 'ESKAPE' pathogens; India is largest antibiotic consumer; National Action Plan on AMR"
-            ]
+              "5 Kingdom Classification (Whittaker): Monera, Protista, Fungi, Plantae, Animalia",
+              "Bacteria: Prokaryotes; classified by Leeuwenhoek (Father of Microbiology)",
+              "Viruses: Non-living outside host; Louis Pasteur, Dimitri Ivanowski (1892) discovered",
+              "Fungi: Decomposers; Penicillin from Penicillium notatum (discovered by Alexander Fleming 1928)",
+              "Photosynthesis: 6CO₂ + 6H₂O + sunlight → C₆H₁₂O₆ + 6O₂ (occurs in chloroplasts)",
+              "Transpiration: Loss of water through stomata — creates 'transpiration pull'"
+            ],
+            "alert": "⭐ Photosynthesis produces O₂ as byproduct. Respiration releases CO₂. Both are opposite processes. Chlorophyll makes plants green"
           }
         ]
-      }
-    ]
-  },
-  "space": {
-    "topics": [
-      {
-        "id": "solar-system",
-        "name": "Solar System and Universe"
       },
       {
-        "id": "isro",
-        "name": "ISRO and Indian Space Programme"
+        "topic_id": "technology",
+        "topic_name": "Science & Technology — Current Affairs",
+        "cards": [
+          {
+            "heading": "India's Space Missions",
+            "color": "blue",
+            "points": [
+              "ISRO: Indian Space Research Organisation; founded 1969; HQ: Bangalore",
+              "Chandrayaan-1 (2008): Discovered water molecules on Moon",
+              "Chandrayaan-2 (2019): Orbiter functional; Vikram lander crashed",
+              "Chandrayaan-3 (2023): Successfully landed on Moon's South Pole — India 1st country to do so",
+              "Mangalyaan/MOM (2014): India's 1st Mars mission; 1st Asian country to reach Mars in 1st attempt",
+              "Aditya-L1 (2023): India's 1st solar mission; studying Sun from Lagrange point L1",
+              "Gaganyaan: India's 1st human spaceflight mission (upcoming)"
+            ]
+          },
+          {
+            "heading": "Key Inventions & Inventors",
+            "color": "orange",
+            "table": {
+              "headers": ["Invention", "Inventor", "Year"],
+              "rows": [
+                ["Telephone", "Alexander Graham Bell", "1876"],
+                ["Electricity (Bulb)", "Thomas Edison", "1879"],
+                ["Radio", "G. Marconi", "1895"],
+                ["Television", "John Logie Baird", "1926"],
+                ["Computer", "Charles Babbage (concept)", "1820s"],
+                ["WWW (Internet)", "Tim Berners-Lee", "1989"],
+                ["Penicillin", "Alexander Fleming", "1928"],
+                ["X-Rays", "Wilhelm Roentgen", "1895"],
+                ["Vaccine", "Edward Jenner (smallpox)", "1796"]
+              ]
+            }
+          }
+        ]
       },
       {
-        "id": "satellites",
-        "name": "Satellites and Applications"
+        "topic_id": "health",
+        "topic_name": "Health & Disease",
+        "cards": [
+          {
+            "heading": "Vitamins & Deficiency Diseases",
+            "color": "green",
+            "table": {
+              "headers": ["Vitamin", "Name", "Deficiency Disease", "Source"],
+              "rows": [
+                ["A", "Retinol", "Night blindness, Xerophthalmia", "Carrot, milk, eggs"],
+                ["B1", "Thiamine", "Beri-Beri (nervous system)", "Cereals, nuts"],
+                ["B2", "Riboflavin", "Ariboflavinosis (skin cracks)", "Milk, meat"],
+                ["B12", "Cyanocobalamin", "Pernicious anaemia", "Meat, dairy"],
+                ["C", "Ascorbic acid", "Scurvy (bleeding gums)", "Citrus fruits, amla"],
+                ["D", "Calciferol", "Rickets (children), Osteomalacia (adults)", "Sunlight, fish"],
+                ["E", "Tocopherol", "Sterility, muscle weakness", "Vegetable oils"],
+                ["K", "Phylloquinone", "Bleeding disorder (no clotting)", "Green vegetables"]
+              ]
+            },
+            "alert": "⭐ Fat-soluble vitamins: A, D, E, K (stored in body — excess harmful). Water-soluble: B-complex, C (excess excreted in urine)"
+          },
+          {
+            "heading": "Communicable Diseases",
+            "color": "orange",
+            "table": {
+              "headers": ["Disease", "Pathogen", "Spread", "Prevention"],
+              "rows": [
+                ["Malaria", "Plasmodium (protozoa)", "Female Anopheles mosquito", "Mosquito nets, quinine"],
+                ["Dengue", "Dengue virus", "Aedes mosquito", "No vaccine; mosquito control"],
+                ["Tuberculosis (TB)", "Mycobacterium tuberculosis", "Air droplets", "BCG vaccine"],
+                ["Cholera", "Vibrio cholerae", "Contaminated water/food", "ORS, clean water"],
+                ["COVID-19", "SARS-CoV-2 virus", "Droplets, airborne", "Vaccination, masks"],
+                ["Rabies", "Rabies virus", "Animal bite", "Vaccination after bite"],
+                ["HIV/AIDS", "HIV virus", "Blood, sexual contact", "Safe practices, antiretroviral"]
+              ]
+            }
+          }
+        ]
       },
       {
-        "id": "missions",
-        "name": "Key Space Missions (India and World)"
-      }
-    ],
-    "notes": [
-      {
-        "topic_id": "solar-system",
-        "topic_name": "Solar System and Universe",
+        "topic_id": "space",
+        "topic_name": "Space Science",
         "cards": [
           {
             "heading": "Solar System — Key Facts",
             "color": "blue",
-            "table": {
-              "headers": [
-                "Planet",
-                "Order",
-                "Key Facts"
-              ],
-              "rows": [
-                [
-                  "Mercury",
-                  "1st from Sun",
-                  "Smallest planet; no atmosphere; extreme temperature variation (-180°C to 430°C); no moon; fastest revolution (88 days)"
-                ],
-                [
-                  "Venus",
-                  "2nd from Sun",
-                  "Hottest planet (462°C average — greenhouse effect with thick CO₂ atmosphere); rotates east to west (retrograde — Sun rises in west); no moon; Earth's twin (size); brightest object in night sky after Moon; 'Evening star' and 'Morning star'"
-                ],
-                [
-                  "Earth",
-                  "3rd from Sun",
-                  "Only planet with life; 71% water; 1 moon; 23.5° axial tilt (causes seasons); 5th largest; 3rd densest"
-                ],
-                [
-                  "Mars",
-                  "4th from Sun",
-                  "Red planet (iron oxide); thin CO₂ atmosphere; 2 moons (Phobos, Deimos); Olympus Mons = tallest volcano in solar system (27 km); Valles Marineris = longest canyon; signs of ancient water"
-                ],
-                [
-                  "Jupiter",
-                  "5th (largest planet)",
-                  "11× Earth's diameter; 79 moons; Great Red Spot (giant storm lasting 350+ years); primarily hydrogen+helium; Io (most volcanically active), Europa (subsurface ocean — possible life), Ganymede (largest moon in solar system)"
-                ],
-                [
-                  "Saturn",
-                  "6th",
-                  "Least dense (would float on water); rings made of ice and rock; 83 moons; Titan (largest moon — thick atmosphere, lakes of liquid methane)"
-                ],
-                [
-                  "Uranus",
-                  "7th",
-                  "Rotates on its side (98° axial tilt — rolls around Sun); pale blue-green (methane atmosphere); 27 moons; 13 rings; coldest planet (-224°C)"
-                ],
-                [
-                  "Neptune",
-                  "8th (farthest)",
-                  "Strongest winds in solar system (2,100 km/h); 14 moons; Triton (largest — orbits backward); Great Dark Spot (storm); blue color (methane)"
-                ],
-                [
-                  "Pluto",
-                  "Dwarf planet",
-                  "Reclassified 2006 by IAU; in Kuiper Belt; 5 moons (Charon is half Pluto's size — 'double dwarf planet')"
-                ]
-              ]
-            },
-            "alert": "⭐ Sun is 99.86% of solar system's mass. Light takes 8 minutes to reach Earth from Sun. Nearest star to Sun = Proxima Centauri (4.24 light years). Milky Way galaxy = 100,000 light years diameter; 100-400 billion stars; Sun is 26,000 light years from centre. Observable universe = 93 billion light years diameter; ~2 trillion galaxies. Big Bang = 13.8 billion years ago."
-          }
-        ]
-      },
-      {
-        "topic_id": "isro",
-        "topic_name": "ISRO and Indian Space Programme",
-        "cards": [
-          {
-            "heading": "ISRO — History, Rockets and Key Programmes",
-            "color": "green",
             "points": [
-              "ISRO: Indian Space Research Organisation; established 1969; headquarters Bengaluru (Dr. Vikram Sarabhai Bhavan); predecessor INCOSPAR founded 1962 by Dr. Vikram Sarabhai (Father of Indian Space Programme) + Dr. Homi Bhabha",
-              "First Indian satellite: Aryabhata (1975; launched by Soviet Union); named after mathematician",
-              "First Indian in space: Rakesh Sharma (1984; Soviet Soyuz T-11; when PM Indira Gandhi asked 'How does India look from space?' he replied 'Saare Jahan Se Achha'); Ravish Malhotra was backup",
-              "Launch vehicles: SLV (Satellite Launch Vehicle) — 1st Indian launch vehicle, 1980; ASLV (Augmented SLV); PSLV (Polar Satellite Launch Vehicle — workhorse; 4-stage alternating solid-liquid; 60+ launches; unprecedented reliability); GSLV (Geosynchronous Satellite Launch Vehicle — cryogenic engine); GSLV Mk III/LVM3 (heaviest; cryogenic; for heaviest payloads; Chandrayaan-3)",
-              "PSLV record: In February 2017, PSLV-C37 launched 104 satellites in one mission — WORLD RECORD at that time",
-              "SHAR: Satish Dhawan Space Centre, Sriharikota (Andhra Pradesh) — main launch site; 2 launch pads. Second launch site being developed at Kulasekarapattinam (Tamil Nadu)",
-              "Vikram Sarabhai Space Centre (VSSC): Thiruvananthapuram — propulsion and launch vehicle development. NRSA/NRSC: Hyderabad — remote sensing. SAC: Ahmedabad — satellite payloads. LEOS: Bengaluru — electro-optical sensors"
-            ]
-          }
-        ]
-      },
-      {
-        "topic_id": "satellites",
-        "topic_name": "Satellites and Applications",
-        "cards": [
-          {
-            "heading": "Types of Satellites and Their Applications",
-            "color": "purple",
-            "table": {
-              "headers": [
-                "Satellite Series",
-                "Type",
-                "Application",
-                "Examples"
-              ],
-              "rows": [
-                [
-                  "INSAT series",
-                  "Geostationary (36,000 km)",
-                  "Communication (TV, telephony), Weather forecasting, Search and Rescue",
-                  "INSAT-1B, INSAT-4B; now merged with GSAT series"
-                ],
-                [
-                  "GSAT series",
-                  "Geostationary",
-                  "Advanced communication, DTH, internet broadband",
-                  "GSAT-11 (heaviest Indian satellite — 5.8 tonnes), GSAT-30"
-                ],
-                [
-                  "IRS series",
-                  "Sun-synchronous (Low Earth Orbit)",
-                  "Remote sensing — agriculture, urban planning, disasters, cartography",
-                  "IRS-1A (1988 — first IRS); Resourcesat, Cartosat, Oceansat"
-                ],
-                [
-                  "NavIC (IRNSS)",
-                  "Geostationary + inclined orbit",
-                  "Indian Navigation system; GPS alternative for India+region; 8 satellites; accuracy < 20m",
-                  "IRNSS-1A to 1H; NavIC now used in smartphones"
-                ],
-                [
-                  "Cartosat series",
-                  "Sun-synchronous",
-                  "High-resolution cartographic imaging; defence applications",
-                  "Cartosat-3 (25 cm resolution — among world's highest)"
-                ],
-                [
-                  "Oceansat series",
-                  "Sun-synchronous",
-                  "Ocean colour monitoring; sea surface temperature; wind speed",
-                  "Oceansat-2, Oceansat-3"
-                ],
-                [
-                  "RISAT series",
-                  "Sun-synchronous (SAR)",
-                  "Radar Imaging Satellite; works in all weather+day+night; disaster monitoring, surveillance",
-                  "RISAT-2BR1"
-                ],
-                [
-                  "EMISAT",
-                  "Low Earth Orbit",
-                  "Electronic Intelligence (ELINT) satellite; defence; launched 2019 (PSLV-C45 with 28 foreign sats)",
-                  "Defence satellite"
-                ]
-              ]
-            },
-            "alert": "⭐ GPS vs NavIC: GPS (USA) = 24 satellites; global; NavIC (India) = 8 satellites; covers India + 1500 km around. Geostationary orbit = 35,786 km; satellite stays fixed over one point (used for TV + communication). LEO = 160-2000 km (spy satellites, ISS, most weather satellites). MEO = 2000-35,786 km (GPS, Galileo). IRNSS/NavIC = India's GPS; compulsory in all smartphones sold in India from 2023."
-          }
-        ]
-      },
-      {
-        "topic_id": "missions",
-        "topic_name": "Key Space Missions — India and World",
-        "cards": [
-          {
-            "heading": "Important Space Missions — India",
-            "color": "orange",
-            "table": {
-              "headers": [
-                "Mission",
-                "Year",
-                "Vehicle",
-                "Achievement"
-              ],
-              "rows": [
-                [
-                  "Aryabhata",
-                  "1975",
-                  "Soviet Kosmos-3M",
-                  "India's first satellite"
-                ],
-                [
-                  "SLV-3 (Rohini)",
-                  "1980",
-                  "SLV-3",
-                  "First launch from Indian soil; Rohini satellite in orbit"
-                ],
-                [
-                  "PSLV-C11 (Chandrayaan-1)",
-                  "2008",
-                  "PSLV-XL",
-                  "India's first Moon mission; confirmed water ice on Moon (Moon Impact Probe); operated 312 days"
-                ],
-                [
-                  "Mangalyaan (MOM)",
-                  "2013",
-                  "PSLV-C25",
-                  "Mars Orbiter Mission; FIRST Asian country to reach Mars orbit; FIRST attempt successful (USA+Russia failed first time); cost $74 million (cheapest Mars mission)"
-                ],
-                [
-                  "Astrosat",
-                  "2015",
-                  "PSLV-C30",
-                  "India's first multi-wavelength space observatory; UV+X-ray astronomy"
-                ],
-                [
-                  "Chandrayaan-2",
-                  "2019",
-                  "GSLV Mk III",
-                  "Orbiter successful (still active); Vikram lander crashed on Moon — 2 km from surface"
-                ],
-                [
-                  "PSLV-C37",
-                  "2017",
-                  "PSLV",
-                  "Launched 104 satellites — World Record at the time (broken by SpaceX 2021)"
-                ],
-                [
-                  "Chandrayaan-3",
-                  "2023",
-                  "LVM3/GSLV Mk III",
-                  "Soft-landed on Moon's SOUTH POLE — FIRST IN WORLD; Vikram lander + Pragyan rover; made India 4th country to soft-land on Moon"
-                ],
-                [
-                  "Aditya-L1",
-                  "2023",
-                  "PSLV-C57",
-                  "India's first solar mission; at L1 Lagrange point; studies Sun's corona and solar wind"
-                ],
-                [
-                  "Gaganyaan",
-                  "2024-25 (planned)",
-                  "LVM3",
-                  "India's first crewed space mission; 3 astronauts 400 km orbit; test flights ongoing (TV-D1 test 2023 successful)"
-                ]
-              ]
-            }
-          },
-          {
-            "heading": "Key World Space Missions",
-            "color": "blue",
-            "table": {
-              "headers": [
-                "Mission",
-                "Agency",
-                "Year",
-                "Achievement"
-              ],
-              "rows": [
-                [
-                  "Sputnik-1",
-                  "USSR",
-                  "1957",
-                  "First artificial satellite ever"
-                ],
-                [
-                  "Vostok-1 (Yuri Gagarin)",
-                  "USSR",
-                  "1961",
-                  "First human in space"
-                ],
-                [
-                  "Apollo-11 (Neil Armstrong)",
-                  "NASA/USA",
-                  "1969",
-                  "First humans to walk on Moon"
-                ],
-                [
-                  "Voyager-1",
-                  "NASA",
-                  "1977",
-                  "First spacecraft to leave Solar System (interstellar space — 2012)"
-                ],
-                [
-                  "Hubble Space Telescope",
-                  "NASA/ESA",
-                  "1990",
-                  "Transformed astronomy; deep field images; galaxies 13+ billion light years away"
-                ],
-                [
-                  "International Space Station (ISS)",
-                  "USA+Russia+ESA+Japan+Canada",
-                  "1998",
-                  "Continuously inhabited since 2000; 400 km orbit; India will dock in future"
-                ],
-                [
-                  "Mars Curiosity Rover",
-                  "NASA",
-                  "2012",
-                  "Most advanced Mars rover; still operational; found organic molecules"
-                ],
-                [
-                  "James Webb Space Telescope",
-                  "NASA/ESA/CSA",
-                  "2022",
-                  "Most powerful space telescope; infrared; images from 13.5 billion years ago"
-                ],
-                [
-                  "Artemis Programme",
-                  "NASA",
-                  "2022-25",
-                  "Return humans to Moon; first woman on Moon planned; Artemis I (2022) successful"
-                ],
-                [
-                  "Chang'e-6 (China)",
-                  "CNSA (China)",
-                  "2024",
-                  "First ever sample return from Moon's far side"
-                ]
-              ]
-            }
+              "Order of planets: My Very Educated Mother Just Served Us Noodles (Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune)",
+              "Largest planet: Jupiter | Smallest: Mercury",
+              "Closest to Sun: Mercury | Farthest: Neptune",
+              "Brightest planet (from Earth): Venus (also called Morning/Evening star)",
+              "Red planet: Mars | Blue planet: Earth | Ringed planet: Saturn",
+              "Only planet rotating east to west (retrograde): Venus (and Uranus — on side)",
+              "Planet with most moons: Saturn (146 confirmed moons, 2023)",
+              "Dwarf planets: Pluto, Eris, Ceres, Makemake, Haumea"
+            ],
+            "alert": "⭐ Pluto was reclassified as dwarf planet by IAU in 2006. Earth's satellite is Moon. Phobos & Deimos are Mars' moons"
           }
         ]
       }
