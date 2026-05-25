@@ -1,1323 +1,581 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UPPCB AEE 2026 — Unit 7: Noise Pollution & Radiation Revision Notes</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
-:root {
-  --header: #1a237e;
-  --header2: #283593;
-  --accent: #0d47a1;
-  --bg: #f0f2f5;
-  --panel: #ffffff;
-  
-  --blue: #0d47a1;
-  --blue-bg: #e3f2fd;
-  --green: #2e7d32;
-  --green-bg: #e8f5e9;
-  --red: #c62828;
-  --red-bg: #ffebee;
-  --orange: #e65100;
-  --orange-bg: #fff3e0;
-  --purple: #4a148c;
-  --purple-bg: #f3e5f5;
-  --cyan: #00838f;
-  --cyan-bg: #e0f2f1;
-  
-  --text: #212121;
-  --text2: #616161;
-  --border: #e0e0e0;
-  --radius: 6px;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Source Sans 3', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-/* ===== HEADER ===== */
-.header {
-  background: linear-gradient(135deg, var(--header) 0%, var(--header2) 100%);
-  color: white;
-  padding: 20px 30px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  letter-spacing: 0.5px;
-}
-
-.header .subtitle {
-  font-size: 13px;
-  opacity: 0.85;
-  font-weight: 400;
-}
-
-/* ===== CONTAINER ===== */
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 30px;
-}
-
-/* ===== TABS ===== */
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.tab-btn {
-  padding: 10px 20px;
-  border: 2px solid var(--border);
-  background: white;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--text2);
-  transition: all 0.3s ease;
-}
-
-.tab-btn.active {
-  background: var(--blue);
-  color: white;
-  border-color: var(--blue);
-}
-
-.tab-btn:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* ===== SECTION HEADERS ===== */
-.section-header {
-  background: linear-gradient(135deg, var(--blue) 0%, #1565c0 100%);
-  color: white;
-  padding: 15px 20px;
-  margin: 25px 0 15px 0;
-  border-radius: var(--radius);
-  font-size: 16px;
-  font-weight: 700;
-  border-left: 5px solid #0d47a1;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.section-header.green {
-  background: linear-gradient(135deg, var(--green) 0%, #1b5e20 100%);
-  border-left-color: var(--green);
-}
-
-.section-header.red {
-  background: linear-gradient(135deg, var(--red) 0%, #ad1457 100%);
-  border-left-color: var(--red);
-}
-
-.section-header.orange {
-  background: linear-gradient(135deg, var(--orange) 0%, #bf360c 100%);
-  border-left-color: var(--orange);
-}
-
-.section-header.purple {
-  background: linear-gradient(135deg, var(--purple) 0%, #6a1b9a 100%);
-  border-left-color: var(--purple);
-}
-
-.section-header.cyan {
-  background: linear-gradient(135deg, var(--cyan) 0%, #00695c 100%);
-  border-left-color: var(--cyan);
-}
-
-.section-header::before {
-  content: "▶";
-  font-size: 14px;
-}
-
-/* ===== BOXES ===== */
-.box {
-  padding: 16px;
-  margin: 12px 0;
-  border-radius: var(--radius);
-  border-left: 4px solid;
-}
-
-.box.formula {
-  background: var(--orange-bg);
-  border-left-color: var(--orange);
-}
-
-.box.formula strong {
-  color: var(--orange);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.box.formula code {
-  font-family: 'JetBrains Mono', monospace;
-  background: rgba(230, 81, 0, 0.1);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--orange);
-  font-weight: 600;
-}
-
-.box.definition {
-  background: var(--blue-bg);
-  border-left-color: var(--blue);
-}
-
-.box.definition strong {
-  color: var(--blue);
-  font-weight: 700;
-}
-
-.box.standard {
-  background: var(--purple-bg);
-  border-left-color: var(--purple);
-}
-
-.box.standard strong {
-  color: var(--purple);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.box.standard code {
-  background: rgba(74, 20, 140, 0.1);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--purple);
-  font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.box.tip {
-  background: var(--green-bg);
-  border-left-color: var(--green);
-}
-
-.box.tip::before {
-  content: "💡 EXAM TIP: ";
-  color: var(--green);
-  font-weight: 700;
-}
-
-.box.warning {
-  background: var(--red-bg);
-  border-left-color: var(--red);
-}
-
-.box.warning::before {
-  content: "⚠ IMPORTANT: ";
-  color: var(--red);
-  font-weight: 700;
-}
-
-.box.cyan {
-  background: var(--cyan-bg);
-  border-left-color: var(--cyan);
-}
-
-.box.cyan strong {
-  color: var(--cyan);
-  font-weight: 700;
-}
-
-/* ===== TABLE ===== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 16px 0;
-  background: white;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-table thead {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--header2) 100%);
-  color: white;
-}
-
-table th {
-  padding: 12px;
-  text-align: left;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.3px;
-}
-
-table td {
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-}
-
-table tr:hover {
-  background: var(--blue-bg);
-}
-
-table tr:last-child td {
-  border-bottom: none;
-}
-
-table code {
-  background: var(--orange-bg);
-  color: var(--orange);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-}
-
-/* ===== LISTS ===== */
-.bullet-list {
-  margin: 12px 0;
-  padding-left: 24px;
-}
-
-.bullet-list li {
-  margin: 8px 0;
-  line-height: 1.6;
-  color: var(--text);
-}
-
-.bullet-list li strong {
-  color: var(--blue);
-  font-weight: 700;
-}
-
-/* ===== GRID ===== */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 16px 0;
-}
-
-.grid.three {
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.grid-item {
-  background: white;
-  padding: 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-}
-
-.grid-item h4 {
-  margin-bottom: 8px;
-  color: var(--blue);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.grid-item code {
-  background: var(--orange-bg);
-  color: var(--orange);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-  font-size: 12px;
-}
-
-/* ===== FOOTER ===== */
-.footer {
-  background: var(--panel);
-  border-top: 2px solid var(--border);
-  padding: 20px 30px;
-  margin-top: 40px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--text2);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .container { padding: 20px; }
-  .grid { grid-template-columns: 1fr; }
-  .grid.three { grid-template-columns: 1fr; }
-  .header h1 { font-size: 18px; }
-  table { font-size: 12px; }
-  table th, table td { padding: 8px; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPPCB AEE Unit 9 - Industrial Pollution & Cleaner Production</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #212121; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #1a237e; text-align: center; margin-bottom: 10px; font-size: 28px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
+        h2 { color: white; background: #283593; padding: 12px; margin: 30px 0 15px 0; border-left: 4px solid #1a237e; }
+        h3 { color: #1a237e; margin: 20px 0 10px 0; font-size: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
+        .content { line-height: 1.8; margin-bottom: 15px; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+        th { background: #283593; color: white; padding: 10px; text-align: left; font-weight: 600; }
+        td { border: 1px solid #ddd; padding: 10px; font-size: 14px; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .highlight { background: #fff3cd; border-left: 4px solid #ff9800; padding: 10px; margin: 10px 0; font-size: 14px; }
+        .standard { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin: 10px 0; font-size: 14px; font-weight: 500; }
+        .formula { background: #f3e5f5; border-left: 4px solid #9c27b0; padding: 10px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 13px; }
+        .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px; margin: 10px 0; font-size: 13px; }
+        .gate-add { background: #ede7f6; border-left: 4px solid #673ab7; padding: 10px; margin: 10px 0; font-size: 14px; }
+        ul, ol { margin-left: 20px; margin-bottom: 10px; }
+        li { margin-bottom: 5px; }
+        .section-intro { background: #f0f2f5; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd; color: #666; font-size: 12px; }
+        .key-point { color: #c62828; font-weight: 600; }
+        .exam-strategy { background: #fff8e1; border: 2px solid #fbc02d; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        @media print { body { background: white; } .container { box-shadow: none; } }
+    </style>
 </head>
 <body>
-
-<!-- HEADER -->
-<div class="header">
-  <h1>📢 UNIT 7: NOISE POLLUTION & RADIATION</h1>
-  <div class="subtitle">UPPCB AEE 2026 Revision Notes | ~3–5 MCQs Expected | High-Frequency Topics</div>
-</div>
-
-<div class="container">
-
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab-btn active" onclick="showTab('fundamentals')">Fundamentals</button>
-  <button class="tab-btn" onclick="showTab('standards')">Standards & Rules</button>
-  <button class="tab-btn" onclick="showTab('control')">Control Methods</button>
-  <button class="tab-btn" onclick="showTab('radiation')">Radiation</button>
-  <button class="tab-btn" onclick="showTab('numericals')">Formula & Numericals</button>
-  <button class="tab-btn" onclick="showTab('quick')">Quick Reference</button>
-</div>
-
-<!-- TAB 1: FUNDAMENTALS -->
-<div id="fundamentals" class="tab-content active">
-
-<div class="section-header">Sound & Noise Basics</div>
-
-<div class="box definition">
-  <strong>Sound:</strong> Acoustic waves causing vibration in air, measurable and predictable
-</div>
-
-<div class="box definition">
-  <strong>Noise:</strong> Unwanted sound that is objectionable, annoying, or harmful to health
-</div>
-
-<ul class="bullet-list">
-  <li><strong>Frequency:</strong> 20 Hz–20 kHz (human hearing range)</li>
-  <li><strong>Infrasound:</strong> &lt;20 Hz (ex: earthquakes, volcano rumble)</li>
-  <li><strong>Ultrasound:</strong> &gt;20 kHz (ex: bats, medical ultrasound)</li>
-  <li><strong>Sound Pressure Level (SPL):</strong> Quantifies acoustic pressure relative to reference pressure (20 µPa)</li>
-</ul>
-
-<div class="section-header green">Decibel (dB) Scale</div>
-
-<div class="box formula">
-  <strong>Sound Pressure Level (SPL) Formula:</strong>
-  <code>SPL (dB) = 20 × log₁₀ (P / P₀)</code>
-  <div style="margin-top: 8px;">
-    where P = measured sound pressure (Pa) | P₀ = reference pressure (20 µPa)
-  </div>
-</div>
-
-<div class="box tip">
-SPL is logarithmic, not linear. Every 10 dB increase = 10× sound pressure; 3 dB ≈ just noticeable change
-</div>
-
-<div class="grid">
-  <div class="grid-item">
-    <h4>Rustle of leaves</h4>
-    <code>10–20 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Normal conversation</h4>
-    <code>50–60 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Vacuum cleaner</h4>
-    <code>70 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Lawn mower</h4>
-    <code>80–90 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Chainsaw</h4>
-    <code>100 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Jet engine</h4>
-    <code>130 dB</code>
-  </div>
-</div>
-
-<div class="section-header green">A-Weighting (dBA)</div>
-
-<ul class="bullet-list">
-  <li><strong>Why A-weighting?</strong> Human ear is not equally sensitive to all frequencies; we hear mid-frequencies (1–5 kHz) louder than very low or very high frequencies</li>
-  <li><strong>A-weighted scale:</strong> Emphasizes frequencies 1–5 kHz; de-emphasizes &lt;500 Hz and &gt;6 kHz</li>
-  <li><strong>Notation:</strong> dBA or LAeq (for energy-equivalent level)</li>
-  <li><strong>Example:</strong> 80 dB @ 100 Hz sounds quieter than 80 dB @ 1 kHz in real life; A-weighting captures this</li>
-</ul>
-
-<div class="box warning">
-UPPCB Noise Rules 2000 use <strong>dBA</strong> for all environmental noise standards—not dB. Always assume dBA for exam questions unless stated otherwise.
-</div>
-
-<div class="section-header green">Noise Descriptors</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Term</th>
-      <th>Full Name</th>
-      <th>Definition & Use</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>SPL</code></td>
-      <td>Sound Pressure Level</td>
-      <td>Instantaneous acoustic pressure; rarely used for environmental noise</td>
-    </tr>
-    <tr>
-      <td><code>Leq</code></td>
-      <td>Energy-Equivalent Level</td>
-      <td>Constant sound level over time T that contains same total energy as actual fluctuating noise; <strong>most used in UPPCB</strong></td>
-    </tr>
-    <tr>
-      <td><code>L10</code></td>
-      <td>Level Exceeded 10% of Time</td>
-      <td>Sound level exceeded for 10% of measurement period (loud peaks); used for traffic noise</td>
-    </tr>
-    <tr>
-      <td><code>L90</code></td>
-      <td>Level Exceeded 90% of Time</td>
-      <td>Background/ambient level (quiet periods); 90% of time noise is above this level</td>
-    </tr>
-    <tr>
-      <td><code>Ldn or Ld/n</code></td>
-      <td>Day-Night Level</td>
-      <td>24-hr weighted level; nighttime (10 PM–6 AM) levels penalized +10 dB to account for sleep disruption</td>
-    </tr>
-    <tr>
-      <td><code>Lnite</code></td>
-      <td>Nighttime Level</td>
-      <td>Average level during night (10 PM–6 AM)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Leq Formula (Simplified):</strong><br>
-  <code>Leq = 10 × log₁₀ [ΣPᵢ² / Pref² / T]</code><br>
-  where i = measurement intervals; T = total duration
-</div>
-
-<div class="section-header green">Inverse-Square Law</div>
-
-<ul class="bullet-list">
-  <li><strong>Sound intensity decreases with distance:</strong> I ∝ 1/r²</li>
-  <li><strong>SPL reduction from point source:</strong> For every doubling of distance, SPL drops ~6 dB</li>
-  <li><strong>Formula:</strong> <code>SPL₁ – SPL₂ = 20 × log₁₀ (r₂/r₁)</code></li>
-  <li><strong>Example:</strong> 80 dB @ 10 m → 74 dB @ 20 m (6 dB drop)</li>
-</ul>
-
-<div class="box tip">
-High-yield topic for numericals. If a question gives SPL @ one distance, ask for SPL @ another—use inverse-square law.
-</div>
-
-<div class="section-header green">Major Noise Sources</div>
-
-<div class="grid">
-  <div class="grid-item">
-    <h4>Industrial</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Textile mills (100 dB)</li>
-      <li>Steel plants (90–100 dB)</li>
-      <li>Mining & quarrying (85–95 dB)</li>
-      <li>Chemical factories (80–95 dB)</li>
-    </ul>
-  </div>
-  <div class="grid-item">
-    <h4>Traffic</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Road (70–85 dB)</li>
-      <li>Rail (80–100 dB)</li>
-      <li>Airport (140–180 dB at source)</li>
-      <li>Heavy vehicles (80–90 dB)</li>
-    </ul>
-  </div>
-  <div class="grid-item">
-    <h4>Construction</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Demolition (110–130 dB)</li>
-      <li>Pile driving (100–110 dB)</li>
-      <li>Concrete cutting (85–95 dB)</li>
-      <li>Drilling (80–90 dB)</li>
-    </ul>
-  </div>
-</div>
-
-</div>
-
-<!-- TAB 2: STANDARDS & RULES -->
-<div id="standards" class="tab-content">
-
-<div class="section-header red">Noise Pollution Rules 2000 (UPPCB Standard)</div>
-
-<div class="box standard">
-  <strong>Four Zone Classification:</strong><br>
-  <code>1. Residential | 2. Commercial | 3. Industrial | 4. Silence Zone (Hospital/School)</code>
-</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Zone Type</th>
-      <th>Leq Daytime<br>(6 AM–10 PM)</th>
-      <th>Leq Nighttime<br>(10 PM–6 AM)</th>
-      <th>Land Use</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential</strong></td>
-      <td><code>55 dBA</code></td>
-      <td><code>45 dBA</code></td>
-      <td>Colonies, residential areas</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial</strong></td>
-      <td><code>65 dBA</code></td>
-      <td><code>55 dBA</code></td>
-      <td>Market areas, offices, shops</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial</strong></td>
-      <td><code>75 dBA</code></td>
-      <td><code>70 dBA</code></td>
-      <td>Factories, workshops, industrial estates</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone</strong></td>
-      <td><code>50 dBA</code></td>
-      <td><code>40 dBA</code></td>
-      <td>Hospitals, schools, senior citizen homes, courts</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box warning">
-Nighttime limit is always <strong>10 dB lower than daytime</strong> (except day/night levels which use +10 dB penalty). Exam often tests zone-matching and time-based standards.
-</div>
-
-<div class="section-header red">UPPCB Enforcement & Penalties</div>
-
-<ul class="bullet-list">
-  <li><strong>Monitoring:</strong> NAMP (National Ambient Monitoring Programme) uses CAAQMS-type networks</li>
-  <li><strong>Non-compliance:</strong> Fine up to ₹1 lakh, imprisonment up to 3 months, or both (Environment Act 1986)</li>
-  <li><strong>Residential violation:</strong> If industrial zone SPL (75 dB) measured in residential area (limit 55 dB), prosecution under Water Act/EP Act</li>
-  <li><strong>Construction hours:</strong> Restricted to 6 AM–10 PM in residential areas (further restricted in silence zones)</li>
-</ul>
-
-<div class="box definition">
-  <strong>Designated Silence Zones (Section 3, Noise Rules 2000):</strong><br>
-  Areas within 100 m of hospitals, schools, courts, senior citizen homes—no amplified music, DJs, horn honking allowed any time
-</div>
-
-<div class="section-header red">Festival/Event Exemptions (Partial)</div>
-
-<ul class="bullet-list">
-  <li>Temporary exemptions may be granted for festivals/cultural events</li>
-  <li>Events must NOT operate 10 PM–6 AM in residential areas</li>
-  <li>SPL &lt;75 dBA still enforced in commercial zones during events</li>
-  <li>Zero tolerance in silence zones (hospitals, courts) even during festivals</li>
-</ul>
-
-</div>
-
-<!-- TAB 3: CONTROL METHODS -->
-<div id="control" class="tab-content">
-
-<div class="section-header orange">Noise Control Hierarchy</div>
-
-<ol class="bullet-list" style="list-style: decimal;">
-  <li><strong>Elimination:</strong> Remove or shut down source (ideal but often impractical)</li>
-  <li><strong>Substitution:</strong> Replace loud equipment with quieter alternatives (ex: electric vehicles vs IC engines)</li>
-  <li><strong>Reduction at Source:</strong> Mufflers, silencers, low-vibration machines</li>
-  <li><strong>Path Reduction:</strong> Barriers, distance, absorption (most practical for existing sources)</li>
-  <li><strong>Personal Protection:</strong> Ear plugs, earmuffs (last resort; personal responsibility)</li>
-</ol>
-
-<div class="section-header orange">Noise Reduction Techniques</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Technique</th>
-      <th>Mechanism</th>
-      <th>Reduction (dB)</th>
-      <th>Applications</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Enclosure</strong></td>
-      <td>Rigid box around source; sound trapped inside</td>
-      <td>10–30 dBA</td>
-      <td>Compressors, generators, diesel pumps</td>
-    </tr>
-    <tr>
-      <td><strong>Muffler/Silencer</strong></td>
-      <td>Absorptive material; expansion chambers</td>
-      <td>10–20 dBA</td>
-      <td>Vehicle exhaust, air compressor outlets</td>
-    </tr>
-    <tr>
-      <td><strong>Damping</strong></td>
-      <td>Viscoelastic coating on vibrating surfaces; energy dissipated as heat</td>
-      <td>5–15 dBA</td>
-      <td>Metal sheets, engine blocks, ductwork</td>
-    </tr>
-    <tr>
-      <td><strong>Isolation (Vibration)</strong></td>
-      <td>Elastic supports (springs, rubber pads) decouple equipment from floor</td>
-      <td>10–20 dBA</td>
-      <td>Motors, pumps, compressors, machinery mounted on resilient pads</td>
-    </tr>
-    <tr>
-      <td><strong>Acoustic Barriers</strong></td>
-      <td>Dense, rigid walls block/reflect sound; gap reduces effectiveness</td>
-      <td>5–15 dBA per barrier</td>
-      <td>Highway noise barriers, factory perimeter walls</td>
-    </tr>
-    <tr>
-      <td><strong>Absorption</strong></td>
-      <td>Porous materials (foam, mineral wool, fiberglass) convert sound to heat</td>
-      <td>5–20 dBA</td>
-      <td>Acoustic ceiling tiles, wall panels, pipe lagging</td>
-    </tr>
-    <tr>
-      <td><strong>Distance/Zoning</strong></td>
-      <td>Inverse-square law: 6 dB per distance doubling</td>
-      <td>6 dBA per 2× distance</td>
-      <td>Urban planning, industrial zone designation</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box formula">
-  <strong>Transmission Loss (TL) for Barriers:</strong>
-  <code>TL = 20 × log₁₀ (2πfm/ρc) + 10 × log₁₀ (S/A)</code><br>
-  where f = frequency (Hz) | m = surface mass (kg/m²) | ρc = acoustic impedance | S/A = geometric factor
-  <div style="margin-top: 8px; font-size: 12px; color: #d32f2f;">
-    <strong>Practical:</strong> Doubling barrier thickness increases TL by ~3 dB
-  </div>
-</div>
-
-<div class="box definition">
-  <strong>Insertion Loss (IL):</strong> Actual SPL reduction achieved by a barrier in real environment (accounts for diffraction, ground effects); typically 5–10 dBA less than TL
-</div>
-
-<div class="section-header orange">Workplace Noise Exposure Limits</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Daily Exposure Time</th>
-      <th>Max Permissible Level (dBA)</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>8 hours (40 hr/week)</td>
-      <td><code>85 dBA</code></td>
-      <td>Safe daily limit; hearing protection required above this</td>
-    </tr>
-    <tr>
-      <td>4 hours</td>
-      <td><code>88 dBA</code></td>
-      <td>Reduce exposure time by half = increase limit by 3 dB</td>
-    </tr>
-    <tr>
-      <td>2 hours</td>
-      <td><code>91 dBA</code></td>
-      <td>Exchange rule: 3 dB for every 50% reduction in exposure</td>
-    </tr>
-    <tr>
-      <td>1 hour</td>
-      <td><code>94 dBA</code></td>
-      <td>Short-term exposures</td>
-    </tr>
-    <tr>
-      <td>&lt;15 min</td>
-      <td><code>∼100 dBA</code></td>
-      <td>Very short exposures; cumulative hearing damage still possible</td>
-    </tr>
-    <tr style="background: #ffebee;">
-      <td>Peak/Impulse</td>
-      <td><code>140 dB</code></td>
-      <td><strong>Never exceed</strong> (gunfire, explosions, impact); risk of acoustic trauma</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box tip">
-3 dB exchange rule is high-yield for numericals. If SPL increases by 3 dB, safe exposure time reduces by 50%.
-</div>
-
-<div class="section-header orange">Hearing Protection Equipment (HPE)</div>
-
-<ul class="bullet-list">
-  <li><strong>Foam Earplugs:</strong> NRR 20–33 dB; foam must be compressed, inserted, held in place 10 sec; single-use</li>
-  <li><strong>Earmuffs:</strong> NRR 20–30 dB; reusable; less effective if hair/glasses on seal surface</li>
-  <li><strong>Dual Protection (plugs + muffs):</strong> NRR ≈ higher NRR + 5 dB (not additive)</li>
-  <li><strong>Canal Caps:</strong> NRR 20–25 dB; intermediate between plugs and muffs</li>
-  <li><strong>Custom-molded earplugs:</strong> Higher comfort, NRR 20–30 dB; expensive</li>
-</ul>
-
-<div class="box definition">
-  <strong>NRR (Noise Reduction Rating):</strong> Attenuation in dB under ideal lab conditions; real-world reduction is 50–75% of stated NRR (due to improper insertion, movement, etc.)
-</div>
-
-</div>
-
-<!-- TAB 4: RADIATION -->
-<div id="radiation" class="tab-content">
-
-<div class="section-header purple">Ionising vs Non-Ionising Radiation</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Energy</th>
-      <th>Examples</th>
-      <th>Effect on Matter</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Ionising</strong></td>
-      <td>&gt;10 eV (high)</td>
-      <td>Alpha (α), Beta (β), Gamma (γ), X-rays, cosmic rays</td>
-      <td>Knock electrons off atoms → ions; DNA damage; cancer risk</td>
-    </tr>
-    <tr style="background: #e0f2f1;">
-      <td><strong>Non-Ionising</strong></td>
-      <td>&lt;10 eV (low)</td>
-      <td>Radio, microwave, IR, visible, UV-A</td>
-      <td>Heat or excite electrons; less cell damage than ionising</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Ionising Radiation Details</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Radiation Type</th>
-      <th>Composition</th>
-      <th>Penetration</th>
-      <th>Shielding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Alpha (α)</strong></td>
-      <td>Helium nucleus (2p + 2n)</td>
-      <td>Paper/skin only</td>
-      <td>Paper, clothing (easily stopped)</td>
-    </tr>
-    <tr>
-      <td><strong>Beta (β)</strong></td>
-      <td>Electron or positron</td>
-      <td>Plastic/aluminum</td>
-      <td>Aluminum foil, acrylic (~1 cm)</td>
-    </tr>
-    <tr>
-      <td><strong>Gamma (γ)</strong></td>
-      <td>Photon (electromagnetic wave)</td>
-      <td>Lead/concrete (penetrating)</td>
-      <td>Lead (5 cm), concrete (30 cm)</td>
-    </tr>
-    <tr>
-      <td><strong>X-rays</strong></td>
-      <td>Photon (produced by electron collision)</td>
-      <td>Lead/concrete</td>
-      <td>Lead aprons, concrete walls</td>
-    </tr>
-    <tr>
-      <td><strong>Neutrons</strong></td>
-      <td>Uncharged particles</td>
-      <td>Water/paraffin (highly penetrating)</td>
-      <td>Hydrogenous material (water, paraffin)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Radiation Units & Measurements</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Unit</th>
-      <th>Full Name</th>
-      <th>Measures</th>
-      <th>SI Unit</th>
-      <th>Legacy Unit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Gray (Gy)</strong></td>
-      <td>Absorbed Dose</td>
-      <td>Energy absorbed per unit mass (1 J/kg)</td>
-      <td><code>1 Gy</code></td>
-      <td>100 Rad</td>
-    </tr>
-    <tr>
-      <td><strong>Sievert (Sv)</strong></td>
-      <td>Dose Equivalent</td>
-      <td>Biological effect; accounts for radiation type quality factor (QF)</td>
-      <td><code>1 Sv</code></td>
-      <td>100 Rem</td>
-    </tr>
-    <tr>
-      <td><strong>Becquerel (Bq)</strong></td>
-      <td>Activity</td>
-      <td>Decays per second (1 decay/s)</td>
-      <td><code>1 Bq</code></td>
-      <td>1 Ci = 3.7×10¹⁰ Bq</td>
-    </tr>
-    <tr>
-      <td><strong>Curie (Ci)</strong></td>
-      <td>Activity (Legacy)</td>
-      <td>3.7×10¹⁰ decays/second</td>
-      <td>—</td>
-      <td><code>1 Ci = 37 GBq</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Quality Factor (QF):</strong><br>
-  <code>Sv = Gy × QF</code><br>
-  Accounts for type of radiation. Ex: Alpha has QF=20 (most damaging if ingested); Beta/Gamma QF=1
-</div>
-
-<div class="section-header purple">Dose Limits (AERB — Atomic Energy Regulatory Board)</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th>Annual Limit (mSv)</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #e8f5e9;">
-      <td><strong>General Public</strong></td>
-      <td><code>1 mSv</code></td>
-      <td>Safe lifetime exposure without significant health risk</td>
-    </tr>
-    <tr style="background: #fff3e0;">
-      <td><strong>Occupational (Radiation Worker)</strong></td>
-      <td><code>50 mSv</code></td>
-      <td>Annual limit for people working with radiation</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Pregnant Worker</strong></td>
-      <td><code>5 mSv</code> (once declared)</td>
-      <td>During pregnancy, limit reduces 10-fold to protect fetus</td>
-    </tr>
-    <tr style="background: #ffebee;">
-      <td><strong>Acute Exposure</strong></td>
-      <td><code>&gt;6 Sv</code> (whole body)</td>
-      <td>Lethal within hours; multi-organ failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box warning">
-<strong>Natural Background Radiation:</strong> ~2–3 mSv/year (varies by location). Radon, cosmic rays, soil uranium are major contributors. UPPCB exams may ask distinction between occupational limit (50 mSv) and public limit (1 mSv).
-</div>
-
-<div class="section-header purple">Radioactive Waste Classification (DAE/AERB)</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Waste Class</th>
-      <th>Activity Level</th>
-      <th>Half-Life</th>
-      <th>Storage Duration</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Exempted (E)</strong></td>
-      <td>&lt;1 Bq/g</td>
-      <td>—</td>
-      <td>No special storage; disposal as regular waste</td>
-    </tr>
-    <tr>
-      <td><strong>Low-Level Waste (LLW)</strong></td>
-      <td>1–10⁵ Bq/g</td>
-      <td>Short-lived (&lt;30 yr)</td>
-      <td>6–10 years decay storage → shallow land burial</td>
-    </tr>
-    <tr>
-      <td><strong>Intermediate-Level Waste (ILW)</strong></td>
-      <td>10⁵–10⁷ Bq/g</td>
-      <td>Long-lived</td>
-      <td>Concrete/bitumen matrix; stored 30–50 years</td>
-    </tr>
-    <tr>
-      <td><strong>High-Level Waste (HLW)</strong></td>
-      <td>&gt;10⁷ Bq/g</td>
-      <td>Very long-lived (&gt;1000 yr)</td>
-      <td>Deep geological repository (India: BARC research)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Non-Ionising Radiation Hazards</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Frequency Range</th>
-      <th>Health Effects</th>
-      <th>Sources</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Ultraviolet (UV)</strong></td>
-      <td>10–400 nm</td>
-      <td>Skin cancer (melanoma), cataracts, immune suppression</td>
-      <td>Sun, welding arcs, germicidal lamps</td>
-    </tr>
-    <tr>
-      <td><strong>Infrared (IR)</strong></td>
-      <td>700 nm–1 mm</td>
-      <td>Thermal burns, cataract (chronic exposure)</td>
-      <td>Heat lamps, furnaces, welding</td>
-    </tr>
-    <tr>
-      <td><strong>Microwave (MW)</strong></td>
-      <td>1 mm–1 m (~1–300 GHz)</td>
-      <td>Dielectric heating; cataracts, reproductive effects (high exposure)</td>
-      <td>Mobile towers, radar, microwave ovens</td>
-    </tr>
-    <tr>
-      <td><strong>Radiofrequency (RF)</strong></td>
-      <td>30 kHz–300 MHz</td>
-      <td>Thermal effects (low); possible non-thermal effects under study</td>
-      <td>Radio/TV broadcasting, wireless networks</td>
-    </tr>
-    <tr>
-      <td><strong>Electromagnetic Fields (EMF)</strong></td>
-      <td>Extremely Low Frequency (ELF) &lt;300 Hz</td>
-      <td>Childhood leukemia (disputed); neuro-behavioral effects</td>
-      <td>Power lines, electrical appliances, transformers</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Specific Absorption Rate (SAR):</strong> Power absorbed per unit mass (W/kg). Mobile phones limited to 2 W/kg (ICNIRP); India uses 2 W/kg for head/trunk
-</div>
-
-<div class="section-header purple">Atomic Energy Act, 1962 & AERB</div>
-
-<ul class="bullet-list">
-  <li><strong>Atomic Energy Act 1962:</strong> Central legislation; authorizes production, use, possession of radioactive materials in India</li>
-  <li><strong>AERB (Atomic Energy Regulatory Board):</strong> Statutory body under DAE; sets radiation safety codes, issues licenses, inspects facilities, prosecutes violations</li>
-  <li><strong>Nuclear Power Corporation (NPC):</strong> Operates 24 reactors; generates 3.3% of India's electricity</li>
-  <li><strong>BARC (Bhabha Atomic Research Centre):</strong> R&D; manages waste, decommissioning</li>
-  <li><strong>Radiation Safety Rules 2004:</strong> Prescribe dose limits, contamination levels, waste management protocols</li>
-</ul>
-
-<div class="box warning">
-AERB is <strong>NOT</strong> CPCB. Radiation is federal (DAE/AERB), not state (UPPCB) jurisdiction. But UPPCB exams test basic knowledge of AERB limits & Atomic Energy Act.
-</div>
-
-</div>
-
-<!-- TAB 5: NUMERICALS & FORMULAS -->
-<div id="numericals" class="tab-content">
-
-<div class="section-header cyan">High-Frequency Formulae</div>
-
-<div class="box formula">
-  <strong>1. SPL Formula (Basic)</strong>
-  <code>SPL (dB) = 20 × log₁₀ (P / P₀)</code>
-  <strong>Example:</strong> If P = 2 Pa and P₀ = 20 µPa = 2×10⁻⁵ Pa:
-  <code>SPL = 20 × log₁₀ (2 / 2×10⁻⁵) = 20 × log₁₀ (10⁵) = 20 × 5 = 100 dB</code>
-</div>
-
-<div class="box formula">
-  <strong>2. SPL Difference from Distance (Inverse-Square Law)</strong>
-  <code>ΔL = 20 × log₁₀ (r₁ / r₂)</code>
-  <strong>Example:</strong> 80 dB @ 10 m. Find SPL @ 20 m:
-  <code>ΔL = 20 × log₁₀ (10 / 20) = 20 × log₁₀ (0.5) = 20 × (−0.301) = −6.02 ≈ −6 dB</code><br>
-  <code>SPL @ 20m = 80 − 6 = 74 dB</code>
-</div>
-
-<div class="box formula">
-  <strong>3. Addition of Multiple Sound Sources (SPL)</strong>
-  <code>Ltotal = 10 × log₁₀ (ΣAntilog(Li/10))</code><br>
-  Or: <code>Ltotal = 10 × log₁₀ (Σ10^(Li/10))</code>
-  <strong>Example:</strong> Two machines: 80 dB + 80 dB:
-  <code>Ltotal = 10 × log₁₀ (10^(80/10) + 10^(80/10)) = 10 × log₁₀ (10⁸ + 10⁸) = 10 × log₁₀ (2×10⁸)</code><br>
-  <code>= 10 × (8 + 0.301) = 10 × 8.301 = 83.01 dB</code><br>
-  <strong>Rule:</strong> Adding two equal SPLs increases by 3 dB. Two 80 dB sources = 83 dB (not 160!)
-</div>
-
-<div class="box formula">
-  <strong>4. 3 dB Exchange Rule (Occupational Exposure)</strong>
-  For every <strong>3 dB increase</strong> in SPL, <strong>safe exposure time reduces by 50%</strong>:
-  <code>T₁ × 2^((L₂−L₁)/3) = T₂</code>
-  <strong>Example:</strong> Safe limit @ 85 dB = 8 hr. Safe limit @ 88 dB?
-  <code>T₂ = 8 × 2^((88−85)/3) = 8 × 2¹ = 16 hours ??? (wrong direction)</code><br>
-  <strong>Correct:</strong> @ 88 dB (3 dB higher), exposure time is HALF: 8 hr / 2 = 4 hr
-</div>
-
-<div class="box formula">
-  <strong>5. Transmission Loss (Barrier) — Simple Form</strong>
-  <code>TL ≈ 20 × log₁₀ (f × m) + constant</code><br>
-  where f = frequency (Hz) | m = mass/unit area (kg/m²)
-  <strong>Practical Rule:</strong> Doubling mass → +3 dB TL. Doubling frequency → +6 dB TL
-</div>
-
-<div class="box formula">
-  <strong>6. Leq (Energy-Equivalent Level)</strong>
-  <code>Leq = 10 × log₁₀ [1/T × ∫₀ᵀ 10^(L(t)/10) dt]</code><br>
-  <strong>Simplified (discrete intervals):</strong> <code>Leq = 10 × log₁₀ [1/n × Σ10^(Li/10)]</code><br>
-  <strong>Example:</strong> Noise measured in 5 consecutive hours: 70, 75, 80, 75, 70 dB:
-  <code>Leq = 10 × log₁₀ [1/5 × (10^7 + 10^7.5 + 10^8 + 10^7.5 + 10^7)]</code><br>
-  <code>= 10 × log₁₀ [1/5 × (1×10⁷ + 3.16×10⁷ + 10×10⁷ + 3.16×10⁷ + 1×10⁷)]</code><br>
-  <code>= 10 × log₁₀ [1/5 × 18.32×10⁷] = 10 × log₁₀ (3.664×10⁷) = 75.64 dB</code>
-</div>
-
-<div class="box tip">
-Leq gives weighted average that accounts for energy over time. Higher peaks contribute MORE because of exponential nature (10^x).
-</div>
-
-<div class="section-header cyan">Sample Numericals</div>
-
-<div class="box cyan">
-  <strong>Q1: Inverse-Square Law</strong><br>
-  A diesel generator produces 90 dB @ 5 m. What is SPL @ 50 m distance?
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> ΔL = 20 × log₁₀ (5/50) = 20 × log₁₀ (0.1) = 20 × (−1) = −20 dB<br>
-    SPL @ 50 m = 90 − 20 = <strong>70 dB</strong>
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q2: Addition of Sources</strong><br>
-  Three identical machines each produce 80 dB. Find combined SPL.
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Ltotal = 10 × log₁₀ (3 × 10^(80/10)) = 10 × log₁₀ (3 × 10⁸)<br>
-    = 10 × (8 + 0.477) = 10 × 8.477 = <strong>84.77 dB</strong><br>
-    <strong>Rule:</strong> Each source adds: first 80 dB, 2nd adds 3 dB → 83 dB, 3rd adds 1.76 dB → 84.76 dB
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q3: Noise Standards Violation</strong><br>
-  A factory operates @ 80 dB (measured Leq) in a residential zone. Check compliance.
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Residential zone daytime limit = 55 dBA (Noise Rules 2000)<br>
-    Measured = 80 dB → Exceeds by 25 dB<br>
-    <strong>Verdict: VIOLATION</strong> → Fine + closure + improvement notice
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q4: Occupational Exposure</strong><br>
-  A worker is exposed to 88 dB Leq daily. Safe exposure limit @ 85 dB = 8 hr. How many hours is safe @ 88 dB?
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Difference = 88 − 85 = 3 dB → Time reduces by 50%<br>
-    Safe time @ 88 dB = 8 × 0.5 = <strong>4 hours</strong>
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q5: Dose Equivalent</strong><br>
-  A worker receives 5 mGy of alpha radiation. Calculate dose equivalent in Sv (QF for alpha = 20).
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Sv = Gy × QF = 0.005 × 20 = <strong>0.1 Sv = 100 mSv</strong><br>
-    This exceeds annual occupational limit (50 mSv) → Immediate medical monitoring required
-  </div>
-</div>
-
-</div>
-
-<!-- TAB 6: QUICK REFERENCE -->
-<div id="quick" class="tab-content">
-
-<div class="section-header" style="background: linear-gradient(135deg, #1a237e 0%, #283593 100%);">⚡ Must-Memorise Standards & Values</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Value</th>
-      <th>Reference / Zone</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential Day</strong></td>
-      <td><code>55 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential Night</strong></td>
-      <td><code>45 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial Day</strong></td>
-      <td><code>65 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial Night</strong></td>
-      <td><code>55 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial Day</strong></td>
-      <td><code>75 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial Night</strong></td>
-      <td><code>70 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone Day</strong></td>
-      <td><code>50 dBA</code></td>
-      <td>Hospital/School/Court | Anytime 6 AM–10 PM</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone Night</strong></td>
-      <td><code>40 dBA</code></td>
-      <td>Hospital/School/Court | Anytime 10 PM–6 AM</td>
-    </tr>
-    <tr style="background: #ffe0b2;">
-      <td><strong>Safe Occupational (8 hr/day)</strong></td>
-      <td><code>85 dBA</code></td>
-      <td>Factories, construction; hearing protection req'd above</td>
-    </tr>
-    <tr style="background: #ffe0b2;">
-      <td><strong>Peak/Impulse (Unsafe)</strong></td>
-      <td><code>140 dB</code></td>
-      <td>Gunfire, explosions; risk of acoustic trauma</td>
-    </tr>
-    <tr style="background: #c8e6c9;">
-      <td><strong>Public Rad. Dose Limit</strong></td>
-      <td><code>1 mSv/yr</code></td>
-      <td>AERB | General population</td>
-    </tr>
-    <tr style="background: #c8e6c9;">
-      <td><strong>Occupational Rad. Limit</strong></td>
-      <td><code>50 mSv/yr</code></td>
-      <td>AERB | Radiation workers</td>
-    </tr>
-    <tr style="background: #b3e5fc;">
-      <td><strong>Lethal Dose (Acute)</strong></td>
-      <td><code>&gt; 6 Sv</code></td>
-      <td>Whole-body exposure; multi-organ failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header" style="background: linear-gradient(135deg, #e65100 0%, #bf360c 100%);">🔊 Noise Reduction Quick Tips</div>
-
-<ul class="bullet-list">
-  <li><strong>Inverse-Square Law:</strong> 6 dB reduction per doubling of distance</li>
-  <li><strong>Addition Rule:</strong> Two equal sources = +3 dB (not 2×). Adding 10 sources ≈ +10 dB</li>
-  <li><strong>Enclosure:</strong> 10–30 dB reduction (most effective)</li>
-  <li><strong>Barrier:</strong> 5–15 dB (depends on frequency & mass)</li>
-  <li><strong>Muffler:</strong> 10–20 dB (typical for exhaust)</li>
-  <li><strong>Time Limit (3 dB rule):</strong> +3 dB → ÷2 time; −3 dB → ×2 time</li>
-</ul>
-
-<div class="section-header" style="background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%);">☢️ Radiation Quick Facts</div>
-
-<ul class="bullet-list">
-  <li><strong>Alpha:</strong> Stopped by paper; dangerous if ingested/inhaled (QF=20)</li>
-  <li><strong>Beta:</strong> Stopped by aluminum; less damaging than alpha (QF=1)</li>
-  <li><strong>Gamma:</strong> Requires lead/concrete; most penetrating (QF=1)</li>
-  <li><strong>LLW:</strong> Store 6–10 years → decay → regular waste</li>
-  <li><strong>HLW:</strong> Deep geological storage required (thousands of years)</li>
-  <li><strong>Public Limit:</strong> 1 mSv/yr; Worker: 50 mSv/yr</li>
-  <li><strong>Background:</strong> 2–3 mSv/yr (natural; varies by location)</li>
-</ul>
-
-<div class="section-header" style="background: linear-gradient(135deg, #00838f 0%, #00695c 100%);">📋 Exam Strategies for Unit 7</div>
-
-<ol class="bullet-list" style="list-style: decimal;">
-  <li><strong>Zone Standards:</strong> Memorise 4 zones + day/night splits. 80% of MCQs test standard matching.</li>
-  <li><strong>Inverse-Square Law:</strong> Most common numerical. Practice 5 problems on distance-based SPL reduction.</li>
-  <li><strong>Addition of Sources:</strong> Know the 10×log(n) rule for n identical sources.</li>
-  <li><strong>Occupational Limits:</strong> 85 dB safe for 8 hr; 3 dB rule for time reduction.</li>
-  <li><strong>Radiation Units:</strong> Distinguish Gray (absorbed), Sievert (effect), Becquerel (activity).</li>
-  <li><strong>AERB vs CPCB:</strong> Radiation = federal (AERB); Noise = state (UPPCB). Different jurisdictions.</li>
-  <li><strong>Control Methods:</strong> Know Enclosure > Barrier > Isolation > Absorption ranking for reduction.</li>
-</ol>
-
-<div class="box warning">
-<strong>Common Mistakes to Avoid:</strong><br>
-❌ Confusing dB with dBA (A-weighted)<br>
-❌ Adding SPLs linearly (80+80 ≠ 160; it's 83)<br>
-❌ Forgetting day/night split (Residential = 55/45, not uniform)<br>
-❌ Mixing AERB (radiation) with CPCB (air/water)<br>
-❌ Thinking noise barriers give full TL (real-world IL is 5–10 dB less due to diffraction)
-</div>
-
-</div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  ✅ Revision notes compiled for UPPCB AEE 2026 | Unit 7: Noise Pollution & Radiation<br>
-  📚 Source: Noise Rules 2000, Atomic Energy Act 1962, AERB regulations, CPCB guidelines | Last updated: April 2026
-</div>
-
+    <div class="container">
+        <h1>UNIT 9: INDUSTRIAL POLLUTION &amp; CLEANER PRODUCTION</h1>
+        <div class="subtitle">UPPCB AEE 2026 | 4-6 Questions | 16-24 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
+
+        <h2>SECTION 1: SECTOR-SPECIFIC INDUSTRIAL POLLUTION</h2>
+        <div class="section-intro">
+            Pollution profile, key pollutants, treatment options, and CPCB standards by sector. Most-asked sectors: pulp &amp; paper, tannery, textile, sugar, distillery, electroplating, thermal power, cement.
+        </div>
+
+        <h3>1.1 17 CATEGORIES OF HIGHLY POLLUTING INDUSTRIES (CPCB)</h3>
+        <div class="standard">
+            CPCB classifies industries into Red / Orange / Green / White categories based on Pollution Index (2016 revision; PI = f of air, water, hazardous waste, and resource consumption).
+            <ul>
+                <li><strong>Red category (PI &gt; 60):</strong> 60 sectors — most polluting; CTE/CTO with strict conditions; not allowed in residential areas</li>
+                <li><strong>Orange (PI 41–59):</strong> 83 sectors — moderately polluting</li>
+                <li><strong>Green (PI 21–40):</strong> 63 sectors — relatively less polluting</li>
+                <li><strong>White (PI ≤ 20):</strong> 36 sectors — practically non-polluting; <strong>only intimation needed, no consent required</strong> (e.g., solar PV cell manufacture, chalk-making, biscuits without baking)</li>
+            </ul>
+            <strong>"17 highly polluting" originally identified categories</strong> (Indo-German project 1991; the basis of MINAS — Minimum National Standards):
+            <ol>
+                <li>Aluminium</li><li>Caustic soda</li><li>Cement</li><li>Copper smelter</li>
+                <li>Distillery</li><li>Dyes &amp; dye intermediates</li><li>Fertiliser</li>
+                <li>Integrated iron &amp; steel</li><li>Leather (tanneries)</li><li>Oil refinery</li>
+                <li>Pesticides</li><li>Petrochemicals</li><li>Pharmaceuticals</li>
+                <li>Pulp &amp; paper</li><li>Sugar</li><li>Thermal power</li><li>Zinc smelter</li>
+            </ol>
+        </div>
+
+        <h3>1.2 PULP &amp; PAPER INDUSTRY</h3>
+        <div class="content">
+            <strong>Process:</strong> Wood / bagasse / agro-residue → debarking → chipping → pulping (kraft / soda / sulphite) → washing → bleaching → paper machine.
+            <strong>Key pollutants:</strong>
+            <ul>
+                <li><strong>Wastewater:</strong> high BOD, COD, TSS, dark colour from <strong>lignin</strong>; AOX (Adsorbable Organic Halides) from chlorine bleaching; high TDS</li>
+                <li><strong>Air:</strong> SO₂, H₂S, mercaptans (TRS — Total Reduced Sulphur in kraft); PM</li>
+                <li><strong>Solid waste:</strong> primary sludge, biological sludge, lime mud, bark</li>
+                <li>Water consumption: 100–250 m³/t paper (large mills); &gt; 200 m³/t (small)</li>
+            </ul>
+            <strong>Treatment:</strong> primary clarifier → activated sludge / ASB → tertiary (chemical coagulation, MBR for water reuse). Black liquor recovery — <strong>Tomlinson recovery boiler</strong> (recovers Na, S; produces steam).<br/>
+            <strong>Cleaner production:</strong> ECF (Elemental Chlorine Free) and TCF (Totally Chlorine Free) bleaching; closed-loop water; agro-residue use.
+        </div>
+        <div class="standard">
+            <strong>CPCB standards (large pulp &amp; paper, &gt; 24,000 t/yr):</strong>
+            <ul>
+                <li>BOD &lt; 30 mg/L (inland); COD &lt; 250; TSS &lt; 100; pH 6.5–8.5</li>
+                <li><strong>AOX &lt; 1.0 kg/t product</strong> (large mills, ECF mandated)</li>
+                <li>Water consumption norm: &lt; 130 m³/t (large mills); &lt; 50 m³/t (agro-based)</li>
+                <li>SO₂ &lt; 200 mg/Nm³; PM &lt; 150 mg/Nm³; TRS &lt; 5 ppm</li>
+            </ul>
+        </div>
+
+        <h3>1.3 LEATHER / TANNERY</h3>
+        <div class="content">
+            <strong>Process:</strong> raw hide/skin → soaking → liming &amp; unhairing → fleshing → deliming → bating → pickling → <strong>chrome tanning</strong> → re-tanning → dyeing → fatliquoring → finishing.
+            <strong>Key pollutants:</strong>
+            <ul>
+                <li><strong>Wastewater:</strong> very high BOD (~1500–6000 mg/L), COD, sulphide (from unhairing — toxic), <strong>Cr³⁺/Cr⁶⁺</strong> (~3000–4000 mg/L Cr in spent chrome liquor), high TDS, TSS, ammonia</li>
+                <li><strong>Solid waste:</strong> chrome shavings, fleshing waste, hair, sludge (50–80 kg/t hide processed)</li>
+                <li><strong>Air:</strong> H₂S, ammonia, VOCs from finishing solvents</li>
+            </ul>
+            <strong>Treatment:</strong> stream segregation (chrome stream → precipitation as Cr(OH)₃ at pH 8–9 → recovery; sulphide stream → catalytic oxidation with Mn²⁺) → equalisation → primary clarifier → ASP → tertiary (RO/NF for ZLD). Most Indian tanneries use <strong>CETPs</strong> (Kanpur Jajmau, Vellore Ranipet, Erode, Tamil Nadu).<br/>
+            <strong>Cleaner production:</strong> chrome recycling (precipitation &amp; redissolution in H₂SO₄), low-chrome syntans, vegetable tanning, salt-free curing, splitting before tanning, enzyme-assisted unhairing.
+        </div>
+        <div class="standard">
+            <strong>CPCB standards (tannery):</strong>
+            <ul>
+                <li>BOD 30 mg/L; COD 250; TSS 100; pH 6.5–8.5 (inland)</li>
+                <li><strong>Total Cr &lt; 2.0 mg/L; Cr⁶⁺ &lt; 0.1 mg/L</strong> (very strict)</li>
+                <li>Sulphide &lt; 2.0; oil &amp; grease &lt; 10; chloride &lt; 1000 (inland)</li>
+                <li><strong>ZLD mandated</strong> for tannery clusters (NGT Kanpur 2020 order)</li>
+            </ul>
+        </div>
+
+        <h3>1.4 TEXTILE INDUSTRY (DYEING &amp; PROCESSING)</h3>
+        <div class="content">
+            <strong>Process:</strong> sizing → desizing → scouring → bleaching → mercerising → dyeing → printing → finishing.
+            <strong>Key pollutants:</strong>
+            <ul>
+                <li><strong>Wastewater:</strong> COD high, BOD moderate (BOD/COD 0.2–0.4 — refractory), strong colour, high pH (8–11), high TDS (5000–25000 mg/L), heavy metals (Cu, Cr, Zn from dyes), surfactants</li>
+                <li>Synthetic dyes: azo (~70% of dyes), reactive, vat, disperse, direct, sulphur</li>
+                <li>Water consumption: 200–300 L/kg fabric</li>
+            </ul>
+            <strong>Treatment:</strong> equalisation → coagulation/flocculation (alum/PAC, FeCl₃) → DAF → ASP/MBR → tertiary (carbon adsorption / ozonation / Fenton oxidation for colour) → RO + MEE for ZLD.<br/>
+            <strong>Tirupur ZLD model (Tamil Nadu):</strong> SC order 2011; ~750 dyeing units forced to install ZLD (RO + evaporator + crystalliser); recovers salt for reuse. World's first major textile ZLD cluster.
+        </div>
+
+        <h3>1.5 SUGAR &amp; DISTILLERY</h3>
+        <div class="content">
+            <strong>Sugar industry:</strong>
+            <ul>
+                <li>Wastewater: cooling, condensate, mill house, boiler — BOD 1000–1500 mg/L; SS, oil, grease</li>
+                <li>Air: bagasse-fired boilers (PM)</li>
+                <li><strong>Bagasse cogeneration:</strong> India sugar mills produce ~9 GW; major RE source</li>
+                <li>Press mud (~3% of cane) → composting / biomethanation</li>
+            </ul>
+            <strong>Distillery (molasses-based):</strong>
+            <ul>
+                <li><strong>Spent wash:</strong> very high BOD (40,000–60,000 mg/L) &amp; COD (80,000–100,000 mg/L); dark brown (melanoidins from caramelisation)</li>
+                <li>Generation: 8–15 L/L alcohol produced; ~14 BL/year India</li>
+                <li>Treatment: anaerobic digestion (UASB / lagoon) → biogas recovery (28–35 m³/m³ spent wash) → aerobic polishing → composting (with press mud) OR <strong>incineration</strong></li>
+                <li><strong>ZLD mandated for distilleries since 2015</strong> (CPCB, Ganga Action Plan); concentration &amp; incineration of slop</li>
+            </ul>
+        </div>
+
+        <h3>1.6 ELECTROPLATING &amp; METAL FINISHING</h3>
+        <div class="content">
+            <strong>Process:</strong> degreasing → pickling (HCl/H₂SO₄) → rinsing → electroplating bath (Cr/Ni/Cu/Zn/Cd/Au) → rinsing → drying.<br/>
+            <strong>Key pollutants:</strong>
+            <ul>
+                <li><strong>Wastewater:</strong> Cr⁶⁺, Cd, Ni, Cu, Zn, Pb, CN⁻ (from cyanide baths); acids/alkalis; rinse waters with low metal but high volume</li>
+                <li>BOD/COD low (inorganic); TDS high</li>
+            </ul>
+            <strong>Treatment (segregated streams):</strong>
+            <ul>
+                <li><strong>Cr⁶⁺ stream:</strong> reduce with NaHSO₃ at pH 2–3 to Cr³⁺; then precipitate at pH 8–9</li>
+                <li><strong>Cyanide stream:</strong> alkaline chlorination — NaOCl + NaOH at pH &gt; 10; first to cyanate (CNO⁻), then to N₂ + CO₂</li>
+                <li><strong>Acid/alkali:</strong> neutralisation</li>
+                <li><strong>Heavy metals:</strong> hydroxide precipitation at <strong>pH 8–10</strong> (Cd 11; Zn 9.5; Ni 10.8; Cu 6.5; Pb 9.0)</li>
+                <li>Polishing: ion exchange, RO, electrodialysis</li>
+            </ul>
+        </div>
+
+        <h3>1.7 THERMAL POWER PLANTS</h3>
+        <div class="content">
+            <strong>Pollutants &amp; sources:</strong>
+            <ul>
+                <li><strong>Air:</strong> PM (fly ash), SO₂, NOₓ, Hg, CO₂; from coal combustion</li>
+                <li><strong>Water:</strong> cooling tower blowdown, ash pond overflow, boiler blowdown, oily water</li>
+                <li><strong>Solid waste:</strong> fly ash + bottom ash (~25–35% of coal mass; India produces ~270 MT/yr)</li>
+                <li><strong>Thermal pollution:</strong> condenser cooling water raises river/sea temperature</li>
+            </ul>
+            <strong>Control technologies:</strong>
+            <ul>
+                <li>ESP (mandatory; &gt; 99% PM removal)</li>
+                <li>FGD — wet limestone scrubber (CaCO₃ + SO₂ → CaSO₄·2H₂O); efficiency &gt; 95%</li>
+                <li>SCR (NH₃ + V₂O₅/TiO₂) or low-NOₓ burners + OFA for NOₓ</li>
+                <li>Fly ash utilisation: cement (substitute for clinker), bricks, road construction, mine filling, agriculture</li>
+                <li>Cooling tower (closed-cycle) replacing once-through to reduce thermal pollution</li>
+            </ul>
+        </div>
+        <div class="standard">
+            <strong>MoEFCC norms — TPP installed 2017 onwards:</strong>
+            <ul>
+                <li>PM: 30 mg/Nm³</li>
+                <li>SO₂: 100 mg/Nm³ (units &gt; 500 MW); &lt; 600 mg/Nm³ for older units</li>
+                <li>NOₓ: 100 mg/Nm³ (new); 300–600 (old)</li>
+                <li>Hg: 0.03 mg/Nm³</li>
+                <li>Water consumption: &lt; 3 m³/MWh (new); 3.5 m³/MWh (existing)</li>
+                <li><strong>Fly ash utilisation:</strong> 100% target (Fly Ash Utilisation Rules, 2009; latest amendment 2021 — extended to 5-year cycle)</li>
+            </ul>
+        </div>
+
+        <h3>1.8 CEMENT INDUSTRY</h3>
+        <div class="content">
+            <strong>Pollutants:</strong>
+            <ul>
+                <li><strong>Air:</strong> PM (kiln, raw mill, cooler), SO₂ (from raw mat S), NOₓ (high T flames), CO₂ (calcination + fuel)</li>
+                <li><strong>CO₂ footprint:</strong> ~0.85 t CO₂ / t cement (60% from calcination, 40% from fuel) → cement = ~7% of global CO₂</li>
+                <li>Negligible wastewater (dry process)</li>
+            </ul>
+            <strong>Control:</strong> bag filter (very high efficiency, &lt; 30 mg/Nm³); ESP for kiln; low-NOₓ burners; SNCR; <strong>cement kiln co-processing</strong> of hazardous waste, plastics, RDF (substitutes coal — Indian Thermal Substitution Rate ~5% target 25%).<br/>
+            <strong>Cleaner production:</strong> blended cements (PPC with fly ash, PSC with slag) — Indian cement uses ~35% of fly ash; reduces clinker factor.
+        </div>
+        <div class="standard">
+            <strong>CPCB stack norms (cement):</strong>
+            <ul>
+                <li>PM: 30 mg/Nm³</li>
+                <li>NOₓ: 600 mg/Nm³</li>
+                <li>SO₂: 100 mg/Nm³ (without pyrite); 700–1000 (with pyrite in raw mat)</li>
+            </ul>
+        </div>
+
+        <h3>1.9 OTHER MAJOR SECTORS — QUICK REFERENCE</h3>
+        <table>
+            <tr><th>Sector</th><th>Key pollutants</th><th>Key control</th></tr>
+            <tr><td>Iron &amp; Steel</td><td>PM (sinter, BOF), SO₂, NOₓ, dioxins, COD/CN⁻ from coke oven</td><td>ESP, bag filter, gas scrubbing, water recycling</td></tr>
+            <tr><td>Refinery</td><td>SO₂, NOₓ, VOCs (BTEX, fugitive), wastewater (oil, phenol, sulphides)</td><td>Hydrotreating, FCC scrubbing, API separator + biological + tertiary</td></tr>
+            <tr><td>Petrochemical</td><td>VOCs, hazardous solvents, mixed wastewater</td><td>RTO/catalytic oxidation; biological + advanced oxidation</td></tr>
+            <tr><td>Pesticide</td><td>Organochlorine, organophosphate; HW</td><td>Incineration; biological + AOP</td></tr>
+            <tr><td>Pharmaceutical</td><td>Spent solvents (acetone, methanol, toluene, DMF), high COD/TDS, antibiotic residues</td><td>Solvent recovery (distillation), MEE, incineration of concentrate</td></tr>
+            <tr><td>Fertiliser (urea)</td><td>NH₃, urea dust, NOₓ; high TDS wastewater</td><td>Scrubbers, condensate stripping, biological</td></tr>
+            <tr><td>Aluminium</td><td>Red mud (Bayer process), F⁻, PFC (CF₄, C₂F₆ in smelting — high GWP)</td><td>Wet scrubbers, dry scrubbing of F⁻; red mud reuse research</td></tr>
+            <tr><td>Brick kilns</td><td>PM (BC esp.), SO₂, CO₂; ~250,000 kilns in India</td><td>Zigzag firing, VSBK (Vertical Shaft Brick Kiln), induced draft</td></tr>
+        </table>
+
+        <h2>SECTION 2: ZERO LIQUID DISCHARGE (ZLD)</h2>
+
+        <h3>2.1 ZLD CONCEPT</h3>
+        <div class="content">
+            <strong>ZLD:</strong> wastewater treatment process designed to eliminate any liquid discharge from a facility. All water is recovered &amp; reused; only solid waste (salt, sludge) leaves the system.<br/>
+            <strong>Drivers in India:</strong>
+            <ul>
+                <li>NGT/SC orders; CPCB directions (textile, distillery, tannery clusters)</li>
+                <li>Water scarcity in industrial regions</li>
+                <li>Reduces pollution load on water bodies (Ganga, Tirupur Noyyal)</li>
+                <li>High TDS effluents not amenable to discharge under CPCB norms</li>
+            </ul>
+        </div>
+
+        <h3>2.2 TYPICAL ZLD TRAIN</h3>
+        <div class="formula">
+            Raw effluent → Equalisation → Primary clarifier → Biological (ASP/MBR) → Tertiary (sand filter, GAC) → Ultrafiltration (UF) → Reverse Osmosis (RO) → MEE (Multiple-Effect Evaporator) → ATFD (Agitated Thin Film Dryer) / Crystalliser → Dry salt + sludge<br/><br/>
+            Recovery: 60–95% as treated water for reuse; 5–40% as solid salt/sludge to landfill.
+        </div>
+
+        <h3>2.3 KEY UNIT OPERATIONS IN ZLD</h3>
+        <table>
+            <tr><th>Unit</th><th>Function</th><th>Performance</th></tr>
+            <tr><td>UF (Ultrafiltration)</td><td>Removes SS, colloids, bacteria; protects RO from fouling</td><td>Pore size 0.001–0.1 µm; 90–98% TSS removal</td></tr>
+            <tr><td>RO (Reverse Osmosis)</td><td>Salt rejection; concentrates TDS</td><td>95–99.5% salt rejection; recovery 70–80% (single pass)</td></tr>
+            <tr><td>HPRO / DTRO</td><td>High pressure / Disc-Tube RO; for high-TDS reject</td><td>Up to 100,000 mg/L feed; 50–60% recovery</td></tr>
+            <tr><td>MEE</td><td>Multi-stage vacuum evaporation; latent heat reused</td><td>2–6 effects; concentrates 5–10× to ~25–40% solids</td></tr>
+            <tr><td>MVR (Mechanical Vapor Recompression)</td><td>Energy-efficient evaporation using compressor</td><td>~50% lower energy than MEE</td></tr>
+            <tr><td>ATFD</td><td>Final drying of concentrate; thin film on heated surface</td><td>Output: dry salt powder (90%+ solids)</td></tr>
+            <tr><td>Crystalliser</td><td>Forced circulation; produces salt crystals</td><td>For pure NaCl recovery</td></tr>
+        </table>
+
+        <h3>2.4 ECONOMICS &amp; CHALLENGES</h3>
+        <div class="content">
+            <ul>
+                <li><strong>CAPEX:</strong> ₹15–40 crore per MLD (vs ₹5–10 cr for conventional ETP)</li>
+                <li><strong>OPEX:</strong> ₹150–300/m³ (vs ₹15–40/m³ for conventional)</li>
+                <li><strong>Energy:</strong> 20–35 kWh/m³ wastewater (vs 1–2 for conventional)</li>
+                <li>Recovered salt often impure (mixed Na, Cl, SO₄, organics) — limited resale</li>
+                <li>Dependence on grid power → indirect carbon footprint</li>
+                <li>Successful: Tirupur dyeing cluster, distilleries; struggling: small textile / tannery units</li>
+            </ul>
+        </div>
+
+        <h2>SECTION 3: COMMON EFFLUENT TREATMENT PLANT (CETP)</h2>
+
+        <h3>3.1 CETP CONCEPT</h3>
+        <div class="standard">
+            <strong>CETP:</strong> centralised facility for collective treatment of wastewater from cluster of small &amp; medium industries (SSI/MSME) in industrial estates / clusters. Justified when individual ETPs are uneconomical or technically inadequate.
+            <ul>
+                <li>Each member unit must achieve <strong>"inlet standards"</strong> (pre-treatment) before discharge to CETP</li>
+                <li>CETP achieves CPCB <strong>outlet standards</strong> (Schedule VI)</li>
+                <li>Funded by member units (capital + O&amp;M cess); often partly subsidised under MoEFCC scheme</li>
+                <li>Operated by SPV / cooperative / private operator</li>
+            </ul>
+            <strong>Notable Indian CETPs:</strong> Vapi (Gujarat — chemicals/dyes), Ankleshwar (chemicals), Naroda &amp; Vatva (Ahmedabad), Tarapur (Maharashtra), Kanpur Jajmau (tanneries), Tirupur (textile), Vellore Ranipet (tanneries), Manali Chennai (chemicals), Patancheru (Hyderabad — pharma).
+        </div>
+
+        <h3>3.2 CETP DESIGN</h3>
+        <div class="content">
+            <strong>Typical train:</strong> Equalisation (24–48 hr; pH/composition averaging) → Neutralisation → Primary clarifier → Biological (ASP / MBBR) → Secondary clarifier → Tertiary (sand filter, AC) → Disinfection → Discharge / Reuse.<br/>
+            For high-TDS / refractory streams: + RO + MEE (ZLD).<br/>
+            <strong>Common challenges:</strong> highly variable inlet (composition, pH, BOD); shock loads; non-compliance by member units (toxic shock); sludge management.
+        </div>
+
+        <h2>SECTION 4: CLEANER PRODUCTION (CP) &amp; END-OF-PIPE</h2>
+
+        <h3>4.1 CP — DEFINITION (UNEP, 1990)</h3>
+        <div class="standard">
+            <strong>Cleaner Production:</strong> "continuous application of an integrated, preventive environmental strategy to processes, products and services to increase eco-efficiency and reduce risks to humans and the environment".
+            <ul>
+                <li><strong>For processes:</strong> conserve raw materials, water, energy; eliminate toxic substances; reduce waste at source</li>
+                <li><strong>For products:</strong> reduce environmental impact across life cycle (DfE — Design for Environment)</li>
+                <li><strong>For services:</strong> incorporate environmental concerns in design &amp; delivery</li>
+            </ul>
+        </div>
+
+        <h3>4.2 CP HIERARCHY (PREVENTION vs END-OF-PIPE)</h3>
+        <div class="formula">
+            <strong>Preferred order (top to bottom):</strong><br/>
+            1. <strong>Source reduction</strong> (best — prevents waste generation)<br/>
+            &nbsp;&nbsp;&nbsp;a. Input substitution (less toxic raw materials)<br/>
+            &nbsp;&nbsp;&nbsp;b. Process change (better technology)<br/>
+            &nbsp;&nbsp;&nbsp;c. Good housekeeping (training, maintenance)<br/>
+            &nbsp;&nbsp;&nbsp;d. Product reformulation<br/>
+            2. <strong>Recycling on-site</strong> (closed loop)<br/>
+            3. <strong>Recycling off-site</strong><br/>
+            4. <strong>Treatment</strong> (end-of-pipe)<br/>
+            5. <strong>Disposal</strong> (least preferred)
+        </div>
+        <div class="content">
+            <strong>End-of-Pipe (EOP):</strong> traditional approach — treat waste after generation. Disadvantages:
+            <ul>
+                <li>Increases production cost without revenue</li>
+                <li>Transfers pollution between media (e.g., wastewater → sludge → air during incineration)</li>
+                <li>Doesn't address root cause</li>
+                <li>Often retrofitted (sub-optimal)</li>
+            </ul>
+            <strong>CP advantages:</strong> reduces waste &amp; cost simultaneously; competitive advantage; regulatory compliance; better worker safety; reduced liability.
+        </div>
+
+        <h3>4.3 CP ASSESSMENT METHODOLOGY (UNEP/UNIDO 6 phases)</h3>
+        <ol>
+            <li><strong>Planning &amp; Organisation:</strong> management commitment, team formation</li>
+            <li><strong>Pre-assessment:</strong> walk-through audit, identify focus areas</li>
+            <li><strong>Assessment:</strong> material &amp; energy balance; identify CP options</li>
+            <li><strong>Feasibility analysis:</strong> technical, economic (NPV/IRR), environmental</li>
+            <li><strong>Implementation:</strong> install &amp; operationalise selected options</li>
+            <li><strong>Continuation:</strong> monitor, document, replicate</li>
+        </ol>
+
+        <h3>4.4 LIFE CYCLE ASSESSMENT (LCA) FOR INDUSTRIAL PRODUCTS</h3>
+        <div class="content">
+            (Detailed coverage in Unit 6.)
+            <ul>
+                <li>ISO 14040/14044 — 4 phases: Goal &amp; Scope → LCI → LCIA → Interpretation</li>
+                <li>Helps choose between alternative materials/processes (e.g., glass vs PET; aluminium vs steel)</li>
+                <li>Common impact categories: GWP, AP, EP, ODP, HTP, water footprint</li>
+                <li>Software: SimaPro, GaBi, OpenLCA</li>
+                <li>Use in Eco-design, EPDs, green procurement</li>
+            </ul>
+        </div>
+
+        <h2>SECTION 5: GREEN CHEMISTRY &amp; INDUSTRIAL ECOLOGY</h2>
+
+        <h3>5.1 GREEN CHEMISTRY — 12 PRINCIPLES (Anastas &amp; Warner, 1998)</h3>
+        <div class="standard">
+            <ol>
+                <li><strong>Prevention</strong> — better to prevent waste than treat after</li>
+                <li><strong>Atom Economy</strong> — synthesis methods should incorporate all materials in final product</li>
+                <li><strong>Less Hazardous Synthesis</strong> — use/generate substances with little or no toxicity</li>
+                <li><strong>Designing Safer Chemicals</strong> — products should fulfil function with minimal toxicity</li>
+                <li><strong>Safer Solvents &amp; Auxiliaries</strong> — avoid auxiliary substances (solvents, separation agents); if used, make innocuous</li>
+                <li><strong>Energy Efficiency</strong> — minimise energy requirements; conduct at ambient T &amp; P where possible</li>
+                <li><strong>Renewable Feedstocks</strong> — raw material from renewable rather than depleting sources</li>
+                <li><strong>Reduce Derivatives</strong> — minimise blocking groups, protection/deprotection (each step uses reagents &amp; generates waste)</li>
+                <li><strong>Catalysis</strong> — catalytic reagents (selective) superior to stoichiometric</li>
+                <li><strong>Design for Degradation</strong> — products break down to innocuous products at end-of-life</li>
+                <li><strong>Real-time Analysis</strong> — for pollution prevention; in-process monitoring</li>
+                <li><strong>Inherently Safer Chemistry</strong> — choose substances/forms to minimise potential for chemical accidents (releases, explosions, fires)</li>
+            </ol>
+        </div>
+        <div class="formula">
+            <strong>Atom Economy</strong> = (MW of desired product / Σ MW of all reactants) × 100<br/>
+            Example: Diels-Alder → 100% atom economy; Wittig reaction → low (~20%) atom economy<br/><br/>
+            <strong>E-Factor</strong> (Sheldon, 1992) = mass of waste / mass of product<br/>
+            Bulk chemicals: &lt; 1 | Fine chemicals: 5–50 | Pharma: 25–100+
+        </div>
+
+        <h3>5.2 INDUSTRIAL ECOLOGY (IE)</h3>
+        <div class="content">
+            <strong>Concept:</strong> industrial systems modelled on natural ecosystems — waste of one process becomes input for another (closed loops, no waste).<br/>
+            <strong>Foundational concept:</strong> Frosch &amp; Gallopoulos, Scientific American 1989.
+        </div>
+
+        <h3>5.3 KALUNDBORG SYMBIOSIS (DENMARK) — CASE STUDY</h3>
+        <div class="standard">
+            <strong>World's first industrial symbiosis;</strong> evolved organically since 1960s; now 30+ exchanges among 12+ partners.<br/>
+            <strong>Key exchanges:</strong>
+            <ul>
+                <li>Asnaes coal power plant → steam to oil refinery (Statoil), pharmaceutical (Novo Nordisk), district heating (Kalundborg town); fly ash → cement; gypsum (from FGD) → wallboard (Gyproc)</li>
+                <li>Statoil refinery → cooling water to power plant; sulphur → sulphuric acid plant</li>
+                <li>Novo Nordisk → biomass sludge → fertiliser to farms</li>
+                <li>Gyproc → uses waste gypsum from power FGD</li>
+            </ul>
+            <strong>Reported savings:</strong> CO₂ (~635,000 t/yr), water (~3 million m³/yr), several materials including oil &amp; gypsum.
+        </div>
+
+        <h3>5.4 OTHER IE CONCEPTS</h3>
+        <ul>
+            <li><strong>Eco-Industrial Park (EIP):</strong> planned industrial cluster designed for symbiosis (vs Kalundborg's organic evolution)</li>
+            <li><strong>Circular Economy:</strong> broader concept — design out waste, keep products in use, regenerate natural systems (Ellen MacArthur Foundation)</li>
+            <li><strong>Cradle-to-Cradle (C2C):</strong> materials flow in two cycles — biological (compost) &amp; technical (closed-loop recycle); no "waste" (McDonough &amp; Braungart)</li>
+            <li><strong>Material Flow Analysis (MFA):</strong> quantitative tracking of materials through economy</li>
+            <li><strong>Substance Flow Analysis (SFA):</strong> for specific substances (Hg, Pb, P)</li>
+        </ul>
+
+        <h2>SECTION 6: CARBON TRADING &amp; CDM</h2>
+
+        <h3>6.1 KYOTO MECHANISMS &amp; INDIA</h3>
+        <div class="content">
+            Kyoto Protocol (1997, in force 2005) introduced 3 flexibility mechanisms:
+            <ul>
+                <li><strong>Clean Development Mechanism (CDM):</strong> Annex I countries fund GHG reduction projects in non-Annex I → earn <strong>CER (Certified Emission Reduction)</strong> credits (1 CER = 1 t CO₂e)</li>
+                <li><strong>Joint Implementation (JI):</strong> between two Annex I countries; ERUs (Emission Reduction Units)</li>
+                <li><strong>Emissions Trading (ET):</strong> trading of AAUs (Assigned Amount Units)</li>
+            </ul>
+            <strong>India under CDM:</strong> 2nd largest host of CDM projects globally (after China); ~1700 registered (mostly RE, energy efficiency, biomass, methane recovery from landfills).
+        </div>
+
+        <h3>6.2 PARIS AGREEMENT — ARTICLE 6 MECHANISMS (post-Kyoto)</h3>
+        <div class="content">
+            <ul>
+                <li><strong>Article 6.2:</strong> bilateral trading of <strong>ITMOs (Internationally Transferred Mitigation Outcomes)</strong></li>
+                <li><strong>Article 6.4:</strong> centralised mechanism (successor to CDM); rules finalised at COP26 Glasgow (2021); operationalised at COP28 (2023) &amp; COP29 (Baku 2024)</li>
+                <li><strong>Article 6.8:</strong> non-market approaches</li>
+            </ul>
+        </div>
+
+        <h3>6.3 INDIAN CARBON MARKET — CCTS 2023</h3>
+        <div class="standard">
+            <strong>Carbon Credit Trading Scheme (CCTS):</strong>
+            <ul>
+                <li>Notified June 2023 under Energy Conservation (Amendment) Act 2022</li>
+                <li>Two segments:
+                    <ul>
+                        <li><strong>Compliance segment:</strong> obligated entities (energy-intensive industries) must surrender carbon credits equivalent to their target</li>
+                        <li><strong>Voluntary segment:</strong> non-obligated entities/projects</li>
+                    </ul>
+                </li>
+                <li>Administered by <strong>BEE</strong>; regulated by <strong>CERC</strong>; trading on power exchanges (IEX, PXIL)</li>
+                <li>Builds on PAT (Perform, Achieve, Trade) Scheme — ESCerts (Energy Saving Certificates)</li>
+                <li><strong>RECs (Renewable Energy Certificates):</strong> for RE generation; tradable</li>
+            </ul>
+        </div>
+
+        <h3>6.4 OTHER MARKET-BASED INSTRUMENTS</h3>
+        <ul>
+            <li><strong>Carbon Tax:</strong> directly taxes CO₂ emissions per tonne (e.g., Sweden ~$130/t — highest globally; India had Coal Cess ₹400/t, subsumed under GST 2017)</li>
+            <li><strong>Cap-and-Trade:</strong> regulator caps total emissions; emitters trade allowances (EU ETS — largest globally; California, China)</li>
+            <li><strong>Carbon Border Adjustment Mechanism (CBAM):</strong> EU 2026 — tariff on imported carbon-intensive goods (steel, aluminium, cement, fertiliser, electricity, hydrogen); affects Indian exports</li>
+            <li><strong>Voluntary Carbon Market:</strong> Verra (VCS), Gold Standard, ACR, CAR — corporate offset purchases</li>
+        </ul>
+
+        <h2>HIGH-YIELD MCQ REVISION LIST</h2>
+        <div class="exam-strategy">
+            <h3>MUST-KNOW FACTS (High Probability Qs):</h3>
+            <ul>
+                <li>✓ <strong>17 highly polluting industries</strong> identified by CPCB (Indo-German 1991)</li>
+                <li>✓ <strong>CPCB categories:</strong> Red, Orange, Green, White (PI 60 / 41-59 / 21-40 / ≤ 20); White needs only intimation</li>
+                <li>✓ <strong>Pulp &amp; paper:</strong> AOX, lignin, BOD/COD; AOX limit &lt; 1.0 kg/t product</li>
+                <li>✓ <strong>Tannery:</strong> Cr⁶⁺ &lt; 0.1 mg/L; sulphide &lt; 2.0; CETP common; ZLD mandated for clusters</li>
+                <li>✓ <strong>Cr⁶⁺ reduction:</strong> NaHSO₃ at pH 2–3; then precipitate as Cr(OH)₃ at pH 8–9</li>
+                <li>✓ <strong>Cyanide treatment:</strong> alkaline chlorination — NaOCl + NaOH at pH &gt; 10</li>
+                <li>✓ <strong>Heavy metal precipitation pH:</strong> 8–10 as hydroxides</li>
+                <li>✓ <strong>Distillery spent wash:</strong> COD 80,000–100,000 mg/L; BOD 40,000–60,000; ZLD mandated 2015</li>
+                <li>✓ <strong>Tirupur textile cluster:</strong> first major textile ZLD (SC order 2011)</li>
+                <li>✓ <strong>FGD reaction:</strong> CaCO₃ + SO₂ + ½O₂ + 2H₂O → CaSO₄·2H₂O + CO₂</li>
+                <li>✓ <strong>TPP norms 2017:</strong> PM 30, SO₂ 100, NOₓ 100, Hg 0.03 mg/Nm³</li>
+                <li>✓ <strong>Fly ash utilisation:</strong> 100% target; Fly Ash Rules 2009 (amended 2021)</li>
+                <li>✓ <strong>Cement CO₂:</strong> ~0.85 t/t; ~7% of global emissions; 60% calcination + 40% fuel</li>
+                <li>✓ <strong>Cement stack norms:</strong> PM 30 mg/Nm³</li>
+                <li>✓ <strong>Cleaner Production hierarchy:</strong> Source reduction → Recycle on-site → Recycle off-site → Treatment → Disposal</li>
+                <li>✓ <strong>UNEP CP definition (1990)</strong></li>
+                <li>✓ <strong>Green Chemistry: 12 principles</strong> (Anastas &amp; Warner, 1998)</li>
+                <li>✓ <strong>Atom Economy:</strong> (MW product / MW reactants) × 100</li>
+                <li>✓ <strong>E-Factor (Sheldon, 1992):</strong> mass of waste / mass of product</li>
+                <li>✓ <strong>Industrial Ecology — Kalundborg Symbiosis</strong> (Denmark, since 1960s)</li>
+                <li>✓ <strong>Kyoto Protocol mechanisms:</strong> CDM, JI, ET</li>
+                <li>✓ <strong>India 2nd largest CDM host</strong> after China</li>
+                <li>✓ <strong>Paris Article 6:</strong> 6.2 (ITMOs), 6.4 (centralised), 6.8 (non-market)</li>
+                <li>✓ <strong>Indian CCTS 2023:</strong> notified June 2023; under EC (Amend) Act 2022; administered by BEE</li>
+                <li>✓ <strong>EU CBAM</strong> from 2026 — affects steel, aluminium, cement, fertiliser, electricity, hydrogen</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>MEDIUM-YIELD TOPICS:</h3>
+            <ul>
+                <li>• Tomlinson recovery boiler (kraft pulp)</li>
+                <li>• ECF vs TCF bleaching</li>
+                <li>• Water consumption norms by sector (130 m³/t paper; 3 m³/MWh TPP)</li>
+                <li>• Bagasse cogeneration (~9 GW Indian capacity)</li>
+                <li>• Distillery biogas yield (28–35 m³/m³ spent wash)</li>
+                <li>• Brick kiln types (zigzag, VSBK, FCBTK)</li>
+                <li>• Aluminium PFC emissions (CF₄, C₂F₆ — high GWP)</li>
+                <li>• Refinery wastewater (API separator)</li>
+                <li>• ZLD typical CAPEX/OPEX (15-40 cr/MLD; 150-300 ₹/m³)</li>
+                <li>• MEE vs MVR comparison</li>
+                <li>• ATFD function (final dryer)</li>
+                <li>• CETP examples (Vapi, Ankleshwar, Tirupur, Kanpur)</li>
+                <li>• CP UNEP/UNIDO 6 phases</li>
+                <li>• LCA software (SimaPro, GaBi, OpenLCA)</li>
+                <li>• Ellen MacArthur Foundation (Circular Economy)</li>
+                <li>• Cradle-to-Cradle (McDonough &amp; Braungart)</li>
+                <li>• MFA vs SFA</li>
+                <li>• PAT scheme — ESCerts; CCTS builds on PAT</li>
+                <li>• REC (Renewable Energy Certificates)</li>
+                <li>• Carbon Tax vs Cap-and-Trade comparison</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>GATE ES ADDITIONS (Higher Weight in GATE):</h3>
+            <ul>
+                <li>✓ Detailed industrial effluent characterisation by sector (BOD, COD, BOD/COD, TDS)</li>
+                <li>✓ ECF vs TCF bleaching chemistry</li>
+                <li>✓ Heavy metal precipitation pH curves</li>
+                <li>✓ ZLD detailed unit operations (UF, RO, MEE, MVR, ATFD)</li>
+                <li>✓ Atom economy &amp; E-Factor calculations</li>
+                <li>✓ Wittig vs Diels-Alder atom economy contrast</li>
+                <li>✓ Material Flow Analysis methodology</li>
+                <li>✓ LCA detailed (covered in Unit 6)</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <h3>CRITICAL EXAM-DAY TIPS:</h3>
+            <ul>
+                <li><strong>✓ "17 highly polluting" list</strong> — memorise; commonly asked. Remember it includes all major heavy industries + all 4 organic-load (sugar, pulp, distillery, leather) + 3 metals (Cu/Zn/Al smelter, Iron-steel) + chemicals/refining.</li>
+                <li><strong>✓ Cr⁶⁺ → Cr³⁺ reduction step:</strong> at LOW pH (2–3); precipitation at HIGH pH (8–9). Two-step. Don't confuse.</li>
+                <li><strong>✓ Cyanide treatment:</strong> alkaline chlorination at pH &gt; 10 (NaOCl). NEVER at low pH (would release HCN gas).</li>
+                <li><strong>✓ ZLD energy:</strong> 20–35 kWh/m³ — large compared to ETP (1–2 kWh/m³). Common Q.</li>
+                <li><strong>✓ FGD product:</strong> wet limestone → marketable gypsum (CaSO₄·2H₂O). For wallboard.</li>
+                <li><strong>✓ TPP MoEFCC norms 2017</strong> deadlines have been extended several times — most plants still not compliant. State both the standard and the gap if asked.</li>
+                <li><strong>✓ Cement CO₂ split:</strong> 60% calcination (CaCO₃ → CaO + CO₂, unavoidable); 40% fuel. Hence emphasis on blended cements + alternative fuels.</li>
+                <li><strong>✓ CP vs EOP:</strong> CP is at SOURCE (preferred); EOP is treatment AFTER waste generation. CP is always higher in waste hierarchy.</li>
+                <li><strong>✓ Green Chemistry 12 principles:</strong> #1 = Prevention; #2 = Atom Economy; #9 = Catalysis; #12 = Inherently Safer Chemistry.</li>
+                <li><strong>✓ Kalundborg = Denmark</strong> (not Sweden or Germany — common trap).</li>
+                <li><strong>✓ Indian CCTS 2023</strong> — under EC Amendment Act 2022 (not 2001 original Act).</li>
+                <li><strong>✓ Marking strategy:</strong> Unit 9 = 4–6 Qs; mostly factual recall. Pulp/Tannery/Textile/Distillery + CP fundamentals = guaranteed marks.</li>
+            </ul>
+        </div>
+
+        <div class="standard">
+            <h3>MUST-MEMORISE SUMMARY (UNIT 9):</h3>
+            <table>
+                <tr><th>Item</th><th>Value / Year</th></tr>
+                <tr><td>17 highly polluting industries</td><td>CPCB; Indo-German 1991 (basis of MINAS)</td></tr>
+                <tr><td>CPCB categories</td><td>Red (PI &gt; 60), Orange (41–59), Green (21–40), White (≤ 20)</td></tr>
+                <tr><td>Pulp &amp; paper AOX limit</td><td>&lt; 1.0 kg/t product</td></tr>
+                <tr><td>Pulp water norm</td><td>&lt; 130 m³/t (large mills)</td></tr>
+                <tr><td>Tannery Cr⁶⁺ limit</td><td>&lt; 0.1 mg/L (inland)</td></tr>
+                <tr><td>Tannery total Cr</td><td>&lt; 2.0 mg/L</td></tr>
+                <tr><td>Cr⁶⁺ → Cr³⁺ reduction</td><td>NaHSO₃ at pH 2–3</td></tr>
+                <tr><td>Heavy metal precipitation</td><td>Hydroxides at pH 8–10</td></tr>
+                <tr><td>Cyanide treatment</td><td>Alkaline chlorination NaOCl + NaOH at pH &gt; 10</td></tr>
+                <tr><td>Distillery spent wash COD</td><td>80,000–100,000 mg/L</td></tr>
+                <tr><td>Distillery ZLD mandated</td><td>2015 (CPCB; Ganga Action Plan)</td></tr>
+                <tr><td>TPP norms 2017</td><td>PM 30 / SO₂ 100 / NOₓ 100 / Hg 0.03 mg/Nm³</td></tr>
+                <tr><td>TPP water norm (new)</td><td>&lt; 3 m³/MWh</td></tr>
+                <tr><td>Fly Ash Utilisation Rules</td><td>2009 (amended 2021); 100% target</td></tr>
+                <tr><td>Cement CO₂ footprint</td><td>~0.85 t/t (60% calcination + 40% fuel)</td></tr>
+                <tr><td>Cement PM stack norm</td><td>30 mg/Nm³</td></tr>
+                <tr><td>Tirupur ZLD year</td><td>SC order 2011</td></tr>
+                <tr><td>ZLD energy consumption</td><td>20–35 kWh/m³</td></tr>
+                <tr><td>Conventional ETP energy</td><td>1–2 kWh/m³</td></tr>
+                <tr><td>UNEP CP definition</td><td>1990</td></tr>
+                <tr><td>CP hierarchy levels</td><td>5 (source reduction → recycle on/off → treat → dispose)</td></tr>
+                <tr><td>Green Chemistry — 12 principles</td><td>Anastas &amp; Warner, 1998</td></tr>
+                <tr><td>Atom Economy formula</td><td>(MW product / MW reactants) × 100</td></tr>
+                <tr><td>E-Factor (Sheldon)</td><td>1992; mass waste / mass product</td></tr>
+                <tr><td>Industrial Ecology paper</td><td>Frosch &amp; Gallopoulos, Sci Am 1989</td></tr>
+                <tr><td>Kalundborg Symbiosis</td><td>Denmark; since 1960s; first symbiosis</td></tr>
+                <tr><td>Kyoto Protocol</td><td>1997 (in force 2005)</td></tr>
+                <tr><td>Kyoto mechanisms</td><td>CDM, JI, ET</td></tr>
+                <tr><td>India CDM rank</td><td>2nd largest host (after China)</td></tr>
+                <tr><td>Paris Article 6 mechanisms</td><td>6.2 (ITMOs), 6.4 (centralised), 6.8 (non-market)</td></tr>
+                <tr><td>India CCTS</td><td>Notified June 2023; under EC Amend Act 2022</td></tr>
+                <tr><td>EU CBAM</td><td>From 2026 (carbon tariff on imports)</td></tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p><strong>UPPCB AEE Unit 9 Revision Notes | Industrial Pollution &amp; Cleaner Production | Generated April 2026</strong></p>
+            <p>Focus on sector-specific pollution (pulp/tannery/textile/sugar/distillery/electroplating/TPP/cement), ZLD, CETP, Cleaner Production methodology, Green Chemistry 12 principles, Industrial Ecology (Kalundborg), and carbon trading (CDM, CCTS, CBAM).</p>
+            <p>Standards referenced from CPCB Schedule VI, MoEFCC Sector-Specific Standards 2015/2017, Fly Ash Rules 2009/2021, EC Amendment Act 2022 (CCTS), Kyoto &amp; Paris Agreements.</p>
+            <p>Includes GATE ES 2026 additions: detailed industrial effluent characterisation, ZLD unit operations, atom economy &amp; E-factor calculations, MFA/SFA methodology.</p>
+        </div>
+    </div>
 </body>
-
-<script>
-function showTab(tabName) {
-  // Hide all tabs
-  const tabs = document.querySelectorAll('.tab-content');
-  tabs.forEach(tab => tab.classList.remove('active'));
-  
-  // Hide all buttons (remove active state)
-  const buttons = document.querySelectorAll('.tab-btn');
-  buttons.forEach(btn => btn.classList.remove('active'));
-  
-  // Show selected tab
-  document.getElementById(tabName).classList.add('active');
-  
-  // Highlight selected button
-  event.target.classList.add('active');
-}
-</script>
-
 </html>

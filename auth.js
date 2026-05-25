@@ -1,273 +1,115 @@
-// db.js — Firestore data access layer
-import { db } from './firebase-config.js';
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  setDoc,
-  getDoc,
-  deleteDoc,
-  limit
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// pcb-notes.js — uniform <h2>-based topic chips for all PCB units
 
-const cache = {
-  questions: {},
-  cachedAt: {},
-  TTL: 1000 * 60 * 5    // 5 min (development) — change to 30 when done
-};
+export const SUBJECTS_PCB_NOTES = [
+  { id: 'unit1',  file: 'data/pcb/unit1.html',  icon: '💧', name: 'Unit 1 — Water Supply Engineering',       description: '~15–18 Qs · Water quality, Treatment, Distribution' },
+  { id: 'unit2',  file: 'data/pcb/unit2.html',  icon: '🚰', name: 'Unit 2 — Wastewater Treatment',           description: '~13–16 Qs · BOD, ASP, Trickling filter, Sludge' },
+  { id: 'unit3',  file: 'data/pcb/unit3.html',  icon: '💨', name: 'Unit 3 — Air Pollution & Control',        description: '~10–13 Qs · Pollutants, Dispersion, ESP, Scrubbers' },
+  { id: 'unit4',  file: 'data/pcb/unit4.html',  icon: '🗑️', name: 'Unit 4 — Solid & Hazardous Waste',       description: '~8–10 Qs · MSW, Landfill, E-waste, Biomedical' },
+  { id: 'unit5',  file: 'data/pcb/unit5.html',  icon: '⚖️', name: 'Unit 5 — Environmental Legislation',     description: '~8–10 Qs · EPA, Water Act, Air Act, NGT, EIA' },
+  { id: 'unit6',  file: 'data/pcb/unit6.html',  icon: '📋', name: 'Unit 6 — EIA & Environmental Mgmt',      description: '~5–7 Qs · EIA process, ISO 14001, AQI, LCA' },
+  { id: 'unit7',  file: 'data/pcb/unit7.html',  icon: '🔊', name: 'Unit 7 — Noise Pollution & Radiation',   description: '~3–5 Qs · dB scale, Noise Rules, Ionising radiation' },
+  { id: 'unit8',  file: 'data/pcb/unit8.html',  icon: '🌿', name: 'Unit 8 — Ecology & Natural Resources',   description: '~5–7 Qs · Ecosystems, Biodiversity, Climate change' },
+  { id: 'unit9',  file: 'data/pcb/unit9.html',  icon: '🏭', name: 'Unit 9 — Industrial Pollution & CP',     description: '~4–6 Qs · CETP, ZLD, LCA, Green chemistry' },
+  { id: 'unit10', file: 'data/pcb/unit10.html', icon: '🧪', name: 'Unit 10 — Environmental Chemistry & Lab', description: '~4–5 Qs · DO, BOD, COD, AAS, Air monitoring' },
+  { id: 'unit11', file: 'data/pcb/unit11.html', icon: '🌊', name: 'Unit 11 — Fluid Mechanics & Hydraulics', description: '~3–5 Qs · Reynolds, Darcy-Weisbach, Manning, Pumps' },
+];
 
-// ─── Questions ────────────────────────────────────────────────────────────────
+const _cache = {};
 
-export async function fetchQuestions(opts = {}) {
-  const { exam, subject = null, type = null, maxCount = 10000, force = false } = opts;
-  if (!exam) { console.error('fetchQuestions: exam is required'); return []; }
-
-  const cacheKey = `${exam}:${subject || 'all'}:${type || 'all'}`;
-  const now = Date.now();
-
-  if (!force && cache.questions[cacheKey] && (now - (cache.cachedAt[cacheKey] || 0)) < cache.TTL) {
-    return cache.questions[cacheKey];
-  }
+/**
+ * Load a PCB unit HTML file.
+ * Extracts body content and builds topic list from <h2> tags — uniform across all units.
+ */
+export async function loadPCBUnit(unitId) {
+  if (_cache[unitId]) return _cache[unitId];
+  const subj = SUBJECTS_PCB_NOTES.find(s => s.id === unitId);
+  if (!subj) return null;
 
   try {
-    const qRef = collection(db, 'exams', exam, 'questions');
-    let q;
-    // Filter by type at Firestore level so limit() is not wasted on wrong types
-    if (subject && type) {
-      q = query(qRef, where('subject', '==', subject), where('type', '==', type), limit(maxCount));
-    } else if (subject) {
-      q = query(qRef, where('subject', '==', subject), limit(maxCount));
-    } else if (type) {
-      q = query(qRef, where('type', '==', type), limit(maxCount));
-    } else {
-      q = query(qRef, limit(maxCount));
-    }
+    const res = await fetch(subj.file);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const html = await res.text();
 
-    const snap = await getDocs(q);
-    const questions = [];
-    snap.forEach(docSnap => {
-      const data = docSnap.data();
-      if (isValidQuestion(data)) {
-        questions.push({ id: docSnap.id, examId: exam, ...data });
-      }
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    doc.querySelectorAll('script').forEach(s => s.remove());
+
+    const container = doc.querySelector('.container') || doc.body;
+    // Remove title and subtitle already shown in app header
+    container.querySelector('h1')?.remove();
+    container.querySelector('.subtitle')?.remove();
+
+    // Build topic list from <h2> tags (uniform across all units)
+    const sections = [{ id: 'all', label: 'All Topics' }];
+    container.querySelectorAll('h2').forEach((h2, i) => {
+      const raw = h2.textContent.trim();
+      // "SECTION 3: AIR POLLUTION CONTROL" → "Air Pollution Control"
+      // "HIGH-YIELD MCQ REVISION LIST"     → "⭐ Mcq Revision List"
+      let label = raw
+        .replace(/^SECTION\s+\d+:\s*/i, '')
+        .replace(/^HIGH-YIELD\s+/i, '⭐ ');
+      label = label.charAt(0).toUpperCase() + label.slice(1).toLowerCase()
+        .replace(/\b(eq|bod|cod|do|mcq|msw|eia|ems|esp|voc|epr|csr|zld|cetp|cdm|aas|ndir|ldp|rbc|uasb|mbbr|mbr|nrc|svl|ntu|gwp|pan|no|co|so|ph|toc|tn|tp|ss|vss|c:n|r:n|naaqs|is|aqr|aqi|wqi|cpheeo|un|epr|iucn|ipcc|ndc|cbdr|ngt|pil|eac|seac|cetp|tsdf|hdpe|rdf|mrf|ltl|srts|hm|jtu|ntu|bcf|ld50|lc50)\b/gi, m => m.toUpperCase());
+      const id = 'pcb-s' + i;
+      h2.setAttribute('data-sid', id);
+      sections.push({ id, label });
     });
 
-    cache.questions[cacheKey] = questions;
-    cache.cachedAt[cacheKey] = now;
-    return questions;
-  } catch (err) {
-    console.error('Error fetching questions:', err);
-    return [];
-  }
-}
-
-// Fetch practice questions across ALL exams (not locked to one exam)
-// Automatically includes any exam added to exams.js — no changes needed here
-export async function fetchPracticeQuestions(opts = {}) {
-  const { subject = null, section = null, maxCount = 10000, force = false } = opts;
-  const { EXAMS } = await import('./exams.js');
-  // Filter exams by section so civil Practice only queries civil exams, PCB only PCB
-  const filtered = section ? EXAMS.filter(e => e.section === section) : EXAMS;
-  const EXAM_IDS = filtered.map(e => e.id);
-
-  const cacheKey = `practice:${section || 'all'}:${subject || 'all'}`;
-  const now = Date.now();
-
-  if (!force && cache.questions[cacheKey] && (now - (cache.cachedAt[cacheKey] || 0)) < cache.TTL) {
-    return cache.questions[cacheKey];
-  }
-
-  try {
-  const perExam = maxCount;   // each exam gets full quota; dedup handled by Firestore IDs
-    const results = await Promise.all(
-      EXAM_IDS.map(async examId => {
-        try {
-          const qRef = collection(db, 'exams', examId, 'questions');
-          let q;
-          if (subject) {
-            q = query(qRef, where('subject', '==', subject), where('type', '==', 'practice'), limit(perExam));
-          } else {
-            q = query(qRef, where('type', '==', 'practice'), limit(perExam));
-          }
-          const snap = await getDocs(q);
-          const qs = [];
-          snap.forEach(docSnap => {
-            const data = docSnap.data();
-            if (isValidQuestion(data)) {
-              qs.push({ id: docSnap.id, examId, ...data });
-            }
-          });
-          return qs;
-        } catch {
-          return [];
-        }
-      })
-    );
-
-    const all = results.flat();
-    cache.questions[cacheKey] = all;
-    cache.cachedAt[cacheKey] = now;
-    return all;
-  } catch (err) {
-    console.error('Error fetching practice questions:', err);
-    return [];
-  }
-}
-
-export async function fetchQuestionById(examId, questionId) {
-  try {
-    const qRef = doc(db, 'exams', examId, 'questions', questionId);
-    const snap = await getDoc(qRef);
-    if (!snap.exists()) return null;
-    const data = snap.data();
-    if (!isValidQuestion(data)) return null;
-    return { id: snap.id, examId, ...data };
-  } catch (err) {
-    console.error('Error fetching question:', err);
+    const bodyHtml = container.innerHTML;
+    const result = { bodyHtml, sections };
+    _cache[unitId] = result;
+    return result;
+  } catch (e) {
+    console.error('[pcb-notes] Failed to load', unitId, e);
     return null;
   }
 }
 
-function isValidQuestion(q) {
-  return q
-    && typeof q.question === 'string'
-    && Array.isArray(q.options)
-    && q.options.length >= 2
-    && typeof q.answer === 'number'
-    && q.answer >= 0
-    && q.answer < q.options.length;
-}
+/**
+ * Render PCB unit notes into the screen.
+ * Same function will be reused for practice question HTML files.
+ */
+export function renderPCBContent(data, mainId, topicBarId, placeholderId) {
+  const main        = document.getElementById(mainId);
+  const topicBar    = document.getElementById(topicBarId);
+  const placeholder = document.getElementById(placeholderId);
+  if (!main || !data) return;
 
-// ─── User profile ─────────────────────────────────────────────────────────────
+  document.getElementById('pcb-notes-rendered')?.remove();
+  if (placeholder) placeholder.style.display = 'none';
 
-export async function saveUserProfile(user) {
-  try {
-    const userRef = doc(db, 'users', user.uid);
-    const existing = await getDoc(userRef);
-    if (!existing.exists()) {
-      await setDoc(userRef, {
-        name: user.name,
-        email: user.email,
-        joinedAt: new Date().toISOString(),
-        plan: 'free'
-      });
-    }
-  } catch (err) {
-    console.error('Error saving user profile:', err);
-  }
-}
+  const wrapper = document.createElement('div');
+  wrapper.id = 'pcb-notes-rendered';
+  wrapper.className = 'pcb-notes-content';
+  wrapper.innerHTML = data.bodyHtml;
 
-// ─── Attempts ─────────────────────────────────────────────────────────────────
+  // Stamp IDs onto h2 elements so chip scrolling works
+  wrapper.querySelectorAll('h2[data-sid]').forEach(h2 => {
+    h2.id = h2.getAttribute('data-sid');
+  });
 
-export async function saveAttempt(userId, examId, questionId, selectedIndex, isCorrect) {
-  if (!questionId) return;   // skip if no id (local-only questions)
-  try {
-    const ref = doc(db, 'users', userId, 'attempts', `${examId}_${questionId}`);
-    await setDoc(ref, { examId, questionId, selectedIndex, isCorrect, attemptedAt: new Date().toISOString() }, { merge: true });
-  } catch (err) {
-    console.error('Error saving attempt:', err);
-  }
-}
+  main.appendChild(wrapper);
 
-// ─── Bookmarks ────────────────────────────────────────────────────────────────
-// We store the FULL question object in Firestore so bookmarks work even if
-// questions came from local JSON (no Firestore doc to re-fetch).
-
-export async function addBookmark(userId, question) {
-  if (!question || !question.id) {
-    console.warn('addBookmark: question has no id, cannot bookmark');
-    return false;
-  }
-  try {
-    const examId = question.examId || 'unknown';
-    const bookmarkId = `${examId}_${question.id}`;
-    const ref = doc(db, 'users', userId, 'bookmarks', bookmarkId);
-    await setDoc(ref, {
-      // store full question so we don't need to re-fetch
-      ...question,
-      examId,
-      savedAt: new Date().toISOString()
-    });
-    return true;
-  } catch (err) {
-    console.error('Error adding bookmark:', err);
-    return false;
-  }
-}
-
-export async function removeBookmark(userId, question) {
-  if (!question || !question.id) return false;
-  try {
-    const examId = question.examId || 'unknown';
-    const bookmarkId = `${examId}_${question.id}`;
-    const ref = doc(db, 'users', userId, 'bookmarks', bookmarkId);
-    await deleteDoc(ref);
-    return true;
-  } catch (err) {
-    console.error('Error removing bookmark:', err);
-    return false;
-  }
-}
-
-export async function isQuestionBookmarked(userId, question) {
-  if (!question || !question.id) return false;
-  try {
-    const examId = question.examId || 'unknown';
-    const bookmarkId = `${examId}_${question.id}`;
-    const ref = doc(db, 'users', userId, 'bookmarks', bookmarkId);
-    const snap = await getDoc(ref);
-    return snap.exists();
-  } catch (err) {
-    console.error('Error checking bookmark:', err);
-    return false;
-  }
-}
-
-export async function fetchBookmarkedQuestions(userId) {
-  try {
-    const ref = collection(db, 'users', userId, 'bookmarks');
-    const snap = await getDocs(ref);
-
-    const fullQuestions = [];   // new format — full question stored in bookmark doc
-    const legacyRefs   = [];   // old format — only examId + questionId stored
-
-    snap.forEach(docSnap => {
-      const data = docSnap.data();
-      if (isValidQuestion(data)) {
-        // New format: full question data is embedded in the bookmark doc
-        fullQuestions.push({ ...data, id: data.id || docSnap.id });
-      } else if (data.examId && data.questionId) {
-        // Old format: bookmark only stored reference IDs — need to fetch question
-        legacyRefs.push({ docId: docSnap.id, examId: data.examId, questionId: data.questionId, savedAt: data.savedAt || '' });
+  // Build topic chips
+  if (!topicBar) return;
+  topicBar.innerHTML = '';
+  data.sections.forEach(sec => {
+    const chip = document.createElement('button');
+    chip.className = 'topic-chip' + (sec.id === 'all' ? ' active' : '');
+    chip.textContent = sec.label;
+    chip.addEventListener('click', () => {
+      topicBar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      if (sec.id === 'all') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        wrapper.querySelector('#' + sec.id)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
-
-    // Fetch old-format bookmarks from Firestore questions collection
-    const legacyResults = await Promise.all(
-      legacyRefs.map(async bm => {
-        try {
-          const q = await fetchQuestionById(bm.examId, bm.questionId);
-          if (!q) return null;
-          // Migrate: save full question into bookmark doc so future reads are fast
-          const bmRef = doc(db, 'users', userId, 'bookmarks', bm.docId);
-          setDoc(bmRef, { ...q, examId: bm.examId, savedAt: bm.savedAt }).catch(() => {});
-          return { ...q, examId: bm.examId, savedAt: bm.savedAt };
-        } catch { return null; }
-      })
-    );
-
-    const all = [
-      ...fullQuestions,
-      ...legacyResults.filter(Boolean)
-    ];
-
-    // Sort newest first
-    all.sort((a, b) => (b.savedAt || '').localeCompare(a.savedAt || ''));
-    return all;
-  } catch (err) {
-    console.error('Error fetching bookmarks:', err);
-    return [];
-  }
+    topicBar.appendChild(chip);
+  });
 }
+
+// Alias for notes (same function, reused for practice questions too)
+export const renderPCBNotesContent = renderPCBContent;

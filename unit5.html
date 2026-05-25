@@ -1,1323 +1,1346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UPPCB AEE 2026 — Unit 7: Noise Pollution & Radiation Revision Notes</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
-:root {
-  --header: #1a237e;
-  --header2: #283593;
-  --accent: #0d47a1;
-  --bg: #f0f2f5;
-  --panel: #ffffff;
-  
-  --blue: #0d47a1;
-  --blue-bg: #e3f2fd;
-  --green: #2e7d32;
-  --green-bg: #e8f5e9;
-  --red: #c62828;
-  --red-bg: #ffebee;
-  --orange: #e65100;
-  --orange-bg: #fff3e0;
-  --purple: #4a148c;
-  --purple-bg: #f3e5f5;
-  --cyan: #00838f;
-  --cyan-bg: #e0f2f1;
-  
-  --text: #212121;
-  --text2: #616161;
-  --border: #e0e0e0;
-  --radius: 6px;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Source Sans 3', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-/* ===== HEADER ===== */
-.header {
-  background: linear-gradient(135deg, var(--header) 0%, var(--header2) 100%);
-  color: white;
-  padding: 20px 30px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  letter-spacing: 0.5px;
-}
-
-.header .subtitle {
-  font-size: 13px;
-  opacity: 0.85;
-  font-weight: 400;
-}
-
-/* ===== CONTAINER ===== */
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 30px;
-}
-
-/* ===== TABS ===== */
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.tab-btn {
-  padding: 10px 20px;
-  border: 2px solid var(--border);
-  background: white;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--text2);
-  transition: all 0.3s ease;
-}
-
-.tab-btn.active {
-  background: var(--blue);
-  color: white;
-  border-color: var(--blue);
-}
-
-.tab-btn:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* ===== SECTION HEADERS ===== */
-.section-header {
-  background: linear-gradient(135deg, var(--blue) 0%, #1565c0 100%);
-  color: white;
-  padding: 15px 20px;
-  margin: 25px 0 15px 0;
-  border-radius: var(--radius);
-  font-size: 16px;
-  font-weight: 700;
-  border-left: 5px solid #0d47a1;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.section-header.green {
-  background: linear-gradient(135deg, var(--green) 0%, #1b5e20 100%);
-  border-left-color: var(--green);
-}
-
-.section-header.red {
-  background: linear-gradient(135deg, var(--red) 0%, #ad1457 100%);
-  border-left-color: var(--red);
-}
-
-.section-header.orange {
-  background: linear-gradient(135deg, var(--orange) 0%, #bf360c 100%);
-  border-left-color: var(--orange);
-}
-
-.section-header.purple {
-  background: linear-gradient(135deg, var(--purple) 0%, #6a1b9a 100%);
-  border-left-color: var(--purple);
-}
-
-.section-header.cyan {
-  background: linear-gradient(135deg, var(--cyan) 0%, #00695c 100%);
-  border-left-color: var(--cyan);
-}
-
-.section-header::before {
-  content: "▶";
-  font-size: 14px;
-}
-
-/* ===== BOXES ===== */
-.box {
-  padding: 16px;
-  margin: 12px 0;
-  border-radius: var(--radius);
-  border-left: 4px solid;
-}
-
-.box.formula {
-  background: var(--orange-bg);
-  border-left-color: var(--orange);
-}
-
-.box.formula strong {
-  color: var(--orange);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.box.formula code {
-  font-family: 'JetBrains Mono', monospace;
-  background: rgba(230, 81, 0, 0.1);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--orange);
-  font-weight: 600;
-}
-
-.box.definition {
-  background: var(--blue-bg);
-  border-left-color: var(--blue);
-}
-
-.box.definition strong {
-  color: var(--blue);
-  font-weight: 700;
-}
-
-.box.standard {
-  background: var(--purple-bg);
-  border-left-color: var(--purple);
-}
-
-.box.standard strong {
-  color: var(--purple);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.box.standard code {
-  background: rgba(74, 20, 140, 0.1);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--purple);
-  font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.box.tip {
-  background: var(--green-bg);
-  border-left-color: var(--green);
-}
-
-.box.tip::before {
-  content: "💡 EXAM TIP: ";
-  color: var(--green);
-  font-weight: 700;
-}
-
-.box.warning {
-  background: var(--red-bg);
-  border-left-color: var(--red);
-}
-
-.box.warning::before {
-  content: "⚠ IMPORTANT: ";
-  color: var(--red);
-  font-weight: 700;
-}
-
-.box.cyan {
-  background: var(--cyan-bg);
-  border-left-color: var(--cyan);
-}
-
-.box.cyan strong {
-  color: var(--cyan);
-  font-weight: 700;
-}
-
-/* ===== TABLE ===== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 16px 0;
-  background: white;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-table thead {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--header2) 100%);
-  color: white;
-}
-
-table th {
-  padding: 12px;
-  text-align: left;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.3px;
-}
-
-table td {
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-}
-
-table tr:hover {
-  background: var(--blue-bg);
-}
-
-table tr:last-child td {
-  border-bottom: none;
-}
-
-table code {
-  background: var(--orange-bg);
-  color: var(--orange);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-}
-
-/* ===== LISTS ===== */
-.bullet-list {
-  margin: 12px 0;
-  padding-left: 24px;
-}
-
-.bullet-list li {
-  margin: 8px 0;
-  line-height: 1.6;
-  color: var(--text);
-}
-
-.bullet-list li strong {
-  color: var(--blue);
-  font-weight: 700;
-}
-
-/* ===== GRID ===== */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 16px 0;
-}
-
-.grid.three {
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.grid-item {
-  background: white;
-  padding: 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-}
-
-.grid-item h4 {
-  margin-bottom: 8px;
-  color: var(--blue);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.grid-item code {
-  background: var(--orange-bg);
-  color: var(--orange);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-  font-size: 12px;
-}
-
-/* ===== FOOTER ===== */
-.footer {
-  background: var(--panel);
-  border-top: 2px solid var(--border);
-  padding: 20px 30px;
-  margin-top: 40px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--text2);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .container { padding: 20px; }
-  .grid { grid-template-columns: 1fr; }
-  .grid.three { grid-template-columns: 1fr; }
-  .header h1 { font-size: 18px; }
-  table { font-size: 12px; }
-  table th, table td { padding: 8px; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPPCB AEE Unit 10 - Environmental Chemistry & Laboratory Analysis</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #212121;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        
+        h1 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        h2 {
+            color: white;
+            background: #283593;
+            padding: 12px;
+            margin: 30px 0 15px 0;
+            border-left: 4px solid #1a237e;
+        }
+        
+        h3 {
+            color: #1a237e;
+            margin: 20px 0 10px 0;
+            font-size: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        
+        .content {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+        }
+        
+        th {
+            background: #283593;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .standard {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .formula {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+        .tip {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        li { margin-bottom: 5px; }
+        
+        .section-intro {
+            background: #f0f2f5;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .key-point {
+            color: #c62828;
+            font-weight: 600;
+        }
+        
+        .exam-strategy {
+            background: #fff8e1;
+            border: 2px solid #fbc02d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        print {
+            display: none;
+        }
+        
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+        }
+    </style>
 </head>
 <body>
-
-<!-- HEADER -->
-<div class="header">
-  <h1>📢 UNIT 7: NOISE POLLUTION & RADIATION</h1>
-  <div class="subtitle">UPPCB AEE 2026 Revision Notes | ~3–5 MCQs Expected | High-Frequency Topics</div>
-</div>
-
-<div class="container">
-
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab-btn active" onclick="showTab('fundamentals')">Fundamentals</button>
-  <button class="tab-btn" onclick="showTab('standards')">Standards & Rules</button>
-  <button class="tab-btn" onclick="showTab('control')">Control Methods</button>
-  <button class="tab-btn" onclick="showTab('radiation')">Radiation</button>
-  <button class="tab-btn" onclick="showTab('numericals')">Formula & Numericals</button>
-  <button class="tab-btn" onclick="showTab('quick')">Quick Reference</button>
-</div>
-
-<!-- TAB 1: FUNDAMENTALS -->
-<div id="fundamentals" class="tab-content active">
-
-        <h2>SECTION 1: SOUND & NOISE BASICS</h2>
-
-<div class="box definition">
-  <strong>Sound:</strong> Acoustic waves causing vibration in air, measurable and predictable
-</div>
-
-<div class="box definition">
-  <strong>Noise:</strong> Unwanted sound that is objectionable, annoying, or harmful to health
-</div>
-
-<ul class="bullet-list">
-  <li><strong>Frequency:</strong> 20 Hz–20 kHz (human hearing range)</li>
-  <li><strong>Infrasound:</strong> &lt;20 Hz (ex: earthquakes, volcano rumble)</li>
-  <li><strong>Ultrasound:</strong> &gt;20 kHz (ex: bats, medical ultrasound)</li>
-  <li><strong>Sound Pressure Level (SPL):</strong> Quantifies acoustic pressure relative to reference pressure (20 µPa)</li>
-</ul>
-
-<div class="section-header green">Decibel (dB) Scale</div>
-
-<div class="box formula">
-  <strong>Sound Pressure Level (SPL) Formula:</strong>
-  <code>SPL (dB) = 20 × log₁₀ (P / P₀)</code>
-  <div style="margin-top: 8px;">
-    where P = measured sound pressure (Pa) | P₀ = reference pressure (20 µPa)
-  </div>
-</div>
-
-<div class="box tip">
-SPL is logarithmic, not linear. Every 10 dB increase = 10× sound pressure; 3 dB ≈ just noticeable change
-</div>
-
-<div class="grid">
-  <div class="grid-item">
-    <h4>Rustle of leaves</h4>
-    <code>10–20 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Normal conversation</h4>
-    <code>50–60 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Vacuum cleaner</h4>
-    <code>70 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Lawn mower</h4>
-    <code>80–90 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Chainsaw</h4>
-    <code>100 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Jet engine</h4>
-    <code>130 dB</code>
-  </div>
-</div>
-
-<div class="section-header green">A-Weighting (dBA)</div>
-
-<ul class="bullet-list">
-  <li><strong>Why A-weighting?</strong> Human ear is not equally sensitive to all frequencies; we hear mid-frequencies (1–5 kHz) louder than very low or very high frequencies</li>
-  <li><strong>A-weighted scale:</strong> Emphasizes frequencies 1–5 kHz; de-emphasizes &lt;500 Hz and &gt;6 kHz</li>
-  <li><strong>Notation:</strong> dBA or LAeq (for energy-equivalent level)</li>
-  <li><strong>Example:</strong> 80 dB @ 100 Hz sounds quieter than 80 dB @ 1 kHz in real life; A-weighting captures this</li>
-</ul>
-
-<div class="box warning">
-UPPCB Noise Rules 2000 use <strong>dBA</strong> for all environmental noise standards—not dB. Always assume dBA for exam questions unless stated otherwise.
-</div>
-
-<div class="section-header green">Noise Descriptors</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Term</th>
-      <th>Full Name</th>
-      <th>Definition & Use</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>SPL</code></td>
-      <td>Sound Pressure Level</td>
-      <td>Instantaneous acoustic pressure; rarely used for environmental noise</td>
-    </tr>
-    <tr>
-      <td><code>Leq</code></td>
-      <td>Energy-Equivalent Level</td>
-      <td>Constant sound level over time T that contains same total energy as actual fluctuating noise; <strong>most used in UPPCB</strong></td>
-    </tr>
-    <tr>
-      <td><code>L10</code></td>
-      <td>Level Exceeded 10% of Time</td>
-      <td>Sound level exceeded for 10% of measurement period (loud peaks); used for traffic noise</td>
-    </tr>
-    <tr>
-      <td><code>L90</code></td>
-      <td>Level Exceeded 90% of Time</td>
-      <td>Background/ambient level (quiet periods); 90% of time noise is above this level</td>
-    </tr>
-    <tr>
-      <td><code>Ldn or Ld/n</code></td>
-      <td>Day-Night Level</td>
-      <td>24-hr weighted level; nighttime (10 PM–6 AM) levels penalized +10 dB to account for sleep disruption</td>
-    </tr>
-    <tr>
-      <td><code>Lnite</code></td>
-      <td>Nighttime Level</td>
-      <td>Average level during night (10 PM–6 AM)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Leq Formula (Simplified):</strong><br>
-  <code>Leq = 10 × log₁₀ [ΣPᵢ² / Pref² / T]</code><br>
-  where i = measurement intervals; T = total duration
-</div>
-
-<div class="section-header green">Inverse-Square Law</div>
-
-<ul class="bullet-list">
-  <li><strong>Sound intensity decreases with distance:</strong> I ∝ 1/r²</li>
-  <li><strong>SPL reduction from point source:</strong> For every doubling of distance, SPL drops ~6 dB</li>
-  <li><strong>Formula:</strong> <code>SPL₁ – SPL₂ = 20 × log₁₀ (r₂/r₁)</code></li>
-  <li><strong>Example:</strong> 80 dB @ 10 m → 74 dB @ 20 m (6 dB drop)</li>
-</ul>
-
-<div class="box tip">
-High-yield topic for numericals. If a question gives SPL @ one distance, ask for SPL @ another—use inverse-square law.
-</div>
-
-<div class="section-header green">Major Noise Sources</div>
-
-<div class="grid">
-  <div class="grid-item">
-    <h4>Industrial</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Textile mills (100 dB)</li>
-      <li>Steel plants (90–100 dB)</li>
-      <li>Mining & quarrying (85–95 dB)</li>
-      <li>Chemical factories (80–95 dB)</li>
-    </ul>
-  </div>
-  <div class="grid-item">
-    <h4>Traffic</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Road (70–85 dB)</li>
-      <li>Rail (80–100 dB)</li>
-      <li>Airport (140–180 dB at source)</li>
-      <li>Heavy vehicles (80–90 dB)</li>
-    </ul>
-  </div>
-  <div class="grid-item">
-    <h4>Construction</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Demolition (110–130 dB)</li>
-      <li>Pile driving (100–110 dB)</li>
-      <li>Concrete cutting (85–95 dB)</li>
-      <li>Drilling (80–90 dB)</li>
-    </ul>
-  </div>
-</div>
-
-</div>
-
-<!-- TAB 2: STANDARDS & RULES -->
-<div id="standards" class="tab-content">
-
-<div class="section-header red">Noise Pollution Rules 2000 (UPPCB Standard)</div>
-
-<div class="box standard">
-  <strong>Four Zone Classification:</strong><br>
-  <code>1. Residential | 2. Commercial | 3. Industrial | 4. Silence Zone (Hospital/School)</code>
-</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Zone Type</th>
-      <th>Leq Daytime<br>(6 AM–10 PM)</th>
-      <th>Leq Nighttime<br>(10 PM–6 AM)</th>
-      <th>Land Use</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential</strong></td>
-      <td><code>55 dBA</code></td>
-      <td><code>45 dBA</code></td>
-      <td>Colonies, residential areas</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial</strong></td>
-      <td><code>65 dBA</code></td>
-      <td><code>55 dBA</code></td>
-      <td>Market areas, offices, shops</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial</strong></td>
-      <td><code>75 dBA</code></td>
-      <td><code>70 dBA</code></td>
-      <td>Factories, workshops, industrial estates</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone</strong></td>
-      <td><code>50 dBA</code></td>
-      <td><code>40 dBA</code></td>
-      <td>Hospitals, schools, senior citizen homes, courts</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box warning">
-Nighttime limit is always <strong>10 dB lower than daytime</strong> (except day/night levels which use +10 dB penalty). Exam often tests zone-matching and time-based standards.
-</div>
-
-<div class="section-header red">UPPCB Enforcement & Penalties</div>
-
-<ul class="bullet-list">
-  <li><strong>Monitoring:</strong> NAMP (National Ambient Monitoring Programme) uses CAAQMS-type networks</li>
-  <li><strong>Non-compliance:</strong> Fine up to ₹1 lakh, imprisonment up to 3 months, or both (Environment Act 1986)</li>
-  <li><strong>Residential violation:</strong> If industrial zone SPL (75 dB) measured in residential area (limit 55 dB), prosecution under Water Act/EP Act</li>
-  <li><strong>Construction hours:</strong> Restricted to 6 AM–10 PM in residential areas (further restricted in silence zones)</li>
-</ul>
-
-<div class="box definition">
-  <strong>Designated Silence Zones (Section 3, Noise Rules 2000):</strong><br>
-  Areas within 100 m of hospitals, schools, courts, senior citizen homes—no amplified music, DJs, horn honking allowed any time
-</div>
-
-<div class="section-header red">Festival/Event Exemptions (Partial)</div>
-
-<ul class="bullet-list">
-  <li>Temporary exemptions may be granted for festivals/cultural events</li>
-  <li>Events must NOT operate 10 PM–6 AM in residential areas</li>
-  <li>SPL &lt;75 dBA still enforced in commercial zones during events</li>
-  <li>Zero tolerance in silence zones (hospitals, courts) even during festivals</li>
-</ul>
-
-</div>
-
-<!-- TAB 3: CONTROL METHODS -->
-<div id="control" class="tab-content">
-
-<div class="section-header orange">Noise Control Hierarchy</div>
-
-<ol class="bullet-list" style="list-style: decimal;">
-  <li><strong>Elimination:</strong> Remove or shut down source (ideal but often impractical)</li>
-  <li><strong>Substitution:</strong> Replace loud equipment with quieter alternatives (ex: electric vehicles vs IC engines)</li>
-  <li><strong>Reduction at Source:</strong> Mufflers, silencers, low-vibration machines</li>
-  <li><strong>Path Reduction:</strong> Barriers, distance, absorption (most practical for existing sources)</li>
-  <li><strong>Personal Protection:</strong> Ear plugs, earmuffs (last resort; personal responsibility)</li>
-</ol>
-
-<div class="section-header orange">Noise Reduction Techniques</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Technique</th>
-      <th>Mechanism</th>
-      <th>Reduction (dB)</th>
-      <th>Applications</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Enclosure</strong></td>
-      <td>Rigid box around source; sound trapped inside</td>
-      <td>10–30 dBA</td>
-      <td>Compressors, generators, diesel pumps</td>
-    </tr>
-    <tr>
-      <td><strong>Muffler/Silencer</strong></td>
-      <td>Absorptive material; expansion chambers</td>
-      <td>10–20 dBA</td>
-      <td>Vehicle exhaust, air compressor outlets</td>
-    </tr>
-    <tr>
-      <td><strong>Damping</strong></td>
-      <td>Viscoelastic coating on vibrating surfaces; energy dissipated as heat</td>
-      <td>5–15 dBA</td>
-      <td>Metal sheets, engine blocks, ductwork</td>
-    </tr>
-    <tr>
-      <td><strong>Isolation (Vibration)</strong></td>
-      <td>Elastic supports (springs, rubber pads) decouple equipment from floor</td>
-      <td>10–20 dBA</td>
-      <td>Motors, pumps, compressors, machinery mounted on resilient pads</td>
-    </tr>
-    <tr>
-      <td><strong>Acoustic Barriers</strong></td>
-      <td>Dense, rigid walls block/reflect sound; gap reduces effectiveness</td>
-      <td>5–15 dBA per barrier</td>
-      <td>Highway noise barriers, factory perimeter walls</td>
-    </tr>
-    <tr>
-      <td><strong>Absorption</strong></td>
-      <td>Porous materials (foam, mineral wool, fiberglass) convert sound to heat</td>
-      <td>5–20 dBA</td>
-      <td>Acoustic ceiling tiles, wall panels, pipe lagging</td>
-    </tr>
-    <tr>
-      <td><strong>Distance/Zoning</strong></td>
-      <td>Inverse-square law: 6 dB per distance doubling</td>
-      <td>6 dBA per 2× distance</td>
-      <td>Urban planning, industrial zone designation</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box formula">
-  <strong>Transmission Loss (TL) for Barriers:</strong>
-  <code>TL = 20 × log₁₀ (2πfm/ρc) + 10 × log₁₀ (S/A)</code><br>
-  where f = frequency (Hz) | m = surface mass (kg/m²) | ρc = acoustic impedance | S/A = geometric factor
-  <div style="margin-top: 8px; font-size: 12px; color: #d32f2f;">
-    <strong>Practical:</strong> Doubling barrier thickness increases TL by ~3 dB
-  </div>
-</div>
-
-<div class="box definition">
-  <strong>Insertion Loss (IL):</strong> Actual SPL reduction achieved by a barrier in real environment (accounts for diffraction, ground effects); typically 5–10 dBA less than TL
-</div>
-
-<div class="section-header orange">Workplace Noise Exposure Limits</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Daily Exposure Time</th>
-      <th>Max Permissible Level (dBA)</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>8 hours (40 hr/week)</td>
-      <td><code>85 dBA</code></td>
-      <td>Safe daily limit; hearing protection required above this</td>
-    </tr>
-    <tr>
-      <td>4 hours</td>
-      <td><code>88 dBA</code></td>
-      <td>Reduce exposure time by half = increase limit by 3 dB</td>
-    </tr>
-    <tr>
-      <td>2 hours</td>
-      <td><code>91 dBA</code></td>
-      <td>Exchange rule: 3 dB for every 50% reduction in exposure</td>
-    </tr>
-    <tr>
-      <td>1 hour</td>
-      <td><code>94 dBA</code></td>
-      <td>Short-term exposures</td>
-    </tr>
-    <tr>
-      <td>&lt;15 min</td>
-      <td><code>∼100 dBA</code></td>
-      <td>Very short exposures; cumulative hearing damage still possible</td>
-    </tr>
-    <tr style="background: #ffebee;">
-      <td>Peak/Impulse</td>
-      <td><code>140 dB</code></td>
-      <td><strong>Never exceed</strong> (gunfire, explosions, impact); risk of acoustic trauma</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box tip">
-3 dB exchange rule is high-yield for numericals. If SPL increases by 3 dB, safe exposure time reduces by 50%.
-</div>
-
-<div class="section-header orange">Hearing Protection Equipment (HPE)</div>
-
-<ul class="bullet-list">
-  <li><strong>Foam Earplugs:</strong> NRR 20–33 dB; foam must be compressed, inserted, held in place 10 sec; single-use</li>
-  <li><strong>Earmuffs:</strong> NRR 20–30 dB; reusable; less effective if hair/glasses on seal surface</li>
-  <li><strong>Dual Protection (plugs + muffs):</strong> NRR ≈ higher NRR + 5 dB (not additive)</li>
-  <li><strong>Canal Caps:</strong> NRR 20–25 dB; intermediate between plugs and muffs</li>
-  <li><strong>Custom-molded earplugs:</strong> Higher comfort, NRR 20–30 dB; expensive</li>
-</ul>
-
-<div class="box definition">
-  <strong>NRR (Noise Reduction Rating):</strong> Attenuation in dB under ideal lab conditions; real-world reduction is 50–75% of stated NRR (due to improper insertion, movement, etc.)
-</div>
-
-</div>
-
-<!-- TAB 4: RADIATION -->
-<div id="radiation" class="tab-content">
-
-<div class="section-header purple">Ionising vs Non-Ionising Radiation</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Energy</th>
-      <th>Examples</th>
-      <th>Effect on Matter</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Ionising</strong></td>
-      <td>&gt;10 eV (high)</td>
-      <td>Alpha (α), Beta (β), Gamma (γ), X-rays, cosmic rays</td>
-      <td>Knock electrons off atoms → ions; DNA damage; cancer risk</td>
-    </tr>
-    <tr style="background: #e0f2f1;">
-      <td><strong>Non-Ionising</strong></td>
-      <td>&lt;10 eV (low)</td>
-      <td>Radio, microwave, IR, visible, UV-A</td>
-      <td>Heat or excite electrons; less cell damage than ionising</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Ionising Radiation Details</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Radiation Type</th>
-      <th>Composition</th>
-      <th>Penetration</th>
-      <th>Shielding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Alpha (α)</strong></td>
-      <td>Helium nucleus (2p + 2n)</td>
-      <td>Paper/skin only</td>
-      <td>Paper, clothing (easily stopped)</td>
-    </tr>
-    <tr>
-      <td><strong>Beta (β)</strong></td>
-      <td>Electron or positron</td>
-      <td>Plastic/aluminum</td>
-      <td>Aluminum foil, acrylic (~1 cm)</td>
-    </tr>
-    <tr>
-      <td><strong>Gamma (γ)</strong></td>
-      <td>Photon (electromagnetic wave)</td>
-      <td>Lead/concrete (penetrating)</td>
-      <td>Lead (5 cm), concrete (30 cm)</td>
-    </tr>
-    <tr>
-      <td><strong>X-rays</strong></td>
-      <td>Photon (produced by electron collision)</td>
-      <td>Lead/concrete</td>
-      <td>Lead aprons, concrete walls</td>
-    </tr>
-    <tr>
-      <td><strong>Neutrons</strong></td>
-      <td>Uncharged particles</td>
-      <td>Water/paraffin (highly penetrating)</td>
-      <td>Hydrogenous material (water, paraffin)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Radiation Units & Measurements</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Unit</th>
-      <th>Full Name</th>
-      <th>Measures</th>
-      <th>SI Unit</th>
-      <th>Legacy Unit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Gray (Gy)</strong></td>
-      <td>Absorbed Dose</td>
-      <td>Energy absorbed per unit mass (1 J/kg)</td>
-      <td><code>1 Gy</code></td>
-      <td>100 Rad</td>
-    </tr>
-    <tr>
-      <td><strong>Sievert (Sv)</strong></td>
-      <td>Dose Equivalent</td>
-      <td>Biological effect; accounts for radiation type quality factor (QF)</td>
-      <td><code>1 Sv</code></td>
-      <td>100 Rem</td>
-    </tr>
-    <tr>
-      <td><strong>Becquerel (Bq)</strong></td>
-      <td>Activity</td>
-      <td>Decays per second (1 decay/s)</td>
-      <td><code>1 Bq</code></td>
-      <td>1 Ci = 3.7×10¹⁰ Bq</td>
-    </tr>
-    <tr>
-      <td><strong>Curie (Ci)</strong></td>
-      <td>Activity (Legacy)</td>
-      <td>3.7×10¹⁰ decays/second</td>
-      <td>—</td>
-      <td><code>1 Ci = 37 GBq</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Quality Factor (QF):</strong><br>
-  <code>Sv = Gy × QF</code><br>
-  Accounts for type of radiation. Ex: Alpha has QF=20 (most damaging if ingested); Beta/Gamma QF=1
-</div>
-
-<div class="section-header purple">Dose Limits (AERB — Atomic Energy Regulatory Board)</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th>Annual Limit (mSv)</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #e8f5e9;">
-      <td><strong>General Public</strong></td>
-      <td><code>1 mSv</code></td>
-      <td>Safe lifetime exposure without significant health risk</td>
-    </tr>
-    <tr style="background: #fff3e0;">
-      <td><strong>Occupational (Radiation Worker)</strong></td>
-      <td><code>50 mSv</code></td>
-      <td>Annual limit for people working with radiation</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Pregnant Worker</strong></td>
-      <td><code>5 mSv</code> (once declared)</td>
-      <td>During pregnancy, limit reduces 10-fold to protect fetus</td>
-    </tr>
-    <tr style="background: #ffebee;">
-      <td><strong>Acute Exposure</strong></td>
-      <td><code>&gt;6 Sv</code> (whole body)</td>
-      <td>Lethal within hours; multi-organ failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box warning">
-<strong>Natural Background Radiation:</strong> ~2–3 mSv/year (varies by location). Radon, cosmic rays, soil uranium are major contributors. UPPCB exams may ask distinction between occupational limit (50 mSv) and public limit (1 mSv).
-</div>
-
-<div class="section-header purple">Radioactive Waste Classification (DAE/AERB)</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Waste Class</th>
-      <th>Activity Level</th>
-      <th>Half-Life</th>
-      <th>Storage Duration</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Exempted (E)</strong></td>
-      <td>&lt;1 Bq/g</td>
-      <td>—</td>
-      <td>No special storage; disposal as regular waste</td>
-    </tr>
-    <tr>
-      <td><strong>Low-Level Waste (LLW)</strong></td>
-      <td>1–10⁵ Bq/g</td>
-      <td>Short-lived (&lt;30 yr)</td>
-      <td>6–10 years decay storage → shallow land burial</td>
-    </tr>
-    <tr>
-      <td><strong>Intermediate-Level Waste (ILW)</strong></td>
-      <td>10⁵–10⁷ Bq/g</td>
-      <td>Long-lived</td>
-      <td>Concrete/bitumen matrix; stored 30–50 years</td>
-    </tr>
-    <tr>
-      <td><strong>High-Level Waste (HLW)</strong></td>
-      <td>&gt;10⁷ Bq/g</td>
-      <td>Very long-lived (&gt;1000 yr)</td>
-      <td>Deep geological repository (India: BARC research)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Non-Ionising Radiation Hazards</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Frequency Range</th>
-      <th>Health Effects</th>
-      <th>Sources</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Ultraviolet (UV)</strong></td>
-      <td>10–400 nm</td>
-      <td>Skin cancer (melanoma), cataracts, immune suppression</td>
-      <td>Sun, welding arcs, germicidal lamps</td>
-    </tr>
-    <tr>
-      <td><strong>Infrared (IR)</strong></td>
-      <td>700 nm–1 mm</td>
-      <td>Thermal burns, cataract (chronic exposure)</td>
-      <td>Heat lamps, furnaces, welding</td>
-    </tr>
-    <tr>
-      <td><strong>Microwave (MW)</strong></td>
-      <td>1 mm–1 m (~1–300 GHz)</td>
-      <td>Dielectric heating; cataracts, reproductive effects (high exposure)</td>
-      <td>Mobile towers, radar, microwave ovens</td>
-    </tr>
-    <tr>
-      <td><strong>Radiofrequency (RF)</strong></td>
-      <td>30 kHz–300 MHz</td>
-      <td>Thermal effects (low); possible non-thermal effects under study</td>
-      <td>Radio/TV broadcasting, wireless networks</td>
-    </tr>
-    <tr>
-      <td><strong>Electromagnetic Fields (EMF)</strong></td>
-      <td>Extremely Low Frequency (ELF) &lt;300 Hz</td>
-      <td>Childhood leukemia (disputed); neuro-behavioral effects</td>
-      <td>Power lines, electrical appliances, transformers</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Specific Absorption Rate (SAR):</strong> Power absorbed per unit mass (W/kg). Mobile phones limited to 2 W/kg (ICNIRP); India uses 2 W/kg for head/trunk
-</div>
-
-<div class="section-header purple">Atomic Energy Act, 1962 & AERB</div>
-
-<ul class="bullet-list">
-  <li><strong>Atomic Energy Act 1962:</strong> Central legislation; authorizes production, use, possession of radioactive materials in India</li>
-  <li><strong>AERB (Atomic Energy Regulatory Board):</strong> Statutory body under DAE; sets radiation safety codes, issues licenses, inspects facilities, prosecutes violations</li>
-  <li><strong>Nuclear Power Corporation (NPC):</strong> Operates 24 reactors; generates 3.3% of India's electricity</li>
-  <li><strong>BARC (Bhabha Atomic Research Centre):</strong> R&D; manages waste, decommissioning</li>
-  <li><strong>Radiation Safety Rules 2004:</strong> Prescribe dose limits, contamination levels, waste management protocols</li>
-</ul>
-
-<div class="box warning">
-AERB is <strong>NOT</strong> CPCB. Radiation is federal (DAE/AERB), not state (UPPCB) jurisdiction. But UPPCB exams test basic knowledge of AERB limits & Atomic Energy Act.
-</div>
-
-</div>
-
-<!-- TAB 5: NUMERICALS & FORMULAS -->
-<div id="numericals" class="tab-content">
-
-<div class="section-header cyan">High-Frequency Formulae</div>
-
-<div class="box formula">
-  <strong>1. SPL Formula (Basic)</strong>
-  <code>SPL (dB) = 20 × log₁₀ (P / P₀)</code>
-  <strong>Example:</strong> If P = 2 Pa and P₀ = 20 µPa = 2×10⁻⁵ Pa:
-  <code>SPL = 20 × log₁₀ (2 / 2×10⁻⁵) = 20 × log₁₀ (10⁵) = 20 × 5 = 100 dB</code>
-</div>
-
-<div class="box formula">
-  <strong>2. SPL Difference from Distance (Inverse-Square Law)</strong>
-  <code>ΔL = 20 × log₁₀ (r₁ / r₂)</code>
-  <strong>Example:</strong> 80 dB @ 10 m. Find SPL @ 20 m:
-  <code>ΔL = 20 × log₁₀ (10 / 20) = 20 × log₁₀ (0.5) = 20 × (−0.301) = −6.02 ≈ −6 dB</code><br>
-  <code>SPL @ 20m = 80 − 6 = 74 dB</code>
-</div>
-
-<div class="box formula">
-  <strong>3. Addition of Multiple Sound Sources (SPL)</strong>
-  <code>Ltotal = 10 × log₁₀ (ΣAntilog(Li/10))</code><br>
-  Or: <code>Ltotal = 10 × log₁₀ (Σ10^(Li/10))</code>
-  <strong>Example:</strong> Two machines: 80 dB + 80 dB:
-  <code>Ltotal = 10 × log₁₀ (10^(80/10) + 10^(80/10)) = 10 × log₁₀ (10⁸ + 10⁸) = 10 × log₁₀ (2×10⁸)</code><br>
-  <code>= 10 × (8 + 0.301) = 10 × 8.301 = 83.01 dB</code><br>
-  <strong>Rule:</strong> Adding two equal SPLs increases by 3 dB. Two 80 dB sources = 83 dB (not 160!)
-</div>
-
-<div class="box formula">
-  <strong>4. 3 dB Exchange Rule (Occupational Exposure)</strong>
-  For every <strong>3 dB increase</strong> in SPL, <strong>safe exposure time reduces by 50%</strong>:
-  <code>T₁ × 2^((L₂−L₁)/3) = T₂</code>
-  <strong>Example:</strong> Safe limit @ 85 dB = 8 hr. Safe limit @ 88 dB?
-  <code>T₂ = 8 × 2^((88−85)/3) = 8 × 2¹ = 16 hours ??? (wrong direction)</code><br>
-  <strong>Correct:</strong> @ 88 dB (3 dB higher), exposure time is HALF: 8 hr / 2 = 4 hr
-</div>
-
-<div class="box formula">
-  <strong>5. Transmission Loss (Barrier) — Simple Form</strong>
-  <code>TL ≈ 20 × log₁₀ (f × m) + constant</code><br>
-  where f = frequency (Hz) | m = mass/unit area (kg/m²)
-  <strong>Practical Rule:</strong> Doubling mass → +3 dB TL. Doubling frequency → +6 dB TL
-</div>
-
-<div class="box formula">
-  <strong>6. Leq (Energy-Equivalent Level)</strong>
-  <code>Leq = 10 × log₁₀ [1/T × ∫₀ᵀ 10^(L(t)/10) dt]</code><br>
-  <strong>Simplified (discrete intervals):</strong> <code>Leq = 10 × log₁₀ [1/n × Σ10^(Li/10)]</code><br>
-  <strong>Example:</strong> Noise measured in 5 consecutive hours: 70, 75, 80, 75, 70 dB:
-  <code>Leq = 10 × log₁₀ [1/5 × (10^7 + 10^7.5 + 10^8 + 10^7.5 + 10^7)]</code><br>
-  <code>= 10 × log₁₀ [1/5 × (1×10⁷ + 3.16×10⁷ + 10×10⁷ + 3.16×10⁷ + 1×10⁷)]</code><br>
-  <code>= 10 × log₁₀ [1/5 × 18.32×10⁷] = 10 × log₁₀ (3.664×10⁷) = 75.64 dB</code>
-</div>
-
-<div class="box tip">
-Leq gives weighted average that accounts for energy over time. Higher peaks contribute MORE because of exponential nature (10^x).
-</div>
-
-<div class="section-header cyan">Sample Numericals</div>
-
-<div class="box cyan">
-  <strong>Q1: Inverse-Square Law</strong><br>
-  A diesel generator produces 90 dB @ 5 m. What is SPL @ 50 m distance?
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> ΔL = 20 × log₁₀ (5/50) = 20 × log₁₀ (0.1) = 20 × (−1) = −20 dB<br>
-    SPL @ 50 m = 90 − 20 = <strong>70 dB</strong>
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q2: Addition of Sources</strong><br>
-  Three identical machines each produce 80 dB. Find combined SPL.
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Ltotal = 10 × log₁₀ (3 × 10^(80/10)) = 10 × log₁₀ (3 × 10⁸)<br>
-    = 10 × (8 + 0.477) = 10 × 8.477 = <strong>84.77 dB</strong><br>
-    <strong>Rule:</strong> Each source adds: first 80 dB, 2nd adds 3 dB → 83 dB, 3rd adds 1.76 dB → 84.76 dB
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q3: Noise Standards Violation</strong><br>
-  A factory operates @ 80 dB (measured Leq) in a residential zone. Check compliance.
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Residential zone daytime limit = 55 dBA (Noise Rules 2000)<br>
-    Measured = 80 dB → Exceeds by 25 dB<br>
-    <strong>Verdict: VIOLATION</strong> → Fine + closure + improvement notice
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q4: Occupational Exposure</strong><br>
-  A worker is exposed to 88 dB Leq daily. Safe exposure limit @ 85 dB = 8 hr. How many hours is safe @ 88 dB?
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Difference = 88 − 85 = 3 dB → Time reduces by 50%<br>
-    Safe time @ 88 dB = 8 × 0.5 = <strong>4 hours</strong>
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q5: Dose Equivalent</strong><br>
-  A worker receives 5 mGy of alpha radiation. Calculate dose equivalent in Sv (QF for alpha = 20).
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Sv = Gy × QF = 0.005 × 20 = <strong>0.1 Sv = 100 mSv</strong><br>
-    This exceeds annual occupational limit (50 mSv) → Immediate medical monitoring required
-  </div>
-</div>
-
-</div>
-
-<!-- TAB 6: QUICK REFERENCE -->
-<div id="quick" class="tab-content">
-
-        <h2>SECTION 2: MUST-MEMORISE STANDARDS & VALUES</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Value</th>
-      <th>Reference / Zone</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential Day</strong></td>
-      <td><code>55 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential Night</strong></td>
-      <td><code>45 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial Day</strong></td>
-      <td><code>65 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial Night</strong></td>
-      <td><code>55 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial Day</strong></td>
-      <td><code>75 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial Night</strong></td>
-      <td><code>70 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone Day</strong></td>
-      <td><code>50 dBA</code></td>
-      <td>Hospital/School/Court | Anytime 6 AM–10 PM</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone Night</strong></td>
-      <td><code>40 dBA</code></td>
-      <td>Hospital/School/Court | Anytime 10 PM–6 AM</td>
-    </tr>
-    <tr style="background: #ffe0b2;">
-      <td><strong>Safe Occupational (8 hr/day)</strong></td>
-      <td><code>85 dBA</code></td>
-      <td>Factories, construction; hearing protection req'd above</td>
-    </tr>
-    <tr style="background: #ffe0b2;">
-      <td><strong>Peak/Impulse (Unsafe)</strong></td>
-      <td><code>140 dB</code></td>
-      <td>Gunfire, explosions; risk of acoustic trauma</td>
-    </tr>
-    <tr style="background: #c8e6c9;">
-      <td><strong>Public Rad. Dose Limit</strong></td>
-      <td><code>1 mSv/yr</code></td>
-      <td>AERB | General population</td>
-    </tr>
-    <tr style="background: #c8e6c9;">
-      <td><strong>Occupational Rad. Limit</strong></td>
-      <td><code>50 mSv/yr</code></td>
-      <td>AERB | Radiation workers</td>
-    </tr>
-    <tr style="background: #b3e5fc;">
-      <td><strong>Lethal Dose (Acute)</strong></td>
-      <td><code>&gt; 6 Sv</code></td>
-      <td>Whole-body exposure; multi-organ failure</td>
-    </tr>
-  </tbody>
-</table>
-
-        <h2>SECTION 3: NOISE REDUCTION QUICK TIPS</h2>
-
-<ul class="bullet-list">
-  <li><strong>Inverse-Square Law:</strong> 6 dB reduction per doubling of distance</li>
-  <li><strong>Addition Rule:</strong> Two equal sources = +3 dB (not 2×). Adding 10 sources ≈ +10 dB</li>
-  <li><strong>Enclosure:</strong> 10–30 dB reduction (most effective)</li>
-  <li><strong>Barrier:</strong> 5–15 dB (depends on frequency & mass)</li>
-  <li><strong>Muffler:</strong> 10–20 dB (typical for exhaust)</li>
-  <li><strong>Time Limit (3 dB rule):</strong> +3 dB → ÷2 time; −3 dB → ×2 time</li>
-</ul>
-
-        <h2>SECTION 4: RADIATION QUICK FACTS</h2>
-
-<ul class="bullet-list">
-  <li><strong>Alpha:</strong> Stopped by paper; dangerous if ingested/inhaled (QF=20)</li>
-  <li><strong>Beta:</strong> Stopped by aluminum; less damaging than alpha (QF=1)</li>
-  <li><strong>Gamma:</strong> Requires lead/concrete; most penetrating (QF=1)</li>
-  <li><strong>LLW:</strong> Store 6–10 years → decay → regular waste</li>
-  <li><strong>HLW:</strong> Deep geological storage required (thousands of years)</li>
-  <li><strong>Public Limit:</strong> 1 mSv/yr; Worker: 50 mSv/yr</li>
-  <li><strong>Background:</strong> 2–3 mSv/yr (natural; varies by location)</li>
-</ul>
-
-        <h2>SECTION 5: EXAM STRATEGIES</h2>
-
-<ol class="bullet-list" style="list-style: decimal;">
-  <li><strong>Zone Standards:</strong> Memorise 4 zones + day/night splits. 80% of MCQs test standard matching.</li>
-  <li><strong>Inverse-Square Law:</strong> Most common numerical. Practice 5 problems on distance-based SPL reduction.</li>
-  <li><strong>Addition of Sources:</strong> Know the 10×log(n) rule for n identical sources.</li>
-  <li><strong>Occupational Limits:</strong> 85 dB safe for 8 hr; 3 dB rule for time reduction.</li>
-  <li><strong>Radiation Units:</strong> Distinguish Gray (absorbed), Sievert (effect), Becquerel (activity).</li>
-  <li><strong>AERB vs CPCB:</strong> Radiation = federal (AERB); Noise = state (UPPCB). Different jurisdictions.</li>
-  <li><strong>Control Methods:</strong> Know Enclosure > Barrier > Isolation > Absorption ranking for reduction.</li>
-</ol>
-
-<div class="box warning">
-<strong>Common Mistakes to Avoid:</strong><br>
-❌ Confusing dB with dBA (A-weighted)<br>
-❌ Adding SPLs linearly (80+80 ≠ 160; it's 83)<br>
-❌ Forgetting day/night split (Residential = 55/45, not uniform)<br>
-❌ Mixing AERB (radiation) with CPCB (air/water)<br>
-❌ Thinking noise barriers give full TL (real-world IL is 5–10 dB less due to diffraction)
-</div>
-
-</div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  ✅ Revision notes compiled for UPPCB AEE 2026 | Unit 7: Noise Pollution & Radiation<br>
-  📚 Source: Noise Rules 2000, Atomic Energy Act 1962, AERB regulations, CPCB guidelines | Last updated: April 2026
-</div>
-
+    <div class="container">
+        <h1>UNIT 10: ENVIRONMENTAL CHEMISTRY & LABORATORY ANALYSIS</h1>
+        <div class="subtitle">UPPCB AEE 2026 | 55 Questions | 220 Marks | Comprehensive Revision Notes</div>
+        
+        <!-- SECTION 1 -->
+        <h2>SECTION 1: WATER ANALYSIS METHODS</h2>
+        <div class="section-intro">
+            This section covers analytical methods for water quality parameters. Focus on procedure details, indicators, and standard values.
+        </div>
+        
+        <h3>1.1 DISSOLVED OXYGEN (DO) - WINKLER'S METHOD (Standard APHA)</h3>
+        <div class="content">
+            <strong>Procedure:</strong> 
+            <ol>
+                <li>Add MnSO₄ + alkaline KI to sample → Mn²⁺ oxidised to MnO₂ by DO</li>
+                <li>Add H₂SO₄ → MnO₂ reacts with KI releasing I₂</li>
+                <li>Titrate I₂ with Na₂S₂O₃ (sodium thiosulphate) using <strong>starch indicator</strong></li>
+                <li>Endpoint: blue colour (starch-iodine complex) → colourless (all I₂ consumed)</li>
+            </ol>
+            
+            <strong>Azide Modification:</strong> Removes NO₂⁻ interference (which would oxidise I⁻ to I₂ in acidic medium, giving falsely high DO).<br/>
+            
+            <strong>Field Alternative:</strong> Clark-type membrane electrode (polarographic sensor):
+            <ul>
+                <li>O₂ diffuses through semi-permeable membrane (Teflon)</li>
+                <li>Electrochemically reduced at cathode → current proportional to DO</li>
+                <li>Continuous monitoring, portable, no chemicals, rapid response</li>
+                <li>Requires calibration in air-saturated water</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>Critical Values:</strong> DO saturation at 20°C (freshwater) = 9.1 mg/L<br/>
+            <strong>CPCB River Standard:</strong> DO &gt; 4 mg/L (indicates healthy stream)<br/>
+            <strong>Below 2 mg/L:</strong> Lethal to most fish; below 4 mg/L causes stress to aquatic organisms
+        </div>
+        
+        <h3>1.2 BIOCHEMICAL OXYGEN DEMAND (BOD5)</h3>
+        <div class="content">
+            <strong>Test Conditions (Critical):</strong>
+            <ul>
+                <li><strong>Temperature:</strong> 20°C (represents average stream temperature)</li>
+                <li><strong>Duration:</strong> 5 days (represents 70-75% of ultimate BOD for domestic sewage)</li>
+                <li><strong>Light:</strong> DARK incubation (prevents algal photosynthesis producing O₂, which would falsely lower measured BOD)</li>
+                <li><strong>Dilution Water:</strong> Aerated, pH 7.2, nutrient-seeded with MgSO₄, CaCl₂, FeCl₃, phosphate buffer</li>
+                <li><strong>Final Conditions:</strong> DO depletion should be 2-6 mg/L; residual DO &gt; 1 mg/L after 5 days</li>
+            </ul>
+        </div>
+        
+        <div class="formula">
+            <strong>BOD Equation:</strong> y = L₀(1 - e<sup>-kt</sup>)<br/>
+            where: y = BOD at time t, L₀ = ultimate BOD, k = rate constant (base e), t = time (days)<br/>
+            <strong>Example:</strong> k₂₀ = 0.23/day, L₀ = 300 mg/L<br/>
+            BOD₅ = 300 × (1 - e<sup>-0.23×5</sup>) = 300 × (1 - e<sup>-1.15</sup>) = 300 × 0.683 = 205 mg/L (≈ 210 mg/L)
+        </div>
+        
+        <div class="formula">
+            <strong>Temperature Correction:</strong> k<sub>T</sub> = k₂₀ × 1.047<sup>(T-20)</sup><br/>
+            <strong>Example:</strong> At 10°C: k₁₀ = 0.23 × 1.047<sup>-10</sup> = 0.23 × 0.633 = 0.146/day
+        </div>
+        
+        <div class="content">
+            <strong>Biodegradability Assessment using BOD/COD Ratio:</strong>
+            <ul>
+                <li>&gt; 0.5 = Readily biodegradable (typical domestic sewage 0.5-0.6) → suitable for biological treatment</li>
+                <li>0.3-0.5 = Moderately biodegradable</li>
+                <li>&lt; 0.3 = Poorly biodegradable → requires physico-chemical or advanced oxidation treatment</li>
+                <li>&lt; 0.1 = Essentially non-biodegradable (industrial effluents with synthetic chemicals, solvents, dyes)</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>CPCB General Standards (Schedule VI - Inland Surface Water):</strong> BOD ≤ 30 mg/L
+        </div>
+        
+        <h3>1.3 CHEMICAL OXYGEN DEMAND (COD) - OPEN REFLUX DICHROMATE METHOD</h3>
+        <table>
+            <tr>
+                <th>Test Step</th>
+                <th>Procedure & Details</th>
+            </tr>
+            <tr>
+                <td><strong>Oxidant</strong></td>
+                <td>K₂Cr₂O₇ (potassium dichromate) in concentrated H₂SO₄</td>
+            </tr>
+            <tr>
+                <td><strong>Catalyst</strong></td>
+                <td>Ag₂SO₄ (promotes oxidation of resistant/straight-chain organics)</td>
+            </tr>
+            <tr>
+                <td><strong>Chloride Masking</strong></td>
+                <td>HgSO₄ (mercuric sulphate) complexes Cl⁻ to prevent false high COD. Ratio: 10:1 HgSO₄:Cl⁻ by mass. Cl⁻ would otherwise be oxidised by dichromate (6Cl⁻ + Cr₂O₇²⁻ + 14H⁺ → 3Cl₂ + 2Cr³⁺ + 7H₂O), giving falsely high readings.</td>
+            </tr>
+            <tr>
+                <td><strong>Reflux Conditions</strong></td>
+                <td>150°C for 2 hours (hot, closed-reflux system for better oxidation)</td>
+            </tr>
+            <tr>
+                <td><strong>Back-Titration</strong></td>
+                <td>Excess unreacted K₂Cr₂O₇ titrated with standardised FAS (Ferrous Ammonium Sulphate)</td>
+            </tr>
+            <tr>
+                <td><strong>Indicator</strong></td>
+                <td>Ferroin (1,10-phenanthroline ferrous complex). Color change: blue-green (oxidised) → reddish-brown (reduced) at endpoint</td>
+            </tr>
+            <tr>
+                <td><strong>Calculation</strong></td>
+                <td>COD (mg/L) = [(Blank FAS mL - Sample FAS mL) × N × 8000] / mL sample, where N = normality of FAS</td>
+            </tr>
+        </table>
+        
+        <div class="content">
+            <strong>Key Advantages of COD over BOD:</strong>
+            <ul>
+                <li><strong>Speed:</strong> Result in 2-3 hours vs 5 days for BOD</li>
+                <li><strong>Completeness:</strong> Measures total oxidisable organic matter (biodegradable + non-biodegradable). BOD measures only biologically degradable organics.</li>
+                <li><strong>Robustness:</strong> Not affected by toxic substances that inhibit microbial activity</li>
+                <li><strong>Reproducibility:</strong> More consistent results than BOD</li>
+                <li><strong>Inorganic Oxidisable Matter:</strong> Oxidises some inorganics (Fe²⁺, sulphides, NO₂⁻)</li>
+            </ul>
+            
+            <strong>COD ≥ BOD Always:</strong> Because COD includes both biodegradable and non-biodegradable organics.<br/>
+            For domestic sewage: BOD₅/COD ≈ 0.5-0.6<br/>
+            For industrial: can be 0.1-0.3
+        </div>
+        
+        <div class="standard">
+            <strong>CPCB General Standards (Schedule VI):</strong> COD ≤ 250 mg/L (inland surface water)<br/>
+            <strong>pH (also Schedule VI):</strong> 5.5-9.0 (new standard; older: 6.0-8.5)<br/>
+            <strong>Suspended Solids (SS):</strong> 100 mg/L (new: 50 mg/L)
+        </div>
+        
+        <h3>1.4 HARDNESS: EDTA TITRATION</h3>
+        <div class="content">
+            <strong>Total Hardness (pH 10 using NH₃-NH₄⁺ buffer):</strong>
+            <ul>
+                <li>Add EDTA (disodium ethylene diamine tetra-acetic acid)</li>
+                <li>EDTA chelates Ca²⁺ and Mg²⁺ ions: Ca²⁺ + EDTA → CaEDTA²⁻, Mg²⁺ + EDTA → MgEDTA²⁻</li>
+                <li><strong>Indicator:</strong> EBT (Eriochrome Black T) forms wine-red/pink complex with Ca²⁺/Mg²⁺</li>
+                <li><strong>Endpoint:</strong> EDTA strips last metal ion from EBT → free EBT turns blue</li>
+                <li><strong>Result:</strong> Expressed as mg/L CaCO₃</li>
+            </ul>
+            
+            <strong>Calcium Hardness Alone (pH 12-13 using NaOH):</strong>
+            <ul>
+                <li>At high pH, Mg²⁺ precipitates as Mg(OH)₂, doesn't interfere</li>
+                <li><strong>Indicator:</strong> Murexide (ammonium purpurate) → pink (with Ca²⁺) to purple (endpoint)</li>
+                <li><strong>Mg Hardness:</strong> Calculated by difference: Mg = Total - Ca</li>
+            </ul>
+            
+            <strong>Temporary vs Permanent Hardness:</strong>
+            <ul>
+                <li><strong>Temporary (Bicarbonate):</strong> Caused by Ca(HCO₃)₂ and Mg(HCO₃)₂. Removed by boiling: Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂↑. Economical for small quantities.</li>
+                <li><strong>Permanent (Non-carbonate):</strong> CaSO₄, MgSO₄, CaCl₂, MgCl₂. NOT removable by boiling. Requires: lime-soda process, zeolite softening, or ion exchange.</li>
+                <li><strong>Total Hardness = Temporary + Permanent</strong></li>
+            </ul>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Hardness Classification</th>
+                <th>mg/L as CaCO₃</th>
+                <th>Health & Technical Impact</th>
+            </tr>
+            <tr>
+                <td><strong>Soft</strong></td>
+                <td>0-75</td>
+                <td>May be corrosive to pipes; risk of Pb/Cu leaching from plumbing materials</td>
+            </tr>
+            <tr>
+                <td><strong>Moderately Hard</strong></td>
+                <td>75-150</td>
+                <td>No significant issues; acceptable for most uses</td>
+            </tr>
+            <tr>
+                <td><strong>Hard</strong></td>
+                <td>150-300</td>
+                <td>Scale formation in boilers/pipes/geysers; high soap consumption; reduces lathering</td>
+            </tr>
+            <tr>
+                <td><strong>Very Hard</strong></td>
+                <td>&gt; 300</td>
+                <td>Severe scaling; significant water softening required for domestic/industrial use</td>
+            </tr>
+        </table>
+        
+        <div class="standard">
+            <strong>IS 10500:2012 Drinking Water Limits:</strong><br/>
+            Desirable: 200 mg/L as CaCO₃<br/>
+            Permissible (no alternative source): 600 mg/L as CaCO₃
+        </div>
+        
+        <h3>1.5 TURBIDITY, COLOUR, ODOUR, CHLORINE RESIDUAL</h3>
+        <div class="content">
+            <strong>Turbidity (Nephelometric):</strong>
+            <ul>
+                <li>Measured by nephelometer (turbidimeter) → light scattered at 90° angle</li>
+                <li>Unit: NTU (Nephelometric Turbidity Unit)</li>
+                <li>Calibration: Formazin polymer suspension (primary standard)</li>
+                <li>Significance: High turbidity shields pathogens from UV/chlorine disinfection (turbidity blocks light penetration and protects microbes)</li>
+                <li>Sources: Clay, silt, plankton, colloidal particles</li>
+            </ul>
+            
+            <strong>True Colour:</strong>
+            <ul>
+                <li>Measured AFTER filtering through 0.45 μm membrane filter (removes all suspended solids)</li>
+                <li>Compared against platinum-cobalt (Pt-Co) standards</li>
+                <li>Unit: TCU (True Colour Unit) or Hazen units</li>
+                <li>Sources: Dissolved humic/fulvic acids, tannins, Fe, Mn, industrial dyes</li>
+            </ul>
+            
+            <strong>Threshold Odour Number (TON):</strong>
+            <ul>
+                <li>TON = (A + B) / A, where A = mL sample, B = mL odour-free dilution water at threshold dilution</li>
+                <li>TON of 1 = no odour (no dilution needed)</li>
+                <li>TON of 200 = 1 mL sample + 199 mL dilution water = objectionable odour</li>
+                <li>Method: Sensory panel (minimum 5 trained panellists)</li>
+                <li>Sources: H₂S (rotten egg), geosmin (earthy, from actinomycetes/cyanobacteria), chlorophenols (medicinal), industrial chemicals</li>
+            </ul>
+            
+            <strong>Residual Chlorine (DPD Method):</strong>
+            <ul>
+                <li><strong>DPD Reagent:</strong> N,N-diethyl-p-phenylenediamine</li>
+                <li><strong>Reaction:</strong> Reacts with free chlorine (HOCl/OCl⁻) → pink/magenta colour</li>
+                <li><strong>Measurement:</strong> Colorimetric/spectrophotometric at 515 nm. Colour intensity proportional to Cl concentration.</li>
+                <li><strong>DPD-1 Vial:</strong> Free chlorine only</li>
+                <li><strong>DPD-3 Vial</strong> (with KI): Total chlorine (free + combined)</li>
+                <li><strong>Combined Cl = Total - Free</strong></li>
+                <li><strong>Alternative:</strong> Amperometric titration (more accurate for lab use)</li>
+                <li><strong>OLD Method (Phased Out):</strong> OTA (o-tolidine) - found to be carcinogenic</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>IS 10500:2012 Drinking Water Limits:</strong><br/>
+            <strong>Turbidity:</strong> Desirable 1 NTU; Permissible 5 NTU<br/>
+            <strong>Colour:</strong> Desirable 5 Hazen; Permissible 15 Hazen<br/>
+            <strong>Odour:</strong> 'Agreeable' (no numerical limit specified)<br/>
+            <strong>Free Chlorine Residual:</strong> Minimum 0.2 mg/L at consumer end (ensures protection during distribution)
+        </div>
+        
+        <h3>1.6 JAR TEST</h3>
+        <div class="content">
+            <strong>Purpose:</strong> Laboratory procedure to determine optimum coagulant dose, pH adjustment chemicals, and mixing conditions for coagulation-flocculation process.<br/>
+            
+            <strong>Procedure:</strong>
+            <ol>
+                <li>Fill 6 identical beakers with sample water (usually 1 L each)</li>
+                <li>Add different coagulant doses to each beaker (e.g., 10, 20, 30, 40, 50, 60 mg/L)</li>
+                <li><strong>Rapid Mix:</strong> Stir at ~100 RPM for 1-2 minutes (coagulation - forms microflocs)</li>
+                <li><strong>Slow Mix:</strong> Reduce to ~30-40 RPM for 15-20 minutes (flocculation - combines microflocs into settleable flocs)</li>
+                <li><strong>Settling:</strong> Allow to settle undisturbed for 30 minutes</li>
+                <li><strong>Analysis:</strong> Measure supernatant: turbidity (NTU), colour (Hazen), pH, alkalinity</li>
+            </ol>
+            
+            <strong>Interpretation:</strong>
+            <ul>
+                <li><strong>Optimum Dose:</strong> Minimum coagulant concentration achieving acceptable water quality (lowest turbidity/colour with acceptable pH)</li>
+                <li><strong>Over-dosing:</strong> Wastes chemicals, may increase turbidity (re-stabilisation)</li>
+                <li><strong>Under-dosing:</strong> Insufficient floc formation, poor removal</li>
+                <li>Tests can include: coagulant aids (polyelectrolytes), pH adjustment (lime/acid), temperature effects</li>
+            </ul>
+        </div>
+        
+        <!-- SECTION 2 -->
+        <h2>SECTION 2: MICROBIOLOGICAL ANALYSIS</h2>
+        
+        <h3>2.1 COLIFORM TESTING: MPN (Most Probable Number) METHOD</h3>
+        <div class="content">
+            <strong>Three-Stage Sequential Procedure:</strong>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Stage</th>
+                <th>Medium</th>
+                <th>Temperature & Time</th>
+                <th>Positive Indicator</th>
+                <th>Principle</th>
+            </tr>
+            <tr>
+                <td><strong>1. Presumptive</strong></td>
+                <td>Lactose Broth (with inverted Durham tube)</td>
+                <td>35°C, 24-48 hrs</td>
+                <td>Gas in Durham tube (top inverted tube)</td>
+                <td>All coliforms ferment lactose producing CO₂/H₂. Mixed with non-coliform bacteria.</td>
+            </tr>
+            <tr>
+                <td><strong>2. Confirmed</strong></td>
+                <td>Brilliant Green Bile Broth (BGBB)</td>
+                <td>35°C, 24-48 hrs</td>
+                <td>Gas in Durham tube</td>
+                <td>BGBB is selective for coliforms; suppresses many non-coliforms. Confirms presence of true coliforms.</td>
+            </tr>
+            <tr>
+                <td><strong>3. Completed</strong></td>
+                <td>EMB Agar (Eosin Methylene Blue)</td>
+                <td>35°C, 24-48 hrs</td>
+                <td>Dark colonies with green metallic sheen</td>
+                <td>EMB is differential; E. coli ferments lactose rapidly → dark colonies. Confirms E. coli.</td>
+            </tr>
+        </table>
+        
+        <div class="content">
+            <strong>EMB Agar Colony Morphology (Critical for Identification):</strong>
+            <ul>
+                <li><strong>E. coli:</strong> Dark blue-black colonies with <strong>green metallic sheen</strong> (pathognomonic). Caused by rapid lactose fermentation producing acid, which precipitates eosin-methylene blue dye.</li>
+                <li><strong>Other Coliforms (Enterobacter, Klebsiella):</strong> Pink or mucoid colonies, <strong>NO metallic sheen</strong></li>
+                <li><strong>Non-lactose Fermenters (Salmonella, Shigella):</strong> Transparent or colourless colonies</li>
+            </ul>
+            
+            <strong>MPN Calculation:</strong>
+            <ul>
+                <li>Count positive tubes (with gas) at presumptive, confirmed, and completed stages</li>
+                <li>Use standard MPN statistical tables (e.g., 3-tube or 5-tube method) to convert tube combinations to MPN/100 mL</li>
+                <li>Example: If 3 presumptive tubes positive, 2 confirmed, 1 completed → use table to find MPN value</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>IS 10500:2012 Drinking Water Standard:</strong><br/>
+            <strong>Total Coliform:</strong> Shall not be detectable in any 100 mL sample (0 MPN/100 mL) - NO RELAXATION<br/>
+            <strong>Thermotolerant (Fecal) Coliform:</strong> Shall not be detectable<br/>
+            <strong>E. coli:</strong> Shall not be detectable
+        </div>
+        
+        <h3>2.2 COLIFORM TESTING: MEMBRANE FILTER (MF) METHOD</h3>
+        <div class="content">
+            <strong>Procedure:</strong>
+            <ol>
+                <li>Filter a known volume of sample (usually 100 mL or appropriate dilution) through a sterile 0.45 μm pore size cellulose acetate membrane filter</li>
+                <li>Place membrane on selective medium (m-Endo agar for total coliform, m-FC agar for fecal coliform)</li>
+                <li>Incubate:
+                    <ul>
+                        <li><strong>Total Coliform:</strong> 35°C for 22-24 hrs</li>
+                        <li><strong>Fecal Coliform:</strong> 44.5°C for 24 hrs (elevated temperature selects for fecal organisms)</li>
+                    </ul>
+                </li>
+                <li>Count dark red/pink colonies with <strong>metallic sheen</strong> (coliforms)</li>
+                <li><strong>Result:</strong> CFU (Colony Forming Units) per 100 mL</li>
+            </ol>
+            
+            <strong>Advantages over MPN Method:</strong>
+            <ul>
+                <li><strong>Speed:</strong> 24 hrs vs 72+ hrs for MPN (3 sequential stages)</li>
+                <li><strong>Precision:</strong> Direct colony count (more accurate than statistical estimation)</li>
+                <li><strong>Quantitative:</strong> Exact number of organisms rather than range</li>
+            </ul>
+            
+            <strong>Limitations:</strong>
+            <ul>
+                <li>Not suitable for highly turbid water (suspended solids clog membrane)</li>
+                <li>Cannot be used for all water types (some inhibitory substances may interfere)</li>
+            </ul>
+        </div>
+        
+        <h3>2.3 THERMOTOLERANT (FECAL) COLIFORMS</h3>
+        <div class="content">
+            <strong>Key Difference from Total Coliform:</strong>
+            <ul>
+                <li><strong>Incubation Temperature: 44-44.5°C</strong> (elevated temperature selects for organisms of fecal/faecal origin)</li>
+                <li>E. coli is the primary thermotolerant coliform indicator</li>
+                <li>Non-fecal coliforms (Enterobacter, Klebsiella) do not grow at 44.5°C</li>
+            </ul>
+            
+            <strong>IMViC Test for E. coli Confirmation:</strong>
+            <ul>
+                <li><strong>I:</strong> Indole production (+)</li>
+                <li><strong>M:</strong> Methyl Red test (+)</li>
+                <li><strong>V:</strong> Voges-Proskauer test (−)</li>
+                <li><strong>C:</strong> Citrate utilisation (−)</li>
+                <li><strong>E. coli Pattern: ++−−</strong> (positive for I and MR; negative for VP and Citrate)</li>
+            </ul>
+            
+            <strong>Why More Specific?</strong>
+            <ul>
+                <li>Thermotolerant coliforms are almost exclusively of fecal origin</li>
+                <li>Total coliforms include environmental coliforms (Enterobacter, Klebsiella) that are ubiquitous in soil/plants</li>
+                <li>Thermotolerant testing is more reliable for detecting actual faecal contamination</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>IS 10500:2012:</strong><br/>
+            Thermotolerant (fecal) coliform: Shall not be detectable<br/>
+            E. coli: Shall not be detectable
+        </div>
+        
+        <!-- SECTION 3 -->
+        <h2>SECTION 3: HEAVY METALS & ADVANCED ANALYSIS</h2>
+        
+        <h3>3.1 ATOMIC ABSORPTION SPECTROSCOPY (AAS)</h3>
+        <div class="content">
+            <strong>Principle:</strong>
+            Sample is atomised (converted to ground-state atoms) in a high-temperature flame or furnace. These ground-state atoms absorb light at characteristic wavelengths specific to each element (from a Hollow Cathode Lamp). The amount of light absorbed is proportional to the concentration of the element (Beer-Lambert Law: A = εbc).<br/>
+            
+            <strong>Procedure:</strong>
+            <ol>
+                <li>Prepare sample in solution</li>
+                <li>Aspirate into flame or graphite furnace</li>
+                <li>Hollow Cathode Lamp emits characteristic wavelength for target element (e.g., Pb = 283.3 nm)</li>
+                <li>Ground-state atoms absorb light</li>
+                <li>Detector measures absorbance (proportional to concentration)</li>
+                <li>Compare with calibration curve</li>
+            </ol>
+            
+            <strong>Types of AAS:</strong>
+            <ul>
+                <li><strong>Flame AAS:</strong> Air-acetylene flame (~2100°C). Detection limits: 0.01-0.1 mg/L. Fast, economical.</li>
+                <li><strong>Graphite Furnace AAS (GF-AAS):</strong> Graphite tube furnace (~2700°C). Detection limits: ~0.001 mg/L (100-fold more sensitive). Better for trace elements, ppb-level analysis (e.g., As, Pb in drinking water). Slower, more expensive.</li>
+            </ul>
+            
+            <strong>Element-Specific Wavelengths (Common Metals):</strong>
+            <ul>
+                <li>Pb: 283.3 nm</li>
+                <li>Cd: 228.8 nm</li>
+                <li>Cr: 357.9 nm</li>
+                <li>Cu: 324.7 nm</li>
+                <li>Ni: 232.0 nm</li>
+                <li>Zn: 213.9 nm</li>
+            </ul>
+            
+            <strong>Advantages:</strong> Specific, accurate, sensitive, economical, simple operation.<br/>
+            <strong>Limitation:</strong> One element at a time (requires changing HCL for each element or using multi-element lamp).
+        </div>
+        
+        <h3>3.2 ICP-OES (Inductively Coupled Plasma - Optical Emission Spectrometry)</h3>
+        <div class="content">
+            <strong>Principle:</strong>
+            Sample is nebulised into an argon plasma at extremely high temperature (6,000-10,000 K). At this temperature, all atoms are excited (energised) and emit characteristic wavelengths. The intensity of emitted light at each wavelength is proportional to the concentration of that element.<br/>
+            
+            <strong>Major Advantage over AAS:</strong>
+            <strong>MULTI-ELEMENT SIMULTANEOUS ANALYSIS</strong> - Can measure 20-70 elements in a single run in just a few minutes. All elements analysed simultaneously from one sample injection.<br/>
+            
+            <strong>Detection Limits:</strong> ~0.001-0.01 mg/L for most metals (comparable to graphite furnace AAS).<br/>
+            
+            <strong>Other Advantages:</strong>
+            <ul>
+                <li>Lower detection limits for many elements (vs flame AAS)</li>
+                <li>Wider dynamic range (concentration range measurable)</li>
+                <li>Less chemical interference</li>
+                <li>Excellent for trace element analysis</li>
+            </ul>
+            
+            <strong>ICP-MS (Mass Spectrometry):</strong>
+            Similar to ICP-OES but uses mass spectrometer for detection instead of optical spectrometry. Even lower detection limits (ppt, parts per trillion) and better handling of spectral interferences. Most sensitive technique available.
+        </div>
+        
+        <h3>3.3 FLUORIDE ANALYSIS: SPADNS METHOD</h3>
+        <div class="content">
+            <strong>Principle:</strong>
+            Zirconium forms a complex with SPADNS (sodium 2-(para-sulfophenylazo)-1,8-dihydroxy-3,6-naphthalene disulfonate) reagent, forming a red-coloured lake. When fluoride is added, it competes for the zirconium, causing dissociation of the zirconium-SPADNS complex and release of free SPADNS dye. The resulting colour bleaching (decrease in red colour) is proportional to fluoride concentration.<br/>
+            
+            <strong>Procedure:</strong>
+            <ol>
+                <li>Add SPADNS reagent (red colour - zirconium-SPADNS complex)</li>
+                <li>Add sample containing F⁻</li>
+                <li>F⁻ preferentially binds Zr: F⁻ + Zr-SPADNS → Zr-F + SPADNS (free dye)</li>
+                <li>Colour decreases (bleaches) with increasing F⁻</li>
+                <li>Measure absorbance at 570 nm (proportional to F⁻)</li>
+            </ol>
+            
+            <strong>Alternative Methods:</strong>
+            <ul>
+                <li><strong>Ion-Selective Electrode (ISE):</strong> More accurate and preferred for routine monitoring. Uses TISAB buffer (Total Ionic Strength Adjustment Buffer) to maintain constant ionic strength and release all F⁻ ions.</li>
+                <li><strong>High Performance Liquid Chromatography (HPLC):</strong> For very accurate/sensitive measurements</li>
+            </ul>
+            
+            <strong>Health Effects of Fluoride:</strong>
+            <ul>
+                <li><strong>&lt; 0.5 mg/L:</strong> Dental caries (cavities) risk</li>
+                <li><strong>0.5-1.5 mg/L:</strong> Optimal for dental health</li>
+                <li><strong>1.5-3.0 mg/L:</strong> Dental fluorosis (enamel mottling, cosmetic discolouration)</li>
+                <li><strong>3-6 mg/L:</strong> Skeletal fluorosis (bone pain, stiffness)</li>
+                <li><strong>&gt; 10 mg/L:</strong> Crippling skeletal fluorosis (disabling joint damage)</li>
+            </ul>
+            
+            <strong>Endemic Fluorosis Areas in India:</strong> Rajasthan, Andhra Pradesh, Tamil Nadu, Gujarat, Uttar Pradesh, Haryana (geogenic origin from fluoride-rich minerals in aquifers).
+        </div>
+        
+        <div class="standard">
+            <strong>IS 10500:2012 Drinking Water Limits:</strong><br/>
+            <strong>Fluoride:</strong> Desirable 1.0 mg/L; Permissible 1.5 mg/L
+        </div>
+        
+        <h3>3.4 ARSENIC ANALYSIS (ppb Level)</h3>
+        <div class="content">
+            <strong>Challenge:</strong> Arsenic occurs at very low concentrations (ppb = parts per billion = μg/L) in drinking water, requiring sensitive analytical techniques.
+            <br/>
+            
+            <strong>Preferred Methods (Detection Limits in ppb):</strong>
+            <ul>
+                <li><strong>Graphite Furnace AAS (GF-AAS):</strong> ~1 ppb (parts per billion)</li>
+                <li><strong>ICP-MS (Inductively Coupled Plasma - Mass Spectrometry):</strong> ~0.01 ppb (parts per trillion) - most sensitive</li>
+                <li><strong>Hydride Generation AAS (HG-AAS):</strong> ~0.1 ppb. Converts As to AsH₃ gas, which is more easily detected.</li>
+            </ul>
+            
+            <strong>Field Test Kits:</strong> Colorimetric methods (cheaper, portable) but higher detection limits (~10 ppb), insufficient for drinking water compliance monitoring.
+            
+            <strong>Speciation Important:</strong>
+            <ul>
+                <li><strong>As(III):</strong> More toxic, more mobile in groundwater</li>
+                <li><strong>As(V):</strong> Less toxic, less mobile</li>
+                <li>Different analytical methods may be needed to distinguish species</li>
+            </ul>
+            
+            <strong>Contamination in India:</strong>
+            <ul>
+                <li><strong>Major endemic areas:</strong> West Bengal, Bihar, Uttar Pradesh, Assam</li>
+                <li><strong>Origin:</strong> Geogenic (natural minerals in alluvial aquifers), not anthropogenic</li>
+                <li><strong>Affects:</strong> Millions of people in these regions dependent on groundwater</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>IS 10500:2012 Drinking Water Limit:</strong><br/>
+            Arsenic: 0.01 mg/L (10 ppb) - same as WHO guideline
+        </div>
+        
+        <!-- SECTION 4 -->
+        <h2>SECTION 4: AIR MONITORING METHODS</h2>
+        
+        <h3>4.1 HIGH VOLUME SAMPLER (HVS) FOR PARTICULATE MATTER</h3>
+        <div class="content">
+            <strong>Purpose:</strong> Measure suspended particulate matter (SPM/TSP - Total Suspended Particles, PM₁₀, PM₂.₅) in ambient air. Used for NAAQS compliance monitoring.<br/>
+            
+            <strong>Operating Procedure:</strong>
+            <ol>
+                <li><strong>Pre-sampling:</strong> Weigh a glass fibre filter (8×10 inches typical) on analytical balance to ±0.1 mg (pre-weighing, W₁)</li>
+                <li><strong>Sampling:</strong> Draw ambient air through the filter at 1.1-1.7 m³/min for 24 hours (standard sampling duration)</li>
+                <li><strong>Post-sampling:</strong> Re-weigh the filter (post-weighing, W₂)</li>
+                <li><strong>Calculation:</strong> Mass of PM collected = W₂ - W₁. Concentration = (Mass / Total Volume) × 10⁶ μg/m³</li>
+            </ol>
+            
+            <strong>Size-Selective Inlets (Impactors):</strong>
+            <ul>
+                <li><strong>TSP (Total Suspended Particles):</strong> No inlet, all particles collected</li>
+                <li><strong>PM₁₀ Inlet:</strong> Size-selective impactor removes particles &gt; 10 μm. Only particles &lt; 10 μm pass through to filter.</li>
+                <li><strong>PM₂.₅ Inlet:</strong> WINS (Well Impactor Ninety-Six) or cyclone inlet selects particles &lt; 2.5 μm</li>
+            </ul>
+            
+            <strong>Why Size-Selection Matters?</strong>
+            <ul>
+                <li><strong>PM₁₀:</strong> Thoracic particles, reach bronchi; inhalable fraction</li>
+                <li><strong>PM₂.₅:</strong> Fine particles, reach alveoli; respirable fraction; deeper lung penetration; higher health risk</li>
+            </ul>
+            
+            <strong>Gravimetric Method:</strong>
+            Direct mass measurement from filter weighing. This is the <strong>REFERENCE METHOD</strong> for NAAQS monitoring under NAMP (National Ambient Monitoring Programme).<br/>
+            
+            <strong>Alternative Method:</strong> Beta attenuation monitors (continuous, real-time measurement at CAAQMS stations).
+        </div>
+        
+        <div class="standard">
+            <strong>NAAQS 2009 Limits (24-hr averaging):</strong><br/>
+            <strong>PM₂.₅:</strong> 60 μg/m³<br/>
+            <strong>PM₁₀:</strong> 100 μg/m³<br/>
+            (Annual standards also exist: PM₂.₅ = 40 μg/m³, PM₁₀ = 60 μg/m³)
+        </div>
+        
+        <h3>4.2 SO₂ MEASUREMENT: WEST-GAEKE METHOD</h3>
+        <div class="content">
+            <strong>Absorbing Reagent:</strong> Sodium tetrachloromercurate (TCM, Na₂HgCl₄). Stable at room temperature.
+            <br/>
+            
+            <strong>Principle & Procedure:</strong>
+            <ol>
+                <li>Draw ambient air through impinger containing TCM absorbing reagent</li>
+                <li><strong>Chemical Reaction:</strong> SO₂ + Na₂HgCl₄ → Na₂[HgCl₂SO₃] (stable dichlorosulphito-mercurate complex)</li>
+                <li>SO₂ is quantitatively absorbed and stabilised in this complex form</li>
+                <li>Add pararosaniline reagent + formaldehyde (in acidic medium)</li>
+                <li><strong>Color Reaction:</strong> Forms magenta/red-violet colour (azo dye, fuchsin)</li>
+                <li>Measure absorbance at 548 nm (wavelength of maximum absorption for the colour complex)</li>
+                <li>Absorbance proportional to SO₂ concentration</li>
+            </ol>
+            
+            <strong>Automated Alternative:</strong>
+            <ul>
+                <li><strong>Pulsed Fluorescence Analyser:</strong> SO₂ absorbs UV light at specific wavelengths and emits fluorescence (re-emits light at longer wavelength). Fluorescence intensity proportional to SO₂ concentration. Provides continuous, real-time measurement.</li>
+            </ul>
+            
+            <strong>Advantages of West-Gaeke Method:</strong>
+            <ul>
+                <li>Simple, reproducible</li>
+                <li>Specific for SO₂</li>
+                <li>Stable complex allows samples to be stored and analyzed later</li>
+                <li>Established reference method</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>NAAQS 2009 Limit (24-hr averaging):</strong><br/>
+            SO₂: 80 μg/m³ (for industrial, residential, or rural areas)
+        </div>
+        
+        <h3>4.3 NOx MEASUREMENT: CHEMILUMINESCENCE ANALYSER</h3>
+        <div class="content">
+            <strong>Principle (Ozone Chemiluminescence):</strong>
+            <ol>
+                <li><strong>NO + O₃ (ozone) → NO₂* (excited state) + O₂</strong></li>
+                <li>The excited NO₂* molecule releases energy as light (photon): <strong>NO₂* → NO₂ + hν (light)</strong></li>
+                <li><strong>Measurement:</strong> Photomultiplier tube detects emitted light</li>
+                <li><strong>Light intensity ∝ NO concentration</strong></li>
+            </ol>
+            
+            <strong>Measurement of NOx (Total Oxidised Nitrogen):</strong>
+            <ul>
+                <li><strong>Direct NO Measurement:</strong> Sample air + O₃ → chemiluminescence → NO concentration</li>
+                <li><strong>NO₂ Conversion:</strong> Sample air heated to 315°C with molybdenum catalyst → NO₂ reduced to NO</li>
+                <li><strong>Total NO Measured:</strong> This now includes original NO + converted NO₂</li>
+                <li><strong>Calculation:</strong> NO₂ = (Total NO with catalyst) - (Direct NO measurement)</li>
+                <li><strong>NOx = NO + NO₂</strong></li>
+            </ul>
+            
+            <strong>Wavelength of Emission:</strong> ~600-3000 nm (near-infrared region).
+            <br/>
+            
+            <strong>Detection Limit:</strong> ~0.5 ppb (excellent sensitivity for ambient monitoring).
+            <br/>
+            
+            <strong>Reference Method:</strong> <strong>US EPA reference method</strong>. Used in Indian CAAQMS (Continuous Ambient Air Quality Monitoring Stations) for real-time NOx monitoring.
+        </div>
+        
+        <div class="standard">
+            <strong>NAAQS 2009 Limit (24-hr averaging):</strong><br/>
+            NO₂: 80 μg/m³
+        </div>
+        
+        <h3>4.4 CARBON MONOXIDE (CO): NDIR (Non-Dispersive Infrared) ANALYSER</h3>
+        <div class="content">
+            <strong>Principle:</strong>
+            CO is a diatomic molecule that absorbs infrared (IR) radiation at specific wavelengths. Different gases absorb IR at different characteristic wavelengths (absorption spectrum).<br/>
+            
+            <strong>NDIR Technology:</strong>
+            <ol>
+                <li><strong>IR Source:</strong> Emits broad-spectrum infrared radiation</li>
+                <li><strong>Sample Cell:</strong> CO in sample absorbs IR at its characteristic wavelength (~4.67 μm)</li>
+                <li><strong>Reference Cell:</strong> Contains a non-absorbing gas (e.g., N₂) for comparison</li>
+                <li><strong>Detector:</strong> Measures IR intensity difference between sample and reference cells</li>
+                <li><strong>Difference in Intensity ∝ CO concentration</strong></li>
+            </ol>
+            
+            <strong>Advantages:</strong>
+            <ul>
+                <li>Specific for CO (wavelength-specific)</li>
+                <li>Not affected by other gases (each has unique absorption wavelength)</li>
+                <li>Provides continuous, real-time measurement</li>
+                <li>Stable baseline</li>
+            </ul>
+            
+            <strong>Also Used For:</strong>
+            <ul>
+                <li><strong>CO₂ Measurement:</strong> Absorption at 4.26 μm (same technology, different wavelength)</li>
+            </ul>
+            
+            <strong>Detection Limit:</strong> ~0.05 ppm (very sensitive).
+        </div>
+        
+        <div class="standard">
+            <strong>NAAQS 2009 Limits:</strong><br/>
+            CO: 2 mg/m³ (8-hr averaging); 4 mg/m³ (1-hr averaging)
+        </div>
+        
+        <h3>4.5 NAMP & CAAQMS MONITORING NETWORK</h3>
+        <div class="content">
+            <strong>NAMP (National Ambient Monitoring Programme):</strong>
+            <ul>
+                <li><strong>Manual Monitoring Stations:</strong> ~900+ across 300+ cities/towns in India</li>
+                <li><strong>Parameters Measured:</strong> SO₂, NO₂, PM₁₀, PM₂.₅ (at select stations)</li>
+                <li><strong>Sampling Frequency:</strong> 2 days per week, 24-hour sampling (typically Wed & Sun, or Sat & Wed)</li>
+                <li><strong>Method:</strong> HVS for particles (gravimetric); absorbers for gases (colorimetric analysis in lab)</li>
+                <li><strong>Coverage:</strong> Represents overall ambient air quality trends; data available on CPCB website and SAMEER app</li>
+            </ul>
+            
+            <strong>CAAQMS (Continuous Ambient Air Quality Monitoring Stations):</strong>
+            <ul>
+                <li><strong>Automated Monitoring:</strong> ~400+ continuous stations across major cities</li>
+                <li><strong>Parameters:</strong> PM₂.₅, PM₁₀, SO₂, NOx, CO, O₃, NH₃, Pb, Benzene (varied by station)</li>
+                <li><strong>Real-Time Data:</strong> Measurements every 15 minutes (or 1-hour average)</li>
+                <li><strong>Instruments:</strong> Automated analysers (beta attenuation for PM, chemiluminescence for NOx, NDIR for CO, etc.)</li>
+                <li><strong>Data Display:</strong> CPCB AQI (Air Quality Index) portal, SAMEER app (mobile), real-time on web</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>CPCB Air Quality Index (AQI) - 6 Categories (based on the worst-performing pollutant):</strong><br/>
+            Good: 0-50 (Green)<br/>
+            Satisfactory: 51-100 (Blue)<br/>
+            Moderately Polluted: 101-200 (Yellow)<br/>
+            Poor: 201-300 (Orange)<br/>
+            Very Poor: 301-400 (Red)<br/>
+            Severe: &gt;400 (Maroon)
+        </div>
+        
+        <!-- SECTION 5 -->
+        <h2>SECTION 5: ENVIRONMENTAL CHEMISTRY FUNDAMENTALS</h2>
+        
+        <h3>5.1 pH, ALKALINITY & BUFFER CAPACITY</h3>
+        <div class="content">
+            <strong>pH Definition:</strong>
+            pH = −log₁₀[H⁺] (negative logarithm of hydrogen ion activity)<br/>
+            Scale: 0 (most acidic) to 14 (most alkaline) at 25°C<br/>
+            pH 7 = Neutral (at 25°C)<br/>
+            &lt; 7 = Acidic<br/>
+            &gt; 7 = Alkaline/Basic<br/>
+            
+            <strong>Significance of pH:</strong>
+            <ul>
+                <li><strong>Disinfection:</strong> Hypochlorous acid (HOCl) is the active disinfectant. HOCl is dominant at pH &lt; 7.5. As pH increases above 7.5, HOCl dissociates to hypochlorite ion (OCl⁻, less effective), reducing disinfection efficiency.</li>
+                <li><strong>Metal Solubility:</strong> pH controls whether metals precipitate (insoluble hydroxides) or remain dissolved (soluble ions). This affects:
+                    <ul>
+                        <li>Metal removal (coagulation works best at specific pH ranges for each metal)</li>
+                        <li>Corrosion of pipes (low pH → corrosive, can leach Pb, Cu from plumbing)</li>
+                    </ul>
+                </li>
+                <li><strong>Biological Treatment:</strong> Optimal pH for microbes is typically 6.5-8.0. Extreme pH inhibits microbial growth.</li>
+            </ul>
+            
+            <strong>Measurement:</strong>
+            <ul>
+                <li>Glass electrode pH meter (reference electrode + glass sensing electrode) - most accurate</li>
+                <li>pH indicator papers/solutions - qualitative/semi-quantitative</li>
+            </ul>
+            
+            <strong>Alkalinity Definition:</strong>
+            <strong>Acid-Neutralising Capacity (ANC)</strong> of water. The amount of strong acid required to bring pH to 4.5 (or total capacity to neutralise acids). Primarily due to dissolved bases:<br/>
+            <ul>
+                <li><strong>Bicarbonate (HCO₃⁻):</strong> Dominant at pH 6.3-8.3 (natural waters)</li>
+                <li><strong>Carbonate (CO₃²⁻):</strong> Dominant at pH &gt; 8.3 (more alkaline waters)</li>
+                <li><strong>Hydroxide (OH⁻):</strong> Significant only at pH &gt; 12 (very alkaline, not natural waters)</li>
+            </ul>
+            
+            <strong>Measurement of Alkalinity:</strong>
+            <ul>
+                <li><strong>Titration Method:</strong> Add standard HCl (H₂SO₄) to sample, measure to two endpoints:
+                    <ul>
+                        <li><strong>P-Alkalinity (phenolphthalein):</strong> Titrate to pH 8.3 (phenolphthalein endpoint, pink→colourless)</li>
+                        <li><strong>M-Alkalinity (methyl orange):</strong> Titrate to pH 4.5 (methyl orange endpoint, red→yellow)</li>
+                    </ul>
+                </li>
+                <li><strong>Interpretation Rules:</strong> Based on P and M values, calculate individual species (HCO₃⁻, CO₃²⁻, OH⁻)</li>
+            </ul>
+            
+            <strong>Buffer Capacity Definition:</strong>
+            The ability to resist pH change when small amounts of strong acid or base are added. Higher buffer capacity = smaller pH change for same amount of acid/base added.<br/>
+            
+            <strong>Buffer System in Natural Waters:</strong>
+            The <strong>carbonate system</strong> (CO₂ ↔ H₂CO₃ ↔ HCO₃⁻ ↔ CO₃²⁻) is the primary buffer in natural water. Higher alkalinity (more HCO₃⁻/CO₃²⁻) = greater buffer capacity.<br/>
+            
+            <strong>Importance:</strong>
+            <ul>
+                <li><strong>Wastewater Treatment:</strong> Nitrification (oxidation of ammonia to nitrate) consumes alkalinity. If alkalinity is insufficient, pH will drop, inhibiting nitrification. Alkalinity supplementation may be needed.</li>
+                <li><strong>Stream Water Quality:</strong> Adequate alkalinity protects streams from pH crashes due to acid rain or other acid inputs, protecting aquatic life.</li>
+                <li><strong>Corrosion Control:</strong> Water with optimal pH and alkalinity is less corrosive to pipes.</li>
+            </ul>
+        </div>
+        
+        <div class="standard">
+            <strong>IS 10500:2012 Drinking Water Limits:</strong><br/>
+            <strong>pH:</strong> 6.5-8.5 (no relaxation - strict requirement)<br/>
+            <strong>CPCB Discharge Standard:</strong> pH 5.5-9.0 (inland surface water)
+        </div>
+        
+        <h3>5.2 REDOX POTENTIAL (ORP/Eh) & Eh-pH DIAGRAMS</h3>
+        <div class="content">
+            <strong>ORP/Eh (Oxidation-Reduction Potential):</strong>
+            Measured in millivolts (mV) using a platinum electrode (inert sensor) paired with a reference electrode. Indicates the oxidising or reducing nature of water.<br/>
+            
+            <strong>Eh Ranges & Environmental Conditions:</strong>
+            <ul>
+                <li><strong>+200 to +600 mV:</strong> Strongly oxidising, aerobic conditions. Dissolved oxygen (O₂) present, or NO₃⁻ as electron acceptor. Supports aerobic organisms.</li>
+                <li><strong>0 to +200 mV:</strong> Anoxic conditions. O₂ depleted, NO₃⁻ available as electron acceptor. Denitrification occurs (NO₃⁻ → N₂).</li>
+                <li><strong>−100 to −400 mV:</strong> Strongly reducing, anaerobic conditions. No O₂ or NO₃⁻. SO₄²⁻ reduction occurs (SO₄²⁻ → H₂S). Methanogenesis (CH₄ production).</li>
+            </ul>
+            
+            <strong>Eh-pH Diagram (Pourbaix Diagram):</strong>
+            A thermodynamic diagram showing stability regions of different chemical species of an element as a function of both Eh (y-axis, in volts) and pH (x-axis).<br/>
+            
+            <strong>Features:</strong>
+            <ul>
+                <li><strong>X-axis:</strong> pH (0-14)</li>
+                <li><strong>Y-axis:</strong> Eh or pe (redox potential, typically -0.4 to +1.0 V)</li>
+                <li><strong>Regions:</strong> Each region represents the stable form of the element under those conditions (dissolved ion, solid oxide, hydroxide, gas, etc.)</li>
+                <li><strong>Upper Boundary:</strong> O₂/H₂O line (limit of oxidising conditions with water)</li>
+                <li><strong>Lower Boundary:</strong> H₂/H₂O line (limit of reducing conditions with water)</li>
+            </ul>
+            
+            <strong>Example:</strong> For Iron (Fe):
+            <ul>
+                <li>At high Eh (oxidising): Fe³⁺ (dissolved, ferric) or Fe₂O₃ (solid rust)</li>
+                <li>At low Eh (reducing): Fe²⁺ (dissolved, ferrous)</li>
+                <li>Different pH: Different hydroxide or oxide forms (Fe(OH)₃, Fe(OH)₂)</li>
+            </ul>
+            
+            <strong>Applications:</strong>
+            <ul>
+                <li><strong>Predicting Metal Mobility:</strong> Where will a metal stay dissolved vs precipitate, how mobile is it in groundwater</li>
+                <li><strong>Corrosion Analysis:</strong> Are pipes in oxidising or reducing environment, will they corrode</li>
+                <li><strong>Treatment Process Design:</strong> What oxidation state will the contaminant be in, which treatment technology is best</li>
+                <li><strong>Chromium Reduction:</strong> Cr⁶⁺ (oxidising conditions) vs Cr³⁺ (reducing conditions). Cr⁶⁺ is toxic, mobile, must be reduced to Cr³⁺ (less toxic, can be precipitated).</li>
+            </ul>
+        </div>
+        
+        <h3>5.3 BIOACCUMULATION & BIOMAGNIFICATION</h3>
+        <div class="content">
+            <strong>Bioaccumulation:</strong>
+            Progressive increase in the concentration of a chemical substance in an organism over time, because the rate of uptake (from all sources: water, food, sediment) exceeds the rate of excretion and metabolism (biological degradation).<br/>
+            
+            <strong>Conditions Favoring Bioaccumulation:</strong>
+            <ul>
+                <li><strong>Lipophilic (Fat-soluble):</strong> Dissolves in fats/lipids of organism tissue, not water-soluble → difficult to excrete</li>
+                <li><strong>Low Water Solubility:</strong> Hydrophobic (water-avoiding)</li>
+                <li><strong>Persistent:</strong> Resists biodegradation (long half-life)</li>
+                <li><strong>Examples:</strong> DDT, PCBs, methylmercury, dioxins, legacy POPs</li>
+            </ul>
+            
+            <strong>Bioconcentration Factor (BCF):</strong>
+            <strong>BCF = Concentration in organism / Concentration in surrounding water</strong> (at steady state equilibrium)<br/>
+            <ul>
+                <li><strong>BCF &lt; 100:</strong> Low bioconcentration (chemical easily excreted, not a concern)</li>
+                <li><strong>BCF 100-1000:</strong> Moderate</li>
+                <li><strong>BCF 1000-5000:</strong> High bioconcentration</li>
+                <li><strong>BCF &gt; 5000:</strong> Very high, significant concern</li>
+            </ul>
+            
+            <strong>BCF Correlation with Kow (Octanol-Water Partition Coefficient):</strong>
+            <strong>log BCF ≈ 0.85 × log Kow</strong><br/>
+            Higher Kow (more lipophilic) → higher BCF (more bioconcentration)<br/>
+            
+            <strong>Examples of BCF Values:</strong>
+            <ul>
+                <li>DDT: ~100,000</li>
+                <li>PCBs: 10,000-100,000</li>
+                <li>Methylmercury: 10,000-100,000</li>
+                <li>PBDEs (flame retardants): High</li>
+            </ul>
+            
+            <strong>Biomagnification:</strong>
+            The progressive increase in concentration of a persistent substance at <strong>successive higher trophic levels</strong> of a food chain. Also called biological magnification.<br/>
+            
+            <strong>Why Does Biomagnification Occur?</strong>
+            <ul>
+                <li>Lower trophic level organism accumulates chemical (e.g., algae).</li>
+                <li>Higher trophic organism eats many lower organisms to survive.</li>
+                <li>Persistent chemical is not excreted or degraded → remains in tissue.</li>
+                <li>Over many predator-prey interactions, concentration increases exponentially with trophic level.</li>
+            </ul>
+            
+            <strong>Classic Example - DDT Biomagnification in Aquatic Food Chain:</strong>
+            <ul>
+                <li>Water: 0.000003 ppm DDT</li>
+                <li>Phytoplankton: 0.04 ppm (13,000× concentration)</li>
+                <li>Zooplankton: 0.5 ppm</li>
+                <li>Small fish: 2 ppm</li>
+                <li>Large fish: 25 ppm</li>
+                <li>Fish-eating birds (Osprey, Bald Eagle): 75 ppm (25 million× water concentration!)</li>
+            </ul>
+            
+            <strong>Consequence:</strong> DDT in raptors caused eggshell thinning, reproductive failure, population collapse. DDT was banned in many countries (but still used in some under malaria exemptions).<br/>
+            
+            <strong>General Rule:</strong> Only persistent, lipophilic chemicals biomagnify. Most chemicals are readily degraded or excreted → don't biomagnify.
+        </div>
+        
+        <h3>5.4 PERSISTENCE & DEGRADATION PATHWAYS</h3>
+        <div class="content">
+            <strong>Environmental Persistence:</strong>
+            Described by the <strong>environmental half-life (t₁/₂)</strong> = the time required for 50% of the chemical to be degraded/removed from the environment.<br/>
+            
+            <strong>Degradation Pathways:</strong>
+            <ol>
+                <li><strong>Hydrolysis:</strong> Reaction with water molecules. Sensitive to pH and temperature. Important for esters, amides.</li>
+                <li><strong>Photolysis (Photochemical Degradation):</strong> UV light breaks chemical bonds. Occurs in surface water/soil exposed to sunlight. Half-lives can range from hours to days.</li>
+                <li><strong>Biodegradation (Microbial Degradation):</strong> Microorganisms (bacteria, fungi) enzymatically degrade chemical. Depends on microbial presence, conditions, chemical structure. Usually slowest pathway.</li>
+                <li><strong>Chemical Oxidation:</strong> Atmospheric oxidants (OH radicals, ozone) oxidise the chemical.</li>
+            </ol>
+            
+            <strong>Examples of Environmental Half-Lives:</strong>
+            <ul>
+                <li><strong>DDT:</strong> 2-15 years (very persistent, now mostly banned)</li>
+                <li><strong>PCBs (Polychlorinated Biphenyls):</strong> Decades to centuries (extremely persistent)</li>
+                <li><strong>Dioxins:</strong> 7-11 years (highly persistent)</li>
+                <li><strong>PFAS (Per- and Polyfluoroalkyl Substances):</strong> Decades to centuries, often called "'forever chemicals'" (extremely resistant to degradation due to carbon-fluorine bonds)</li>
+                <li><strong>Most Natural Organic Compounds:</strong> Hours to weeks (readily degradable)</li>
+            </ul>
+            
+            <strong>Persistent Organic Pollutants (POPs):</strong>
+            <ul>
+                <li><strong>Definition:</strong> Chemicals that are persistent (resist degradation), bioaccumulative (accumulate in organisms), toxic, and undergo long-range environmental transport.</li>
+                <li><strong>Stockholm Convention (2001):</strong> International treaty addressing POPs. Specifies chemicals to be eliminated globally.
+                    <ul>
+                        <li><strong>Original "Dirty Dozen":</strong> Aldrin, Chlordane, DDT, Dieldrin, Endrin, Heptachlor, Hexachlorobenzene, Mirex, Toxaphene, PCBs, Dioxins, Furans</li>
+                        <li><strong>Expanded List:</strong> Now includes ~30 chemicals</li>
+                    </ul>
+                </li>
+                <li><strong>DDT Special Status:</strong> Annex B (restricted, not completely eliminated). Exempted for disease vector control (malaria, dengue) under WHO approval. India uses DDT for malaria control under this exemption; agricultural use banned since 1989.</li>
+            </ul>
+        </div>
+        
+        <!-- SECTION 6 -->
+        <h2>SECTION 6: TOXICOLOGY & RISK ASSESSMENT</h2>
+        
+        <h3>6.1 TOXICITY PARAMETERS: LD50, LC50, NOAEL, LOAEL, RfD</h3>
+        <div class="content">
+            <strong>LD50 (Lethal Dose 50):</strong>
+            The dose of a substance that causes death in 50% of test animals under specified conditions. Expressed as mg/kg body weight (oral, dermal, or inhalation route specified separately). <strong>Lower LD50 = more toxic.</strong><br/>
+            
+            <strong>Examples of LD50 (Oral, Rat):</strong>
+            <ul>
+                <li>Botulinum toxin: 0.001 mg/kg (extremely toxic)</li>
+                <li>Ricin: 0.01 mg/kg</li>
+                <li>Cyanide (sodium): 6.4 mg/kg (highly toxic)</li>
+                <li>Aspirin: ~1500 mg/kg</li>
+                <li>Caffeine: 192 mg/kg</li>
+                <li>Table salt (NaCl): 3000 mg/kg (surprisingly toxic in large doses)</li>
+                <li>Water: &gt; 90,000 mg/kg (essentially non-toxic)</li>
+            </ul>
+            
+            <strong>WHO Classification of Acute Toxicity (based on LD50):</strong>
+            <ul>
+                <li><strong>Class Ia (Extremely Hazardous):</strong> LD50 (oral) &lt; 5 mg/kg</li>
+                <li><strong>Class Ib (Highly Hazardous):</strong> LD50 5-50 mg/kg</li>
+                <li><strong>Class II (Moderately Hazardous):</strong> LD50 50-500 mg/kg</li>
+                <li><strong>Class III (Slightly Hazardous):</strong> LD50 &gt; 500 mg/kg</li>
+            </ul>
+            
+            <strong>LC50 (Lethal Concentration 50):</strong>
+            The concentration of a substance in air (ppm or mg/m³) or water (mg/L) that causes death in 50% of test organisms during a specified exposure period. <strong>Lower LC50 = more toxic.</strong><br/>
+            
+            <strong>Typical Exposure Durations:</strong>
+            <ul>
+                <li><strong>Inhalation:</strong> 4 hours (standard)</li>
+                <li><strong>Aquatic Toxicity:</strong>
+                    <ul>
+                        <li>Fish: 96-hour LC50</li>
+                        <li>Daphnia (water flea): 48-hour LC50 (or EC50 for immobility)</li>
+                        <li>Algae: 72-hour EC50 (for growth inhibition)</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <strong>NOAEL & LOAEL (Subchronic/Chronic Toxicity):</strong>
+            <ul>
+                <li><strong>NOAEL (No Observed Adverse Effect Level):</strong> Highest dose at which there is NO statistically significant increase in adverse effects (compared to control). Used as basis for setting RfD (Reference Dose) and ADI (Acceptable Daily Intake). More reliable than LOAEL.</li>
+                <li><strong>LOAEL (Lowest Observed Adverse Effect Level):</strong> Lowest dose at which adverse effects are observed. Used when NOAEL cannot be established (higher uncertainty, larger safety factors applied).</li>
+                <li><strong>Always:</strong> NOAEL &lt; LOAEL (by definition)</li>
+            </ul>
+            
+            <strong>Reference Dose (RfD) - Chronic Human Risk Assessment:</strong>
+            <strong>RfD = NOAEL / (UF × MF)</strong><br/>
+            where: UF = Uncertainty Factors (typically 10 each for different types of uncertainty), MF = Modifying Factor (professional judgment, usually 1-10)<br/>
+            
+            <strong>Typical Uncertainty Factors:</strong>
+            <ul>
+                <li>10× for animal-to-human extrapolation (interspecies variability)</li>
+                <li>10× for human variability (intraspecies - differences between individuals)</li>
+                <li>10× for subchronic-to-chronic extrapolation (if only subchronic data available)</li>
+                <li>10× for LOAEL-to-NOAEL extrapolation (if only LOAEL available, no NOAEL)</li>
+                <li><strong>Total typical UF = 100 to 1000</strong></li>
+            </ul>
+            
+            <strong>Example RfD Calculation:</strong>
+            If NOAEL = 10 mg/kg/day, UF = 100 (interspecies 10 × intraspecies 10)<br/>
+            Then RfD = 10 / 100 = 0.1 mg/kg/day (safe daily dose per kg body weight)<br/>
+            
+            <strong>Use in Risk Assessment - Hazard Quotient (HQ):</strong>
+            <strong>HQ = Estimated Exposure Dose / RfD</strong><br/>
+            <ul>
+                <li><strong>HQ &lt; 1:</strong> No concern (exposure below safe level)</li>
+                <li><strong>HQ ≥ 1:</strong> Potential health concern (exposure exceeds RfD, detailed risk assessment needed)</li>
+            </ul>
+        </div>
+        
+        <h3>6.2 SYNERGISM VS ANTAGONISM</h3>
+        <div class="content">
+            <strong>Synergism:</strong>
+            Combined toxic effect of 2 or more chemicals is GREATER than the sum of their individual effects. (1 + 1 > 2, supra-additive).<br/>
+            
+            <strong>Example:</strong> Carbon tetrachloride (CCl₄) + Ethanol (alcohol)<br/>
+            Liver damage from combination is much more severe than expected from adding individual liver damage from each substance alone. The chemicals interact to amplify toxicity.<br/>
+            
+            <strong>Antagonism:</strong>
+            Combined effect is LESS than the sum (sub-additive). One substance reduces the toxicity of another. (1 + 1 < 2).<br/>
+            
+            <strong>Example:</strong> Atropine counteracts organophosphate poisoning<br/>
+            Organophosphates inhibit acetylcholinesterase enzyme. Atropine blocks acetylcholine receptors, reducing symptoms of over-stimulation.<br/>
+            
+            <strong>Additive Effect (Baseline):</strong>
+            Combined effect equals the sum. (1 + 1 = 2). Most common when mechanisms are independent.<br/>
+            
+            <strong>Potentiation:</strong>
+            A non-toxic substance enhances the toxicity of another (special case of synergism).<br/>
+            
+            <strong>Importance in Environmental Health:</strong>
+            Real-world exposure is rarely to single chemicals - we're exposed to chemical mixtures. Understanding interactions is crucial for accurate risk assessment and environmental protection.
+        </div>
+        
+        <!-- Standards Table -->
+        <h2>SECTION 7: KEY STANDARDS & CRITICAL VALUES (MEMORY)</h2>
+        
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Standard / Limit</th>
+                <th>Regulation / Source</th>
+            </tr>
+            <tr>
+                <td><strong>DRINKING WATER</strong></td>
+                <td></td>
+                <td><strong>IS 10500:2012</strong></td>
+            </tr>
+            <tr>
+                <td>pH</td>
+                <td>6.5-8.5</td>
+                <td>Desirable & no relaxation</td>
+            </tr>
+            <tr>
+                <td>Turbidity</td>
+                <td>1 NTU (des.); 5 NTU (perm.)</td>
+                <td>Desirable 1, Permissible 5</td>
+            </tr>
+            <tr>
+                <td>Colour</td>
+                <td>5 Hazen (des.); 15 Hazen (perm.)</td>
+                <td>True colour units</td>
+            </tr>
+            <tr>
+                <td>Total Coliform</td>
+                <td>ABSENT (0 MPN/100 mL)</td>
+                <td>No relaxation - strict</td>
+            </tr>
+            <tr>
+                <td>Fecal Coliform / E. coli</td>
+                <td>Shall not be detectable</td>
+                <td>No relaxation</td>
+            </tr>
+            <tr>
+                <td>Free Chlorine Residual</td>
+                <td>≥ 0.2 mg/L at consumer end</td>
+                <td>Minimum for protection during distribution</td>
+            </tr>
+            <tr>
+                <td>Hardness (Total)</td>
+                <td>200 mg/L (des.); 600 mg/L (perm.)</td>
+                <td>As CaCO₃</td>
+            </tr>
+            <tr>
+                <td>Fluoride</td>
+                <td>1.0 mg/L (des.); 1.5 mg/L (perm.)</td>
+                <td>Optical <0.5 is caries risk, >3 is fluorosis</td>
+            </tr>
+            <tr>
+                <td>Arsenic</td>
+                <td>0.01 mg/L (10 ppb)</td>
+                <td>WHO guideline</td>
+            </tr>
+            <tr>
+                <td><strong>WASTEWATER - INLAND SURFACE WATER</strong></td>
+                <td></td>
+                <td><strong>CPCB General Standards</strong></td>
+            </tr>
+            <tr>
+                <td>BOD</td>
+                <td>≤ 30 mg/L</td>
+                <td>Schedule VI</td>
+            </tr>
+            <tr>
+                <td>COD</td>
+                <td>≤ 250 mg/L</td>
+                <td>Schedule VI</td>
+            </tr>
+            <tr>
+                <td>Suspended Solids (SS)</td>
+                <td>100 mg/L (old: 50 mg/L new)</td>
+                <td>Schedule VI</td>
+            </tr>
+            <tr>
+                <td>pH</td>
+                <td>6.0-8.5 (old); 5.5-9.0 (new)</td>
+                <td>Schedule VI</td>
+            </tr>
+            <tr>
+                <td>DO (dissolved oxygen)</td>
+                <td>&gt; 4 mg/L</td>
+                <td>CPCB River Standard for healthy stream</td>
+            </tr>
+            <tr>
+                <td><strong>AMBIENT AIR QUALITY</strong></td>
+                <td></td>
+                <td><strong>NAAQS 2009 (24-hr avg)</strong></td>
+            </tr>
+            <tr>
+                <td>PM₂.₅</td>
+                <td>60 μg/m³</td>
+                <td>24-hr (Annual: 40 μg/m³)</td>
+            </tr>
+            <tr>
+                <td>PM₁₀</td>
+                <td>100 μg/m³</td>
+                <td>24-hr (Annual: 60 μg/m³)</td>
+            </tr>
+            <tr>
+                <td>SO₂</td>
+                <td>80 μg/m³</td>
+                <td>Industrial/residential/rural</td>
+            </tr>
+            <tr>
+                <td>NO₂</td>
+                <td>80 μg/m³</td>
+                <td>Industrial/residential/rural</td>
+            </tr>
+            <tr>
+                <td>CO</td>
+                <td>2 mg/m³ (8-hr); 4 mg/m³ (1-hr)</td>
+                <td>Industrial/residential/rural</td>
+            </tr>
+        </table>
+        
+        <!-- Exam Strategy -->
+        <h2>SECTION 8: EXAM STRATEGY & HIGH-YIELD TOPICS</h2>
+        
+        <div class="exam-strategy">
+            <h3>TOP 10 FORMULAE TO MEMORISE (For Quick Calculation Questions):</h3>
+            <ol>
+                <li><strong>BOD₅ = L₀(1 - e<sup>-kt</sup>)</strong> | Calculate BOD at 5 days given ultimate BOD & rate constant</li>
+                <li><strong>k<sub>T</sub> = k₂₀ × 1.047<sup>(T-20)</sup></strong> | Adjust rate constant for temperature</li>
+                <li><strong>DO saturation (20°C, freshwater) = 9.1 mg/L</strong> | Reference value</li>
+                <li><strong>BOD/COD ratio = 0.5-0.6 (domestic)</strong> | Assess biodegradability; guide treatment selection</li>
+                <li><strong>Hardness >300 mg/L = Very Hard</strong> | Classification thresholds</li>
+                <li><strong>EMB Agar: Dark colonies + green metallic sheen = E. coli</strong> | Colony morphology for identification</li>
+                <li><strong>BCF = C<sub>organism</sub> / C<sub>water</sub></strong> | Predict bioconcentration from laboratory or Kow data</li>
+                <li><strong>RfD = NOAEL / UF (typically 100-1000)</strong> | Calculate safe daily human exposure</li>
+                <li><strong>NAAQS PM₂.₅ (24-hr) = 60 μg/m³</strong> | Particulate matter standard</li>
+                <li><strong>Coliform Standard = ABSENT (IS 10500)</strong> | Zero tolerance for drinking water</li>
+            </ol>
+        </div>
+        
+        <div class="exam-strategy">
+            <h3>HIGHEST PROBABILITY QUESTIONS (Memorise These Topics):</h3>
+            <ul>
+                <li>✓ <strong>Winkler's DO Method (Q1-Q5):</strong> Standard APHA method, azide modification, indicator, procedure</li>
+                <li>✓ <strong>BOD Kinetics & Temperature Correction (Q6-Q10):</strong> Equation, k value, temperature correction, BOD/COD ratio</li>
+                <li>✓ <strong>COD Test Procedure (Q11-Q15):</strong> K₂Cr₂O₇, HgSO₄ masking, ferroin indicator, back-titration, comparison with BOD</li>
+                <li>✓ <strong>EDTA Hardness Titration (Q16-Q20):</strong> Total vs calcium, temporary vs permanent, classification, IS 10500 limits</li>
+                <li>✓ <strong>MPN Coliform 3-Stage Procedure (Q26-Q30):</strong> Presumptive → Confirmed → Completed, EMB agar morphology, IS 10500</li>
+                <li>✓ <strong>AAS vs ICP-OES (Q31-Q32):</strong> Multi-element capability, detection limits</li>
+                <li>✓ <strong>SPADNS Fluoride Method (Q33-Q34):</strong> Principle, zirconium-SPADNS complex, IS 10500 limits</li>
+                <li>✓ <strong>HVS for PM Monitoring (Q36):</strong> Procedure, PM₁₀/PM₂.₅ inlets, gravimetric method, NAAQS limits</li>
+                <li>✓ <strong>Bioaccumulation & BCF (Q46-Q48):</strong> Definition, BCF calculation, Kow correlation, examples</li>
+                <li>✓ <strong>Toxicity Parameters (Q51-Q55):</strong> LD50, LC50, NOAEL/LOAEL, RfD, synergism, antagonism</li>
+            </ul>
+        </div>
+        
+        <div class="exam-strategy">
+            <h3>MEDIUM-YIELD TOPICS (Important but Less Frequent):</h3>
+            <ul>
+                <li>• Jar test procedure (Q25)</li>
+                <li>• HgSO₄ and Ag₂SO₄ roles in COD test (Q12)</li>
+                <li>• Eh-pH diagrams & redox chemistry (Q44-Q45)</li>
+                <li>• West-Gaeke SO₂ method (Q37)</li>
+                <li>• Chemiluminescence for NOx (Q38)</li>
+                <li>• Synergism vs antagonism (Q54)</li>
+                <li>• NAMP & CAAQMS monitoring (Q40)</li>
+                <li>• Persistence & Stockholm Convention (Q49-Q50)</li>
+            </ul>
+        </div>
+        
+        <div class="tip">
+            <h3>CRITICAL EXAM-DAY TIPS:</h3>
+            <ul>
+                <li><strong>✓ BOD Questions:</strong> Always check whether the question asks for BOD₅ (5-day BOD) or ultimate BOD (L₀). Many students confuse these.</li>
+                <li><strong>✓ Hardness Questions:</strong> Watch carefully for 'temporary hardness' vs 'permanent hardness' - they require different treatment methods.</li>
+                <li><strong>✓ Coliform Questions:</strong> Remember the 3-stage MPN sequence (Presumptive → Confirmed → Completed) and EMB agar morphology (dark + sheen = E. coli).</li>
+                <li><strong>✓ Standard Values:</strong> Memorise IS 10500:2012 limits for drinking water. These are frequently asked and easy marks if memorised correctly.</li>
+                <li><strong>✓ Formulae:</strong> Keep the k-correction factor 1.047 and DO saturation 9.1 mg/L in quick mental reference. Used in many numerical questions.</li>
+                <li><strong>✓ Time Management:</strong> ~1.2 min per question. Allocate 50 min to water analysis (DO, BOD, COD, hardness, coliform), 15 min to air monitoring, 35 min to other topics.</li>
+                <li><strong>✓ Marking Strategy:</strong> Skip if &lt; 60% confident. Penalty is -1 but correct answer is +4 → risk/reward ratio is 1:4, so only mark when confident.</li>
+                <li><strong>✓ Unit Verification:</strong> Before finalising calculation answers, VERIFY UNITS (mg/L vs μg/m³ vs ppm vs %). Many mistakes occur from unit conversion errors.</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p><strong>UPPCB AEE Unit 10 Revision Notes | 55 Questions | 220 Marks | Generated April 2026</strong></p>
+            <p>Focus on water analysis methods, microbiological testing, heavy metal analysis, air monitoring, chemistry fundamentals, and toxicology parameters.</p>
+            <p>All standards and limits referenced from IS 10500:2012, CPCB General Standards, and NAAQS 2009.</p>
+        </div>
+    </div>
 </body>
-
-<script>
-function showTab(tabName) {
-  // Hide all tabs
-  const tabs = document.querySelectorAll('.tab-content');
-  tabs.forEach(tab => tab.classList.remove('active'));
-  
-  // Hide all buttons (remove active state)
-  const buttons = document.querySelectorAll('.tab-btn');
-  buttons.forEach(btn => btn.classList.remove('active'));
-  
-  // Show selected tab
-  document.getElementById(tabName).classList.add('active');
-  
-  // Highlight selected button
-  event.target.classList.add('active');
-}
-</script>
-
 </html>

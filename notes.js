@@ -1,26 +1,103 @@
-// firebase-config.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// exams.js — Exam definitions for PYQ section
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
-  // IMPORTANT: keep authDomain as firebaseapp.com — this is the redirect handler URL
-  // Do NOT change to github.io — Firebase handles auth through its own domain
-  authDomain: "ae-exam-app.firebaseapp.com",
-  projectId: "ae-exam-app",
-  storageBucket: "ae-exam-app.firebasestorage.app",
-  messagingSenderId: "101353507688",
-  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
-};
+export const EXAMS = [
+  // ── AE/JE Civil ──────────────────────────────────────────────────────────
+  {
+    id: 'uppsc-ae',
+    name: 'UPPSC AE',
+    fullName: 'UP Public Service Commission – Assistant Engineer',
+    icon: '🏛️',
+    state: 'Uttar Pradesh',
+    section: 'civil',
+  },
+  {
+    id: 'uppsc-polytechnic',
+    name: 'UPPSC Polytechnic Lecturer',
+    fullName: 'UPPSC Polytechnic Lecturer – Civil Engineering',
+    icon: '🎓',
+    state: 'Uttar Pradesh',
+    section: 'civil',
+  },
+  {
+    id: 'bpsc-ae',
+    name: 'BPSC AE',
+    fullName: 'Bihar PSC – Assistant Engineer',
+    icon: '🏢',
+    state: 'Bihar',
+    section: 'civil',
+  },
+  {
+    id: 'cgpsc-ae',
+    name: 'CGPSC AE',
+    fullName: 'Chhattisgarh PSC – Assistant Engineer',
+    icon: '🏗️',
+    state: 'Chhattisgarh',
+    section: 'civil',
+  },
+  {
+    id: 'gpsc-ae',
+    name: 'GPSC Civil Engineering Exam',
+    fullName: 'Gujarat Engineering Service (Civil) Class-1 & Class-2',
+    icon: '🏬',
+    state: 'Gujarat',
+    section: 'civil',
+  },
+  {
+    id: 'tspsc-ae',
+    name: 'TSPSC AE',
+    fullName: 'Telangana PSC – Assistant Engineer',
+    icon: '🏘️',
+    state: 'Telangana',
+    section: 'civil',
+  },
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+  // ── Pollution Control Board ───────────────────────────────────────────────
+  {
+    id: 'uppcb-aee',
+    name: 'UPPCB AEE',
+    fullName: 'UP Pollution Control Board – Assistant Environmental Engineer',
+    icon: '🌿',
+    state: 'Uttar Pradesh',
+    section: 'pcb',
+  },
+  {
+    id: 'gpcb-aee',
+    name: 'GPCB AEE',
+    fullName: 'Gujarat Pollution Control Board – Assistant Environmental Engineer',
+    icon: '🌱',
+    state: 'Gujarat',
+    section: 'pcb',
+  },
+  {
+    id: 'cpcb-scientist',
+    name: 'CPCB Scientist-B',
+    fullName: 'Central Pollution Control Board – Scientist B (Environmental)',
+    icon: '🔬',
+    state: 'Central',
+    section: 'pcb',
+  },
+  {
+    id: 'rspcb-aee',
+    name: 'RSPCB AEE/JEE',
+    fullName: 'Rajasthan State Pollution Control Board – AEE/JEE',
+    icon: '🏜️',
+    state: 'Rajasthan',
+    section: 'pcb',
+  },
+  {
+    id: 'bpsc-aee',
+    name: 'BPSC AEE',
+    fullName: 'Bihar PSC – Assistant Environmental Engineer',
+    icon: '🌊',
+    state: 'Bihar',
+    section: 'pcb',
+  },
+];
 
-// Add scopes for profile info
-googleProvider.addScope('profile');
-googleProvider.addScope('email');
+export function getExamById(id) {
+  return EXAMS.find(e => e.id === id) || null;
+}
 
-export { app, auth, db, googleProvider, RecaptchaVerifier, signInWithPhoneNumber };
+export function getExamsBySection(section) {
+  return EXAMS.filter(e => e.section === section);
+}

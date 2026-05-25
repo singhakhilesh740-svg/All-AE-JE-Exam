@@ -66,11 +66,13 @@ export async function fetchQuestions(opts = {}) {
 // Fetch practice questions across ALL exams (not locked to one exam)
 // Automatically includes any exam added to exams.js — no changes needed here
 export async function fetchPracticeQuestions(opts = {}) {
-  const { subject = null, maxCount = 10000, force = false } = opts;
+  const { subject = null, section = null, maxCount = 10000, force = false } = opts;
   const { EXAMS } = await import('./exams.js');
-  const EXAM_IDS = EXAMS.map(e => e.id);
+  // Filter exams by section so civil Practice only queries civil exams, PCB only PCB
+  const filtered = section ? EXAMS.filter(e => e.section === section) : EXAMS;
+  const EXAM_IDS = filtered.map(e => e.id);
 
-  const cacheKey = `practice:all:${subject || 'all'}`;
+  const cacheKey = `practice:${section || 'all'}:${subject || 'all'}`;
   const now = Date.now();
 
   if (!force && cache.questions[cacheKey] && (now - (cache.cachedAt[cacheKey] || 0)) < cache.TTL) {

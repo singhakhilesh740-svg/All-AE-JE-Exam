@@ -1,414 +1,2030 @@
 {
-  "hindi-grammar": {
+  "sub_subjects": [
+    {
+      "id": "physical",
+      "icon": "⛰️",
+      "name": "Physical Features",
+      "description": "Mountains · Plateaus · Plains · Coastal regions · Islands"
+    },
+    {
+      "id": "climate",
+      "icon": "🌦️",
+      "name": "Climate of India",
+      "description": "Monsoon · Seasons · Rainfall · Cyclones · Climate zones"
+    },
+    {
+      "id": "rivers",
+      "icon": "🌊",
+      "name": "Rivers and Drainage",
+      "description": "Himalayan rivers · Peninsular rivers · Lakes · Waterfalls"
+    },
+    {
+      "id": "soils",
+      "icon": "🌱",
+      "name": "Soils and Vegetation",
+      "description": "8 soil types · Natural vegetation · Forest types · Biomes"
+    },
+    {
+      "id": "resources",
+      "icon": "⛏️",
+      "name": "Natural Resources and Minerals",
+      "description": "Coal · Iron ore · Petroleum · Minerals · Distribution"
+    },
+    {
+      "id": "agriculture",
+      "icon": "🌾",
+      "name": "Agriculture",
+      "description": "Kharif · Rabi · Zaid · Major crops · Irrigation · Green Revolution"
+    },
+    {
+      "id": "industry",
+      "icon": "🏭",
+      "name": "Industry and Transport",
+      "description": "Iron and steel · Textiles · IT · Railways · Ports · Highways"
+    },
+    {
+      "id": "population",
+      "icon": "👥",
+      "name": "Population and Census",
+      "description": "Census 2011 · Literacy · Sex ratio · Density · Migration"
+    },
+    {
+      "id": "world",
+      "icon": "🌍",
+      "name": "World Geography",
+      "description": "Continents · Oceans · Climate zones · Biomes · Countries"
+    }
+  ],
+  "physical": {
     "topics": [
-      { "id": "varnamala", "name": "वर्णमाला" },
-      { "id": "sandhi", "name": "संधि" },
-      { "id": "samas", "name": "समास" },
-      { "id": "karak", "name": "कारक" },
-      { "id": "kal", "name": "काल" },
-      { "id": "vakya", "name": "वाक्य" },
-      { "id": "alankar", "name": "अलंकार" },
-      { "id": "ras", "name": "रस व छंद" }
+      {
+        "id": "himalayas",
+        "name": "Himalayan Mountains"
+      },
+      {
+        "id": "plateaus",
+        "name": "Peninsular Plateau and Deccan"
+      },
+      {
+        "id": "plains",
+        "name": "Northern Plains and Thar Desert"
+      },
+      {
+        "id": "coastal",
+        "name": "Coastal Plains and Islands"
+      }
     ],
     "notes": [
       {
-        "topic_id": "varnamala",
-        "topic_name": "वर्णमाला (Alphabet)",
+        "topic_id": "himalayas",
+        "topic_name": "Himalayan Mountains",
         "cards": [
           {
-            "heading": "स्वर और व्यंजन",
+            "heading": "Himalayas — Structure and Key Facts",
             "color": "blue",
             "points": [
-              "हिंदी वर्णमाला में कुल 52 वर्ण होते हैं",
-              "स्वर: अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ = 11 स्वर",
-              "व्यंजन: 33 (क, ख, ग... + 4 संयुक्त व्यंजन + 2 द्विगुण व्यंजन)",
-              "हस्व स्वर (Short): अ, इ, उ, ऋ — एक मात्रा",
-              "दीर्घ स्वर (Long): आ, ई, ऊ, ए, ऐ, ओ, औ — दो मात्राएं",
-              "अनुनासिक (nasals): ङ, ञ, ण, न, म",
-              "महाप्राण व्यंजन (Aspirated): ख, घ, छ, झ, ठ, ढ, थ, ध, फ, भ"
+              "Formed by: Collision of Indian Plate (northward moving) with Eurasian Plate; Tethys Sea sediments folded upward; youngest fold mountains in the world; still rising (active orogeny)",
+              "Length: 2,500 km from Indus gorge (west) to Brahmaputra gorge (east); width 150–400 km; covers 5 lakh sq km",
+              "Three parallel ranges (west to east and north to south):",
+              "1. Himadri (Greater Himalaya/Inner Himalaya): Highest peaks; perennially snow-covered; average elevation 6,000m; Mt. Everest (8,849m — Nepal), Kanchenjunga (8,586m — Sikkim-Nepal; highest peak in India), K2/Godwin Austen (8,611m — POK; 2nd highest in world)",
+              "2. Himachal (Lesser Himalaya/Middle Himalaya): 3,700–4,500m; Mussoorie, Shimla, Nainital, Ranikhet; Pir Panjal range; Dhauladhar range; Valley of Kashmir here",
+              "3. Shiwaliks (Outer Himalaya/Sub-Himalaya): 900–1,100m; FOOTHILLS; Doons/Duars (longitudinal valleys between Shiwaliks and Lesser Himalaya) — Dehra Dun, Patli Dun, Kota Dun",
+              "Trans-Himalaya (beyond main range): Karakoram range (K2); Ladakh range; Zanskar range; these are older and harder rocks",
+              "Himalayan passes (important): Karakoram Pass (Ladakh — highest motorable pass in world — DISPUTED; Khardung La also claims this); Rohtang Pass (Himachal Pradesh); Zoji La (J&K; connects Srinagar with Ladakh); Nathu La (Sikkim; India-China trade); Bom Di La (Arunachal Pradesh)",
+              "Western extensions: Hindukush and Sulaiman ranges (Pakistan/Afghanistan); Arakan Yoma (Myanmar) = eastern extension of Himalaya"
             ],
-            "alert": "⭐ परीक्षा में अक्सर: 'हिंदी में कितने स्वर हैं?' — 11 स्वर; 'कुल वर्ण?' — 52"
+            "alert": "⭐ Kanchenjunga (8,586m) = HIGHEST PEAK in India; K2 (8,611m) = in Pakistan-occupied Kashmir — so sometimes excluded from 'India's peaks'. Mt. Everest = Nepal (not India). Himalayas are FOLD mountains (not volcanic). Indus-Ganga Plain = formed by alluvium deposited by Himalayan rivers = most fertile region. Himalayas act as climate barrier — blocking cold Central Asian winds and forcing monsoon to rain."
           },
           {
-            "heading": "उच्चारण स्थान",
-            "color": "purple",
+            "heading": "Major Himalayan Sub-Regions and States",
+            "color": "green",
             "table": {
-              "headers": ["स्थान", "वर्ण"],
+              "headers": [
+                "Region",
+                "States",
+                "Key Features"
+              ],
               "rows": [
-                ["कंठ (Throat)", "अ, आ, क, ख, ग, घ, ङ, ह, विसर्ग"],
-                ["तालु (Palate)", "इ, ई, च, छ, ज, झ, ञ, य, श"],
-                ["मूर्धा (Hard Palate)", "ट, ठ, ड, ढ, ण, र, ष"],
-                ["दंत (Teeth)", "त, थ, द, ध, न, ल, स"],
-                ["ओष्ठ (Lips)", "उ, ऊ, प, फ, ब, भ, म"],
-                ["नासिका (Nose)", "ञ, ण, न, म, ङ (अनुनासिक)"]
+                [
+                  "Kashmir Himalaya",
+                  "J&K",
+                  "Dal Lake; Jhelum river valley; Karewa soils (saffron cultivation); highest density of glaciers; Wular lake (largest freshwater lake in India)"
+                ],
+                [
+                  "Himachal Himalaya",
+                  "Himachal Pradesh, Uttarakhand",
+                  "Shimla; apple orchards; Kullu-Manali; Spiti Valley; Rohtang Pass; Corbett National Park (first NP in India 1936); Gangotri glacier"
+                ],
+                [
+                  "Darjeeling Himalaya",
+                  "West Bengal (Darjeeling)",
+                  "Darjeeling tea (India's 1st GI tag); Kanchenjunga NP; Terai plains at foothills"
+                ],
+                [
+                  "Sikkim Himalaya",
+                  "Sikkim",
+                  "Kanchenjunga (highest in India); Zemu glacier; only UNESCO Mixed WHS in India (Khangchendzonga NP)"
+                ],
+                [
+                  "Arunachal Himalaya",
+                  "Arunachal Pradesh",
+                  "Bom Di La pass; McMahon Line; Brahmaputra gorges; Namdapha NP"
+                ],
+                [
+                  "Meghalaya Plateau",
+                  "Meghalaya",
+                  "Shillong Plateau — detached from main Peninsular Plateau; Cherrapunji+Mawsynram (wettest places on Earth); Garo, Khasi, Jaintia Hills"
+                ]
               ]
             }
           }
         ]
       },
       {
-        "topic_id": "sandhi",
-        "topic_name": "संधि (Sandhi)",
+        "topic_id": "plateaus",
+        "topic_name": "Peninsular Plateau and Deccan",
         "cards": [
           {
-            "heading": "संधि के प्रकार",
-            "color": "green",
+            "heading": "Peninsular Plateau — Complete Coverage",
+            "color": "purple",
             "points": [
-              "संधि = दो वर्णों के मिलने से होने वाला विकार",
-              "1. स्वर संधि (Vowel Sandhi): दो स्वरों के मेल से",
-              "2. व्यंजन संधि (Consonant Sandhi): व्यंजन + स्वर/व्यंजन के मेल से",
-              "3. विसर्ग संधि: विसर्ग (:) के मेल से"
+              "Oldest and most stable landmass of India; part of ancient Gondwana land; composed of old crystalline igneous and metamorphic rocks",
+              "Two parts: Central Highlands (north of Narmada river) + Deccan Plateau (south of Narmada river)",
+              "Central Highlands: Aravalli range (oldest fold mountains in India; runs NE-SW from Delhi to Gujarat; Guru Shikhar 1722m = highest peak in Aravallis and in Rajasthan); Vindhya range; Satpura range; Chota Nagpur Plateau",
+              "Chota Nagpur Plateau (Jharkhand): Rich mineral belt — iron ore (Singhbhum), coal (Jharia, Bokaro, Raniganj), copper, mica; Damodar river valley; Jharia = largest coalfield in India",
+              "Deccan Plateau: Triangular; bounded by Western Ghats (west), Eastern Ghats (east), Satpura+Vindhya (north); tilts slightly east (rivers flow east); composed of basalt in northwestern part (Deccan Traps)",
+              "Deccan Traps: Northwestern Deccan (Maharashtra, Gujarat, MP, AP); formed by volcanic lava flows 65 million years ago (Cretaceous period — same time as dinosaur extinction); covers 5 lakh sq km; lava created BLACK COTTON SOIL (regur) = fertile for cotton",
+              "Western Ghats (Sahyadri): Runs along west coast; continuous; average 1000–1500m; highest = Anamudi (2695m) in Kerala = highest peak in South India; UNESCO WHS (biodiversity hotspot); source of peninsular rivers flowing east; rainfall on western side = high; eastern side (rain shadow) = less rainfall",
+              "Eastern Ghats: Discontinuous; broken by rivers (Mahanadi, Godavari, Krishna, Cauvery); average 600m; Mahendragiri (1501m in Odisha = highest in Eastern Ghats)"
             ],
             "table": {
-              "headers": ["संधि भेद", "नियम", "उदाहरण"],
+              "headers": [
+                "Mountain Range",
+                "Location",
+                "Highest Peak",
+                "Key Fact"
+              ],
               "rows": [
-                ["दीर्घ संधि", "अ/आ + अ/आ = आ", "विद्या + आलय = विद्यालय"],
-                ["गुण संधि", "अ/आ + इ/ई = ए", "देव + इंद्र = देवेंद्र"],
-                ["वृद्धि संधि", "अ/आ + ए/ऐ = ऐ", "एक + एक = एकैक"],
-                ["यण संधि", "इ/ई + असजातीय = य्", "यदि + अपि = यद्यपि"],
-                ["अयादि संधि", "ए/ओ + असजातीय स्वर", "ने + अन = नयन"]
+                [
+                  "Aravalli",
+                  "Rajasthan + Haryana + Gujarat",
+                  "Guru Shikhar (1722m)",
+                  "Oldest fold mountains in India; Delhi Ridge is northern extension"
+                ],
+                [
+                  "Vindhya",
+                  "MP + UP border",
+                  "Sad Bhawna (752m)",
+                  "N-S boundary of Deccan Plateau; Narmada flows along its southern edge"
+                ],
+                [
+                  "Satpura",
+                  "MP + Maharashtra",
+                  "Dhupgarh (1350m) in MP",
+                  "Block mountains; Pachmarhi = only hill station in MP; Project Tiger reserve"
+                ],
+                [
+                  "Western Ghats",
+                  "Kerala + Karnataka + TN + Goa + Maharashtra",
+                  "Anamudi (2695m) in Kerala",
+                  "UNESCO WHS; biodiversity hotspot; highest rainfall; source of Kaveri, Krishna, Godavari"
+                ],
+                [
+                  "Eastern Ghats",
+                  "Odisha + AP + TN",
+                  "Mahendragiri (1501m) in Odisha",
+                  "Discontinuous; broken by rivers; much lower than Western Ghats"
+                ],
+                [
+                  "Nilgiri Hills",
+                  "TN + Kerala + Karnataka junction",
+                  "Doddabetta (2637m)",
+                  "Joins Western and Eastern Ghats; Ooty (Udhagamandalam) hill station"
+                ],
+                [
+                  "Cardamom Hills",
+                  "Kerala + TN",
+                  "Agasthyamalai (1868m)",
+                  "Southernmost; Agasthyamalai Biosphere Reserve; cardamom cultivation"
+                ]
               ]
             }
           }
         ]
       },
       {
-        "topic_id": "samas",
-        "topic_name": "समास (Compound Words)",
+        "topic_id": "plains",
+        "topic_name": "Northern Plains and Thar Desert",
         "cards": [
           {
-            "heading": "समास के प्रकार",
+            "heading": "Northern Plains (Indo-Gangetic Plains)",
             "color": "orange",
-            "table": {
-              "headers": ["समास", "पहचान", "उदाहरण"],
-              "rows": [
-                ["अव्ययीभाव", "पहला पद प्रधान; अव्यय", "यथाशक्ति, प्रतिदिन, आजन्म"],
-                ["तत्पुरुष", "अंतिम पद प्रधान; कारक चिह्न लुप्त", "राजपुत्र, देशभक्त, पाठशाला"],
-                ["कर्मधारय", "विशेषण-विशेष्य; उपमान-उपमेय", "नीलकमल, महाराज, मृगनयनी"],
-                ["द्विगु", "संख्यावाची पद पहले", "त्रिभुज, पंचवटी, सप्तर्षि"],
-                ["द्वंद्व", "दोनों पद प्रधान; 'और' का लोप", "माता-पिता, राम-लक्ष्मण"],
-                ["बहुव्रीहि", "दोनों पद अप्रधान; तीसरे की ओर संकेत", "नीलकंठ (शिव), गजानन (गणेश)"]
-              ]
-            },
-            "alert": "⭐ बहुव्रीहि और कर्मधारय में अंतर: 'नीलकमल' = कर्मधारय (नीला कमल); 'नीलकंठ' = बहुव्रीहि (वह जिसका कंठ नीला है — शिव)"
-          }
-        ]
-      },
-      {
-        "topic_id": "karak",
-        "topic_name": "कारक (Cases)",
-        "cards": [
-          {
-            "heading": "आठ कारक और उनके विभक्ति चिह्न",
-            "color": "blue",
-            "table": {
-              "headers": ["कारक", "विभक्ति चिह्न", "उदाहरण"],
-              "rows": [
-                ["कर्ता (Subject)", "ने", "राम ने खाया"],
-                ["कर्म (Object)", "को", "राम ने सेब को खाया"],
-                ["करण (Instrument)", "से, के द्वारा", "चाकू से काटा"],
-                ["संप्रदान (Recipient)", "के लिए, को", "गरीबों के लिए दान"],
-                ["अपादान (Separation)", "से", "पेड़ से पत्ता गिरा"],
-                ["संबंध (Relation)", "का, की, के, रा, री, रे", "राम का घर"],
-                ["अधिकरण (Location)", "में, पर", "घर में बैठा"],
-                ["संबोधन (Address)", "हे!, अरे!", "हे राम! अरे भाई!"]
-              ]
-            },
-            "alert": "⭐ TRICK: क-क-क-स-अ-स-अ-स → कर्ता, कर्म, करण, संप्रदान, अपादान, संबंध, अधिकरण, संबोधन"
-          }
-        ]
-      },
-      {
-        "topic_id": "kal",
-        "topic_name": "काल (Tense)",
-        "cards": [
-          {
-            "heading": "काल के भेद",
-            "color": "green",
             "points": [
-              "काल = क्रिया के होने का समय",
-              "1. भूतकाल (Past): जो बीत गया — 'था, थे, थी'",
-              "2. वर्तमानकाल (Present): जो अभी हो रहा है — 'है, हैं, हूं'",
-              "3. भविष्यत्काल (Future): जो होगा — 'गा, गी, गे'"
-            ],
-            "table": {
-              "headers": ["उपभेद", "पहचान", "उदाहरण"],
-              "rows": [
-                ["सामान्य भूत", "— (सीधा वर्णन)", "राम आया"],
-                ["आसन्न भूत", "है/हैं के साथ", "राम आया है"],
-                ["पूर्ण भूत", "था/थे/थी के साथ", "राम आया था"],
-                ["सामान्य वर्तमान", "ता है, ती है", "राम खाता है"],
-                ["तात्कालिक वर्तमान", "रहा है/हैं", "राम खा रहा है"],
-                ["सामान्य भविष्य", "गा, गी, गे", "राम आएगा"]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "vakya",
-        "topic_name": "वाक्य (Sentence) और शब्द शक्ति",
-        "cards": [
-          {
-            "heading": "वाक्य के भेद — अर्थ के आधार पर",
-            "color": "purple",
-            "points": [
-              "1. विधिवाचक: सकारात्मक कथन — 'राम घर जाता है'",
-              "2. निषेधवाचक: नकारात्मक — 'राम घर नहीं जाता'",
-              "3. प्रश्नवाचक: प्रश्न — 'क्या राम जाएगा?'",
-              "4. आज्ञावाचक: आदेश — 'चले जाओ'",
-              "5. इच्छावाचक: इच्छा — 'भगवान तुम्हें सुखी रखे'",
-              "6. संदेहवाचक: संदेह — 'शायद वह आए'",
-              "7. विस्मयादिवाचक: भाव — 'वाह! क्या खूब!'"
+              "Formation: Alluvial deposits of Himalayan rivers (Indus, Ganga, Brahmaputra and their tributaries) over millions of years in the geosyncline between Himalayas and Peninsular Plateau",
+              "Area: 7 lakh sq km; length 2,400 km (Indus to Brahmaputra); width 150–300 km",
+              "Most fertile region of India; most densely populated; major agricultural zone",
+              "Three sections: Punjab-Haryana Plain (Indus basin; level; wheat+rice); Ganga Plain (main; Bihar to UP; most fertile; rice+wheat+sugarcane); Brahmaputra Plain (assam; floods; jute+rice+tea)",
+              "Types of alluvial soil in Northern Plains: Bhangar (older alluvium; higher elevation; less fertile; kankar/calcium carbonate nodules); Khadar (newer alluvium; lower elevation; flood plains; more fertile; renewed every year by floods)",
+              "Terai: Belt of wet and marshy land along foothills of Himalayas; thick forests; swamps; cleared for cultivation now; good for sugarcane, rice, jute",
+              "Bhabar: Coarse gravel belt immediately below Himalayas (south of Shiwaliks); streams disappear underground here; good for orchards"
             ]
           },
           {
-            "heading": "शब्द शक्ति (Word Power)",
-            "color": "orange",
+            "heading": "Thar Desert and Rajasthan",
+            "color": "blue",
             "points": [
-              "1. अभिधा: शब्द का सीधा / मुख्यार्थ — 'कमल खिला' (कमल = फूल)",
-              "2. लक्षणा: मुख्यार्थ बाधा होने पर — 'वह गधा है' (मूर्ख व्यक्ति)",
-              "3. व्यंजना: संकेत / ध्वनि के रूप में — छुपा अर्थ"
+              "Location: Northwestern India; mainly Rajasthan (extends to Gujarat, Punjab, Haryana); also in Pakistan (Sind desert)",
+              "Area: 2 lakh sq km in India",
+              "Sand dunes: Barchans (crescent-shaped; most common); Seif dunes (longitudinal); Parabolic dunes; dunes cover only 1/5 of desert",
+              "Lowest rainfall: Jaisalmer receives 8–10 cm/year; some areas even less",
+              "Rivers: Luni river (only major river — drains into Rann of Kutch; saline in lower course); Ghaggar river (seasonal — 'river of lost identity'; considered ancient Saraswati by some scholars; disappears in sands of Rajasthan)",
+              "Salt lakes: Sambhar (largest inland salt lake in India — Rajasthan); Didwana; Degana (all in Rajasthan)",
+              "Fauna: Great Indian Bustard (critically endangered; Rajasthan + Gujarat); blackbuck; chinkara gazelle; desert fox",
+              "Aravalli as barrier: Aravalli blocks moisture-carrying Arabian Sea monsoon from reaching Rajasthan — hence desert; cities on eastern side of Aravalli (Jaipur) get more rain than cities on western side (Jodhpur)"
             ]
           }
         ]
       },
       {
-        "topic_id": "alankar",
-        "topic_name": "अलंकार (Figures of Speech)",
+        "topic_id": "coastal",
+        "topic_name": "Coastal Plains and Islands",
         "cards": [
           {
-            "heading": "प्रमुख अलंकार",
-            "color": "blue",
+            "heading": "West and East Coastal Plains",
+            "color": "green",
             "table": {
-              "headers": ["अलंकार", "पहचान/लक्षण", "उदाहरण"],
+              "headers": [
+                "Feature",
+                "Western Coast",
+                "Eastern Coast"
+              ],
               "rows": [
-                ["अनुप्रास", "एक ही वर्ण की पुनरावृत्ति", "चारु चंद्र की चंचल किरणें"],
-                ["यमक", "एक ही शब्द भिन्न अर्थों में", "कनक कनक ते सौगुनी (सोना/धतूरा)"],
-                ["श्लेष", "एक शब्द के कई अर्थ", "जो रहीम गति दीप की (दीप/ज्ञान)"],
-                ["उपमा", "दो वस्तुओं की तुलना; सा/सी/सम", "मुख चंद्र सा सुंदर है"],
-                ["रूपक", "उपमेय में उपमान का आरोप", "मुख चंद्र है (सा नहीं)"],
-                ["उत्प्रेक्षा", "मानो, जनु, जानो", "नेत्र मानो कमल हैं"],
-                ["मानवीकरण", "निर्जीव में मानवीय क्रिया", "बादल रो रहे हैं"],
-                ["अतिशयोक्ति", "बढ़ा-चढ़ाकर कहना", "आंसुओं से नदी बह चली"]
+                [
+                  "Length",
+                  "1,500 km (Rann of Kutch to Kanyakumari)",
+                  "1,100 km (Subarnarekha river to Kanyakumari)"
+                ],
+                [
+                  "Width",
+                  "Narrow (10–25 km)",
+                  "Wide (80–100 km)"
+                ],
+                [
+                  "Type",
+                  "Submerged coast; smooth; few beaches; natural harbours",
+                  "Emergent coast; wide beaches; sandy; deltaic plains"
+                ],
+                [
+                  "Rivers",
+                  "Rivers short; do not form deltas (fall steeply into sea); backwaters (lagoons/kayals)",
+                  "Rivers long; form deltas (Mahanadi, Godavari, Krishna, Cauvery deltas)"
+                ],
+                [
+                  "Lakes/Lagoons",
+                  "Vembanad Lake (Kerala; largest in India; 96 km long); Chilika Lake... wait — on E coast",
+                  "Chilika Lake (Odisha; largest lagoon in India; largest wintering ground for migratory birds in Asia; Irrawaddy dolphin)"
+                ],
+                [
+                  "Parts (N to S)",
+                  "Konkan (Maharashtra+Goa); Kanara (Karnataka); Malabar (Kerala)",
+                  "Utkal Coast (Odisha); Northern Circars (AP); Coromandel Coast (TN)"
+                ],
+                [
+                  "Rainfall",
+                  "Very high (1500–3000mm+); SW monsoon hits first",
+                  "Moderate; gets NE monsoon (Oct–Dec)"
+                ],
+                [
+                  "Ports",
+                  "Mumbai (largest; natural harbour), Kandla, Goa, Mangalore, Kochi (deepest natural harbour)",
+                  "Chennai, Kolkata (on Hooghly — not on sea), Paradip, Visakhapatnam, Ennore/Kamarajar"
+                ]
               ]
-            },
-            "alert": "⭐ उपमा = चार अंग: उपमेय, उपमान, साधारण धर्म, वाचक शब्द (सा/सी/सम). रूपक में 'सा' नहीं आता — सीधा आरोप"
+            }
+          },
+          {
+            "heading": "Indian Islands",
+            "color": "purple",
+            "points": [
+              "Andaman and Nicobar Islands (Bay of Bengal): 572 islands; only 37 inhabited; capital Port Blair; largest island = South Andaman; highest point = Saddle Peak (North Andaman, 738m); only active volcano in India = Barren Island; India's only mud volcano = Baratang Island; Cellular Jail (Kala Pani) at Port Blair; close to equator (Indira Point = southernmost point of India at 6°45'N, in Great Nicobar Island)",
+              "Lakshadweep Islands (Arabian Sea): 36 islands; only 10 inhabited; capital Kavaratti; entirely CORAL ISLANDS; smallest UT of India by area and population; no rivers; no forests; coconut trees; only Muslim population; nearest to Kerala; Minicoy (southernmost; closest to Maldives); pony car not used — only walking + boats",
+              "Coral reefs in India: Andaman and Nicobar (richest coral reefs); Lakshadweep; Gulf of Mannar (between India and Sri Lanka); Gulf of Kutch",
+              "Pamban Island (Rameswaram, Tamil Nadu): India's largest island (not counting A&N and Lakshadweep); connected by Pamban Bridge (first sea bridge in India 1914) + new cable-stayed bridge (2024)"
+            ],
+            "alert": "⭐ Barren Island = ONLY ACTIVE VOLCANO in India (Andaman Islands). Narcondam = dormant volcano (Andaman Islands). Indira Point (Great Nicobar) = southernmost point of India (submerged partially by 2004 tsunami). Chilika Lake (Odisha) = largest coastal lake in India + largest wintering ground for migratory birds in Asia + Irrawaddy dolphins. Vembanad Lake (Kerala) = longest lake in India (96 km)."
+          }
+        ]
+      }
+    ]
+  },
+  "climate": {
+    "topics": [
+      {
+        "id": "monsoon",
+        "name": "Monsoon — Mechanism and Types"
+      },
+      {
+        "id": "seasons",
+        "name": "Four Seasons of India"
+      },
+      {
+        "id": "rainfall",
+        "name": "Rainfall Distribution"
+      },
+      {
+        "id": "cyclones",
+        "name": "Cyclones and Climate Zones"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": "monsoon",
+        "topic_name": "Monsoon — Mechanism and Types",
+        "cards": [
+          {
+            "heading": "Monsoon Mechanism — Complete",
+            "color": "blue",
+            "points": [
+              "Definition: Seasonal reversal of wind direction; from Arabic 'mausim' (season)",
+              "SW Monsoon (June–September): Main rainy season; winds blow from sea to land (Arabian Sea + Bay of Bengal → India); caused by differential heating (land heats faster than sea → low pressure over India → high pressure over Indian Ocean → winds rush inland)",
+              "Two branches of SW Monsoon: Arabian Sea Branch (hits Kerala coast first around 1 June; more rainfall; reaches Mumbai, Western Ghats, Gujarat, Rajasthan); Bay of Bengal Branch (hits northeastern India first; moves westward; reaches UP, MP, Bihar)",
+              "NE Monsoon (October–December): Winds blow from land to sea; dry winds (already passed over land); BUT pick up moisture over Bay of Bengal → rain to southeastern coast (Tamil Nadu, coastal AP) = Tamil Nadu gets rain in Oct-Dec when rest of India is dry",
+              "Break in Monsoon: Temporary pause of 1–2 weeks during SW monsoon; anticyclone develops over NW India; southern India continues to receive rainfall while northern India faces a dry spell",
+              "El Nino: Warming of central and eastern tropical Pacific Ocean; weakens SW monsoon over India; associated with droughts in India; La Nina (cooling of Pacific) = often stronger than normal monsoon",
+              "Indian Ocean Dipole (IOD): Difference in sea surface temperature between western and eastern Indian Ocean; positive IOD = stronger monsoon; discovered 1999; linked to Indian monsoon rainfall"
+            ],
+            "alert": "⭐ Onset of SW Monsoon: Kerala on 1 June (average); reaches Delhi by 15 July; covers entire India by 15 July approximately. Withdrawal: From northwest (Rajasthan) by 1 September; complete withdrawal by 1 December from southern India. Tamil Nadu = only coastal state that BENEFITS from NE monsoon (when rest of India has post-monsoon dry season)."
           }
         ]
       },
       {
-        "topic_id": "ras",
-        "topic_name": "रस और छंद",
+        "topic_id": "seasons",
+        "topic_name": "Four Seasons of India",
         "cards": [
           {
-            "heading": "नौ रस (Navarasa)",
-            "color": "purple",
+            "heading": "Four Seasons and Their Characteristics",
+            "color": "green",
             "table": {
-              "headers": ["रस", "स्थायी भाव", "उदाहरण"],
+              "headers": [
+                "Season",
+                "Months",
+                "Wind",
+                "Key Characteristics"
+              ],
               "rows": [
-                ["श्रृंगार", "रति (प्रेम)", "प्रेम कविताएं, मीराबाई के पद"],
-                ["हास्य", "हास", "हास्य-विनोद की कविताएं"],
-                ["करुण", "शोक", "किसी की मृत्यु पर विलाप"],
-                ["रौद्र", "क्रोध", "युद्ध के दृश्य"],
-                ["वीर", "उत्साह", "वीरता के प्रसंग"],
-                ["भयानक", "भय", "डरावने दृश्य"],
-                ["वीभत्स", "जुगुप्सा (घृणा)", "गंदगी/क्रूर दृश्य"],
-                ["अद्भुत", "विस्मय", "आश्चर्यजनक घटनाएं"],
-                ["शांत", "निर्वेद (वैराग्य)", "तुलसीदास — 'माया महा ठगनी हम जानी'"]
+                [
+                  "Winter Season (Cold Weather Season)",
+                  "Dec–Feb",
+                  "NE trade winds blow from land to sea",
+                  "Cold in north; mild in south; western disturbances bring rain to Punjab/Himachal/J&K (important for rabi crops); foggy mornings in IGP; cold wave and frost in north"
+                ],
+                [
+                  "Hot Weather Season (Summer)",
+                  "Mar–May",
+                  "Local hot winds — 'Loo' in NW; 'Kalbaisakhi' (Nor'westers) in West Bengal",
+                  "Temperatures 45°C+ in Rajasthan; Loo = hot, dry, dusty wind; Kalbaisakhi = violent thunderstorms (beneficial for tea in Assam, jute in WB); Mango showers in Karnataka+Kerala"
+                ],
+                [
+                  "Advancing Monsoon (SW Monsoon)",
+                  "June–September",
+                  "SW winds from Arabian Sea + Bay of Bengal",
+                  "Most rainfall; sudden onset ('burst of monsoon'); Kerala gets rain first; Western Ghats get maximum; Rajasthan least; highest at Cherrapunji/Mawsynram"
+                ],
+                [
+                  "Retreating Monsoon (NE Monsoon)",
+                  "Oct–Nov",
+                  "Winds reverse; blow from land to sea (NE direction)",
+                  "Cyclones in Bay of Bengal (hit Andhra Pradesh + Tamil Nadu + Odisha); clear sky in most of India; Tamil Nadu gets rain from NE Monsoon"
+                ]
               ]
             },
-            "alert": "⭐ भरत मुनि ने 'नाट्यशास्त्र' में 8 रस बताए। शांत रस को 9वां रस अभिनवगुप्त ने जोड़ा। भक्ति रस को 10वां कहते हैं"
-          },
+            "alert": "⭐ Western Disturbances: Extra-tropical cyclones born in Mediterranean Sea; travel east; bring rain/snow to Punjab, Haryana, HP, J&K, Uttarakhand in winter (important for wheat — rabi crop). 'Mango showers' (Kerala + Karnataka in April-May) = pre-monsoon showers that help mango ripening. 'Cherry Blossom showers' in coffee plantations of Karnataka = same phenomenon."
+          }
+        ]
+      },
+      {
+        "topic_id": "rainfall",
+        "topic_name": "Rainfall Distribution",
+        "cards": [
           {
-            "heading": "प्रमुख छंद",
+            "heading": "Rainfall Distribution Across India",
             "color": "orange",
             "points": [
-              "दोहा: अर्धमात्रिक छंद; 13+11 = 24 मात्राएं (पहले चरण में 13, दूसरे में 11)",
-              "चौपाई: मात्रिक छंद; 4 चरण; प्रत्येक चरण 16 मात्राएं; रामचरितमानस में",
-              "सोरठा: दोहे का उल्टा; 11+13 मात्राएं",
-              "कवित्त: वार्णिक छंद; 4 चरण; 31-31-31-31 वर्ण",
-              "सवैया: वार्णिक; 4 चरण; 22-26 वर्ण प्रति चरण",
-              "मात्रिक छंद: मात्राओं की गिनती होती है",
-              "वार्णिक छंद: वर्णों की गिनती होती है"
+              "Highest rainfall: Cherrapunji/Sohra (Meghalaya) — average 11,000 mm/year; Mawsynram (Meghalaya) — average 11,872 mm/year (highest in the world); both in rain shadow of Shillong Plateau",
+              "Lowest rainfall: Jaisalmer (Rajasthan) — about 8 cm/year; Leh (Ladakh) — cold desert",
+              "VERY HIGH rainfall (above 200 cm): Western Ghats slopes, Meghalaya and Assam (NE India), coastal Karnataka, West Bengal (sub-Himalayan), Andaman and Nicobar Islands",
+              "HIGH rainfall (100–200 cm): Eastern Rajasthan, eastern UP, Bihar, eastern MP, coastal Tamil Nadu (NE monsoon), most of Odisha, West Bengal plains",
+              "MODERATE rainfall (50–100 cm): Most of Rajasthan (except west), western UP, western MP, Deccan Plateau, Tamil Nadu interior",
+              "LOW rainfall (less than 50 cm): Rajasthan desert (Thar), Gujarat interior, Deccan rain shadow area (Pune, parts of Karnataka and AP), J&K rain shadow (Leh-Ladakh)",
+              "Rain shadow effect: Western Ghats block Arabian Sea branch of SW monsoon — western slope gets very heavy rain (Mahabaleshwar = 600 cm); eastern side (Pune, Sholapur) gets much less (30–50 cm)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "cyclones",
+        "topic_name": "Cyclones and Climate Zones",
+        "cards": [
+          {
+            "heading": "Cyclones and Major Climate Zones",
+            "color": "purple",
+            "points": [
+              "Tropical Cyclones: Develop over warm tropical oceans (sea surface temperature >26°C); called Typhoons (Pacific), Hurricanes (Atlantic), Cyclones (Indian Ocean); anticlockwise rotation (Northern Hemisphere)",
+              "Bay of Bengal cyclones: More frequent and more intense than Arabian Sea cyclones; warmer waters; landfall mostly on Odisha, Andhra Pradesh, Tamil Nadu, West Bengal coasts; October-November = peak season",
+              "Arabian Sea cyclones: Less frequent; increasing recently (linked to global warming); landfall on Gujarat, Maharashtra, Kerala coasts; Cyclone Ockhi (2017), Cyclone Tauktae (2021) = recent examples",
+              "IMD cyclone scale: Low Pressure → Depression → Deep Depression → Cyclonic Storm → Severe Cyclonic Storm → Very Severe Cyclonic Storm → Extremely Severe → Super Cyclonic Storm",
+              "Devastating cyclones: 1999 Odisha Super Cyclone (15,000 deaths); 2020 Amphan (West Bengal); 2021 Yaas (West Bengal+Odisha); 2021 Tauktae (Gujarat+Maharashtra)"
+            ],
+            "table": {
+              "headers": [
+                "Climate Zone",
+                "Region",
+                "Key Characteristics",
+                "States"
+              ],
+              "rows": [
+                [
+                  "Tropical Monsoon",
+                  "Most of India",
+                  "Distinct wet (June-Sept) and dry seasons; high temp throughout",
+                  "Most states"
+                ],
+                [
+                  "Tropical Savanna",
+                  "Central India + Deccan",
+                  "Drier than monsoon zone; distinct dry season; grasslands",
+                  "Parts of MP, AP, Telangana"
+                ],
+                [
+                  "Semi-Arid",
+                  "Rajasthan border + Punjab",
+                  "Less rainfall; extreme temperatures; scrub vegetation",
+                  "W.Rajasthan, W.Gujarat"
+                ],
+                [
+                  "Arid (Hot Desert)",
+                  "Thar Desert",
+                  "Very low rainfall (<25 cm); extreme heat; sand dunes",
+                  "W.Rajasthan (Jaisalmer, Barmer)"
+                ],
+                [
+                  "Cold Desert (Alpine)",
+                  "J&K, Ladakh, HP, Uttarakhand (high altitude)",
+                  "Very low rainfall; extreme cold; snow; cold desert",
+                  "Ladakh, Spiti Valley"
+                ],
+                [
+                  "Tropical Wet (Humid)",
+                  "West coast + NE India",
+                  "Very high rainfall; high humidity; tropical rainforest",
+                  "Kerala, Karnataka coast, NE India"
+                ],
+                [
+                  "Subtropical (Mediterranean-type)",
+                  "Part of J&K (Kashmir)",
+                  "Mild climate; dry summer + wet winter (Western Disturbances)",
+                  "Kashmir Valley"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "rivers": {
+    "topics": [
+      {
+        "id": "himalayan",
+        "name": "Himalayan Rivers — Indus, Ganga, Brahmaputra"
+      },
+      {
+        "id": "peninsular",
+        "name": "Peninsular Rivers — East and West Flowing"
+      },
+      {
+        "id": "lakes",
+        "name": "Important Lakes of India"
+      },
+      {
+        "id": "waterfalls",
+        "name": "Waterfalls and Dams"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": "himalayan",
+        "topic_name": "Himalayan Rivers",
+        "cards": [
+          {
+            "heading": "Indus, Ganga and Brahmaputra River Systems",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "River",
+                "Origin",
+                "Length (India)",
+                "Key Tributaries",
+                "Key Facts"
+              ],
+              "rows": [
+                [
+                  "Indus",
+                  "Mansarovar Lake, Tibet (near Kailash)",
+                  "3,180 km total (709 km in India)",
+                  "Zaskar, Nubra, Shyok, Hunza (in J&K); Jhelum, Chenab, Ravi, Beas, Sutlej",
+                  "Flows through J&K; enters Pakistan near Attock; Indus Water Treaty (1960) — India gets Ravi+Beas+Sutlej; Pakistan gets Indus+Jhelum+Chenab"
+                ],
+                [
+                  "Jhelum",
+                  "Verinag Spring (Kashmir)",
+                  "725 km",
+                  "Kishanganga (Neelum)",
+                  "Flows through Dal Lake; forms Wular Lake; enters Pakistan; Indian side called Jhelum, Pakistan side = Hydaspes (ancient)"
+                ],
+                [
+                  "Chenab",
+                  "Bara Lacha La pass (HP)",
+                  "960 km",
+                  "Chandra + Bhaga rivers merge = Chenab",
+                  "Largest of Punjab rivers (by discharge); origin at Chandra Bhaga (Chandrabhaga)"
+                ],
+                [
+                  "Ravi",
+                  "Kullu hills (Rohtang Pass area, HP)",
+                  "720 km",
+                  "Budhi, Nai, Saho",
+                  "Passes through Dalhousie area; enters Pakistan; Ravi flows past Lahore"
+                ],
+                [
+                  "Beas",
+                  "Beas Kund (near Rohtang, HP)",
+                  "470 km",
+                  "Banganga, Luni",
+                  "Westernmost river entirely in India; Alexander's soldiers refused to cross at Beas"
+                ],
+                [
+                  "Sutlej",
+                  "Rakshas Tal lake, Tibet",
+                  "1,450 km total (600 km India)",
+                  "Spiti, Beas (joins below Harike)",
+                  "Originates in Tibet; cuts through Himalayas near Shipki La; Bhakra Nangal Dam on Sutlej"
+                ],
+                [
+                  "Ganga",
+                  "Gangotri glacier (Uttarakhand); technically from Bhagirathi + Alaknanda",
+                  "2,525 km",
+                  "Yamuna+Ghaghara+Gandak+Kosi+Son+Chambal (left bank); Gomti (right bank)",
+                  "National River of India; Triveni Sangam at Prayagraj (Ganga+Yamuna+mythical Saraswati); meets Bay of Bengal at Bay of Bengal (Ganga Sagar); Sundarbans mangroves in delta"
+                ],
+                [
+                  "Yamuna",
+                  "Yamunotri glacier (Uttarakhand)",
+                  "1,376 km",
+                  "Chambal, Betwa, Ken, Tons, Hindon",
+                  "Largest tributary of Ganga; highly polluted in Delhi stretch; joins Ganga at Prayagraj"
+                ],
+                [
+                  "Brahmaputra",
+                  "Mansarovar Lake, Tibet (as Tsangpo)",
+                  "2,900 km total (916 km India)",
+                  "Subansiri, Jia Bhareli, Dhansiri, Manas, Teesta, Lohit",
+                  "Longest river in the world by some measures in Tibet; enters India near Pasighat (Arunachal); world's longest river gorge at Namcha Barwa; called Tsangpo (Tibet), Siang (Arunachal), Brahmaputra (Assam), Jamuna (Bangladesh); Majuli Island = world's largest river island"
+                ]
+              ]
+            },
+            "alert": "⭐ Ganga becomes Padma in Bangladesh; Brahmaputra becomes Jamuna. They merge to form Meghna which meets Bay of Bengal. Teesta river = in Sikkim+WB → joins Brahmaputra in Bangladesh. Indus Water Treaty (1960): PM Nehru + President Ayub Khan; World Bank mediated; governs water sharing of 6 Punjab rivers between India and Pakistan."
+          }
+        ]
+      },
+      {
+        "topic_id": "peninsular",
+        "topic_name": "Peninsular Rivers — East and West Flowing",
+        "cards": [
+          {
+            "heading": "Peninsular Rivers",
+            "color": "green",
+            "table": {
+              "headers": [
+                "River",
+                "Length",
+                "Originates",
+                "Drains Into",
+                "Key Facts"
+              ],
+              "rows": [
+                [
+                  "Mahanadi",
+                  "858 km",
+                  "Chhattisgarh (Raipur dist)",
+                  "Bay of Bengal (Odisha)",
+                  "Hirakud Dam (longest earthen dam in world — 4.8 km); Chilika Lake in delta; Mahanadi delta most productive delta"
+                ],
+                [
+                  "Godavari",
+                  "1,465 km",
+                  "Nasik (Maharashtra, Western Ghats)",
+                  "Bay of Bengal (AP/Telangana)",
+                  "Longest peninsular river; 'Vriddha Ganga' (Old Ganga/Ganga of South); Papikondalu gorge in AP"
+                ],
+                [
+                  "Krishna",
+                  "1,400 km",
+                  "Mahabaleshwar (Maharashtra, Western Ghats)",
+                  "Bay of Bengal (AP)",
+                  "Nagarjuna Sagar Dam (largest masonry dam); Tungabhadra tributary (Hampi is on Tungabhadra)"
+                ],
+                [
+                  "Cauvery (Kaveri)",
+                  "800 km",
+                  "Talakaveri (Kodagu/Coorg, Karnataka, Western Ghats)",
+                  "Bay of Bengal (TN)",
+                  "'Dakshina Ganga' (Ganga of South); Ranganathittu + Ranganathaswamy island in river; Shivasamudram waterfall; Mettur Dam (oldest large dam in South India); INTER-STATE WATER DISPUTE (Karnataka vs Tamil Nadu — Cauvery Water Disputes Tribunal)"
+                ],
+                [
+                  "Narmada",
+                  "1,312 km",
+                  "Amarkantak plateau (MP)",
+                  "Arabian Sea (Gulf of Khambhat)",
+                  "Only major west-flowing peninsular river with a rift valley origin (flows in a trough between Vindhya and Satpura ranges); Marble Rocks at Jabalpur (Bhedaghat); Dhuandhar Falls; Sardar Sarovar Dam (Gujarat) — world's 2nd largest concrete dam; flows east to west — UNUSUAL for peninsular river"
+                ],
+                [
+                  "Tapti (Tapi)",
+                  "724 km",
+                  "Multai (Betul, MP)",
+                  "Arabian Sea (Gulf of Khambhat)",
+                  "Second major west-flowing peninsular river; parallel to Narmada in rift valley; Surat on Tapti"
+                ],
+                [
+                  "Luni",
+                  "495 km",
+                  "Pushkar Lake (Aravalli range, Rajasthan)",
+                  "Rann of Kutch (Gujarat)",
+                  "Only major river in Rajasthan desert; saline in lower course; seasonal; drains Thar Desert"
+                ],
+                [
+                  "Tungabhadra",
+                  "531 km",
+                  "Union of Tunga + Bhadra rivers (Western Ghats, Karnataka)",
+                  "Joins Krishna (AP)",
+                  "Hampi (Vijayanagara capital) is on Tungabhadra; Tungabhadra Dam (Hospet)"
+                ],
+                [
+                  "Periyar",
+                  "244 km",
+                  "Sivagiri hills (Western Ghats, Kerala)",
+                  "Arabian Sea (Kerala)",
+                  "Idukki Dam on Periyar; Periyar Wildlife Sanctuary; important source for Kerala's irrigation"
+                ]
+              ]
+            },
+            "alert": "⭐ East-flowing peninsular rivers form DELTAS (Mahanadi, Godavari, Krishna, Cauvery). West-flowing peninsular rivers (Narmada, Tapti) do NOT form deltas — they flow fast through gorges and the coarse material doesn't settle. Godavari = longest peninsular river. Cauvery = most litigated river (water dispute). Narmada = only major west-flowing peninsular river in a rift valley."
+          }
+        ]
+      },
+      {
+        "topic_id": "lakes",
+        "topic_name": "Important Lakes of India",
+        "cards": [
+          {
+            "heading": "Major Lakes — All for Exam",
+            "color": "purple",
+            "table": {
+              "headers": [
+                "Lake",
+                "State",
+                "Type",
+                "Key Facts"
+              ],
+              "rows": [
+                [
+                  "Wular Lake",
+                  "J&K",
+                  "Freshwater (largest freshwater lake in India)",
+                  "Fed by Jhelum river; 130–260 sq km; migratory birds"
+                ],
+                [
+                  "Chilika Lake",
+                  "Odisha",
+                  "Brackish water lagoon (largest coastal lagoon in India; largest in Asia)",
+                  "Irrawaddy dolphins; RAMSAR site; largest wintering ground for migratory birds in Asia; Nalabana Island Bird Sanctuary"
+                ],
+                [
+                  "Sambhar Lake",
+                  "Rajasthan",
+                  "Saline (largest inland salt lake in India)",
+                  "Source of salt for India; RAMSAR site; flamingos in winter; 230 sq km"
+                ],
+                [
+                  "Vembanad Lake",
+                  "Kerala",
+                  "Brackish water (longest lake in India; largest in Kerala)",
+                  "96 km long; Nehru Trophy Boat Race on Punnamada stretch; Kumarakom Bird Sanctuary on banks; RAMSAR site"
+                ],
+                [
+                  "Dal Lake",
+                  "J&K",
+                  "Freshwater",
+                  "Srinagar; houseboats; Hazratbal mosque nearby; surrounded by mountains; shrinking due to encroachment"
+                ],
+                [
+                  "Loktak Lake",
+                  "Manipur",
+                  "Freshwater (largest freshwater lake in NE India)",
+                  "Famous for 'phumdis' (floating islands of vegetation); Keibul Lamjao NP on phumdis (only floating national park in world); Sangai deer (brow-antlered deer) = state animal of Manipur"
+                ],
+                [
+                  "Pangong Tso",
+                  "Ladakh (shared with China)",
+                  "Saline",
+                  "70 km long; 60% in China; changes color 5 times a day; filming location of 3 Idiots; altitude 4,350m"
+                ],
+                [
+                  "Tsomoriri",
+                  "Ladakh",
+                  "Saline; high altitude",
+                  "Biosphere Reserve; breeding ground of bar-headed goose and black-necked crane"
+                ],
+                [
+                  "Pushkar Lake",
+                  "Rajasthan",
+                  "Freshwater (sacred)",
+                  "Only Brahma temple in world at Pushkar; Pushkar Camel Fair; Aravalli origin"
+                ],
+                [
+                  "Hussain Sagar",
+                  "Telangana",
+                  "Artificial lake",
+                  "Hyderabad; built by Ibrahim Quli Qutb Shah (1562); Rock of Gibraltar statue in middle"
+                ],
+                [
+                  "Lonar Lake",
+                  "Maharashtra",
+                  "Saltwater crater lake (meteorite impact — ONLY such lake in Asia)",
+                  "Created by meteorite impact 52,000 years ago; Wildlife Sanctuary; UNESCO tentative list"
+                ]
+              ]
+            },
+            "alert": "⭐ RAMSAR Sites (Wetlands of International Importance) in India: 75+ RAMSAR sites (as of 2023) — most in the world. Largest RAMSAR = Sundarbans (WB). Chilika, Keoladeo, Loktak, Wular, Harike, Sambhar, Bhoj, Point Calimere, Vembanad-Kol, Kolleru = important RAMSAR sites. India has more RAMSAR sites than any other country."
+          }
+        ]
+      },
+      {
+        "topic_id": "waterfalls",
+        "topic_name": "Waterfalls and Major Dams",
+        "cards": [
+          {
+            "heading": "Major Waterfalls and Dams of India",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Name",
+                "State",
+                "River",
+                "Height/Notable Facts"
+              ],
+              "rows": [
+                [
+                  "Jog Falls (Gersoppa)",
+                  "Karnataka",
+                  "Sharavathi river",
+                  "253m — highest plunge waterfall in India; 4 falls: Raja, Rani, Rover, Rocket; UNESCO tentative list"
+                ],
+                [
+                  "Dudhsagar Falls",
+                  "Goa/Karnataka border",
+                  "Mandovi river",
+                  "310m — 2nd highest; Dudhsagar means 'sea of milk'; falls across Konkan Railway line — scenic"
+                ],
+                [
+                  "Athirappilly Falls",
+                  "Kerala",
+                  "Chalakudy river",
+                  "80m — 'Niagara of India'; largest waterfall in Kerala"
+                ],
+                [
+                  "Dhuandhar Falls",
+                  "Madhya Pradesh",
+                  "Narmada river",
+                  "30m — 'Smoke Cascade'; Marble Rocks at Bhedaghat; Jabalpur"
+                ],
+                [
+                  "Shivasamudram Falls",
+                  "Karnataka",
+                  "Cauvery river",
+                  "90m — one of the earliest hydroelectric power projects (1902)"
+                ],
+                [
+                  "Kynrem Falls",
+                  "Meghalaya",
+                  "Near Cherrapunji",
+                  "305m — 3rd highest in India; 3-tiered"
+                ],
+                [
+                  "Bhakra Nangal Dam",
+                  "HP/Punjab border",
+                  "Sutlej river",
+                  "Height 226m — highest gravity dam in India; largest reservoir = Gobind Sagar Lake"
+                ],
+                [
+                  "Sardar Sarovar",
+                  "Gujarat",
+                  "Narmada river",
+                  "163m height — 2nd largest concrete dam in world; Narmada Bachao Andolan (Medha Patkar led)"
+                ],
+                [
+                  "Tehri Dam",
+                  "Uttarakhand",
+                  "Bhagirathi river",
+                  "260.5m — tallest dam in India + tallest in Asia; rock-fill dam; Tehri Lake"
+                ],
+                [
+                  "Hirakud Dam",
+                  "Odisha",
+                  "Mahanadi river",
+                  "4,800m length — world's longest earthen dam (some say longest dam in India)"
+                ],
+                [
+                  "Nagarjuna Sagar",
+                  "Telangana/AP border",
+                  "Krishna river",
+                  "Largest masonry dam in world; 409 islands created in reservoir; Nagarjunakonda Buddhist site submerged"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "soils": {
+    "topics": [
+      {
+        "id": "soil-types",
+        "name": "8 Types of Soils in India"
+      },
+      {
+        "id": "vegetation",
+        "name": "Natural Vegetation and Forest Types"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": "soil-types",
+        "topic_name": "8 Types of Soils in India",
+        "cards": [
+          {
+            "heading": "All 8 Soil Types — Key Facts for Exam",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Soil Type",
+                "Color",
+                "Region",
+                "Crops",
+                "Key Feature"
+              ],
+              "rows": [
+                [
+                  "Alluvial Soil (largest area)",
+                  "Light grey to ash grey",
+                  "Northern Plains; coastal plains; river deltas",
+                  "Wheat, Rice, Sugarcane, Cotton, Jute, Oilseeds",
+                  "Most fertile; deposited by rivers; Khadar (new, fertile) + Bhangar (old); rich in potash but poor in nitrogen + phosphorus"
+                ],
+                [
+                  "Black/Regur Soil (Cotton soil)",
+                  "Black (iron-rich)",
+                  "Deccan Plateau; Maharashtra, MP, Karnataka, AP; Malwa Plateau",
+                  "Cotton (best for); Sugarcane, Wheat, Groundnut, Tobacco, Citrus",
+                  "Formed from Deccan Trap lava; self-ploughing (cracks when dry — mixes itself); holds moisture well; fertile without irrigation; poor in nitrogen+phosphorus+organic"
+                ],
+                [
+                  "Red and Yellow Soil",
+                  "Red (iron); Yellow when hydrated",
+                  "Eastern Plateau (Odisha, Chhattisgarh, AP, TN, parts of MP and UP)",
+                  "Groundnut, Pulses, Millets, Rice, Tobacco",
+                  "Red color due to iron oxide; yellow when hydrated; poor in nitrogen, phosphorus, organic; porous and less fertile"
+                ],
+                [
+                  "Laterite Soil",
+                  "Red/brick red",
+                  "Kerala, Karnataka, TN, Odisha, Chhattisgarh (high rainfall areas)",
+                  "Tea, Coffee, Cashew, Rubber, Coconut",
+                  "Formed by leaching in heavy rainfall; silica leaches out; aluminum+iron remain; hard surface; cannot hold water; acidic; poor fertility"
+                ],
+                [
+                  "Desert/Arid Soil",
+                  "Sandy, light brown",
+                  "Rajasthan, Gujarat, Haryana (semi-arid parts)",
+                  "Bajra, Pulses, Barley (with irrigation)",
+                  "Sandy; poor in organic matter; high in soluble salts; low moisture retention; alkaline; can be productive with irrigation (Indira Gandhi Canal transformed Rajasthan)"
+                ],
+                [
+                  "Mountain/Forest Soil",
+                  "Dark brown to black",
+                  "Himalayan mountain slopes, NE India",
+                  "Tea (in Darjeeling), Coffee, Tropical fruits",
+                  "Formed by breakdown of rocks; varies greatly with altitude; acidic in nature; thin layer; good for coniferous forests"
+                ],
+                [
+                  "Peaty/Marshy Soil",
+                  "Dark/black",
+                  "Kerala backwaters, Sundarbans WB, coastal Odisha, Almora district",
+                  "Rice",
+                  "High organic matter; water-logged; acidic; rich in humus; very limited distribution"
+                ],
+                [
+                  "Saline/Alkaline Soil",
+                  "White efflorescence on surface",
+                  "Arid regions of Rajasthan, Punjab, Haryana, UP (Usar/Reh/Thur/Bhur)",
+                  "Unproductive unless reclaimed",
+                  "Excessive salt content; 'reh' or 'usar' land; caused by poor drainage and high evaporation; can be reclaimed"
+                ]
+              ]
+            },
+            "alert": "⭐ Soil distribution: Alluvial = largest area (about 40%); Red = second largest; Black = third (about 15%); Laterite = 4th. Black soil = BEST for cotton = also called 'regur' (from Telugu word). Laterite = 'brick' in Latin; used as building material in Kerala. Alluvial soil classified by ICAR (Indian Council of Agricultural Research) into 8 types. Soil erosion = wind erosion (Rajasthan), water erosion (NE+peninsular rivers), gully erosion (Chambal ravines)."
+          }
+        ]
+      },
+      {
+        "topic_id": "vegetation",
+        "topic_name": "Natural Vegetation and Forest Types",
+        "cards": [
+          {
+            "heading": "Types of Natural Vegetation in India",
+            "color": "green",
+            "table": {
+              "headers": [
+                "Forest Type",
+                "Region/Rainfall",
+                "Key Trees",
+                "Examples"
+              ],
+              "rows": [
+                [
+                  "Tropical Evergreen Forests",
+                  ">200 cm rainfall; Western Ghats, NE India, Andaman",
+                  "Ebony, Mahogany, Rosewood, Rubber, Cinchona",
+                  "Silent Valley (Kerala); Namdapha (Arunachal); Agumbe (Karnataka)"
+                ],
+                [
+                  "Tropical Deciduous (Monsoon) Forests",
+                  "100–200 cm rainfall; Most of India",
+                  "Teak (best timber), Sal, Sandalwood, Khair, Sheesham",
+                  "Sal forests = UP, MP, Jharkhand; Teak = Maharashtra, MP, Karnataka"
+                ],
+                [
+                  "Tropical Thorn Forests (Scrub)",
+                  "< 70 cm rainfall; Rajasthan, semi-arid",
+                  "Acacia, Euphoria, Cactus, Date palm, Babool (Khejri = state tree of Rajasthan)",
+                  "Thar Desert margin; Deccan rain shadow; Gujarat"
+                ],
+                [
+                  "Montane (Mountain) Forests",
+                  "Altitude-based; Himalayas, NE",
+                  "Lower: Shorea, Sal; Middle: Oak, Chestnut, Rhododendron; Higher: Pine, Fir, Spruce, Cedar (Deodar); Timberline: Alpine meadows (Bugyals)",
+                  "Deodar = Uttarakhand state tree; Cedar in J&K"
+                ],
+                [
+                  "Mangrove (Tidal) Forests",
+                  "Coastal areas; tidal zones; saline",
+                  "Sundari (from which Sundarbans is named), Rhizophora, Avicennia",
+                  "Sundarbans (WB) = world's largest mangrove; Bhitarkanika (Odisha); Pichavaram (TN); Coringa (AP)"
+                ],
+                [
+                  "Littoral Forests",
+                  "Coastal regions along beaches",
+                  "Casuarina, Coconut, Pandanus",
+                  "Coastal strips; not large forests"
+                ]
+              ]
+            },
+            "alert": "⭐ Largest forest area: MP (77,000+ sq km) > Arunachal Pradesh > Chhattisgarh > Odisha > Maharashtra. Highest forest cover percentage: Mizoram (85%+) > Meghalaya > Manipur. Teak and Sal = most important commercially. Sandalwood = Karnataka (state tree of Karnataka = Sandalwood tree). Khejri = Rajputs used for fodder + food — Chipko-like movement (Bishnoi community protected khejri trees). Chipko Movement (1973, Uttarakhand): Sundarlal Bahuguna; women hugged trees to prevent felling; 'hug the tree' movement; led to ban on felling in Himalayas."
+          }
+        ]
+      }
+    ]
+  },
+  "resources": {
+    "topics": [
+      {
+        "id": "coal",
+        "name": "Coal and Petroleum"
+      },
+      {
+        "id": "iron-minerals",
+        "name": "Iron Ore and Key Minerals"
+      },
+      {
+        "id": "power",
+        "name": "Power Resources — Conventional and Non-conventional"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": "coal",
+        "topic_name": "Coal and Petroleum Resources",
+        "cards": [
+          {
+            "heading": "Coal — Distribution and Types",
+            "color": "blue",
+            "points": [
+              "India = 4th largest coal reserves in world; 3rd largest producer",
+              "Types: Anthracite (highest carbon 92–98%; hard; best quality; very limited in India — J&K), Bituminous (80–90% carbon; most common; used in industry), Lignite/Brown coal (low carbon 40–55%; soft; Neyveli TN = largest lignite mine), Peat (lowest carbon; not commercial)",
+              "Distribution: 80%+ in Gondwana coalfields (Damodar Valley — most important); rest in Tertiary coalfields (NE India, J&K)",
+              "Damodar Valley coalfields: Jharia (Jharkhand — LARGEST coalfield in India; coking coal); Raniganj (WB — oldest coalfield in India); Bokaro (Jharkhand); Ramgarh (Jharkhand); Korba (Chhattisgarh)",
+              "Other coalfields: Singrauli (MP-UP border); Wardha Valley (Maharashtra); Talcher (Odisha); Godavari Valley (Telangana); Umaria (MP)",
+              "Neyveli Lignite: Tamil Nadu; open cast mine; feeds thermal power station; India's largest lignite deposit"
+            ]
+          },
+          {
+            "heading": "Petroleum — Distribution and Refineries",
+            "color": "green",
+            "table": {
+              "headers": [
+                "Oil Field/Refinery",
+                "State",
+                "Notes"
+              ],
+              "rows": [
+                [
+                  "Mumbai High (Bombay High)",
+                  "Offshore (Maharashtra coast)",
+                  "Largest oil field in India; offshore; discovered 1974; ONGC operates"
+                ],
+                [
+                  "Ankleshwar",
+                  "Gujarat",
+                  "First commercial oil well in India after independence"
+                ],
+                [
+                  "Digboi",
+                  "Assam",
+                  "Oldest oil field in Asia (1889); still producing; oldest refinery in Asia"
+                ],
+                [
+                  "Naharkatiya-Moran",
+                  "Assam",
+                  "Major oil field in NE India"
+                ],
+                [
+                  "Krishna-Godavari Basin",
+                  "Andhra Pradesh + Telangana (offshore)",
+                  "KG Basin; major gas (Reliance D6 block); Mangamaripeta oil field"
+                ],
+                [
+                  "Jamnagar Refinery",
+                  "Gujarat (Reliance)",
+                  "World's largest single-location refinery complex"
+                ],
+                [
+                  "Koyali Refinery",
+                  "Gujarat (IOCL)",
+                  "Oldest refinery after Digboi; largest public sector refinery"
+                ],
+                [
+                  "Mathura Refinery",
+                  "UP (IOCL)",
+                  "Near Agra; controversy over fumes harming Taj Mahal"
+                ],
+                [
+                  "Numaligarh Refinery",
+                  "Assam",
+                  "NE India; part of NE peace accord"
+                ],
+                [
+                  "Digboi Refinery",
+                  "Assam",
+                  "Oldest refinery in Asia (1901)"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "topic_id": "iron-minerals",
+        "topic_name": "Iron Ore and Key Minerals",
+        "cards": [
+          {
+            "heading": "Iron Ore, Steel and Key Minerals",
+            "color": "purple",
+            "table": {
+              "headers": [
+                "Mineral",
+                "Major States",
+                "Notable Facts"
+              ],
+              "rows": [
+                [
+                  "Iron Ore",
+                  "Jharkhand(Singhbhum), Odisha(Keonjhar/Mayurbhanj), Chhattisgarh, Karnataka(Bellary/Hospet), Goa",
+                  "India = 4th largest iron ore reserves; 2nd largest exporter; Hemantite (best quality) and Magnetite are main types"
+                ],
+                [
+                  "Coal",
+                  "Jharkhand, WB, MP, Chhattisgarh, Odisha, Telangana",
+                  "4th largest reserves; Jharia = largest coalfield (coking coal)"
+                ],
+                [
+                  "Bauxite (Aluminum ore)",
+                  "Odisha, Andhra Pradesh, MP, Gujarat, Maharashtra",
+                  "India = 5th largest bauxite reserves; Odisha = largest producer"
+                ],
+                [
+                  "Copper",
+                  "Rajasthan (Khetri), MP (Malanjkhand), Jharkhand (Singhbhum)",
+                  "Very low reserves; Khetri = 'Copper City'; major importer"
+                ],
+                [
+                  "Mica",
+                  "Jharkhand, AP, Rajasthan",
+                  "India = world's largest mica producer; used in electrical industry; Jharkhand = Koderma district"
+                ],
+                [
+                  "Manganese",
+                  "Odisha, Madhya Pradesh, Maharashtra, Karnataka",
+                  "Used in steel industry + batteries; India = 4th largest producer"
+                ],
+                [
+                  "Gold",
+                  "Karnataka (Kolar Gold Fields — KGF; deepest gold mine in Asia; now closed), Andhra Pradesh",
+                  "KGF mines now government owned; Karnataka = major producer"
+                ],
+                [
+                  "Thorium",
+                  "Kerala (Monazite sands in beaches)",
+                  "India = world's largest thorium reserves; important for nuclear power"
+                ],
+                [
+                  "Uranium",
+                  "Jharkhand (Jaduguda), Rajasthan, Andhra Pradesh, Meghalaya",
+                  "Jaduguda = first uranium mine in India (1967)"
+                ],
+                [
+                  "Chromite",
+                  "Odisha (Sukinda Valley)",
+                  "India = 3rd largest chromite producer; Sukinda = world's largest open cast chromite mine"
+                ],
+                [
+                  "Limestone",
+                  "MP, Rajasthan, AP, Gujarat, Karnataka",
+                  "Used in cement industry; India = major cement producer"
+                ],
+                [
+                  "Diamond",
+                  "Madhya Pradesh (Panna district)",
+                  "Only diamond mines in India; limited production"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "topic_id": "power",
+        "topic_name": "Power Resources",
+        "cards": [
+          {
+            "heading": "Conventional and Non-conventional Energy Sources",
+            "color": "orange",
+            "points": [
+              "Thermal Power: Coal-based thermal plants generate most electricity in India (~60%); major plants at Vindhyachal (MP), Singrauli (MP-UP border), Korba (Chhattisgarh), Ramagundam (Telangana), Rihand (UP), Talcher (Odisha)",
+              "Hydroelectric Power: About 13% of installed capacity; major: Bhakra-Nangal (Sutlej), Bhilai+Damodar Valley, Nagarjuna Sagar (Krishna), Koyna (Maharashtra — largest HEP in Maharashtra), Salal (J&K), Dulhasti (J&K), Tehri (Uttarakhand)",
+              "Nuclear Power: About 3% of total; plants at Tarapur (Maharashtra — first nuclear plant 1969), Rawatbhata (Rajasthan), Kalpakkam (Tamil Nadu — first Fast Breeder Reactor under construction), Narora (UP), Kakrapar (Gujarat), Kaiga (Karnataka), Kudankulam (TN — Russian built; largest nuclear plant)",
+              "Solar Power: India has vast potential; Rajasthan, Gujarat best potential; major parks: Bhadla Solar Park (Rajasthan — world's largest solar park, 2245 MW), Kamuthi Solar Power Plant (TN — was world's largest single-location solar plant briefly), Gujarat Solar Park",
+              "Wind Power: India = 4th largest wind power producer; Tamil Nadu, Gujarat, Karnataka, Maharashtra, Rajasthan, AP have best potential; Muppandal Wind Farm (TN) = largest wind farm in India; Jaisalmer Wind Park (Rajasthan)",
+              "Target: India aims for 500 GW renewable energy by 2030 (announced at COP26)"
             ]
           }
         ]
       }
     ]
   },
-  "hindi-sahitya": {
+  "agriculture": {
     "topics": [
-      { "id": "kaal", "name": "काल-विभाजन" },
-      { "id": "bhakti", "name": "भक्तिकाल" },
-      { "id": "riti", "name": "रीतिकाल" },
-      { "id": "adhunik", "name": "आधुनिक काल" },
-      { "id": "kavi", "name": "प्रमुख कवि" },
-      { "id": "gadya", "name": "गद्य साहित्य" }
+      {
+        "id": "seasons-crops",
+        "name": "Agricultural Seasons and Major Crops"
+      },
+      {
+        "id": "irrigation",
+        "name": "Irrigation Systems"
+      },
+      {
+        "id": "revolutions",
+        "name": "Agricultural Revolutions in India"
+      }
     ],
     "notes": [
       {
-        "topic_id": "kaal",
-        "topic_name": "हिंदी साहित्य का काल-विभाजन",
+        "topic_id": "seasons-crops",
+        "topic_name": "Agricultural Seasons and Major Crops",
         "cards": [
           {
-            "heading": "हिंदी साहित्य के चार काल",
+            "heading": "Three Crop Seasons — Kharif, Rabi, Zaid",
             "color": "blue",
             "table": {
-              "headers": ["काल", "समय", "अन्य नाम", "मुख्य विशेषता"],
+              "headers": [
+                "Season",
+                "Sowing",
+                "Harvesting",
+                "Major Crops",
+                "Key States"
+              ],
               "rows": [
-                ["आदिकाल", "993–1318 ई.", "वीरगाथाकाल, चारणकाल (Ramchandra Shukla)", "वीरगाथाएं, डिंगल-पिंगल भाषा"],
-                ["भक्तिकाल", "1318–1643 ई.", "स्वर्ण युग", "भक्ति आंदोलन; सगुण-निर्गुण धाराएं"],
-                ["रीतिकाल", "1643–1843 ई.", "श्रृंगारकाल", "श्रृंगार रस प्रधान; लक्षण ग्रंथ"],
-                ["आधुनिक काल", "1843 ई.– अब तक", "गद्यकाल", "गद्य का विकास; भारतेंदु युग से"]
-              ]
-            },
-            "alert": "⭐ आचार्य रामचंद्र शुक्ल ने हिंदी साहित्य का काल-विभाजन किया — 'हिंदी साहित्य का इतिहास' (1929)"
-          }
-        ]
-      },
-      {
-        "topic_id": "bhakti",
-        "topic_name": "भक्तिकाल — कवि और रचनाएं",
-        "cards": [
-          {
-            "heading": "निर्गुण भक्ति धारा",
-            "color": "orange",
-            "table": {
-              "headers": ["कवि", "गुरु", "प्रमुख रचना", "विशेष"],
-              "rows": [
-                ["कबीरदास", "रामानंद", "बीजक, सखी, साखी, रमैनी", "'हिंदी का पहला क्रांतिकारी कवि'"],
-                ["रैदास (रविदास)", "रामानंद", "रैदास की वाणी", "निम्न वर्ग से; मीराबाई के गुरु"],
-                ["नानकदेव (गुरु)", "—", "जपुजी साहिब", "सिख धर्म के संस्थापक"],
-                ["दादू दयाल", "—", "—", "राजस्थान; निर्गुण संत"]
+                [
+                  "Kharif (Monsoon crops)",
+                  "June–July (with onset of SW monsoon)",
+                  "September–October",
+                  "Rice, Jowar (Sorghum), Bajra, Maize, Cotton, Groundnut, Jute, Sugarcane, Soyabean, Tur (Arhar dal), Urad, Moong",
+                  "Rice: WB, UP, Punjab; Cotton: Maharashtra, Gujarat; Groundnut: Gujarat, AP; Jute: WB"
+                ],
+                [
+                  "Rabi (Winter crops)",
+                  "October–November",
+                  "March–April",
+                  "Wheat, Barley, Gram (Chickpea), Mustard, Linseed, Peas, Masur (Lentil)",
+                  "Wheat: Punjab, Haryana, UP, MP, Rajasthan; Gram: MP, Maharashtra; Mustard: Rajasthan"
+                ],
+                [
+                  "Zaid (Summer crops)",
+                  "March–April",
+                  "June–July",
+                  "Watermelon, Muskmelon, Cucumber, Vegetables, Fodder crops",
+                  "UP (Ganga-Yamuna Doab), Punjab, Haryana; requires intensive irrigation"
+                ],
+                [
+                  "Plantation crops",
+                  "Year-round (perennial)",
+                  "Varies",
+                  "Tea, Coffee, Rubber, Coconut, Spices, Tobacco",
+                  "Tea: Assam+WB; Coffee: Karnataka; Rubber: Kerala"
+                ]
               ]
             }
           },
           {
-            "heading": "सगुण भक्ति धारा",
+            "heading": "State-wise Important Crops",
             "color": "green",
             "table": {
-              "headers": ["कवि", "रचना", "विशेष"],
+              "headers": [
+                "Crop",
+                "Top Producing States",
+                "Key Facts"
+              ],
               "rows": [
-                ["तुलसीदास", "रामचरितमानस, विनयपत्रिका, कवितावली, गीतावली", "'राम काव्य के सर्वश्रेष्ठ कवि'"],
-                ["सूरदास", "सूरसागर, सूरसारावली, साहित्यलहरी", "'वात्सल्य रस के सम्राट'"],
-                ["मीराबाई", "मीरा बाई के पद", "कृष्ण-भक्त; राजस्थानी राजकुमारी"],
-                ["रसखान", "प्रेम वाटिका, सुजान रसखान", "मुस्लिम कवि; कृष्ण-भक्त"]
+                [
+                  "Rice",
+                  "WB, UP, Punjab, Andhra Pradesh",
+                  "India = 2nd largest producer in world; staple food of eastern+southern India"
+                ],
+                [
+                  "Wheat",
+                  "UP, Punjab, Haryana, MP, Rajasthan",
+                  "India = 2nd largest producer; mainly N.India; Green Revolution success crop"
+                ],
+                [
+                  "Sugarcane",
+                  "UP, Maharashtra, Karnataka, TN",
+                  "India = 2nd largest producer + largest consumer; UP = largest producer; Maharashtra = highest productivity"
+                ],
+                [
+                  "Cotton",
+                  "Maharashtra, Gujarat, Telangana, AP, MP",
+                  "India = 3rd largest producer; Black soil = best for cotton; Bt cotton (GMO) = most widely grown"
+                ],
+                [
+                  "Tea",
+                  "Assam, WB (Darjeeling), TN (Nilgiris), Kerala",
+                  "India = 2nd largest producer (after China); Assam = 52% of India's tea; Darjeeling tea = GI tag"
+                ],
+                [
+                  "Coffee",
+                  "Karnataka (70%), Kerala, TN",
+                  "Arabica and Robusta varieties; Bababudan Hills (Chikmagalur Karnataka) = origin of coffee cultivation in India; brought by Baba Budan (Sufi saint) from Yemen"
+                ],
+                [
+                  "Rubber",
+                  "Kerala (91%), TN",
+                  "India = 5th largest natural rubber producer; Kerala plantation sector"
+                ],
+                [
+                  "Groundnut",
+                  "Gujarat, AP, TN, Karnataka",
+                  "India = 2nd largest producer after China; edible oil + cattle feed"
+                ],
+                [
+                  "Soyabean",
+                  "MP, Maharashtra, Rajasthan",
+                  "India = 5th largest producer; MP = 'Soya State'"
+                ],
+                [
+                  "Spices",
+                  "Kerala (Pepper, Cardamom, Cloves), Rajasthan (Coriander), AP (Chilli)",
+                  "India = largest spice exporter in world; 'Spice Bowl of World'"
+                ]
               ]
-            },
-            "alert": "⭐ तुलसीदास — 'गोस्वामी' उपाधि। रामचरितमानस अवधी में। 'भक्तिकाल = स्वर्ण युग' — Hazari Prasad Dwivedi। सूरदास 'अष्टछाप' के कवि"
+            }
           }
         ]
       },
       {
-        "topic_id": "riti",
-        "topic_name": "रीतिकाल",
+        "topic_id": "irrigation",
+        "topic_name": "Irrigation Systems",
         "cards": [
           {
-            "heading": "रीतिकाल के प्रमुख कवि",
+            "heading": "Types of Irrigation and Major Projects",
             "color": "purple",
-            "table": {
-              "headers": ["कवि", "रचना", "विशेष"],
-              "rows": [
-                ["केशवदास", "रामचंद्रिका, रसिकप्रिया, कविप्रिया", "रीतिकाल के प्रवर्तक; 'कठिन काव्य के प्रेत'"],
-                ["बिहारी", "बिहारी सतसई (725 दोहे)", "श्रृंगार रस; 'एक दोहे में सरसों'"],
-                ["मतिराम", "रसराज, ललितललाम", "कोमल भावनाएं"],
-                ["घनानंद", "सुजान हित प्रबंध", "रीतिमुक्त धारा; 'प्रेम की पीर'"],
-                ["बोधा", "इश्कनामा, विरहवारीश", "रीतिमुक्त; वास्तविक प्रेम"]
-              ]
-            }
+            "points": [
+              "Canal Irrigation: Most important; mainly in IGP (UP, Punjab, Haryana, Bihar, WB); also Rajasthan Canal / Indira Gandhi Canal (Rajasthan — 649 km main canal; transforms Thar Desert; from Sutlej+Beas rivers at Harike barrage); TN (from Cauvery); Andhra Pradesh (Krishna+Godavari)",
+              "Well and Tube Well Irrigation: Most widely used type in India (by area irrigated); mainly IGP; Punjab, Haryana, UP, Bihar; ground water depletion is major concern",
+              "Tank Irrigation: Mainly South India (Tamil Nadu, AP, Karnataka); tanks = artificial reservoirs; Chembarambakkam Lake (Chennai's main water source); also Odisha",
+              "Drip and Sprinkler Irrigation: Water efficient; promoted by government; Maharashtra, Gujarat, Rajasthan, Karnataka; important for water conservation",
+              "Major Irrigation Projects:",
+              "Indira Gandhi Canal (Rajasthan): Longest canal in India; from Harike Barrage (Sutlej+Beas); transforms Rajasthan desert",
+              "Upper Ganga Canal (UP): From Haridwar; oldest major canal in India",
+              "Nagarjuna Sagar (AP/Telangana): On Krishna river; Largest masonry dam; major irrigation for AP and Telangana",
+              "Tungabhadra Project (Karnataka/AP): Joint; Tungabhadra river; important for northern Karnataka+AP",
+              "Bhakra-Nangal (Punjab/HP): Sutlej river; major irrigation for Punjab, Haryana, Rajasthan"
+            ]
           }
         ]
       },
       {
-        "topic_id": "adhunik",
-        "topic_name": "आधुनिक काल",
+        "topic_id": "revolutions",
+        "topic_name": "Agricultural Revolutions in India",
         "cards": [
           {
-            "heading": "आधुनिक काल के युग",
-            "color": "blue",
-            "table": {
-              "headers": ["युग", "समय", "प्रमुख कवि/लेखक"],
-              "rows": [
-                ["भारतेंदु युग", "1850–1900", "भारतेंदु हरिश्चंद्र, बद्रीनारायण चौधरी 'प्रेमघन'"],
-                ["द्विवेदी युग", "1900–1920", "महावीर प्रसाद द्विवेदी, मैथिलीशरण गुप्त"],
-                ["छायावाद", "1920–1936", "जयशंकर प्रसाद, सुमित्रानंदन पंत, महादेवी वर्मा, निराला"],
-                ["प्रगतिवाद", "1936–1943", "नागार्जुन, केदारनाथ अग्रवाल"],
-                ["प्रयोगवाद", "1943–1950", "अज्ञेय ('तारसप्तक' 1943)"],
-                ["नई कविता", "1950 के बाद", "धर्मवीर भारती, लक्ष्मीकांत वर्मा"]
-              ]
-            },
-            "alert": "⭐ भारतेंदु हरिश्चंद्र = 'आधुनिक हिंदी साहित्य के पितामह'. छायावाद के 4 स्तंभ: PMSN (Prasad, Mahadevi, Sumitranandan, Nirala)"
-          },
-          {
-            "heading": "छायावाद के चार स्तंभ",
-            "color": "green",
-            "table": {
-              "headers": ["कवि", "प्रमुख रचना", "उपाधि/विशेष"],
-              "rows": [
-                ["जयशंकर प्रसाद", "कामायनी (श्रेष्ठ), आंसू, लहर", "'कामायनी' महाकाव्य; नाटक: चंद्रगुप्त, स्कंदगुप्त"],
-                ["सुमित्रानंदन पंत", "पल्लव, गुंजन, युगांत", "'प्रकृति के सुकुमार कवि'; वर्डस्वर्थ ऑफ हिंदी"],
-                ["महादेवी वर्मा", "यामा, नीहार, रश्मि, दीपशिखा", "'आधुनिक मीरा'; 'श्रृंखला की कड़ियां' (गद्य)"],
-                ["सूर्यकांत त्रिपाठी निराला", "राम की शक्तिपूजा, सरोज स्मृति", "'महाप्राण'; छंद-मुक्त कविता के जनक"]
-              ]
-            }
-          }
-        ]
-      },
-      {
-        "topic_id": "kavi",
-        "topic_name": "प्रमुख कवि — विशेष तथ्य",
-        "cards": [
-          {
-            "heading": "महत्वपूर्ण कवि और उपाधियां",
+            "heading": "Color-Coded Revolutions in Indian Agriculture",
             "color": "orange",
             "table": {
-              "headers": ["उपाधि", "कवि"],
+              "headers": [
+                "Revolution",
+                "Color",
+                "Domain",
+                "Key Person"
+              ],
               "rows": [
-                ["राष्ट्रकवि", "मैथिलीशरण गुप्त (साकेत, यशोधरा)"],
-                ["हिंदी का मिल्टन", "तुलसीदास"],
-                ["वात्सल्य रस के सम्राट", "सूरदास"],
-                ["पंचायती भाषा", "कबीर (सधुक्कड़ी भाषा)"],
-                ["हिंदी का शेक्सपियर", "भारतेंदु हरिश्चंद्र"],
-                ["कविता का कबीर", "धूमिल (सुदामा पांडेय)"],
-                ["कवि प्रिया", "केशवदास"],
-                ["आधुनिक मीरा", "महादेवी वर्मा"]
+                [
+                  "Green Revolution",
+                  "Green",
+                  "Food grains (wheat+rice); HYV seeds; increased production",
+                  "M.S. Swaminathan (India); Norman Borlaug (International)"
+                ],
+                [
+                  "White Revolution (Operation Flood)",
+                  "White",
+                  "Milk/Dairy; made India world's largest milk producer",
+                  "Verghese Kurien ('Milkman of India'); NDDB; Amul model"
+                ],
+                [
+                  "Blue Revolution",
+                  "Blue",
+                  "Fish production (aquaculture + fisheries)",
+                  "India = 2nd largest fish producer; major aquaculture growth"
+                ],
+                [
+                  "Yellow Revolution",
+                  "Yellow",
+                  "Oilseeds (mustard, sunflower, soyabean, groundnut)",
+                  "India became self-sufficient in edible oils period (then gap again)"
+                ],
+                [
+                  "Golden Revolution",
+                  "Golden",
+                  "Horticulture (fruits + honey); also called 'Honey Revolution'",
+                  "Nirpakh Tutaj; major push to fruit cultivation; NE India fruits"
+                ],
+                [
+                  "Silver Revolution",
+                  "Silver",
+                  "Eggs and Poultry production",
+                  "India = 3rd largest egg producer in world"
+                ],
+                [
+                  "Pink Revolution",
+                  "Pink",
+                  "Meat + Onion (dual usage)",
+                  "India = major meat exporter"
+                ],
+                [
+                  "Brown Revolution",
+                  "Brown",
+                  "Non-conventional energy (leather, cocoa)",
+                  "Leather industry growth"
+                ],
+                [
+                  "Red Revolution",
+                  "Red",
+                  "Tomato + Meat production (different from pink)",
+                  "—"
+                ],
+                [
+                  "Rainbow Revolution",
+                  "Rainbow",
+                  "Composite agricultural development (all sectors)",
+                  "Dr. M.S. Swaminathan advocated holistic development"
+                ],
+                [
+                  "Evergreen Revolution",
+                  "Evergreen",
+                  "Sustainable agriculture without harming environment",
+                  "Dr. M.S. Swaminathan's concept for 21st century"
+                ]
+              ]
+            },
+            "alert": "⭐ Green Revolution: Punjab, Haryana, W.UP = main beneficiaries; IR-8 (miracle rice) + Sonora-64/Lerma Rojo (wheat); HYV = High Yielding Variety. Negative effects: Groundwater depletion, soil degradation, pesticide overuse, regional inequality, only rice+wheat (not pulses+millets). Evergreen Revolution = Dr. Swaminathan's concept for sustainable food security. NDDB (National Dairy Development Board) = Verghese Kurien founded 1965 at Anand, Gujarat."
+          }
+        ]
+      }
+    ]
+  },
+  "industry": {
+    "topics": [
+      {
+        "id": "iron-steel",
+        "name": "Iron and Steel Industry"
+      },
+      {
+        "id": "textiles",
+        "name": "Textile and Other Industries"
+      },
+      {
+        "id": "transport",
+        "name": "Transport — Railways, Roads, Ports"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": "iron-steel",
+        "topic_name": "Iron and Steel Industry",
+        "cards": [
+          {
+            "heading": "Iron and Steel Plants in India",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Steel Plant",
+                "State",
+                "Established",
+                "Collaboration"
+              ],
+              "rows": [
+                [
+                  "TISCO (Tata Iron and Steel Company)",
+                  "Jharkhand (Jamshedpur)",
+                  "1907",
+                  "Private (first in India; oldest integrated steel plant)"
+                ],
+                [
+                  "IISCO (Indian Iron and Steel Company)",
+                  "West Bengal (Burnpur)",
+                  "1918",
+                  "British collaboration; now under SAIL"
+                ],
+                [
+                  "Bhilai Steel Plant",
+                  "Chhattisgarh",
+                  "1959",
+                  "Soviet Union (USSR) collaboration"
+                ],
+                [
+                  "Durgapur Steel Plant",
+                  "West Bengal",
+                  "1959",
+                  "UK (British) collaboration"
+                ],
+                [
+                  "Rourkela Steel Plant",
+                  "Odisha",
+                  "1959",
+                  "West Germany (German) collaboration"
+                ],
+                [
+                  "Bokaro Steel Plant",
+                  "Jharkhand",
+                  "1964",
+                  "USSR collaboration (originally US proposed but they withdrew)"
+                ],
+                [
+                  "Vizag Steel (RINL)",
+                  "Andhra Pradesh (Visakhapatnam)",
+                  "1992",
+                  "First coastal steel plant in India; 'Steel City of India'"
+                ],
+                [
+                  "Salem Steel Plant",
+                  "Tamil Nadu (Salem)",
+                  "1981",
+                  "Stainless steel"
+                ],
+                [
+                  "Bhadravati Steel Plant",
+                  "Karnataka",
+                  "1923",
+                  "One of oldest; manganese steel"
+                ],
+                [
+                  "ESSAR Steel (now AM/NS)",
+                  "Gujarat (Hazira)",
+                  "Private sector",
+                  "Second largest steel producer in India"
+                ]
+              ]
+            },
+            "alert": "⭐ TISCO = FIRST private sector integrated steel plant in India (1907, Jamshedpur — founded by J.N. Tata; advice by German metallurgist Julius Vogelstein). VIZAG = first coastal steel plant. Bhilai+Durgapur+Rourkela = 1959 = 2nd Five Year Plan steel plants. SAIL (Steel Authority of India Limited) = public sector umbrella; controls Bhilai, Durgapur, Rourkela, Bokaro, IISCO."
+          }
+        ]
+      },
+      {
+        "topic_id": "textiles",
+        "topic_name": "Textile and Other Industries",
+        "cards": [
+          {
+            "heading": "Major Industries and Their Centers",
+            "color": "green",
+            "table": {
+              "headers": [
+                "Industry",
+                "Major Centers",
+                "Key Facts"
+              ],
+              "rows": [
+                [
+                  "Cotton Textile",
+                  "Mumbai (was 'Cottonopolis of India'), Ahmedabad (Manchester of India), Coimbatore, Surat, Nagpur, Indore",
+                  "India = world's largest cotton yarn exporter + 2nd largest textile exporter"
+                ],
+                [
+                  "Jute Textile",
+                  "Kolkata region (Hooghly River belt) — Rishra, Serampore, Baranagar, Howrah",
+                  "India = largest jute producer + largest jute goods producer; Bangladesh = largest raw jute exporter"
+                ],
+                [
+                  "Silk Textile",
+                  "Karnataka (Mysore — mulberry silk; Kolar, Ramanagara), WB (Murshidabad), Tamil Nadu, Assam (Sualkuchi)",
+                  "India = 2nd largest silk producer (after China); Bangalore = silk city; Sualkuchi = Manchester of the East (Assam)"
+                ],
+                [
+                  "Sugar Industry",
+                  "UP + Maharashtra = 60%+ of India's sugar; also Bihar, Karnataka, TN",
+                  "India = 2nd largest sugar producer after Brazil; UP = largest producer"
+                ],
+                [
+                  "Cement Industry",
+                  "MP, Rajasthan, Gujarat, AP (limestone-rich states)",
+                  "India = 2nd largest cement producer in world; ACC (1936) = oldest cement company"
+                ],
+                [
+                  "Chemical Industry",
+                  "Gujarat (largest — Ankleshwar, Vadodara, Surat), Mumbai, Pune, TN",
+                  "Petro-chemicals, fertilizers, pharmaceuticals, dyes"
+                ],
+                [
+                  "Pharmaceutical",
+                  "Hyderabad (Pharma capital of India), Mumbai, Ahmedabad, Pune, Bengaluru",
+                  "India = 3rd largest pharma producer in volume; 'Pharmacy of the World'"
+                ],
+                [
+                  "IT/Software",
+                  "Bengaluru (Silicon Valley of India), Hyderabad (Cyberabad), Pune, Chennai, Noida-Gurugram, Kolkata",
+                  "India = largest IT services exporter; TCS, Infosys, Wipro = top companies"
+                ],
+                [
+                  "Automobile",
+                  "Chennai (Detroit of India), Pune, Gurugram-Manesar, Bengaluru, Kolkata",
+                  "India = 3rd largest auto market in world; Maruti Suzuki (largest car maker); TVS+Hero (two-wheelers)"
+                ]
               ]
             }
           }
         ]
       },
       {
-        "topic_id": "gadya",
-        "topic_name": "हिंदी गद्य साहित्य",
+        "topic_id": "transport",
+        "topic_name": "Transport — Railways, Roads and Ports",
         "cards": [
           {
-            "heading": "प्रमुख उपन्यासकार और उपन्यास",
-            "color": "blue",
-            "table": {
-              "headers": ["लेखक", "प्रमुख उपन्यास", "विशेष"],
-              "rows": [
-                ["प्रेमचंद", "गोदान, गबन, निर्मला, रंगभूमि", "'उपन्यास सम्राट'; 'कफन' कहानी"],
-                ["जयशंकर प्रसाद", "कंकाल, तितली, इरावती", "छायावादी उपन्यासकार"],
-                ["हजारी प्रसाद द्विवेदी", "बाणभट्ट की आत्मकथा, अनामदास का पोथा", "ऐतिहासिक उपन्यास"],
-                ["फणीश्वरनाथ रेणु", "मैला आंचल (1954)", "आंचलिक उपन्यास के जनक"],
-                ["धर्मवीर भारती", "गुनाहों का देवता, सूरज का सातवां घोड़ा", "लोकप्रिय आधुनिक"]
-              ]
-            },
-            "alert": "⭐ 'मैला आंचल' को हिंदी का पहला आंचलिक उपन्यास माना जाता है। प्रेमचंद की मृत्यु के बाद 'मंगलसूत्र' अधूरा रह गया"
-          },
+            "heading": "Transport Networks of India",
+            "color": "purple",
+            "points": [
+              "Indian Railways: Largest rail network in Asia; 4th largest in world; 68,000+ km route length; 7,000+ stations; 1.3 crore passengers daily; first train 16 April 1853 (Bori Bunder-Thane, 34 km); 18 railway zones (HQ: CST Mumbai/Chennai/Kolkata/Delhi/etc.)",
+              "Railway gauges: Broad gauge (1.676m — 90% of network); Metre gauge; Narrow gauge; All being converted to Broad gauge (Project Unigauge)",
+              "Mountain Railways: Darjeeling Himalayan Railway (2ft gauge — UNESCO WHS); Nilgiri Mountain Railway (Ooty — only rack-and-pinion railway in India — UNESCO WHS); Kalka-Shimla Railway (UNESCO WHS)",
+              "National Highway Network: NH-44 = longest NH in India (3,745 km — Srinagar to Kanyakumari); NH-48 = Delhi-Mumbai-Bangalore; NH-27 = East-West corridor; Golden Quadrilateral (Delhi-Mumbai-Chennai-Kolkata = 5,846 km; NHAI project; completed 2012)",
+              "Major Ports: 13 major ports; Kandla (Deendayal) = largest cargo port; Jawaharlal Nehru Port Trust (JNPT/Nhava Sheva) = busiest container port; Paradip (Odisha) = on east coast; Chennai = oldest artificial port; Vizag = deepest natural port; Kochi = deepest natural harbour; Kolkata (on Hooghly) = only riverine major port",
+              "Inland Waterways: National Waterway-1 = Allahabad to Haldia (Ganga river — 1,620 km; longest); NW-2 = Sadiya to Dhubri (Brahmaputra); NW-3 = West Coast Canal (Kerala — 205 km)",
+              "Air Transport: Indira Gandhi International Airport (Delhi) = busiest in South Asia; Chhatrapati Shivaji Maharaj International Airport (Mumbai) = 2nd; Air India = national carrier (privatized to Tata Group 2022)"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "population": {
+    "topics": [
+      {
+        "id": "census2011",
+        "name": "Census 2011 — Key Data"
+      },
+      {
+        "id": "trends",
+        "name": "Population Trends and Distribution"
+      },
+      {
+        "id": "literacy-sex",
+        "name": "Literacy, Sex Ratio and Density"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": "census2011",
+        "topic_name": "Census 2011 — Key Data",
+        "cards": [
           {
-            "heading": "प्रमुख कहानीकार",
+            "heading": "Census 2011 — Must Know Facts",
+            "color": "blue",
+            "points": [
+              "Total population: 121.09 crore (1.21 billion); 2nd largest in world after China (now India is 1st as of 2023 — 143 crore)",
+              "Decadal growth rate (2001–2011): 17.7% (lowest since 1951); population growth rate declining",
+              "Census 2011 motto: 'Our Census Our Future'",
+              "Census Commissioner: C. Chandramauli",
+              "Population density: 382 persons/sq km (India average; UP has 828, WB has 1029)",
+              "Sex ratio: 943 females per 1000 males (2011); improved from 933 (2001); best ever since 1971",
+              "Child sex ratio (0–6 years): 919 girls per 1000 boys — very concerning; declined from 927 (2001)",
+              "Literacy rate: 74.04% (2011); Male 82.14%; Female 65.46%; improved from 64.8% (2001)"
+            ],
+            "table": {
+              "headers": [
+                "Category",
+                "Highest",
+                "Lowest"
+              ],
+              "rows": [
+                [
+                  "Most Populous State",
+                  "Uttar Pradesh (19.98 crore)",
+                  "Sikkim (6.1 lakh)"
+                ],
+                [
+                  "Least Populous State",
+                  "Sikkim",
+                  "—"
+                ],
+                [
+                  "Most Populous UT",
+                  "Delhi",
+                  "Lakshadweep"
+                ],
+                [
+                  "Highest Density State",
+                  "Bihar (1106 persons/sq km)",
+                  "Arunachal Pradesh (17 persons/sq km)"
+                ],
+                [
+                  "Highest Density UT",
+                  "Delhi (11,297)",
+                  "A&N Islands (46)"
+                ],
+                [
+                  "Best Sex Ratio State",
+                  "Kerala (1084 females/1000 males)",
+                  "Haryana (879)"
+                ],
+                [
+                  "Best Literacy State",
+                  "Kerala (93.91%)",
+                  "Bihar (61.80%)"
+                ],
+                [
+                  "Fastest Growing State (2001–11)",
+                  "Meghalaya",
+                  "—"
+                ],
+                [
+                  "Largest State by Area",
+                  "Rajasthan",
+                  "Goa (state); Lakshadweep (UT)"
+                ],
+                [
+                  "Largest District by Area",
+                  "Lahul and Spiti (HP)",
+                  "Mahe (Puducherry)"
+                ],
+                [
+                  "Most Urbanized State",
+                  "Goa (62.2%)",
+                  "Himachal Pradesh (10%)"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "topic_id": "trends",
+        "topic_name": "Population Trends and Distribution",
+        "cards": [
+          {
+            "heading": "Population Distribution and Urbanization",
             "color": "green",
             "points": [
-              "प्रेमचंद: कफन, पूस की रात, बड़े घर की बेटी — 'उपन्यास सम्राट' और 'कहानी सम्राट'",
-              "जयशंकर प्रसाद: आकाशदीप, पुरस्कार — रोमांटिक-ऐतिहासिक कहानियां",
-              "जैनेंद्र कुमार: पत्नी, खेल — मनोविश्लेषण शैली",
-              "अज्ञेय (सच्चिदानंद हीरानंद वात्स्यायन): विपथगा — प्रयोगवादी",
-              "मोहन राकेश: मलबे का मालिक — विभाजन का दर्द",
-              "मन्नू भंडारी: यही सच है, आपका बंटी — नारी केंद्रित",
-              "निर्मल वर्मा: परिंदे — नई कहानी आंदोलन"
+              "Northern Plains = most densely populated region (Bihar 1106, WB 1029, UP 828); fertile land + good transport + economic opportunity",
+              "NE states, Himalayas, Thar Desert = sparsely populated; difficult terrain/climate",
+              "India's demographic dividend: 65%+ population under 35 years (2022); large working-age population = economic opportunity IF properly educated and employed",
+              "Population policy: National Population Policy 2000; Total Fertility Rate (TFR) target = 2.1 (replacement level); currently 2.0 (2020) — TFR already at replacement level; South India and Kerala lower than north India",
+              "Urbanization: 31.16% urban population (2011); Urban India growing; 53 cities with 10 lakh+ population; Mumbai = most populous city",
+              "Million Cities (2011): 53 cities with 10 lakh+ population; 8 cities with 50 lakh+ (Mumbai 1.25 crore, Delhi 1.1 crore, Kolkata 91 lakh, Chennai 70 lakh, Bangalore 84 lakh)",
+              "Migration: Internal migration mainly from UP+Bihar+Rajasthan to Maharashtra, Gujarat, Delhi; inter-state migration for employment; push factors (poverty, drought) and pull factors (jobs, amenities)"
             ]
+          }
+        ]
+      },
+      {
+        "topic_id": "literacy-sex",
+        "topic_name": "Literacy, Sex Ratio and Density",
+        "cards": [
+          {
+            "heading": "Literacy, Sex Ratio and Density — State-wise Rankings",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Parameter",
+                "Highest",
+                "Lowest",
+                "India Average"
+              ],
+              "rows": [
+                [
+                  "Literacy Rate",
+                  "Kerala (93.91%)",
+                  "Bihar (61.80%)",
+                  "74.04% (2011)"
+                ],
+                [
+                  "Male Literacy",
+                  "Lakshadweep (96.11%)",
+                  "Bihar (71.2%)",
+                  "82.14%"
+                ],
+                [
+                  "Female Literacy",
+                  "Kerala (92.07%)",
+                  "Rajasthan (52.66%)",
+                  "65.46%"
+                ],
+                [
+                  "Sex Ratio",
+                  "Kerala (1084)",
+                  "Haryana (879)",
+                  "943 per 1000 males"
+                ],
+                [
+                  "Child Sex Ratio (0-6)",
+                  "Mizoram (971)",
+                  "Haryana (834)",
+                  "919 per 1000 boys"
+                ],
+                [
+                  "Population Density",
+                  "Bihar (1106/sq km)",
+                  "Arunachal Pradesh (17/sq km)",
+                  "382/sq km"
+                ],
+                [
+                  "Decadal Growth Rate (2001-11)",
+                  "Meghalaya (27.9%)",
+                  "Nagaland (-0.5%); first negative growth",
+                  "17.7%"
+                ],
+                [
+                  "Urban Population %",
+                  "Goa (62.2%)",
+                  "Himachal Pradesh (10%)",
+                  "31.16%"
+                ]
+              ]
+            },
+            "alert": "⭐ Kerala = most educated, best sex ratio, highest HDI state. Bihar = lowest literacy, highest density state. Nagaland = only state with NEGATIVE population growth (2001-2011) — due to migration. Child sex ratio most concerning in Haryana (834) despite being prosperous state — sex-selective abortion. Census 2021 (due in 2021) postponed due to COVID — yet to be conducted."
+          }
+        ]
+      }
+    ]
+  },
+  "world": {
+    "topics": [
+      {
+        "id": "continents-oceans",
+        "name": "Continents, Oceans and Major Features"
+      },
+      {
+        "id": "countries-capitals",
+        "name": "Countries, Capitals and GK"
+      },
+      {
+        "id": "climate-zones",
+        "name": "World Climate Zones and Biomes"
+      }
+    ],
+    "notes": [
+      {
+        "topic_id": "continents-oceans",
+        "topic_name": "Continents, Oceans and Major Features",
+        "cards": [
+          {
+            "heading": "World's Major Geographical Features",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Category",
+                "1st",
+                "2nd",
+                "3rd",
+                "Notes"
+              ],
+              "rows": [
+                [
+                  "Largest Continent",
+                  "Asia (44.5 million sq km)",
+                  "Africa",
+                  "N.America",
+                  "Asia = 30% of Earth's land"
+                ],
+                [
+                  "Smallest Continent",
+                  "Australia",
+                  "—",
+                  "—",
+                  "Sometimes Antarctic counted as continent"
+                ],
+                [
+                  "Largest Ocean",
+                  "Pacific (165 million sq km)",
+                  "Atlantic",
+                  "Indian",
+                  "Pacific = larger than all land combined"
+                ],
+                [
+                  "Deepest Point",
+                  "Mariana Trench (11,034m — Pacific)",
+                  "—",
+                  "—",
+                  "Challenger Deep in Mariana Trench"
+                ],
+                [
+                  "Longest River",
+                  "Nile (6,650 km — Africa)",
+                  "Amazon (S.America)",
+                  "Yangtze (China)",
+                  "Debate: Amazon might be longer; Nile = traditionally accepted"
+                ],
+                [
+                  "Largest Lake",
+                  "Caspian Sea (370,000 sq km)",
+                  "Superior (N.America)",
+                  "Victoria (Africa)",
+                  "Caspian = saline; landlocked sea"
+                ],
+                [
+                  "Largest Desert",
+                  "Antarctic Desert (14 million sq km)",
+                  "Sahara (Africa — 9.2 million; largest hot desert)",
+                  "Arabian",
+                  "Sahara = largest HOT desert"
+                ],
+                [
+                  "Largest Island",
+                  "Greenland",
+                  "New Guinea",
+                  "Borneo",
+                  "Australia counted as continent not island"
+                ],
+                [
+                  "Longest Mountain Range",
+                  "Andes (S.America — 7,000 km)",
+                  "Rockies",
+                  "Himalayas",
+                  "Andes also longest in world; Himalayas = highest"
+                ],
+                [
+                  "Highest Mountain",
+                  "Mt. Everest (8,849m — Nepal-China border)",
+                  "K2 (8,611m — Pakistan)",
+                  "Kanchenjunga (8,586m — Nepal-India)",
+                  "Everest height revised to 8,849m in 2020 by Nepal+China joint survey (was 8,848m)"
+                ],
+                [
+                  "Largest Country by Area",
+                  "Russia (17.1 million sq km)",
+                  "Canada",
+                  "USA",
+                  "India = 7th largest"
+                ],
+                [
+                  "Largest Country by Population",
+                  "India (143 crore — 2023)",
+                  "China (142 crore)",
+                  "USA",
+                  "India surpassed China in 2023"
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "topic_id": "countries-capitals",
+        "topic_name": "Countries, Capitals and Important GK",
+        "cards": [
+          {
+            "heading": "Frequently Asked Countries and GK",
+            "color": "green",
+            "points": [
+              "Landlocked countries bordering India: Nepal (capital Kathmandu), Bhutan (capital Thimphu) — both landlocked; Nepal = buffer state between India and China",
+              "Smallest country in world: Vatican City (0.44 sq km; Rome, Italy); followed by Monaco; San Marino",
+              "Most island-dependent country: Maldives (1192 islands; capital Male; all low-lying — threatened by sea level rise); Tuvalu; Marshall Islands; Kiribati",
+              "Straits important for India: Palk Strait (between India and Sri Lanka; very shallow; Ram Setu/Adam's Bridge of islands here); Strait of Malacca (between Malay Peninsula and Sumatra; busiest shipping lane in world; India-China trade route); Strait of Hormuz (Iran-Oman; oil tankers from Middle East pass through here)",
+              "International Date Line: 180° meridian; roughly along Pacific Ocean; Samoa, Tonga, Fiji east of it; Japan, Australia, NZ west of it; arbitrary adjustments for island nations",
+              "Major Passes in World: Khyber Pass (Pakistan-Afghanistan; Hindu Kush; historic invasion route); Bolan Pass (Pakistan; connects Quetta-Sind); Karakoram Pass (India-China; high altitude)",
+              "Deserts of World: Sahara (Africa; hot); Gobi (China-Mongolia; cold); Arabian (Arabia); Atacama (Chile; driest place on Earth; 0.1 mm/year); Patagonian (Argentina; cold); Great Victoria (Australia)"
+            ]
+          }
+        ]
+      },
+      {
+        "topic_id": "climate-zones",
+        "topic_name": "World Climate Zones and Biomes",
+        "cards": [
+          {
+            "heading": "Major World Biomes and Climate Zones",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Biome/Climate Zone",
+                "Location",
+                "Key Characteristics",
+                "Important Species"
+              ],
+              "rows": [
+                [
+                  "Tropical Rainforest",
+                  "Amazon (S.America), Congo (Africa), SE Asia",
+                  "High rainfall (>200 cm), High temperature, High biodiversity; 50% of all species; canopy structure",
+                  "Jaguar, Gorilla, Orangutan, Anaconda, Toucan"
+                ],
+                [
+                  "Savanna (Tropical Grassland)",
+                  "Africa (east+south), Brazil (Cerrado), India (Deccan)",
+                  "Seasonal rainfall; distinct dry season; scattered trees; grasses dominant",
+                  "Lion, Elephant, Zebra, Giraffe, Wildebeest"
+                ],
+                [
+                  "Hot Desert",
+                  "Sahara, Arabian, Australian outback, Atacama",
+                  "< 25 cm rainfall; extreme temperature variation; sandy/rocky",
+                  "Camel, Fennec fox, Roadrunner, Saharan horned viper"
+                ],
+                [
+                  "Mediterranean",
+                  "Mediterranean basin, California, Chile, SW Australia, SW South Africa",
+                  "Hot dry summer + mild wet winter; evergreen shrubs; UNIQUE climate",
+                  "Olive, Cork Oak, Lavender, Macchia"
+                ],
+                [
+                  "Temperate Grassland",
+                  "Prairies (N.America), Steppes (Eurasia), Pampas (S.America), Veld (S.Africa), Downs (Australia)",
+                  "Low rainfall; extreme temperature; no trees; fertile soils",
+                  "Bison (Prairies), Saiga antelope (Steppes)"
+                ],
+                [
+                  "Temperate Deciduous Forest",
+                  "Eastern USA, Western Europe, Eastern China, Japan",
+                  "Moderate rainfall; distinct seasons; trees shed leaves in autumn",
+                  "Oak, Maple, Deer, Bear, Fox, Squirrel"
+                ],
+                [
+                  "Boreal Forest (Taiga)",
+                  "Russia, Canada, Scandinavia (sub-polar)",
+                  "Long cold winters; short summers; coniferous trees (pine, fir, spruce, larch)",
+                  "Wolf, Moose, Lynx, Wolverine, Brown bear"
+                ],
+                [
+                  "Tundra",
+                  "Arctic (above 60°N), high mountains (Alpine tundra)",
+                  "Permafrost; no trees; mosses+lichens; very cold; brief summer",
+                  "Polar bear, Arctic fox, Musk ox, Reindeer/Caribou"
+                ],
+                [
+                  "Tropical Monsoon",
+                  "South+SE Asia, India, Bangladesh",
+                  "Distinct wet and dry season; SW monsoon; high rainfall in wet season",
+                  "Indian Tiger, Leopard, Peacock, Indian Elephant"
+                ]
+              ]
+            },
+            "alert": "⭐ Major Biodiversity Hotspots (Norman Myers concept; Conservation International): 36 hotspots globally; in India: Western Ghats + Sri Lanka hotspot; Eastern Himalayas; Indo-Burma; Sundaland (partly covers Andaman). Hotspot criteria: 1500+ endemic plant species AND lost 70%+ of original habitat. India hosts 2 major hotspots fully + 2 partially."
           }
         ]
       }
