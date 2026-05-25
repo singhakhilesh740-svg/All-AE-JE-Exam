@@ -91,7 +91,7 @@ const HINDI_SUBJECTS = [
 // ── Subjects per section ────────────────────────────────────────────────────
 // Civil uses SUBJECTS_UPPSC_MAINS (imported from subjects.js)
 // PCB — reuse same list for now; swap with PCB-specific subjects when ready
-const SUBJECTS_PCB = SUBJECTS_UPPSC_MAINS; // replace with PCB subject list when available
+// PCB uses SUBJECTS_PCB_NOTES (unit1–unit11) for Practice and PYQ subject-wise
 
 // ── DOM helper ─────────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
@@ -303,6 +303,7 @@ on('civilPractice', () => {
 
 on('civilPYQ', () => {
   $('pyqExamsBackBtn').onclick = () => showScreen('civilHomeScreen');
+  $('pyqExamsTitle').textContent = '📜 AE/JE Civil — PYQ';
   renderExamList('civil');
   showScreen('pyqExamsScreen');
 });
@@ -324,12 +325,13 @@ on('pcbNotes', () => {
 
 on('pcbPractice', () => {
   $('practiceSubjectsBackBtn').onclick = () => showScreen('pcbHomeScreen');
-  renderSubjectList('practiceSubjectList', SUBJECTS_PCB, openPracticeSubject);
+  renderSubjectList('practiceSubjectList', SUBJECTS_PCB_NOTES, openPCBPracticeUnit);
   showScreen('practiceSubjectsScreen');
 });
 
 on('pcbPYQ', () => {
   $('pyqExamsBackBtn').onclick = () => showScreen('pcbHomeScreen');
+  $('pyqExamsTitle').textContent = '📜 PCB — PYQ';
   renderExamList('pcb');
   showScreen('pyqExamsScreen');
 });
@@ -363,6 +365,7 @@ on('nonTechPractice', () => {
 
 on('nonTechPYQ', () => {
   $('pyqExamsBackBtn').onclick = () => showScreen('nonTechHomeScreen');
+  $('pyqExamsTitle').textContent = '📜 Non-Tech — PYQ';
   renderExamList('nontech');
   showScreen('pyqExamsScreen');
 });
@@ -450,7 +453,7 @@ async function openPracticeSubject(subj) {
   quizRoute      = 'practice';
   quizSource     = 'practiceSubjectsScreen';
 
-  let questions = await fetchPracticeQuestions({ subject: subj.id, maxCount: 10000 });
+  let questions = await fetchPracticeQuestions({ subject: subj.id, section: activeSection, maxCount: 10000 });
   if (!questions || !questions.length) { toast('No practice questions for this subject yet'); return; }
 
   Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
@@ -458,7 +461,7 @@ async function openPracticeSubject(subj) {
   showScreen('quizScreen');
   buildTopicChips('quizTopicBar', subj.id, async topicId => {
     currentTopic = topicId;
-    let qs = await fetchPracticeQuestions({ subject: subj.id, maxCount: 10000 });
+    let qs = await fetchPracticeQuestions({ subject: subj.id, section: activeSection, maxCount: 10000 });
     if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
     if (!qs.length) { toast('No questions for this topic yet'); return; }
     Quiz.resetToQuestions(qs);
@@ -467,16 +470,81 @@ async function openPracticeSubject(subj) {
   renderQuiz();
 }
 
+// ── PCB Practice — unit-based with PCB topic chips ──────────────────────────
+
+// PCB unit topic sections (match the h2 sections in each unit HTML)
+const PCB_UNIT_TOPICS = {
+  unit1:  [{id:'all',label:'All Topics'},{id:'s1',label:'Water Quality Parameters'},{id:'s2',label:'Sources & Population Forecasting'},{id:'s3',label:'Water Treatment Processes'},{id:'s4',label:'Distribution System'},{id:'s5',label:'GATE ES Additions'},{id:'s6',label:'Key Formulae & Exam Strategy'}],
+  unit2:  [{id:'all',label:'All Topics'},{id:'s1',label:'Sewage Characteristics'},{id:'s2',label:'Sewer System Design'},{id:'s3',label:'Wastewater Treatment Processes'},{id:'s4',label:'Sludge Treatment & Disposal'},{id:'s5',label:'Effluent Standards'},{id:'s6',label:'MCQ Revision List'}],
+  unit3:  [{id:'all',label:'All Topics'},{id:'s1',label:'Fundamentals of Air Pollution'},{id:'s2',label:'Specific Pollutants & Health Effects'},{id:'s3',label:'Meteorology & Dispersion'},{id:'s4',label:'Air Pollution Control Equipment'},{id:'s5',label:'Standards & Monitoring'},{id:'s6',label:'MCQ Revision List'}],
+  unit4:  [{id:'all',label:'All Topics'},{id:'s1',label:'Municipal Solid Waste'},{id:'s2',label:'Collection & Transport'},{id:'s3',label:'Treatment & Disposal'},{id:'s4',label:'Hazardous Waste'},{id:'s5',label:'Bio-Medical Waste'},{id:'s6',label:'E-Waste & Plastic Waste'},{id:'s7',label:'MCQ Revision List'}],
+  unit5:  [{id:'all',label:'All Topics'},{id:'s1',label:'Constitutional Provisions'},{id:'s2',label:'Key Environmental Acts'},{id:'s3',label:'Rules & Notifications'},{id:'s4',label:'International Conventions'},{id:'s5',label:'Key Institutions'},{id:'s6',label:'MCQ Revision List'}],
+  unit6:  [{id:'all',label:'All Topics'},{id:'s1',label:'EIA Concept, History & Process'},{id:'s2',label:'Environmental Management Systems'},{id:'s3',label:'Environmental Indices'},{id:'s4',label:'CSR, EPR & Green Initiatives'},{id:'s5',label:'MCQ Revision List'}],
+  unit7:  [{id:'all',label:'All Topics'},{id:'s1',label:'Sound & Noise Basics'},{id:'s2',label:'Must-Memorise Standards & Values'},{id:'s3',label:'Noise Reduction Quick Tips'},{id:'s4',label:'Radiation Quick Facts'},{id:'s5',label:'Exam Strategies'}],
+  unit8:  [{id:'all',label:'All Topics'},{id:'s1',label:'Ecosystem Concepts'},{id:'s2',label:'Types of Ecosystems'},{id:'s3',label:'Biodiversity'},{id:'s4',label:'Climate Change & Global Issues'},{id:'s5',label:'Natural Resources'},{id:'s6',label:'MCQ Revision List'}],
+  unit9:  [{id:'all',label:'All Topics'},{id:'s1',label:'Sector-Specific Industrial Pollution'},{id:'s2',label:'Zero Liquid Discharge (ZLD)'},{id:'s3',label:'CETP'},{id:'s4',label:'Cleaner Production & End-of-Pipe'},{id:'s5',label:'Green Chemistry & Industrial Ecology'},{id:'s6',label:'Carbon Trading & CDM'},{id:'s7',label:'MCQ Revision List'}],
+  unit10: [{id:'all',label:'All Topics'},{id:'s1',label:'Water Analysis Methods'},{id:'s2',label:'Microbiological Analysis'},{id:'s3',label:'Heavy Metals & Advanced Analysis'},{id:'s4',label:'Air Monitoring Methods'},{id:'s5',label:'Environmental Chemistry Fundamentals'},{id:'s6',label:'Toxicology & Risk Assessment'},{id:'s7',label:'Key Standards & Critical Values'},{id:'s8',label:'Exam Strategy & High-Yield Topics'}],
+  unit11: [{id:'all',label:'All Topics'},{id:'s1',label:'Fluid Properties & Hydrostatics'},{id:'s2',label:'Must-Memorise Constants & Formulas'},{id:'s3',label:'Quick Design Checklist'},{id:'s4',label:'Exam Strategies'}],
+};
+
+async function openPCBPracticeUnit(subj) {
+  currentSubject = subj;
+  currentTopic   = 'all';
+  quizRoute      = 'practice';
+  quizSource     = 'practiceSubjectsScreen';
+
+  // Fetch practice questions where subject = unit id (e.g. 'unit3')
+  let questions = await fetchPracticeQuestions({ subject: subj.id, section: 'pcb', maxCount: 10000 });
+  if (!questions || !questions.length) {
+    toast('No practice questions for this unit yet');
+    return;
+  }
+
+  Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
+  Quiz.startQuiz(questions);
+  showScreen('quizScreen');
+
+  // Build PCB topic chips from unit's section list
+  buildPCBTopicChips('quizTopicBar', subj.id, questions, async topicId => {
+    currentTopic = topicId;
+    let qs = await fetchPracticeQuestions({ subject: subj.id, section: 'pcb', maxCount: 10000 });
+    if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
+    if (!qs.length) { toast('No questions for this section yet'); return; }
+    Quiz.resetToQuestions(qs);
+    renderQuiz();
+  });
+
+  renderQuiz();
+}
+
+function buildPCBTopicChips(containerId, unitId, allQs, onSelect) {
+  const container = $(containerId);
+  if (!container) return;
+  const topics = PCB_UNIT_TOPICS[unitId] || [{id:'all',label:'All Topics'}];
+  container.innerHTML = topics.map(t =>
+    `<button class="topic-chip${t.id === 'all' ? ' active' : ''}" data-topic="${t.id}">${escapeHtml(t.label)}</button>`
+  ).join('');
+  container.querySelectorAll('.topic-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      container.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentTopic = chip.dataset.topic;
+      if (onSelect) onSelect(currentTopic);
+    });
+  });
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
 // PYQ FLOW
 // ══════════════════════════════════════════════════════════════════════════════
 
 function renderExamList(section) {
-  // Filter exams by section tag when you add that field to exams.js
-  // For now show all exams — filter by section === 'civil' / 'pcb' / 'nontech'
   const container = $('pyqExamList');
   container.innerHTML = '';
-  const filtered = EXAMS.filter(e => !e.section || e.section === section || section === 'civil');
+  // Filter exams by section field (now properly set in exams.js)
+  const filtered = section === 'nontech'
+    ? EXAMS.filter(e => e.section === 'civil') // non-tech reuses civil exams for now
+    : EXAMS.filter(e => e.section === section);
   if (!filtered.length) {
     container.innerHTML = '<div class="empty-state"><div class="empty-icon">📜</div><h3>No exams yet</h3><p>Exams will appear here.</p></div>';
     return;
@@ -511,7 +579,7 @@ on('pyqModeYear', () => {
 });
 
 on('pyqModeSubject', () => {
-  const subjectList = activeSection === 'pcb' ? SUBJECTS_PCB : SUBJECTS_UPPSC_MAINS;
+  const subjectList = activeSection === 'pcb' ? SUBJECTS_PCB_NOTES : SUBJECTS_UPPSC_MAINS;
   $('pyqSubjectsTitle').textContent = currentExam.name + ' — Subject-wise';
   $('pyqSubjectsSub').textContent   = 'Pick a subject';
   renderSubjectList('pyqSubjectList', subjectList, openPyqSubject);
@@ -583,7 +651,8 @@ function buildYearSubjectChips(allQs) {
   allChip.dataset.topic = 'subj:all';
   bar.appendChild(allChip);
   subjects.forEach(subjId => {
-    const subj = SUBJECTS_UPPSC_MAINS.find(s => s.id === subjId);
+    const subj = SUBJECTS_UPPSC_MAINS.find(s => s.id === subjId)
+              || SUBJECTS_PCB_NOTES.find(s => s.id === subjId);
     const chip = document.createElement('button');
     chip.className = 'topic-chip';
     chip.textContent = (subj?.icon || '') + ' ' + (subj?.name || subjId);
@@ -614,15 +683,29 @@ async function openPyqSubject(subj) {
   Object.keys(quizAnswerMap).forEach(k => delete quizAnswerMap[k]);
   Quiz.startQuiz(questions);
   showScreen('quizScreen');
-  buildTopicChips('quizTopicBar', subj.id, async topicId => {
-    currentTopic = topicId;
-    let qs = await fetchQuestions({ exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 10000 });
-    if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
-    if (!qs.length) { toast('No questions for this topic yet'); return; }
-    qs.sort((a,b) => (b.year||0)-(a.year||0) || (a.q_num||0)-(b.q_num||0));
-    Quiz.resetToQuestions(qs);
-    renderQuiz();
-  });
+
+  // Use PCB topic chips for PCB section, civil topic chips for civil
+  if (activeSection === 'pcb') {
+    buildPCBTopicChips('quizTopicBar', subj.id, questions, async topicId => {
+      currentTopic = topicId;
+      let qs = await fetchQuestions({ exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 10000 });
+      if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
+      if (!qs.length) { toast('No questions for this section yet'); return; }
+      qs.sort((a,b) => (b.year||0)-(a.year||0) || (a.q_num||0)-(b.q_num||0));
+      Quiz.resetToQuestions(qs);
+      renderQuiz();
+    });
+  } else {
+    buildTopicChips('quizTopicBar', subj.id, async topicId => {
+      currentTopic = topicId;
+      let qs = await fetchQuestions({ exam: currentExam.id, subject: subj.id, type: 'pyq', maxCount: 10000 });
+      if (topicId !== 'all') qs = qs.filter(q => !q.topic || q.topic === 'all' || q.topic === topicId);
+      if (!qs.length) { toast('No questions for this topic yet'); return; }
+      qs.sort((a,b) => (b.year||0)-(a.year||0) || (a.q_num||0)-(b.q_num||0));
+      Quiz.resetToQuestions(qs);
+      renderQuiz();
+    });
+  }
   renderQuiz();
 }
 
