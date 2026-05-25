@@ -1,1323 +1,793 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UPPCB AEE 2026 — Unit 7: Noise Pollution & Radiation Revision Notes</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
-:root {
-  --header: #1a237e;
-  --header2: #283593;
-  --accent: #0d47a1;
-  --bg: #f0f2f5;
-  --panel: #ffffff;
-  
-  --blue: #0d47a1;
-  --blue-bg: #e3f2fd;
-  --green: #2e7d32;
-  --green-bg: #e8f5e9;
-  --red: #c62828;
-  --red-bg: #ffebee;
-  --orange: #e65100;
-  --orange-bg: #fff3e0;
-  --purple: #4a148c;
-  --purple-bg: #f3e5f5;
-  --cyan: #00838f;
-  --cyan-bg: #e0f2f1;
-  
-  --text: #212121;
-  --text2: #616161;
-  --border: #e0e0e0;
-  --radius: 6px;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Source Sans 3', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-/* ===== HEADER ===== */
-.header {
-  background: linear-gradient(135deg, var(--header) 0%, var(--header2) 100%);
-  color: white;
-  padding: 20px 30px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  letter-spacing: 0.5px;
-}
-
-.header .subtitle {
-  font-size: 13px;
-  opacity: 0.85;
-  font-weight: 400;
-}
-
-/* ===== CONTAINER ===== */
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 30px;
-}
-
-/* ===== TABS ===== */
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.tab-btn {
-  padding: 10px 20px;
-  border: 2px solid var(--border);
-  background: white;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--text2);
-  transition: all 0.3s ease;
-}
-
-.tab-btn.active {
-  background: var(--blue);
-  color: white;
-  border-color: var(--blue);
-}
-
-.tab-btn:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* ===== SECTION HEADERS ===== */
-.section-header {
-  background: linear-gradient(135deg, var(--blue) 0%, #1565c0 100%);
-  color: white;
-  padding: 15px 20px;
-  margin: 25px 0 15px 0;
-  border-radius: var(--radius);
-  font-size: 16px;
-  font-weight: 700;
-  border-left: 5px solid #0d47a1;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.section-header.green {
-  background: linear-gradient(135deg, var(--green) 0%, #1b5e20 100%);
-  border-left-color: var(--green);
-}
-
-.section-header.red {
-  background: linear-gradient(135deg, var(--red) 0%, #ad1457 100%);
-  border-left-color: var(--red);
-}
-
-.section-header.orange {
-  background: linear-gradient(135deg, var(--orange) 0%, #bf360c 100%);
-  border-left-color: var(--orange);
-}
-
-.section-header.purple {
-  background: linear-gradient(135deg, var(--purple) 0%, #6a1b9a 100%);
-  border-left-color: var(--purple);
-}
-
-.section-header.cyan {
-  background: linear-gradient(135deg, var(--cyan) 0%, #00695c 100%);
-  border-left-color: var(--cyan);
-}
-
-.section-header::before {
-  content: "▶";
-  font-size: 14px;
-}
-
-/* ===== BOXES ===== */
-.box {
-  padding: 16px;
-  margin: 12px 0;
-  border-radius: var(--radius);
-  border-left: 4px solid;
-}
-
-.box.formula {
-  background: var(--orange-bg);
-  border-left-color: var(--orange);
-}
-
-.box.formula strong {
-  color: var(--orange);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.box.formula code {
-  font-family: 'JetBrains Mono', monospace;
-  background: rgba(230, 81, 0, 0.1);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--orange);
-  font-weight: 600;
-}
-
-.box.definition {
-  background: var(--blue-bg);
-  border-left-color: var(--blue);
-}
-
-.box.definition strong {
-  color: var(--blue);
-  font-weight: 700;
-}
-
-.box.standard {
-  background: var(--purple-bg);
-  border-left-color: var(--purple);
-}
-
-.box.standard strong {
-  color: var(--purple);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.box.standard code {
-  background: rgba(74, 20, 140, 0.1);
-  padding: 2px 6px;
-  border-radius: 3px;
-  color: var(--purple);
-  font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.box.tip {
-  background: var(--green-bg);
-  border-left-color: var(--green);
-}
-
-.box.tip::before {
-  content: "💡 EXAM TIP: ";
-  color: var(--green);
-  font-weight: 700;
-}
-
-.box.warning {
-  background: var(--red-bg);
-  border-left-color: var(--red);
-}
-
-.box.warning::before {
-  content: "⚠ IMPORTANT: ";
-  color: var(--red);
-  font-weight: 700;
-}
-
-.box.cyan {
-  background: var(--cyan-bg);
-  border-left-color: var(--cyan);
-}
-
-.box.cyan strong {
-  color: var(--cyan);
-  font-weight: 700;
-}
-
-/* ===== TABLE ===== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 16px 0;
-  background: white;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-table thead {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--header2) 100%);
-  color: white;
-}
-
-table th {
-  padding: 12px;
-  text-align: left;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.3px;
-}
-
-table td {
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-}
-
-table tr:hover {
-  background: var(--blue-bg);
-}
-
-table tr:last-child td {
-  border-bottom: none;
-}
-
-table code {
-  background: var(--orange-bg);
-  color: var(--orange);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-}
-
-/* ===== LISTS ===== */
-.bullet-list {
-  margin: 12px 0;
-  padding-left: 24px;
-}
-
-.bullet-list li {
-  margin: 8px 0;
-  line-height: 1.6;
-  color: var(--text);
-}
-
-.bullet-list li strong {
-  color: var(--blue);
-  font-weight: 700;
-}
-
-/* ===== GRID ===== */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 16px 0;
-}
-
-.grid.three {
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.grid-item {
-  background: white;
-  padding: 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-}
-
-.grid-item h4 {
-  margin-bottom: 8px;
-  color: var(--blue);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.grid-item code {
-  background: var(--orange-bg);
-  color: var(--orange);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-  font-size: 12px;
-}
-
-/* ===== FOOTER ===== */
-.footer {
-  background: var(--panel);
-  border-top: 2px solid var(--border);
-  padding: 20px 30px;
-  margin-top: 40px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--text2);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .container { padding: 20px; }
-  .grid { grid-template-columns: 1fr; }
-  .grid.three { grid-template-columns: 1fr; }
-  .header h1 { font-size: 18px; }
-  table { font-size: 12px; }
-  table th, table td { padding: 8px; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPPCB AEE Unit 3 - Air Pollution & Control Technology</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #212121; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #1a237e; text-align: center; margin-bottom: 10px; font-size: 28px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
+        h2 { color: white; background: #283593; padding: 12px; margin: 30px 0 15px 0; border-left: 4px solid #1a237e; }
+        h3 { color: #1a237e; margin: 20px 0 10px 0; font-size: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
+        .content { line-height: 1.8; margin-bottom: 15px; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+        th { background: #283593; color: white; padding: 10px; text-align: left; font-weight: 600; }
+        td { border: 1px solid #ddd; padding: 10px; font-size: 14px; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .highlight { background: #fff3cd; border-left: 4px solid #ff9800; padding: 10px; margin: 10px 0; font-size: 14px; }
+        .standard { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin: 10px 0; font-size: 14px; font-weight: 500; }
+        .formula { background: #f3e5f5; border-left: 4px solid #9c27b0; padding: 10px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 13px; }
+        .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px; margin: 10px 0; font-size: 13px; }
+        .gate-add { background: #ede7f6; border-left: 4px solid #673ab7; padding: 10px; margin: 10px 0; font-size: 14px; }
+        ul, ol { margin-left: 20px; margin-bottom: 10px; }
+        li { margin-bottom: 5px; }
+        .section-intro { background: #f0f2f5; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd; color: #666; font-size: 12px; }
+        .key-point { color: #c62828; font-weight: 600; }
+        .exam-strategy { background: #fff8e1; border: 2px solid #fbc02d; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        @media print { body { background: white; } .container { box-shadow: none; } }
+    </style>
 </head>
 <body>
-
-<!-- HEADER -->
-<div class="header">
-  <h1>📢 UNIT 7: NOISE POLLUTION & RADIATION</h1>
-  <div class="subtitle">UPPCB AEE 2026 Revision Notes | ~3–5 MCQs Expected | High-Frequency Topics</div>
-</div>
-
-<div class="container">
-
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab-btn active" onclick="showTab('fundamentals')">Fundamentals</button>
-  <button class="tab-btn" onclick="showTab('standards')">Standards & Rules</button>
-  <button class="tab-btn" onclick="showTab('control')">Control Methods</button>
-  <button class="tab-btn" onclick="showTab('radiation')">Radiation</button>
-  <button class="tab-btn" onclick="showTab('numericals')">Formula & Numericals</button>
-  <button class="tab-btn" onclick="showTab('quick')">Quick Reference</button>
-</div>
-
-<!-- TAB 1: FUNDAMENTALS -->
-<div id="fundamentals" class="tab-content active">
-
-        <h2>SECTION 1: SOUND & NOISE BASICS</h2>
-
-<div class="box definition">
-  <strong>Sound:</strong> Acoustic waves causing vibration in air, measurable and predictable
-</div>
-
-<div class="box definition">
-  <strong>Noise:</strong> Unwanted sound that is objectionable, annoying, or harmful to health
-</div>
-
-<ul class="bullet-list">
-  <li><strong>Frequency:</strong> 20 Hz–20 kHz (human hearing range)</li>
-  <li><strong>Infrasound:</strong> &lt;20 Hz (ex: earthquakes, volcano rumble)</li>
-  <li><strong>Ultrasound:</strong> &gt;20 kHz (ex: bats, medical ultrasound)</li>
-  <li><strong>Sound Pressure Level (SPL):</strong> Quantifies acoustic pressure relative to reference pressure (20 µPa)</li>
-</ul>
-
-<div class="section-header green">Decibel (dB) Scale</div>
-
-<div class="box formula">
-  <strong>Sound Pressure Level (SPL) Formula:</strong>
-  <code>SPL (dB) = 20 × log₁₀ (P / P₀)</code>
-  <div style="margin-top: 8px;">
-    where P = measured sound pressure (Pa) | P₀ = reference pressure (20 µPa)
-  </div>
-</div>
-
-<div class="box tip">
-SPL is logarithmic, not linear. Every 10 dB increase = 10× sound pressure; 3 dB ≈ just noticeable change
-</div>
-
-<div class="grid">
-  <div class="grid-item">
-    <h4>Rustle of leaves</h4>
-    <code>10–20 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Normal conversation</h4>
-    <code>50–60 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Vacuum cleaner</h4>
-    <code>70 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Lawn mower</h4>
-    <code>80–90 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Chainsaw</h4>
-    <code>100 dB</code>
-  </div>
-  <div class="grid-item">
-    <h4>Jet engine</h4>
-    <code>130 dB</code>
-  </div>
-</div>
-
-<div class="section-header green">A-Weighting (dBA)</div>
-
-<ul class="bullet-list">
-  <li><strong>Why A-weighting?</strong> Human ear is not equally sensitive to all frequencies; we hear mid-frequencies (1–5 kHz) louder than very low or very high frequencies</li>
-  <li><strong>A-weighted scale:</strong> Emphasizes frequencies 1–5 kHz; de-emphasizes &lt;500 Hz and &gt;6 kHz</li>
-  <li><strong>Notation:</strong> dBA or LAeq (for energy-equivalent level)</li>
-  <li><strong>Example:</strong> 80 dB @ 100 Hz sounds quieter than 80 dB @ 1 kHz in real life; A-weighting captures this</li>
-</ul>
-
-<div class="box warning">
-UPPCB Noise Rules 2000 use <strong>dBA</strong> for all environmental noise standards—not dB. Always assume dBA for exam questions unless stated otherwise.
-</div>
-
-<div class="section-header green">Noise Descriptors</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Term</th>
-      <th>Full Name</th>
-      <th>Definition & Use</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>SPL</code></td>
-      <td>Sound Pressure Level</td>
-      <td>Instantaneous acoustic pressure; rarely used for environmental noise</td>
-    </tr>
-    <tr>
-      <td><code>Leq</code></td>
-      <td>Energy-Equivalent Level</td>
-      <td>Constant sound level over time T that contains same total energy as actual fluctuating noise; <strong>most used in UPPCB</strong></td>
-    </tr>
-    <tr>
-      <td><code>L10</code></td>
-      <td>Level Exceeded 10% of Time</td>
-      <td>Sound level exceeded for 10% of measurement period (loud peaks); used for traffic noise</td>
-    </tr>
-    <tr>
-      <td><code>L90</code></td>
-      <td>Level Exceeded 90% of Time</td>
-      <td>Background/ambient level (quiet periods); 90% of time noise is above this level</td>
-    </tr>
-    <tr>
-      <td><code>Ldn or Ld/n</code></td>
-      <td>Day-Night Level</td>
-      <td>24-hr weighted level; nighttime (10 PM–6 AM) levels penalized +10 dB to account for sleep disruption</td>
-    </tr>
-    <tr>
-      <td><code>Lnite</code></td>
-      <td>Nighttime Level</td>
-      <td>Average level during night (10 PM–6 AM)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Leq Formula (Simplified):</strong><br>
-  <code>Leq = 10 × log₁₀ [ΣPᵢ² / Pref² / T]</code><br>
-  where i = measurement intervals; T = total duration
-</div>
-
-<div class="section-header green">Inverse-Square Law</div>
-
-<ul class="bullet-list">
-  <li><strong>Sound intensity decreases with distance:</strong> I ∝ 1/r²</li>
-  <li><strong>SPL reduction from point source:</strong> For every doubling of distance, SPL drops ~6 dB</li>
-  <li><strong>Formula:</strong> <code>SPL₁ – SPL₂ = 20 × log₁₀ (r₂/r₁)</code></li>
-  <li><strong>Example:</strong> 80 dB @ 10 m → 74 dB @ 20 m (6 dB drop)</li>
-</ul>
-
-<div class="box tip">
-High-yield topic for numericals. If a question gives SPL @ one distance, ask for SPL @ another—use inverse-square law.
-</div>
-
-<div class="section-header green">Major Noise Sources</div>
-
-<div class="grid">
-  <div class="grid-item">
-    <h4>Industrial</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Textile mills (100 dB)</li>
-      <li>Steel plants (90–100 dB)</li>
-      <li>Mining & quarrying (85–95 dB)</li>
-      <li>Chemical factories (80–95 dB)</li>
-    </ul>
-  </div>
-  <div class="grid-item">
-    <h4>Traffic</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Road (70–85 dB)</li>
-      <li>Rail (80–100 dB)</li>
-      <li>Airport (140–180 dB at source)</li>
-      <li>Heavy vehicles (80–90 dB)</li>
-    </ul>
-  </div>
-  <div class="grid-item">
-    <h4>Construction</h4>
-    <ul style="font-size: 12px; padding-left: 16px; margin-top: 6px;">
-      <li>Demolition (110–130 dB)</li>
-      <li>Pile driving (100–110 dB)</li>
-      <li>Concrete cutting (85–95 dB)</li>
-      <li>Drilling (80–90 dB)</li>
-    </ul>
-  </div>
-</div>
-
-</div>
-
-<!-- TAB 2: STANDARDS & RULES -->
-<div id="standards" class="tab-content">
-
-<div class="section-header red">Noise Pollution Rules 2000 (UPPCB Standard)</div>
-
-<div class="box standard">
-  <strong>Four Zone Classification:</strong><br>
-  <code>1. Residential | 2. Commercial | 3. Industrial | 4. Silence Zone (Hospital/School)</code>
-</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Zone Type</th>
-      <th>Leq Daytime<br>(6 AM–10 PM)</th>
-      <th>Leq Nighttime<br>(10 PM–6 AM)</th>
-      <th>Land Use</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential</strong></td>
-      <td><code>55 dBA</code></td>
-      <td><code>45 dBA</code></td>
-      <td>Colonies, residential areas</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial</strong></td>
-      <td><code>65 dBA</code></td>
-      <td><code>55 dBA</code></td>
-      <td>Market areas, offices, shops</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial</strong></td>
-      <td><code>75 dBA</code></td>
-      <td><code>70 dBA</code></td>
-      <td>Factories, workshops, industrial estates</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone</strong></td>
-      <td><code>50 dBA</code></td>
-      <td><code>40 dBA</code></td>
-      <td>Hospitals, schools, senior citizen homes, courts</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box warning">
-Nighttime limit is always <strong>10 dB lower than daytime</strong> (except day/night levels which use +10 dB penalty). Exam often tests zone-matching and time-based standards.
-</div>
-
-<div class="section-header red">UPPCB Enforcement & Penalties</div>
-
-<ul class="bullet-list">
-  <li><strong>Monitoring:</strong> NAMP (National Ambient Monitoring Programme) uses CAAQMS-type networks</li>
-  <li><strong>Non-compliance:</strong> Fine up to ₹1 lakh, imprisonment up to 3 months, or both (Environment Act 1986)</li>
-  <li><strong>Residential violation:</strong> If industrial zone SPL (75 dB) measured in residential area (limit 55 dB), prosecution under Water Act/EP Act</li>
-  <li><strong>Construction hours:</strong> Restricted to 6 AM–10 PM in residential areas (further restricted in silence zones)</li>
-</ul>
-
-<div class="box definition">
-  <strong>Designated Silence Zones (Section 3, Noise Rules 2000):</strong><br>
-  Areas within 100 m of hospitals, schools, courts, senior citizen homes—no amplified music, DJs, horn honking allowed any time
-</div>
-
-<div class="section-header red">Festival/Event Exemptions (Partial)</div>
-
-<ul class="bullet-list">
-  <li>Temporary exemptions may be granted for festivals/cultural events</li>
-  <li>Events must NOT operate 10 PM–6 AM in residential areas</li>
-  <li>SPL &lt;75 dBA still enforced in commercial zones during events</li>
-  <li>Zero tolerance in silence zones (hospitals, courts) even during festivals</li>
-</ul>
-
-</div>
-
-<!-- TAB 3: CONTROL METHODS -->
-<div id="control" class="tab-content">
-
-<div class="section-header orange">Noise Control Hierarchy</div>
-
-<ol class="bullet-list" style="list-style: decimal;">
-  <li><strong>Elimination:</strong> Remove or shut down source (ideal but often impractical)</li>
-  <li><strong>Substitution:</strong> Replace loud equipment with quieter alternatives (ex: electric vehicles vs IC engines)</li>
-  <li><strong>Reduction at Source:</strong> Mufflers, silencers, low-vibration machines</li>
-  <li><strong>Path Reduction:</strong> Barriers, distance, absorption (most practical for existing sources)</li>
-  <li><strong>Personal Protection:</strong> Ear plugs, earmuffs (last resort; personal responsibility)</li>
-</ol>
-
-<div class="section-header orange">Noise Reduction Techniques</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Technique</th>
-      <th>Mechanism</th>
-      <th>Reduction (dB)</th>
-      <th>Applications</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Enclosure</strong></td>
-      <td>Rigid box around source; sound trapped inside</td>
-      <td>10–30 dBA</td>
-      <td>Compressors, generators, diesel pumps</td>
-    </tr>
-    <tr>
-      <td><strong>Muffler/Silencer</strong></td>
-      <td>Absorptive material; expansion chambers</td>
-      <td>10–20 dBA</td>
-      <td>Vehicle exhaust, air compressor outlets</td>
-    </tr>
-    <tr>
-      <td><strong>Damping</strong></td>
-      <td>Viscoelastic coating on vibrating surfaces; energy dissipated as heat</td>
-      <td>5–15 dBA</td>
-      <td>Metal sheets, engine blocks, ductwork</td>
-    </tr>
-    <tr>
-      <td><strong>Isolation (Vibration)</strong></td>
-      <td>Elastic supports (springs, rubber pads) decouple equipment from floor</td>
-      <td>10–20 dBA</td>
-      <td>Motors, pumps, compressors, machinery mounted on resilient pads</td>
-    </tr>
-    <tr>
-      <td><strong>Acoustic Barriers</strong></td>
-      <td>Dense, rigid walls block/reflect sound; gap reduces effectiveness</td>
-      <td>5–15 dBA per barrier</td>
-      <td>Highway noise barriers, factory perimeter walls</td>
-    </tr>
-    <tr>
-      <td><strong>Absorption</strong></td>
-      <td>Porous materials (foam, mineral wool, fiberglass) convert sound to heat</td>
-      <td>5–20 dBA</td>
-      <td>Acoustic ceiling tiles, wall panels, pipe lagging</td>
-    </tr>
-    <tr>
-      <td><strong>Distance/Zoning</strong></td>
-      <td>Inverse-square law: 6 dB per distance doubling</td>
-      <td>6 dBA per 2× distance</td>
-      <td>Urban planning, industrial zone designation</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box formula">
-  <strong>Transmission Loss (TL) for Barriers:</strong>
-  <code>TL = 20 × log₁₀ (2πfm/ρc) + 10 × log₁₀ (S/A)</code><br>
-  where f = frequency (Hz) | m = surface mass (kg/m²) | ρc = acoustic impedance | S/A = geometric factor
-  <div style="margin-top: 8px; font-size: 12px; color: #d32f2f;">
-    <strong>Practical:</strong> Doubling barrier thickness increases TL by ~3 dB
-  </div>
-</div>
-
-<div class="box definition">
-  <strong>Insertion Loss (IL):</strong> Actual SPL reduction achieved by a barrier in real environment (accounts for diffraction, ground effects); typically 5–10 dBA less than TL
-</div>
-
-<div class="section-header orange">Workplace Noise Exposure Limits</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Daily Exposure Time</th>
-      <th>Max Permissible Level (dBA)</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>8 hours (40 hr/week)</td>
-      <td><code>85 dBA</code></td>
-      <td>Safe daily limit; hearing protection required above this</td>
-    </tr>
-    <tr>
-      <td>4 hours</td>
-      <td><code>88 dBA</code></td>
-      <td>Reduce exposure time by half = increase limit by 3 dB</td>
-    </tr>
-    <tr>
-      <td>2 hours</td>
-      <td><code>91 dBA</code></td>
-      <td>Exchange rule: 3 dB for every 50% reduction in exposure</td>
-    </tr>
-    <tr>
-      <td>1 hour</td>
-      <td><code>94 dBA</code></td>
-      <td>Short-term exposures</td>
-    </tr>
-    <tr>
-      <td>&lt;15 min</td>
-      <td><code>∼100 dBA</code></td>
-      <td>Very short exposures; cumulative hearing damage still possible</td>
-    </tr>
-    <tr style="background: #ffebee;">
-      <td>Peak/Impulse</td>
-      <td><code>140 dB</code></td>
-      <td><strong>Never exceed</strong> (gunfire, explosions, impact); risk of acoustic trauma</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box tip">
-3 dB exchange rule is high-yield for numericals. If SPL increases by 3 dB, safe exposure time reduces by 50%.
-</div>
-
-<div class="section-header orange">Hearing Protection Equipment (HPE)</div>
-
-<ul class="bullet-list">
-  <li><strong>Foam Earplugs:</strong> NRR 20–33 dB; foam must be compressed, inserted, held in place 10 sec; single-use</li>
-  <li><strong>Earmuffs:</strong> NRR 20–30 dB; reusable; less effective if hair/glasses on seal surface</li>
-  <li><strong>Dual Protection (plugs + muffs):</strong> NRR ≈ higher NRR + 5 dB (not additive)</li>
-  <li><strong>Canal Caps:</strong> NRR 20–25 dB; intermediate between plugs and muffs</li>
-  <li><strong>Custom-molded earplugs:</strong> Higher comfort, NRR 20–30 dB; expensive</li>
-</ul>
-
-<div class="box definition">
-  <strong>NRR (Noise Reduction Rating):</strong> Attenuation in dB under ideal lab conditions; real-world reduction is 50–75% of stated NRR (due to improper insertion, movement, etc.)
-</div>
-
-</div>
-
-<!-- TAB 4: RADIATION -->
-<div id="radiation" class="tab-content">
-
-<div class="section-header purple">Ionising vs Non-Ionising Radiation</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Energy</th>
-      <th>Examples</th>
-      <th>Effect on Matter</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Ionising</strong></td>
-      <td>&gt;10 eV (high)</td>
-      <td>Alpha (α), Beta (β), Gamma (γ), X-rays, cosmic rays</td>
-      <td>Knock electrons off atoms → ions; DNA damage; cancer risk</td>
-    </tr>
-    <tr style="background: #e0f2f1;">
-      <td><strong>Non-Ionising</strong></td>
-      <td>&lt;10 eV (low)</td>
-      <td>Radio, microwave, IR, visible, UV-A</td>
-      <td>Heat or excite electrons; less cell damage than ionising</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Ionising Radiation Details</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Radiation Type</th>
-      <th>Composition</th>
-      <th>Penetration</th>
-      <th>Shielding</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Alpha (α)</strong></td>
-      <td>Helium nucleus (2p + 2n)</td>
-      <td>Paper/skin only</td>
-      <td>Paper, clothing (easily stopped)</td>
-    </tr>
-    <tr>
-      <td><strong>Beta (β)</strong></td>
-      <td>Electron or positron</td>
-      <td>Plastic/aluminum</td>
-      <td>Aluminum foil, acrylic (~1 cm)</td>
-    </tr>
-    <tr>
-      <td><strong>Gamma (γ)</strong></td>
-      <td>Photon (electromagnetic wave)</td>
-      <td>Lead/concrete (penetrating)</td>
-      <td>Lead (5 cm), concrete (30 cm)</td>
-    </tr>
-    <tr>
-      <td><strong>X-rays</strong></td>
-      <td>Photon (produced by electron collision)</td>
-      <td>Lead/concrete</td>
-      <td>Lead aprons, concrete walls</td>
-    </tr>
-    <tr>
-      <td><strong>Neutrons</strong></td>
-      <td>Uncharged particles</td>
-      <td>Water/paraffin (highly penetrating)</td>
-      <td>Hydrogenous material (water, paraffin)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Radiation Units & Measurements</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Unit</th>
-      <th>Full Name</th>
-      <th>Measures</th>
-      <th>SI Unit</th>
-      <th>Legacy Unit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Gray (Gy)</strong></td>
-      <td>Absorbed Dose</td>
-      <td>Energy absorbed per unit mass (1 J/kg)</td>
-      <td><code>1 Gy</code></td>
-      <td>100 Rad</td>
-    </tr>
-    <tr>
-      <td><strong>Sievert (Sv)</strong></td>
-      <td>Dose Equivalent</td>
-      <td>Biological effect; accounts for radiation type quality factor (QF)</td>
-      <td><code>1 Sv</code></td>
-      <td>100 Rem</td>
-    </tr>
-    <tr>
-      <td><strong>Becquerel (Bq)</strong></td>
-      <td>Activity</td>
-      <td>Decays per second (1 decay/s)</td>
-      <td><code>1 Bq</code></td>
-      <td>1 Ci = 3.7×10¹⁰ Bq</td>
-    </tr>
-    <tr>
-      <td><strong>Curie (Ci)</strong></td>
-      <td>Activity (Legacy)</td>
-      <td>3.7×10¹⁰ decays/second</td>
-      <td>—</td>
-      <td><code>1 Ci = 37 GBq</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Quality Factor (QF):</strong><br>
-  <code>Sv = Gy × QF</code><br>
-  Accounts for type of radiation. Ex: Alpha has QF=20 (most damaging if ingested); Beta/Gamma QF=1
-</div>
-
-<div class="section-header purple">Dose Limits (AERB — Atomic Energy Regulatory Board)</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th>Annual Limit (mSv)</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #e8f5e9;">
-      <td><strong>General Public</strong></td>
-      <td><code>1 mSv</code></td>
-      <td>Safe lifetime exposure without significant health risk</td>
-    </tr>
-    <tr style="background: #fff3e0;">
-      <td><strong>Occupational (Radiation Worker)</strong></td>
-      <td><code>50 mSv</code></td>
-      <td>Annual limit for people working with radiation</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Pregnant Worker</strong></td>
-      <td><code>5 mSv</code> (once declared)</td>
-      <td>During pregnancy, limit reduces 10-fold to protect fetus</td>
-    </tr>
-    <tr style="background: #ffebee;">
-      <td><strong>Acute Exposure</strong></td>
-      <td><code>&gt;6 Sv</code> (whole body)</td>
-      <td>Lethal within hours; multi-organ failure</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box warning">
-<strong>Natural Background Radiation:</strong> ~2–3 mSv/year (varies by location). Radon, cosmic rays, soil uranium are major contributors. UPPCB exams may ask distinction between occupational limit (50 mSv) and public limit (1 mSv).
-</div>
-
-<div class="section-header purple">Radioactive Waste Classification (DAE/AERB)</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Waste Class</th>
-      <th>Activity Level</th>
-      <th>Half-Life</th>
-      <th>Storage Duration</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Exempted (E)</strong></td>
-      <td>&lt;1 Bq/g</td>
-      <td>—</td>
-      <td>No special storage; disposal as regular waste</td>
-    </tr>
-    <tr>
-      <td><strong>Low-Level Waste (LLW)</strong></td>
-      <td>1–10⁵ Bq/g</td>
-      <td>Short-lived (&lt;30 yr)</td>
-      <td>6–10 years decay storage → shallow land burial</td>
-    </tr>
-    <tr>
-      <td><strong>Intermediate-Level Waste (ILW)</strong></td>
-      <td>10⁵–10⁷ Bq/g</td>
-      <td>Long-lived</td>
-      <td>Concrete/bitumen matrix; stored 30–50 years</td>
-    </tr>
-    <tr>
-      <td><strong>High-Level Waste (HLW)</strong></td>
-      <td>&gt;10⁷ Bq/g</td>
-      <td>Very long-lived (&gt;1000 yr)</td>
-      <td>Deep geological repository (India: BARC research)</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="section-header purple">Non-Ionising Radiation Hazards</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Frequency Range</th>
-      <th>Health Effects</th>
-      <th>Sources</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Ultraviolet (UV)</strong></td>
-      <td>10–400 nm</td>
-      <td>Skin cancer (melanoma), cataracts, immune suppression</td>
-      <td>Sun, welding arcs, germicidal lamps</td>
-    </tr>
-    <tr>
-      <td><strong>Infrared (IR)</strong></td>
-      <td>700 nm–1 mm</td>
-      <td>Thermal burns, cataract (chronic exposure)</td>
-      <td>Heat lamps, furnaces, welding</td>
-    </tr>
-    <tr>
-      <td><strong>Microwave (MW)</strong></td>
-      <td>1 mm–1 m (~1–300 GHz)</td>
-      <td>Dielectric heating; cataracts, reproductive effects (high exposure)</td>
-      <td>Mobile towers, radar, microwave ovens</td>
-    </tr>
-    <tr>
-      <td><strong>Radiofrequency (RF)</strong></td>
-      <td>30 kHz–300 MHz</td>
-      <td>Thermal effects (low); possible non-thermal effects under study</td>
-      <td>Radio/TV broadcasting, wireless networks</td>
-    </tr>
-    <tr>
-      <td><strong>Electromagnetic Fields (EMF)</strong></td>
-      <td>Extremely Low Frequency (ELF) &lt;300 Hz</td>
-      <td>Childhood leukemia (disputed); neuro-behavioral effects</td>
-      <td>Power lines, electrical appliances, transformers</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="box definition">
-  <strong>Specific Absorption Rate (SAR):</strong> Power absorbed per unit mass (W/kg). Mobile phones limited to 2 W/kg (ICNIRP); India uses 2 W/kg for head/trunk
-</div>
-
-<div class="section-header purple">Atomic Energy Act, 1962 & AERB</div>
-
-<ul class="bullet-list">
-  <li><strong>Atomic Energy Act 1962:</strong> Central legislation; authorizes production, use, possession of radioactive materials in India</li>
-  <li><strong>AERB (Atomic Energy Regulatory Board):</strong> Statutory body under DAE; sets radiation safety codes, issues licenses, inspects facilities, prosecutes violations</li>
-  <li><strong>Nuclear Power Corporation (NPC):</strong> Operates 24 reactors; generates 3.3% of India's electricity</li>
-  <li><strong>BARC (Bhabha Atomic Research Centre):</strong> R&D; manages waste, decommissioning</li>
-  <li><strong>Radiation Safety Rules 2004:</strong> Prescribe dose limits, contamination levels, waste management protocols</li>
-</ul>
-
-<div class="box warning">
-AERB is <strong>NOT</strong> CPCB. Radiation is federal (DAE/AERB), not state (UPPCB) jurisdiction. But UPPCB exams test basic knowledge of AERB limits & Atomic Energy Act.
-</div>
-
-</div>
-
-<!-- TAB 5: NUMERICALS & FORMULAS -->
-<div id="numericals" class="tab-content">
-
-<div class="section-header cyan">High-Frequency Formulae</div>
-
-<div class="box formula">
-  <strong>1. SPL Formula (Basic)</strong>
-  <code>SPL (dB) = 20 × log₁₀ (P / P₀)</code>
-  <strong>Example:</strong> If P = 2 Pa and P₀ = 20 µPa = 2×10⁻⁵ Pa:
-  <code>SPL = 20 × log₁₀ (2 / 2×10⁻⁵) = 20 × log₁₀ (10⁵) = 20 × 5 = 100 dB</code>
-</div>
-
-<div class="box formula">
-  <strong>2. SPL Difference from Distance (Inverse-Square Law)</strong>
-  <code>ΔL = 20 × log₁₀ (r₁ / r₂)</code>
-  <strong>Example:</strong> 80 dB @ 10 m. Find SPL @ 20 m:
-  <code>ΔL = 20 × log₁₀ (10 / 20) = 20 × log₁₀ (0.5) = 20 × (−0.301) = −6.02 ≈ −6 dB</code><br>
-  <code>SPL @ 20m = 80 − 6 = 74 dB</code>
-</div>
-
-<div class="box formula">
-  <strong>3. Addition of Multiple Sound Sources (SPL)</strong>
-  <code>Ltotal = 10 × log₁₀ (ΣAntilog(Li/10))</code><br>
-  Or: <code>Ltotal = 10 × log₁₀ (Σ10^(Li/10))</code>
-  <strong>Example:</strong> Two machines: 80 dB + 80 dB:
-  <code>Ltotal = 10 × log₁₀ (10^(80/10) + 10^(80/10)) = 10 × log₁₀ (10⁸ + 10⁸) = 10 × log₁₀ (2×10⁸)</code><br>
-  <code>= 10 × (8 + 0.301) = 10 × 8.301 = 83.01 dB</code><br>
-  <strong>Rule:</strong> Adding two equal SPLs increases by 3 dB. Two 80 dB sources = 83 dB (not 160!)
-</div>
-
-<div class="box formula">
-  <strong>4. 3 dB Exchange Rule (Occupational Exposure)</strong>
-  For every <strong>3 dB increase</strong> in SPL, <strong>safe exposure time reduces by 50%</strong>:
-  <code>T₁ × 2^((L₂−L₁)/3) = T₂</code>
-  <strong>Example:</strong> Safe limit @ 85 dB = 8 hr. Safe limit @ 88 dB?
-  <code>T₂ = 8 × 2^((88−85)/3) = 8 × 2¹ = 16 hours ??? (wrong direction)</code><br>
-  <strong>Correct:</strong> @ 88 dB (3 dB higher), exposure time is HALF: 8 hr / 2 = 4 hr
-</div>
-
-<div class="box formula">
-  <strong>5. Transmission Loss (Barrier) — Simple Form</strong>
-  <code>TL ≈ 20 × log₁₀ (f × m) + constant</code><br>
-  where f = frequency (Hz) | m = mass/unit area (kg/m²)
-  <strong>Practical Rule:</strong> Doubling mass → +3 dB TL. Doubling frequency → +6 dB TL
-</div>
-
-<div class="box formula">
-  <strong>6. Leq (Energy-Equivalent Level)</strong>
-  <code>Leq = 10 × log₁₀ [1/T × ∫₀ᵀ 10^(L(t)/10) dt]</code><br>
-  <strong>Simplified (discrete intervals):</strong> <code>Leq = 10 × log₁₀ [1/n × Σ10^(Li/10)]</code><br>
-  <strong>Example:</strong> Noise measured in 5 consecutive hours: 70, 75, 80, 75, 70 dB:
-  <code>Leq = 10 × log₁₀ [1/5 × (10^7 + 10^7.5 + 10^8 + 10^7.5 + 10^7)]</code><br>
-  <code>= 10 × log₁₀ [1/5 × (1×10⁷ + 3.16×10⁷ + 10×10⁷ + 3.16×10⁷ + 1×10⁷)]</code><br>
-  <code>= 10 × log₁₀ [1/5 × 18.32×10⁷] = 10 × log₁₀ (3.664×10⁷) = 75.64 dB</code>
-</div>
-
-<div class="box tip">
-Leq gives weighted average that accounts for energy over time. Higher peaks contribute MORE because of exponential nature (10^x).
-</div>
-
-<div class="section-header cyan">Sample Numericals</div>
-
-<div class="box cyan">
-  <strong>Q1: Inverse-Square Law</strong><br>
-  A diesel generator produces 90 dB @ 5 m. What is SPL @ 50 m distance?
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> ΔL = 20 × log₁₀ (5/50) = 20 × log₁₀ (0.1) = 20 × (−1) = −20 dB<br>
-    SPL @ 50 m = 90 − 20 = <strong>70 dB</strong>
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q2: Addition of Sources</strong><br>
-  Three identical machines each produce 80 dB. Find combined SPL.
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Ltotal = 10 × log₁₀ (3 × 10^(80/10)) = 10 × log₁₀ (3 × 10⁸)<br>
-    = 10 × (8 + 0.477) = 10 × 8.477 = <strong>84.77 dB</strong><br>
-    <strong>Rule:</strong> Each source adds: first 80 dB, 2nd adds 3 dB → 83 dB, 3rd adds 1.76 dB → 84.76 dB
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q3: Noise Standards Violation</strong><br>
-  A factory operates @ 80 dB (measured Leq) in a residential zone. Check compliance.
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Residential zone daytime limit = 55 dBA (Noise Rules 2000)<br>
-    Measured = 80 dB → Exceeds by 25 dB<br>
-    <strong>Verdict: VIOLATION</strong> → Fine + closure + improvement notice
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q4: Occupational Exposure</strong><br>
-  A worker is exposed to 88 dB Leq daily. Safe exposure limit @ 85 dB = 8 hr. How many hours is safe @ 88 dB?
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Difference = 88 − 85 = 3 dB → Time reduces by 50%<br>
-    Safe time @ 88 dB = 8 × 0.5 = <strong>4 hours</strong>
-  </div>
-</div>
-
-<div class="box cyan">
-  <strong>Q5: Dose Equivalent</strong><br>
-  A worker receives 5 mGy of alpha radiation. Calculate dose equivalent in Sv (QF for alpha = 20).
-  <div style="margin-top: 8px; font-size: 12px;">
-    <strong>Solution:</strong> Sv = Gy × QF = 0.005 × 20 = <strong>0.1 Sv = 100 mSv</strong><br>
-    This exceeds annual occupational limit (50 mSv) → Immediate medical monitoring required
-  </div>
-</div>
-
-</div>
-
-<!-- TAB 6: QUICK REFERENCE -->
-<div id="quick" class="tab-content">
-
-        <h2>SECTION 2: MUST-MEMORISE STANDARDS & VALUES</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Value</th>
-      <th>Reference / Zone</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential Day</strong></td>
-      <td><code>55 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #fff3e0;">
-      <td><strong>Residential Night</strong></td>
-      <td><code>45 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial Day</strong></td>
-      <td><code>65 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e3f2fd;">
-      <td><strong>Commercial Night</strong></td>
-      <td><code>55 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial Day</strong></td>
-      <td><code>75 dBA</code></td>
-      <td>6 AM–10 PM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #e8f5e9;">
-      <td><strong>Industrial Night</strong></td>
-      <td><code>70 dBA</code></td>
-      <td>10 PM–6 AM | Noise Rules 2000</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone Day</strong></td>
-      <td><code>50 dBA</code></td>
-      <td>Hospital/School/Court | Anytime 6 AM–10 PM</td>
-    </tr>
-    <tr style="background: #f3e5f5;">
-      <td><strong>Silence Zone Night</strong></td>
-      <td><code>40 dBA</code></td>
-      <td>Hospital/School/Court | Anytime 10 PM–6 AM</td>
-    </tr>
-    <tr style="background: #ffe0b2;">
-      <td><strong>Safe Occupational (8 hr/day)</strong></td>
-      <td><code>85 dBA</code></td>
-      <td>Factories, construction; hearing protection req'd above</td>
-    </tr>
-    <tr style="background: #ffe0b2;">
-      <td><strong>Peak/Impulse (Unsafe)</strong></td>
-      <td><code>140 dB</code></td>
-      <td>Gunfire, explosions; risk of acoustic trauma</td>
-    </tr>
-    <tr style="background: #c8e6c9;">
-      <td><strong>Public Rad. Dose Limit</strong></td>
-      <td><code>1 mSv/yr</code></td>
-      <td>AERB | General population</td>
-    </tr>
-    <tr style="background: #c8e6c9;">
-      <td><strong>Occupational Rad. Limit</strong></td>
-      <td><code>50 mSv/yr</code></td>
-      <td>AERB | Radiation workers</td>
-    </tr>
-    <tr style="background: #b3e5fc;">
-      <td><strong>Lethal Dose (Acute)</strong></td>
-      <td><code>&gt; 6 Sv</code></td>
-      <td>Whole-body exposure; multi-organ failure</td>
-    </tr>
-  </tbody>
-</table>
-
-        <h2>SECTION 3: NOISE REDUCTION QUICK TIPS</h2>
-
-<ul class="bullet-list">
-  <li><strong>Inverse-Square Law:</strong> 6 dB reduction per doubling of distance</li>
-  <li><strong>Addition Rule:</strong> Two equal sources = +3 dB (not 2×). Adding 10 sources ≈ +10 dB</li>
-  <li><strong>Enclosure:</strong> 10–30 dB reduction (most effective)</li>
-  <li><strong>Barrier:</strong> 5–15 dB (depends on frequency & mass)</li>
-  <li><strong>Muffler:</strong> 10–20 dB (typical for exhaust)</li>
-  <li><strong>Time Limit (3 dB rule):</strong> +3 dB → ÷2 time; −3 dB → ×2 time</li>
-</ul>
-
-        <h2>SECTION 4: RADIATION QUICK FACTS</h2>
-
-<ul class="bullet-list">
-  <li><strong>Alpha:</strong> Stopped by paper; dangerous if ingested/inhaled (QF=20)</li>
-  <li><strong>Beta:</strong> Stopped by aluminum; less damaging than alpha (QF=1)</li>
-  <li><strong>Gamma:</strong> Requires lead/concrete; most penetrating (QF=1)</li>
-  <li><strong>LLW:</strong> Store 6–10 years → decay → regular waste</li>
-  <li><strong>HLW:</strong> Deep geological storage required (thousands of years)</li>
-  <li><strong>Public Limit:</strong> 1 mSv/yr; Worker: 50 mSv/yr</li>
-  <li><strong>Background:</strong> 2–3 mSv/yr (natural; varies by location)</li>
-</ul>
-
-        <h2>SECTION 5: EXAM STRATEGIES</h2>
-
-<ol class="bullet-list" style="list-style: decimal;">
-  <li><strong>Zone Standards:</strong> Memorise 4 zones + day/night splits. 80% of MCQs test standard matching.</li>
-  <li><strong>Inverse-Square Law:</strong> Most common numerical. Practice 5 problems on distance-based SPL reduction.</li>
-  <li><strong>Addition of Sources:</strong> Know the 10×log(n) rule for n identical sources.</li>
-  <li><strong>Occupational Limits:</strong> 85 dB safe for 8 hr; 3 dB rule for time reduction.</li>
-  <li><strong>Radiation Units:</strong> Distinguish Gray (absorbed), Sievert (effect), Becquerel (activity).</li>
-  <li><strong>AERB vs CPCB:</strong> Radiation = federal (AERB); Noise = state (UPPCB). Different jurisdictions.</li>
-  <li><strong>Control Methods:</strong> Know Enclosure > Barrier > Isolation > Absorption ranking for reduction.</li>
-</ol>
-
-<div class="box warning">
-<strong>Common Mistakes to Avoid:</strong><br>
-❌ Confusing dB with dBA (A-weighted)<br>
-❌ Adding SPLs linearly (80+80 ≠ 160; it's 83)<br>
-❌ Forgetting day/night split (Residential = 55/45, not uniform)<br>
-❌ Mixing AERB (radiation) with CPCB (air/water)<br>
-❌ Thinking noise barriers give full TL (real-world IL is 5–10 dB less due to diffraction)
-</div>
-
-</div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  ✅ Revision notes compiled for UPPCB AEE 2026 | Unit 7: Noise Pollution & Radiation<br>
-  📚 Source: Noise Rules 2000, Atomic Energy Act 1962, AERB regulations, CPCB guidelines | Last updated: April 2026
-</div>
-
+    <div class="container">
+        <h1>UNIT 3: AIR POLLUTION &amp; CONTROL TECHNOLOGY</h1>
+        <div class="subtitle">UPPCB AEE 2026 | 10-13 Questions | 40-52 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
+
+        <h2>SECTION 1: FUNDAMENTALS OF AIR POLLUTION</h2>
+        <div class="section-intro">
+            Structure of atmosphere, classification of pollutants, sources, and criteria pollutants. Conceptual base for dispersion, control, and standards.
+        </div>
+
+        <h3>1.1 STRUCTURE OF ATMOSPHERE</h3>
+        <div class="content">
+            <strong>Layers (bottom to top):</strong>
+            <ul>
+                <li><strong>Troposphere</strong> (0–12 km): T <span class="key-point">decreases</span> with altitude (DALR ≈ 6.5°C/km); ~75% of atmospheric mass; weather phenomena; air pollution mostly here</li>
+                <li><strong>Stratosphere</strong> (12–50 km): T <span class="key-point">increases</span> with altitude (UV absorption by O₃); contains ozone layer (peak 20–25 km); stable, no vertical mixing</li>
+                <li><strong>Mesosphere</strong> (50–85 km): T decreases; coldest layer (~ −90°C at mesopause)</li>
+                <li><strong>Thermosphere</strong> (85–600 km): T rises sharply; ionosphere; auroras</li>
+                <li><strong>Exosphere</strong> (&gt; 600 km): merges with outer space</li>
+            </ul>
+            <strong>Dry air composition (by volume):</strong> N₂ = 78.09%, O₂ = 20.95%, Ar = 0.93%, CO₂ ≈ 0.042% (420 ppm, 2024), trace Ne, He, CH₄, Kr, H₂, N₂O, Xe, O₃.
+        </div>
+        <div class="standard">
+            <strong>Ozone layer:</strong> Peak O₃ = 2–8 ppm at 20–25 km; absorbs 97–99% of UV-B/UV-C; "good ozone" in stratosphere vs "bad ozone" (smog) in troposphere.
+        </div>
+
+        <h3>1.2 CLASSIFICATION OF POLLUTANTS</h3>
+        <div class="content">
+            <strong>By origin:</strong>
+            <ul>
+                <li><strong>Primary:</strong> emitted directly — SO₂, NOₓ (as NO), CO, PM, VOCs, Pb, NH₃</li>
+                <li><strong>Secondary:</strong> formed in atmosphere — O₃ (ground-level), PAN, H₂SO₄/HNO₃, sulphate &amp; nitrate aerosols, formaldehyde</li>
+            </ul>
+            <strong>By state:</strong> Gaseous (SO₂, NOₓ, CO, CO₂, O₃, VOCs, H₂S); Particulate (dust, fumes, mist, smoke, fly ash, smog).
+        </div>
+        <div class="highlight">
+            <strong>Criteria pollutants — India NAAQS 2009 lists 12:</strong><br/>
+            PM₁₀, PM₂.₅, SO₂, NO₂, O₃, CO, Pb, NH₃, Benzene, BaP, As, Ni.<br/>
+            (USEPA list = 6: PM, O₃, SO₂, NO₂, CO, Pb)
+        </div>
+
+        <h3>1.3 PARTICULATE MATTER CLASSIFICATION</h3>
+        <div class="content">
+            <ul>
+                <li><strong>Dust:</strong> solid, 1–200 µm; from mechanical disintegration (crushing, grinding)</li>
+                <li><strong>Fumes:</strong> solid, 0.03–0.3 µm; from condensation of vapours (metallurgy)</li>
+                <li><strong>Mist:</strong> liquid &lt; 10 µm; condensation/atomization</li>
+                <li><strong>Smoke:</strong> 0.01–1 µm; incomplete combustion of carbonaceous fuels</li>
+                <li><strong>Fog:</strong> liquid &gt; 10 µm; visibility &lt; 1 km</li>
+                <li><strong>Aerosol:</strong> general term — solid/liquid suspension in gas</li>
+            </ul>
+        </div>
+        <div class="standard">
+            <strong>Size-based PM:</strong><br/>
+            <strong>TSP</strong> &lt; 100 µm; <strong>PM₁₀</strong> ≤ 10 µm (inhalable, upper airway); <strong>PM₂.₅</strong> ≤ 2.5 µm (respirable, alveoli); <strong>PM₁</strong> ≤ 1 µm (ultrafine, can enter bloodstream)
+        </div>
+
+        <h3>1.4 SOURCES OF POLLUTION</h3>
+        <div class="content">
+            <ul>
+                <li><strong>Point source:</strong> identifiable, localised (thermal stack, refinery vent)</li>
+                <li><strong>Line source:</strong> linear (highways, railways)</li>
+                <li><strong>Area source:</strong> spread (residential colony, landfill, brick kiln cluster)</li>
+                <li><strong>Mobile source:</strong> vehicles, aircraft, ships</li>
+                <li><strong>Fugitive emissions:</strong> unintentional leaks (valves, flanges, tanks)</li>
+            </ul>
+            <strong>Emission factor (EF):</strong> mass of pollutant / unit activity (e.g., kg SO₂ per t coal). Used when stack data is absent. USEPA <strong>AP-42</strong> is the standard reference.
+        </div>
+
+        <div class="gate-add">
+            <strong>GATE ADD — Atmospheric sinks &amp; residence times:</strong>
+            <ul>
+                <li><strong>Wet deposition:</strong> rainout (within cloud) + washout (below cloud)</li>
+                <li><strong>Dry deposition:</strong> gravitational settling + surface impaction</li>
+                <li><strong>Chemical transformation:</strong> OH• oxidation, photolysis</li>
+            </ul>
+            Residence times: SO₂ ≈ 2–4 d; NOₓ ≈ 1 d; CH₄ ≈ 12 yr; N₂O ≈ 114 yr; CO₂ ≈ 100–1000 yr; CFCs 50–100 yr.
+        </div>
+
+        <h3>1.5 INDOOR AIR POLLUTION <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="content">
+            <ul>
+                <li><strong>Sources:</strong> biomass burning (chulha), tobacco smoke, paints/solvents (VOCs), plywood (HCHO), soil (Rn-222), asbestos, mould</li>
+                <li><strong>Key pollutants:</strong> PM₂.₅, CO, NO₂, formaldehyde, radon, VOCs</li>
+                <li><strong>Sick Building Syndrome (SBS):</strong> headache, irritation, fatigue — poor ventilation, low humidity, VOCs</li>
+                <li>WHO: household air pollution causes ~3.2 million premature deaths/year globally</li>
+                <li><strong>PMUY (Ujjwala):</strong> Indian scheme providing LPG to reduce indoor biomass burning</li>
+            </ul>
+        </div>
+
+        <h2>SECTION 2: SPECIFIC POLLUTANTS &amp; HEALTH EFFECTS</h2>
+        <div class="section-intro">
+            Properties, sources, chemistry and health/environment impacts of each criteria pollutant. High-frequency MCQ area (3–4 Qs).
+        </div>
+
+        <h3>2.1 PARTICULATE MATTER (PM)</h3>
+        <div class="content">
+            <strong>Sources:</strong> coal/diesel/biomass combustion, road dust, construction, cement &amp; steel, secondary aerosols (sulphate, nitrate, organic).<br/>
+            <strong>Health:</strong>
+            <ul>
+                <li>PM₁₀ → upper airway: bronchitis, cough</li>
+                <li>PM₂.₅ → alveoli → bloodstream; IARC <span class="key-point">Group 1 carcinogen</span>; lung cancer, CVD, stroke, premature mortality</li>
+                <li>AQLI 2023: long-term PM₂.₅ reduces life expectancy — India ~5.3 yr; Delhi ~11.9 yr</li>
+            </ul>
+            <strong>Environmental:</strong> reduced visibility (Rayleigh &amp; Mie scattering), building soiling, global dimming, cloud nucleation.
+        </div>
+
+        <h3>2.2 SULPHUR DIOXIDE (SO₂)</h3>
+        <div class="content">
+            <strong>Sources:</strong> coal/oil combustion (thermal power, refineries), Cu/Zn/Pb smelting, H₂SO₄ plants, volcanoes.
+        </div>
+        <div class="formula">
+            SO₂ + OH• → HSO₃•<br/>
+            HSO₃• + O₂ → HO₂• + SO₃<br/>
+            SO₃ + H₂O → H₂SO₄ (acid rain)<br/>
+            Residence time ≈ 2–4 days
+        </div>
+        <div class="content">
+            <strong>Health:</strong> bronchoconstriction, asthma, eye/throat irritation. Olfactory threshold ≈ 0.5 ppm.<br/>
+            <strong>Environmental:</strong> acid rain (pH &lt; 5.6); Taj Mahal damage → <span class="key-point">Taj Trapezium Zone</span> (10,400 km², SC 1996 order); vegetation injury &gt; 0.3 ppm.
+        </div>
+
+        <h3>2.3 OXIDES OF NITROGEN (NOₓ)</h3>
+        <div class="content">
+            NOₓ = NO + NO₂. NO is primary emission; NO₂ formed by oxidation.<br/>
+            <strong>Formation mechanisms:</strong>
+            <ul>
+                <li><strong>Thermal NOₓ (Zeldovich):</strong> N₂ + O₂ → 2NO at &gt; 1500°C (dominant in combustion)</li>
+                <li><strong>Fuel NOₓ:</strong> N bound in fuel (coal) oxidises</li>
+                <li><strong>Prompt NOₓ (Fenimore):</strong> rapid, in flame front via HCN intermediate</li>
+            </ul>
+            <strong>Sources:</strong> vehicles (~40% urban), thermal power, industrial boilers, lightning.<br/>
+            <strong>Health:</strong> NO₂ ~4× more toxic than NO; pulmonary oedema at high conc; chronic bronchitis.<br/>
+            <strong>Environmental:</strong> HNO₃ (acid rain), precursor to tropospheric O₃ &amp; PAN, brown haze.
+        </div>
+
+        <h3>2.4 CARBON MONOXIDE (CO)</h3>
+        <div class="content">
+            <strong>Sources:</strong> incomplete combustion — vehicles (50–60%), biomass burning, tobacco smoke. Highest during cold starts.
+        </div>
+        <div class="formula">
+            Hb + CO → COHb (carboxyhaemoglobin)<br/>
+            Hb affinity for CO is <strong>~240× that for O₂</strong><br/>
+            Effect: hypoxia (tissue O₂ starvation)
+        </div>
+        <div class="content">
+            <strong>Health by COHb%:</strong>
+            <ul>
+                <li>2–5%: impaired judgment, reduced exercise capacity (smokers)</li>
+                <li>10–20%: headache, fatigue, dizziness</li>
+                <li>30–50%: nausea, confusion, loss of consciousness</li>
+                <li>&gt; 60%: death</li>
+            </ul>
+            <strong>Environmental:</strong> not a direct GHG but oxidises to CO₂ and depletes OH• radical (indirect warming).
+        </div>
+
+        <h3>2.5 VOCs &amp; HYDROCARBONS</h3>
+        <div class="content">
+            <strong>Definition (CPCB):</strong> organics with vapour pressure &gt; 0.01 kPa at 20°C or boiling point ≤ 250°C.<br/>
+            <strong>Key VOCs:</strong>
+            <ul>
+                <li><strong>Benzene (C₆H₆):</strong> IARC Group 1; causes leukaemia (AML); NAAQS annual = 5 µg/m³</li>
+                <li><strong>Formaldehyde (HCHO):</strong> irritant, carcinogen, from plywood/paints</li>
+                <li><strong>1,3-Butadiene:</strong> carcinogen, from vehicles &amp; tyre industry</li>
+                <li><strong>PAHs:</strong> 16 priority PAHs (USEPA); Benzo[a]pyrene — IARC Group 1</li>
+            </ul>
+            <strong>Role in smog:</strong> VOCs + NOₓ + sunlight → O₃ + PAN.
+        </div>
+
+        <h3>2.6 LEAD (Pb)</h3>
+        <div class="content">
+            <ul>
+                <li>Historical source: tetraethyl lead in petrol; India phased out <strong>April 2000</strong></li>
+                <li>Current: Pb-acid battery manufacture/recycling, smelting, paints</li>
+                <li>Health: affects CNS in children (reduced IQ), anaemia (inhibits haem synthesis), kidney damage</li>
+                <li>Bioaccumulates in bone (half-life 20–30 yr)</li>
+                <li>WHO BLL of concern: &gt; 5 µg/dL</li>
+                <li>NAAQS: 0.5 µg/m³ (annual)</li>
+            </ul>
+        </div>
+
+        <h3>2.7 GHGs &amp; GLOBAL WARMING POTENTIAL (GWP, 100-yr, IPCC AR6)</h3>
+        <table>
+            <tr><th>Gas</th><th>Formula</th><th>GWP (100 yr)</th><th>Lifetime</th><th>Main source</th></tr>
+            <tr><td>Carbon dioxide</td><td>CO₂</td><td>1 (ref)</td><td>~100–1000 yr</td><td>Fossil fuel combustion</td></tr>
+            <tr><td>Methane</td><td>CH₄</td><td>~28</td><td>~12 yr</td><td>Paddy, livestock, landfill, NG leaks</td></tr>
+            <tr><td>Nitrous oxide</td><td>N₂O</td><td>~273</td><td>~114 yr</td><td>Fertilizers, combustion</td></tr>
+            <tr><td>HFC-134a</td><td>CH₂FCF₃</td><td>~1530</td><td>~14 yr</td><td>Refrigerants</td></tr>
+            <tr><td>SF₆</td><td>SF₆</td><td>~25200</td><td>~3200 yr</td><td>Electrical insulation</td></tr>
+            <tr><td>CFC-12</td><td>CCl₂F₂</td><td>~10200</td><td>~100 yr</td><td>Old refrigerants (banned)</td></tr>
+        </table>
+
+        <h3>2.8 ACID RAIN</h3>
+        <div class="content">
+            <strong>Definition:</strong> pH &lt; 5.6 (pure rain ≈ 5.6 due to dissolved CO₂ → H₂CO₃).
+        </div>
+        <div class="formula">
+            2SO₂ + O₂ → 2SO₃;  SO₃ + H₂O → H₂SO₄<br/>
+            4NO₂ + O₂ + 2H₂O → 4HNO₃<br/>
+            ~65–70% acidity from H₂SO₄; ~30–35% from HNO₃
+        </div>
+        <div class="content">
+            <strong>Effects:</strong>
+            <ul>
+                <li>Aquatic: fish kills at pH &lt; 5; release of toxic Al³⁺ from soils into lakes</li>
+                <li>Soil: leaching of Ca²⁺, Mg²⁺, K⁺; mobilisation of Al, Hg</li>
+                <li>Forests: Waldsterben (forest dieback) — Germany; needle damage</li>
+                <li>Buildings: marble/limestone corrosion — Taj Mahal, Parliament House</li>
+                <li>Reaction: CaCO₃ + H₂SO₄ → CaSO₄ + CO₂ + H₂O</li>
+            </ul>
+        </div>
+
+        <h3>2.9 PHOTOCHEMICAL SMOG</h3>
+        <table>
+            <tr><th>Feature</th><th>London (classical) smog</th><th>Los Angeles (photochemical) smog</th></tr>
+            <tr><td>Main pollutants</td><td>SO₂ + PM + fog</td><td>NOₓ + VOCs + O₃ + PAN</td></tr>
+            <tr><td>Nature</td><td>Reducing</td><td>Oxidising</td></tr>
+            <tr><td>Occurs</td><td>Cold, damp mornings (winter)</td><td>Hot, sunny afternoons (summer)</td></tr>
+            <tr><td>Temperature</td><td>Low (&lt; 4°C)</td><td>High (&gt; 24°C)</td></tr>
+            <tr><td>Visibility</td><td>Very low</td><td>Low-moderate, brownish</td></tr>
+            <tr><td>Health</td><td>Bronchitis, heart disease</td><td>Eye irritation, asthma</td></tr>
+            <tr><td>Famous event</td><td>London 1952 (~12000 deaths)</td><td>LA 1940s onwards</td></tr>
+        </table>
+        <div class="formula">
+            <strong>Photochemical smog chemistry:</strong><br/>
+            (1) NO₂ + hν (λ &lt; 430 nm) → NO + O•<br/>
+            (2) O• + O₂ + M → O₃ + M<br/>
+            (3) O₃ + NO → NO₂ + O₂ (recycles)<br/>
+            (4) RH + OH• → R• → RO₂• → RO• → aldehydes + PAN (CH₃COO-O-NO₂)<br/>
+            <em>PAN is a powerful eye irritant and plant toxin.</em>
+        </div>
+
+        <div class="gate-add">
+            <strong>GATE ADD — Stratospheric ozone depletion (Rowland-Molina):</strong>
+            <div class="formula">
+                CFCl₃ + hν (UV) → CFCl₂• + Cl•<br/>
+                Cl• + O₃ → ClO• + O₂<br/>
+                ClO• + O• → Cl• + O₂   [Cl• regenerated — chain reaction]<br/>
+                Net: O₃ + O• → 2O₂; 1 Cl destroys ~100,000 O₃ molecules
+            </div>
+            <strong>ODP:</strong> CFC-11 = 1.0 (ref); CFC-12 = 1.0; Halon-1301 ≈ 10; HCFCs = 0.02–0.11; HFCs = 0.<br/>
+            <strong>Montreal Protocol (1987):</strong> phase-out CFCs, halons. <strong>Kigali Amendment (2016):</strong> adds HFCs (high GWP).
+        </div>
+
+        <h2>SECTION 3: METEOROLOGY &amp; DISPERSION</h2>
+        <div class="section-intro">
+            Core numerical area. Gaussian plume, plume rise, stability classes. Expect 1–2 calculation Qs.
+        </div>
+
+        <h3>3.1 LAPSE RATES &amp; STABILITY</h3>
+        <div class="formula">
+            <strong>Dry Adiabatic Lapse Rate (DALR):</strong><br/>
+            Γ<sub>d</sub> = g/c<sub>p</sub> = 9.81 / 1005 ≈ <strong>9.8 °C/km ≈ 1°C / 100 m</strong><br/>
+            (rate at which dry air parcel cools as it rises with no heat exchange)<br/><br/>
+            <strong>Environmental Lapse Rate (ELR):</strong> actual measured profile; ISA avg ≈ 6.5 °C/km<br/>
+            <strong>Saturated ALR:</strong> ~5–6 °C/km (latent heat released during condensation)
+        </div>
+        <div class="standard">
+            <strong>Stability criteria:</strong>
+            <ul>
+                <li><strong>Super-adiabatic</strong> (ELR &gt; DALR): <span class="key-point">UNSTABLE</span> — strong vertical mixing, good dispersion</li>
+                <li><strong>Adiabatic/neutral</strong> (ELR = DALR): NEUTRAL</li>
+                <li><strong>Sub-adiabatic</strong> (ELR &lt; DALR): STABLE — restricted mixing</li>
+                <li><strong>Isothermal</strong> (dT/dz = 0): very stable</li>
+                <li><strong>Inversion</strong> (dT/dz &gt; 0, T rises with height): <span class="key-point">extremely stable</span> — traps pollutants</li>
+            </ul>
+        </div>
+
+        <h3>3.2 PLUME BEHAVIOUR</h3>
+        <table>
+            <tr><th>Plume shape</th><th>Condition</th><th>Stability</th><th>Dispersion</th></tr>
+            <tr><td><strong>Looping</strong></td><td>Super-adiabatic (strong sun)</td><td>Unstable</td><td>Erratic; possible high ground conc.</td></tr>
+            <tr><td><strong>Coning</strong></td><td>Neutral / slightly stable</td><td>Neutral</td><td>Normal Gaussian spread</td></tr>
+            <tr><td><strong>Fanning</strong></td><td>Inversion above &amp; below</td><td>Very stable</td><td>Horizontal only; no vertical mixing</td></tr>
+            <tr><td><strong>Fumigation</strong></td><td>Inversion above, unstable below</td><td>Mixed</td><td>Worst case — high ground conc.</td></tr>
+            <tr><td><strong>Lofting</strong></td><td>Inversion below, unstable above</td><td>Mixed</td><td>Favourable — plume rises, not down</td></tr>
+            <tr><td><strong>Trapping</strong></td><td>Inversions above &amp; below</td><td>Very stable</td><td>Plume confined; very poor dispersion</td></tr>
+        </table>
+
+        <h3>3.3 PASQUILL STABILITY CLASSES</h3>
+        <div class="content">
+            Six classes based on surface wind, daytime insolation, night cloud cover:
+            <ul>
+                <li><strong>A</strong> — extremely unstable (strong sun, light wind)</li>
+                <li><strong>B</strong> — moderately unstable</li>
+                <li><strong>C</strong> — slightly unstable</li>
+                <li><strong>D</strong> — neutral (cloudy day or night)</li>
+                <li><strong>E</strong> — slightly stable (night)</li>
+                <li><strong>F</strong> — moderately stable (clear night, light wind)</li>
+            </ul>
+            Used to select dispersion coefficients σ<sub>y</sub>, σ<sub>z</sub> in the Gaussian equation.
+        </div>
+
+        <h3>3.4 INVERSIONS &amp; MIXING HEIGHT</h3>
+        <div class="content">
+            <strong>Types:</strong>
+            <ul>
+                <li><strong>Radiation inversion:</strong> ground cools rapidly on clear nights (most common; winter mornings in N. India)</li>
+                <li><strong>Subsidence inversion:</strong> sinking air warms adiabatically (high-pressure systems)</li>
+                <li><strong>Frontal inversion:</strong> warm air overrides cold along a front</li>
+                <li><strong>Advection inversion:</strong> warm air moves over cold surface</li>
+            </ul>
+            <strong>Mixing height (H<sub>mix</sub>):</strong> height to which pollutants can disperse vertically.<br/>
+            Delhi winter H<sub>mix</sub> ≈ 100–200 m (severe) vs summer ≈ 2000–3000 m — explains winter AQI spikes.
+        </div>
+
+        <h3>3.5 GAUSSIAN PLUME MODEL</h3>
+        <div class="content">
+            Assumes steady state, Gaussian distribution in y (cross-wind) and z (vertical).
+        </div>
+        <div class="formula">
+            <strong>General Gaussian equation (continuous point source):</strong><br/>
+            C(x,y,z) = [Q / (2π·σ<sub>y</sub>·σ<sub>z</sub>·u)] × exp[−y²/(2σ<sub>y</sub>²)] × { exp[−(z−H)²/(2σ<sub>z</sub>²)] + exp[−(z+H)²/(2σ<sub>z</sub>²)] }<br/><br/>
+            <strong>Ground-level centreline (y=0, z=0):</strong><br/>
+            C(x,0,0) = [Q / (π·σ<sub>y</sub>·σ<sub>z</sub>·u)] × exp[−H²/(2σ<sub>z</sub>²)]<br/><br/>
+            <strong>Maximum ground-level concentration</strong> (occurs at σ<sub>z</sub> = H/√2):<br/>
+            C<sub>max</sub> = 2Q / (π·e·u·H²) × (σ<sub>y</sub>/σ<sub>z</sub>)<br/><br/>
+            Q = emission rate (g/s); u = wind at stack (m/s); H = effective stack height (m)<br/>
+            σ<sub>y</sub>, σ<sub>z</sub> = dispersion coefficients (m) from Pasquill-Gifford curves
+        </div>
+
+        <h3>3.6 PLUME RISE — HOLLAND'S FORMULA</h3>
+        <div class="formula">
+            Δh = (v<sub>s</sub>·d / u) × [1.5 + 2.68×10⁻³ · P · (T<sub>s</sub> − T<sub>a</sub>)/T<sub>s</sub> · d]<br/><br/>
+            Δh = plume rise (m); v<sub>s</sub> = exit velocity (m/s); d = stack dia (m); u = wind (m/s)<br/>
+            P = atm. pressure (kPa, ≈ 101.3); T<sub>s</sub>, T<sub>a</sub> = stack &amp; ambient T (K)<br/><br/>
+            <strong>Effective stack height:</strong> H = h<sub>s</sub> + Δh
+        </div>
+        <div class="highlight">
+            <strong>Plume rise insight:</strong> Δh ↑ with exit velocity, stack diameter, (T<sub>s</sub>−T<sub>a</sub>); Δh ↓ with wind speed. Holland's formula is <span class="key-point">conservative</span> (underpredicts rise). Briggs' formula more accurate for tall stacks.
+        </div>
+
+        <h3>3.7 WIND ROSE DIAGRAM</h3>
+        <div class="content">
+            Graphical tool showing frequency of wind <strong>direction</strong> and <strong>speed</strong>. Uses:
+            <ul>
+                <li>Siting of industries (locate downwind of city)</li>
+                <li>Design of air monitoring networks</li>
+                <li>Inputs for dispersion models</li>
+            </ul>
+            <strong>Convention:</strong> wind rose shows direction wind is blowing FROM (not TO).
+        </div>
+
+        <div class="gate-add">
+            <strong>GATE ADD — Topographic &amp; urban effects:</strong>
+            <ul>
+                <li><strong>Urban Heat Island (UHI):</strong> city 2–8°C warmer; concrete/asphalt thermal mass, low vegetation, anthropogenic heat; local circulation traps pollutants</li>
+                <li><strong>Valley effects:</strong> cold air drainage at night traps pollutants (Dehradun, Shimla)</li>
+                <li><strong>Coastal effects:</strong> sea breeze (day), land breeze (night) — fumigation common</li>
+                <li><strong>Building downwash:</strong> rule of thumb — stack height &gt; 2.5× tallest building nearby</li>
+            </ul>
+        </div>
+
+        <h2>SECTION 4: AIR POLLUTION CONTROL EQUIPMENT</h2>
+        <div class="section-intro">
+            Most important numerical section. Deutsch-Anderson (ESP), cyclone cut-size, efficiency calcs. Expect 2–3 Qs including ≥ 1 numerical.
+        </div>
+
+        <h3>4.1 GRAVITY SETTLING CHAMBER</h3>
+        <div class="content">
+            <strong>Principle:</strong> large particles settle by gravity at low horizontal gas velocity. Used for &gt; 50 µm as <strong>pre-cleaner</strong> before ESP/bag filter.
+        </div>
+        <div class="formula">
+            Stokes' settling velocity: v<sub>s</sub> = g(ρ<sub>p</sub> − ρ<sub>g</sub>)d² / (18µ)<br/><br/>
+            Minimum diameter collected (100% efficiency):<br/>
+            d<sub>min</sub> = √[18µ·H / (g·ρ<sub>p</sub>·t)]  where t = residence time<br/>
+            Also: d<sub>min</sub> = √[18µ·H·V<sub>h</sub> / (g·ρ<sub>p</sub>·L)]<br/><br/>
+            Efficiency: η = v<sub>s</sub>·L / (H·V<sub>h</sub>); η = 1 when v<sub>s</sub>·t<sub>res</sub> ≥ H
+        </div>
+        <div class="highlight">
+            Typical efficiency 50–70% for PM &gt; 50 µm; very poor for &lt; 10 µm. ΔP &lt; 1 cm H₂O.
+        </div>
+
+        <h3>4.2 CYCLONE SEPARATOR</h3>
+        <div class="content">
+            <strong>Principle:</strong> centrifugal force throws particles outward; clean gas spirals upward. Best for <strong>5–50 µm</strong>; ~80–95% for &gt; 10 µm.
+        </div>
+        <div class="formula">
+            Centrifugal acceleration ≈ 5 to 2500× gravity<br/><br/>
+            <strong>Cut-size (Lapple):</strong><br/>
+            d<sub>pc</sub> = √[9µ·W / (2π·N·V·(ρ<sub>p</sub> − ρ<sub>g</sub>))]<br/>
+            W = inlet width; N = effective turns (~5); V = inlet gas velocity<br/>
+            d<sub>pc</sub> = particle size collected at <strong>50% efficiency</strong>
+        </div>
+        <div class="content">
+            <strong>Advantages:</strong> no moving parts, low cost, high T / abrasive dust OK.<br/>
+            <strong>Limitations:</strong> poor for &lt; 10 µm; ΔP = 5–15 cm H₂O.<br/>
+            <strong>Multi-cyclone:</strong> parallel array of small cyclones — higher efficiency.
+        </div>
+
+        <h3>4.3 ELECTROSTATIC PRECIPITATOR (ESP)</h3>
+        <div class="content">
+            <strong>Principle:</strong> particles pass through high-voltage corona (20–100 kV DC) → acquire negative charge → attracted to grounded collection plates → dislodged by rappers into hopper.<br/>
+            <strong>Used for:</strong> fly ash (mandatory on Indian thermal plants), cement, steel. Handles huge volumes.
+        </div>
+        <div class="formula">
+            <strong>Deutsch-Anderson equation:</strong><br/>
+            η = 1 − exp(−wA/Q)<br/><br/>
+            w = drift velocity (m/s); typical 0.03–0.15 m/s<br/>
+            A = total plate area (m²); Q = gas flow (m³/s)<br/><br/>
+            <strong>SCA (Specific Collection Area):</strong> SCA = A/Q (m² per m³/s); typical 50–120 for 99%<br/><br/>
+            <strong>Modified D-A with non-ideality (Matts-Öhnfeldt):</strong><br/>
+            η = 1 − exp[−(wA/Q)^k]; k ≈ 0.5
+        </div>
+        <div class="tip">
+            <strong>Key ESP insights:</strong>
+            <ul>
+                <li>Efficiency &gt; 99% for PM₁₀; ~95% for PM₂.₅</li>
+                <li>Resistivity optimum: 10⁴ to 10¹⁰ Ω·cm</li>
+                <li>High-resistivity fly ash (low-S coal) hardest to collect → needs SO₃ flue gas conditioning</li>
+                <li>Low ΔP (1–2 cm H₂O) — energy efficient</li>
+                <li>High CAPEX, low OPEX; mandatory on Indian coal plants</li>
+            </ul>
+        </div>
+
+        <h3>4.4 FABRIC FILTER / BAG HOUSE</h3>
+        <div class="content">
+            <strong>Principle:</strong> dust-laden gas passes through woven/felted bags; dust cake forms on surface &amp; itself acts as filter. Efficiency &gt; 99.9% for PM down to 0.3 µm.
+        </div>
+        <div class="standard">
+            <strong>Cleaning mechanisms:</strong>
+            <ul>
+                <li><strong>Mechanical shaking:</strong> simplest, low A/C</li>
+                <li><strong>Reverse air:</strong> reverse airflow collapses bag</li>
+                <li><strong>Pulse-jet:</strong> high-pressure air pulse (0.5–0.7 MPa); highest A/C; most common modern</li>
+            </ul>
+        </div>
+        <div class="formula">
+            <strong>Air-to-cloth ratio (A/C, filtration velocity):</strong><br/>
+            A/C = Q / A<sub>fabric</sub> (m/min)<br/>
+            Shaker: 0.5–1 | Reverse-air: 0.5–2 | Pulse-jet: 2–5<br/><br/>
+            <strong>Pressure drop:</strong> ΔP = ΔP<sub>fabric</sub> + K<sub>2</sub>·W·V<br/>
+            W = dust loading (kg/m²); V = filtration velocity
+        </div>
+        <div class="content">
+            <strong>Bag materials &amp; temperature limits:</strong>
+            <ul>
+                <li>Cotton &lt; 80°C</li>
+                <li>Polyester &lt; 135°C</li>
+                <li>Nomex (aramid) &lt; 200°C</li>
+                <li>Fibreglass &lt; 260°C</li>
+                <li>PTFE / Teflon &lt; 260°C (acid resistant)</li>
+                <li>P84 &lt; 240°C</li>
+            </ul>
+            <strong>Limitations:</strong> temperature, moist/sticky dust causes blinding, ΔP 10–20 cm H₂O.
+        </div>
+
+        <h3>4.5 WET SCRUBBERS</h3>
+        <div class="content">
+            <strong>Principle:</strong> liquid (water) contacts dust or gas; removes both PM and soluble gases (SO₂, HCl, NH₃).<br/>
+            <strong>Types:</strong>
+            <ul>
+                <li><strong>Spray tower:</strong> simplest; PM &gt; 10 µm; low efficiency, low ΔP</li>
+                <li><strong>Packed tower:</strong> gas absorption; Raschig rings / Pall rings / structured packing</li>
+                <li><strong>Venturi scrubber:</strong> gas through throat at 60–150 m/s; water injected; &gt; 99% for PM &gt; 1 µm; ΔP 50–200 cm H₂O</li>
+                <li><strong>Cyclonic scrubber, impingement-plate scrubber</strong></li>
+            </ul>
+        </div>
+        <div class="formula">
+            <strong>Contact power theory (Semrau):</strong><br/>
+            N<sub>t</sub> = α · P<sub>T</sub>^β (transfer units vs contact power)<br/>
+            Higher ΔP → higher efficiency for fine PM
+        </div>
+        <div class="highlight">
+            <strong>Wet scrubber</strong> handles sticky/flammable dust and does simultaneous gas + PM removal, but generates wastewater (needs treatment), visible plume, corrosion, freezing.
+        </div>
+
+        <h3>4.6 COMPARISON OF PM CONTROL EQUIPMENT</h3>
+        <table>
+            <tr><th>Device</th><th>PM size range</th><th>Efficiency</th><th>ΔP (cm H₂O)</th><th>Application</th></tr>
+            <tr><td>Settling chamber</td><td>&gt; 50 µm</td><td>50–70%</td><td>&lt; 1</td><td>Pre-cleaner</td></tr>
+            <tr><td>Cyclone</td><td>5–50 µm</td><td>80–95%</td><td>5–15</td><td>Pre-cleaner, sawmills</td></tr>
+            <tr><td>ESP</td><td>&gt; 0.1 µm</td><td>95–99.9%</td><td>1–2</td><td>Power, cement</td></tr>
+            <tr><td>Bag filter</td><td>&gt; 0.3 µm</td><td>99.5–99.99%</td><td>10–20</td><td>Cement, boilers</td></tr>
+            <tr><td>Venturi scrubber</td><td>&gt; 1 µm</td><td>95–99%</td><td>50–200</td><td>Sticky dust, acid gas</td></tr>
+        </table>
+
+        <h3>4.7 GASEOUS POLLUTANT CONTROL</h3>
+        <div class="content">
+            <strong>(a) Absorption (gas-liquid):</strong> soluble gas transferred from gas to liquid in packed/tray column.
+        </div>
+        <div class="formula">
+            Fick's law: N = −D · (dc/dx)<br/>
+            Two-film theory: 1/K<sub>G</sub> = 1/k<sub>g</sub> + H/k<sub>L</sub><br/>
+            Henry's law: p = H·x
+        </div>
+        <div class="content">
+            <strong>(b) Adsorption (gas-solid):</strong> VOCs, H₂S, odours. Activated carbon most common (surface area 500–1500 m²/g). Silica gel, alumina, zeolites for specific gases.
+            <ul>
+                <li>Langmuir isotherm (monolayer): q = q<sub>m</sub>·K·c / (1 + K·c)</li>
+                <li>Freundlich isotherm: q = K<sub>f</sub>·c^(1/n)</li>
+            </ul>
+            <strong>(c) Condensation:</strong> cool gas below dew point → liquid; used for high-conc VOCs.<br/>
+            <strong>(d) Combustion / Afterburners:</strong>
+            <ul>
+                <li><strong>Thermal oxidiser:</strong> direct combustion at 700–980°C; VOC destruction &gt; 99%</li>
+                <li><strong>Catalytic oxidiser:</strong> Pt/Pd catalyst; operates at 300–500°C; lower fuel cost</li>
+                <li><strong>Regenerative Thermal Oxidiser (RTO):</strong> ceramic heat recovery, efficiency &gt; 95%</li>
+            </ul>
+        </div>
+
+        <h3>4.8 FLUE GAS DESULPHURISATION (FGD)</h3>
+        <div class="content">
+            <strong>Purpose:</strong> removes SO₂ from flue gas (thermal power plants).<br/>
+            <strong>Wet limestone FGD</strong> (most common, ~85% of world capacity):
+        </div>
+        <div class="formula">
+            CaCO₃ + SO₂ + ½O₂ + 2H₂O → CaSO₄·2H₂O (gypsum) + CO₂<br/>
+            SO₂ removal efficiency: &gt; 95%<br/>
+            L/G ratio: 5–20 L/m³; Ca/S molar ratio: 1.02–1.05<br/>
+            Byproduct: marketable gypsum (wallboard, cement)
+        </div>
+        <div class="content">
+            <strong>Other FGD types:</strong> dry/semi-dry lime (spray dryer absorber), seawater FGD (coastal plants), ammonia scrubbing, regenerable processes (Wellman-Lord).<br/>
+            <strong>Indian context:</strong> MoEFCC 2015 norms made FGD mandatory for all thermal plants; deadlines extended multiple times; &lt; 40% capacity fitted as of 2025.
+        </div>
+
+        <h3>4.9 NOₓ CONTROL</h3>
+        <div class="content">
+            <strong>Combustion modifications (in-furnace):</strong>
+            <ul>
+                <li>Low-NOₓ burners (staged combustion)</li>
+                <li>Flue Gas Recirculation (FGR): reduces flame T → less thermal NOₓ</li>
+                <li>Over-Fire Air (OFA): two-stage combustion</li>
+                <li>Water/steam injection</li>
+            </ul>
+            <strong>Post-combustion:</strong>
+            <ul>
+                <li><strong>SCR (Selective Catalytic Reduction):</strong> NH₃ + NO + ¼O₂ → N₂ + 1.5H₂O on V₂O₅/TiO₂ catalyst at 300–400°C; efficiency 80–95%</li>
+                <li><strong>SNCR (Selective Non-Catalytic Reduction):</strong> NH₃ or urea at 870–1100°C; no catalyst; efficiency 30–70%; cheaper but lower efficiency</li>
+            </ul>
+        </div>
+
+        <h3>4.10 AUTOMOTIVE EMISSION CONTROLS <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="content">
+            <strong>Three-Way Catalyst (TWC)</strong> for petrol vehicles (stoichiometric operation):
+            <ul>
+                <li>Simultaneously oxidises CO, HC and reduces NOₓ on Pt/Pd/Rh catalyst</li>
+                <li>Requires λ (excess air ratio) close to 1.0 — controlled by O₂ sensor</li>
+                <li>Needs unleaded petrol (Pb poisons catalyst)</li>
+            </ul>
+            <strong>Diesel controls:</strong>
+            <ul>
+                <li><strong>DOC (Diesel Oxidation Catalyst):</strong> oxidises CO, HC</li>
+                <li><strong>DPF (Diesel Particulate Filter):</strong> traps soot, regenerates by burning at high T</li>
+                <li><strong>SCR:</strong> NOₓ reduction with AdBlue (urea 32.5%)</li>
+                <li><strong>EGR (Exhaust Gas Recirculation):</strong> reduces combustion T</li>
+            </ul>
+            <strong>Fuel quality (BS-VI, since April 2020):</strong> sulphur &lt; 10 ppm (vs 50 ppm BS-IV); enables TWC/DPF.
+        </div>
+
+        <h2>SECTION 5: STANDARDS &amp; MONITORING</h2>
+        <div class="section-intro">
+            Factual section — pure recall. Essential for UPPCB AEE (guaranteed 2–3 Qs).
+        </div>
+
+        <h3>5.1 NAAQS 2009 (MoEFCC, India)</h3>
+        <div class="standard">
+            <strong>National Ambient Air Quality Standards — 12 pollutants:</strong>
+            <table>
+                <tr><th>Pollutant</th><th>Averaging time</th><th>Industrial/Residential/Rural</th><th>Ecologically sensitive</th></tr>
+                <tr><td>SO₂ (µg/m³)</td><td>Annual</td><td>50</td><td>20</td></tr>
+                <tr><td>SO₂ (µg/m³)</td><td>24-hr</td><td>80</td><td>80</td></tr>
+                <tr><td>NO₂ (µg/m³)</td><td>Annual</td><td>40</td><td>30</td></tr>
+                <tr><td>NO₂ (µg/m³)</td><td>24-hr</td><td>80</td><td>80</td></tr>
+                <tr><td>PM₁₀ (µg/m³)</td><td>Annual</td><td>60</td><td>60</td></tr>
+                <tr><td>PM₁₀ (µg/m³)</td><td>24-hr</td><td>100</td><td>100</td></tr>
+                <tr><td>PM₂.₅ (µg/m³)</td><td>Annual</td><td>40</td><td>40</td></tr>
+                <tr><td>PM₂.₅ (µg/m³)</td><td>24-hr</td><td>60</td><td>60</td></tr>
+                <tr><td>O₃ (µg/m³)</td><td>8-hr</td><td>100</td><td>100</td></tr>
+                <tr><td>O₃ (µg/m³)</td><td>1-hr</td><td>180</td><td>180</td></tr>
+                <tr><td>CO (mg/m³)</td><td>8-hr</td><td>2</td><td>2</td></tr>
+                <tr><td>CO (mg/m³)</td><td>1-hr</td><td>4</td><td>4</td></tr>
+                <tr><td>Pb (µg/m³)</td><td>Annual</td><td>0.5</td><td>0.5</td></tr>
+                <tr><td>NH₃ (µg/m³)</td><td>Annual</td><td>100</td><td>100</td></tr>
+                <tr><td>Benzene (µg/m³)</td><td>Annual</td><td>5</td><td>5</td></tr>
+                <tr><td>BaP (ng/m³)</td><td>Annual</td><td>1</td><td>1</td></tr>
+                <tr><td>As (ng/m³)</td><td>Annual</td><td>6</td><td>6</td></tr>
+                <tr><td>Ni (ng/m³)</td><td>Annual</td><td>20</td><td>20</td></tr>
+            </table>
+        </div>
+
+        <h3>5.2 AIR QUALITY INDEX (AQI)</h3>
+        <div class="content">
+            CPCB AQI launched 2014 under Swachh Bharat. Uses 8 pollutants: PM₁₀, PM₂.₅, SO₂, NO₂, O₃, CO, NH₃, Pb.
+        </div>
+        <table>
+            <tr><th>AQI</th><th>Category</th><th>Colour</th><th>Health impact</th></tr>
+            <tr><td>0–50</td><td>Good</td><td>Green</td><td>Minimal</td></tr>
+            <tr><td>51–100</td><td>Satisfactory</td><td>Light green</td><td>Minor discomfort for sensitive</td></tr>
+            <tr><td>101–200</td><td>Moderate</td><td>Yellow</td><td>Breathing discomfort for sensitive</td></tr>
+            <tr><td>201–300</td><td>Poor</td><td>Orange</td><td>Breathing discomfort on prolonged exposure</td></tr>
+            <tr><td>301–400</td><td>Very Poor</td><td>Red</td><td>Respiratory illness on prolonged exposure</td></tr>
+            <tr><td>401–500</td><td>Severe</td><td>Maroon</td><td>Affects healthy; serious for diseased</td></tr>
+        </table>
+        <div class="formula">
+            AQI calculation: sub-index I<sub>p</sub> for each pollutant; AQI = max(I<sub>p</sub>); reported only if ≥ 3 pollutants measured (min 1 of PM₁₀ or PM₂.₅).
+        </div>
+
+        <h3>5.3 BS-VI VEHICLE EMISSION NORMS (April 2020)</h3>
+        <table>
+            <tr><th>Parameter</th><th>BS-IV</th><th>BS-VI</th></tr>
+            <tr><td>Fuel sulphur (petrol/diesel)</td><td>50 ppm</td><td>10 ppm</td></tr>
+            <tr><td>Diesel PM (car)</td><td>25 mg/km</td><td>4.5 mg/km</td></tr>
+            <tr><td>Diesel NOₓ (car)</td><td>0.25 g/km</td><td>0.08 g/km</td></tr>
+            <tr><td>Petrol NOₓ (car)</td><td>0.08 g/km</td><td>0.06 g/km</td></tr>
+            <tr><td>Enabling tech</td><td>DOC</td><td>DPF + SCR + TWC</td></tr>
+            <tr><td>New requirement</td><td>—</td><td>RDE (Real Driving Emissions), OBD-II</td></tr>
+        </table>
+        <div class="highlight">
+            India skipped BS-V and jumped from BS-IV (2017) to BS-VI (April 2020) — a 3-year fuel quality leap.
+        </div>
+
+        <h3>5.4 CPCB STACK EMISSION STANDARDS (examples)</h3>
+        <ul>
+            <li><strong>Thermal power (installed before 2003):</strong> PM 100 mg/Nm³; SO₂ 600/200 (&lt;500/&gt;500 MW); NOₓ 600 mg/Nm³</li>
+            <li><strong>Thermal power (installed 2017 onwards):</strong> PM 30 mg/Nm³; SO₂ 100; NOₓ 100; Hg 0.03 mg/Nm³</li>
+            <li><strong>Cement plant:</strong> PM 30 mg/Nm³; NOₓ 600; SO₂ 100–700 (depends on feed)</li>
+            <li><strong>Diesel generator set (&gt; 800 kW):</strong> PM 0.2 g/kWh; NOₓ 3.5–9.2 g/kWh</li>
+            <li><strong>Brick kiln (zigzag/VSBK):</strong> PM 250 mg/Nm³</li>
+        </ul>
+
+        <h3>5.5 MONITORING NETWORKS</h3>
+        <div class="content">
+            <ul>
+                <li><strong>NAMP (National Air quality Monitoring Programme):</strong> manual monitoring of 4 pollutants (SO₂, NO₂, PM₁₀, PM₂.₅); ~830 stations in 344 cities (2023)</li>
+                <li><strong>CAAQMS (Continuous Ambient AQ Monitoring Stations):</strong> real-time monitoring of 12 pollutants + meteorology; ~530 stations (2024)</li>
+                <li><strong>SAFAR (System of Air quality &amp; weather Forecasting):</strong> IITM Pune — Delhi, Mumbai, Pune, Ahmedabad</li>
+                <li>Sampling height: 3–10 m above ground</li>
+                <li>Sampling duration: 24-hr (manual); continuous for CAAQMS</li>
+                <li>Minimum monitoring: 104 days/yr (NAMP)</li>
+            </ul>
+        </div>
+
+        <h3>5.6 AIR MONITORING INSTRUMENTS</h3>
+        <table>
+            <tr><th>Pollutant</th><th>Method</th><th>Principle</th></tr>
+            <tr><td>TSP / PM₁₀</td><td>High-Volume Sampler (HVS)</td><td>Gravimetric; 24 hr</td></tr>
+            <tr><td>PM₂.₅</td><td>FRM gravimetric, beta attenuation, TEOM</td><td>Mass-based</td></tr>
+            <tr><td>SO₂</td><td>West-Gaeke (pararosaniline)</td><td>Colorimetric; impinger</td></tr>
+            <tr><td>NOₓ</td><td>Saltzman (Jacobs-Hochheiser)</td><td>Colorimetric; azo-dye</td></tr>
+            <tr><td>CO / CO₂</td><td>NDIR (non-dispersive IR)</td><td>IR absorption</td></tr>
+            <tr><td>O₃</td><td>UV photometric</td><td>UV absorption at 254 nm</td></tr>
+            <tr><td>NO / NOₓ</td><td>Chemiluminescence</td><td>NO + O₃ → NO₂* → hν</td></tr>
+            <tr><td>VOCs</td><td>GC-FID, GC-MS</td><td>Chromatography</td></tr>
+            <tr><td>Heavy metals</td><td>HVS + AAS / ICP-MS</td><td>Collect on filter, digest, analyse</td></tr>
+        </table>
+
+        <h2>HIGH-YIELD MCQ REVISION LIST</h2>
+        <div class="exam-strategy">
+            <h3>MUST-KNOW FACTS (High Probability Qs):</h3>
+            <ul>
+                <li>✓ <strong>Atmosphere layers order:</strong> Tropo (T ↓) → Strato (T ↑, O₃) → Meso (T ↓) → Thermo (T ↑)</li>
+                <li>✓ <strong>DALR = 9.8°C/km</strong>; ISA ELR ≈ 6.5°C/km</li>
+                <li>✓ <strong>Primary vs secondary pollutants:</strong> O₃, PAN, H₂SO₄, HNO₃ = secondary</li>
+                <li>✓ <strong>PM size cutoffs:</strong> PM₁₀ = 10 µm; PM₂.₅ = 2.5 µm (aerodynamic)</li>
+                <li>✓ <strong>NAAQS PM₂.₅:</strong> 60 µg/m³ (24-hr); 40 µg/m³ (annual)</li>
+                <li>✓ <strong>NAAQS PM₁₀:</strong> 100 (24-hr); 60 (annual)</li>
+                <li>✓ <strong>NAAQS SO₂:</strong> 80 (24-hr); 50 (annual); 20 (annual ecologically sensitive)</li>
+                <li>✓ <strong>NAAQS NO₂:</strong> 80 (24-hr); 40 (annual)</li>
+                <li>✓ <strong>CO NAAQS:</strong> 2 mg/m³ (8-hr); 4 mg/m³ (1-hr)</li>
+                <li>✓ <strong>Hb affinity for CO ≈ 240× that for O₂</strong></li>
+                <li>✓ <strong>Zeldovich mechanism:</strong> thermal NOₓ &gt; 1500°C</li>
+                <li>✓ <strong>Deutsch-Anderson:</strong> η = 1 − exp(−wA/Q)</li>
+                <li>✓ <strong>Cyclone cut-size (Lapple):</strong> d<sub>pc</sub> = √[9µW / (2πNV(ρ<sub>p</sub>−ρ))]</li>
+                <li>✓ <strong>Holland's plume rise formula</strong></li>
+                <li>✓ <strong>Pasquill stability classes A–F</strong></li>
+                <li>✓ <strong>Acid rain pH &lt; 5.6;</strong> H₂SO₄ 65–70%, HNO₃ 30–35%</li>
+                <li>✓ <strong>Taj Trapezium Zone:</strong> 10,400 km²; SC order 1996</li>
+                <li>✓ <strong>BS-VI launched April 2020;</strong> sulphur &lt; 10 ppm</li>
+                <li>✓ <strong>AQI: 8 pollutants, 6 categories</strong> (Good to Severe); launched 2014</li>
+                <li>✓ <strong>Benzene NAAQS:</strong> 5 µg/m³ annual</li>
+                <li>✓ <strong>FGD reaction:</strong> CaCO₃ + SO₂ + ½O₂ + 2H₂O → CaSO₄·2H₂O + CO₂</li>
+                <li>✓ <strong>SCR catalyst:</strong> V₂O₅/TiO₂ at 300–400°C with NH₃</li>
+                <li>✓ <strong>TWC for petrol:</strong> Pt/Pd/Rh; needs λ ≈ 1.0; unleaded fuel</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>MEDIUM-YIELD TOPICS:</h3>
+            <ul>
+                <li>• Inversion types (radiation, subsidence, frontal, advection)</li>
+                <li>• Mixing height &amp; seasonal variation in Delhi</li>
+                <li>• Plume types (looping, coning, fanning, fumigation, lofting, trapping)</li>
+                <li>• GWP of key GHGs: CH₄ ≈ 28, N₂O ≈ 273, SF₆ ≈ 25200</li>
+                <li>• ODP: CFC-11 = 1.0 (ref); HCFCs 0.02–0.11; HFCs = 0</li>
+                <li>• London 1952 smog (~12000 deaths); reducing vs oxidising smog</li>
+                <li>• Urban Heat Island: 2–8°C differential</li>
+                <li>• Air monitoring methods (West-Gaeke, Saltzman, NDIR, chemiluminescence)</li>
+                <li>• NAMP vs CAAQMS</li>
+                <li>• Bag filter temperature limits by material</li>
+                <li>• Wet vs dry FGD comparison</li>
+                <li>• Indoor air quality &amp; PMUY</li>
+                <li>• Wind rose convention (FROM not TO)</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>GATE ES ADDITIONS (High Weight in GATE):</h3>
+            <ul>
+                <li>✓ <strong>Stratospheric O₃ depletion (Rowland-Molina):</strong> Cl• chain reaction; 1 Cl atom destroys ~100,000 O₃</li>
+                <li>✓ <strong>Atmospheric sinks &amp; residence times:</strong> SO₂ 2–4 d, CH₄ 12 yr, CFC 50–100 yr, CO₂ 100–1000 yr</li>
+                <li>✓ <strong>Two-film theory, Henry's law</strong> for gas absorption</li>
+                <li>✓ <strong>Langmuir &amp; Freundlich isotherms</strong> for adsorption</li>
+                <li>✓ <strong>Thermal/Fuel/Prompt NOₓ mechanisms</strong> (Zeldovich, Fenimore)</li>
+                <li>✓ <strong>DOC / DPF / EGR / SCR</strong> for diesel emission control</li>
+                <li>✓ <strong>Fick's law</strong> in diffusion-limited scrubbing</li>
+                <li>✓ <strong>Indoor air pollutants</strong> (HCHO, radon, VOCs, SBS)</li>
+                <li>✓ <strong>Monitoring network design</strong> for NAMP/CAAQMS</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <h3>CRITICAL EXAM-DAY TIPS:</h3>
+            <ul>
+                <li><strong>✓ Unit check in Deutsch-Anderson:</strong> w (m/s), A (m²), Q (m³/s) — if Q given in m³/hr, convert.</li>
+                <li><strong>✓ Gaussian plume:</strong> Q in g/s; u in m/s; concentration in µg/m³ requires factor of 10⁶.</li>
+                <li><strong>✓ Holland's Δh:</strong> T in Kelvin; u at stack top (not ground); P ≈ 101.3 kPa unless stated.</li>
+                <li><strong>✓ NAAQS memory:</strong> PM₁₀ annual = 60 &amp; 24-hr = 100; PM₂.₅ = 40 &amp; 60; SO₂ = 50 &amp; 80; NO₂ = 40 &amp; 80.</li>
+                <li><strong>✓ Stokes' settling:</strong> valid only for Re &lt; 1 (small particles); for large particles use intermediate/Newton regime.</li>
+                <li><strong>✓ Pasquill class:</strong> daytime + strong sun + low wind = A (most unstable); clear night + low wind = F.</li>
+                <li><strong>✓ Plume traps:</strong> fumigation (worst ground conc) — inversion ABOVE, unstable below.</li>
+                <li><strong>✓ DALR vs SALR:</strong> dry = 9.8°C/km; saturated &lt; dry because latent heat release slows cooling.</li>
+                <li><strong>✓ ESP resistivity:</strong> too high = back-corona; too low = particle re-entrainment; optimum 10⁴–10¹⁰ Ω·cm.</li>
+                <li><strong>✓ FGD products:</strong> wet limestone → gypsum (marketable); dry lime → mix (waste).</li>
+                <li><strong>✓ Smog ID:</strong> reducing (SO₂ + PM, winter, cold) = London; oxidising (O₃ + PAN, summer, hot) = LA.</li>
+                <li><strong>✓ Marking:</strong> Unit 3 = 10–13 Qs (~15% of paper). Factual (NAAQS, standards) are guaranteed marks — prioritise.</li>
+                <li><strong>✓ Common trap:</strong> criteria pollutants count = 12 (India NAAQS) vs 6 (USEPA) — read question carefully.</li>
+            </ul>
+        </div>
+
+        <div class="standard">
+            <h3>MUST-MEMORISE STANDARDS SUMMARY (NAAQS 2009 India):</h3>
+            <table>
+                <tr><th>Pollutant</th><th>Averaging</th><th>Indl/Res/Rural</th><th>Ecol. sensitive</th></tr>
+                <tr><td>PM₁₀</td><td>24-hr / Annual</td><td>100 / 60</td><td>100 / 60</td></tr>
+                <tr><td>PM₂.₅</td><td>24-hr / Annual</td><td>60 / 40</td><td>60 / 40</td></tr>
+                <tr><td>SO₂</td><td>24-hr / Annual</td><td>80 / 50</td><td>80 / 20</td></tr>
+                <tr><td>NO₂</td><td>24-hr / Annual</td><td>80 / 40</td><td>80 / 30</td></tr>
+                <tr><td>O₃</td><td>1-hr / 8-hr</td><td>180 / 100</td><td>180 / 100</td></tr>
+                <tr><td>CO (mg/m³)</td><td>1-hr / 8-hr</td><td>4 / 2</td><td>4 / 2</td></tr>
+                <tr><td>Pb</td><td>Annual</td><td>0.5</td><td>0.5</td></tr>
+                <tr><td>NH₃</td><td>Annual</td><td>100</td><td>100</td></tr>
+                <tr><td>Benzene</td><td>Annual</td><td>5</td><td>5</td></tr>
+                <tr><td>BaP (ng/m³)</td><td>Annual</td><td>1</td><td>1</td></tr>
+                <tr><td>As (ng/m³)</td><td>Annual</td><td>6</td><td>6</td></tr>
+                <tr><td>Ni (ng/m³)</td><td>Annual</td><td>20</td><td>20</td></tr>
+            </table>
+            All units µg/m³ unless specified. Source: CPCB NAAQS notification 16 Nov 2009.
+        </div>
+
+        <div class="footer">
+            <p><strong>UPPCB AEE Unit 3 Revision Notes | Air Pollution &amp; Control Technology | Generated April 2026</strong></p>
+            <p>Focus on fundamentals, criteria pollutants, dispersion meteorology, control equipment (ESP/bag filter/cyclone/scrubber/FGD/SCR), and NAAQS standards.</p>
+            <p>Standards referenced from NAAQS 2009, CPCB stack emission standards 2015/2017, BS-VI norms (April 2020), Montreal Protocol + Kigali Amendment, and CPHEEO.</p>
+            <p>Includes GATE ES 2026 additions: atmospheric chemistry, ozone depletion, automotive emission controls, absorption/adsorption theory.</p>
+        </div>
+    </div>
 </body>
-
-<script>
-function showTab(tabName) {
-  // Hide all tabs
-  const tabs = document.querySelectorAll('.tab-content');
-  tabs.forEach(tab => tab.classList.remove('active'));
-  
-  // Hide all buttons (remove active state)
-  const buttons = document.querySelectorAll('.tab-btn');
-  buttons.forEach(btn => btn.classList.remove('active'));
-  
-  // Show selected tab
-  document.getElementById(tabName).classList.add('active');
-  
-  // Highlight selected button
-  event.target.classList.add('active');
-}
-</script>
-
 </html>

@@ -3,635 +3,1289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPPCB AEE Unit 5 - Environmental Legislation & Policy</title>
+    <title>UPPCB AEE Unit 1 - Water Supply Engineering</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #212121; background: #f5f5f5; padding: 20px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #212121;
+            background: #f5f5f5;
+            padding: 20px;
+        }
         .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        h1 { color: #1a237e; text-align: center; margin-bottom: 10px; font-size: 28px; }
-        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
-        h2 { color: white; background: #283593; padding: 12px; margin: 30px 0 15px 0; border-left: 4px solid #1a237e; }
-        h3 { color: #1a237e; margin: 20px 0 10px 0; font-size: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
-        .content { line-height: 1.8; margin-bottom: 15px; text-align: justify; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
-        th { background: #283593; color: white; padding: 10px; text-align: left; font-weight: 600; }
-        td { border: 1px solid #ddd; padding: 10px; font-size: 14px; }
-        tr:nth-child(even) { background: #f9f9f9; }
-        .highlight { background: #fff3cd; border-left: 4px solid #ff9800; padding: 10px; margin: 10px 0; font-size: 14px; }
-        .standard { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin: 10px 0; font-size: 14px; font-weight: 500; }
-        .formula { background: #f3e5f5; border-left: 4px solid #9c27b0; padding: 10px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 13px; }
-        .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px; margin: 10px 0; font-size: 13px; }
-        .gate-add { background: #ede7f6; border-left: 4px solid #673ab7; padding: 10px; margin: 10px 0; font-size: 14px; }
-        ul, ol { margin-left: 20px; margin-bottom: 10px; }
+        
+        h1 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        h2 {
+            color: white;
+            background: #283593;
+            padding: 12px;
+            margin: 30px 0 15px 0;
+            border-left: 4px solid #1a237e;
+        }
+        
+        h3 {
+            color: #1a237e;
+            margin: 20px 0 10px 0;
+            font-size: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        
+        .content {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+        }
+        
+        th {
+            background: #283593;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .standard {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .formula {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+        .tip {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
         li { margin-bottom: 5px; }
-        .section-intro { background: #f0f2f5; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd; color: #666; font-size: 12px; }
-        .key-point { color: #c62828; font-weight: 600; }
-        .exam-strategy { background: #fff8e1; border: 2px solid #fbc02d; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        @media print { body { background: white; } .container { box-shadow: none; } }
+        
+        .section-intro {
+            background: #f0f2f5;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .key-point {
+            color: #c62828;
+            font-weight: 600;
+        }
+        
+        .exam-strategy {
+            background: #fff8e1;
+            border: 2px solid #fbc02d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>UNIT 5: ENVIRONMENTAL LEGISLATION &amp; POLICY</h1>
-        <div class="subtitle">UPPCB AEE 2026 | 8-10 Questions | 32-40 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
+        <h1>UNIT 1: WATER SUPPLY ENGINEERING</h1>
+        <div class="subtitle">UPPCB AEE 2026 | 15-18 Questions | 60-72 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
 
-        <h2>SECTION 1: CONSTITUTIONAL PROVISIONS</h2>
+        <!-- SECTION 1 -->
+        <h2>SECTION 1: WATER QUALITY PARAMETERS</h2>
         <div class="section-intro">
-            Indian Constitution articles &amp; schedules relevant to environment. Foundation for all environmental laws — guaranteed 1–2 Qs.
+            Physical, chemical, and biological parameters that define drinking water quality. Focus on IS 10500:2012 limits, measurement methods, and health significance.
         </div>
 
-        <h3>1.1 KEY ARTICLES</h3>
-        <table>
-            <tr><th>Article</th><th>Provision</th><th>Type</th></tr>
-            <tr><td><strong>Article 21</strong></td><td>Right to life — interpreted by SC to include <span class="key-point">right to clean &amp; healthy environment</span></td><td>Fundamental Right</td></tr>
-            <tr><td><strong>Article 32</strong></td><td>Right to constitutional remedies (Writ jurisdiction in SC)</td><td>Fundamental Right</td></tr>
-            <tr><td><strong>Article 48A</strong></td><td>"State shall endeavour to protect &amp; improve environment and to safeguard forests and wildlife"</td><td>DPSP (added by 42nd Amendment, 1976)</td></tr>
-            <tr><td><strong>Article 51A(g)</strong></td><td>"Fundamental duty of every citizen to protect &amp; improve natural environment, forests, lakes, rivers, wildlife, and have compassion for living creatures"</td><td>Fundamental Duty (42nd Amendment, 1976)</td></tr>
-            <tr><td><strong>Article 226</strong></td><td>Writ jurisdiction in High Courts</td><td>Constitutional remedy</td></tr>
-            <tr><td><strong>Article 253</strong></td><td>Parliament power to make law for implementing international treaties</td><td>Legislative power (basis for E(P) Act 1986)</td></tr>
-        </table>
-        <div class="highlight">
-            <strong>Landmark interpretation:</strong> SC in <em>Subhash Kumar v State of Bihar</em> (1991) held that right to live includes right to enjoyment of pollution-free water and air for full enjoyment of life under Art 21.
-        </div>
-
-        <h3>1.2 SEVENTH SCHEDULE — DIVISION OF SUBJECTS</h3>
-        <ul>
-            <li><strong>Union List (List I):</strong> Atomic energy, oilfields/mineral oil resources, regulation of mines</li>
-            <li><strong>State List (List II):</strong> Public health, sanitation, water supply, irrigation, fisheries, land</li>
-            <li><strong>Concurrent List (List III):</strong> Forests (transferred from State List by 42nd Amendment), protection of wild animals &amp; birds, prevention of cruelty to animals, factories</li>
-        </ul>
-
-        <h3>1.3 42ND AMENDMENT (1976) — ENVIRONMENT-RELATED CHANGES</h3>
+        <h3>1.1 PHYSICAL PARAMETERS</h3>
         <div class="content">
+            <strong>Turbidity:</strong> Caused by suspended clay, silt, algae, colloidal organics. Measured <strong>nephelometrically in NTU</strong> (Nephelometric Turbidity Units). High turbidity <span class="key-point">shields pathogens from disinfection</span> (UV, Cl₂).<br/>
+
+            <strong>Colour:</strong>
             <ul>
-                <li>Added <strong>Article 48A</strong> (DPSP) and <strong>Article 51A(g)</strong> (Fundamental Duty)</li>
-                <li>Transferred "Forests" and "Protection of Wild Animals &amp; Birds" from State List to Concurrent List</li>
-                <li>This made environment a constitutional priority</li>
+                <li><strong>True colour</strong> = measured after filtering through 0.45 micron membrane (removes suspended matter)</li>
+                <li><strong>Apparent colour</strong> = includes colour from suspended particles</li>
+                <li>Measured in TCU (True Colour Units) by visual comparison with platinum-cobalt standard or spectrophotometry at 456 nm</li>
             </ul>
+
+            <strong>Odour - Threshold Odour Number (TON):</strong>
+            <ul>
+                <li>TON = (Volume sample + Volume odour-free water) / Volume sample at minimum dilution where odour just detectable to 50% of trained panel</li>
+                <li>TON = 50 means 50× dilution needed before odour disappears; higher TON = more objectionable</li>
+                <li>IS 10500:2012 requires taste and odour to be <strong>'agreeable'</strong> - no numerical limit</li>
+            </ul>
+
+            <strong>Temperature effects:</strong> Palatability (cold water preferred &lt;15°C), decreases DO solubility, increases microbial growth rate, decreases CT values (faster kill), increases reaction rates, makes taste/odour more perceptible.
         </div>
 
-        <h2>SECTION 2: KEY ENVIRONMENTAL ACTS</h2>
-        <div class="section-intro">
-            Mother of legislation — Acts. Highest weightage section. Memorise year, sections, penalties.
-        </div>
-
-        <h3>2.1 WATER (PREVENTION &amp; CONTROL OF POLLUTION) ACT, 1974</h3>
         <div class="standard">
-            <strong>First major environmental Act in India.</strong> Enacted under Article 252 (consent of states), as Water is a State Subject.
-            <ul>
-                <li><strong>Section 3:</strong> Constitution of CPCB (Central Pollution Control Board)</li>
-                <li><strong>Section 4:</strong> Constitution of SPCBs (State Pollution Control Boards)</li>
-                <li><strong>Section 16:</strong> Functions of CPCB — coordinate, advise, set standards, training, R&amp;D</li>
-                <li><strong>Section 17:</strong> Functions of SPCB — implement standards, grant consent, monitor</li>
-                <li><strong>Section 24:</strong> Prohibits use of stream/well for disposal of polluting matter</li>
-                <li><strong>Section 25:</strong> <span class="key-point">Consent to Establish (CTE)</span> &amp; <strong>Section 26 (existing units):</strong> mandatory before discharge</li>
-                <li><strong>Section 27:</strong> Refusal/withdrawal of consent</li>
-                <li><strong>Section 33A:</strong> Power of SPCB to issue directions (closure, electricity/water cut)</li>
-                <li><strong>Section 41/43/44:</strong> Penalties — imprisonment 1.5 years to 6 years + fine</li>
-                <li><strong>Section 47:</strong> Offences by companies (officers liable)</li>
-                <li><strong>Section 49:</strong> Cognisance of offences only by Board or by complaint with 60-day notice</li>
-            </ul>
+            <strong>IS 10500:2012 Physical Limits:</strong><br/>
+            Turbidity: Desirable = <strong>1 NTU</strong>; Permissible (no alternative source) = <strong>5 NTU</strong><br/>
+            Colour: Desirable = <strong>5 TCU</strong>; Permissible = 15 TCU<br/>
+            Taste & Odour: 'Agreeable' (no numerical limit)
         </div>
 
-        <h3>2.2 WATER (PREVENTION &amp; CONTROL OF POLLUTION) CESS ACT, 1977</h3>
+        <h3>1.2 CHEMICAL PARAMETERS</h3>
         <div class="content">
+            <strong>pH:</strong> IS 10500 range = <strong>6.5 to 8.5</strong> (no relaxation permitted).
             <ul>
-                <li>Levies cess on water consumed by specified industries &amp; local authorities</li>
-                <li>Cess collected by State; transferred to Central Govt; reimbursed to SPCBs (up to 80%) for funding</li>
-                <li>15 categories of industries (Schedule I): pulp &amp; paper, chemicals, ferrous metals, non-ferrous, sugar, textiles, dye &amp; dye intermediates, etc.</li>
-                <li>Rebate of 25% if (a) ETP installed and (b) consumption within standard</li>
-                <li><strong>Repealed by GST Council in 2017</strong> (subsumed under GST regime)</li>
+                <li>pH &lt; 6.5 → corrosion of pipes, leaching of heavy metals</li>
+                <li>pH &gt; 8.5 → reduces chlorination efficiency (HOCl → OCl⁻, which is 80× less germicidal)</li>
+                <li>Optimal disinfection pH: <strong>7.0-7.5</strong> (HOCl dominates)</li>
             </ul>
+
+            <strong>Hardness:</strong>
+            <ul>
+                <li><strong>Temporary hardness:</strong> Ca(HCO₃)₂ and Mg(HCO₃)₂ - removed by boiling → CaCO₃ ↓ + H₂O + CO₂</li>
+                <li><strong>Permanent hardness:</strong> CaSO₄, MgSO₄, CaCl₂, MgCl₂ - requires lime-soda or ion exchange softening</li>
+                <li><strong>Hardness as CaCO₃ = (ion mg/L ÷ equivalent weight) × 50</strong></li>
+            </ul>
+
+            <strong>Alkalinity interpretation (P = phenolphthalein, M = methyl orange):</strong>
+            <ul>
+                <li>P = 0, M &gt; 0 → HCO₃⁻ only = M</li>
+                <li>P = M → OH⁻ only</li>
+                <li>P = M/2 → CO₃²⁻ only</li>
+                <li>P &lt; M/2 → CO₃²⁻ + HCO₃⁻</li>
+                <li>P &gt; M/2 → CO₃²⁻ + OH⁻</li>
+            </ul>
+
+            <strong>Dissolved Oxygen (DO):</strong> Measured by <strong>Winkler iodometric method</strong> (azide modification removes NO₂⁻ interference). Field: membrane electrode (Clark-type polarographic sensor).
         </div>
 
-        <h3>2.3 AIR (PREVENTION &amp; CONTROL OF POLLUTION) ACT, 1981</h3>
         <div class="standard">
-            Enacted under Article 253 (to implement Stockholm Conference 1972).
-            <ul>
-                <li><strong>Section 16:</strong> Functions of CPCB on air</li>
-                <li><strong>Section 17:</strong> Functions of SPCB on air</li>
-                <li><strong>Section 19:</strong> Power to declare <strong>Air Pollution Control Areas</strong> (APCAs)</li>
-                <li><strong>Section 20:</strong> Power to give instructions on use of fuels in APCAs</li>
-                <li><strong>Section 21:</strong> CTE/CTO for industries in APCAs</li>
-                <li><strong>Section 22:</strong> Prohibition of emission exceeding standards</li>
-                <li><strong>Section 31A:</strong> Power to issue directions (added 1987 amendment, mirrors Water Act 33A)</li>
-                <li><strong>Section 37:</strong> Penalty — imprisonment 1.5–6 years + fine</li>
-                <li><strong>1987 amendment</strong> brought Noise within Air Act ambit</li>
-            </ul>
+            <strong>IS 10500:2012 Chemical Limits:</strong><br/>
+            pH = <strong>6.5-8.5</strong> | Total Hardness: Desirable 200, Permissible 600 mg/L as CaCO₃<br/>
+            TDS: Desirable 500, Permissible 2000 mg/L | Chloride: 250/1000 mg/L<br/>
+            Sulphate: 200/400 mg/L | Iron: 0.3/no relaxation | Fluoride: 1.0/1.5 mg/L<br/>
+            Nitrate: 45 mg/L (no relaxation) | Arsenic: 0.01/0.05 mg/L | Lead: 0.01/0.05 mg/L
         </div>
 
-        <h3>2.4 ENVIRONMENT (PROTECTION) ACT, 1986 ["UMBRELLA ACT"]</h3>
-        <div class="standard">
-            Passed in aftermath of Bhopal disaster (Dec 2-3, 1984). Most powerful environmental statute.
-            <ul>
-                <li><strong>Section 3:</strong> Power of Central Govt to take ALL measures for environment protection</li>
-                <li>&nbsp;&nbsp;• 3(1) — coordinate state actions, set standards, restrict locations of industries, lay down procedures &amp; safeguards</li>
-                <li>&nbsp;&nbsp;• 3(2) — set standards for emissions/discharge</li>
-                <li>&nbsp;&nbsp;• 3(3) — constitute authorities (e.g., CRZ Authority, EPCA, CGWA)</li>
-                <li><strong>Section 5:</strong> Power to issue directions (closure, electricity/water cut)</li>
-                <li><strong>Section 6:</strong> Power to make rules</li>
-                <li><strong>Section 7:</strong> No person shall discharge pollutant in excess of standard</li>
-                <li><strong>Section 8:</strong> Procedure for handling hazardous substances</li>
-                <li><strong>Section 9:</strong> Furnishing information to authorities in case of emergency</li>
-                <li><strong>Section 15:</strong> <span class="key-point">Penalty — up to 5 years imprisonment + ₹1 lakh fine; continuing failure ₹5000/day; if &gt; 1 yr, up to 7 years</span></li>
-                <li><strong>Section 16:</strong> Offences by companies</li>
-                <li><strong>Section 19:</strong> Cognisance only on complaint by Govt OR by any person who has given 60-day notice</li>
-            </ul>
-        </div>
-        <div class="highlight">
-            <strong>Major rules under E(P) Act 1986:</strong> EIA Notification 2006; CRZ Notification 2019; Hazardous Chemicals Rules 1989; HOWM Rules 2016; SWM Rules 2016; Plastic Waste Rules 2016; E-Waste Rules 2022; BMW Rules 2016; Noise Rules 2000; Wetland Rules 2017; Eco-Sensitive Zones; Ozone Depleting Substances (Regulation) Rules 2000.
-        </div>
-
-        <h3>2.5 WILDLIFE (PROTECTION) ACT, 1972</h3>
+        <h3>1.3 BIOLOGICAL PARAMETERS</h3>
         <div class="content">
-            Enacted to implement CITES (1973). Amended several times — latest <strong>Wildlife (Protection) Amendment Act, 2022</strong>.<br/>
-            <strong>Schedules (post 2022 amendment — restructured to 4 from earlier 6):</strong>
+            <strong>Coliform Bacteria:</strong> Used as indicator organisms. <span class="key-point">E. coli</span> is chosen over pathogens because:
             <ul>
-                <li><strong>Schedule I:</strong> animals with highest protection (tiger, lion, elephant, rhinoceros, snow leopard, etc.); penalty for hunting: 3–7 years + fine ₹25,000+</li>
-                <li><strong>Schedule II:</strong> animals with reduced protection (some monkeys, civets)</li>
-                <li><strong>Schedule III:</strong> protected plants (orchids, kuth, etc.)</li>
-                <li><strong>Schedule IV:</strong> CITES Appendix species (added by 2022 amendment)</li>
+                <li>Abundant: 10⁸-10⁹ per gram of human feces</li>
+                <li>Simple, inexpensive detection (MPN, MF technique)</li>
+                <li>Survival similar to most enteric pathogens</li>
+                <li>Does not multiply in treated water</li>
+                <li>Thermotolerant coliforms at 44.5°C = fecal indicator</li>
             </ul>
-            <strong>Protected Areas:</strong>
-            <ul>
-                <li><strong>National Park</strong> (NP): no human activity; ~106 in India</li>
-                <li><strong>Wildlife Sanctuary</strong> (WLS): some restricted activity allowed; ~573</li>
-                <li><strong>Conservation Reserve</strong> &amp; <strong>Community Reserve</strong> (added 2002 amendment)</li>
-                <li><strong>Tiger Reserves:</strong> declared under Section 38V (added 2006); ~55 tiger reserves managed by NTCA (Project Tiger 1973)</li>
-            </ul>
-            <strong>Authorities:</strong> NBWL (National Board for Wildlife) chaired by PM; State Boards; Wildlife Crime Control Bureau (WCCB).
-        </div>
 
-        <h3>2.6 FOREST (CONSERVATION) ACT, 1980</h3>
-        <div class="standard">
-            <ul>
-                <li><strong>Section 2:</strong> No State Govt shall (without prior approval of Central Govt) — (a) declare reserved forest as not reserved; (b) use forest land for non-forest purpose; (c) assign forest land to private person; (d) clear naturally grown trees for re-afforestation</li>
-                <li><strong>Compensatory Afforestation:</strong> equivalent area of non-forest land OR 2× degraded forest land, plus NPV (Net Present Value) for diversion</li>
-                <li><strong>CAMPA</strong> (Compensatory Afforestation Fund Mgmt &amp; Planning Authority) — under CAF Act 2016 — manages CA funds (~₹50,000 crore corpus)</li>
-                <li><strong>FCA Amendment 2023</strong> renamed it "Van (Sanrakshan Evam Samvardhan) Adhiniyam" — exempted forest land within 100 km of LAC, security infrastructure up to 10 ha, etc.</li>
-            </ul>
-        </div>
-
-        <h3>2.7 BIOLOGICAL DIVERSITY ACT, 2002</h3>
-        <div class="content">
-            Enacted to implement <strong>Convention on Biological Diversity (CBD), 1992 (Rio Earth Summit)</strong>.<br/>
-            <strong>Three-tier structure:</strong>
-            <ul>
-                <li><strong>National Biodiversity Authority (NBA):</strong> Chennai; foreign access &amp; IPR clearance</li>
-                <li><strong>State Biodiversity Board (SBB):</strong> domestic commercial use approvals</li>
-                <li><strong>Biodiversity Management Committee (BMC):</strong> at every panchayat / municipality; maintains <strong>People's Biodiversity Register (PBR)</strong></li>
-            </ul>
-            <strong>Key concepts:</strong>
-            <ul>
-                <li><strong>ABS (Access &amp; Benefit Sharing):</strong> equitable sharing of benefits from biological resources</li>
-                <li><strong>Section 3:</strong> Restriction on foreign nationals/companies for use of biological resources without NBA approval</li>
-                <li><strong>Biodiversity Heritage Sites</strong> declared by State Govt</li>
-                <li><strong>2023 amendment:</strong> decriminalised some offences; encouraged AYUSH research; faster approvals</li>
-            </ul>
-        </div>
-
-        <h3>2.8 NATIONAL GREEN TRIBUNAL (NGT) ACT, 2010</h3>
-        <div class="standard">
-            <ul>
-                <li><strong>Established:</strong> 18 October 2010; first sitting May 2011</li>
-                <li><strong>Composition:</strong> Chairperson (sitting/retired SC judge or HC Chief Justice) + judicial &amp; expert members (10 each, max 20 each)</li>
-                <li><strong>Principal bench:</strong> New Delhi; <strong>Zonal benches:</strong> Pune (West), Bhopal (Central), Kolkata (East), Chennai (South)</li>
-                <li><strong>Jurisdiction:</strong> civil cases related to enforcement of any of <strong>7 environmental laws</strong> in Schedule I:
-                    <ol>
-                        <li>Water Act 1974</li>
-                        <li>Water Cess Act 1977</li>
-                        <li>Forest (Conservation) Act 1980</li>
-                        <li>Air Act 1981</li>
-                        <li>Environment (Protection) Act 1986</li>
-                        <li>Public Liability Insurance Act 1991</li>
-                        <li>Biological Diversity Act 2002</li>
-                    </ol>
-                    (Note: Wildlife Protection Act 1972 is NOT under NGT jurisdiction)
-                </li>
-                <li><strong>Limitation:</strong> 6 months from cause of action (extendable by 60 days)</li>
-                <li><strong>Decision:</strong> within 6 months</li>
-                <li><strong>Appeal:</strong> directly to Supreme Court within 90 days</li>
-                <li><strong>Principles applied:</strong> Sustainable development, Polluter Pays, Precautionary Principle</li>
-                <li><strong>Penalty:</strong> non-compliance — up to 3 years jail or ₹10 crore (companies up to ₹25 crore)</li>
-            </ul>
-        </div>
-        <div class="highlight">
-            <strong>Notable NGT orders:</strong> Banned diesel vehicles &gt; 10 yr in NCR (2015); Sterlite Copper closure (2018, Tuticorin); STP discharge standards revision (Jan 2019, 1 mg/L FC for new STPs in metros); Yamuna pollution monitoring; ban on plastic flags.
-        </div>
-
-        <h3>2.9 PUBLIC LIABILITY INSURANCE (PLI) ACT, 1991</h3>
-        <div class="content">
-            Enacted post-Bhopal to provide immediate relief to victims of accidents involving hazardous substances.
-            <ul>
-                <li>Mandatory insurance by handlers of hazardous substances (listed in HC Rules 1989 — over 600 substances)</li>
-                <li><strong>No-fault liability principle:</strong> victims need not prove negligence</li>
-                <li>Maximum compensation per claim: ₹25,000 (medical), ₹25,000 (loss of wages), ₹25,000–₹1 lakh (death/permanent disability) — limited; balance through tort law</li>
-                <li><strong>Environmental Relief Fund:</strong> contribution by industry equal to insurance premium; managed by Govt</li>
-                <li>District Collector adjudicates claims</li>
-            </ul>
-        </div>
-
-        <h3>2.10 OTHER KEY LAWS (BRIEF)</h3>
-        <table>
-            <tr><th>Act</th><th>Year</th><th>Subject</th></tr>
-            <tr><td>Indian Forest Act</td><td>1927</td><td>Forest classification (Reserved, Protected, Village)</td></tr>
-            <tr><td>Atomic Energy Act</td><td>1962</td><td>Radioactive material regulation; AERB</td></tr>
-            <tr><td>Insecticides Act</td><td>1968</td><td>Registration &amp; sale of pesticides</td></tr>
-            <tr><td>Hazardous Chemicals (Manufacture, Storage &amp; Import) Rules</td><td>1989</td><td>MAH units; on-site &amp; off-site emergency plans</td></tr>
-            <tr><td>National Environment Tribunal Act</td><td>1995</td><td>(repealed by NGT Act 2010)</td></tr>
-            <tr><td>National Environment Appellate Authority Act</td><td>1997</td><td>(repealed by NGT Act 2010)</td></tr>
-            <tr><td>Compensatory Afforestation Fund (CAF) Act</td><td>2016</td><td>CAMPA fund management</td></tr>
-            <tr><td>Energy Conservation Act</td><td>2001 (amended 2022)</td><td>BEE; star rating; carbon market provisions (2022 amendment)</td></tr>
-        </table>
-
-        <h2>SECTION 3: RULES &amp; NOTIFICATIONS</h2>
-        <div class="section-intro">
-            Subordinate legislation under E(P) Act 1986 — high probability factual Qs.
-        </div>
-
-        <h3>3.1 EIA NOTIFICATION 2006</h3>
-        <div class="standard">
-            Issued under E(P) Act 1986; supersedes EIA Notification 1994.
-            <ul>
-                <li><strong>Scope:</strong> 8 sectors covering 39 categories of projects (mining, thermal power, river valley, infrastructure, etc.)</li>
-                <li><strong>Two categories:</strong>
-                    <ul>
-                        <li><strong>Category A:</strong> appraised by <strong>EAC (Expert Appraisal Committee)</strong> at central level (MoEFCC)</li>
-                        <li><strong>Category B:</strong> appraised by <strong>SEAC (State EAC)</strong> at state level (SEIAA — State Environmental Impact Assessment Authority)</li>
-                        <li>Category B further split into <strong>B1</strong> (full EIA required) &amp; <strong>B2</strong> (no EIA, only EMP)</li>
-                    </ul>
-                </li>
-                <li><strong>4-stage process:</strong> Screening → Scoping (ToR) → Public Consultation → Appraisal</li>
-                <li><strong>Public hearing:</strong> compulsory for Cat A &amp; B1 (except some exempt categories like industrial estates within notified parks)</li>
-                <li><strong>Validity of EC:</strong> 5 years (mining 50 years, river valley 13 years, area development 10 years)</li>
-                <li><strong>Form 1 + Form 1A</strong> (latter for buildings/area development) — initial application</li>
-                <li><strong>EIA Draft Notification 2020</strong> proposed major changes (post-facto clearance, reduced public hearing) — heavily criticised; not finalised</li>
-            </ul>
-        </div>
-
-        <h3>3.2 CRZ NOTIFICATION 2019</h3>
-        <div class="content">
-            Coastal Regulation Zone — 500 m landward from HTL; 50 m on tidal influenced rivers/creeks.<br/>
-            <strong>Four CRZ categories:</strong>
-            <ul>
-                <li><strong>CRZ-I:</strong> ecologically sensitive (mangroves, coral reefs, salt marshes, turtle nesting); two sub-zones IA (no construction) &amp; IB (intertidal, limited)</li>
-                <li><strong>CRZ-II:</strong> developed urban areas close to shoreline (existing built environment)</li>
-                <li><strong>CRZ-III:</strong> rural &amp; undeveloped; A &amp; B sub-zones based on density (A: density &gt; 2161/km²; B: density ≤ 2161/km²); No Development Zone reduced — A: 50 m; B: 200 m from HTL</li>
-                <li><strong>CRZ-IV:</strong> water area from LTL up to 12 nautical miles</li>
-            </ul>
-            Implementation by State CZMAs (Coastal Zone Management Authorities).
-        </div>
-
-        <h3>3.3 NOISE POLLUTION (REGULATION &amp; CONTROL) RULES, 2000</h3>
-        <table>
-            <tr><th>Area Category</th><th>Day (6 AM – 10 PM) dBA</th><th>Night (10 PM – 6 AM) dBA</th></tr>
-            <tr><td>Industrial</td><td>75</td><td>70</td></tr>
-            <tr><td>Commercial</td><td>65</td><td>55</td></tr>
-            <tr><td>Residential</td><td>55</td><td>45</td></tr>
-            <tr><td><strong>Silence Zone</strong></td><td>50</td><td>40</td></tr>
-        </table>
-        <div class="content">
-            <strong>Silence zones:</strong> 100 m around hospitals, educational institutions, courts.<br/>
-            <strong>Other key provisions:</strong>
-            <ul>
-                <li>Loudspeakers/PA systems prohibited 10 PM – 6 AM (state may permit relaxation up to 12 midnight on cultural/festive occasions, max 15 days/year)</li>
-                <li>Horns of motor vehicles prohibited in silence zones</li>
-                <li>Firecrackers banned 10 PM – 6 AM (SC order 2018: only "green crackers" allowed in NCR; 2 hr only on Diwali)</li>
-            </ul>
-        </div>
-
-        <h3>3.4 OZONE DEPLETING SUBSTANCES (ODS) RULES, 2000</h3>
-        <div class="content">
-            Implements <strong>Montreal Protocol (1987)</strong> &amp; <strong>Kigali Amendment (2016)</strong>.
-            <ul>
-                <li>Phases out CFCs (completed 2010 in India), Halons (2010), CTC, MeCl, MeBr</li>
-                <li>HCFCs phase-out: complete by 2030 (India)</li>
-                <li>HFCs (added by Kigali) — India to reduce by 80% by 2047</li>
-                <li>Mandatory labelling, registration of importers/manufacturers</li>
-                <li>Cell: Ozone Cell, MoEFCC</li>
-            </ul>
-        </div>
-
-        <h3>3.5 WETLAND (CONSERVATION &amp; MANAGEMENT) RULES, 2017</h3>
-        <div class="content">
-            <ul>
-                <li>Replace Wetland Rules 2010</li>
-                <li><strong>Wetlands Authority</strong> at state level (chaired by Environment Minister)</li>
-                <li>Brief list of "prohibited activities": conversion to non-wetland use, encroachment, setting up new industries, solid waste disposal, untreated effluent discharge, poaching</li>
-                <li>India has <strong>85 Ramsar sites</strong> (as of 2024); largest network in South Asia</li>
-                <li>Total area covered: ~13 lakh ha</li>
-                <li>Largest Ramsar site in India: <strong>Sundarbans (West Bengal)</strong></li>
-            </ul>
-        </div>
-
-        <h2>SECTION 4: INTERNATIONAL CONVENTIONS</h2>
-        <div class="section-intro">
-            International environmental treaties India is party to. High recall — multiple Qs likely.
-        </div>
-
-        <h3>4.1 MAJOR CONVENTIONS — TIMELINE</h3>
-        <table>
-            <tr><th>Year</th><th>Convention</th><th>Subject</th><th>Hosted at</th></tr>
-            <tr><td>1971</td><td><strong>Ramsar Convention</strong></td><td>Wetlands of international importance</td><td>Ramsar, Iran</td></tr>
-            <tr><td>1972</td><td><strong>Stockholm Conference</strong> (UNCHE)</td><td>First UN environment conference; UNEP born</td><td>Stockholm</td></tr>
-            <tr><td>1972</td><td>London Convention</td><td>Marine dumping</td><td>London</td></tr>
-            <tr><td>1973</td><td><strong>CITES</strong></td><td>Trade in endangered species</td><td>Washington DC</td></tr>
-            <tr><td>1979</td><td>Bonn (CMS) Convention</td><td>Migratory species</td><td>Bonn</td></tr>
-            <tr><td>1985</td><td><strong>Vienna Convention</strong></td><td>Ozone layer (framework)</td><td>Vienna</td></tr>
-            <tr><td>1987</td><td><strong>Montreal Protocol</strong></td><td>ODS phase-out (operational)</td><td>Montreal</td></tr>
-            <tr><td>1989</td><td><strong>Basel Convention</strong></td><td>Hazardous waste transboundary movement</td><td>Basel</td></tr>
-            <tr><td>1992</td><td><strong>Rio Earth Summit (UNCED)</strong></td><td>Birth of UNFCCC, CBD, UNCCD; Agenda 21; Rio Declaration</td><td>Rio de Janeiro</td></tr>
-            <tr><td>1992</td><td><strong>UNFCCC</strong></td><td>Climate change framework</td><td>Rio</td></tr>
-            <tr><td>1992</td><td><strong>CBD</strong></td><td>Biological diversity</td><td>Rio</td></tr>
-            <tr><td>1994</td><td>UNCCD</td><td>Desertification</td><td>Paris</td></tr>
-            <tr><td>1997</td><td><strong>Kyoto Protocol</strong></td><td>Binding emissions targets for Annex I (developed)</td><td>Kyoto</td></tr>
-            <tr><td>1998</td><td>Rotterdam Convention</td><td>PIC for trade in chemicals/pesticides</td><td>Rotterdam</td></tr>
-            <tr><td>2000</td><td>Cartagena Protocol</td><td>Biosafety (LMOs); under CBD</td><td>Cartagena, Colombia</td></tr>
-            <tr><td>2001</td><td><strong>Stockholm Convention</strong></td><td>Persistent Organic Pollutants (POPs)</td><td>Stockholm</td></tr>
-            <tr><td>2010</td><td>Nagoya Protocol</td><td>ABS; under CBD</td><td>Nagoya, Japan</td></tr>
-            <tr><td>2013</td><td>Minamata Convention</td><td>Mercury</td><td>Kumamoto, Japan</td></tr>
-            <tr><td>2015</td><td><strong>Paris Agreement</strong></td><td>Climate; NDCs; 1.5°C goal</td><td>Paris (COP 21)</td></tr>
-            <tr><td>2016</td><td><strong>Kigali Amendment</strong></td><td>HFC phase-down (under Montreal Protocol)</td><td>Kigali, Rwanda</td></tr>
-        </table>
-
-        <h3>4.2 STOCKHOLM CONFERENCE 1972 &amp; FOLLOW-UP</h3>
-        <div class="content">
-            <strong>UN Conference on Human Environment, Stockholm, 5–16 June 1972.</strong> Tagline: "Only One Earth". Indira Gandhi was the only Head of Government other than the host PM to attend.
-            <ul>
-                <li>Birthed <strong>UNEP</strong> (UN Environment Programme; HQ Nairobi)</li>
-                <li><strong>5 June</strong> declared <strong>World Environment Day</strong></li>
-                <li>India enacted Air Act 1981, E(P) Act 1986 in pursuance</li>
-            </ul>
-            <strong>Subsequent Earth Summits:</strong> Rio 1992; Johannesburg 2002 (Rio+10); Rio 2012 (Rio+20); Stockholm+50 in 2022.
-        </div>
-
-        <h3>4.3 CLIMATE — UNFCCC, KYOTO, PARIS</h3>
-        <div class="standard">
-            <strong>UNFCCC (1992):</strong> framework convention; objective = stabilise GHG concentrations to prevent dangerous anthropogenic interference. India ratified 1993.
-            <ul>
-                <li>Annex I: developed countries (binding obligations)</li>
-                <li>Non-Annex I: developing countries (no binding obligations, but voluntary actions)</li>
-                <li><strong>CBDR-RC</strong> = Common But Differentiated Responsibilities &amp; Respective Capabilities</li>
-            </ul>
-            <strong>Kyoto Protocol (1997, in force 2005):</strong>
-            <ul>
-                <li>Binding emission cuts for Annex I (~5.2% below 1990 levels by 2008–12; first commitment period)</li>
-                <li>3 flexibility mechanisms: <strong>CDM</strong> (Clean Dev Mechanism), <strong>JI</strong> (Joint Implementation), <strong>ET</strong> (Emissions Trading)</li>
-                <li>Doha Amendment (2012): 2nd commitment period 2013–20 (limited ratification)</li>
-            </ul>
-            <strong>Paris Agreement (2015, in force 2016):</strong>
-            <ul>
-                <li><strong>Goal:</strong> well below 2°C above pre-industrial; pursue 1.5°C</li>
-                <li><strong>NDCs</strong> (Nationally Determined Contributions): self-set, reviewed every 5 years (ratchet mechanism)</li>
-                <li><strong>India's updated NDC (Aug 2022):</strong>
-                    <ul>
-                        <li>Reduce GDP emissions intensity by 45% by 2030 (from 2005 level)</li>
-                        <li>50% cumulative installed capacity from non-fossil fuel by 2030</li>
-                        <li>Create additional carbon sink of 2.5–3 billion tonnes CO₂eq through forest cover by 2030</li>
-                        <li><strong>Net-zero by 2070</strong> (announced at COP26 Glasgow, 2021 — Panchamrit)</li>
-                    </ul>
-                </li>
-                <li>$100 billion/year climate finance pledge by developed → developing (committed; underdelivered)</li>
-                <li><strong>Article 6:</strong> carbon markets (rules finalised at COP26)</li>
-            </ul>
-        </div>
-
-        <h3>4.4 OZONE — VIENNA, MONTREAL, KIGALI</h3>
-        <div class="content">
-            <ul>
-                <li><strong>Vienna Convention 1985:</strong> framework; no binding cuts</li>
-                <li><strong>Montreal Protocol 1987:</strong> binding phase-out of CFCs, halons, CTC, methyl chloroform, HCFCs (developed by 2020, developing by 2030); methyl bromide</li>
-                <li>Universally ratified treaty (197 parties + EU); successful — Antarctic ozone hole expected to close by 2065</li>
-                <li><strong>Kigali Amendment 2016:</strong> brings HFCs (high GWP, no ODP) under Montreal; India phase-down 80% by 2047</li>
-                <li>India ratified Kigali in 2021</li>
-            </ul>
-        </div>
-
-        <h3>4.5 BIODIVERSITY — CBD, NAGOYA, CARTAGENA</h3>
-        <div class="content">
-            <strong>CBD (1992, Rio):</strong> 3 objectives:
+            <strong>MPN Test (3-stage procedure):</strong>
             <ol>
-                <li>Conservation of biological diversity</li>
-                <li>Sustainable use of components</li>
-                <li>Fair &amp; equitable sharing of benefits arising from use of genetic resources (ABS)</li>
+                <li><strong>Presumptive:</strong> Lactose broth with inverted Durham tube. Gas production (CO₂ + H₂) within 24-48 h at 35°C = positive</li>
+                <li><strong>Confirmed:</strong> Brilliant Green Bile Broth (BGBB)</li>
+                <li><strong>Completed:</strong> Plated on EMB agar - <strong>metallic sheen on dark colonies = E. coli</strong></li>
             </ol>
-            <strong>Cartagena Protocol on Biosafety (2000):</strong> safe transfer/handling of LMOs (living modified organisms); India ratified 2003.<br/>
-            <strong>Nagoya Protocol on ABS (2010, in force 2014):</strong> implements 3rd objective of CBD; India ratified 2014.<br/>
-            <strong>Aichi Targets (2010, Nagoya):</strong> 20 biodiversity targets for 2011–2020. <strong>Replaced by Kunming-Montreal Global Biodiversity Framework (Dec 2022):</strong> 23 action targets including <strong>30×30</strong> (protect 30% of land &amp; sea by 2030).
-        </div>
 
-        <h3>4.6 CITES (1973, in force 1975)</h3>
-        <div class="standard">
-            Convention on International Trade in Endangered Species of Wild Fauna and Flora.
+            <strong>BOD₅ Test:</strong>
             <ul>
-                <li><strong>Appendix I:</strong> species threatened with extinction; <span class="key-point">commercial trade BANNED</span> (~1100 species — tiger, rhino, gorilla, elephant)</li>
-                <li><strong>Appendix II:</strong> species not necessarily threatened but trade controlled to avoid use incompatible with survival (~37000 species)</li>
-                <li><strong>Appendix III:</strong> species protected in at least one country, which has asked others for help (~200 species)</li>
-                <li>India ratified 1976; implemented through Wildlife (Protection) Act 1972</li>
+                <li>5 days at <strong>20°C ± 1°C in DARK</strong> (darkness prevents algal photosynthesis producing O₂ which would give falsely low BOD)</li>
+                <li>Bottles must be completely full (no air space) and sealed</li>
+                <li>DO depletion should be 2-6 mg/L; residual DO &gt; 1 mg/L after 5 days</li>
+            </ul>
+
+            <strong>COD Test (Standard APHA):</strong>
+            <ul>
+                <li>Oxidant: <strong>K₂Cr₂O₇ in concentrated H₂SO₄</strong></li>
+                <li>Catalyst: Ag₂SO₄ (oxidises straight-chain hydrocarbons)</li>
+                <li>Conditions: 150°C for 2 hours (reflux)</li>
+                <li>Chloride interference removed by HgSO₄ (ratio 10:1 HgSO₄:Cl⁻)</li>
+                <li>Excess Cr₂O₇²⁻ back-titrated with FAS (ferrous ammonium sulphate)</li>
             </ul>
         </div>
 
-        <h3>4.7 BASEL, ROTTERDAM, STOCKHOLM (BRS) "Chemical Conventions"</h3>
-        <ul>
-            <li><strong>Basel (1989):</strong> hazardous waste transboundary movement; PIC; ESM; Ban Amendment in force 2019</li>
-            <li><strong>Rotterdam (1998):</strong> PIC for trade in 50+ hazardous chemicals/pesticides</li>
-            <li><strong>Stockholm (2001):</strong> POPs — initial 12 ("dirty dozen": aldrin, chlordane, DDT, dieldrin, endrin, heptachlor, mirex, toxaphene, HCB, PCBs, dioxins, furans); later expanded to 30+ chemicals</li>
-        </ul>
+        <div class="formula">
+            <strong>BOD/COD Ratio Interpretation:</strong><br/>
+            &gt; 0.5 = Readily biodegradable (domestic sewage 0.5-0.6)<br/>
+            0.3-0.5 = Moderately biodegradable<br/>
+            &lt; 0.3 = Poorly biodegradable (industrial with solvents, dyes - needs physico-chemical/AOP)<br/>
+            <strong>Coliform standard:</strong> ABSENT (0 MPN/100 mL) in drinking water
+        </div>
 
-        <h3>4.8 RAMSAR &amp; OTHER</h3>
+        <h3>1.4 IS 10500:2012 vs WHO GUIDELINES</h3>
         <div class="content">
+            <strong>WHO GDWQ Framework:</strong> Health-based targets derived from risk assessment:
             <ul>
-                <li><strong>Ramsar Convention 1971</strong> (in force 1975): wetlands of international importance; India ratified 1982; <strong>85 Ramsar sites</strong> in India (2024)</li>
-                <li><strong>Bonn (CMS) 1979:</strong> migratory species; India ratified 1983</li>
-                <li><strong>Minamata Convention 2013</strong> (in force 2017): Mercury — phase-out manufacture/import/export, dental amalgam, batteries; named after Minamata mercury poisoning Japan 1956; India ratified 2018</li>
-                <li><strong>UNCCD 1994:</strong> desertification; India hosted COP14 in Sept 2019 (New Delhi Declaration)</li>
+                <li><strong>Carcinogens:</strong> 10⁻⁶ additional lifetime cancer risk</li>
+                <li><strong>Non-carcinogens:</strong> 1 μDALY/person/year tolerable health burden using TDI</li>
+                <li>Non-mandatory international benchmarks; national standards adapt them</li>
+            </ul>
+
+            <strong>WHO Water Safety Plan (WSP):</strong> Multi-barrier preventive approach adapted from HACCP:
+            <ol>
+                <li>Catchment characterisation</li>
+                <li>Treatment barrier adequacy</li>
+                <li>Distribution safeguards</li>
+                <li>Verification monitoring</li>
+                <li>Management procedures</li>
+            </ol>
+
+            <strong>Key WHO vs IS differences:</strong>
+            <ul>
+                <li>WHO free chlorine residual at tap: min 0.1 mg/L, max 5 mg/L (CPHEEO India: min 0.2 mg/L)</li>
+                <li>WHO PM₂.₅ annual (2021): <strong>5 μg/m³</strong> (India NAAQS: 40 μg/m³ - 8× higher)</li>
+                <li>WHO uranium: 0.03 mg/L (basis: kidney nephrotoxicity, not radiation)</li>
             </ul>
         </div>
 
-        <h3>4.9 PRINCIPLES OF INTERNATIONAL ENVIRONMENTAL LAW <span style="color:#673ab7;">(GATE ADD)</span></h3>
-        <div class="standard">
-            <ul>
-                <li><strong>Sustainable Development:</strong> "development that meets the needs of the present without compromising the ability of future generations to meet their own needs" — Brundtland Report 1987 ("Our Common Future")</li>
-                <li><strong>Polluter Pays Principle (PPP):</strong> polluter bears cost of pollution control + damage; first articulated by OECD 1972; SC adopted in <em>Indian Council for Enviro-Legal Action v UoI</em> (1996)</li>
-                <li><strong>Precautionary Principle:</strong> lack of full scientific certainty shall not be a reason to postpone cost-effective measures to prevent environmental degradation; Rio Principle 15; SC adopted in <em>Vellore Citizens Welfare Forum v UoI</em> (1996)</li>
-                <li><strong>Public Trust Doctrine:</strong> certain resources (rivers, seashores, forests) held in trust by state for public use; SC in <em>MC Mehta v Kamal Nath</em> (1997, Span Motels)</li>
-                <li><strong>Inter-generational Equity:</strong> present generation has duty to preserve resources for future; <em>State of HP v Ganesh Wood Products</em> (1995)</li>
-                <li><strong>Common but Differentiated Responsibilities (CBDR):</strong> all states responsible but with differing capabilities (Rio 1992)</li>
-                <li><strong>Absolute Liability:</strong> stricter than strict liability; no exceptions; SC in <em>MC Mehta v UoI</em> (Oleum Gas Leak, 1986)</li>
-            </ul>
+        <!-- SECTION 2 -->
+        <h2>SECTION 2: SOURCES, QUANTITY & POPULATION FORECASTING</h2>
+        <div class="section-intro">
+            Estimation of water demand based on population forecasts, design periods, and fire demand. Foundation for water supply scheme design.
         </div>
 
-        <h3>4.10 NATIONAL ENVIRONMENT POLICY (NEP) 2006 <span style="color:#673ab7;">(GATE ADD)</span></h3>
-        <div class="content">
-            Approved by Union Cabinet in May 2006.<br/>
-            <strong>Key principles:</strong> Human beings at centre of sustainable development; Right to development; Environmental protection integral to development; Polluter Pays; Precautionary; PPP (public participation); Decentralisation; Equity.<br/>
-            <strong>Strategic actions:</strong> conservation of biodiversity, climate change mitigation, water resource management, freshwater ecosystems, pollution control, mountain ecosystems, coastal management.<br/>
-            <strong>NEP is a policy guideline (not legally binding)</strong> — informs subsequent rules &amp; programs.
-        </div>
-
-        <h2>SECTION 5: KEY INSTITUTIONS</h2>
-
-        <h3>5.1 REGULATORY BODIES</h3>
+        <h3>2.1 SURFACE WATER vs GROUNDWATER SOURCES</h3>
         <table>
-            <tr><th>Institution</th><th>Established</th><th>Role</th></tr>
-            <tr><td><strong>MoEFCC</strong> (Ministry of Environment, Forest &amp; Climate Change)</td><td>1985 (renamed 2014)</td><td>Apex policy &amp; regulation</td></tr>
-            <tr><td><strong>CPCB</strong> (Central Pollution Control Board)</td><td>1974</td><td>Standards, monitoring; advises CG</td></tr>
-            <tr><td><strong>SPCB</strong> (State Pollution Control Boards)</td><td>1974+</td><td>Implementation; consent management</td></tr>
-            <tr><td><strong>NGT</strong> (National Green Tribunal)</td><td>2010</td><td>Adjudication of environmental disputes</td></tr>
-            <tr><td><strong>CGWA</strong> (Central Ground Water Authority)</td><td>1997 (under E(P) Act)</td><td>Groundwater regulation in OE/critical areas</td></tr>
-            <tr><td><strong>NBA</strong> (National Biodiversity Authority)</td><td>2003</td><td>BD Act implementation, ABS</td></tr>
-            <tr><td><strong>NTCA</strong> (National Tiger Conservation Authority)</td><td>2006 (statutory; Project Tiger 1973)</td><td>Tiger reserves management</td></tr>
-            <tr><td><strong>NBWL</strong> (National Board for Wildlife)</td><td>2003 (chaired by PM)</td><td>Wildlife policy advice</td></tr>
-            <tr><td><strong>WCCB</strong> (Wildlife Crime Control Bureau)</td><td>2006</td><td>Combat illegal wildlife trade</td></tr>
-            <tr><td><strong>AERB</strong> (Atomic Energy Regulatory Board)</td><td>1983</td><td>Radiation safety</td></tr>
-            <tr><td><strong>BIS</strong> (Bureau of Indian Standards)</td><td>1986</td><td>Indian Standards (e.g., IS 10500 drinking water)</td></tr>
-            <tr><td><strong>FSI</strong> (Forest Survey of India)</td><td>1981 (Dehradun)</td><td>Biennial India State of Forest Report (ISFR)</td></tr>
-            <tr><td><strong>WII</strong> (Wildlife Institute of India)</td><td>1982 (Dehradun)</td><td>Research, training</td></tr>
-            <tr><td><strong>BEE</strong> (Bureau of Energy Efficiency)</td><td>2002 (under EC Act 2001)</td><td>Star ratings, PAT scheme, carbon market</td></tr>
-            <tr><td><strong>GRAP / EPCA / CAQM</strong></td><td>2017 / 2020</td><td>Air pollution mgmt in NCR; CAQM is statutory body since Aug 2021</td></tr>
+            <tr>
+                <th>Parameter</th>
+                <th>Surface Water</th>
+                <th>Groundwater</th>
+            </tr>
+            <tr>
+                <td>Turbidity</td>
+                <td>High (seasonal variation)</td>
+                <td>Low (natural filtration through soil)</td>
+            </tr>
+            <tr>
+                <td>Microbial load</td>
+                <td>High</td>
+                <td>Low</td>
+            </tr>
+            <tr>
+                <td>Hardness</td>
+                <td>Moderate</td>
+                <td>Often high (Ca²⁺, Mg²⁺ from rock)</td>
+            </tr>
+            <tr>
+                <td>Iron/Manganese</td>
+                <td>Low</td>
+                <td>Often high (Fe²⁺, Mn²⁺ from anoxic conditions)</td>
+            </tr>
+            <tr>
+                <td>Dissolved Oxygen</td>
+                <td>Good (near saturation)</td>
+                <td>Low/anaerobic</td>
+            </tr>
+            <tr>
+                <td>Special contaminants</td>
+                <td>Agricultural runoff, pollution</td>
+                <td>High F⁻, As, NO₃⁻ possible (geogenic)</td>
+            </tr>
+            <tr>
+                <td>Treatment required</td>
+                <td>Full treatment train</td>
+                <td>Mainly disinfection + Fe/Mn removal</td>
+            </tr>
         </table>
 
-        <h2>HIGH-YIELD MCQ REVISION LIST</h2>
-        <div class="exam-strategy">
-            <h3>MUST-KNOW FACTS (High Probability Qs):</h3>
+        <div class="content">
+            <strong>Aquifer Types:</strong>
             <ul>
-                <li>✓ <strong>Article 48A:</strong> DPSP (state duty) — protect &amp; improve environment</li>
-                <li>✓ <strong>Article 51A(g):</strong> Fundamental Duty (citizen) — protect environment</li>
-                <li>✓ <strong>Both added by 42nd Amendment (1976)</strong></li>
-                <li>✓ <strong>Article 21:</strong> Right to clean environment (judicially expanded)</li>
-                <li>✓ <strong>Water Act:</strong> 1974 (first major env Act); CPCB &amp; SPCB constituted under Sec 3 &amp; 4</li>
-                <li>✓ <strong>Air Act:</strong> 1981 (under Article 253 to implement Stockholm 1972)</li>
-                <li>✓ <strong>E(P) Act 1986:</strong> umbrella Act post-Bhopal; Section 15 penalty (5 yr + ₹1 lakh)</li>
-                <li>✓ <strong>Wildlife Protection Act:</strong> 1972; latest amendment 2022 (4 schedules now)</li>
-                <li>✓ <strong>Forest Conservation Act:</strong> 1980 (Section 2 — prior CG approval); CAMPA</li>
-                <li>✓ <strong>Biological Diversity Act:</strong> 2002 (implements CBD); NBA Chennai; SBB; BMC; PBR</li>
-                <li>✓ <strong>NGT Act:</strong> 2010; 7 laws under Schedule I; appeal to SC; benches Pune/Bhopal/Kolkata/Chennai (zonal) + Delhi (principal)</li>
-                <li>✓ <strong>Public Liability Insurance Act:</strong> 1991 (no-fault liability)</li>
-                <li>✓ <strong>EIA Notification:</strong> 2006; Cat A (EAC central) &amp; Cat B (SEAC state); 4 stages</li>
-                <li>✓ <strong>CRZ:</strong> 2019 notification; CRZ I to IV; 500 m landward from HTL</li>
-                <li>✓ <strong>Noise Rules 2000:</strong> Industrial 75/70; Commercial 65/55; Residential 55/45; Silence 50/40</li>
-                <li>✓ <strong>Wetland Rules:</strong> 2017; India 85 Ramsar sites</li>
-                <li>✓ <strong>Stockholm Conference 1972;</strong> UNEP born; June 5 World Env Day</li>
-                <li>✓ <strong>Rio Earth Summit 1992:</strong> UNFCCC, CBD, UNCCD, Agenda 21, Forest Principles</li>
-                <li>✓ <strong>Kyoto Protocol 1997:</strong> CDM, JI, ET; binding only on Annex I</li>
-                <li>✓ <strong>Paris Agreement 2015:</strong> NDCs; 1.5°C; India net-zero 2070 (Glasgow 2021)</li>
-                <li>✓ <strong>Montreal Protocol 1987:</strong> CFC phase-out; Kigali 2016 adds HFCs</li>
-                <li>✓ <strong>CITES 1973:</strong> Appendices I (banned), II (regulated), III (national)</li>
-                <li>✓ <strong>Basel 1989:</strong> hazardous waste transboundary; India ratified 1992</li>
-                <li>✓ <strong>Stockholm Conv 2001:</strong> POPs "dirty dozen"</li>
-                <li>✓ <strong>Ramsar 1971:</strong> wetlands; India ratified 1982</li>
-                <li>✓ <strong>Brundtland Report 1987:</strong> "Our Common Future" — sustainable development definition</li>
-                <li>✓ <strong>Polluter Pays Principle:</strong> SC adopted in Bichhri case (1996)</li>
-                <li>✓ <strong>Precautionary Principle:</strong> SC adopted in Vellore Citizens (1996)</li>
-                <li>✓ <strong>Absolute Liability:</strong> Oleum Gas Leak (1986)</li>
+                <li><strong>Unconfined (phreatic):</strong> Water table at atmospheric pressure; specific yield Sy = 0.05-0.30 (drains by gravity)</li>
+                <li><strong>Confined (artesian):</strong> Sandwiched between aquitards; piezometric head &gt; aquifer top; storativity 10⁻⁵ to 10⁻³ (elastic storage)</li>
+                <li><strong>Artesian well:</strong> Piezometric surface above ground → water flows without pumping</li>
+            </ul>
+
+            <strong>Rippl's Mass Curve Method:</strong> Determines reservoir storage capacity. Cumulative inflow plotted vs time; demand line at constant slope. <strong>Maximum vertical gap between tangent demand lines and mass curve = required storage.</strong> Critical period = longest stretch where cumulative demand exceeds supply.
+
+            <strong>Perennial rivers</strong> maintained by groundwater baseflow (gaining streams). Overextraction of groundwater reduces baseflow (seen in Rajasthan, Gujarat).
+        </div>
+
+        <h3>2.2 POPULATION FORECASTING METHODS</h3>
+        <div class="formula">
+            <strong>1. Arithmetic Method:</strong> P<sub>n</sub> = P₀ + n × K<sub>a</sub><br/>
+            K<sub>a</sub> = average decadal arithmetic increase | Suitable for large established cities | Gives LOWEST projection<br/><br/>
+
+            <strong>2. Geometric Method:</strong> P<sub>n</sub> = P₀ × (1 + r)<sup>n</sup><br/>
+            r = average decadal growth rate (fraction) | Suitable for rapidly growing cities | Gives HIGHEST projection<br/><br/>
+
+            <strong>3. Incremental Increase:</strong> P<sub>n</sub> = P₀ + n·K<sub>a</sub> + [n(n+1)/2]·K<sub>s</sub><br/>
+            K<sub>s</sub> = average of second differences (change in increment) | Captures acceleration/deceleration<br/><br/>
+
+            <strong>4. Logistic (S-curve) Method:</strong> P = P<sub>s</sub> / (1 + m·e<sup>-rn</sup>)<br/>
+            P<sub>s</sub> = saturation population (carrying capacity) | Most realistic long-term model | Requires 3 census data points
+        </div>
+
+        <div class="highlight">
+            <strong>WORKED EXAMPLE - Geometric Method:</strong><br/>
+            Given: 1991=1,00,000; 2001=1,30,000; 2011=1,69,000<br/>
+            r₁ = (130-100)/100 = 30%; r₂ = (169-130)/130 = 30% → Average r = 30%<br/>
+            P(2021) = 169,000 × 1.30 = <strong>2,19,700</strong>
+        </div>
+
+        <h3>2.3 PER CAPITA DEMAND & VARIATIONS (CPHEEO)</h3>
+        <div class="content">
+            <strong>Recommended Per Capita Supply:</strong>
+            <ul>
+                <li>Jal Jeevan Mission rural target (FHTC): <strong>55 LPCD</strong></li>
+                <li>CPHEEO domestic urban: <strong>135 LPCD</strong></li>
+                <li>Total (including commercial, fire, losses): <strong>200-250 LPCD</strong> for large cities</li>
+                <li>Delhi actual supply: ~220 LPCD average (unequal - planned 300+, slums &lt;50)</li>
+            </ul>
+
+            <strong>Demand Variation Factors:</strong>
+            <ul>
+                <li>Maximum daily demand = <strong>1.8 × average daily</strong></li>
+                <li>Maximum hourly demand = 1.5 × maximum daily = <strong>2.7 × average daily</strong></li>
+                <li>Small towns peak factor: up to 3.5×; large metros: ~2.5× (averaging effect)</li>
+                <li>Peak hour: typically 7-9 AM and 6-8 PM</li>
+            </ul>
+
+            <strong>Seasonal variation:</strong> Summer (April-June) is peak demand due to higher consumption, cooling, irrigation. Maximum daily factor (1.8×) applied to summer consumption.
+
+            <strong>Coincident Draft (design peak):</strong> = Maximum daily demand + Fire demand (simultaneous). Governs service reservoir capacity and distribution main sizing. Maximum hourly demand (without fire) governs pumping station capacity.
+        </div>
+
+        <h3>2.4 DESIGN PERIOD & FIRE DEMAND</h3>
+        <div class="standard">
+            <strong>CPHEEO Design Periods:</strong><br/>
+            Civil infrastructure (dams, WTPs, mains, reservoirs): <strong>30 years</strong><br/>
+            Mechanical/electrical equipment (pumps, motors): <strong>15 years</strong> (replaced mid-project)<br/>
+            Rationale: Civil has 50-100 yr physical life; buried pipe replacement is disruptive; matches 25-30 yr loan financing
+        </div>
+
+        <div class="formula">
+            <strong>Fire Demand Formulae (Q in L/min, P in thousands):</strong><br/>
+            <strong>Kuichling:</strong> Q = 3182 × √P (simpler, predominantly used in India per CPHEEO)<br/>
+            <strong>Freeman:</strong> Q = 4637 × √P × (1 - 0.01√P) (includes correction factor)<br/>
+            <strong>NBFU:</strong> Q = 4637 × √P (simplified Freeman)<br/><br/>
+
+            <strong>Example:</strong> P = 250,000 (250 thousand):<br/>
+            Kuichling: Q = 3182 × √250 = 3182 × 15.81 = <strong>50,325 L/min</strong><br/><br/>
+
+            <strong>Fire Reserve Volume = Q × Duration</strong> (typically 4-8 hours)<br/>
+            Example: Q = 20,000 L/min × 4 hr × 60 min = <strong>4,800,000 L = 4,800 kL</strong>
+        </div>
+
+        <div class="content">
+            <strong>Fire Hydrant Design (CPHEEO):</strong>
+            <ul>
+                <li>Residential/commercial: max 150 m spacing (hose length limitation)</li>
+                <li>Congested areas: 120 m | Industrial: 250 m</li>
+                <li>Connected to main of minimum <strong>100 mm diameter</strong></li>
+                <li>Minimum flow: 1000-1500 L/min at 10.5 m residual pressure (1.5 kg/cm²)</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 3 -->
+        <h2>SECTION 3: WATER TREATMENT PROCESSES</h2>
+        <div class="section-intro">
+            Sequential treatment processes converting raw water to potable quality. Covers screening, sedimentation, coagulation-flocculation, filtration, and disinfection.
+        </div>
+
+        <h3>3.1 SCREENING & PLAIN SEDIMENTATION</h3>
+        <div class="content">
+            <strong>Bar Screens (intake):</strong>
+            <ul>
+                <li>Coarse: 25-75 mm spacing (logs, fish, large solids)</li>
+                <li>Fine: 1-10 mm (drum/band type) - algae mats, leaves</li>
+                <li>Purpose: Protect pumps, valves, pipelines from damage</li>
+            </ul>
+
+            <strong>Plain Sedimentation:</strong> Gravity settling of coarse SS without coagulants. Removes 30-60% SS, 10-25% BOD. Pre-treatment for high-turbidity sources.
+        </div>
+
+        <div class="formula">
+            <strong>Hazen's Ideal Sedimentation Theory:</strong><br/>
+            <strong>Surface Overflow Rate (SOR) = Q/A</strong> (m³/m²/day = m/day)<br/>
+            Physically equals upward water velocity in tank<br/><br/>
+
+            <strong>Particle Removal:</strong><br/>
+            Particles with V<sub>s</sub> ≥ SOR: <strong>100% removed</strong><br/>
+            Particles with V<sub>s</sub> &lt; SOR: Fraction removed = V<sub>s</sub>/SOR<br/><br/>
+
+            <strong>Detention Time:</strong> t = H/SOR = V/Q<br/>
+            Example: SOR = 20 m/day, H = 3 m → t = 3/(20/24) = 3.6 hr
+        </div>
+
+        <div class="standard">
+            <strong>Typical SOR Values:</strong><br/>
+            Plain sedimentation: 15-30 m/day | Primary clarifier: 30-50 m/day<br/>
+            Secondary clarifier: 15-25 m/day | Tube settler: 50-200 m/day<br/>
+            <strong>Detention Times:</strong> Plain sedim. 2-8 hr | Primary/Secondary clarifier 1.5-2.5 hr
+        </div>
+
+        <div class="content">
+            <strong>Weir Loading Rate (WLR):</strong> = Q/L<sub>weir</sub> (m³/m/day). Prevents excessive upward velocity near weir (short-circuiting, floc carry-over). Primary clarifier max: 125-250 m³/m/day.
+
+            <strong>Tube/Plate Settlers (Lamella):</strong>
+            <ul>
+                <li>Inclined plates at 55-60° to horizontal with 50-100 mm spacing</li>
+                <li>Particle settles only across plate spacing (not full depth)</li>
+                <li>Effective SOR: 3-10× higher for same footprint</li>
+                <li>Cut-size reduction: d<sub>50</sub> ∝ √(H/L); H from 3 m to 0.05 m = 7.7× better</li>
+                <li>Flow regime: Laminar (Re &lt; 100)</li>
+            </ul>
+        </div>
+
+        <h3>3.2 COAGULATION & FLOCCULATION</h3>
+        <div class="content">
+            <strong>Colloidal Stability:</strong> Natural colloids have negative <span class="key-point">zeta potential (-15 to -30 mV)</span>. Electrostatic repulsion prevents aggregation. Coagulation goal: reduce |ZP| to ~0 (isoelectric point).
+
+            <strong>Alum Coagulation Mechanisms:</strong>
+            <ol>
+                <li><strong>Charge neutralisation:</strong> Al³⁺ and hydrolysis products (Al(OH)²⁺, Al₈(OH)₂₀⁴⁺) compress electrical double layer</li>
+                <li><strong>Sweep floc:</strong> Al(OH)₃ gelatinous precipitate enmeshes colloids</li>
+                <li><strong>Adsorption-bridging:</strong> Polymer-like Al species bridge particles</li>
+            </ol>
+
+            <strong>Jar Test Procedure (Standard):</strong>
+            <ol>
+                <li><strong>Rapid mix:</strong> 60-100 rpm for 1-2 min (coagulation phase - disperses coagulant)</li>
+                <li><strong>Slow mix:</strong> 20-40 rpm for 15-20 min (flocculation phase - forms settleable floc)</li>
+                <li><strong>Settle:</strong> 30 min</li>
+                <li>Measure supernatant turbidity; plot vs dose → minimum = optimum dose</li>
+            </ol>
+
+            <strong>Typical Alum Doses:</strong>
+            <ul>
+                <li>Low turbidity (&lt;10 NTU): 5-10 mg/L</li>
+                <li>Moderate (50-200 NTU): 10-50 mg/L</li>
+                <li>High (&gt;500 NTU): 20-80 mg/L</li>
+                <li>High colour: up to 100 mg/L</li>
+            </ul>
+
+            <strong>Coagulant Aids:</strong>
+            <ul>
+                <li><strong>Synthetic polymers</strong> (polyacrylamide - anionic/cationic/non-ionic): 0.1-2 mg/L; bridging</li>
+                <li><strong>Activated silica:</strong> anionic, strong bonds in floc</li>
+                <li><strong>Bentonite clay:</strong> added to very low-turbidity water to provide nuclei for floc</li>
+            </ul>
+
+            <strong>Optimal pH for alum:</strong> 6.5-7.5 | Ferric: 4-7 | PAC: wider range
+        </div>
+
+        <h3>3.3 FILTRATION (SSF, RSF, Pressure Filter)</h3>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Slow Sand Filter (SSF)</th>
+                <th>Rapid Sand Filter (RSF)</th>
+            </tr>
+            <tr>
+                <td>Filtration rate</td>
+                <td>0.1-0.4 m/hr</td>
+                <td>4-8 m/hr (high-rate: 12-15)</td>
+            </tr>
+            <tr>
+                <td>Mechanism</td>
+                <td>Biological (schmutzdecke)</td>
+                <td>Physical (straining, adsorption)</td>
+            </tr>
+            <tr>
+                <td>Pre-treatment</td>
+                <td>None needed (turbidity &lt;5 NTU)</td>
+                <td>Coagulation-flocculation MANDATORY</td>
+            </tr>
+            <tr>
+                <td>Media effective size</td>
+                <td>0.15-0.35 mm</td>
+                <td>0.45-0.55 mm</td>
+            </tr>
+            <tr>
+                <td>Media depth</td>
+                <td>0.6-1.2 m</td>
+                <td>0.6-0.75 m</td>
+            </tr>
+            <tr>
+                <td>Cleaning</td>
+                <td>Scrape top 1-2 cm every 1-3 months</td>
+                <td>Backwash every 24-72 hours</td>
+            </tr>
+            <tr>
+                <td>Pathogen removal</td>
+                <td>&gt;3-log Giardia/Crypto; 99% bacteria</td>
+                <td>Moderate (depends on coagulation)</td>
+            </tr>
+        </table>
+
+        <div class="content">
+            <strong>Schmutzdecke ("dirt layer"):</strong> Biological film on top 1-2 cm of SSF sand - algae, protozoa, bacteria, rotifers. Responsible for predation and biological degradation.
+
+            <strong>Filter Media Specifications:</strong>
+            <ul>
+                <li><strong>Effective Size (ES) = d₁₀</strong> (sieve size passing 10% by weight)</li>
+                <li><strong>Uniformity Coefficient (UC) = d₆₀/d₁₀</strong>; RSF needs UC &lt; 1.7</li>
+                <li>UC close to 1.0 = uniform; UC &gt; 2.0 = stratification problem</li>
+            </ul>
+
+            <strong>Dual-media Filter:</strong> Anthracite (SG ~1.5, ES 1.0-1.5 mm) on top + sand (SG ~2.65, ES 0.45-0.55 mm) below. After backwash, natural stratification (lighter stays on top). Benefits: coarser anthracite penetrates floc deeper, longer runs (2-3×), higher throughput. Triple-media adds garnet (SG ~4.0) at bottom.
+
+            <strong>Pressure Filter:</strong> Enclosed vessel (3-5 bar), pump-pressurised flow, rates 10-20 m/hr. Advantages: compact, installable at any elevation, no gravity head needed. Common in industrial water supply.
+        </div>
+
+        <h3>3.4 BACKWASHING & FILTER RUNS</h3>
+        <div class="content">
+            <strong>Backwash Parameters:</strong>
+            <ul>
+                <li>Target: <strong>20-50% bed expansion</strong></li>
+                <li>Water rate: 25-50 L/m²/min (0.025-0.050 m/s upward)</li>
+                <li>Air scour: 15-20 L/m²/min (vigorous scrubbing)</li>
+                <li>Duration: 5-10 minutes</li>
+                <li>Sequence: Air first, then water wash</li>
+            </ul>
+
+            <strong>Terminal Head Loss (THL) - Backwash Trigger:</strong>
+            <ul>
+                <li>Clean filter head loss: 0.3-0.6 m</li>
+                <li>THL trigger: <strong>1.5-3 m</strong></li>
+                <li>Turbidity breakthrough: 0.5-1 NTU in filtered water</li>
+                <li>Filter run: typically 24-48 hours</li>
+            </ul>
+
+            <strong>Filter Ripening Period:</strong> 15-60 min post-backwash with elevated turbidity. Initial filtrate has: (1) Fines from backwash water, (2) Unstable forming floc. <strong>Filter-to-Waste (FTW):</strong> divert initial filtrate to waste until turbidity &lt; 0.3 NTU. Critical for Cryptosporidium oocyst removal (USEPA LT2ESWTR).
+
+            <strong>Mudballs:</strong> Coagulated floc + media aggregates (1-5 cm) from inadequate backwash. Remediation: increase backwash rate, add air scour, surface wash (rotary nozzles 0.5-1.5 m/s), manual raking, media replacement.
+        </div>
+
+        <h3>3.5 DISINFECTION (Chlorination, Ozone, UV)</h3>
+        <div class="content">
+            <strong>Chlorine Chemistry:</strong><br/>
+            Cl₂ + H₂O → HOCl + HCl | HOCl ⇌ H⁺ + OCl⁻ (pKa ~7.5)
+            <ul>
+                <li>At pH 6.5: ~90% HOCl (germicidal)</li>
+                <li>At pH 7.5: 50% HOCl, 50% OCl⁻</li>
+                <li>At pH 8.5: ~10% HOCl, 90% OCl⁻</li>
+                <li><strong>HOCl is 80× more germicidal than OCl⁻</strong> (neutral vs charged)</li>
+            </ul>
+
+            <strong>Breakpoint Chlorination Curve:</strong>
+            <ol>
+                <li>Phase 1: Chloramines form with NH₃ (combined residual)</li>
+                <li>Phase 2: Chloramines oxidised by excess Cl₂ → residual drops to MINIMUM (breakpoint)</li>
+                <li>Phase 3: Beyond breakpoint, free residual (HOCl + OCl⁻) increases linearly</li>
+            </ol>
+            Breakpoint dose: <strong>~7.6 mg Cl₂ per mg NH₃-N</strong>
+        </div>
+
+        <div class="formula">
+            <strong>CT Concept (Chick-Watson model):</strong> Inactivation = f(C × T)<br/>
+            C = residual disinfectant (mg/L); T = contact time (min)<br/>
+            <strong>CT = 15 mg·min/L</strong> can be achieved by: 1.5 mg/L × 10 min OR 3 mg/L × 5 min OR 0.5 mg/L × 30 min<br/><br/>
+
+            <strong>CT Values for 3-log Inactivation (at 5°C, pH 7):</strong><br/>
+            Giardia (free Cl₂): ~165 mg·min/L<br/>
+            Cryptosporidium (free Cl₂): <strong>&gt;7200 mg·min/L (impractical!)</strong><br/>
+            Cryptosporidium (Ozone): 5-10 mg·min/L<br/>
+            Cryptosporidium (UV): 10-12 mJ/cm² for 3-log
+        </div>
+
+        <div class="content">
+            <strong>Pre- vs Post-Chlorination:</strong>
+            <ul>
+                <li><strong>Pre-chlorination:</strong> Kills algae, controls taste/odour; BUT forms THMs/HAAs with NOM (carcinogenic DBPs)</li>
+                <li><strong>Post-chlorination:</strong> Minimal THM formation (NOM removed); provides distribution residual</li>
+                <li>Best practice: O₃/UV as primary disinfectant + Cl₂ only for residual</li>
+            </ul>
+
+            <strong>UV Disinfection (254 nm):</strong>
+            <ul>
+                <li>Mechanism: Pyrimidine dimer formation in DNA/RNA → replication blocked</li>
+                <li>Giardia/Crypto: very sensitive (3-log at 10-12 mJ/cm²)</li>
+                <li>Adenovirus: resistant (&gt;186 mJ/cm² for 4-log)</li>
+                <li><strong>Limitations:</strong> No residual (Cl₂ still needed); turbidity interference (&lt;0.5-1 NTU); photoreactivation</li>
+            </ul>
+
+            <strong>Ozonation:</strong>
+            <ul>
+                <li>Half-life: 10-30 min at 20°C, pH 7</li>
+                <li>Must be generated on-site</li>
+                <li>No distribution residual</li>
+                <li><strong>Bromate (BrO₃⁻) issue:</strong> O₃ + Br⁻ → HOBr → BrO₃⁻ (suspected carcinogen, IS limit 0.01 mg/L)</li>
+                <li>Control: ammonia addition, pH reduction, H₂O₂ quenching</li>
+            </ul>
+
+            <strong>Advanced Oxidation Processes (AOP):</strong> O₃+H₂O₂, UV+H₂O₂, O₃/UV → generates <strong>hydroxyl radicals (OH•, E⁰ = 2.8 V)</strong> - non-selective destruction of micropollutants (pharmaceuticals, pesticides, endocrine disruptors). Essential for potable reuse.
+        </div>
+
+        <h3>3.6 SOFTENING (Lime-Soda, Zeolite, Ion Exchange)</h3>
+        <div class="formula">
+            <strong>Lime-Soda Softening Reactions:</strong><br/>
+            Temp. Ca: Ca(HCO₃)₂ + Ca(OH)₂ → 2CaCO₃↓ + 2H₂O (lime only)<br/>
+            Temp. Mg: Mg(HCO₃)₂ + 2Ca(OH)₂ → 2CaCO₃↓ + Mg(OH)₂↓ + 2H₂O<br/>
+            Perm. Ca: CaSO₄ + Na₂CO₃ → CaCO₃↓ + Na₂SO₄ <strong>(SODA ASH needed)</strong><br/>
+            Perm. Mg: MgSO₄ + Ca(OH)₂ → Mg(OH)₂↓ + CaSO₄ (then treat as above)<br/><br/>
+
+            <strong>Residual hardness limit:</strong> 50-85 mg/L as CaCO₃<br/>
+            (Limited by CaCO₃ Ksp = 3.3×10⁻⁹ and Mg(OH)₂ Ksp = 5.6×10⁻¹²)
+        </div>
+
+        <div class="content">
+            <strong>Recarbonation:</strong> Excess lime removal by CO₂:
+            <ul>
+                <li>Stage 1: Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O (removes excess lime, pH 11→10)</li>
+                <li>Stage 2: CaCO₃ + CO₂ + H₂O → Ca(HCO₃)₂ (stabilisation, pH 8.3-8.5)</li>
+            </ul>
+
+            <strong>Split Treatment:</strong> Treat portion (60%) with full excess lime; bypass remainder (40%) untreated. Blend to achieve target hardness. Saves lime, sludge, cost.
+
+            <strong>Zeolite/Ion Exchange Softening:</strong><br/>
+            Softening: Ca²⁺ + Na₂Ze → CaZe + 2Na⁺<br/>
+            Regeneration: CaZe + 2NaCl (10% brine) → Na₂Ze + CaCl₂
+            <ul>
+                <li>Advantages: removes both temporary AND permanent hardness completely; no sludge</li>
+                <li>Disadvantages: adds Na⁺ (hypertension concern); turbidity/iron fouls resin; brine disposal</li>
+            </ul>
+        </div>
+
+        <h3>3.7 AERATION & IRON/MANGANESE REMOVAL</h3>
+        <div class="content">
+            <strong>Purpose of Aeration:</strong>
+            <ol>
+                <li>Oxidise Fe²⁺ (soluble) to Fe³⁺ → Fe(OH)₃ ↓ (brown precipitate, filterable)</li>
+                <li>Strip CO₂ (raises pH, reduces corrosivity)</li>
+                <li>Remove H₂S, CH₄, VOCs (taste/odour)</li>
+                <li>Raise DO from near-zero (anaerobic groundwater) to saturation</li>
+            </ol>
+
+            <strong>Aerator Types:</strong>
+            <ul>
+                <li><strong>Cascade:</strong> Best for CO₂, H₂S removal (gravity, no moving parts); less effective for DO</li>
+                <li><strong>Spray:</strong> Fine droplets (1-3 mm), large SA; effective for DO addition; issues: wind drift, nozzle clogging</li>
+                <li><strong>Diffused air:</strong> Compressed air through porous diffusers; controlled DO addition</li>
+            </ul>
+
+            <strong>Iron Removal (Fe²⁺ oxidation):</strong> Rate ∝ [Fe²⁺][O₂][OH⁻]². EXTREMELY pH-dependent - doubling pH = 100× faster.
+            <ul>
+                <li>pH 6: slow (hours) | pH 7: minutes | pH 8: seconds</li>
+                <li>Minimum <strong>pH 6.5</strong> required; desirable pH &gt; 7.0</li>
+            </ul>
+
+            <strong>Manganese Removal:</strong> Much harder than Fe. O₂ oxidation of Mn²⁺ is negligible below pH 9.5.
+            <ul>
+                <li><strong>KMnO₄ oxidation:</strong> 1.92 mg KMnO₄ per mg Mn → MnO₂ ppt</li>
+                <li><strong>Cl₂ oxidation:</strong> 1.3 mg Cl₂/mg Mn at pH &gt; 7.5</li>
+                <li><strong>Greensand filter:</strong> MnO₂-coated media (autocatalytic)</li>
+                <li><strong>Biological oxidation:</strong> Mn-oxidising bacteria (most cost-effective)</li>
+            </ul>
+        </div>
+
+        <h3>3.8 FLUORIDATION & DEFLUORIDATION</h3>
+        <div class="content">
+            <strong>Fluoride Health Thresholds:</strong>
+            <ul>
+                <li>&lt; 0.5 mg/L: Dental caries risk</li>
+                <li>0.5-1.5 mg/L: Dental protection (optimal 0.6-1.0 mg/L, climate-adjusted)</li>
+                <li>&gt; 1.5 mg/L: <strong>Dental fluorosis</strong> (IS 10500 permissible limit)</li>
+                <li>&gt; 3.0 mg/L: Severe dental fluorosis (pitting, brown staining)</li>
+                <li>&gt; 3-6 mg/L: <strong>Skeletal fluorosis</strong> (joint pain, spine deformity)</li>
+                <li>&gt; 10 mg/L: Crippling skeletal fluorosis</li>
+            </ul>
+            <em>India: 17 states have endemic fluorosis from naturally high-F groundwater.</em>
+
+            <strong>Nalgonda Technique (NEERI Nagpur):</strong>
+            <ol>
+                <li>Add lime (raises pH, adds alkalinity)</li>
+                <li>Add alum (200-800 mg/L large dose) + bleaching powder</li>
+                <li>Al(OH)₃ floc forms → F⁻ adsorbs on floc</li>
+                <li>Sedimentation → Filtration</li>
+            </ol>
+            Efficiency: 70-90% removal. Limitations: large alum dose (residual Al³⁺), high sulphate, sludge disposal, ineffective for F &gt; 10 mg/L.
+
+            <strong>Alternative Methods:</strong>
+            <ul>
+                <li>Activated alumina adsorption: 92-97% efficient</li>
+                <li>Reverse osmosis: 90-98% rejection</li>
+                <li>Fluoride measurement: <strong>SPADNS colorimetric</strong> (Zr-dye bleaching) or Ion-Selective Electrode</li>
+            </ul>
+        </div>
+
+        <h3>3.9 DESALINATION (RO, Electrodialysis)</h3>
+        <div class="formula">
+            <strong>Osmotic Pressure:</strong> π = MRT (Van't Hoff)<br/>
+            Seawater (35,000 mg/L TDS): π ≈ 25-27 bar<br/>
+            Brackish water (3,000 mg/L): π ≈ 2.5 bar<br/>
+            <strong>RO Operating Pressure:</strong> SWRO 55-80 bar | BWRO 10-20 bar
+        </div>
+
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>SWRO (Seawater)</th>
+                <th>BWRO (Brackish)</th>
+            </tr>
+            <tr>
+                <td>TDS feed</td>
+                <td>35,000-45,000 mg/L</td>
+                <td>1,000-8,000 mg/L</td>
+            </tr>
+            <tr>
+                <td>Operating pressure</td>
+                <td>55-80 bar</td>
+                <td>10-20 bar</td>
+            </tr>
+            <tr>
+                <td>Recovery rate</td>
+                <td>35-50%</td>
+                <td>75-85%</td>
+            </tr>
+            <tr>
+                <td>Energy</td>
+                <td>3-5 kWh/m³ (with ERD)</td>
+                <td>0.5-1.5 kWh/m³</td>
+            </tr>
+            <tr>
+                <td>Salt rejection</td>
+                <td>&gt;99.5%</td>
+                <td>&gt;99%</td>
+            </tr>
+        </table>
+
+        <div class="content">
+            <strong>Electrodialysis (ED):</strong> DC electric field drives ions through alternating cation/anion-exchange membranes. Economical for brackish water (1000-5000 mg/L TDS). Advantages: less pre-treatment, higher recovery (85-95%), handles variable TDS. Disadvantages: inefficient for high TDS; doesn't remove uncharged species (organics, silica, bacteria).
+
+            <strong>Multi-Stage Flash (MSF):</strong> Seawater heated to 90-120°C; flashed through stages at progressively lower pressure. Energy: 10-20 kWh/m³ (vs RO 3-5). Used in Middle East; 100,000-500,000 m³/day plants.
+        </div>
+
+        <!-- SECTION 4 -->
+        <h2>SECTION 4: DISTRIBUTION SYSTEM</h2>
+        <div class="section-intro">
+            Pipe networks, reservoirs, valves, hydrants, and leakage management. Covers Hardy Cross analysis and EPANET modelling.
+        </div>
+
+        <h3>4.1 PIPE NETWORKS & HARDY CROSS METHOD</h3>
+        <div class="formula">
+            <strong>Hardy Cross Iterative Correction:</strong><br/>
+            ΔQ = -Σh<sub>L</sub> / (n × Σ|h<sub>L</sub>/Q|)<br/>
+            n = 1.852 (Hazen-Williams) or n = 2 (Darcy-Weisbach)<br/>
+            Sign convention: Clockwise (+), Counter-clockwise (-)<br/>
+            Iterate until |ΔQ| &lt; 0.01 L/s (3-5 iterations typically)<br/><br/>
+
+            <strong>Hazen-Williams Equation:</strong><br/>
+            h<sub>L</sub> = 10.67 × L × Q<sup>1.852</sup> / (C<sup>1.852</sup> × D<sup>4.87</sup>)<br/>
+            C values: New CI/steel 130-140 | Old corroded 80-100 | PVC/HDPE 140-150 | AC 120-140<br/><br/>
+
+            <strong>Darcy-Weisbach:</strong> h<sub>L</sub> = fLV²/(2gD)
+        </div>
+
+        <div class="content">
+            <strong>Dead-end vs Grid Networks:</strong>
+            <ul>
+                <li><strong>Dead-end (tree):</strong> Single path; pipe failure cuts all downstream supply; stagnation causes chlorine depletion & bacterial regrowth</li>
+                <li><strong>Grid/Loop:</strong> Multiple paths; redundancy; more uniform pressure; <strong>CPHEEO recommended</strong> for towns/cities</li>
+            </ul>
+
+            <strong>EPANET (US EPA):</strong> Solves simultaneously:
+            <ol>
+                <li>Nodal continuity: Σ inflows = Σ outflows + demand at every node</li>
+                <li>Energy equation: Σh<sub>L</sub> around every loop = 0</li>
+            </ol>
+            Uses Global Gradient Algorithm (sparse matrix). Also simulates chlorine decay, water age, pump curves, PRVs, storage tanks, pressure-dependent demand.
+        </div>
+
+        <div class="standard">
+            <strong>CPHEEO/IS 1172 Minimum Residual Pressure:</strong><br/>
+            Single-storey: 7 m (0.7 bar) | Two-storey: 12 m | Three-storey: 17 m<br/>
+            Maximum in mains: 70 m (to limit leakage/stress)<br/>
+            Fire hydrant: minimum 10.5 m (1.5 kg/cm²) during firefighting
+        </div>
+
+        <h3>4.2 SERVICE RESERVOIRS (ESR & GLSR)</h3>
+        <div class="content">
+            <strong>Elevated Storage Reservoir (ESR / Overhead Tank):</strong>
+            <ul>
+                <li>Equalisation: pump operates at constant rate, ESR supplements peak</li>
+                <li>Gravity supply: constant pressure independent of pump operation</li>
+                <li>Emergency storage during pump failure</li>
+                <li>Capacity = Equalisation (⅓ max daily) + Fire + Emergency + Operational</li>
+                <li>Height: designed for min 7 m residual pressure at farthest/lowest point</li>
+            </ul>
+
+            <strong>Ground Level Service Reservoir (GLSR/Clear Water Reservoir):</strong>
+            <ul>
+                <li>Chlorine contact chamber (30+ min CT requirement, serpentine baffling)</li>
+                <li>Balancing storage between WTP output and variable distribution pumping</li>
+                <li>Emergency reserve + suction source for distribution pumps</li>
+                <li>Capacity: 1-2 days average daily demand</li>
+                <li>Dual compartments for maintenance without supply interruption</li>
+            </ul>
+
+            <strong>Economic Velocity in Water Mains:</strong> 0.6-1.5 m/s (optimal 0.9-1.2 m/s)
+            <ul>
+                <li>Below 0.6 m/s: sedimentation, biological growth, staleness</li>
+                <li>Above 1.5-3 m/s: high head losses, pipe erosion, water hammer</li>
+                <li>Large transmission mains: up to 3 m/s acceptable</li>
+            </ul>
+
+            <strong>Minimum Distribution Main Diameter (CPHEEO/IS 1742): 100 mm (4 inches)</strong>
+            <ul>
+                <li>Sub-mains: 150-200 mm | Trunk mains: 300-600+ mm</li>
+                <li>Service connections (laterals): 12.5-25 mm</li>
+            </ul>
+        </div>
+
+        <h3>4.3 VALVES, METERS & HYDRANTS</h3>
+        <div class="content">
+            <strong>Valve Types & Applications:</strong>
+            <ul>
+                <li><strong>Gate (sluice):</strong> Full bore open, full obstruction closed. NOT for throttling. Isolation use.</li>
+                <li><strong>Butterfly:</strong> Quarter-turn disc. Suitable for throttling. Flow control in large mains.</li>
+                <li><strong>Globe:</strong> Excellent throttling, higher head loss</li>
+                <li><strong>Check (non-return):</strong> Prevents reverse flow</li>
+                <li><strong>Pressure Reducing Valve (PRV):</strong> Pressure management in DMAs</li>
+            </ul>
+
+            <strong>Scour/Blow-off Valve:</strong> Installed at LOW points (valleys). Drains main for maintenance, flushes sediment, emergency dewatering. Size: ¼ to ⅓ of main diameter. Discharges to storm drain (NOT sewer).
+
+            <strong>Air Valve:</strong> Installed at HIGH points. Releases trapped air during filling (prevents air lock, water hammer).
+
+            <strong>Water Meters:</strong>
+            <ul>
+                <li><strong>Positive Displacement (PD):</strong> Nutating disc/oscillating piston; accurate at low flows; domestic 15-25 mm (most common)</li>
+                <li><strong>Turbine/Velocity:</strong> Propeller speed ∝ velocity; for 50-100 mm connections</li>
+                <li><strong>Electromagnetic:</strong> No moving parts; industrial/bulk metering (DN &gt; 50 mm)</li>
+                <li>Smart meters: AMR with pulse transmitters + telemetry</li>
+                <li>Standard: IS 779</li>
+            </ul>
+
+            <strong>Venturi Meter Discharge:</strong> Q = Cd × A₂/√(1-(A₂/A₁)²) × √(2gh)
+        </div>
+
+        <h3>4.4 LEAKAGE DETECTION & NRW</h3>
+        <div class="content">
+            <strong>Non-Revenue Water (NRW) - IWA Water Balance:</strong>
+            <ul>
+                <li>Apparent losses: meter under-registration, billing errors, illegal connections</li>
+                <li>Real losses: pipe leakage (main breaks + background seepage + reservoir overflow)</li>
+                <li>Unbilled authorised: firefighting, flushing, parks</li>
+                <li>India NRW: typically 30-55% (target &lt;15-20%); Delhi ~35-40%</li>
+            </ul>
+
+            <strong>Minimum Night Flow (MNF) Analysis:</strong> Measure DMA inlet flow at 2-4 AM (minimum demand). MNF minus night use = background leakage. DMA = District Metered Area (5000-7000 connections, single metered inlet).
+
+            <strong>Acoustic Leak Detection:</strong> Two sensors on valves/hydrants. Cross-correlation of signals → time delay Δt → leak distance: x = (L - c·Δt)/2. Sound speed c ~1000-1500 m/s in pipes. Effective for metal pipes; harder for plastic.
+
+            <strong>Hydrostatic Pressure Testing (IS 2065/CPHEEO):</strong>
+            <ul>
+                <li>Test pressure: <strong>1.5 × working pressure</strong> (min 6 kg/cm² for class B-C)</li>
+                <li>Duration: 30-60 minutes</li>
+                <li>Essentially zero visible leakage allowed</li>
+                <li>Escaping water test: L = ND√P / 125,000 (L = L/hr, N = joints, D = mm, P = m)</li>
+            </ul>
+
+            <strong>Pressure-Leakage Relationship:</strong> L = L₀ × (P/P₀)<sup>N1</sup>
+            <ul>
+                <li>N1 = 0.5 for orifice leaks; 1.0-1.5 for elastic pipe cracks</li>
+                <li>Reducing pressure 20% → leakage reduction 20-30%</li>
+                <li>30-40% NRW reduction possible with pressure management</li>
+            </ul>
+
+            <strong>Cathodic Protection:</strong> Prevents galvanic corrosion of buried CI/DI/steel pipes.
+            <ul>
+                <li>Sacrificial anode: Mg, Zn, Al connected to pipe (pipe becomes cathode)</li>
+                <li>Impressed current: DC rectifier (10-30 mA/m²)</li>
+                <li>PVC/PE: no CP needed (non-metallic)</li>
+            </ul>
+        </div>
+
+        <!-- GATE ADDITIONS -->
+        <h2>SECTION 5: GATE ES 2026 ADDITIONS (Purple Section)</h2>
+        <div class="section-intro">
+            GATE-specific topics not in UPPCB syllabus but valuable foundation. Covers hydrology, groundwater, oxygen sag, lake dynamics, and reactor design.
+        </div>
+
+        <h3>5.1 HYDROLOGICAL CYCLE & WATER BALANCE</h3>
+        <div class="formula">
+            <strong>Water Balance:</strong> P = R + ET + ΔS + GW recharge<br/>
+            Example: P=800, R=300, ET=420 → ΔS = +80 mm (storage increase)<br/><br/>
+
+            <strong>Rational Method (Peak Runoff):</strong> Q = C·i·A/360 (A in hectares, i in mm/hr)<br/>
+            C = runoff coefficient: impervious 0.85-0.95 | forest 0.1-0.3 | agricultural 0.2-0.5<br/><br/>
+
+            <strong>Rating Curve:</strong> Q = a(h - h₀)<sup>b</sup> (power function; loop curves show flood hysteresis)
+        </div>
+
+        <div class="content">
+            <strong>Hydrological Processes:</strong>
+            <ul>
+                <li><strong>Interception loss:</strong> Rainfall caught on vegetation that evaporates directly</li>
+                <li><strong>Transpiration:</strong> Water via plant roots → stomata</li>
+                <li><strong>Evapotranspiration (ET) = transpiration + soil evaporation + interception</strong></li>
+                <li>PET estimated by Penman-Monteith or Thornthwaite</li>
+            </ul>
+
+            <strong>Unit Hydrograph (Sherman 1932) - 3 principles:</strong>
+            <ol>
+                <li>Linearity: DRH proportional to effective rainfall depth</li>
+                <li>Superposition: Multiple-period DRH can be summed</li>
+                <li>Time invariance: Same UH for same-duration storms</li>
+            </ol>
+
+            <strong>Base Flow Separation Methods:</strong>
+            <ul>
+                <li>Constant slope method</li>
+                <li>N-day method: N = A^0.2 (A in km²)</li>
+                <li>Straight-line method</li>
+                <li>Base flow recession: Q(t) = Q₀·e^(-kt)</li>
+            </ul>
+        </div>
+
+        <h3>5.2 GROUNDWATER HYDRAULICS</h3>
+        <div class="formula">
+            <strong>Darcy's Law:</strong> Q = K·i·A (K = hydraulic conductivity)<br/>
+            Darcy velocity (flux): v = K·i | Seepage velocity = v/n (n = porosity)<br/>
+            Valid for laminar flow (Re &lt; 1-10 in porous media)<br/><br/>
+
+            <strong>K typical values:</strong> Gravel 10⁻² to 10² m/day | Sand 10⁻³ to 10⁰ | Clay &lt;10⁻⁴<br/><br/>
+
+            <strong>Transmissivity:</strong> T = K × b (b = saturated thickness; units m²/day)<br/>
+            <strong>Storage Coefficient:</strong> S = S<sub>s</sub> × b (10⁻⁵ to 10⁻³ for confined)<br/>
+            <strong>Specific Yield:</strong> S<sub>y</sub> = 0.1-0.3 for unconfined<br/><br/>
+
+            <strong>Thiem Equation (steady-state, confined):</strong><br/>
+            Q = 2π·T·(h₂-h₁) / ln(r₂/r₁)<br/><br/>
+
+            <strong>Unconfined (steady-state):</strong> Q = π·K·(h₂² - h₁²) / ln(r₂/r₁)<br/>
+            <strong>Transient (Theis):</strong> Q = (4πT·s) / W(u)
+        </div>
+
+        <div class="content">
+            <strong>Specific Capacity (Well):</strong> S<sub>c</sub> = Q/s (m³/hr/m or L/s/m)
+            <ul>
+                <li>Higher S<sub>c</sub> = better-performing well</li>
+                <li>Rough field approximation: T ≈ S<sub>c</sub> × 2000</li>
+                <li>Declining S<sub>c</sub> over time → biofouling, incrustation, screen clogging</li>
+                <li>Well efficiency = theoretical drawdown / actual drawdown × 100%</li>
+            </ul>
+        </div>
+
+        <h3>5.3 OXYGEN SAG CURVE (Streeter-Phelps)</h3>
+        <div class="formula">
+            <strong>Streeter-Phelps Equation:</strong><br/>
+            D(t) = [k<sub>d</sub>·L₀/(k<sub>r</sub>-k<sub>d</sub>)]·(e^(-k<sub>d</sub>t) - e^(-k<sub>r</sub>t)) + D₀·e^(-k<sub>r</sub>t)<br/><br/>
+
+            <strong>At Critical Point (Sag):</strong> dD/dt = 0 → k<sub>d</sub>·L<sub>c</sub> = k<sub>r</sub>·D<sub>c</sub><br/>
+            D<sub>c</sub> = k<sub>d</sub>·L<sub>c</sub>/k<sub>r</sub><br/>
+            t<sub>c</sub> = [1/(k<sub>r</sub>-k<sub>d</sub>)] · ln[(k<sub>r</sub>/k<sub>d</sub>)·(1 - D₀·(k<sub>r</sub>-k<sub>d</sub>)/(k<sub>d</sub>·L₀))]<br/><br/>
+
+            <strong>O'Connor-Dobbins Reaeration:</strong> k<sub>r</sub> = (D<sub>L</sub>·u)^0.5 / H^1.5<br/>
+            Temperature correction: k<sub>r</sub>(T) = k<sub>r</sub>(20) × 1.024^(T-20)
+        </div>
+
+        <div class="content">
+            <strong>Self-Purification Zones (downstream order):</strong>
+            <ol>
+                <li><strong>Zone of Degradation:</strong> Turbid, DO drops, BOD high, H₂S, fish absent</li>
+                <li><strong>Zone of Active Decomposition:</strong> Lowest DO (critical point), fungi, sludgeworms, no fish</li>
+                <li><strong>Zone of Recovery:</strong> DO rising, algae appear, rough fish return</li>
+                <li><strong>Clean Zone:</strong> DO restored to saturation, diverse biota</li>
+            </ol>
+
+            <strong>DO Saturation vs Temperature:</strong>
+            <ul>
+                <li>15°C: 10.1 mg/L | 20°C: 9.1 mg/L | 25°C: 8.3 mg/L | 30°C: 7.5 mg/L</li>
+                <li>Decreases with salinity and altitude</li>
+            </ul>
+
+            <strong>Initial Deficit:</strong> D₀ = DO<sub>sat</sub> - DO<sub>actual</sub>
+        </div>
+
+        <h3>5.4 EUTROPHICATION & LAKE STRATIFICATION</h3>
+        <div class="content">
+            <strong>Limiting Nutrient (Liebig's Law):</strong> <span class="key-point">Phosphorus in freshwater; Nitrogen in marine</span>
+            <ul>
+                <li>Redfield ratio C:N:P = 106:16:1 by atoms</li>
+                <li>N:P &gt; 16 → P limiting | N:P &lt; 16 → N limiting</li>
+                <li>Carlson TSI uses Secchi depth, Chl-a, Total P</li>
+            </ul>
+
+            <strong>Thermal Stratification (3 layers):</strong>
+            <ol>
+                <li><strong>Epilimnion:</strong> Warm, wind-mixed, high DO (surface)</li>
+                <li><strong>Thermocline (metalimnion):</strong> Steepest T gradient (&gt;1°C/m) - density barrier</li>
+                <li><strong>Hypolimnion:</strong> Cold, stagnant, DO depletion in productive lakes</li>
+            </ol>
+            Seasonal turnover (spring/autumn) mixes layers.
+
+            <strong>Secchi Disk (20 cm white):</strong> Depth at which disk just disappears. <strong>TSI(SD) = 60 - 14.41·ln(SD in m)</strong>
+            <ul>
+                <li>Oligotrophic: SD &gt; 4 m (clear, nutrient-poor)</li>
+                <li>Mesotrophic: 2-4 m</li>
+                <li>Eutrophic: &lt; 2 m (algal blooms, low DO, fish kills)</li>
+            </ul>
+
+            <strong>Internal Loading (Legacy P):</strong> Under anoxic hypolimnion, Fe(III)-P reduces to Fe(II), releasing dissolved P. Perpetuates eutrophication even after external loading control.
+            <ul>
+                <li>Control: Alum treatment, hypolimnetic aeration, dredging, Phoslock (lanthanum-bentonite)</li>
+            </ul>
+        </div>
+
+        <h3>5.5 REACTOR DESIGN & KINETICS</h3>
+        <div class="formula">
+            <strong>First-Order Reaction (-r = k·C):</strong><br/><br/>
+
+            <strong>Batch Reactor:</strong> -ln(C/C₀) = k·t<br/>
+            <strong>Plug Flow Reactor (PFR):</strong> τ = -ln(C/C₀)/k (same as batch)<br/>
+            <strong>Continuous-Mixed Flow Reactor (CMFR/CSTR):</strong> τ = (C₀-C)/(k·C)<br/>
+            Rearranged: <strong>C/C₀ = 1/(1 + k·τ)</strong><br/><br/>
+
+            <strong>For 90% conversion:</strong> CMFR needs τ = 9/k | PFR needs τ = 2.3/k (4× smaller!)<br/><br/>
+
+            <strong>Damköhler Number:</strong> Da = k·τ<br/>
+            Da &gt;&gt; 1 → high conversion (reaction dominates)<br/>
+            CMFR: C/C₀ = 1/(1+Da) | PFR: C/C₀ = e^(-Da)
+        </div>
+
+        <div class="highlight">
+            <strong>WORKED EXAMPLE - CMFR vs PFR:</strong><br/>
+            C₀ = 200 mg/L BOD, effluent = 20 mg/L, k = 0.25/hr<br/>
+            <strong>CMFR:</strong> τ = (200-20)/(0.25 × 20) = 180/5 = <strong>36 hr</strong><br/>
+            <strong>PFR:</strong> τ = -ln(20/200)/0.25 = ln(10)/0.25 = <strong>9.2 hr</strong><br/>
+            CMFR needs 4× larger volume! PFR preferred for high removal.
+        </div>
+
+        <div class="content">
+            <strong>Mass Balance (CMFR Steady State):</strong><br/>
+            Rate in - Rate out - Rate consumed = 0<br/>
+            Q·C₀ - Q·C - k·C·V = 0 → C = C₀/(1 + k·τ)
+
+            <strong>Second-Order Reaction (-r = k·C²):</strong>
+            <ul>
+                <li>Batch/PFR: τ = (1/k)·(1/C - 1/C₀)</li>
+                <li>CMFR: τ = (C₀ - C)/(k·C²)</li>
+                <li>Performance gap widens for higher-order reactions</li>
+            </ul>
+
+            <strong>RTD Tracer Studies:</strong> Inject conservative tracer (NaCl, rhodamine B, fluoride).
+            <ul>
+                <li>Ideal CMFR: E(t) = (1/τ)·e^(-t/τ) (exponential decay)</li>
+                <li>Ideal PFR: Dirac delta at t = τ</li>
+                <li>Early peak = short-circuiting | Long tail = dead zones</li>
+            </ul>
+        </div>
+
+        <h3>5.6 ENVIRONMENTAL HYDRAULICS</h3>
+        <div class="formula">
+            <strong>Manning's Equation:</strong> V = (1/n)·R^(2/3)·S^(1/2)<br/>
+            R = A/P (hydraulic radius)<br/>
+            <strong>Half-full circular pipe:</strong> R = D/4 (same as full pipe!)<br/>
+            Max velocity at 93% full; max discharge at 94% full<br/><br/>
+
+            <strong>Froude Number:</strong> Fr = V/√(g·y)<br/>
+            Fr &lt; 1 subcritical | Fr = 1 critical (E<sub>min</sub>) | Fr &gt; 1 supercritical<br/>
+            Critical depth: y<sub>c</sub> = (q²/g)^(1/3) for rectangular<br/>
+            Hydraulic jump: y₂/y₁ = (√(1+8Fr₁²) - 1)/2<br/><br/>
+
+            <strong>Weir Formulae:</strong><br/>
+            Broad-crested: Q = 1.71·L·H^1.5 (SI)<br/>
+            Sharp-crested (Francis): Q = 1.84·L·H^1.5<br/>
+            V-notch: Q = (8/15)·Cd·tan(θ/2)·√(2g)·H^2.5
+        </div>
+
+        <div class="content">
+            <strong>Channel Design Velocities:</strong>
+            <ul>
+                <li>Non-silting (minimum): &gt; 0.6 m/s</li>
+                <li>Non-scouring (maximum): earthen 0.6-0.9 | grassed 1.2-1.5 | stone/brick 1.5-2.0 | concrete 2.5-6 m/s</li>
+            </ul>
+
+            <strong>Regime Theory (Lacey):</strong>
+            <ul>
+                <li>P = 4.75·√Q | R = 0.47·(Q/f)^(1/3) | S = f^(5/3) / (3340·Q^(1/6))</li>
+                <li>Used for unlined alluvial channels</li>
+            </ul>
+
+            <strong>Muskingum Channel Routing:</strong> S = K[x·I + (1-x)·O]
+            <ul>
+                <li>K = travel time of flood wave (hr)</li>
+                <li>x = weighting factor (0 = pure attenuation; 0.5 = pure translation)</li>
+                <li>Natural streams: x = 0.2-0.3</li>
+            </ul>
+
+            <strong>SCS Curve Number Method:</strong> Q = (P - I<sub>a</sub>)² / (P - I<sub>a</sub> + S)
+            <ul>
+                <li>S = 25400/CN - 254 (mm) | I<sub>a</sub> = 0.2S</li>
+                <li>Depends on land use, Hydrological Soil Group (A to D), AMC</li>
+                <li>CWC India uses for design floods</li>
+            </ul>
+        </div>
+
+        <!-- KEY FORMULAE & STRATEGY -->
+        <h2>SECTION 6: KEY FORMULAE & EXAM STRATEGY</h2>
+
+        <div class="exam-strategy">
+            <h3>TOP 15 FORMULAE TO MEMORISE:</h3>
+            <ol>
+                <li><strong>SOR = Q/A</strong> | Surface overflow rate = primary sedimentation design parameter</li>
+                <li><strong>Detention time t = V/Q = H/SOR</strong> | Plug-flow tank</li>
+                <li><strong>Particle removal = V<sub>s</sub>/SOR</strong> (if V<sub>s</sub> &lt; SOR; else 100%)</li>
+                <li><strong>Hardness as CaCO₃ = (ion mg/L / EW) × 50</strong> | EW of CaCO₃ = 50</li>
+                <li><strong>CT = C × T</strong> | Chick-Watson disinfection</li>
+                <li><strong>P<sub>n</sub> = P₀ + n·K<sub>a</sub></strong> | Arithmetic population forecast</li>
+                <li><strong>P<sub>n</sub> = P₀(1+r)<sup>n</sup></strong> | Geometric forecast</li>
+                <li><strong>Q = 3182·√P L/min</strong> | Kuichling fire demand (P in thousands)</li>
+                <li><strong>Max daily = 1.8 × average | Max hourly = 2.7 × average</strong></li>
+                <li><strong>Hazen-Williams:</strong> h<sub>L</sub> = 10.67·L·Q^1.852 / (C^1.852·D^4.87)</li>
+                <li><strong>Hardy Cross:</strong> ΔQ = -Σh<sub>L</sub> / (n·Σ|h<sub>L</sub>/Q|)</li>
+                <li><strong>Darcy's Law:</strong> Q = K·i·A | T = K·b (transmissivity)</li>
+                <li><strong>CMFR:</strong> C/C₀ = 1/(1+k·τ) | <strong>PFR:</strong> τ = -ln(C/C₀)/k</li>
+                <li><strong>Stokes Law:</strong> V<sub>s</sub> = g·(ρ<sub>p</sub>-ρ<sub>w</sub>)·d² / (18μ)</li>
+                <li><strong>Manning:</strong> V = (1/n)·R^(2/3)·S^(1/2) | Froude: Fr = V/√(gy)</li>
+            </ol>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>HIGHEST PROBABILITY QUESTIONS (Memorise These Topics):</h3>
+            <ul>
+                <li>✓ <strong>IS 10500:2012 Standards (Q16-Q20):</strong> Turbidity 1/5 NTU, pH 6.5-8.5, F⁻ 1.0/1.5, NO₃⁻ 45, Hardness 200/600, TDS 500/2000, As 0.01/0.05, Pb 0.01/0.05</li>
+                <li>✓ <strong>Hardness Types (Q6):</strong> Temp (bicarbonates) vs Permanent (SO₄²⁻, Cl⁻, NO₃⁻)</li>
+                <li>✓ <strong>MPN Procedure (Q11):</strong> 3-stage (Presumptive → Confirmed → Completed); Lactose + Durham tube → BGBB → EMB (metallic sheen)</li>
+                <li>✓ <strong>BOD₅ Test Conditions (Q12):</strong> 20°C, 5 days, DARK (prevents algal O₂), sealed bottle</li>
+                <li>✓ <strong>Population Forecasting (Q31-Q35):</strong> Arithmetic, Geometric, Incremental, Logistic - know when to use each</li>
+                <li>✓ <strong>Fire Demand Formulae (Q41-Q45):</strong> Kuichling Q = 3182√P; CPHEEO design periods 30/15 years</li>
+                <li>✓ <strong>Sedimentation (Q47-Q50):</strong> SOR = Q/A; removal = V<sub>s</sub>/SOR; DT = H/SOR</li>
+                <li>✓ <strong>Jar Test (Q52):</strong> Rapid (60-100 rpm, 1-2 min) → Slow (20-40 rpm, 15-20 min) → Settle 30 min</li>
+                <li>✓ <strong>Filtration Comparison (Q61-Q64):</strong> SSF (0.1-0.4 m/hr, biological) vs RSF (4-8 m/hr, physical)</li>
+                <li>✓ <strong>Chlorine pH Effect (Q73):</strong> HOCl pKa 7.5; HOCl 80× more germicidal than OCl⁻</li>
+                <li>✓ <strong>Breakpoint Chlorination (Q71):</strong> ~7.6 mg Cl₂/mg NH₃-N</li>
+                <li>✓ <strong>Lime-Soda (Q81-Q83):</strong> Lime for temp, soda for permanent; residual 50-85 mg/L</li>
+                <li>✓ <strong>Fluoride (Q91-Q95):</strong> Optimal 0.6-1.0 mg/L; 1.5 fluorosis; 3-6 skeletal; Nalgonda technique (lime+alum+bleach)</li>
+                <li>✓ <strong>Hardy Cross (Q101-Q103):</strong> ΔQ formula, sign convention, Hazen-Williams</li>
             </ul>
         </div>
 
         <div class="exam-strategy">
-            <h3>MEDIUM-YIELD TOPICS:</h3>
+            <h3>MEDIUM-YIELD TOPICS (Important but Less Frequent):</h3>
             <ul>
-                <li>• Section 25/26 Water Act — Consent to Establish/Operate</li>
-                <li>• Section 33A Water / 31A Air — Power of directions (added 1987)</li>
-                <li>• HC Rules 1989 — over 600 hazardous chemicals; MAH units</li>
-                <li>• Tiger Reserves under Sec 38V (added 2006); ~55 in India</li>
-                <li>• Project Tiger 1973; NTCA constituted 2006</li>
-                <li>• National Parks (~106), Wildlife Sanctuaries (~573), Conservation/Community Reserves</li>
-                <li>• CRZ-I sub-zones IA/IB; CRZ-III A/B (density-based 2161/km²)</li>
-                <li>• EIA validity: 5 yr (general); 50 yr (mining); 10 yr (area dev)</li>
-                <li>• Public hearing exemptions</li>
-                <li>• Compensatory afforestation: 2× degraded forest land + NPV</li>
-                <li>• CAF Act 2016; CAMPA fund ₹50,000 cr+</li>
-                <li>• Doha Amendment (Kyoto 2nd commitment period)</li>
-                <li>• India NDC 2022: 45% GDP intensity, 50% non-fossil capacity, 2.5–3 BT carbon sink</li>
-                <li>• Aichi → Kunming-Montreal GBF (30×30)</li>
-                <li>• UNFCCC: CBDR-RC; Annex I vs Non-Annex I</li>
-                <li>• Vienna 1985 (framework) → Montreal 1987 (operational)</li>
-                <li>• Cartagena Protocol (LMOs/biosafety); Nagoya Protocol (ABS)</li>
-                <li>• Minamata Convention 2013 — mercury</li>
-                <li>• CAQM (NCR) replaced EPCA in Aug 2021</li>
-                <li>• Energy Conservation (Amendment) Act 2022 — carbon market</li>
+                <li>• Ozonation limitations & bromate formation (Q78-Q79)</li>
+                <li>• UV mechanism: pyrimidine dimers (Q76-Q77)</li>
+                <li>• RO vs Electrodialysis comparison (Q96-Q100)</li>
+                <li>• Desalination energy: SWRO 3-5 kWh/m³, BWRO 0.5-1.5 (Q100)</li>
+                <li>• Aquifer types: confined vs unconfined (Q27)</li>
+                <li>• Rippl's mass curve for reservoir sizing (Q29)</li>
+                <li>• CPHEEO per capita: 135 LPCD urban, 55 LPCD rural JJM (Q37)</li>
+                <li>• NRW & MNF analysis (Q116-Q117)</li>
+                <li>• Pressure-leakage relationship (Q120)</li>
+                <li>• Manganese removal difficulty vs Iron (Q89)</li>
+                <li>• Tube/Lamella settlers (Q50, Q60)</li>
+                <li>• WHO vs IS 10500 differences (Q21-Q25)</li>
             </ul>
         </div>
 
         <div class="exam-strategy">
-            <h3>GATE ES ADDITIONS (High Weight in GATE):</h3>
+            <h3>GATE ES ADDITIONS (High Weight in GATE, Skip if UPPCB-only):</h3>
             <ul>
-                <li>✓ <strong>National Environment Policy 2006</strong> — non-binding policy guideline</li>
-                <li>✓ <strong>Polluter Pays Principle</strong> (OECD 1972; Rio Principle 16)</li>
-                <li>✓ <strong>Precautionary Principle</strong> (Rio Principle 15)</li>
-                <li>✓ <strong>Public Trust Doctrine</strong> (Span Motels case 1997)</li>
-                <li>✓ <strong>Inter-generational Equity</strong></li>
-                <li>✓ <strong>CBDR-RC</strong> (Rio 1992)</li>
-                <li>✓ <strong>Brundtland Report 1987</strong> — sustainable development definition</li>
-                <li>✓ <strong>Absolute Liability</strong> (Oleum Gas case 1986)</li>
-                <li>✓ <strong>Article 6</strong> of Paris Agreement (carbon markets)</li>
+                <li>✓ <strong>Streeter-Phelps oxygen sag:</strong> Critical point, O'Connor-Dobbins reaeration</li>
+                <li>✓ <strong>Reactor design:</strong> CMFR vs PFR performance for first-order; Damköhler number</li>
+                <li>✓ <strong>Darcy's law & well hydraulics:</strong> Thiem equation, specific capacity, transmissivity</li>
+                <li>✓ <strong>Eutrophication:</strong> Liebig's limiting nutrient (P in freshwater), Carlson TSI</li>
+                <li>✓ <strong>Thermal stratification:</strong> 3 layers, seasonal turnover, internal loading</li>
+                <li>✓ <strong>Hydrological cycle:</strong> Water balance, unit hydrograph, rational method, SCS-CN</li>
+                <li>✓ <strong>Environmental hydraulics:</strong> Manning's, Froude, critical flow, hydraulic jump</li>
             </ul>
         </div>
 
         <div class="tip">
             <h3>CRITICAL EXAM-DAY TIPS:</h3>
             <ul>
-                <li><strong>✓ Mnemonic for Acts &amp; Years:</strong> Wild-72, Water-74, Forest-80, Air-81, EP-86, PLI-91, NGT-10. Practice this — comes up every time.</li>
-                <li><strong>✓ 42nd Amendment:</strong> 1976; both Art 48A &amp; 51A(g) + Forest to Concurrent List.</li>
-                <li><strong>✓ E(P) Act 1986</strong> = parent for ALL major rules (EIA, CRZ, BMW, SWM, HW, Plastic, Noise, Wetland) — frame answers using this.</li>
-                <li><strong>✓ NGT 7 Acts:</strong> Water/Cess/Forest/Air/EP/PLI/BD — Wildlife Act NOT included. Common trap.</li>
-                <li><strong>✓ Convention–Year–City triplet:</strong> Always remember together: Stockholm-72, CITES-73, Vienna-85, Montreal-87, Basel-89, Rio-92, Kyoto-97, Stockholm-01 (POPs), Paris-15, Kigali-16.</li>
-                <li><strong>✓ India ratification dates:</strong> CBD 1994, UNFCCC 1993, Basel 1992, Kyoto 2002, Paris 2016, Kigali 2021, Minamata 2018.</li>
-                <li><strong>✓ NEP 2006:</strong> only POLICY (not law); doesn't have legal teeth.</li>
-                <li><strong>✓ CITES Appendices:</strong> I = banned trade (most strict); II = controlled; III = national listing.</li>
-                <li><strong>✓ Ramsar India:</strong> 85 sites; largest = Sundarbans; designated 2 February (World Wetlands Day).</li>
-                <li><strong>✓ Wildlife schedules POST-2022:</strong> 4 (was 6 earlier). Be aware of restructuring.</li>
-                <li><strong>✓ Net-zero year:</strong> India 2070, China 2060, US/EU/UK 2050, Bhutan/Suriname already.</li>
-                <li><strong>✓ Marking strategy:</strong> Unit 5 = 8–10 Qs, all FACTUAL — guaranteed if memorised. Allocate revision time accordingly. Highest yield-per-hour unit.</li>
-                <li><strong>✓ Watch out:</strong> Stockholm 1972 (Conference) vs Stockholm 2001 (POPs Convention) — same city, very different events.</li>
+                <li><strong>✓ Turbidity Units:</strong> Always NTU (Nephelometric Turbidity Units), NOT FTU or JTU. Desirable = 1, Permissible = 5.</li>
+                <li><strong>✓ Hardness Conversion:</strong> Always convert to CaCO₃ equivalent. Multiply by (50/EW) where EW = atomic wt ÷ valency.</li>
+                <li><strong>✓ SOR vs Detention Time:</strong> SOR is the PRIMARY design parameter for settling tanks. Don't confuse Q/A with Q/V.</li>
+                <li><strong>✓ Population Methods:</strong> Arithmetic = lowest; Geometric = highest; Logistic = most realistic long-term. Select based on growth pattern in data.</li>
+                <li><strong>✓ Fire Demand:</strong> P must be in THOUSANDS for Kuichling/Freeman formulae. Check units carefully!</li>
+                <li><strong>✓ Chlorine pH:</strong> Remember pKa of HOCl ≈ 7.5. Operating at pH &lt; 7.5 gives better disinfection (more HOCl).</li>
+                <li><strong>✓ Filter Comparison:</strong> SSF vs RSF - mechanism (biological vs physical), pre-treatment (none vs coagulation), rate (0.1 vs 4 m/hr).</li>
+                <li><strong>✓ Hardy Cross:</strong> Sign convention matters! CW flows positive, CCW negative. Apply correction with same sign convention.</li>
+                <li><strong>✓ CMFR vs PFR:</strong> For same conversion, CMFR always needs LARGER volume (4-10× for high conversions). Exception: zero-order reactions.</li>
+                <li><strong>✓ Time Management:</strong> Unit 1 is HIGHEST weight (15-18 Qs, ~25% of paper). Allocate 25-30 min here.</li>
+                <li><strong>✓ Marking Strategy:</strong> Skip if &lt; 60% confident. +4 correct, -1 wrong → risk/reward 1:4, so mark confidently or skip.</li>
+                <li><strong>✓ Unit Verification:</strong> BEFORE finalising, check units. Common traps: m/day vs m/hr for SOR; mg/L vs μg/L; thousands vs actual for population.</li>
             </ul>
         </div>
 
         <div class="standard">
-            <h3>MUST-MEMORISE SUMMARY (LAWS, CONVENTIONS &amp; PRINCIPLES):</h3>
+            <h3>MUST-MEMORISE STANDARDS SUMMARY (IS 10500:2012):</h3>
             <table>
-                <tr><th>Item</th><th>Year / Key Fact</th></tr>
-                <tr><td>Wildlife Protection Act</td><td>1972 (latest amendment 2022)</td></tr>
-                <tr><td>Water Act</td><td>1974</td></tr>
-                <tr><td>Water Cess Act</td><td>1977 (repealed 2017 GST)</td></tr>
-                <tr><td>Forest Conservation Act</td><td>1980 (amended 2023)</td></tr>
-                <tr><td>Air Act</td><td>1981</td></tr>
-                <tr><td>Environment (Protection) Act</td><td>1986 (umbrella; post-Bhopal)</td></tr>
-                <tr><td>Public Liability Insurance Act</td><td>1991 (no-fault)</td></tr>
-                <tr><td>Biological Diversity Act</td><td>2002 (implements CBD; amended 2023)</td></tr>
-                <tr><td>NGT Act</td><td>2010 (7 laws in Schedule I)</td></tr>
-                <tr><td>Article 48A</td><td>DPSP — env protection (42nd Amend 1976)</td></tr>
-                <tr><td>Article 51A(g)</td><td>Fundamental Duty — env (42nd Amend 1976)</td></tr>
-                <tr><td>Article 21</td><td>Right to clean environment (SC interpretation)</td></tr>
-                <tr><td>Section 15 EP Act penalty</td><td>5 yr + ₹1 lakh; continuing ₹5000/d; up to 7 yr</td></tr>
-                <tr><td>Stockholm Conference</td><td>1972 — UNEP born; June 5 WED</td></tr>
-                <tr><td>Brundtland Report</td><td>1987 — "Our Common Future"</td></tr>
-                <tr><td>Rio Earth Summit</td><td>1992 — UNFCCC, CBD, UNCCD</td></tr>
-                <tr><td>Kyoto Protocol</td><td>1997 (in force 2005); CDM/JI/ET</td></tr>
-                <tr><td>Paris Agreement</td><td>2015; NDCs; 1.5°C</td></tr>
-                <tr><td>India net-zero target</td><td>2070 (Glasgow COP26, 2021)</td></tr>
-                <tr><td>India NDC 2022</td><td>45% intensity, 50% non-fossil, 2.5–3 BT sink</td></tr>
-                <tr><td>Vienna Convention</td><td>1985 (ozone framework)</td></tr>
-                <tr><td>Montreal Protocol</td><td>1987 (CFC phase-out)</td></tr>
-                <tr><td>Kigali Amendment</td><td>2016 (HFC phase-down; India by 2047)</td></tr>
-                <tr><td>CITES</td><td>1973 (Appendices I/II/III)</td></tr>
-                <tr><td>Basel Convention</td><td>1989 (HW transboundary)</td></tr>
-                <tr><td>Rotterdam Convention</td><td>1998 (PIC chemicals)</td></tr>
-                <tr><td>Stockholm Convention</td><td>2001 (POPs — dirty dozen)</td></tr>
-                <tr><td>Ramsar Convention</td><td>1971 (wetlands); India 85 sites</td></tr>
-                <tr><td>Minamata Convention</td><td>2013 (mercury)</td></tr>
-                <tr><td>CBD</td><td>1992 (3 objectives — conserve, sustain use, ABS)</td></tr>
-                <tr><td>Cartagena Protocol</td><td>2000 (biosafety/LMOs)</td></tr>
-                <tr><td>Nagoya Protocol</td><td>2010 (ABS)</td></tr>
+                <tr><th>Parameter</th><th>Desirable</th><th>Permissible</th></tr>
+                <tr><td>pH</td><td>6.5-8.5</td><td>No relaxation</td></tr>
+                <tr><td>Turbidity (NTU)</td><td>1</td><td>5</td></tr>
+                <tr><td>Colour (TCU)</td><td>5</td><td>15</td></tr>
+                <tr><td>TDS (mg/L)</td><td>500</td><td>2000</td></tr>
+                <tr><td>Total Hardness (mg/L as CaCO₃)</td><td>200</td><td>600</td></tr>
+                <tr><td>Chloride (mg/L)</td><td>250</td><td>1000</td></tr>
+                <tr><td>Sulphate (mg/L)</td><td>200</td><td>400</td></tr>
+                <tr><td>Fluoride (mg/L)</td><td>1.0</td><td>1.5</td></tr>
+                <tr><td>Nitrate (mg/L as NO₃⁻)</td><td>45</td><td>No relaxation</td></tr>
+                <tr><td>Iron (mg/L)</td><td>0.3</td><td>No relaxation</td></tr>
+                <tr><td>Arsenic (mg/L)</td><td>0.01</td><td>0.05</td></tr>
+                <tr><td>Lead (mg/L)</td><td>0.01</td><td>No relaxation</td></tr>
+                <tr><td>Coliform</td><td>Absent/100 mL</td><td>Absent</td></tr>
+                <tr><td>E. coli</td><td>Absent/100 mL</td><td>Absent</td></tr>
             </table>
         </div>
 
         <div class="footer">
-            <p><strong>UPPCB AEE Unit 5 Revision Notes | Environmental Legislation &amp; Policy | Generated April 2026</strong></p>
-            <p>Focus on Constitutional provisions, key Acts (Water, Air, EP, Wildlife, Forest, BD, NGT, PLI), Rules under EP Act 1986 (EIA, CRZ, Noise, Wetland), international conventions (Stockholm, Rio, Kyoto, Paris, Montreal, Basel, CITES, Ramsar), and principles of environmental law.</p>
-            <p>Sources: Bare Acts, MoEFCC notifications, CPCB website, UN treaty texts, Supreme Court judgments.</p>
-            <p>Includes GATE ES 2026 additions: NEP 2006, Polluter Pays, Precautionary Principle, Brundtland definition, Public Trust Doctrine, Absolute Liability, CBDR-RC.</p>
+            <p><strong>UPPCB AEE Unit 1 Revision Notes | Water Supply Engineering | Generated April 2026</strong></p>
+            <p>Focus on water quality parameters, treatment processes, distribution systems, and population/demand estimation.</p>
+            <p>Standards referenced from IS 10500:2012, CPHEEO Manual, IS 1172, IS 1742, IS 2065, and WHO GDWQ.</p>
+            <p>Includes GATE ES 2026 additions for Section 4 (Environmental Hydraulics) and Section 5 (Reactor Design).</p>
         </div>
     </div>
 </body>

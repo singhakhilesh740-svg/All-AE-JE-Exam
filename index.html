@@ -1,299 +1,549 @@
-// gs-notes.js — General Studies & Hindi Notes Module v2
-// Architecture: each GS subject has its own JSON file for detailed notes
-// Flow: Home → GS Subject → Sub-Subject List → Notes (topic chips + cards)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>All AE/JE Civil Exams</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
 
-const HI_VERSION = 'v1-hi-notes-1';
+  <!-- ===== LOGIN SCREEN ===== -->
+  <div id="loginScreen" class="screen active">
+    <div class="login-card">
+      <div class="logo">📘</div>
+      <h1>All AE/JE Civil Exams</h1>
+      <p class="tagline">All State AE/JE Civil Engineering Exams</p>
+      <p class="subtitle">PYQ · Practice · Notes · Bookmarks</p>
 
-// Per-subject cache map
-const _subjectCache = {};
+      <div id="loginPhoneStep">
+        <p class="auth-step-label" style="font-weight:700;color:#e2e8f0;font-size:15px">Login with Mobile OTP</p>
+        <div class="phone-input-row">
+          <span class="country-code">+91</span>
+          <input id="loginMobileInput" type="tel" inputmode="numeric" maxlength="10"
+            placeholder="10-digit mobile number" autocomplete="tel"/>
+        </div>
+        <button id="loginSendOtpBtn" class="btn-primary-auth">Send OTP</button>
+        <div class="divider"><span>or</span></div>
+        <button id="googleLoginBtn" class="btn-google">
+          <svg width="18" height="18" viewBox="0 0 18 18">
+            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
+            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+          </svg>
+          Login with Google
+        </button>
+      </div>
 
-// Subject → JSON file mapping
-const GS_SUBJECT_FILES = {
-  'history':         { file: 'data/gs-history.json',   version: 'v3-hist-2' },
-  'polity':          { file: 'data/gs-polity.json',    version: 'v2-pol-2'  },
-  'geography':       { file: 'data/gs-geography.json', version: 'v2-geo-2'  },
-  'general-science': { file: 'data/gs-science.json',   version: 'v2-sci-2'  },
-};
+      <div id="loginOtpStep" style="display:none">
+        <p class="auth-step-label">OTP sent to <strong id="loginOtpSentTo" style="color:#60a5fa"></strong></p>
+        <div class="otp-row">
+          <input id="loginOtpInput" type="tel" inputmode="numeric" maxlength="6"
+            placeholder="6-digit OTP" autocomplete="one-time-code"/>
+        </div>
+        <button id="loginVerifyOtpBtn" class="btn-primary-auth">Verify & Login</button>
+        <button id="loginResendOtpBtn" class="btn-ghost" style="font-size:12px">Resend OTP</button>
+        <button id="backToLoginPhone" class="btn-ghost">← Change Number</button>
+      </div>
 
-// Fallback: load from combined gs-notes.json if no dedicated file
-const GS_COMBINED_VERSION = 'v1-gs-notes-1';
-let _gsCombinedCache = null;
+      <p class="footer-note" id="loginFooter">Login with your mobile number</p>
+      <div id="authMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
+    </div>
+  </div>
 
-// ── Loaders ────────────────────────────────────────────────────────────────
+  <!-- ===== HOME SCREEN ===== -->
+  <div id="homeScreen" class="screen">
+    <header class="app-header">
+      <div class="header-left">
+        <h2>🏠 Home</h2>
+        <span class="header-sub">Select Exam Category</span>
+      </div>
+      <div class="header-right">
+        <button id="editProfileBtn" class="btn-icon" title="My Profile">👤</button>
+        <button id="logoutBtn" class="btn-icon" title="Logout">⏻</button>
+      </div>
+    </header>
+    <div class="welcome-strip">
+      <p>Welcome, <span id="userName">student</span> 👋</p>
+    </div>
+    <main class="home-main">
+      <div class="home-grid">
 
-export async function loadGSNotes(subjectId) {
-  // Return from per-subject cache if available
-  if (_subjectCache[subjectId]) return _subjectCache[subjectId];
+        <button class="home-tile tile-civil" id="homeCivil">
+          <div class="tile-icon">🏗️</div>
+          <div class="tile-title">AE/JE Civil</div>
+          <div class="tile-sub">Notes · Practice · PYQ · Bookmarks</div>
+        </button>
 
-  const mapping = GS_SUBJECT_FILES[subjectId];
-  if (mapping) {
-    try {
-      const r = await fetch(mapping.file + '?v=' + mapping.version, { cache: 'no-cache' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const data = await r.json();
-      _subjectCache[subjectId] = data;
-      return data;
-    } catch (e) {
-      console.error('[gs-notes] dedicated file load error for', subjectId, e);
-      // fall through to combined
-    }
-  }
+        <button class="home-tile tile-pcb" id="homePCB">
+          <div class="tile-icon">🌿</div>
+          <div class="tile-title">Pollution Control Board</div>
+          <div class="tile-sub">Notes · Practice · PYQ · Bookmarks</div>
+        </button>
 
-  // Fallback: combined file
-  try {
-    if (!_gsCombinedCache) {
-      const r = await fetch('data/gs-notes.json?v=' + GS_COMBINED_VERSION, { cache: 'no-cache' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      _gsCombinedCache = await r.json();
-    }
-    const data = _gsCombinedCache[subjectId] || null;
-    if (data) _subjectCache[subjectId] = data;
-    return data;
-  } catch (e) {
-    console.error('[gs-notes] combined load error:', e);
-    return null;
-  }
-}
+        <button class="home-tile tile-nontech" id="homeNonTech">
+          <div class="tile-icon">📚</div>
+          <div class="tile-title">Non-Tech</div>
+          <div class="tile-sub">GS · Hindi · Practice · PYQ</div>
+        </button>
 
-let _hiCache = null;
-export async function loadHindiNotes(subjectId) {
-  try {
-    if (!_hiCache) {
-      const r = await fetch('data/hindi-notes.json?v=' + HI_VERSION, { cache: 'no-cache' });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      _hiCache = await r.json();
-    }
-    return _hiCache[subjectId] || null;
-  } catch (e) {
-    console.error('[hindi-notes] load error:', e);
-    return null;
-  }
-}
+      </div>
+    </main>
+  </div>
 
+  <!-- ===== PROFILE SCREEN ===== -->
+  <div id="profileScreen" class="screen">
+    <header class="app-header">
+      <div class="header-left">
+        <h2>👤 My Profile</h2>
+        <span class="header-sub">Your account details</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="login-card" style="max-width:420px;margin:20px auto">
+        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin-bottom:4px">Mobile Number</p>
+        <input id="profileMobile" type="text" class="auth-input" disabled style="opacity:0.7;cursor:not-allowed"/>
+        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Full Name</p>
+        <input id="profileName" type="text" placeholder="Enter your full name" maxlength="60" class="auth-input"/>
+        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Email ID</p>
+        <input id="profileEmail" type="email" placeholder="Enter your email" class="auth-input"/>
+        <button id="saveProfileBtn" class="btn-primary-auth" style="background:#065f46;margin-top:16px">💾 Save Details</button>
+        <div id="profileMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
+      </div>
+    </main>
+  </div>
 
-/**
- * Get the sub-subjects list for a given GS subject (e.g. all periods of History)
- * Returns array of {id, icon, name, description} or null
- */
-export function getSubSubjects(data) {
-  return data && data.sub_subjects ? data.sub_subjects : null;
-}
+  <!-- ===================================================
+       AE/JE CIVIL — SECTION HOME
+       =================================================== -->
+  <div id="civilHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🏗️ AE/JE Civil</h2>
+        <span class="header-sub">Choose a section</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-notes" id="civilNotes">
+          <div class="tile-icon">📝</div>
+          <div class="tile-title">Notes</div>
+          <div class="tile-sub">Subject-wise study material</div>
+        </button>
+        <button class="home-tile tile-practice" id="civilPractice">
+          <div class="tile-icon">✏️</div>
+          <div class="tile-title">Imp Practice</div>
+          <div class="tile-sub">Important questions by subject</div>
+        </button>
+        <button class="home-tile tile-pyq" id="civilPYQ">
+          <div class="tile-icon">📜</div>
+          <div class="tile-title">PYQ</div>
+          <div class="tile-sub">Previous year questions</div>
+        </button>
+        <button class="home-tile tile-bookmarks" id="civilBookmarks">
+          <div class="tile-icon">⭐</div>
+          <div class="tile-title">Bookmarks</div>
+          <div class="tile-sub">Your saved questions</div>
+        </button>
+      </div>
+    </main>
+  </div>
 
-/**
- * Get notes data for a specific sub-subject (e.g. Ancient India within History)
- * @param {Object} data - full subject data loaded from JSON
- * @param {string} subId - sub-subject id (e.g. 'ancient')
- */
-export function getSubSubjectData(data, subId) {
-  if (!data || !data[subId]) return null;
-  return data[subId]; // returns {topics: [...], notes: [...]}
-}
+  <!-- ===================================================
+       PCB — SECTION HOME
+       =================================================== -->
+  <div id="pcbHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🌿 Pollution Control Board</h2>
+        <span class="header-sub">Choose a section</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-notes" id="pcbNotes">
+          <div class="tile-icon">📝</div>
+          <div class="tile-title">Notes</div>
+          <div class="tile-sub">Subject-wise study material</div>
+        </button>
+        <button class="home-tile tile-practice" id="pcbPractice">
+          <div class="tile-icon">✏️</div>
+          <div class="tile-title">Imp Practice</div>
+          <div class="tile-sub">Important questions by subject</div>
+        </button>
+        <button class="home-tile tile-pyq" id="pcbPYQ">
+          <div class="tile-icon">📜</div>
+          <div class="tile-title">PYQ</div>
+          <div class="tile-sub">Previous year questions</div>
+        </button>
+        <button class="home-tile tile-bookmarks" id="pcbBookmarks">
+          <div class="tile-icon">⭐</div>
+          <div class="tile-title">Bookmarks</div>
+          <div class="tile-sub">Your saved questions</div>
+        </button>
+      </div>
+    </main>
+  </div>
 
-// ── Renderer (shared for GS + Hindi) ─────────────────────────────────────
+  <!-- ===================================================
+       NON-TECH — SECTION HOME
+       =================================================== -->
+  <div id="nonTechHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="homeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>📚 Non-Tech</h2>
+        <span class="header-sub">Choose a section</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-gs" id="nonTechGS">
+          <div class="tile-icon">🌍</div>
+          <div class="tile-title">General Studies</div>
+          <div class="tile-sub">Polity · History · Geography · Science</div>
+        </button>
+        <button class="home-tile tile-hindi" id="nonTechHindi">
+          <div class="tile-icon">📖</div>
+          <div class="tile-title">Hindi</div>
+          <div class="tile-sub">व्याकरण · साहित्य · कवि</div>
+        </button>
+        <button class="home-tile tile-practice" id="nonTechPractice">
+          <div class="tile-icon">✏️</div>
+          <div class="tile-title">Practice Questions</div>
+          <div class="tile-sub">GS · Reasoning · Aptitude</div>
+        </button>
+        <button class="home-tile tile-pyq" id="nonTechPYQ">
+          <div class="tile-icon">📜</div>
+          <div class="tile-title">PYQ</div>
+          <div class="tile-sub">Previous year questions</div>
+        </button>
+      </div>
+    </main>
+  </div>
 
-/**
- * @param {Object} data        — subject notes data from JSON
- * @param {string} mainId      — DOM id of the <main> element
- * @param {string} topicBarId  — DOM id of the topic bar container
- * @param {string} placeholderId
- */
-export function renderGSNotesContent(data, mainId, topicBarId, placeholderId, filterTopicId) {
-  const main        = document.getElementById(mainId);
-  const topicBar    = document.getElementById(topicBarId);
-  const placeholder = document.getElementById(placeholderId);
+  <!-- ===== PCB NOTES: SUBJECT LIST ===== -->
+  <div id="pcbNotesSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pcbHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>📝 PCB Notes</h2>
+        <span class="header-sub">Select a unit</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pcbNotesSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
 
-  if (placeholder) placeholder.style.display = 'none';
+  <!-- ===== PCB NOTES: CONTENT SCREEN ===== -->
+  <div id="pcbNotesContentScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pcbNotesSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="pcbNotesContentTitle">Notes</h2>
+        <span class="header-sub" id="pcbNotesContentSub">Unit notes</span>
+      </div>
+    </header>
+    <div id="pcbNotesTopicBar" class="notes-topic-bar"></div>
+    <main class="notes-main" id="pcbNotesMain">
+      <div id="pcbNotesPlaceholder" class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>Loading…</h3>
+        <p>Please wait</p>
+      </div>
+    </main>
+  </div>
 
-  // Remove old rendered content
-  const old = document.getElementById(mainId + '-rendered');
-  if (old) old.remove();
+  <!-- ===== NOTES: SUBJECT LIST ===== -->
+  <div id="notesSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon" id="notesSubjectsBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>📝 Notes</h2>
+        <span class="header-sub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="notesSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
 
-  // Build topic chips
-  topicBar.innerHTML = '';
-  if (data.topics && data.topics.length) {
-    _addChip(topicBar, 'All', 'all', true, mainId);
-    data.topics.forEach(t => _addChip(topicBar, t.name, t.id, false, mainId));
-  }
+  <!-- ===== NOTES: CONTENT SCREEN ===== -->
+  <div id="notesContentScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon" id="notesContentBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="notesContentTitle">Notes</h2>
+        <span class="header-sub" id="notesContentSub">Subject notes</span>
+      </div>
+    </header>
+    <main class="notes-main" id="notesMain">
+      <div id="notesTopicBar" class="notes-topic-bar"></div>
+      <div id="notesPlaceholder" class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>Notes coming soon</h3>
+        <p>Notes for this subject will be added here.</p>
+      </div>
+    </main>
+  </div>
 
-  // Build notes container
-  const wrap = document.createElement('div');
-  wrap.id = mainId + '-rendered';
-  wrap.className = 'notes-container';
+  <!-- ===== PRACTICE: SUBJECT LIST ===== -->
+  <div id="practiceSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon" id="practiceSubjectsBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>✏️ Imp Practice</h2>
+        <span class="header-sub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="practiceSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
 
-  if (!data.notes || !data.notes.length) {
-    wrap.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><h3>No content yet</h3></div>';
-    main.appendChild(wrap);
-    return;
-  }
+  <!-- ===== PYQ: EXAM LIST ===== -->
+  <div id="pyqExamsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon" id="pyqExamsBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>📜 PYQ</h2>
+        <span class="header-sub">Pick an exam</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pyqExamList" class="subjects-list"></div>
+    </main>
+  </div>
 
-  data.notes.forEach(section => {
-    if (!section.cards || !section.cards.length) return;
-    const sec = document.createElement('div');
-    sec.className = 'notes-section';
-    sec.setAttribute('data-topic-id', section.topic_id);
+  <!-- ===== PYQ: MODE SELECT ===== -->
+  <div id="pyqModeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pyqExamsScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="pyqModeTitle">📜 PYQ</h2>
+        <span class="header-sub">How do you want to browse?</span>
+      </div>
+    </header>
+    <main class="home-main">
+      <div class="home-grid">
+        <button class="home-tile tile-pyq" id="pyqModeYear">
+          <div class="tile-icon">📅</div>
+          <div class="tile-title">Exam & Year-wise</div>
+          <div class="tile-sub">Browse by exam year</div>
+        </button>
+        <button class="home-tile tile-notes" id="pyqModeSubject">
+          <div class="tile-icon">📖</div>
+          <div class="tile-title">Subject-wise</div>
+          <div class="tile-sub">Browse by subject</div>
+        </button>
+      </div>
+    </main>
+  </div>
 
-    const h3 = document.createElement('h3');
-    h3.className = 'notes-topic-header';
-    h3.textContent = section.topic_name;
-    sec.appendChild(h3);
+  <!-- ===== PYQ: YEAR LIST ===== -->
+  <div id="pyqYearsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="pyqYearsTitle">📅 PYQ — Year-wise</h2>
+        <span class="header-sub" id="pyqYearsSub">Pick an exam paper</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pyqYearList" class="subjects-list"></div>
+    </main>
+  </div>
 
-    section.cards.forEach(c => sec.appendChild(_buildCard(c)));
-    wrap.appendChild(sec);
-  });
+  <!-- ===== PYQ: SUBJECT LIST ===== -->
+  <div id="pyqSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="pyqModeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="pyqSubjectsTitle">PYQ</h2>
+        <span class="header-sub" id="pyqSubjectsSub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="pyqSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
 
-  main.appendChild(wrap);
-  // If a specific topic was requested, auto-activate it
-  const initialFilter = filterTopicId || 'all';
-  _applyFilter(wrap, initialFilter);
+  <!-- ===== BOOKMARKS SCREEN ===== -->
+  <div id="bookmarksScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon" id="bookmarksBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>⭐ Bookmarks</h2>
+        <span class="header-sub">Your saved questions</span>
+      </div>
+    </header>
+    <main class="bookmarks-main">
+      <button id="practiceBookmarksBtn" class="practice-all-btn hidden">Practice all bookmarks</button>
+      <div id="bookmarksList" class="bookmarks-list"></div>
+      <div id="bookmarksEmpty" class="empty-state hidden">
+        <div class="empty-icon">⭐</div>
+        <h3>No bookmarks yet</h3>
+        <p>Tap the ☆ icon during a quiz to save questions here.</p>
+      </div>
+    </main>
+  </div>
 
-  // Sync the chip bar to match the initial filter
-  if (filterTopicId) {
-    const bar = document.getElementById(topicBarId);
-    if (bar) {
-      bar.querySelectorAll('.topic-chip').forEach(c => {
-        c.classList.toggle('active', c.textContent.trim() === 'All'
-          ? false
-          : (data.topics || []).find(t => t.id === filterTopicId && t.name === c.textContent.trim()) != null
-        );
+  <!-- ===== QUIZ SCREEN ===== -->
+  <div id="quizScreen" class="screen">
+    <header class="quiz-header">
+      <button id="quizBackBtn" class="btn-icon">←</button>
+      <div class="quiz-header-center">
+        <div class="quiz-progress-bar">
+          <div id="quizProgressFill" class="quiz-progress-fill"></div>
+        </div>
+        <span id="quizProgress" class="quiz-progress-text">0 / 0</span>
+      </div>
+      <button id="quizBookmarkBtn" class="btn-icon" title="Bookmark" data-marked="0">☆</button>
+    </header>
+    <div id="quizTopicBar" class="topic-bar-scroll"></div>
+    <main class="quiz-main">
+      <div class="quiz-meta-row">
+        <div class="quiz-meta">
+          <span id="quizExamTag" class="hidden">—</span>
+          <span id="quizSubjectTag">—</span>
+          <span id="quizYearTag">—</span>
+        </div>
+        <button id="quizGridBtn" class="btn-grid" title="Jump to question">⊞</button>
+      </div>
+      <div id="quizSrNo" class="quiz-sr-no">Q.1</div>
+      <h2 id="quizQuestion" class="quiz-question">Loading...</h2>
+      <div id="quizOptions" class="quiz-options"></div>
+      <div id="quizExplanation" class="quiz-explanation hidden">
+        <h4>Explanation</h4>
+        <p id="quizExplanationText"></p>
+      </div>
+    </main>
+    <footer class="quiz-footer">
+      <button id="quizPrevBtn" class="btn-secondary">← Prev</button>
+      <button id="quizNextBtn" class="btn-primary">Next →</button>
+    </footer>
+  </div>
+
+  <!-- QUESTION JUMP PANEL -->
+  <div id="jumpPanel" class="jump-panel hidden">
+    <div class="jump-panel-inner">
+      <div class="jump-panel-header">
+        <span class="jump-panel-title">Jump to Question</span>
+        <button id="jumpCloseBtn" class="btn-icon">✕</button>
+      </div>
+      <div id="jumpGrid" class="jump-grid"></div>
+    </div>
+  </div>
+
+  <!-- ===== GS: SUBJECT LIST ===== -->
+  <div id="gsSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🌍 General Studies</h2>
+        <span class="header-sub">Pick a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="gsSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== GS: SUB-SUBJECT LIST ===== -->
+  <div id="gsSubSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="gsSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="gsSubSubjectTitle">History</h2>
+        <span class="header-sub" id="gsSubSubjectSub">Choose a period</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="gsSubSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== GS NOTES CONTENT ===== -->
+  <div id="gsNotesScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon" id="gsNotesBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="gsNotesTitle">General Studies</h2>
+        <span class="header-sub" id="gsNotesSub">Notes</span>
+      </div>
+    </header>
+    <main class="notes-main" id="gsNotesMain">
+      <div id="gsTopicBar" class="notes-topic-bar"></div>
+      <div id="gsPlaceholder" class="empty-state">
+        <div class="empty-icon">🌍</div>
+        <h3>Notes loading…</h3>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== HINDI: SUBJECT LIST ===== -->
+  <div id="hindiSubjectsScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>📖 Hindi</h2>
+        <span class="header-sub">Pick a section</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="hindiSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== HINDI NOTES CONTENT ===== -->
+  <div id="hindiNotesScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="hindiSubjectsScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="hindiNotesTitle">Hindi</h2>
+        <span class="header-sub" id="hindiNotesSub">Notes</span>
+      </div>
+    </header>
+    <main class="notes-main" id="hindiNotesMain">
+      <div id="hindiTopicBar" class="notes-topic-bar"></div>
+      <div id="hindiPlaceholder" class="empty-state">
+        <div class="empty-icon">📖</div>
+        <h3>Notes loading…</h3>
+      </div>
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/db.js"></script>
+  <script type="module" src="js/quiz.js"></script>
+  <script type="module" src="js/subjects.js"></script>
+  <script type="module" src="js/exams.js"></script>
+  <script type="module" src="js/notes.js"></script>
+  <script type="module" src="js/gs-notes.js"></script>
+  <script type="module" src="js/pcb-notes.js"></script>
+  <script type="module" src="js/app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').catch(() => {});
       });
-      // Mark the matching chip active; fallback: keep All active
-      let found = false;
-      bar.querySelectorAll('.topic-chip').forEach(c => {
-        if (!found) {
-          const matchTopic = (data.topics || []).find(t => t.id === filterTopicId);
-          if (matchTopic && c.textContent.trim() === matchTopic.name) {
-            c.classList.add('active');
-            found = true;
-          }
-        }
-      });
-      if (!found) {
-        const allChip = bar.querySelector('.topic-chip');
-        if (allChip) allChip.classList.add('active');
-      }
     }
-  }
-}
-
-// ── Internal helpers ───────────────────────────────────────────────────────
-
-function _addChip(bar, label, id, isActive, mainId) {
-  const btn = document.createElement('button');
-  btn.className = 'topic-chip' + (isActive ? ' active' : '');
-  btn.textContent = label;
-  btn.addEventListener('click', () => {
-    bar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
-    btn.classList.add('active');
-    const wrap = document.getElementById(mainId + '-rendered');
-    if (wrap) _applyFilter(wrap, id);
-    // scroll back to top
-    const m = document.getElementById(mainId);
-    if (m) m.scrollTop = 0;
-  });
-  bar.appendChild(btn);
-}
-
-function _applyFilter(wrap, topicId) {
-  wrap.querySelectorAll('.notes-section').forEach(sec => {
-    const tid = sec.getAttribute('data-topic-id');
-    sec.style.display = (topicId === 'all' || tid === topicId) ? '' : 'none';
-  });
-}
-
-function _buildCard(card) {
-  const el = document.createElement('div');
-  el.className = 'notes-card notes-card-' + (card.color || 'blue');
-
-  // Heading
-  const h4 = document.createElement('h4');
-  h4.className = 'notes-card-heading';
-  h4.textContent = card.heading;
-  el.appendChild(h4);
-
-  // Formula blocks
-  if (card.formulas) {
-    card.formulas.forEach(f => {
-      const d = document.createElement('div');
-      d.className = 'notes-formula';
-      const lbl = document.createElement('div');
-      lbl.className = 'notes-formula-label';
-      lbl.textContent = f.label;
-      d.appendChild(lbl);
-      const pre = document.createElement('pre');
-      pre.className = 'notes-formula-text';
-      pre.textContent = f.text;
-      d.appendChild(pre);
-      el.appendChild(d);
-    });
-  }
-
-  // Points
-  if (card.points && card.points.length) {
-    const ul = document.createElement('ul');
-    ul.className = 'notes-points';
-    card.points.forEach(p => {
-      const li = document.createElement('li');
-      // Support inline highlighting: **text** → yellow highlight
-      li.innerHTML = _parseHighlights(p);
-      ul.appendChild(li);
-    });
-    el.appendChild(ul);
-  }
-
-  // Table
-  if (card.table) {
-    const tw = document.createElement('div');
-    tw.className = 'notes-table-wrapper';
-    const tbl = document.createElement('table');
-    tbl.className = 'notes-table';
-
-    const thead = document.createElement('thead');
-    const hr = document.createElement('tr');
-    card.table.headers.forEach(h => {
-      const th = document.createElement('th');
-      th.textContent = h;
-      hr.appendChild(th);
-    });
-    thead.appendChild(hr);
-    tbl.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
-    card.table.rows.forEach(row => {
-      const tr = document.createElement('tr');
-      row.forEach((cell, ci) => {
-        const td = document.createElement('td');
-        // First column gets accent color
-        if (ci === 0) td.style.color = 'var(--accent)';
-        td.innerHTML = _parseHighlights(cell);
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-    tbl.appendChild(tbody);
-    tw.appendChild(tbl);
-    el.appendChild(tw);
-  }
-
-  // Alert / important note — shown in coloured box
-  if (card.alert) {
-    const a = document.createElement('div');
-    a.className = 'notes-alert';
-    a.innerHTML = _parseHighlights(card.alert);
-    el.appendChild(a);
-  }
-
-  return el;
-}
-
-// Parse **text** → highlighted span, and ★/⭐ lines get special treatment
-function _parseHighlights(str) {
-  if (!str) return '';
-  // Escape HTML first
-  const escaped = str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-  // Bold **text** → yellow highlight
-  return escaped.replace(/\*\*(.+?)\*\*/g,
-    '<span class="hi-yellow">$1</span>');
-}
+  </script>
+</body>
+</html>
