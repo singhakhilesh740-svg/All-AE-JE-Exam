@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Reports Admin — AE/JE Civil</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
+    .container{max-width:960px;margin:0 auto}
+    h1{color:#f59e0b;font-size:22px;margin-bottom:4px}
+    .sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
+    a{color:#60a5fa;text-decoration:none;font-size:13px}
+    .stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .stat{background:#1e293b;padding:12px 18px;border-radius:10px;text-align:center;border:1px solid #334155;flex:1;min-width:90px}
+    .stat-num{font-size:24px;font-weight:700;color:#f59e0b}
+    .stat-lbl{font-size:11px;color:#64748b;margin-top:2px}
+    .stat-num.green{color:#10b981}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .filter-btn{padding:7px 14px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer}
+    .filter-btn.active{border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,.08)}
+    .report-card{background:#1e293b;border-radius:12px;padding:16px;margin-bottom:10px;border:1px solid #334155;border-left:4px solid #f59e0b}
+    .report-card.resolved{border-left-color:#10b981;opacity:.7}
+    .report-card.dismissed{border-left-color:#334155;opacity:.5}
+    .rc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+    .rc-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
+    .badge-wrong-answer{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3)}
+    .badge-wrong-explanation{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3)}
+    .badge-typo{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+    .badge-wrong-options{background:rgba(168,85,247,.15);color:#a855f7;border:1px solid rgba(168,85,247,.3)}
+    .badge-other{background:rgba(100,116,139,.15);color:#94a3b8;border:1px solid #334155}
+    .badge-pending{background:rgba(245,158,11,.1);color:#f59e0b}
+    .badge-resolved{background:rgba(16,185,129,.1);color:#10b981}
+    .badge-dismissed{background:rgba(100,116,139,.1);color:#64748b}
+    .rc-meta{font-size:11px;color:#64748b}
+    .rc-question{font-size:13px;color:#e2e8f0;line-height:1.5;margin-bottom:8px;background:#0f172a;padding:10px;border-radius:8px}
+    .rc-exam{font-size:11px;color:#60a5fa;margin-bottom:6px}
+    .rc-options{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:8px}
+    .rc-opt{font-size:11px;padding:4px 8px;border-radius:6px;background:#0f172a;color:#94a3b8}
+    .rc-opt.correct{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+    .rc-explanation{font-size:11px;color:#94a3b8;background:#0a1122;padding:8px;border-radius:6px;margin-bottom:8px;line-height:1.5}
+    .rc-user-msg{font-size:12px;color:#fbbf24;font-style:italic;margin-bottom:10px;padding:8px;background:rgba(245,158,11,.05);border-radius:6px;border:1px solid rgba(245,158,11,.2)}
+    .rc-user-meta{font-size:11px;color:#475569;margin-bottom:10px}
+    .rc-actions{display:flex;gap:8px;flex-wrap:wrap}
+    button{padding:8px 14px;border-radius:8px;border:none;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit}
+    .btn-resolve{background:#10b981;color:#022c22}
+    .btn-dismiss{background:#334155;color:#94a3b8}
+    .btn-delete{background:#ef4444;color:#fff}
+    .btn-login{background:#f59e0b;color:#1f2937;font-size:14px;padding:10px 24px}
+    .login-wrap{text-align:center;padding:60px 20px}
+    .login-wrap p{color:#94a3b8;margin-bottom:20px}
+    .hidden{display:none!important}
+    .empty{text-align:center;padding:40px;color:#475569;font-size:14px}
+    .loading{text-align:center;padding:40px;color:#64748b}
+    .letters{display:flex;gap:3px;margin-bottom:4px}
+    .letter{font-size:10px;font-weight:700;width:18px;height:18px;display:flex;align-items:center;justify-content:center;border-radius:4px;background:#1e293b;color:#64748b;flex-shrink:0}
+    .letter.correct-letter{background:rgba(16,185,129,.2);color:#10b981}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>⚠️ Reports Admin</h1>
+  <p class="sub">User-reported question issues · <a href="notes-admin.html">← Notes Admin</a></p>
+
+  <!-- LOGIN -->
+  <div id="loginPanel" class="login-wrap">
+    <p>Sign in with admin account to view reports.</p>
+    <button class="btn-login" id="loginBtn">🔐 Login with Google</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainPanel" class="hidden">
+
+    <!-- Stats -->
+    <div class="stats" id="statsRow">
+      <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Total</div></div>
+      <div class="stat"><div class="stat-num" id="statPending">0</div><div class="stat-lbl">Pending</div></div>
+      <div class="stat"><div class="stat-num green" id="statResolved">0</div><div class="stat-lbl">Resolved</div></div>
+      <div class="stat"><div class="stat-num" id="statDismissed">0</div><div class="stat-lbl">Dismissed</div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="pending">Pending</button>
+      <button class="filter-btn" data-filter="resolved">Resolved</button>
+      <button class="filter-btn" data-filter="dismissed">Dismissed</button>
+      <button class="filter-btn" data-filter="wrong-answer">Wrong Answer</button>
+      <button class="filter-btn" data-filter="wrong-explanation">Wrong Explanation</button>
+    </div>
+
+    <!-- Reports list -->
+    <div id="reportsList"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }
+                               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc }
+                               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+
+const ADMIN_EMAIL = '112ce0489@gmail.com';
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+const $ = id => document.getElementById(id);
+
+let allReports  = [];
+let activeFilter = 'all';
+
+// ── Auth ──────────────────────────────────────────────
+$('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
+
+onAuthStateChanged(auth, user => {
+  if (user && user.email === ADMIN_EMAIL) {
+    $('loginPanel').classList.add('hidden');
+    $('mainPanel').classList.remove('hidden');
+    loadReports();
+  } else if (user) {
+    $('loginPanel').innerHTML = '<p style="color:#ef4444">❌ Not authorized. Use admin account.</p>';
+  }
+});
+
+// ── Load Reports (real-time) ──────────────────────────
+function loadReports() {
+  const q = query(collection(db, 'reports'), orderBy('timestamp', 'desc'));
+  onSnapshot(q, snap => {
+    allReports = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    updateStats();
+    renderReports();
+  });
+}
+
+// ── Stats ──────────────────────────────────────────────
+function updateStats() {
+  $('statTotal').textContent     = allReports.length;
+  $('statPending').textContent   = allReports.filter(r => r.status === 'pending').length;
+  $('statResolved').textContent  = allReports.filter(r => r.status === 'resolved').length;
+  $('statDismissed').textContent = allReports.filter(r => r.status === 'dismissed').length;
+}
+
+// ── Filter ────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    renderReports();
+  };
+});
+
+// ── Render ────────────────────────────────────────────
+function renderReports() {
+  const list = $('reportsList');
+  const letters = ['A','B','C','D','E','F'];
+
+  let filtered = allReports;
+  if (activeFilter === 'pending' || activeFilter === 'resolved' || activeFilter === 'dismissed') {
+    filtered = allReports.filter(r => r.status === activeFilter);
+  } else if (activeFilter !== 'all') {
+    filtered = allReports.filter(r => r.issue_type === activeFilter);
+  }
+
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty">No reports found.</div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(r => {
+    const badgeClass = {
+      'wrong-answer':      'badge-wrong-answer',
+      'wrong-explanation': 'badge-wrong-explanation',
+      'typo':              'badge-typo',
+      'wrong-options':     'badge-wrong-options',
+      'other':             'badge-other'
+    }[r.issue_type] || 'badge-other';
+
+    const statusBadge = {
+      pending:   '<span class="rc-badge badge-pending">● Pending</span>',
+      resolved:  '<span class="rc-badge badge-resolved">✓ Resolved</span>',
+      dismissed: '<span class="rc-badge badge-dismissed">— Dismissed</span>'
+    }[r.status] || '';
+
+    const issueLabel = {
+      'wrong-answer':      '❌ Wrong Answer',
+      'wrong-explanation': '📝 Wrong Explanation',
+      'typo':              '✏️ Typo',
+      'wrong-options':     '🔀 Wrong Options',
+      'other':             '💬 Other'
+    }[r.issue_type] || r.issue_type;
+
+    const ts = r.timestamp ? new Date(r.timestamp.seconds * 1000).toLocaleDateString('en-IN',
+      { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '—';
+
+    const optionsHtml = r.options && r.options.length
+      ? `<div class="letters">${r.options.map((o,i) =>
+          `<span class="letter ${i === r.correct_ans ? 'correct-letter' : ''}">${letters[i]}</span>`
+        ).join('')}</div>
+        <div class="rc-options">${r.options.map((o,i) =>
+          `<div class="rc-opt ${i === r.correct_ans ? 'correct' : ''}">${letters[i]}. ${o}</div>`
+        ).join('')}</div>` : '';
+
+    const expHtml = r.explanation
+      ? `<div class="rc-explanation">💡 ${r.explanation.slice(0, 200)}${r.explanation.length > 200 ? '…' : ''}</div>` : '';
+
+    const userMsgHtml = r.user_message
+      ? `<div class="rc-user-msg">"${r.user_message}"</div>` : '';
+
+    const resolveBtn  = r.status !== 'resolved'  ? `<button class="btn-resolve"  onclick="setStatus('${r.id}','resolved')">✓ Resolve</button>` : '';
+    const dismissBtn  = r.status !== 'dismissed' ? `<button class="btn-dismiss" onclick="setStatus('${r.id}','dismissed')">— Dismiss</button>` : '';
+    const pendingBtn  = r.status !== 'pending'   ? `<button class="btn-dismiss" onclick="setStatus('${r.id}','pending')">↩ Pending</button>` : '';
+    const deleteBtn   = `<button class="btn-delete" onclick="deleteReport('${r.id}')">🗑 Delete</button>`;
+
+    return `
+      <div class="report-card ${r.status}" id="card-${r.id}">
+        <div class="rc-top">
+          <div>
+            <span class="rc-badge ${badgeClass}">${issueLabel}</span>
+            &nbsp;${statusBadge}
+          </div>
+          <span class="rc-meta">${ts}</span>
+        </div>
+        <div class="rc-exam">📋 ${r.exam || '—'} · Q.${r.q_num || '?'} · ${r.subject ? r.subject.replace(/-/g,' ') : '—'} · ${r.year || '—'}</div>
+        <div class="rc-question">${r.question || '—'}</div>
+        ${optionsHtml}
+        ${expHtml}
+        ${userMsgHtml}
+        <div class="rc-user-meta">👤 ${r.reported_by || 'anonymous'}</div>
+        <div class="rc-actions">
+          ${resolveBtn}${pendingBtn}${dismissBtn}${deleteBtn}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── Actions ───────────────────────────────────────────
+window.setStatus = async (id, status) => {
+  await updateDoc(doc(db, 'reports', id), { status });
+};
+
+window.deleteReport = async (id) => {
+  if (!confirm('Delete this report permanently?')) return;
+  await deleteDoc(doc(db, 'reports', id));
+};
+</script>
+</body>
+</html>

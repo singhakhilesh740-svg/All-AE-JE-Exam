@@ -916,3 +916,22 @@ body {
 .pcb-notes-content div.section-header {
   scroll-margin-top: 120px;
 }
+
+/* ── Report Question Button ─────────────────────────── */
+.report-question-btn {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: rgba(245,158,11,0.08);
+  color: #f59e0b;
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+.report-question-btn:active { opacity: 0.7; }

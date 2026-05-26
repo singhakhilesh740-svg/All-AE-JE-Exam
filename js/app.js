@@ -14,6 +14,7 @@ import {
   removeBookmark,
   isQuestionBookmarked,
   fetchBookmarkedQuestions
+  submitQuestionReport,
 } from './db.js';
 import * as Quiz from './quiz.js';
 import { EXAMS, getExamById } from './exams.js';
@@ -1002,3 +1003,43 @@ on('quizBookmarkBtn', async () => {
     } else toast('Failed to bookmark');
   }
 });
+
+// ═══════════════════════════════════════════════════
+// REPORT QUESTION FEATURE
+// ═══════════════════════════════════════════════════
+
+function openReportModal() {
+  const q = Quiz.getCurrent();
+  if (!q) return;
+  const preview = q.question.length > 100 ? q.question.slice(0, 100) + '…' : q.question;
+  $('reportQuestionText').textContent = preview;
+  $('reportIssueType').value = 'wrong-answer';
+  $('reportUserMsg').value = '';
+  $('reportModal').classList.remove('hidden');
+}
+
+function closeReportModal() {
+  $('reportModal').classList.add('hidden');
+}
+
+async function onSubmitReport() {
+  const q = Quiz.getCurrent();
+  if (!q) return;
+  const issueType = $('reportIssueType').value;
+  const userMsg   = $('reportUserMsg').value.trim();
+  if (!issueType) { toast('Please select an issue type'); return; }
+  const btn = $('reportSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  const ok = await submitQuestionReport({ q, issueType, userMsg, currentUser, currentExam });
+  btn.disabled = false;
+  btn.textContent = 'Submit Report';
+  if (ok) { closeReportModal(); toast('Report sent! Thank you 🙏'); }
+  else toast('Failed to send report. Try again.');
+}
+
+on('quizReportBtn',   openReportModal);
+on('reportCloseBtn',  closeReportModal);
+on('reportCancelBtn', closeReportModal);
+on('reportSubmitBtn', onSubmitReport);
+on('reportModal', e => { if (e.target === $('reportModal')) closeReportModal(); });

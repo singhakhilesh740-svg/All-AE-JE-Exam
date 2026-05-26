@@ -8,6 +8,8 @@ import {
   doc,
   setDoc,
   getDoc,
+  addDoc,
+  serverTimestamp,
   deleteDoc,
   limit
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -269,5 +271,32 @@ export async function fetchBookmarkedQuestions(userId) {
   } catch (err) {
     console.error('Error fetching bookmarks:', err);
     return [];
+  }
+}
+
+// ── Submit Question Report ─────────────────────────────────────────────────
+export async function submitQuestionReport({ q, issueType, userMsg, currentUser, currentExam }) {
+  try {
+    await addDoc(collection(db, 'reports'), {
+      q_num:        q.q_num       || null,
+      question:     q.question    || '',
+      exam:         q.exam_name   || (currentExam ? (currentExam.fullName || currentExam.name) : 'Unknown'),
+      exam_id:      q.exam        || (currentExam ? currentExam.id : ''),
+      subject:      q.subject     || '',
+      year:         q.year        || null,
+      correct_ans:  q.answer      !== undefined ? q.answer : null,
+      options:      q.options     || [],
+      explanation:  q.explanation || '',
+      issue_type:   issueType,
+      user_message: userMsg,
+      reported_by:  currentUser ? (currentUser.email || currentUser.phoneNumber || currentUser.uid) : 'anonymous',
+      user_uid:     currentUser ? currentUser.uid : null,
+      status:       'pending',
+      timestamp:    serverTimestamp()
+    });
+    return true;
+  } catch (err) {
+    console.error('submitQuestionReport error:', err);
+    return false;
   }
 }
