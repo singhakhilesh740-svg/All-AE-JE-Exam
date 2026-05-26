@@ -47,6 +47,14 @@ service cloud.firestore {
       }
     }
 
+
+    // ── Reports ────────────────────────────────────────────────────────────
+    // Any logged-in user can create a report; only admin can read/update/delete.
+    match /reports/{reportId} {
+      allow create: if isLoggedIn();
+      allow read, update, delete: if isAdmin();
+    }
+
     // ── Deny everything else ────────────────────────────────────────────────
     match /{document=**} {
       allow read, write: if false;
