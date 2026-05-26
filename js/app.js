@@ -13,7 +13,7 @@ import {
   addBookmark,
   removeBookmark,
   isQuestionBookmarked,
-  fetchBookmarkedQuestions
+  fetchBookmarkedQuestions,
   submitQuestionReport,
 } from './db.js';
 import * as Quiz from './quiz.js';
