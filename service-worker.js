@@ -1,10 +1,12 @@
-// service-worker.js — PWA caching v16-pcb-notes
-const CACHE_NAME = 'ae-civil-v18';
+// service-worker.js — PWA caching v19-pwa
+const CACHE_NAME = 'ae-civil-v19-pwa';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './css/styles.css',
-  './manifest.json'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // Network-first assets — always fetch fresh, fallback to cache
