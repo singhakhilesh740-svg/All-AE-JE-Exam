@@ -9,6 +9,16 @@
   <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- ✅ TEMP: Hide OTP login — remove this block to re-enable -->
+  <style>
+    #loginPhoneStep .auth-step-label,
+    #loginPhoneStep .phone-input-row,
+    #loginPhoneStep #loginSendOtpBtn,
+    #loginPhoneStep .divider,
+    #loginOtpStep { display: none !important; }
+  </style>
+
 </head>
 <body>
 
@@ -51,7 +61,7 @@
         <button id="backToLoginPhone" class="btn-ghost">← Change Number</button>
       </div>
 
-      <p class="footer-note" id="loginFooter">Login with your mobile number</p>
+      <p class="footer-note" id="loginFooter">Login with your Google account</p>
       <div id="authMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
     </div>
   </div>
