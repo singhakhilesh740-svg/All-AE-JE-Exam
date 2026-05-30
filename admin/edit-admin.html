@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Edit Questions — Admin</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
+    .container{max-width:960px;margin:0 auto}
+    h1{color:#60a5fa;font-size:22px;margin-bottom:4px}
+    .sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
+    a{color:#f59e0b;text-decoration:none;font-size:13px}
+
+    /* Panels */
+    .panel{background:#1e293b;padding:16px;border-radius:12px;margin-bottom:12px;border:1px solid #334155}
+    .panel-title{font-size:11px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+
+    /* Controls */
+    .ctrl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    select,input[type=text],input[type=number]{background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit}
+    select:focus,input:focus{outline:none;border-color:#60a5fa}
+    .search-input{flex:1;min-width:200px}
+
+    /* Stats */
+    .stats{display:flex;gap:8px;margin:12px 0}
+    .stat{background:#0f172a;padding:8px 14px;border-radius:8px;text-align:center;border:1px solid #334155;flex:1;min-width:70px}
+    .stat-num{font-size:20px;font-weight:700;color:#60a5fa}
+    .stat-lbl{font-size:10px;color:#64748b;margin-top:2px}
+
+    /* Question List */
+    .q-list{max-height:500px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin-top:10px}
+    .q-card{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px;cursor:pointer;transition:all .15s;border-left:3px solid #334155}
+    .q-card:hover{border-left-color:#60a5fa;background:#162032}
+    .q-card.editing{border-left-color:#f59e0b;background:rgba(245,158,11,.05)}
+    .q-num{font-size:11px;font-weight:700;color:#60a5fa;margin-bottom:4px}
+    .q-text{font-size:13px;color:#e2e8f0;line-height:1.5;margin-bottom:6px}
+    .q-meta{display:flex;gap:5px;flex-wrap:wrap}
+    .q-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600}
+    .tag-subj{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+    .tag-topic{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3)}
+    .tag-ans{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
+    .tag-yr{background:rgba(168,85,247,.15);color:#a855f7;border:1px solid rgba(168,85,247,.3)}
+
+    /* Edit Modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+    .modal-box{background:#1e293b;border-radius:16px;padding:20px;max-width:700px;width:100%;border:1px solid #334155;margin:20px 0}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .modal-header h2{color:#60a5fa;font-size:18px}
+    .close-btn{background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;padding:4px 8px}
+
+    /* Form */
+    label{font-size:12px;color:#94a3b8;display:block;margin-bottom:4px;margin-top:12px;font-weight:600}
+    label:first-child{margin-top:0}
+    textarea{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:10px;font-size:13px;font-family:inherit;resize:vertical;line-height:1.6}
+    textarea:focus{outline:none;border-color:#60a5fa}
+    .form-input{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit}
+    .form-input:focus{outline:none;border-color:#60a5fa}
+    .form-select{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit}
+    .opt-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+    .opt-label{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;border:2px solid #334155;color:#94a3b8;cursor:pointer;transition:all .15s}
+    .opt-label.correct{background:#10b981;color:#fff;border-color:#10b981}
+    .opt-input{flex:1}
+    .opt-hint{font-size:10px;color:#475569;margin-bottom:8px}
+
+    /* Buttons */
+    button{padding:9px 16px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit}
+    .btn-primary{background:#60a5fa;color:#0f172a}
+    .btn-save{background:#10b981;color:#022c22}
+    .btn-danger{background:#ef4444;color:#fff}
+    .btn-secondary{background:#334155;color:#f1f5f9}
+    .btn-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+
+    /* Status */
+    .status-msg{padding:10px;border-radius:8px;font-size:13px;margin-top:10px;display:none}
+    .status-ok{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.3);display:block}
+    .status-err{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);display:block}
+
+    .login-wrap{text-align:center;padding:50px 20px}
+    .login-wrap p{color:#94a3b8;margin-bottom:20px}
+    .btn-login{background:#60a5fa;color:#0f172a;font-size:14px;padding:10px 24px;border-radius:8px;font-weight:700}
+    .hidden{display:none!important}
+    .empty{text-align:center;padding:30px;color:#475569;font-size:14px}
+    .loading{text-align:center;padding:30px;color:#64748b}
+
+    /* Two col on desktop */
+    .two-col{display:flex;gap:8px;flex-wrap:wrap}
+    .two-col>*{flex:1;min-width:120px}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>✏️ Edit Questions</h1>
+  <p class="sub">Search, edit, and fix any question · <a href="index.html">← Back to Admin</a></p>
+
+  <!-- LOGIN -->
+  <div id="loginPanel" class="login-wrap">
+    <p>Sign in with admin account.</p>
+    <button class="btn-login" id="loginBtn">🔐 Login with Google</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainPanel" class="hidden">
+
+    <!-- Step 1: Select Exam -->
+    <div class="panel">
+      <div class="panel-title">Step 1 — Select Exam</div>
+      <div class="ctrl-row">
+        <select id="examSelect" style="flex:1;min-width:200px">
+          <option value="">Select an exam...</option>
+          <optgroup label="AE/JE Civil">
+            <option value="uppsc-ae">UPPSC AE</option>
+            <option value="uppsc-polytechnic">UPPSC Polytechnic</option>
+            <option value="bpsc-ae">BPSC AE</option>
+            <option value="cgpsc-ae">CGPSC AE</option>
+            <option value="gpsc-ae">GPSC AE</option>
+            <option value="tspsc-ae">TSPSC AE</option>
+            <option value="hpsc-ae">HPSC AE</option>
+            <option value="ukpsc-ae">UKPSC AE</option>
+          </optgroup>
+          <optgroup label="Pollution Control Board">
+            <option value="uppcb-aee">UPPCB AEE</option>
+            <option value="gpcb-aee">GPCB AEE</option>
+            <option value="cpcb-scientist">CPCB Scientist</option>
+            <option value="rspcb-aee">RSPCB AEE</option>
+            <option value="bpsc-aee">BPSC AEE (Env)</option>
+          </optgroup>
+        </select>
+        <button class="btn-primary" id="loadBtn">📥 Load Questions</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Search & Filter -->
+    <div class="panel" id="searchPanel" style="display:none">
+      <div class="panel-title">Step 2 — Search & Filter</div>
+      <div class="ctrl-row">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search by question text, Q number, subject..."/>
+        <select id="filterSubject" style="min-width:140px">
+          <option value="">All Subjects</option>
+        </select>
+        <select id="filterYear" style="min-width:100px">
+          <option value="">All Years</option>
+        </select>
+      </div>
+      <div class="stats" id="statsRow">
+        <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Total</div></div>
+        <div class="stat"><div class="stat-num" id="statShown">0</div><div class="stat-lbl">Shown</div></div>
+        <div class="stat"><div class="stat-num" style="color:#10b981" id="statEdited">0</div><div class="stat-lbl">Edited</div></div>
+      </div>
+
+      <!-- Question List -->
+      <div class="q-list" id="qList"><div class="loading">Click "Load Questions" first</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div id="editModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>✏️ Edit Question <span id="editQNum" style="color:#f59e0b"></span></h2>
+      <button class="close-btn" id="editCloseBtn">✕</button>
+    </div>
+
+    <!-- Question Text -->
+    <label>Question Text</label>
+    <textarea id="editQuestion" rows="3"></textarea>
+
+    <!-- Options -->
+    <label>Options <span class="opt-hint">(click letter circle to mark as correct answer)</span></label>
+    <div class="opt-row">
+      <div class="opt-label" id="optA" data-idx="0">A</div>
+      <input type="text" class="form-input opt-input" id="editOptA"/>
+    </div>
+    <div class="opt-row">
+      <div class="opt-label" id="optB" data-idx="1">B</div>
+      <input type="text" class="form-input opt-input" id="editOptB"/>
+    </div>
+    <div class="opt-row">
+      <div class="opt-label" id="optC" data-idx="2">C</div>
+      <input type="text" class="form-input opt-input" id="editOptC"/>
+    </div>
+    <div class="opt-row">
+      <div class="opt-label" id="optD" data-idx="3">D</div>
+      <input type="text" class="form-input opt-input" id="editOptD"/>
+    </div>
+
+    <!-- Explanation -->
+    <label>Explanation / Solution</label>
+    <textarea id="editExplanation" rows="4"></textarea>
+
+    <!-- Meta Fields -->
+    <div class="two-col">
+      <div>
+        <label>Subject</label>
+        <input type="text" class="form-input" id="editSubject"/>
+      </div>
+      <div>
+        <label>Topic</label>
+        <input type="text" class="form-input" id="editTopic"/>
+      </div>
+    </div>
+    <div class="two-col">
+      <div>
+        <label>Year</label>
+        <input type="number" class="form-input" id="editYear"/>
+      </div>
+      <div>
+        <label>Q Number</label>
+        <input type="number" class="form-input" id="editQNumInput"/>
+      </div>
+    </div>
+    <div class="two-col">
+      <div>
+        <label>Difficulty</label>
+        <select class="form-select" id="editDifficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div>
+        <label>Tier</label>
+        <select class="form-select" id="editTier">
+          <option value="free">Free</option>
+          <option value="premium">Premium</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div id="editStatus" class="status-msg"></div>
+
+    <!-- Actions -->
+    <div class="btn-row">
+      <button class="btn-save" id="editSaveBtn" style="flex:2">💾 Save Changes</button>
+      <button class="btn-secondary" id="editCancelBtn">Cancel</button>
+      <button class="btn-danger" id="editDeleteBtn">🗑️ Delete</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+    authDomain: "ae-exam-app.firebaseapp.com",
+    projectId: "ae-exam-app",
+    storageBucket: "ae-exam-app.firebasestorage.app",
+    messagingSenderId: "101353507688",
+    appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+  });
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const ADMIN = '112ce0489@gmail.com';
+  const $ = id => document.getElementById(id);
+
+  let allQuestions = [];
+  let currentExam = '';
+  let editingDoc = null;
+  let editedCount = 0;
+  let selectedAnswer = 0;
+
+  // Auth
+  $('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
+  onAuthStateChanged(auth, user => {
+    if (user && user.email === ADMIN) {
+      $('loginPanel').classList.add('hidden');
+      $('mainPanel').classList.remove('hidden');
+    } else {
+      $('loginPanel').classList.remove('hidden');
+      $('mainPanel').classList.add('hidden');
+    }
+  });
+
+  // Load Questions
+  $('loadBtn').onclick = async () => {
+    currentExam = $('examSelect').value;
+    if (!currentExam) { alert('Select an exam first'); return; }
+
+    $('loadBtn').textContent = '⏳ Loading...';
+    $('loadBtn').disabled = true;
+
+    try {
+      const snap = await getDocs(query(
+        collection(db, 'exams', currentExam, 'questions'),
+        orderBy('q_num', 'asc')
+      ));
+      allQuestions = [];
+      snap.forEach(d => allQuestions.push({ _docId: d.id, ...d.data() }));
+
+      $('searchPanel').style.display = '';
+      $('statTotal').textContent = allQuestions.length;
+      $('statEdited').textContent = editedCount;
+
+      // Populate filter dropdowns
+      const subjects = [...new Set(allQuestions.map(q => q.subject).filter(Boolean))].sort();
+      $('filterSubject').innerHTML = '<option value="">All Subjects</option>' +
+        subjects.map(s => `<option value="${s}">${s}</option>`).join('');
+
+      const years = [...new Set(allQuestions.map(q => q.year).filter(Boolean))].sort((a,b) => b-a);
+      $('filterYear').innerHTML = '<option value="">All Years</option>' +
+        years.map(y => `<option value="${y}">${y}</option>`).join('');
+
+      renderList();
+    } catch (err) {
+      alert('Error loading: ' + err.message);
+      console.error(err);
+    }
+    $('loadBtn').textContent = '📥 Load Questions';
+    $('loadBtn').disabled = false;
+  };
+
+  // Render Question List
+  function renderList() {
+    const search = ($('searchInput').value || '').toLowerCase();
+    const subj = $('filterSubject').value;
+    const yr = $('filterYear').value;
+
+    let filtered = allQuestions.filter(q => {
+      if (subj && q.subject !== subj) return false;
+      if (yr && String(q.year) !== yr) return false;
+      if (search) {
+        const haystack = `${q.q_num} ${q.question} ${q.subject} ${q.topic || ''}`.toLowerCase();
+        if (!haystack.includes(search)) return false;
+      }
+      return true;
+    });
+
+    $('statShown').textContent = filtered.length;
+
+    if (!filtered.length) {
+      $('qList').innerHTML = '<div class="empty">No questions match your search</div>';
+      return;
+    }
+
+    const letters = ['A','B','C','D'];
+    $('qList').innerHTML = filtered.map(q => `
+      <div class="q-card" data-id="${q._docId}">
+        <div class="q-num">Q${q.q_num || '?'} · ${currentExam}</div>
+        <div class="q-text">${esc(q.question || '').slice(0, 150)}${(q.question||'').length > 150 ? '...' : ''}</div>
+        <div class="q-meta">
+          <span class="q-tag tag-ans">✅ ${letters[q.answer] || '?'}</span>
+          <span class="q-tag tag-subj">${q.subject || '—'}</span>
+          ${q.topic ? `<span class="q-tag tag-topic">${q.topic}</span>` : ''}
+          ${q.year ? `<span class="q-tag tag-yr">${q.year}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    // Click to edit
+    document.querySelectorAll('.q-card').forEach(card => {
+      card.addEventListener('click', () => openEdit(card.dataset.id));
+    });
+  }
+
+  // Search & Filter events
+  $('searchInput').addEventListener('input', renderList);
+  $('filterSubject').addEventListener('change', renderList);
+  $('filterYear').addEventListener('change', renderList);
+
+  // Open Edit Modal
+  function openEdit(docId) {
+    const q = allQuestions.find(x => x._docId === docId);
+    if (!q) return;
+    editingDoc = q;
+    selectedAnswer = q.answer || 0;
+
+    $('editQNum').textContent = `#${q.q_num || '?'}`;
+    $('editQuestion').value = q.question || '';
+    $('editOptA').value = (q.options && q.options[0]) || '';
+    $('editOptB').value = (q.options && q.options[1]) || '';
+    $('editOptC').value = (q.options && q.options[2]) || '';
+    $('editOptD').value = (q.options && q.options[3]) || '';
+    $('editExplanation').value = q.explanation || '';
+    $('editSubject').value = q.subject || '';
+    $('editTopic').value = q.topic || '';
+    $('editYear').value = q.year || '';
+    $('editQNumInput').value = q.q_num || '';
+    $('editDifficulty').value = q.difficulty || 'medium';
+    $('editTier').value = q.tier || 'free';
+
+    updateAnswerUI();
+    $('editStatus').className = 'status-msg';
+    $('editStatus').style.display = 'none';
+    $('editModal').classList.remove('hidden');
+  }
+
+  // Answer selection (click circle)
+  function updateAnswerUI() {
+    ['optA','optB','optC','optD'].forEach((id, i) => {
+      $(id).classList.toggle('correct', i === selectedAnswer);
+    });
+  }
+
+  ['optA','optB','optC','optD'].forEach((id, i) => {
+    $(id).addEventListener('click', () => {
+      selectedAnswer = i;
+      updateAnswerUI();
+    });
+  });
+
+  // Close modal
+  function closeEdit() { $('editModal').classList.add('hidden'); editingDoc = null; }
+  $('editCloseBtn').onclick = closeEdit;
+  $('editCancelBtn').onclick = closeEdit;
+  $('editModal').addEventListener('click', e => { if (e.target === $('editModal')) closeEdit(); });
+
+  // Save
+  $('editSaveBtn').onclick = async () => {
+    if (!editingDoc) return;
+    $('editSaveBtn').disabled = true;
+    $('editSaveBtn').textContent = '⏳ Saving...';
+
+    try {
+      const updated = {
+        question: $('editQuestion').value.trim(),
+        options: [
+          $('editOptA').value.trim(),
+          $('editOptB').value.trim(),
+          $('editOptC').value.trim(),
+          $('editOptD').value.trim(),
+        ],
+        answer: selectedAnswer,
+        explanation: $('editExplanation').value.trim(),
+        subject: $('editSubject').value.trim(),
+        topic: $('editTopic').value.trim() || null,
+        year: parseInt($('editYear').value) || null,
+        q_num: parseInt($('editQNumInput').value) || null,
+        difficulty: $('editDifficulty').value,
+        tier: $('editTier').value,
+      };
+
+      await updateDoc(doc(db, 'exams', currentExam, 'questions', editingDoc._docId), updated);
+
+      // Update local data
+      Object.assign(editingDoc, updated);
+      editedCount++;
+      $('statEdited').textContent = editedCount;
+
+      $('editStatus').textContent = '✅ Saved successfully!';
+      $('editStatus').className = 'status-msg status-ok';
+
+      renderList();
+      setTimeout(closeEdit, 800);
+    } catch (err) {
+      console.error(err);
+      $('editStatus').textContent = '❌ Error: ' + err.message;
+      $('editStatus').className = 'status-msg status-err';
+    }
+    $('editSaveBtn').disabled = false;
+    $('editSaveBtn').textContent = '💾 Save Changes';
+  };
+
+  // Delete
+  $('editDeleteBtn').onclick = async () => {
+    if (!editingDoc) return;
+    if (!confirm(`Delete Q${editingDoc.q_num}? This cannot be undone!`)) return;
+    if (!confirm('FINAL CONFIRMATION: Permanently delete this question?')) return;
+
+    try {
+      await deleteDoc(doc(db, 'exams', currentExam, 'questions', editingDoc._docId));
+      allQuestions = allQuestions.filter(q => q._docId !== editingDoc._docId);
+      $('statTotal').textContent = allQuestions.length;
+      renderList();
+      closeEdit();
+      alert('Question deleted.');
+    } catch (err) {
+      alert('Delete error: ' + err.message);
+    }
+  };
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+</script>
+</body>
+</html>
