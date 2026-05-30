@@ -11,7 +11,7 @@ import {
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-  doc, getDoc, setDoc, collection, query, where, getDocs, serverTimestamp
+  doc, getDoc, setDoc, collection, query, where, getDocs, serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Capacitor native plugin — accessed via the runtime GLOBAL (window.Capacitor)
@@ -113,6 +113,21 @@ async function ensureProfileDoc(user, { email, mobile } = {}) {
   }
 }
 
+// ── Track login activity ────────────────────────────────────────────────
+async function trackLogin(user) {
+  try {
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    await setDoc(doc(db, 'users', user.uid), {
+      lastLogin: serverTimestamp(),
+      loginCount: increment(1),
+      lastDevice: isMobile ? 'mobile' : 'desktop',
+      lastBrowser: navigator.userAgent.slice(0, 100),
+    }, { merge: true });
+  } catch (e) {
+    console.error('[Auth] trackLogin error:', e);
+  }
+}
+
 // ── Google login ─────────────────────────────────────────────────────────────
 export async function loginWithGoogle() {
   if (isNative) {
@@ -124,12 +139,14 @@ export async function loginWithGoogle() {
     const credential = GoogleAuthProvider.credential(idToken);
     const userCred = await signInWithCredential(auth, credential);
     await ensureProfileDoc(userCred.user, { email: result.user?.email });
+    await trackLogin(userCred.user);
     return userCred.user;
   } else {
     // Web fallback — popup
     await setPersistence(auth, browserLocalPersistence);
     const result = await signInWithPopup(auth, googleProvider);
     await ensureProfileDoc(result.user, { email: result.user.email });
+    await trackLogin(result.user);
     return result.user;
   }
 }

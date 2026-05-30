@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Users Admin — AE/JE Civil</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
+    .container{max-width:1000px;margin:0 auto}
+    h1{color:#60a5fa;font-size:22px;margin-bottom:4px}
+    .sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
+    a{color:#f59e0b;text-decoration:none;font-size:13px}
+
+    /* Stats Cards */
+    .stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+    .stat{background:#1e293b;padding:14px 18px;border-radius:12px;text-align:center;border:1px solid #334155;flex:1;min-width:100px}
+    .stat-num{font-size:28px;font-weight:700}
+    .stat-lbl{font-size:11px;color:#64748b;margin-top:3px}
+    .blue{color:#60a5fa} .green{color:#10b981} .orange{color:#f59e0b} .purple{color:#a855f7}
+
+    /* Search & Filters */
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .search-input{flex:1;min-width:200px;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#f1f5f9;font-size:13px;font-family:inherit}
+    .search-input::placeholder{color:#475569}
+    .filter-btn{padding:8px 14px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer}
+    .filter-btn.active{border-color:#60a5fa;color:#60a5fa;background:rgba(96,165,250,.08)}
+
+    /* User Cards */
+    .user-card{background:#1e293b;border-radius:12px;padding:14px 16px;margin-bottom:8px;border:1px solid #334155;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .user-avatar{width:40px;height:40px;border-radius:50%;background:#334155;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#60a5fa;flex-shrink:0}
+    .user-info{flex:1;min-width:180px}
+    .user-name{font-size:14px;font-weight:600;color:#f1f5f9}
+    .user-email{font-size:12px;color:#64748b;margin-top:2px}
+    .user-meta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .meta-item{font-size:11px;padding:4px 8px;border-radius:6px;background:#0f172a;color:#94a3b8;border:1px solid #1e293b}
+    .meta-item.active-now{background:rgba(16,185,129,.1);color:#10b981;border-color:rgba(16,185,129,.3)}
+    .meta-item.active-today{background:rgba(96,165,250,.1);color:#60a5fa;border-color:rgba(96,165,250,.3)}
+    .meta-item.active-week{background:rgba(245,158,11,.1);color:#f59e0b;border-color:rgba(245,158,11,.3)}
+    .meta-item.inactive{background:rgba(100,116,139,.1);color:#475569}
+
+    /* Table header */
+    .table-header{display:flex;align-items:center;gap:12px;padding:8px 16px;font-size:11px;color:#475569;font-weight:600;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #1e293b;margin-bottom:8px}
+    .th-avatar{width:40px;flex-shrink:0}
+    .th-info{flex:1;min-width:180px}
+    .th-meta{display:flex;gap:12px;flex-wrap:wrap}
+
+    .login-wrap{text-align:center;padding:60px 20px}
+    .login-wrap p{color:#94a3b8;margin-bottom:20px}
+    .btn-login{background:#60a5fa;color:#0f172a;font-size:14px;padding:10px 24px;border:none;border-radius:8px;font-weight:700;cursor:pointer}
+    .hidden{display:none!important}
+    .empty{text-align:center;padding:40px;color:#475569;font-size:14px}
+    .loading{text-align:center;padding:40px;color:#64748b}
+    .sort-btn{background:none;border:none;color:#64748b;cursor:pointer;font-size:11px;font-weight:600}
+    .sort-btn:hover{color:#f1f5f9}
+    .export-btn{padding:8px 16px;border-radius:8px;background:#334155;color:#f1f5f9;border:none;font-size:12px;font-weight:600;cursor:pointer}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>👥 Users Dashboard</h1>
+  <p class="sub">
+    Registered users & login activity ·
+    <a href="feedback-admin.html">Feedback →</a> ·
+    <a href="reports-admin.html">Reports →</a> ·
+    <a href="upload.html">Upload →</a>
+  </p>
+
+  <!-- LOGIN -->
+  <div id="loginPanel" class="login-wrap">
+    <p>Sign in with admin account to view users.</p>
+    <button class="btn-login" id="loginBtn">🔐 Login with Google</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainPanel" class="hidden">
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat"><div class="stat-num blue" id="statTotal">0</div><div class="stat-lbl">Total Users</div></div>
+      <div class="stat"><div class="stat-num green" id="statToday">0</div><div class="stat-lbl">Active Today</div></div>
+      <div class="stat"><div class="stat-num orange" id="statWeek">0</div><div class="stat-lbl">Active This Week</div></div>
+      <div class="stat"><div class="stat-num purple" id="statMobile">0</div><div class="stat-lbl">Mobile Users</div></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search by name or email..." />
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="today">Today</button>
+      <button class="filter-btn" data-filter="week">This Week</button>
+      <button class="filter-btn" data-filter="inactive">Inactive</button>
+      <button class="export-btn" id="exportBtn">📥 Export CSV</button>
+    </div>
+
+    <!-- User List -->
+    <div class="table-header">
+      <div class="th-avatar"></div>
+      <div class="th-info">
+        User <button class="sort-btn" data-sort="name">↕ Name</button>
+      </div>
+      <div class="th-meta">
+        <button class="sort-btn" data-sort="lastLogin">↕ Last Login</button>
+        <button class="sort-btn" data-sort="loginCount">↕ Logins</button>
+      </div>
+    </div>
+    <div id="userList"><div class="loading">Loading users…</div></div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+    authDomain: "ae-exam-app.firebaseapp.com",
+    projectId: "ae-exam-app",
+    storageBucket: "ae-exam-app.firebasestorage.app",
+    messagingSenderId: "101353507688",
+    appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+  });
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const ADMIN = '112ce0489@gmail.com';
+
+  let allUsers = [];
+  let currentFilter = 'all';
+  let currentSort = 'lastLogin';
+  let sortDir = 'desc';
+
+  document.getElementById('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
+
+  onAuthStateChanged(auth, user => {
+    if (user && user.email === ADMIN) {
+      document.getElementById('loginPanel').classList.add('hidden');
+      document.getElementById('mainPanel').classList.remove('hidden');
+      loadUsers();
+    } else {
+      document.getElementById('loginPanel').classList.remove('hidden');
+      document.getElementById('mainPanel').classList.add('hidden');
+    }
+  });
+
+  async function loadUsers() {
+    const snap = await getDocs(collection(db, 'users'));
+    allUsers = [];
+    snap.forEach(d => allUsers.push({ uid: d.id, ...d.data() }));
+    updateStats();
+    renderUsers();
+  }
+
+  function getTimestamp(user, field) {
+    const val = user[field];
+    if (!val) return 0;
+    if (val.seconds) return val.seconds * 1000;
+    if (val instanceof Date) return val.getTime();
+    return 0;
+  }
+
+  function timeAgo(ts) {
+    if (!ts) return 'Never';
+    const now = Date.now();
+    const diff = now - ts;
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'Just now';
+    if (mins < 60) return mins + 'm ago';
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + 'h ago';
+    const days = Math.floor(hrs / 24);
+    if (days < 7) return days + 'd ago';
+    return new Date(ts).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  function isToday(ts) {
+    if (!ts) return false;
+    const d = new Date(ts);
+    const now = new Date();
+    return d.toDateString() === now.toDateString();
+  }
+
+  function isThisWeek(ts) {
+    if (!ts) return false;
+    return (Date.now() - ts) < 7 * 24 * 60 * 60 * 1000;
+  }
+
+  function updateStats() {
+    document.getElementById('statTotal').textContent = allUsers.length;
+    const today = allUsers.filter(u => isToday(getTimestamp(u, 'lastLogin'))).length;
+    const week = allUsers.filter(u => isThisWeek(getTimestamp(u, 'lastLogin'))).length;
+    const mobile = allUsers.filter(u => u.lastDevice === 'mobile').length;
+    document.getElementById('statToday').textContent = today;
+    document.getElementById('statWeek').textContent = week;
+    document.getElementById('statMobile').textContent = mobile;
+  }
+
+  function renderUsers() {
+    const list = document.getElementById('userList');
+    const searchTerm = (document.getElementById('searchInput').value || '').toLowerCase();
+
+    let users = [...allUsers];
+
+    // Filter
+    if (currentFilter === 'today') users = users.filter(u => isToday(getTimestamp(u, 'lastLogin')));
+    else if (currentFilter === 'week') users = users.filter(u => isThisWeek(getTimestamp(u, 'lastLogin')));
+    else if (currentFilter === 'inactive') users = users.filter(u => !isThisWeek(getTimestamp(u, 'lastLogin')));
+
+    // Search
+    if (searchTerm) {
+      users = users.filter(u =>
+        (u.name || '').toLowerCase().includes(searchTerm) ||
+        (u.email || '').toLowerCase().includes(searchTerm)
+      );
+    }
+
+    // Sort
+    users.sort((a, b) => {
+      let va, vb;
+      if (currentSort === 'name') { va = (a.name || '').toLowerCase(); vb = (b.name || '').toLowerCase(); }
+      else if (currentSort === 'loginCount') { va = a.loginCount || 0; vb = b.loginCount || 0; }
+      else { va = getTimestamp(a, 'lastLogin'); vb = getTimestamp(b, 'lastLogin'); }
+      return sortDir === 'desc' ? (vb > va ? 1 : -1) : (va > vb ? 1 : -1);
+    });
+
+    if (!users.length) { list.innerHTML = '<div class="empty">No users found</div>'; return; }
+
+    list.innerHTML = users.map(u => {
+      const ts = getTimestamp(u, 'lastLogin');
+      const ago = timeAgo(ts);
+      const initials = ((u.name || u.email || '?')[0] || '?').toUpperCase();
+      let activityClass = 'inactive';
+      if (isToday(ts)) activityClass = 'active-today';
+      if ((Date.now() - ts) < 30 * 60000) activityClass = 'active-now';
+      else if (isThisWeek(ts)) activityClass = 'active-week';
+
+      return `
+        <div class="user-card">
+          <div class="user-avatar">${esc(initials)}</div>
+          <div class="user-info">
+            <div class="user-name">${esc(u.name || 'No Name')}</div>
+            <div class="user-email">${esc(u.email || 'No Email')}${u.mobile ? ' · ' + esc(u.mobile) : ''}</div>
+          </div>
+          <div class="user-meta">
+            <span class="meta-item ${activityClass}">🕐 ${ago}</span>
+            <span class="meta-item">🔑 ${u.loginCount || 0} logins</span>
+            <span class="meta-item">${u.lastDevice === 'mobile' ? '📱' : '💻'} ${u.lastDevice || '—'}</span>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  // Search
+  document.getElementById('searchInput').addEventListener('input', renderUsers);
+
+  // Filters
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderUsers();
+    });
+  });
+
+  // Sort
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (currentSort === btn.dataset.sort) sortDir = sortDir === 'desc' ? 'asc' : 'desc';
+      else { currentSort = btn.dataset.sort; sortDir = 'desc'; }
+      renderUsers();
+    });
+  });
+
+  // Export CSV
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const header = 'Name,Email,Mobile,Last Login,Login Count,Device\n';
+    const rows = allUsers.map(u => {
+      const ts = getTimestamp(u, 'lastLogin');
+      const date = ts ? new Date(ts).toLocaleString('en-IN') : 'Never';
+      return `"${u.name || ''}","${u.email || ''}","${u.mobile || ''}","${date}",${u.loginCount || 0},"${u.lastDevice || ''}"`;
+    }).join('\n');
+    const blob = new Blob([header + rows], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `users_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  });
+</script>
+</body>
+</html>
