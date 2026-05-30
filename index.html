@@ -10,6 +10,18 @@
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="stylesheet" href="css/styles.css" />
 
+  <!-- ✅ Security: Prevent screenshots & content copying -->
+  <style>
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    input, textarea { -webkit-user-select: text; user-select: text; }
+  </style>
+
   <!-- ✅ TEMP: Hide OTP login — remove this block to re-enable -->
   <style>
     #loginPhoneStep .auth-step-label,
@@ -103,7 +115,38 @@
         </button>
 
       </div>
+
+      <!-- ── Feedback Button ── -->
+      <div style="text-align:center;margin-top:20px;">
+        <button id="feedbackBtn" style="padding:12px 24px;border-radius:12px;background:#1e293b;border:1px solid #334155;color:#94a3b8;font-size:14px;font-weight:600;cursor:pointer;width:100%;max-width:360px;">
+          💬 Send Feedback / Suggestion
+        </button>
+      </div>
+
     </main>
+  </div>
+
+  <!-- ===== FEEDBACK MODAL ===== -->
+  <div id="feedbackModal" class="modal-overlay hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;display:flex;align-items:center;justify-content:center;padding:16px;">
+    <div style="background:#1e293b;border-radius:16px;padding:20px;max-width:420px;width:100%;border:1px solid #334155;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <h3 style="color:#f59e0b;font-size:16px;">💬 Send Feedback</h3>
+        <button id="feedbackCloseBtn" style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer;">✕</button>
+      </div>
+      <select id="feedbackType" style="width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:14px;margin-bottom:12px;">
+        <option value="">Select feedback type...</option>
+        <option value="suggestion">💡 Feature Suggestion</option>
+        <option value="bug">🐛 Bug Report</option>
+        <option value="content">📝 Content Request</option>
+        <option value="praise">⭐ Appreciation</option>
+        <option value="other">📌 Other</option>
+      </select>
+      <textarea id="feedbackMessage" placeholder="Write your feedback here..." style="width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:10px;font-size:13px;min-height:100px;resize:vertical;font-family:inherit;margin-bottom:12px;"></textarea>
+      <div style="display:flex;gap:8px;">
+        <button id="feedbackCancelBtn" style="flex:1;padding:10px;background:#334155;color:#f1f5f9;border:none;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;">Cancel</button>
+        <button id="feedbackSubmitBtn" style="flex:2;padding:10px;background:#f59e0b;color:#1f2937;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;">Submit Feedback</button>
+      </div>
+    </div>
   </div>
 
   <!-- ===== PROFILE SCREEN ===== -->
@@ -296,6 +339,11 @@
       <div class="header-left" style="flex:1;margin-left:8px;">
         <h2 id="notesContentTitle">Notes</h2>
         <span class="header-sub" id="notesContentSub">Subject notes</span>
+      </div>
+      <div class="zoom-controls" style="display:flex;gap:4px;align-items:center;">
+        <button id="zoomOutBtn" class="btn-icon" style="font-size:16px;font-weight:700;width:32px;height:32px;border-radius:8px;background:#1e293b;color:#f1f5f9;border:1px solid #334155;">A−</button>
+        <span id="zoomLevel" style="font-size:11px;color:#64748b;min-width:32px;text-align:center;">100%</span>
+        <button id="zoomInBtn" class="btn-icon" style="font-size:16px;font-weight:700;width:32px;height:32px;border-radius:8px;background:#1e293b;color:#f1f5f9;border:1px solid #334155;">A+</button>
       </div>
     </header>
     <main class="notes-main" id="notesMain">
@@ -581,6 +629,82 @@
       </div>
     </div>
   </div>
+
+  <!-- ===== SCREENSHOT PREVENTION JS ===== -->
+  <script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'PrintScreen' ||
+          (e.ctrlKey && e.key === 'p') ||
+          (e.ctrlKey && e.shiftKey && (e.key === 's' || e.key === 'S' || e.key === 'i' || e.key === 'I')) ||
+          (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4'))) {
+        e.preventDefault(); return false;
+      }
+    });
+    document.addEventListener('visibilitychange', () => {
+      const app = document.getElementById('app');
+      if (app) app.style.filter = document.hidden ? 'blur(20px)' : 'none';
+    });
+  </script>
+
+  <!-- ===== ZOOM CONTROLS JS ===== -->
+  <script type="module">
+    const notesMain = document.getElementById('notesMain');
+    const zoomLevel = document.getElementById('zoomLevel');
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+    let currentZoom = 100;
+    function applyZoom() {
+      if (notesMain) notesMain.style.fontSize = currentZoom + '%';
+      if (zoomLevel) zoomLevel.textContent = currentZoom + '%';
+      localStorage.setItem('notesZoom', currentZoom);
+    }
+    const saved = localStorage.getItem('notesZoom');
+    if (saved) { currentZoom = parseInt(saved); applyZoom(); }
+    if (zoomInBtn) zoomInBtn.addEventListener('click', () => { if (currentZoom < 150) { currentZoom += 10; applyZoom(); } });
+    if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => { if (currentZoom > 70) { currentZoom -= 10; applyZoom(); } });
+  </script>
+
+  <!-- ===== FEEDBACK SYSTEM JS ===== -->
+  <script type="module">
+    import { auth, db } from './js/firebase-config.js';
+    import { addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    const feedbackBtn = document.getElementById('feedbackBtn');
+    const feedbackModal = document.getElementById('feedbackModal');
+    const feedbackCloseBtn = document.getElementById('feedbackCloseBtn');
+    const feedbackCancelBtn = document.getElementById('feedbackCancelBtn');
+    const feedbackSubmitBtn = document.getElementById('feedbackSubmitBtn');
+    function openFB() { feedbackModal.classList.remove('hidden'); }
+    function closeFB() { feedbackModal.classList.add('hidden'); }
+    if (feedbackBtn) feedbackBtn.addEventListener('click', openFB);
+    if (feedbackCloseBtn) feedbackCloseBtn.addEventListener('click', closeFB);
+    if (feedbackCancelBtn) feedbackCancelBtn.addEventListener('click', closeFB);
+    if (feedbackModal) feedbackModal.addEventListener('click', e => { if (e.target === feedbackModal) closeFB(); });
+    if (feedbackSubmitBtn) feedbackSubmitBtn.addEventListener('click', async () => {
+      const type = document.getElementById('feedbackType').value;
+      const msg = document.getElementById('feedbackMessage').value.trim();
+      if (!type) { alert('Please select a feedback type'); return; }
+      if (!msg) { alert('Please write your feedback'); return; }
+      feedbackSubmitBtn.disabled = true;
+      feedbackSubmitBtn.textContent = 'Sending…';
+      try {
+        const user = auth.currentUser;
+        await addDoc(collection(db, 'feedback'), {
+          type, message: msg,
+          user_email: user ? (user.email || '') : 'anonymous',
+          user_uid: user ? user.uid : null,
+          user_name: user ? (user.displayName || '') : '',
+          status: 'new', timestamp: serverTimestamp()
+        });
+        closeFB();
+        document.getElementById('feedbackType').value = '';
+        document.getElementById('feedbackMessage').value = '';
+        alert('Thank you for your feedback! 🙏');
+      } catch (err) { console.error('Feedback error:', err); alert('Failed to send. Try again.'); }
+      feedbackSubmitBtn.disabled = false;
+      feedbackSubmitBtn.textContent = 'Submit Feedback';
+    });
+  </script>
 
 </body>
 </html>

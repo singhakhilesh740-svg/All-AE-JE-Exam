@@ -1,5 +1,5 @@
 // service-worker.js — PWA caching v19-pwa
-const CACHE_NAME = 'ae-civil-v19-pwa';
+const CACHE_NAME = 'ae-civil-v20-features';
 const STATIC_ASSETS = [
   './',
   './index.html',

@@ -55,6 +55,13 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // ── Feedback ──────────────────────────────────────────────────────────
+    // Any logged-in user can submit feedback; only admin can read/manage.
+    match /feedback/{feedbackId} {
+      allow create: if isLoggedIn();
+      allow read, update, delete: if isAdmin();
+    }
+
     // ── Deny everything else ────────────────────────────────────────────────
     match /{document=**} {
       allow read, write: if false;

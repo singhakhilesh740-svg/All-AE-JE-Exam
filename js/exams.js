@@ -50,6 +50,22 @@ export const EXAMS = [
     state: 'Telangana',
     section: 'civil',
   },
+  {
+    id: 'hpsc-ae',
+    name: 'HPSC AE',
+    fullName: 'Haryana PSC – Assistant Engineer (Civil)',
+    icon: '🌾',
+    state: 'Haryana',
+    section: 'civil',
+  },
+  {
+    id: 'ukpsc-ae',
+    name: 'UKPSC AE',
+    fullName: 'Uttarakhand PSC – Assistant Engineer (Civil)',
+    icon: '🏔️',
+    state: 'Uttarakhand',
+    section: 'civil',
+  },
 
   // ── Pollution Control Board ───────────────────────────────────────────────
   {
