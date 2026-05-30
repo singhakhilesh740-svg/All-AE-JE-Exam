@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Notes Editor — Admin</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
+    .container{max-width:1000px;margin:0 auto}
+    h1{color:#10b981;font-size:22px;margin-bottom:4px}
+    .sub{color:#94a3b8;font-size:13px;margin-bottom:16px}
+    a{color:#f59e0b;text-decoration:none;font-size:13px}
+    .panel{background:#1e293b;padding:16px;border-radius:12px;margin-bottom:12px;border:1px solid #334155}
+    .panel-title{font-size:11px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+    select,input[type=text],input[type=number]{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit}
+    select:focus,input:focus,textarea:focus{outline:none;border-color:#10b981}
+    textarea{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:10px;font-size:13px;font-family:inherit;resize:vertical;line-height:1.5}
+    label{font-size:12px;color:#94a3b8;display:block;margin-bottom:4px;margin-top:10px;font-weight:600}
+    button{padding:8px 14px;border-radius:8px;border:none;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit}
+    .btn-green{background:#10b981;color:#022c22}
+    .btn-blue{background:#3b82f6;color:#fff}
+    .btn-amber{background:#f59e0b;color:#1f2937}
+    .btn-red{background:#ef4444;color:#fff}
+    .btn-gray{background:#334155;color:#f1f5f9}
+    .btn-sm{padding:5px 10px;font-size:11px}
+    .btn-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+    .two-col{display:flex;gap:8px;flex-wrap:wrap}.two-col>*{flex:1;min-width:140px}
+
+    /* Breadcrumb */
+    .breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:#64748b;margin-bottom:12px;flex-wrap:wrap}
+    .breadcrumb span{cursor:pointer;color:#60a5fa;font-weight:600}
+    .breadcrumb span:hover{text-decoration:underline}
+    .breadcrumb .sep{color:#475569;cursor:default}
+
+    /* Topic List */
+    .topic-item{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer;transition:all .15s;border-left:3px solid #334155}
+    .topic-item:hover{border-left-color:#10b981;background:#162032}
+    .topic-item.active{border-left-color:#10b981;background:rgba(16,185,129,.05)}
+    .topic-name{font-size:14px;font-weight:600;color:#f1f5f9}
+    .topic-desc{font-size:12px;color:#64748b;margin-top:3px}
+    .topic-meta{font-size:11px;color:#475569;margin-top:4px}
+
+    /* Card Editor */
+    .card-item{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:14px;margin-bottom:10px;position:relative}
+    .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .card-color{display:flex;gap:4px}
+    .color-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s}
+    .color-dot.active{border-color:#fff;transform:scale(1.15)}
+    .color-dot[data-c=purple]{background:#a855f7}.color-dot[data-c=blue]{background:#3b82f6}
+    .color-dot[data-c=green]{background:#10b981}.color-dot[data-c=amber]{background:#f59e0b}
+    .color-dot[data-c=red]{background:#ef4444}
+
+    /* Formula/Point rows */
+    .item-row{display:flex;gap:6px;align-items:flex-start;margin-bottom:4px}
+    .item-row input,.item-row textarea{flex:1}
+    .item-row .del-btn{flex-shrink:0;background:#1e293b;border:1px solid #334155;color:#64748b;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:14px}
+    .item-row .del-btn:hover{color:#ef4444;border-color:#ef4444}
+
+    /* Content List */
+    .content-item{background:#0f172a;border:1px solid #1e293b;border-radius:8px;padding:8px 12px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+    .content-item input{flex:1;background:transparent;border:none;color:#f1f5f9;font-size:13px;padding:2px 0}
+    .content-item input:focus{outline:none;border-bottom:1px solid #10b981}
+    .content-num{font-size:11px;color:#475569;font-weight:700;min-width:24px}
+
+    .hidden{display:none!important}
+    .empty{text-align:center;padding:20px;color:#475569;font-size:13px}
+    .login-wrap{text-align:center;padding:50px 20px}
+    .login-wrap p{color:#94a3b8;margin-bottom:20px}
+    .btn-login{background:#10b981;color:#022c22;font-size:14px;padding:10px 24px;border-radius:8px;font-weight:700}
+    .status{padding:8px 12px;border-radius:8px;font-size:12px;margin-top:8px}
+    .status-ok{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+    .drag-handle{cursor:grab;color:#475569;font-size:14px;padding:0 4px}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>📝 Notes Editor</h1>
+  <p class="sub">Edit topics, cards, content lists · <a href="index.html">← Admin Home</a></p>
+
+  <div id="loginPanel" class="login-wrap">
+    <p>Sign in with admin account.</p>
+    <button class="btn-login" id="loginBtn">🔐 Login with Google</button>
+  </div>
+
+  <div id="mainPanel" class="hidden">
+    <!-- Subject Selector -->
+    <div class="panel">
+      <div class="panel-title">Select Subject</div>
+      <select id="subjectSel"><option value="">Choose subject...</option></select>
+      <div class="btn-row">
+        <button class="btn-green" id="loadBtn">📥 Load Notes</button>
+        <button class="btn-amber" id="downloadBtn" style="display:none">⬇️ Download Updated JSON</button>
+        <button class="btn-blue" id="addTopicBtn" style="display:none">➕ Add New Topic</button>
+      </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb hidden" id="breadcrumb"></div>
+
+    <!-- VIEW: Topic List -->
+    <div id="topicListView" class="hidden">
+      <div class="panel">
+        <div class="panel-title">Topics <span id="topicCount" style="color:#64748b;font-weight:400"></span></div>
+        <div id="topicList"></div>
+      </div>
+    </div>
+
+    <!-- VIEW: Topic Editor (cards + content list) -->
+    <div id="topicEditorView" class="hidden">
+      <!-- Topic Meta -->
+      <div class="panel">
+        <div class="panel-title">Topic Settings</div>
+        <div class="two-col">
+          <div><label>Topic Name</label><input type="text" id="editTopicName"/></div>
+          <div><label>Topic Description</label><input type="text" id="editTopicDesc"/></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-green btn-sm" id="saveTopicMeta">💾 Save Topic Info</button>
+          <button class="btn-red btn-sm" id="deleteTopicBtn">🗑️ Delete Topic</button>
+        </div>
+      </div>
+
+      <!-- Content List (Subtopics) -->
+      <div class="panel">
+        <div class="panel-title">📋 Content List <span style="color:#64748b;font-weight:400">(subtopics covered in this topic)</span></div>
+        <div id="contentList"></div>
+        <div class="btn-row">
+          <button class="btn-blue btn-sm" id="addContentBtn">➕ Add Content Item</button>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="panel">
+        <div class="panel-title">📦 Note Cards <span id="cardCount" style="color:#64748b;font-weight:400"></span></div>
+        <div id="cardList"></div>
+        <div class="btn-row">
+          <button class="btn-green" id="addCardBtn">➕ Add New Card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const app = initializeApp({
+    apiKey:"AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",authDomain:"ae-exam-app.firebaseapp.com",
+    projectId:"ae-exam-app",appId:"1:101353507688:web:82b31f2d6096387d7aa4dd"
+  });
+  const auth = getAuth(app);
+  const ADMIN = '112ce0489@gmail.com';
+  const $ = id => document.getElementById(id);
+
+  let notesData = null;
+  let currentSubject = null;
+  let currentTopicIdx = null;
+  let dirty = false;
+
+  // Auth
+  $('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
+  onAuthStateChanged(auth, u => {
+    if (u && u.email === ADMIN) { $('loginPanel').classList.add('hidden'); $('mainPanel').classList.remove('hidden'); }
+    else { $('loginPanel').classList.remove('hidden'); $('mainPanel').classList.add('hidden'); }
+  });
+
+  // Populate subjects
+  const SUBJECTS = [
+    {id:'engg-mechanics',name:'Engineering Mechanics'},{id:'strength-of-materials',name:'Strength of Materials'},
+    {id:'structural-analysis',name:'Structural Analysis'},{id:'steel-design',name:'Steel Design'},
+    {id:'concrete-design',name:'Concrete Design'},{id:'building-materials',name:'Building Materials'},
+    {id:'construction-tech',name:'Construction Technology'},{id:'geotech-foundation',name:'Geotechnical Engineering'},
+    {id:'fluid-mechanics',name:'Fluid Mechanics'},{id:'hydrology',name:'Hydrology & Irrigation'},
+    {id:'transportation',name:'Transportation Engineering'},{id:'environmental',name:'Environmental Engineering'},
+    {id:'surveying-geology',name:'Surveying & Geology'},
+  ];
+  $('subjectSel').innerHTML = '<option value="">Choose subject...</option>' +
+    SUBJECTS.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+
+  // Load notes
+  $('loadBtn').onclick = async () => {
+    const sid = $('subjectSel').value;
+    if (!sid) { alert('Select a subject'); return; }
+    $('loadBtn').textContent = '⏳ Loading...'; $('loadBtn').disabled = true;
+    try {
+      if (!notesData) {
+        const r = await fetch('../data/notes-combined.json?t=' + Date.now());
+        notesData = await r.json();
+      }
+      currentSubject = sid;
+      currentTopicIdx = null;
+      showTopicList();
+      $('downloadBtn').style.display = '';
+      $('addTopicBtn').style.display = '';
+    } catch(e) { alert('Load error: ' + e.message); }
+    $('loadBtn').textContent = '📥 Load Notes'; $('loadBtn').disabled = false;
+  };
+
+  // ── Show Topic List ─────────────────────────────────────────────────
+  function showTopicList() {
+    const subj = notesData[currentSubject];
+    if (!subj) { notesData[currentSubject] = { subject: currentSubject, subject_name: SUBJECTS.find(s=>s.id===currentSubject)?.name||currentSubject, topics: [], notes: [] }; }
+    const data = notesData[currentSubject];
+    const topics = data.topics || [];
+    const notes = data.notes || [];
+
+    $('topicCount').textContent = `(${topics.length} topics)`;
+    $('breadcrumb').classList.remove('hidden');
+    $('breadcrumb').innerHTML = `<span onclick="window._showTopics()">📚 ${esc(data.subject_name || currentSubject)}</span>`;
+    $('topicListView').classList.remove('hidden');
+    $('topicEditorView').classList.add('hidden');
+
+    if (!topics.length) {
+      $('topicList').innerHTML = '<div class="empty">No topics yet. Click "Add New Topic" to start.</div>';
+      return;
+    }
+
+    $('topicList').innerHTML = topics.map((t, i) => {
+      const noteSection = notes.find(n => n.topic_id === t.id || n.topic_id === i);
+      const cardCount = noteSection ? (noteSection.cards||[]).length : 0;
+      const contentCount = (t.contents || []).length;
+      return `<div class="topic-item" data-idx="${i}">
+        <div class="topic-name">${esc(t.name || 'Untitled')}</div>
+        <div class="topic-desc">${esc(t.desc || 'No description')}</div>
+        <div class="topic-meta">📦 ${cardCount} cards · 📋 ${contentCount} content items · ID: ${t.id}</div>
+      </div>`;
+    }).join('');
+
+    document.querySelectorAll('.topic-item').forEach(el => {
+      el.addEventListener('click', () => {
+        currentTopicIdx = parseInt(el.dataset.idx);
+        showTopicEditor();
+      });
+    });
+  }
+  window._showTopics = () => { currentTopicIdx = null; showTopicList(); };
+
+  // ── Show Topic Editor ───────────────────────────────────────────────
+  function showTopicEditor() {
+    const data = notesData[currentSubject];
+    const topic = data.topics[currentTopicIdx];
+    if (!topic) return;
+
+    $('breadcrumb').innerHTML = `<span onclick="window._showTopics()">📚 ${esc(data.subject_name)}</span>
+      <span class="sep">›</span>
+      <span style="color:#10b981;cursor:default">${esc(topic.name)}</span>`;
+
+    $('topicListView').classList.add('hidden');
+    $('topicEditorView').classList.remove('hidden');
+
+    // Fill topic meta
+    $('editTopicName').value = topic.name || '';
+    $('editTopicDesc').value = topic.desc || '';
+
+    // Content List
+    renderContentList(topic);
+
+    // Cards
+    renderCards();
+  }
+
+  // Save topic meta
+  $('saveTopicMeta').onclick = () => {
+    const topic = notesData[currentSubject].topics[currentTopicIdx];
+    topic.name = $('editTopicName').value.trim();
+    topic.desc = $('editTopicDesc').value.trim();
+    // Also update notes section topic_name
+    const notesSec = getNotesSection();
+    if (notesSec) notesSec.topic_name = topic.name;
+    dirty = true;
+    showStatus('Topic info saved!');
+  };
+
+  // Delete topic
+  $('deleteTopicBtn').onclick = () => {
+    if (!confirm('Delete this topic and all its cards?')) return;
+    if (!confirm('FINAL: This cannot be undone!')) return;
+    const data = notesData[currentSubject];
+    const topicId = data.topics[currentTopicIdx].id;
+    data.topics.splice(currentTopicIdx, 1);
+    data.notes = (data.notes||[]).filter(n => n.topic_id !== topicId && n.topic_id !== currentTopicIdx);
+    dirty = true;
+    showTopicList();
+  };
+
+  // ── Content List ────────────────────────────────────────────────────
+  function renderContentList(topic) {
+    if (!topic.contents) topic.contents = [];
+    const list = $('contentList');
+    if (!topic.contents.length) {
+      list.innerHTML = '<div class="empty">No content items. Add what this topic covers.</div>';
+      return;
+    }
+    list.innerHTML = topic.contents.map((c, i) => `
+      <div class="content-item">
+        <span class="content-num">${i+1}.</span>
+        <input type="text" value="${escAttr(c.title || c)}" onchange="window._updateContent(${i}, this.value)"/>
+        <button class="del-btn" onclick="window._delContent(${i})" style="background:none;border:none;color:#64748b;cursor:pointer">✕</button>
+      </div>
+    `).join('');
+  }
+
+  $('addContentBtn').onclick = () => {
+    const topic = notesData[currentSubject].topics[currentTopicIdx];
+    if (!topic.contents) topic.contents = [];
+    const title = prompt('Enter content/subtopic title:');
+    if (!title) return;
+    topic.contents.push({ title: title.trim(), id: 'c' + Date.now() });
+    dirty = true;
+    renderContentList(topic);
+  };
+
+  window._updateContent = (idx, val) => {
+    const topic = notesData[currentSubject].topics[currentTopicIdx];
+    if (typeof topic.contents[idx] === 'object') topic.contents[idx].title = val;
+    else topic.contents[idx] = val;
+    dirty = true;
+  };
+
+  window._delContent = (idx) => {
+    const topic = notesData[currentSubject].topics[currentTopicIdx];
+    topic.contents.splice(idx, 1);
+    dirty = true;
+    renderContentList(topic);
+  };
+
+  // ── Cards ───────────────────────────────────────────────────────────
+  function getNotesSection() {
+    const data = notesData[currentSubject];
+    const topic = data.topics[currentTopicIdx];
+    if (!data.notes) data.notes = [];
+    let sec = data.notes.find(n => n.topic_id === topic.id || n.topic_id === currentTopicIdx);
+    if (!sec) {
+      sec = { topic_id: topic.id, topic_name: topic.name, cards: [] };
+      data.notes.push(sec);
+    }
+    return sec;
+  }
+
+  function renderCards() {
+    const sec = getNotesSection();
+    const cards = sec.cards || [];
+    $('cardCount').textContent = `(${cards.length} cards)`;
+
+    if (!cards.length) {
+      $('cardList').innerHTML = '<div class="empty">No cards yet. Click "Add New Card" to create one.</div>';
+      return;
+    }
+
+    $('cardList').innerHTML = cards.map((c, i) => `
+      <div class="card-item" id="card-${i}">
+        <div class="card-header">
+          <strong style="color:#f1f5f9;font-size:13px">Card ${i+1}: ${esc(c.heading || 'Untitled')}</strong>
+          <div style="display:flex;gap:4px">
+            <button class="btn-blue btn-sm" onclick="window._editCard(${i})">✏️ Edit</button>
+            <button class="btn-red btn-sm" onclick="window._delCard(${i})">🗑️</button>
+          </div>
+        </div>
+        <div class="card-color">
+          ${['purple','blue','green','amber','red'].map(cl =>
+            `<div class="color-dot ${c.color===cl?'active':''}" data-c="${cl}" onclick="window._setColor(${i},'${cl}')"></div>`
+          ).join('')}
+        </div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px">
+          ${(c.formulas||[]).length} formulas · ${(c.points||[]).length} points · ${c.table?'Has table':'No table'} · ${c.tip?'Has tip':'No tip'} · ${c.alert?'Has alert':'No alert'}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window._setColor = (idx, color) => {
+    getNotesSection().cards[idx].color = color;
+    dirty = true;
+    renderCards();
+  };
+
+  window._delCard = (idx) => {
+    if (!confirm(`Delete Card ${idx+1}?`)) return;
+    getNotesSection().cards.splice(idx, 1);
+    dirty = true;
+    renderCards();
+  };
+
+  // ── Card Editor (full modal-like inline) ────────────────────────────
+  window._editCard = (idx) => {
+    const card = getNotesSection().cards[idx];
+    const el = document.getElementById('card-' + idx);
+
+    el.innerHTML = `
+      <div style="border-top:2px solid #10b981;padding-top:12px">
+        <strong style="color:#10b981">✏️ Editing Card ${idx+1}</strong>
+
+        <label>Heading</label>
+        <input type="text" id="ce-heading" value="${escAttr(card.heading||'')}" class="form-input"/>
+
+        <label>Color</label>
+        <div class="card-color" style="margin:6px 0">
+          ${['purple','blue','green','amber','red'].map(cl =>
+            `<div class="color-dot ${card.color===cl?'active':''}" data-c="${cl}" onclick="this.parentElement.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));this.classList.add('active');document.getElementById('ce-color').value='${cl}'"></div>`
+          ).join('')}
+          <input type="hidden" id="ce-color" value="${card.color||'blue'}"/>
+        </div>
+
+        <label>Formulas <button class="btn-sm btn-blue" style="margin-left:8px" onclick="window._addFormula()">+ Add</button></label>
+        <div id="ce-formulas">
+          ${(card.formulas||[]).map((f,fi) => `
+            <div class="item-row">
+              <input type="text" placeholder="Label" value="${escAttr(f.label||'')}" style="max-width:120px" data-fi="${fi}" data-field="label"/>
+              <input type="text" placeholder="Formula text" value="${escAttr(f.text||'')}" data-fi="${fi}" data-field="text"/>
+              <button class="del-btn" onclick="this.parentElement.remove()">✕</button>
+            </div>
+          `).join('')}
+        </div>
+
+        <label>Points <button class="btn-sm btn-blue" style="margin-left:8px" onclick="window._addPoint()">+ Add</button></label>
+        <div id="ce-points">
+          ${(card.points||[]).map((p,pi) => `
+            <div class="item-row">
+              <input type="text" value="${escAttr(p)}" data-pi="${pi}"/>
+              <button class="del-btn" onclick="this.parentElement.remove()">✕</button>
+            </div>
+          `).join('')}
+        </div>
+
+        <label>Tip <small style="color:#475569">(optional)</small></label>
+        <textarea id="ce-tip" rows="2">${esc(card.tip||'')}</textarea>
+
+        <label>Alert <small style="color:#475569">(optional)</small></label>
+        <textarea id="ce-alert" rows="2">${esc(card.alert||'')}</textarea>
+
+        <div class="btn-row">
+          <button class="btn-green" onclick="window._saveCard(${idx})">💾 Save Card</button>
+          <button class="btn-gray" onclick="renderCards()">Cancel</button>
+        </div>
+      </div>
+    `;
+  };
+
+  window._addFormula = () => {
+    const div = document.createElement('div');
+    div.className = 'item-row';
+    div.innerHTML = `<input type="text" placeholder="Label" style="max-width:120px" data-field="label"/>
+      <input type="text" placeholder="Formula text" data-field="text"/>
+      <button class="del-btn" onclick="this.parentElement.remove()">✕</button>`;
+    document.getElementById('ce-formulas').appendChild(div);
+  };
+
+  window._addPoint = () => {
+    const div = document.createElement('div');
+    div.className = 'item-row';
+    div.innerHTML = `<input type="text" placeholder="New point..."/>
+      <button class="del-btn" onclick="this.parentElement.remove()">✕</button>`;
+    document.getElementById('ce-points').appendChild(div);
+  };
+
+  window._saveCard = (idx) => {
+    const card = getNotesSection().cards[idx];
+    card.heading = document.getElementById('ce-heading').value.trim();
+    card.color = document.getElementById('ce-color').value;
+
+    // Collect formulas
+    card.formulas = [];
+    document.querySelectorAll('#ce-formulas .item-row').forEach(row => {
+      const inputs = row.querySelectorAll('input');
+      const label = inputs[0]?.value?.trim() || '';
+      const text = inputs[1]?.value?.trim() || '';
+      if (label || text) card.formulas.push({ label, text });
+    });
+
+    // Collect points
+    card.points = [];
+    document.querySelectorAll('#ce-points .item-row').forEach(row => {
+      const val = row.querySelector('input')?.value?.trim();
+      if (val) card.points.push(val);
+    });
+
+    card.tip = document.getElementById('ce-tip').value.trim() || null;
+    card.alert = document.getElementById('ce-alert').value.trim() || null;
+
+    dirty = true;
+    renderCards();
+    showStatus('Card saved!');
+  };
+
+  // ── Add New Card ────────────────────────────────────────────────────
+  $('addCardBtn').onclick = () => {
+    const sec = getNotesSection();
+    sec.cards.push({
+      heading: 'NEW CARD',
+      color: 'blue',
+      formulas: [],
+      points: ['Point 1'],
+    });
+    dirty = true;
+    renderCards();
+    // Auto-open editor for new card
+    window._editCard(sec.cards.length - 1);
+  };
+
+  // ── Add New Topic ───────────────────────────────────────────────────
+  $('addTopicBtn').onclick = () => {
+    const name = prompt('Enter new topic name:');
+    if (!name) return;
+    const data = notesData[currentSubject];
+    if (!data.topics) data.topics = [];
+    if (!data.notes) data.notes = [];
+    const newId = data.topics.length;
+    data.topics.push({
+      id: newId,
+      name: name.trim(),
+      desc: '',
+      contents: []
+    });
+    data.notes.push({
+      topic_id: newId,
+      topic_name: name.trim(),
+      cards: []
+    });
+    dirty = true;
+    showTopicList();
+  };
+
+  // ── Download JSON ───────────────────────────────────────────────────
+  $('downloadBtn').onclick = () => {
+    const blob = new Blob([JSON.stringify(notesData, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'notes-combined.json';
+    a.click();
+    showStatus('JSON downloaded! Replace the file in your project and push to GitHub.');
+  };
+
+  // ── Helpers ─────────────────────────────────────────────────────────
+  function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function escAttr(s) { return (s||'').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+
+  function showStatus(msg) {
+    let el = document.querySelector('.status');
+    if (!el) { el = document.createElement('div'); el.className = 'status status-ok'; document.querySelector('.container').prepend(el); }
+    el.textContent = '✅ ' + msg;
+    el.className = 'status status-ok';
+    setTimeout(() => el.remove(), 3000);
+  }
+
+  // Warn on exit if dirty
+  window.addEventListener('beforeunload', e => {
+    if (dirty) { e.preventDefault(); e.returnValue = 'You have unsaved changes!'; }
+  });
+</script>
+</body>
+</html>

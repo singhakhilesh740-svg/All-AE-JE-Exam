@@ -340,6 +340,7 @@
         <h2 id="notesContentTitle">Notes</h2>
         <span class="header-sub" id="notesContentSub">Subject notes</span>
       </div>
+      <button id="viewHighlightsBtn" style="font-size:12px;font-weight:600;padding:6px 10px;border-radius:8px;background:#1e293b;color:#fbbf24;border:1px solid #334155;cursor:pointer;white-space:nowrap;">⭐ Highlights</button>
       <div class="zoom-controls" style="display:flex;gap:4px;align-items:center;">
         <button id="zoomOutBtn" class="btn-icon" style="font-size:16px;font-weight:700;width:32px;height:32px;border-radius:8px;background:#1e293b;color:#f1f5f9;border:1px solid #334155;">A−</button>
         <span id="zoomLevel" style="font-size:11px;color:#64748b;min-width:32px;text-align:center;">100%</span>
@@ -629,6 +630,123 @@
       </div>
     </div>
   </div>
+
+  <!-- ===== HIGHLIGHT FEATURE CSS ===== -->
+  <style>
+    .user-highlight{background:rgba(251,191,36,.25);border-bottom:2px solid #fbbf24;cursor:pointer;border-radius:2px;padding:0 1px}
+    .user-highlight:hover{background:rgba(251,191,36,.4)}
+    #highlightTooltip{position:fixed;z-index:998;background:#1e293b;border:1px solid #f59e0b;border-radius:10px;padding:6px 12px;font-size:12px;font-weight:600;color:#fbbf24;cursor:pointer;display:none;box-shadow:0 4px 12px rgba(0,0,0,.5)}
+    #highlightsPanel{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;padding:16px}
+    #highlightsPanel .hl-box{background:#1e293b;border-radius:16px;padding:20px;max-width:500px;width:100%;max-height:80vh;overflow-y:auto;border:1px solid #334155}
+    .hl-item{background:#0f172a;padding:10px 12px;border-radius:8px;margin-bottom:6px;border-left:3px solid #fbbf24;font-size:13px;color:#e2e8f0;line-height:1.5;position:relative}
+    .hl-meta{font-size:10px;color:#64748b;margin-top:4px}
+    .hl-del{position:absolute;top:8px;right:8px;background:none;border:none;color:#64748b;cursor:pointer;font-size:14px;padding:2px 6px}
+    .hl-del:hover{color:#ef4444}
+  </style>
+
+  <!-- ===== HIGHLIGHT TOOLTIP ===== -->
+  <div id="highlightTooltip" onclick="saveHighlight()">⭐ Highlight</div>
+
+  <!-- ===== HIGHLIGHTS PANEL ===== -->
+  <div id="highlightsPanel" class="hidden" onclick="if(event.target===this)this.classList.add('hidden')">
+    <div class="hl-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <h3 style="color:#fbbf24;font-size:16px">⭐ Your Highlights</h3>
+        <button onclick="document.getElementById('highlightsPanel').classList.add('hidden')" style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer">✕</button>
+      </div>
+      <div id="highlightsList"></div>
+    </div>
+  </div>
+
+  <!-- ===== HIGHLIGHT JS ===== -->
+  <script>
+    let _hlSelection = null;
+    const HL_KEY = 'ae_highlights';
+
+    function getHighlights() {
+      try { return JSON.parse(localStorage.getItem(HL_KEY) || '[]'); } catch { return []; }
+    }
+    function saveHighlights(arr) { localStorage.setItem(HL_KEY, JSON.stringify(arr)); }
+
+    // Show tooltip on text selection inside notes
+    document.addEventListener('mouseup', handleSelection);
+    document.addEventListener('touchend', e => setTimeout(handleSelection, 200));
+
+    function handleSelection() {
+      const sel = window.getSelection();
+      const tooltip = document.getElementById('highlightTooltip');
+      if (!sel || sel.isCollapsed || !sel.toString().trim()) { tooltip.style.display = 'none'; return; }
+
+      // Only in notes area
+      const notesMain = document.getElementById('notesMain');
+      if (!notesMain) { tooltip.style.display = 'none'; return; }
+      const anchor = sel.anchorNode?.parentElement;
+      if (!anchor || !notesMain.contains(anchor)) { tooltip.style.display = 'none'; return; }
+
+      _hlSelection = sel.toString().trim();
+      const range = sel.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      tooltip.style.display = 'block';
+      tooltip.style.left = Math.min(rect.left, window.innerWidth - 120) + 'px';
+      tooltip.style.top = (rect.top - 40) + 'px';
+    }
+
+    window.saveHighlight = function() {
+      if (!_hlSelection) return;
+      const notesTitle = document.getElementById('notesContentTitle')?.textContent || '';
+      const notesSub = document.getElementById('notesContentSub')?.textContent || '';
+      const highlights = getHighlights();
+      highlights.unshift({
+        text: _hlSelection.slice(0, 500),
+        subject: notesTitle,
+        topic: notesSub,
+        date: new Date().toISOString()
+      });
+      saveHighlights(highlights);
+      document.getElementById('highlightTooltip').style.display = 'none';
+
+      // Wrap selected text with highlight span
+      try {
+        const sel = window.getSelection();
+        if (sel.rangeCount) {
+          const range = sel.getRangeAt(0);
+          const span = document.createElement('span');
+          span.className = 'user-highlight';
+          range.surroundContents(span);
+        }
+      } catch(e) {}
+
+      window.getSelection()?.removeAllRanges();
+      _hlSelection = null;
+    };
+
+    // View highlights button
+    document.getElementById('viewHighlightsBtn')?.addEventListener('click', () => {
+      const highlights = getHighlights();
+      const list = document.getElementById('highlightsList');
+      if (!highlights.length) {
+        list.innerHTML = '<div style="text-align:center;color:#475569;padding:20px">No highlights yet.<br>Select text in notes to highlight.</div>';
+      } else {
+        list.innerHTML = highlights.map((h, i) => `
+          <div class="hl-item">
+            <button class="hl-del" onclick="deleteHighlight(${i})">✕</button>
+            ${escH(h.text)}
+            <div class="hl-meta">📚 ${escH(h.subject)} · ${escH(h.topic)} · ${new Date(h.date).toLocaleDateString('en-IN')}</div>
+          </div>
+        `).join('');
+      }
+      document.getElementById('highlightsPanel').classList.remove('hidden');
+    });
+
+    window.deleteHighlight = function(idx) {
+      const hl = getHighlights();
+      hl.splice(idx, 1);
+      saveHighlights(hl);
+      document.getElementById('viewHighlightsBtn').click(); // refresh
+    };
+
+    function escH(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  </script>
 
   <!-- ===== SCREENSHOT PREVENTION JS ===== -->
   <script>
