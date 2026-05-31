@@ -19,6 +19,8 @@ export async function loadNotesForSubject(subjectId) {
     const snap = await getDoc(doc(db, 'notes', subjectId));
     if (snap.exists()) {
       const d = snap.data();
+      // Decode table.rows back to array of arrays (Firestore stores as {cells:[...]})
+      if (d.notes) d.notes = decodeNotes(d.notes);
       _fsCache[subjectId] = d;
       console.log(`[notes] Loaded "${subjectId}" from Firestore (${d.totalCards||'?'} cards)`);
       return d;
@@ -49,6 +51,23 @@ export async function loadNotesForSubject(subjectId) {
 /** Invalidate cache for a subject (call after admin edits) */
 export function invalidateNotesCache(subjectId) {
   delete _fsCache[subjectId];
+}
+
+// Decode Firestore-stored notes (table.rows {cells:[]} → arrays of arrays)
+function decodeNotes(notes) {
+  return notes.map(section => ({
+    ...section,
+    cards: (section.cards || []).map(card => {
+      const c = { ...card };
+      if (c.table && Array.isArray(c.table.rows) && c.table.rows.length && c.table.rows[0].cells) {
+        c.table = {
+          headers: c.table.headers || [],
+          rows: c.table.rows.map(r => r.cells)
+        };
+      }
+      return c;
+    })
+  }));
 }
 
 /**
