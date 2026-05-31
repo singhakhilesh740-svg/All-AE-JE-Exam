@@ -100,7 +100,8 @@
     <!-- Tab bar -->
     <div class="tab-bar">
       <button class="tab active" data-tab="upload">⬆️ Upload Notes</button>
-      <button class="tab" data-tab="manage">📋 Manage Existing</button>
+      <button class="tab" data-tab="manage">📋 Manage &amp; Edit</button>
+      <button class="tab" data-tab="migrate">🔄 Migrate JSON→Firestore</button>
       <button class="tab" data-tab="template">📄 JSON Template</button>
     </div>
 
@@ -162,43 +163,93 @@
     <!-- ══════════ MANAGE TAB ══════════ -->
     <div id="tab-manage" class="hidden">
 
-      <!-- Download panel -->
       <div class="panel">
-        <div class="panel-title">⬇️ Download Notes JSON</div>
-        <div class="info-box" style="margin-bottom:10px">
-          Download existing notes as JSON → edit on your PC → re-upload via Upload tab.
-        </div>
-        <label>Select Subject</label>
-        <select id="downloadSubjSel"></select>
-        <div class="btn-row" style="margin-top:10px">
-          <button class="btn-amber" id="downloadOneBtn">⬇️ Download Selected Subject</button>
-          <button class="btn-blue" id="downloadAllBtn">⬇️ Download ALL Subjects</button>
-        </div>
-        <div class="log hidden" id="downloadLog"></div>
-      </div>
-
-      <!-- Existing list -->
-      <div class="panel">
-        <div class="panel-title">Existing Notes in Firestore</div>
+        <div class="panel-title">Select Subject to Manage</div>
         <div class="btn-row" style="margin-bottom:10px">
           <button class="btn-blue" id="refreshNotesBtn">🔄 Refresh List</button>
         </div>
         <div class="notes-list" id="notesList">
-          <div style="color:#64748b;font-size:13px;padding:10px">Click Refresh to load existing notes.</div>
+          <div style="color:#64748b;font-size:13px;padding:10px">Click Refresh to load subjects.</div>
         </div>
       </div>
 
-      <!-- Delete panel -->
-      <div class="panel">
-        <div class="panel-title">Delete Notes</div>
-        <label>Select Subject to Delete</label>
-        <select id="deleteSubjSel"></select>
-        <div class="btn-row" style="margin-top:10px">
-          <button class="btn-danger" id="deleteNotesBtn">🗑️ Delete Notes for Subject</button>
+      <!-- Card editor (hidden until subject selected) -->
+      <div class="panel hidden" id="cardEditorPanel">
+        <div class="panel-title" id="cardEditorTitle">✏️ Edit Notes</div>
+        <div id="sectionTree" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px"></div>
+
+        <!-- Add new card -->
+        <div style="background:#0f172a;border:1px dashed #334155;border-radius:10px;padding:14px;margin-bottom:10px">
+          <div class="panel-title" style="margin-bottom:10px">➕ Add New Card</div>
+          <label>Topic Section</label>
+          <select id="newCardSection"></select>
+          <label>Card Heading</label>
+          <input type="text" id="newCardHeading" placeholder="e.g. Bending Stress Formula">
+          <label>Color</label>
+          <select id="newCardColor">
+            <option value="blue">Blue</option><option value="green">Green</option>
+            <option value="purple">Purple</option><option value="amber">Amber</option>
+            <option value="red">Red</option><option value="cyan">Cyan</option>
+          </select>
+          <label>Bullet Points (one per line)</label>
+          <textarea id="newCardPoints" style="min-height:100px" placeholder="Point 1&#10;Point 2&#10;Point 3"></textarea>
+          <label>Formulas — one per line: LABEL | FORMULA TEXT</label>
+          <textarea id="newCardFormulas" style="min-height:60px" placeholder="Bending Formula | σ = M·y / I"></textarea>
+          <label>Alert/Tip (optional)</label>
+          <input type="text" id="newCardAlert" placeholder="⚠️ Remember: ...">
+          <div class="btn-row" style="margin-top:10px">
+            <button class="btn-primary" id="addCardBtn">➕ Add Card</button>
+          </div>
         </div>
-        <div class="log hidden" id="deleteLog"></div>
+
+        <div class="btn-row">
+          <button class="btn-primary" id="saveNotesBtn">💾 Save All Changes to Firestore</button>
+          <button class="btn-amber" id="downloadOneBtn">⬇️ Download JSON</button>
+          <button class="btn-danger" id="deleteNotesBtn">🗑️ Delete This Subject</button>
+        </div>
+        <div class="log hidden" id="manageLog"></div>
       </div>
+
+      <!-- Edit card modal -->
+      <div id="editModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;overflow-y:auto;padding:20px">
+        <div style="max-width:600px;margin:0 auto;background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155">
+          <div style="font-size:15px;font-weight:700;color:#10b981;margin-bottom:14px">✏️ Edit Card</div>
+          <label>Heading</label><input type="text" id="editHeading">
+          <label>Color</label>
+          <select id="editColor">
+            <option value="blue">Blue</option><option value="green">Green</option>
+            <option value="purple">Purple</option><option value="amber">Amber</option>
+            <option value="red">Red</option><option value="cyan">Cyan</option>
+          </select>
+          <label>Bullet Points (one per line)</label>
+          <textarea id="editPoints" style="min-height:120px"></textarea>
+          <label>Formulas (one per line — LABEL | FORMULA TEXT)</label>
+          <textarea id="editFormulas" style="min-height:80px"></textarea>
+          <label>Alert/Tip</label><input type="text" id="editAlert">
+          <div class="btn-row" style="margin-top:14px">
+            <button class="btn-primary" id="saveCardEditBtn">💾 Save Card</button>
+            <button class="btn-secondary" id="cancelCardEditBtn">Cancel</button>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /tab-manage -->
+
+    <!-- ══════════ MIGRATE TAB ══════════ -->
+    <div id="tab-migrate" class="hidden">
+      <div class="panel">
+        <div class="panel-title">🔄 Migrate Bundled JSON Notes → Firestore</div>
+        <div class="info-box" style="margin-bottom:12px">
+          Pushes your existing <code>notes-combined.json</code> into Firestore as if admin-uploaded.
+          Already-uploaded subjects will be skipped. Run once after deploying.
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" id="migrateAllBtn">🚀 Migrate All Subjects</button>
+          <button class="btn-secondary" id="migrateDryRunBtn">👁️ Dry Run (preview only)</button>
+        </div>
+        <div class="log hidden" id="migrateLog"></div>
+      </div>
+    </div><!-- /tab-migrate -->
 
     <!-- ══════════ TEMPLATE TAB ══════════ -->
     <div id="tab-template" class="hidden">
@@ -330,8 +381,6 @@ onAuthStateChanged(auth, user => {
 async function init() {
   buildSubjectGrid();
   buildTemplate();
-  buildDeleteSelect();
-  buildDownloadSelect();
   buildTopicRef();
   setupTabs();
   await checkExistingNotes();
@@ -344,7 +393,7 @@ function setupTabs() {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       btn.classList.add('active');
       const tab = btn.dataset.tab;
-      ['upload','manage','template'].forEach(t => {
+      ['upload','manage','migrate','template'].forEach(t => {
         document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
       });
     });
@@ -534,18 +583,19 @@ document.getElementById('replaceBtn').addEventListener('click', () => {
 });
 
 // ── Manage: Refresh notes list ────────────────────────────────────────────────
+let editingSubjId   = null;   // currently open subject in editor
+let editingNotesData = null;  // in-memory notes array being edited
+let editingCardRef  = null;   // { sectionIdx, cardIdx } for modal
+
 document.getElementById('refreshNotesBtn').addEventListener('click', async () => {
   const list = document.getElementById('notesList');
   list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:10px">Loading...</div>';
   await checkExistingNotes();
-
   const existing = SUBJECTS.filter(s => existingInFS[s.id]);
   if (!existing.length) {
-    list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:10px">No notes found in Firestore.</div>';
+    list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:10px">No notes found in Firestore. Use Migrate tab to push existing JSON notes.</div>';
     return;
   }
-
-  // Fetch details for each
   list.innerHTML = '';
   for (const s of existing) {
     try {
@@ -556,120 +606,289 @@ document.getElementById('refreshNotesBtn').addEventListener('click', async () =>
       row.innerHTML = `
         <div class="notes-row-info">
           <div class="notes-row-subj">${s.icon} ${s.name}</div>
-          <div class="notes-row-meta">${d.totalSections||0} sections · ${d.totalCards||0} cards · Updated: ${(d.updatedAt||'').substring(0,10)} by ${d.updatedBy||'?'}</div>
+          <div class="notes-row-meta">${d.totalSections||0} sections · ${d.totalCards||0} cards · ${(d.updatedAt||'').substring(0,10)} by ${d.updatedBy||'?'}</div>
         </div>
         <div style="display:flex;gap:6px">
-          <button class="btn-amber" style="font-size:11px;padding:5px 10px" onclick="downloadSubject('${s.id}','${s.name}')">⬇️ JSON</button>
-          <button class="btn-blue"  style="font-size:11px;padding:5px 10px" onclick="loadIntoEditor('${s.id}')">✏️ Edit</button>
-        </div>
-      `;
+          <button class="btn-blue" style="font-size:11px;padding:5px 10px" onclick="openSubjectEditor('${s.id}')">✏️ Edit</button>
+        </div>`;
       list.appendChild(row);
-    } catch(e) {
-      console.error(e);
-    }
+    } catch(e) { console.error(e); }
   }
 });
 
-// ── Download select ───────────────────────────────────────────────────────────
-function buildDownloadSelect() {
-  const sel = document.getElementById('downloadSubjSel');
-  sel.innerHTML = SUBJECTS.map(s => `<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
+// ── Open subject in card editor ───────────────────────────────────────────────
+window.openSubjectEditor = async (subjId) => {
+  const subj = SUBJECTS.find(s => s.id === subjId);
+  if (!subj) return;
+  const snap = await getDoc(doc(db, 'notes', subjId));
+  if (!snap.exists()) { alert('Not found in Firestore'); return; }
+
+  editingSubjId    = subjId;
+  editingNotesData = JSON.parse(JSON.stringify(snap.data().notes || [])); // deep clone
+
+  document.getElementById('cardEditorTitle').textContent = `✏️ ${subj.icon} ${subj.name} — Notes Editor`;
+  document.getElementById('cardEditorPanel').classList.remove('hidden');
+
+  // Populate section dropdown for new card
+  const secSel = document.getElementById('newCardSection');
+  secSel.innerHTML = editingNotesData.map((sec,i) =>
+    `<option value="${i}">${sec.topic_name}</option>`
+  ).join('');
+
+  renderSectionTree();
+  document.getElementById('cardEditorPanel').scrollIntoView({ behavior:'smooth' });
+};
+
+// ── Render the section tree ───────────────────────────────────────────────────
+function renderSectionTree() {
+  const tree = document.getElementById('sectionTree');
+  tree.innerHTML = '';
+
+  editingNotesData.forEach((section, sIdx) => {
+    const secEl = document.createElement('div');
+    secEl.style.cssText = 'background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px';
+
+    const header = document.createElement('div');
+    header.style.cssText = 'font-size:13px;font-weight:700;color:#f59e0b;margin-bottom:10px';
+    header.textContent = `📂 ${section.topic_name} (${(section.cards||[]).length} cards)`;
+    secEl.appendChild(header);
+
+    (section.cards || []).forEach((card, cIdx) => {
+      const cardEl = document.createElement('div');
+      cardEl.style.cssText = `display:flex;align-items:center;justify-content:space-between;
+        background:#1e293b;border-radius:8px;padding:8px 12px;margin-bottom:6px;
+        border-left:3px solid ${colorHex(card.color)}`;
+
+      const info = document.createElement('div');
+      info.style.cssText = 'font-size:12px;color:#e2e8f0;flex:1;min-width:0';
+      info.textContent = card.heading;
+      cardEl.appendChild(info);
+
+      const btns = document.createElement('div');
+      btns.style.cssText = 'display:flex;gap:5px;flex-shrink:0;margin-left:8px';
+      btns.innerHTML = `
+        <button class="btn-blue"   style="font-size:10px;padding:4px 8px" onclick="openEditModal(${sIdx},${cIdx})">✏️</button>
+        <button class="btn-danger" style="font-size:10px;padding:4px 8px" onclick="deleteCard(${sIdx},${cIdx})">🗑️</button>`;
+      cardEl.appendChild(btns);
+      secEl.appendChild(cardEl);
+    });
+
+    tree.appendChild(secEl);
+  });
 }
 
+function colorHex(c) {
+  return {blue:'#3b82f6',green:'#10b981',purple:'#8b5cf6',amber:'#f59e0b',red:'#ef4444',cyan:'#06b6d4'}[c] || '#64748b';
+}
+
+// ── Add new card ──────────────────────────────────────────────────────────────
+document.getElementById('addCardBtn').addEventListener('click', () => {
+  const sIdx    = parseInt(document.getElementById('newCardSection').value);
+  const heading = document.getElementById('newCardHeading').value.trim();
+  if (!heading) { alert('Enter a card heading'); return; }
+
+  const points   = document.getElementById('newCardPoints').value.trim().split('\n').filter(Boolean);
+  const fLines   = document.getElementById('newCardFormulas').value.trim().split('\n').filter(Boolean);
+  const alert_   = document.getElementById('newCardAlert').value.trim();
+  const color    = document.getElementById('newCardColor').value;
+
+  const formulas = fLines.map(l => {
+    const [label, ...rest] = l.split('|');
+    return { label: label.trim(), text: rest.join('|').trim() };
+  }).filter(f => f.label && f.text);
+
+  const newCard = { heading, color, points };
+  if (formulas.length) newCard.formulas = formulas;
+  if (alert_) newCard.alert = alert_;
+
+  if (!editingNotesData[sIdx].cards) editingNotesData[sIdx].cards = [];
+  editingNotesData[sIdx].cards.push(newCard);
+
+  // Clear form
+  document.getElementById('newCardHeading').value = '';
+  document.getElementById('newCardPoints').value  = '';
+  document.getElementById('newCardFormulas').value = '';
+  document.getElementById('newCardAlert').value   = '';
+
+  renderSectionTree();
+  mlog(`✅ Card "${heading}" added to section "${editingNotesData[sIdx].topic_name}"`, 'ok');
+});
+
+// ── Delete card ───────────────────────────────────────────────────────────────
+window.deleteCard = (sIdx, cIdx) => {
+  const heading = editingNotesData[sIdx].cards[cIdx].heading;
+  if (!confirm(`Delete card "${heading}"?`)) return;
+  editingNotesData[sIdx].cards.splice(cIdx, 1);
+  renderSectionTree();
+  mlog(`🗑️ Card "${heading}" deleted (unsaved — click Save to apply)`, 'warn');
+};
+
+// ── Edit card modal ───────────────────────────────────────────────────────────
+window.openEditModal = (sIdx, cIdx) => {
+  editingCardRef = { sIdx, cIdx };
+  const card = editingNotesData[sIdx].cards[cIdx];
+  document.getElementById('editHeading').value  = card.heading || '';
+  document.getElementById('editColor').value    = card.color   || 'blue';
+  document.getElementById('editPoints').value   = (card.points  || []).join('\n');
+  document.getElementById('editFormulas').value = (card.formulas|| []).map(f => `${f.label} | ${f.text}`).join('\n');
+  document.getElementById('editAlert').value    = card.alert    || '';
+  document.getElementById('editModal').style.display = 'block';
+};
+
+document.getElementById('cancelCardEditBtn').addEventListener('click', () => {
+  document.getElementById('editModal').style.display = 'none';
+  editingCardRef = null;
+});
+
+document.getElementById('saveCardEditBtn').addEventListener('click', () => {
+  if (!editingCardRef) return;
+  const { sIdx, cIdx } = editingCardRef;
+  const card    = editingNotesData[sIdx].cards[cIdx];
+
+  card.heading  = document.getElementById('editHeading').value.trim();
+  card.color    = document.getElementById('editColor').value;
+  card.points   = document.getElementById('editPoints').value.trim().split('\n').filter(Boolean);
+  const fLines  = document.getElementById('editFormulas').value.trim().split('\n').filter(Boolean);
+  card.formulas = fLines.map(l => {
+    const [label,...rest] = l.split('|');
+    return { label: label.trim(), text: rest.join('|').trim() };
+  }).filter(f => f.label && f.text);
+  card.alert    = document.getElementById('editAlert').value.trim() || undefined;
+
+  document.getElementById('editModal').style.display = 'none';
+  editingCardRef = null;
+  renderSectionTree();
+  mlog(`✏️ Card "${card.heading}" updated (unsaved — click Save to apply)`, 'warn');
+});
+
+// ── Save all changes ──────────────────────────────────────────────────────────
+document.getElementById('saveNotesBtn').addEventListener('click', async () => {
+  if (!editingSubjId) return;
+  const subj = SUBJECTS.find(s => s.id === editingSubjId);
+  mlog(`💾 Saving "${subj.name}" to Firestore...`, 'info');
+  try {
+    const totalCards    = editingNotesData.reduce((s,sec) => s + (sec.cards||[]).length, 0);
+    const totalSections = editingNotesData.length;
+    await setDoc(doc(db, 'notes', editingSubjId), {
+      subject: editingSubjId, subject_name: subj.name,
+      topics: subj.topics, notes: editingNotesData,
+      totalCards, totalSections,
+      updatedAt: new Date().toISOString(), updatedBy: currentUser.email,
+      source: 'admin-edited'
+    });
+    mlog(`✅ Saved! ${totalSections} sections, ${totalCards} cards.`, 'ok');
+  } catch(e) {
+    mlog(`❌ Error: ${e.message}`, 'err');
+  }
+});
+
+// ── Download JSON from editor ─────────────────────────────────────────────────
+document.getElementById('downloadOneBtn').addEventListener('click', async () => {
+  if (!editingSubjId) return;
+  downloadJSON(editingNotesData, `notes-${editingSubjId}-${new Date().toISOString().substring(0,10)}.json`);
+  mlog('⬇️ Downloaded current (in-memory) notes JSON', 'info');
+});
+
+// ── Delete subject ────────────────────────────────────────────────────────────
+document.getElementById('deleteNotesBtn').addEventListener('click', async () => {
+  if (!editingSubjId) return;
+  const subj = SUBJECTS.find(s => s.id === editingSubjId);
+  if (!confirm(`DELETE all notes for "${subj?.name}"? This cannot be undone.`)) return;
+  try {
+    await deleteDoc(doc(db, 'notes', editingSubjId));
+    existingInFS[editingSubjId] = false;
+    editingSubjId    = null;
+    editingNotesData = null;
+    document.getElementById('cardEditorPanel').classList.add('hidden');
+    buildSubjectGrid();
+    mlog(`✅ Deleted notes for ${subj?.name}`, 'ok');
+  } catch(e) {
+    mlog(`❌ Error: ${e.message}`, 'err');
+  }
+});
+
+function mlog(msg, cls='info') {
+  const el = document.getElementById('manageLog');
+  el.classList.remove('hidden');
+  el.innerHTML += `<span class="${cls}">${msg}</span>\n`;
+  el.scrollTop = 9999;
+}
+
+// ── JSON download helper ──────────────────────────────────────────────────────
 function downloadJSON(data, filename) {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
-  a.href     = url;
-  a.download = filename;
-  a.click();
+  a.href = url; a.download = filename; a.click();
   URL.revokeObjectURL(url);
 }
 
-document.getElementById('downloadOneBtn').addEventListener('click', async () => {
-  const subjId  = document.getElementById('downloadSubjSel').value;
-  const subj    = SUBJECTS.find(s => s.id === subjId);
-  const logEl   = document.getElementById('downloadLog');
+// ── Migrate: JSON → Firestore ─────────────────────────────────────────────────
+async function runMigration(dryRun) {
+  const logEl = document.getElementById('migrateLog');
   logEl.classList.remove('hidden');
-  logEl.innerHTML = `<span class="info">⏳ Fetching notes for ${subj.name}...</span>`;
+  logEl.innerHTML = `<span class="info">${dryRun ? '👁️ DRY RUN — no writes will happen' : '🚀 Migrating...'}</span>\n`;
 
+  let allData;
   try {
-    const snap = await getDoc(doc(db, 'notes', subjId));
-    if (!snap.exists()) {
-      logEl.innerHTML = `<span class="warn">⚠️ No Firestore notes found for ${subj.name}. Try downloading from local JSON.</span>`;
-      return;
-    }
-    const data    = snap.data();
-    // Extract only the editable notes array (what you'd re-upload)
-    const payload = data.notes || [];
-    const filename = `notes-${subjId}-${new Date().toISOString().substring(0,10)}.json`;
-    downloadJSON(payload, filename);
-    logEl.innerHTML = `<span class="ok">✅ Downloaded: ${filename} (${payload.length} sections, ${data.totalCards||'?'} cards)</span>`;
+    const r = await fetch('../data/notes-combined.json?v=' + Date.now(), { cache:'no-cache' });
+    allData = await r.json();
+    logEl.innerHTML += `<span class="ok">✅ Loaded notes-combined.json: ${Object.keys(allData).length} subjects</span>\n`;
   } catch(e) {
-    logEl.innerHTML = `<span class="err">❌ Error: ${e.message}</span>`;
+    logEl.innerHTML += `<span class="err">❌ Could not load notes-combined.json: ${e.message}</span>`;
+    return;
   }
-});
 
-document.getElementById('downloadAllBtn').addEventListener('click', async () => {
-  const logEl = document.getElementById('downloadLog');
-  logEl.classList.remove('hidden');
-  logEl.innerHTML = `<span class="info">⏳ Fetching all subjects from Firestore...</span>`;
+  await checkExistingNotes();
+  let migrated = 0, skipped = 0, errors = 0;
 
-  const result = {};
-  let found = 0;
+  for (const [subjId, data] of Object.entries(allData)) {
+    if (existingInFS[subjId]) {
+      logEl.innerHTML += `<span class="warn">  ⏭️ ${subjId}: already in Firestore — skipped</span>\n`;
+      skipped++; continue;
+    }
+    const subj = SUBJECTS.find(s => s.id === subjId);
+    const notes = data.notes || [];
+    const totalCards = notes.reduce((s,sec)=>s+(sec.cards||[]).length,0);
 
-  for (const s of SUBJECTS) {
+    if (dryRun) {
+      logEl.innerHTML += `<span class="info">  👁️ Would migrate: ${subjId} — ${notes.length} sections, ${totalCards} cards</span>\n`;
+      migrated++; continue;
+    }
+
     try {
-      const snap = await getDoc(doc(db, 'notes', s.id));
-      if (snap.exists()) {
-        result[s.id] = snap.data().notes || [];
-        found++;
-        logEl.innerHTML += `\n<span class="ok">  ✓ ${s.name} (${result[s.id].length} sections)</span>`;
-      } else {
-        logEl.innerHTML += `\n<span class="warn">  – ${s.name}: not in Firestore</span>`;
-      }
+      await setDoc(doc(db, 'notes', subjId), {
+        subject: subjId,
+        subject_name: subj?.name || data.subject_name || subjId,
+        topics: subj?.topics || data.topics || [],
+        notes,
+        totalCards, totalSections: notes.length,
+        updatedAt: new Date().toISOString(),
+        updatedBy: currentUser.email,
+        source: 'migrated-from-json'
+      });
+      existingInFS[subjId] = true;
+      logEl.innerHTML += `<span class="ok">  ✅ ${subjId}: ${notes.length} sections, ${totalCards} cards</span>\n`;
+      migrated++;
     } catch(e) {
-      logEl.innerHTML += `\n<span class="err">  ✗ ${s.name}: ${e.message}</span>`;
+      logEl.innerHTML += `<span class="err">  ❌ ${subjId}: ${e.message}</span>\n`;
+      errors++;
     }
     logEl.scrollTop = 9999;
   }
 
-  if (found === 0) {
-    logEl.innerHTML += `\n<span class="warn">⚠️ No notes found in Firestore.</span>`;
-    return;
-  }
-
-  const filename = `notes-all-subjects-${new Date().toISOString().substring(0,10)}.json`;
-  downloadJSON(result, filename);
-  logEl.innerHTML += `\n<span class="ok">✅ Downloaded: ${filename} (${found} subjects)</span>`;
-});
-
-// ── Delete notes ──────────────────────────────────────────────────────────────
-function buildDeleteSelect() {
-  const sel = document.getElementById('deleteSubjSel');
-  sel.innerHTML = SUBJECTS.map(s => `<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
+  logEl.innerHTML += `\n<span class="${dryRun?'info':'ok'}">── Done: ${migrated} ${dryRun?'would migrate':'migrated'}, ${skipped} skipped, ${errors} errors ──</span>\n`;
+  if (!dryRun) buildSubjectGrid();
 }
 
-document.getElementById('deleteNotesBtn').addEventListener('click', async () => {
-  const subjId = document.getElementById('deleteSubjSel').value;
-  const subj   = SUBJECTS.find(s => s.id === subjId);
-  if (!confirm(`DELETE all notes for "${subj?.name}"? This cannot be undone.`)) return;
-
-  const logEl = document.getElementById('deleteLog');
-  logEl.classList.remove('hidden');
-  logEl.innerHTML = '';
-
-  try {
-    await deleteDoc(doc(db, 'notes', subjId));
-    logEl.innerHTML = `<span class="ok">✅ Deleted notes for ${subj?.name}</span>`;
-    existingInFS[subjId] = false;
-    buildSubjectGrid();
-  } catch(e) {
-    logEl.innerHTML = `<span class="err">❌ Error: ${e.message}</span>`;
+document.getElementById('migrateAllBtn').addEventListener('click', () => {
+  if (confirm('Migrate all un-uploaded notes from notes-combined.json to Firestore? Already-uploaded subjects will be skipped.')) {
+    runMigration(false);
   }
 });
+document.getElementById('migrateDryRunBtn').addEventListener('click', () => runMigration(true));
 
-// ── Template ──────────────────────────────────────────────────────────────────
+// ── Template + topic reference ────────────────────────────────────────────────
 function buildTemplate() {
   const tmpl = [
     {
@@ -677,36 +896,10 @@ function buildTemplate() {
       "topic_name": "Topic Name Here",
       "cards": [
         {
-          "heading": "CARD HEADING (e.g. KEY FORMULAS)",
+          "heading": "CARD HEADING",
           "color": "purple",
-          "formulas": [
-            { "label": "Formula Label", "text": "E = σ/ε\nG = τ/γ\nK = σ/(volumetric strain)" }
-          ],
-          "points": [
-            "Important point 1",
-            "Important point 2 with value: 0.3 for steel"
-          ]
-        },
-        {
-          "heading": "ANOTHER CARD",
-          "color": "blue",
-          "formulas": [],
-          "points": [
-            "Point A",
-            "Point B"
-          ]
-        }
-      ]
-    },
-    {
-      "topic_id": 1,
-      "topic_name": "Second Topic",
-      "cards": [
-        {
-          "heading": "CONCEPT CARD",
-          "color": "green",
-          "formulas": [],
-          "points": ["Key fact 1", "Key fact 2"]
+          "formulas": [{ "label": "Formula Label", "text": "E = σ/ε" }],
+          "points": ["Important point 1", "Important point 2"]
         }
       ]
     }
@@ -720,7 +913,6 @@ document.getElementById('copyTemplateBtn').addEventListener('click', () => {
   navigator.clipboard.writeText(ta.value).then(() => alert('Copied!'));
 });
 
-// ── Topic Reference ───────────────────────────────────────────────────────────
 function buildTopicRef() {
   const el = document.getElementById('subjTopicRef');
   let html = '';
@@ -736,36 +928,14 @@ function buildTopicRef() {
 }
 
 // ── Quick download from list row ──────────────────────────────────────────────
-window.downloadSubject = async (subjId, subjName) => {
+window.downloadSubject = async (subjId) => {
   try {
     const snap = await getDoc(doc(db, 'notes', subjId));
     if (!snap.exists()) { alert('Not found in Firestore'); return; }
-    const payload  = snap.data().notes || [];
-    const filename = `notes-${subjId}-${new Date().toISOString().substring(0,10)}.json`;
-    downloadJSON(payload, filename);
+    downloadJSON(snap.data().notes || [], `notes-${subjId}-${new Date().toISOString().substring(0,10)}.json`);
   } catch(e) { alert('Error: ' + e.message); }
 };
 
-// ── Load into editor (Edit button in list row) ────────────────────────────────
-window.loadIntoEditor = async (subjId) => {
-  try {
-    const snap = await getDoc(doc(db, 'notes', subjId));
-    if (!snap.exists()) { alert('Not found in Firestore'); return; }
-    const subj    = SUBJECTS.find(s => s.id === subjId);
-    const payload = snap.data().notes || [];
-    // Switch to Upload tab
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelector('.tab[data-tab="upload"]').classList.add('active');
-    ['upload','manage','template'].forEach(t => {
-      document.getElementById('tab-' + t).classList.toggle('hidden', t !== 'upload');
-    });
-    // Select the subject
-    selectSubject(subj);
-    // Fill in the JSON textarea
-    document.getElementById('jsonInput').value = JSON.stringify(payload, null, 2);
-    window.scrollTo(0, 0);
-  } catch(e) { alert('Error: ' + e.message); }
-};
 
 </script>
 </body>

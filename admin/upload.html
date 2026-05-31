@@ -306,7 +306,7 @@ import { EXAMS, getExamsBySection } from '../js/exams.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from '../js/subjects.js';
 import { SUBJECTS_PCB_NOTES } from '../js/pcb-notes.js';
 import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { doc, writeBatch, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { doc, writeBatch, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const ADMIN_EMAILS = ['112ce0489@gmail.com'];
 const ADMIN_PIN    = '1947';
@@ -773,6 +773,49 @@ $('uploadBtn').onclick = async () => {
     }
     log(`✅ Done! ${uploaded} questions uploaded to [${currentSection}] → exam: ${valid[0].exam}`, 'ok');
     validatedQuestions = [];
+
+    // ── Post-upload verification ──────────────────────────────────────────
+    log('🔍 Verifying upload — re-fetching from Firestore...', 'info');
+    try {
+      // Group uploaded questions by exam so we verify each exam independently
+      const examGroups = {};
+      valid.forEach(q => {
+        if (!examGroups[q.exam]) examGroups[q.exam] = { type: q.type, year: q.year || null, count: 0 };
+        examGroups[q.exam].count++;
+      });
+
+      let allOk = true;
+      for (const [examId, meta] of Object.entries(examGroups)) {
+        const qRef = collection(db, 'exams', examId, 'questions');
+        let verifyQ;
+        if (meta.type === 'pyq' && meta.year) {
+          verifyQ = query(qRef, where('type', '==', 'pyq'), where('year', '==', meta.year));
+        } else if (meta.type === 'practice') {
+          verifyQ = query(qRef, where('type', '==', 'practice'));
+        } else {
+          verifyQ = query(qRef, where('type', '==', meta.type));
+        }
+        const snap = await getDocs(verifyQ);
+        const found = snap.size;
+        const expected = meta.count;
+
+        if (found >= expected) {
+          log(`✅ Verified [${examId}] — ${found} docs found in Firestore (type="${meta.type}"${meta.year ? `, year=${meta.year}` : ''}) ✔`, 'ok');
+        } else {
+          log(`⚠️ Mismatch [${examId}] — uploaded ${expected} but Firestore shows only ${found} (type="${meta.type}"${meta.year ? `, year=${meta.year}` : ''}). Check exam/type fields in your JSON.`, 'err');
+          allOk = false;
+        }
+      }
+
+      if (allOk) {
+        log('🎉 Verification passed — questions are live in Firestore!', 'ok');
+      } else {
+        log('⚠️ Some counts mismatched. Possible causes: wrong "exam" field in JSON, wrong "type" field, or Firestore indexing delay. Wait 10s and check Stats below.', 'err');
+      }
+    } catch(verifyErr) {
+      log('⚠️ Verification fetch failed: ' + verifyErr.message + ' — upload may still have succeeded, check Stats below.', 'err');
+    }
+
   } catch(e) {
     log('❌ Upload error: ' + e.message, 'err');
   }

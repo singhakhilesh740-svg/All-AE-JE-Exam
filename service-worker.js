@@ -1,5 +1,5 @@
 // service-worker.js — PWA caching v19-pwa
-const CACHE_NAME = 'ae-civil-v24-notes-hl';
+const CACHE_NAME = 'ae-civil-v25-notes-firestore';
 const STATIC_ASSETS = [
   './',
   './index.html',
