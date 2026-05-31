@@ -53,18 +53,22 @@ export function invalidateNotesCache(subjectId) {
   delete _fsCache[subjectId];
 }
 
-// Decode Firestore-stored notes (table.rows {cells:[]} → arrays of arrays)
+// Decode Firestore-stored notes ({cells:[]} → arrays of arrays)
+// Handles table, table2, table3, etc.
 function decodeNotes(notes) {
   return notes.map(section => ({
     ...section,
     cards: (section.cards || []).map(card => {
       const c = { ...card };
-      if (c.table && Array.isArray(c.table.rows) && c.table.rows.length && c.table.rows[0].cells) {
-        c.table = {
-          headers: c.table.headers || [],
-          rows: c.table.rows.map(r => r.cells)
-        };
-      }
+      Object.keys(c).forEach(key => {
+        const v = c[key];
+        if (v && typeof v === 'object' && Array.isArray(v.rows) && v.rows.length && v.rows[0] && v.rows[0].cells) {
+          c[key] = {
+            headers: v.headers || [],
+            rows: v.rows.map(r => r.cells)
+          };
+        }
+      });
       return c;
     })
   }));
@@ -167,19 +171,23 @@ function buildCard(card) {
     el.appendChild(ul);
   }
 
-  if (card.table) {
+  // Render any field that looks like a table (table, table2, etc.)
+  Object.keys(card).forEach(function(key) {
+    if (!/^table\d*$/.test(key)) return;
+    var t = card[key];
+    if (!t || !t.headers || !t.rows) return;
     var tw   = document.createElement('div');
     tw.className = 'notes-table-wrapper';
     var tbl  = document.createElement('table');
     tbl.className = 'notes-table';
     var thead = document.createElement('thead');
     var hr    = document.createElement('tr');
-    card.table.headers.forEach(function(h) {
+    t.headers.forEach(function(h) {
       var th = document.createElement('th'); th.textContent = h; hr.appendChild(th);
     });
     thead.appendChild(hr); tbl.appendChild(thead);
     var tbody = document.createElement('tbody');
-    card.table.rows.forEach(function(row) {
+    t.rows.forEach(function(row) {
       var tr = document.createElement('tr');
       row.forEach(function(cell) {
         var td = document.createElement('td'); td.textContent = cell; tr.appendChild(td);
@@ -187,7 +195,7 @@ function buildCard(card) {
       tbody.appendChild(tr);
     });
     tbl.appendChild(tbody); tw.appendChild(tbl); el.appendChild(tw);
-  }
+  });
 
   if (card.alert) {
     var a = document.createElement('div');

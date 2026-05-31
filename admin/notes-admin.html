@@ -551,7 +551,7 @@ async function doUpload() {
     subject: selectedSubj.id,
     subject_name: selectedSubj.name,
     topics: selectedSubj.topics,
-    notes: parsedNotes,
+    notes: encodeNotesForFirestore(parsedNotes),
     updatedAt: new Date().toISOString(),
     updatedBy: currentUser.email,
     totalCards: parsedNotes.reduce((s, sec) => s + (sec.cards||[]).length, 0),
@@ -624,7 +624,7 @@ window.openSubjectEditor = async (subjId) => {
   if (!snap.exists()) { alert('Not found in Firestore'); return; }
 
   editingSubjId    = subjId;
-  editingNotesData = JSON.parse(JSON.stringify(snap.data().notes || [])); // deep clone
+  editingNotesData = decodeNotesFromFirestore(JSON.parse(JSON.stringify(snap.data().notes || [])));
 
   document.getElementById('cardEditorTitle').textContent = `✏️ ${subj.icon} ${subj.name} — Notes Editor`;
   document.getElementById('cardEditorPanel').classList.remove('hidden');
@@ -771,7 +771,7 @@ document.getElementById('saveNotesBtn').addEventListener('click', async () => {
     const totalSections = editingNotesData.length;
     await setDoc(doc(db, 'notes', editingSubjId), {
       subject: editingSubjId, subject_name: subj.name,
-      topics: subj.topics, notes: editingNotesData,
+      topics: subj.topics, notes: encodeNotesForFirestore(editingNotesData),
       totalCards, totalSections,
       updatedAt: new Date().toISOString(), updatedBy: currentUser.email,
       source: 'admin-edited'
@@ -824,6 +824,48 @@ function downloadJSON(data, filename) {
 }
 
 // ── Migrate: JSON → Firestore ─────────────────────────────────────────────────
+// ── Encode/Decode helpers (Firestore doesn't allow nested arrays) ─────────────
+// Convert table.rows (array of arrays) → array of {cells:[...]} objects
+// Handles table, table2, table3, etc. — any field whose value is {headers, rows: [[...]]}
+function encodeNotesForFirestore(notes) {
+  return notes.map(section => ({
+    ...section,
+    cards: (section.cards || []).map(card => {
+      const c = { ...card };
+      Object.keys(c).forEach(key => {
+        const v = c[key];
+        if (v && typeof v === 'object' && Array.isArray(v.rows) && v.rows.length && Array.isArray(v.rows[0])) {
+          c[key] = {
+            headers: v.headers || [],
+            rows: v.rows.map(row => ({ cells: row }))
+          };
+        }
+      });
+      return c;
+    })
+  }));
+}
+
+// Reverse: convert {cells:[]} back to arrays of arrays for editing/rendering
+function decodeNotesFromFirestore(notes) {
+  return notes.map(section => ({
+    ...section,
+    cards: (section.cards || []).map(card => {
+      const c = { ...card };
+      Object.keys(c).forEach(key => {
+        const v = c[key];
+        if (v && typeof v === 'object' && Array.isArray(v.rows) && v.rows.length && v.rows[0] && v.rows[0].cells) {
+          c[key] = {
+            headers: v.headers || [],
+            rows: v.rows.map(r => r.cells)
+          };
+        }
+      });
+      return c;
+    })
+  }));
+}
+
 async function runMigration(dryRun) {
   const logEl = document.getElementById('migrateLog');
   logEl.classList.remove('hidden');
@@ -861,7 +903,7 @@ async function runMigration(dryRun) {
         subject: subjId,
         subject_name: subj?.name || data.subject_name || subjId,
         topics: subj?.topics || data.topics || [],
-        notes,
+        notes: encodeNotesForFirestore(notes),
         totalCards, totalSections: notes.length,
         updatedAt: new Date().toISOString(),
         updatedBy: currentUser.email,
