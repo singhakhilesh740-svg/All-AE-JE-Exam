@@ -235,9 +235,12 @@ async function openProfileScreen() {
   let profile = null;
   try { profile = await getUserProfile(currentUser.uid); } catch(e) {}
   const mEl = $('profileMobile'), nEl = $('profileName'), eEl = $('profileEmail');
+  const sEl = $('profileState'), xEl = $('profileExam');
   if (mEl) mEl.value = profile?.mobile || currentUser.mobile || '';
   if (nEl) nEl.value = profile?.name   || currentUser.name   || '';
   if (eEl) eEl.value = profile?.email  || currentUser.email  || '';
+  if (sEl) sEl.value = profile?.state  || '';
+  if (xEl) xEl.value = profile?.preparingFor || '';
   profileMsg('');
   showScreen('profileScreen');
 }
@@ -248,14 +251,18 @@ on('saveProfileBtn', async () => {
   if (!currentUser) return;
   const name  = $('profileName').value.trim();
   const email = $('profileEmail').value.trim();
+  const state = $('profileState').value;
+  const preparingFor = $('profileExam').value;
   if (!name) { profileMsg('Please enter your name', '#ef4444'); return; }
+  if (!state) { profileMsg('Please select your state', '#ef4444'); return; }
+  if (!preparingFor) { profileMsg('Please select the exam you are preparing for', '#ef4444'); return; }
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     profileMsg('Please enter a valid email ID', '#ef4444'); return;
   }
   profileMsg('Saving…', '#f59e0b');
   const btn = $('saveProfileBtn'); btn.disabled = true;
   try {
-    await saveUserProfile({ uid: currentUser.uid, name, email, mobile: currentUser.mobile });
+    await saveUserProfile({ uid: currentUser.uid, name, email, mobile: currentUser.mobile, state, preparingFor });
     currentUser.name = name; currentUser.email = email; currentUser.hasProfile = true;
     $('userName').textContent = name.split(' ')[0];
     profileMsg('Saved! ✓', '#10b981');

@@ -164,10 +164,75 @@
       <div class="login-card" style="max-width:420px;margin:20px auto">
         <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin-bottom:4px">Mobile Number</p>
         <input id="profileMobile" type="text" class="auth-input" disabled style="opacity:0.7;cursor:not-allowed"/>
-        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Full Name</p>
+        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Full Name <span style="color:#ef4444">*</span></p>
         <input id="profileName" type="text" placeholder="Enter your full name" maxlength="60" class="auth-input"/>
         <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Email ID</p>
         <input id="profileEmail" type="email" placeholder="Enter your email" class="auth-input"/>
+        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">State <span style="color:#ef4444">*</span></p>
+        <select id="profileState" class="auth-input" style="appearance:auto;padding:10px 12px">
+          <option value="">Select your state...</option>
+          <option value="Andhra Pradesh">Andhra Pradesh</option>
+          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+          <option value="Assam">Assam</option>
+          <option value="Bihar">Bihar</option>
+          <option value="Chhattisgarh">Chhattisgarh</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Goa">Goa</option>
+          <option value="Gujarat">Gujarat</option>
+          <option value="Haryana">Haryana</option>
+          <option value="Himachal Pradesh">Himachal Pradesh</option>
+          <option value="Jharkhand">Jharkhand</option>
+          <option value="Karnataka">Karnataka</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Madhya Pradesh">Madhya Pradesh</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Manipur">Manipur</option>
+          <option value="Meghalaya">Meghalaya</option>
+          <option value="Mizoram">Mizoram</option>
+          <option value="Nagaland">Nagaland</option>
+          <option value="Odisha">Odisha</option>
+          <option value="Punjab">Punjab</option>
+          <option value="Rajasthan">Rajasthan</option>
+          <option value="Sikkim">Sikkim</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Telangana">Telangana</option>
+          <option value="Tripura">Tripura</option>
+          <option value="Uttar Pradesh">Uttar Pradesh</option>
+          <option value="Uttarakhand">Uttarakhand</option>
+          <option value="West Bengal">West Bengal</option>
+          <option value="Other">Other</option>
+        </select>
+        <p class="auth-step-label" style="text-align:left;color:#94a3b8;margin:12px 0 4px">Preparing For <span style="color:#ef4444">*</span></p>
+        <select id="profileExam" class="auth-input" style="appearance:auto;padding:10px 12px">
+          <option value="">Select exam...</option>
+          <optgroup label="AE/JE Civil Exams">
+            <option value="UPPSC AE">UPPSC AE — Uttar Pradesh</option>
+            <option value="UKPSC AE">UKPSC AE — Uttarakhand</option>
+            <option value="BPSC AE">BPSC AE — Bihar</option>
+            <option value="CGPSC AE">CGPSC AE — Chhattisgarh</option>
+            <option value="GPSC AE">GPSC AE — Gujarat</option>
+            <option value="TSPSC AE">TSPSC AE — Telangana</option>
+            <option value="HPSC AE">HPSC AE — Haryana</option>
+            <option value="MPPSC AE">MPPSC AE — Madhya Pradesh</option>
+            <option value="RPSC AE">RPSC AE — Rajasthan</option>
+            <option value="WBPSC AE">WBPSC AE — West Bengal</option>
+            <option value="SSC JE">SSC JE — Central</option>
+            <option value="UPPSC Polytechnic Lecturer">UPPSC Polytechnic Lecturer</option>
+          </optgroup>
+          <optgroup label="Pollution Control Board">
+            <option value="UPPCB AEE">UPPCB AEE</option>
+            <option value="GPCB AEE">GPCB AEE — Gujarat</option>
+            <option value="CPCB Scientist-B">CPCB Scientist-B</option>
+            <option value="RSPCB AEE">RSPCB AEE — Rajasthan</option>
+            <option value="BPSC AEE">BPSC AEE — Bihar PCB</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="GATE CE">GATE CE</option>
+            <option value="GATE ES">GATE ES</option>
+            <option value="ESE/IES">ESE / IES</option>
+            <option value="Other">Other</option>
+          </optgroup>
+        </select>
         <button id="saveProfileBtn" class="btn-primary-auth" style="background:#065f46;margin-top:16px">💾 Save Details</button>
         <div id="profileMsg" style="margin-top:8px;font-size:12px;min-height:18px;text-align:center"></div>
       </div>

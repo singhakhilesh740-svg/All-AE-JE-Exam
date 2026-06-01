@@ -60,7 +60,9 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
         name:    profile?.name  || '',
         email:   profile?.email || user.email || '',
         mobile:  profile?.mobile || user.phoneNumber || '',
-        hasProfile: !!(profile && profile.name)
+        state:   profile?.state || '',
+        preparingFor: profile?.preparingFor || '',
+        hasProfile: !!(profile && profile.name && profile.state && profile.preparingFor)
       });
     } else {
       onLoggedOut();
@@ -76,13 +78,16 @@ export async function getUserProfile(uid) {
   } catch { return null; }
 }
 
-export async function saveUserProfile({ uid, name, email, mobile }) {
-  await setDoc(doc(db, 'users', uid), {
+export async function saveUserProfile({ uid, name, email, mobile, state, preparingFor }) {
+  const data = {
     name:   (name || '').trim(),
     email:  (email || '').toLowerCase().trim(),
     mobile: mobile || '',
     updatedAt: serverTimestamp()
-  }, { merge: true });
+  };
+  if (state !== undefined) data.state = state;
+  if (preparingFor !== undefined) data.preparingFor = preparingFor;
+  await setDoc(doc(db, 'users', uid), data, { merge: true });
 }
 
 // Shared: ensure a profile doc exists right after first sign-in
