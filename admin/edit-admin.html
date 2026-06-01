@@ -285,12 +285,16 @@
     $('loadBtn').disabled = true;
 
     try {
-      const snap = await getDocs(query(
-        collection(db, 'exams', currentExam, 'questions'),
-        orderBy('q_num', 'asc')
-      ));
+      const snap = await getDocs(collection(db, 'exams', currentExam, 'questions'));
       allQuestions = [];
       snap.forEach(d => allQuestions.push({ _docId: d.id, ...d.data() }));
+
+      // Sort client-side: by q_num if present, else by year+subject for stable order
+      allQuestions.sort((a, b) => {
+        if (a.q_num != null && b.q_num != null) return a.q_num - b.q_num;
+        if (a.year !== b.year) return (b.year || 0) - (a.year || 0);
+        return (a.subject || '').localeCompare(b.subject || '');
+      });
 
       $('searchPanel').style.display = '';
       $('statTotal').textContent = allQuestions.length;
