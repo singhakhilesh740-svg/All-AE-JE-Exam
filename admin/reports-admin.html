@@ -55,6 +55,11 @@
     .letters{display:flex;gap:3px;margin-bottom:4px}
     .letter{font-size:10px;font-weight:700;width:18px;height:18px;display:flex;align-items:center;justify-content:center;border-radius:4px;background:#1e293b;color:#64748b;flex-shrink:0}
     .letter.correct-letter{background:rgba(16,185,129,.2);color:#10b981}
+    .btn-ai{background:#8b5cf6;color:#fff}
+    .btn-ai:disabled{opacity:.5;cursor:wait}
+    .rm-opt{font-size:12px;padding:6px 10px;border-radius:6px;background:#0f172a;color:#94a3b8;border:1px solid #1e293b}
+    .rm-correct{background:rgba(16,185,129,.12);color:#10b981;border:1px solid rgba(16,185,129,.3);font-weight:700}
+    .rm-wrong{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);text-decoration:line-through}
   </style>
 </head>
 <body>
@@ -72,6 +77,12 @@
   <div id="mainPanel" class="hidden">
 
     <!-- Stats -->
+    <div style="margin-bottom:12px;background:#1e293b;padding:10px 14px;border-radius:10px;border:1px solid #334155;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#94a3b8">🔑 Claude API Key:</span>
+      <input type="password" id="apiKeyInput" placeholder="sk-ant-..." style="flex:1;min-width:200px;padding:6px 10px;border-radius:6px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:12px;font-family:monospace">
+      <span style="font-size:10px;color:#475569">Session only — not stored</span>
+    </div>
+
     <div class="stats" id="statsRow">
       <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Total</div></div>
       <div class="stat"><div class="stat-num" id="statPending">0</div><div class="stat-lbl">Pending</div></div>
@@ -92,13 +103,47 @@
     <!-- Reports list -->
     <div id="reportsList"></div>
   </div>
+
+  <!-- AI Resolve Modal -->
+  <div id="resolveModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;overflow-y:auto;padding:20px">
+    <div style="max-width:640px;margin:0 auto;background:#1e293b;border-radius:14px;padding:22px;border:1px solid #334155">
+      <div style="font-size:16px;font-weight:700;color:#f59e0b;margin-bottom:14px">🤖 AI Analysis</div>
+
+      <div style="font-size:13px;color:#e2e8f0;background:#0f172a;padding:10px;border-radius:8px;margin-bottom:10px;line-height:1.5" id="rmQuestion"></div>
+
+      <div id="rmOptions" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:12px"></div>
+
+      <div id="rmCurrentAns" style="font-size:13px;color:#e2e8f0;margin-bottom:8px;padding:8px;background:#0f172a;border-radius:8px"></div>
+
+      <div style="font-size:12px;color:#94a3b8;background:#0a1122;padding:10px;border-radius:8px;margin-bottom:8px;line-height:1.5">
+        <strong style="color:#60a5fa">AI Analysis:</strong> <span id="rmAnalysis"></span>
+        <div id="rmConfidence" style="color:#f59e0b;margin-top:4px;font-weight:600"></div>
+      </div>
+
+      <!-- Editable fields -->
+      <div style="margin-bottom:12px">
+        <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:4px">Correct Answer Index (0=A, 1=B, 2=C, 3=D)</label>
+        <input type="number" id="rmNewAnswer" min="0" max="5" style="width:80px;padding:6px;border-radius:6px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:14px">
+      </div>
+
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:4px">New Explanation (editable)</label>
+        <textarea id="rmNewExplanation" style="width:100%;min-height:80px;padding:8px;border-radius:6px;border:1px solid #334155;background:#0f172a;color:#e2e8f0;font-size:12px;resize:vertical"></textarea>
+      </div>
+
+      <div style="display:flex;gap:8px">
+        <button class="btn-resolve" id="rmApplyBtn" style="flex:1">✅ Apply Fix & Resolve</button>
+        <button class="btn-dismiss" id="rmCancelBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="module">
 import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }
                                from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc }
+import { getFirestore, collection, query, orderBy, where, onSnapshot, doc, updateDoc, deleteDoc, getDocs }
                                from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -219,6 +264,7 @@ function renderReports() {
       ? `<div class="rc-user-msg">"${r.user_message}"</div>` : '';
 
     const resolveBtn  = r.status !== 'resolved'  ? `<button class="btn-resolve"  onclick="setStatus('${r.id}','resolved')">✓ Resolve</button>` : '';
+    const aiBtn       = r.status === 'pending'   ? `<button class="btn-ai" id="ai-${r.id}" onclick="aiResolve('${r.id}')">🤖 AI Resolve</button>` : '';
     const dismissBtn  = r.status !== 'dismissed' ? `<button class="btn-dismiss" onclick="setStatus('${r.id}','dismissed')">— Dismiss</button>` : '';
     const pendingBtn  = r.status !== 'pending'   ? `<button class="btn-dismiss" onclick="setStatus('${r.id}','pending')">↩ Pending</button>` : '';
     const deleteBtn   = `<button class="btn-delete" onclick="deleteReport('${r.id}')">🗑 Delete</button>`;
@@ -239,7 +285,7 @@ function renderReports() {
         ${userMsgHtml}
         <div class="rc-user-meta">👤 ${r.reported_by || 'anonymous'}</div>
         <div class="rc-actions">
-          ${resolveBtn}${pendingBtn}${dismissBtn}${deleteBtn}
+          ${aiBtn}${resolveBtn}${pendingBtn}${dismissBtn}${deleteBtn}
         </div>
       </div>`;
   }).join('');
@@ -254,6 +300,144 @@ window.deleteReport = async (id) => {
   if (!confirm('Delete this report permanently?')) return;
   await deleteDoc(doc(db, 'reports', id));
 };
+
+// ── AI Resolve ────────────────────────────────────────────────────────────────
+window.aiResolve = async (reportId) => {
+  const r = allReports.find(x => x.id === reportId);
+  if (!r) return;
+
+  const btn = document.querySelector(`#card-${reportId} .btn-ai`);
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Analyzing...'; }
+
+  try {
+    const examId = r.exam_id;
+    if (!examId) throw new Error('No exam_id in report — cannot locate question');
+
+    // Find the question doc in Firestore
+    const qSnap = await getDocs(query(
+      collection(db, 'exams', examId, 'questions'),
+      where('question', '==', r.question)
+    ));
+
+    let qDocId = null, qDocData = null;
+    qSnap.forEach(d => { if (!qDocId) { qDocId = d.id; qDocData = d.data(); } });
+    if (!qDocId) throw new Error(`Question not found in exams/${examId}/questions`);
+
+    // Call Claude API
+    const letters = ['A','B','C','D','E','F'];
+    const optionsText = (r.options || []).map((o,i) => `${letters[i]}. ${o}`).join('\n');
+    const prompt = `You are a civil engineering exam expert.
+
+A user reported an issue with this question.
+
+QUESTION: ${r.question}
+
+OPTIONS:
+${optionsText}
+
+CURRENT MARKED ANSWER: ${letters[r.correct_ans]} (index ${r.correct_ans})
+CURRENT EXPLANATION: ${r.explanation || 'None'}
+USER COMPLAINT (${r.issue_type}): ${r.user_message || 'No details'}
+SUBJECT: ${r.subject || 'Unknown'}
+
+TASK: Determine the CORRECT answer with proper reasoning.
+
+Respond ONLY in this JSON (no markdown, no backticks):
+{"correct_answer_index": <0-based>, "correct_answer_letter": "<A/B/C/D>", "explanation": "<concise 2-3 line explanation>", "current_is_correct": <true/false>, "confidence": "<high/medium/low>", "analysis": "<what was wrong and why>"}`;
+
+    const apiKey = document.getElementById('apiKeyInput').value.trim();
+    if (!apiKey) throw new Error('Enter your Claude API key first (🔑 field at top)');
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.map(c => c.text || '').join('') || '';
+    const clean = text.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(clean);
+
+    showResolveModal(reportId, r, qDocId, examId, result);
+
+  } catch (err) {
+    alert('AI Resolve failed: ' + err.message);
+    console.error(err);
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '🤖 AI Resolve'; }
+};
+
+function showResolveModal(reportId, report, qDocId, examId, ai) {
+  const letters = ['A','B','C','D','E','F'];
+  const options = report.options || [];
+  const changed = ai.correct_answer_index !== report.correct_ans;
+
+  const modal = document.getElementById('resolveModal');
+  document.getElementById('rmQuestion').textContent = report.question;
+
+  document.getElementById('rmOptions').innerHTML = options.map((o,i) => {
+    let cls = '';
+    if (i === report.correct_ans && i !== ai.correct_answer_index) cls = 'rm-wrong';
+    else if (i === ai.correct_answer_index) cls = 'rm-correct';
+    return `<div class="rm-opt ${cls}">${letters[i]}. ${o}</div>`;
+  }).join('');
+
+  document.getElementById('rmCurrentAns').innerHTML =
+    `<strong>Current:</strong> ${letters[report.correct_ans]}` +
+    (changed
+      ? ` <span style="color:#ef4444">✗ Wrong</span> → <strong style="color:#10b981">AI says: ${ai.correct_answer_letter}</strong>`
+      : ` <span style="color:#10b981">✓ Already correct</span>`);
+
+  document.getElementById('rmAnalysis').textContent = ai.analysis || '';
+  document.getElementById('rmConfidence').textContent = `Confidence: ${ai.confidence || '?'}`;
+  document.getElementById('rmNewAnswer').value = ai.correct_answer_index;
+  document.getElementById('rmNewExplanation').value = ai.explanation || '';
+
+  document.getElementById('rmApplyBtn').onclick = async () => {
+    const newAns = parseInt(document.getElementById('rmNewAnswer').value);
+    const newExp = document.getElementById('rmNewExplanation').value.trim();
+
+    document.getElementById('rmApplyBtn').disabled = true;
+    document.getElementById('rmApplyBtn').textContent = '⏳ Updating...';
+
+    try {
+      const updateData = { answer: newAns };
+      if (newExp) updateData.explanation = newExp;
+      await updateDoc(doc(db, 'exams', examId, 'questions', qDocId), updateData);
+
+      await updateDoc(doc(db, 'reports', reportId), {
+        status: 'resolved',
+        ai_resolution: {
+          old_answer: report.correct_ans,
+          new_answer: newAns,
+          new_explanation: newExp,
+          confidence: ai.confidence,
+          resolved_at: new Date().toISOString(),
+          resolved_by: 'AI + Admin'
+        }
+      });
+
+      modal.style.display = 'none';
+    } catch(e) {
+      alert('Error: ' + e.message);
+    }
+    document.getElementById('rmApplyBtn').disabled = false;
+    document.getElementById('rmApplyBtn').textContent = '✅ Apply Fix & Resolve';
+  };
+
+  document.getElementById('rmCancelBtn').onclick = () => { modal.style.display = 'none'; };
+  modal.style.display = 'block';
+}
 </script>
 </body>
 </html>
