@@ -87,6 +87,11 @@
     <!-- Subject Selector -->
     <div class="panel">
       <div class="panel-title">Select Subject</div>
+      <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap" id="noteEditSecFilter">
+        <button class="sec-f active" data-sec="civil" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #3b82f6;background:rgba(59,130,246,.1);color:#93c5fd;cursor:pointer">🏗️ AE/JE Civil</button>
+        <button class="sec-f" data-sec="pcb" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">🌿 PCB</button>
+        <button class="sec-f" data-sec="gs" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">📚 Non-Tech / GS</button>
+      </div>
       <select id="subjectSel"><option value="">Choose subject...</option></select>
       <div class="btn-row">
         <button class="btn-green" id="loadBtn">📥 Load Notes</button>
@@ -168,16 +173,46 @@
 
   // Populate subjects
   const SUBJECTS = [
-    {id:'engg-mechanics',name:'Engineering Mechanics'},{id:'strength-of-materials',name:'Strength of Materials'},
-    {id:'structural-analysis',name:'Structural Analysis'},{id:'steel-design',name:'Steel Design'},
-    {id:'concrete-design',name:'Concrete Design'},{id:'building-materials',name:'Building Materials'},
-    {id:'construction-tech',name:'Construction Technology'},{id:'geotech-foundation',name:'Geotechnical Engineering'},
-    {id:'fluid-mechanics',name:'Fluid Mechanics'},{id:'hydrology',name:'Hydrology & Irrigation'},
-    {id:'transportation',name:'Transportation Engineering'},{id:'environmental',name:'Environmental Engineering'},
-    {id:'surveying-geology',name:'Surveying & Geology'},
+    {id:'engg-mechanics',name:'Engineering Mechanics',sec:'civil'},{id:'strength-of-materials',name:'Strength of Materials',sec:'civil'},
+    {id:'structural-analysis',name:'Structural Analysis',sec:'civil'},{id:'steel-design',name:'Steel Design',sec:'civil'},
+    {id:'concrete-design',name:'Concrete Design',sec:'civil'},{id:'building-materials',name:'Building Materials',sec:'civil'},
+    {id:'construction-tech',name:'Construction Technology',sec:'civil'},{id:'geotech-foundation',name:'Geotechnical Engineering',sec:'civil'},
+    {id:'fluid-mechanics',name:'Fluid Mechanics',sec:'civil'},{id:'hydrology',name:'Hydrology & Irrigation',sec:'civil'},
+    {id:'transportation',name:'Transportation Engineering',sec:'civil'},{id:'environmental',name:'Environmental Engineering',sec:'civil'},
+    {id:'surveying-geology',name:'Surveying & Geology',sec:'civil'},
+    // GS / Non-Tech
+    {id:'polity',name:'⚖️ Polity',sec:'gs'},{id:'history',name:'🏛️ History',sec:'gs'},
+    {id:'geography',name:'🗺️ Geography',sec:'gs'},{id:'general-science',name:'🔬 General Science',sec:'gs'},
+    {id:'economy',name:'💰 Economy',sec:'gs'},{id:'current-affairs',name:'📰 Current Affairs',sec:'gs'},
+    {id:'environment',name:'🌍 Environment',sec:'gs'},
+    {id:'hindi-grammar',name:'📝 Hindi Grammar (व्याकरण)',sec:'gs'},{id:'hindi-sahitya',name:'📚 Hindi Literature (साहित्य)',sec:'gs'},
+    {id:'reasoning',name:'🧠 Logical Reasoning',sec:'gs'},{id:'quantitative-aptitude',name:'🔢 Quantitative Aptitude',sec:'gs'},
+    {id:'english',name:'🔤 English Language',sec:'gs'},
   ];
-  $('subjectSel').innerHTML = '<option value="">Choose subject...</option>' +
-    SUBJECTS.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+
+  let noteEditSec = 'civil';
+  function populateSubjects() {
+    const filtered = SUBJECTS.filter(s => s.sec === noteEditSec);
+    $('subjectSel').innerHTML = '<option value="">Choose subject...</option>' +
+      filtered.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+  }
+  populateSubjects();
+
+  // Section filter
+  const secCols = {civil:'#3b82f6',pcb:'#10b981',gs:'#f59e0b'};
+  document.getElementById('noteEditSecFilter').addEventListener('click', e => {
+    const btn = e.target.closest('[data-sec]');
+    if (!btn) return;
+    noteEditSec = btn.dataset.sec;
+    document.querySelectorAll('#noteEditSecFilter .sec-f').forEach(b => {
+      const active = b.dataset.sec === noteEditSec;
+      b.style.borderColor = active ? secCols[b.dataset.sec] : '#334155';
+      b.style.background = active ? secCols[b.dataset.sec] + '1a' : 'transparent';
+      b.style.color = active ? '#e2e8f0' : '#94a3b8';
+      b.classList.toggle('active', active);
+    });
+    populateSubjects();
+  });
 
   // Load notes
   $('loadBtn').onclick = async () => {
