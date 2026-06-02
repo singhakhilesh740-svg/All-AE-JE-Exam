@@ -244,10 +244,14 @@
     <!-- ══════════ MIGRATE TAB ══════════ -->
     <div id="tab-migrate" class="hidden">
       <div class="panel">
-        <div class="panel-title">🔄 Migrate Bundled JSON Notes → Firestore</div>
+        <div class="panel-title">🔄 Migrate All Notes → Firestore</div>
         <div class="info-box" style="margin-bottom:12px">
-          Pushes your existing <code>notes-combined.json</code> into Firestore as if admin-uploaded.
-          Already-uploaded subjects will be skipped. Run once after deploying.
+          Migrates notes from all local JSON files into Firestore:<br>
+          🏗️ <strong>Civil</strong> — from <code>notes-combined.json</code><br>
+          📚 <strong>GS</strong> — from <code>gs-polity.json</code>, <code>gs-history.json</code>, <code>gs-geography.json</code>, <code>gs-science.json</code><br>
+          📝 <strong>Hindi</strong> — from <code>hindi-notes.json</code><br>
+          🌿 <strong>PCB</strong> — HTML only, needs manual JSON upload<br>
+          Already-uploaded subjects will be skipped.
         </div>
         <div class="btn-row">
           <button class="btn-primary" id="migrateAllBtn">🚀 Migrate All Subjects</button>
@@ -976,45 +980,33 @@ function decodeNotesFromFirestore(notes) {
 async function runMigration(dryRun) {
   const logEl = document.getElementById('migrateLog');
   logEl.classList.remove('hidden');
-  logEl.innerHTML = `<span class="info">${dryRun ? '👁️ DRY RUN — no writes will happen' : '🚀 Migrating...'}</span>\n`;
-
-  let allData;
-  try {
-    const r = await fetch('../data/notes-combined.json?v=' + Date.now(), { cache:'no-cache' });
-    allData = await r.json();
-    logEl.innerHTML += `<span class="ok">✅ Loaded notes-combined.json: ${Object.keys(allData).length} subjects</span>\n`;
-  } catch(e) {
-    logEl.innerHTML += `<span class="err">❌ Could not load notes-combined.json: ${e.message}</span>`;
-    return;
-  }
+  logEl.innerHTML = `<span class="info">${dryRun ? '👁️ DRY RUN — no writes' : '🚀 Migrating all sections...'}</span>\n`;
 
   await checkExistingNotes();
   let migrated = 0, skipped = 0, errors = 0;
 
-  for (const [subjId, data] of Object.entries(allData)) {
+  // Helper to migrate a single subject
+  async function migrateOne(subjId, notes, subjectName, topics, source) {
     if (existingInFS[subjId]) {
       logEl.innerHTML += `<span class="warn">  ⏭️ ${subjId}: already in Firestore — skipped</span>\n`;
-      skipped++; continue;
+      skipped++; return;
     }
-    const subj = SUBJECTS.find(s => s.id === subjId);
-    const notes = data.notes || [];
-    const totalCards = notes.reduce((s,sec)=>s+(sec.cards||[]).length,0);
-
+    const totalCards = notes.reduce((s,sec) => s + (sec.cards||[]).length, 0);
+    if (!notes.length) {
+      logEl.innerHTML += `<span class="warn">  ⏭️ ${subjId}: no notes content — skipped</span>\n`;
+      return;
+    }
     if (dryRun) {
-      logEl.innerHTML += `<span class="info">  👁️ Would migrate: ${subjId} — ${notes.length} sections, ${totalCards} cards</span>\n`;
-      migrated++; continue;
+      logEl.innerHTML += `<span class="info">  👁️ Would migrate: ${subjId} — ${notes.length} sections, ${totalCards} cards [${source}]</span>\n`;
+      migrated++; return;
     }
-
     try {
       await setDoc(doc(db, 'notes', subjId), {
-        subject: subjId,
-        subject_name: subj?.name || data.subject_name || subjId,
-        topics: subj?.topics || data.topics || [],
-        notes: encodeNotesForFirestore(notes),
+        subject: subjId, subject_name: subjectName,
+        topics: topics || [], notes: encodeNotesForFirestore(notes),
         totalCards, totalSections: notes.length,
-        updatedAt: new Date().toISOString(),
-        updatedBy: currentUser.email,
-        source: 'migrated-from-json'
+        updatedAt: new Date().toISOString(), updatedBy: currentUser.email,
+        source: 'migrated-from-' + source
       });
       existingInFS[subjId] = true;
       logEl.innerHTML += `<span class="ok">  ✅ ${subjId}: ${notes.length} sections, ${totalCards} cards</span>\n`;
@@ -1026,7 +1018,73 @@ async function runMigration(dryRun) {
     logEl.scrollTop = 9999;
   }
 
-  logEl.innerHTML += `\n<span class="${dryRun?'info':'ok'}">── Done: ${migrated} ${dryRun?'would migrate':'migrated'}, ${skipped} skipped, ${errors} errors ──</span>\n`;
+  // ── 1. Civil subjects from notes-combined.json ──────────────────────────
+  logEl.innerHTML += `\n<span class="info" style="color:#93c5fd;font-weight:700">── 🏗️ AE/JE Civil (from notes-combined.json) ──</span>\n`;
+  try {
+    const r = await fetch('../data/notes-combined.json?v=' + Date.now(), { cache:'no-cache' });
+    const allData = await r.json();
+    logEl.innerHTML += `<span class="ok">✅ Loaded notes-combined.json: ${Object.keys(allData).length} subjects</span>\n`;
+    for (const [subjId, data] of Object.entries(allData)) {
+      const subj = SUBJECTS.find(s => s.id === subjId);
+      await migrateOne(subjId, data.notes || [], subj?.name || data.subject_name || subjId, subj?.topics || data.topics || [], 'notes-combined');
+    }
+  } catch(e) {
+    logEl.innerHTML += `<span class="err">❌ notes-combined.json: ${e.message}</span>\n`;
+  }
+
+  // ── 2. GS subjects from dedicated files ─────────────────────────────────
+  logEl.innerHTML += `\n<span class="info" style="color:#fcd34d;font-weight:700">── 📚 GS Subjects (from gs-*.json) ──</span>\n`;
+  const gsFiles = {
+    'polity':          { file: '../data/gs-polity.json',    name: 'Polity' },
+    'history':         { file: '../data/gs-history.json',   name: 'History' },
+    'geography':       { file: '../data/gs-geography.json', name: 'Geography' },
+    'general-science': { file: '../data/gs-science.json',   name: 'General Science' },
+  };
+
+  for (const [subjId, meta] of Object.entries(gsFiles)) {
+    try {
+      const r = await fetch(meta.file + '?v=' + Date.now(), { cache:'no-cache' });
+      const gsData = await r.json();
+      const subSubjects = gsData.sub_subjects || [];
+      // Flatten all sub-subjects' notes into one array
+      const flatNotes = [];
+      const flatTopics = [];
+      subSubjects.forEach((ss, idx) => {
+        const ssData = gsData[ss.id];
+        if (!ssData) return;
+        flatTopics.push({ id: idx, name: ss.name });
+        (ssData.notes || []).forEach(section => {
+          flatNotes.push({ ...section, topic_id: idx, parent_sub: ss.id });
+        });
+      });
+      const subj = SUBJECTS.find(s => s.id === subjId);
+      await migrateOne(subjId, flatNotes, meta.name, subj?.topics || flatTopics, 'gs-json');
+    } catch(e) {
+      logEl.innerHTML += `<span class="err">  ❌ ${subjId}: ${e.message}</span>\n`;
+      errors++;
+    }
+  }
+
+  // ── 3. Hindi from hindi-notes.json ──────────────────────────────────────
+  logEl.innerHTML += `\n<span class="info" style="color:#fcd34d;font-weight:700">── 📝 Hindi (from hindi-notes.json) ──</span>\n`;
+  try {
+    const r = await fetch('../data/hindi-notes.json?v=' + Date.now(), { cache:'no-cache' });
+    const hiData = await r.json();
+    for (const [subjId, data] of Object.entries(hiData)) {
+      const subj = SUBJECTS.find(s => s.id === subjId);
+      await migrateOne(subjId, data.notes || [], subj?.name || subjId, subj?.topics || data.topics || [], 'hindi-json');
+    }
+  } catch(e) {
+    logEl.innerHTML += `<span class="err">❌ hindi-notes.json: ${e.message}</span>\n`;
+  }
+
+  // ── 4. PCB units — info only ────────────────────────────────────────────
+  logEl.innerHTML += `\n<span class="info" style="color:#6ee7b7;font-weight:700">── 🌿 PCB Units ──</span>\n`;
+  logEl.innerHTML += `<span class="warn">  ℹ️ PCB notes are HTML files (data/pcb/unit*.html) — not JSON. They cannot be auto-migrated.</span>\n`;
+  logEl.innerHTML += `<span class="warn">  ℹ️ To add PCB notes to Firestore: create JSON notes → Upload Notes tab → 🌿 PCB → select unit → upload.</span>\n`;
+
+  // ── Summary ─────────────────────────────────────────────────────────────
+  logEl.innerHTML += `\n<span class="${dryRun?'info':'ok'}" style="font-weight:700">── Done: ${migrated} ${dryRun?'would migrate':'migrated'}, ${skipped} skipped, ${errors} errors ──</span>\n`;
   if (!dryRun) buildSubjectGrid();
 }
 
