@@ -694,7 +694,7 @@ function validateAndBuild(raw, i, opts) {
 
   const { defaultExam, defaultType, defaultYear, defaultSubject, defaultTopic, section } = opts;
   const subject = raw.subject || defaultSubject;
-  const validIds = section === 'civil' ? CIVIL_IDS : PCB_IDS;
+  const validIds = section === 'civil' ? CIVIL_IDS : section === 'pcb' ? PCB_IDS : NONTECH_IDS;
 
   if (!subject) errs.push('subject required');
   else if (!validIds.includes(subject)) errs.push(`unknown subject "${subject}" for section ${section}`);
@@ -790,7 +790,9 @@ async function runValidate(doUpload=false) {
       const ans = result.q.options[result.q.answer];
       const secBadge = currentSection === 'civil'
         ? `<span class="preview-tag tag-subject">🏗️ Civil</span>`
-        : `<span class="preview-tag tag-section">🌿 PCB</span>`;
+        : currentSection === 'pcb'
+        ? `<span class="preview-tag tag-section">🌿 PCB</span>`
+        : `<span class="preview-tag" style="background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.3)">📚 Non-Tech</span>`;
       card.innerHTML = `<div class="preview-q">Q${valid.length}: ${escHtml(result.q.question.substring(0,100))}${result.q.question.length>100?'…':''}</div>
         <div class="preview-meta">
           ${secBadge}
@@ -928,8 +930,18 @@ $('loadStatsBtn').onclick = async () => {
     // Practice breakdown by section + subject
     const civilPrc = prcDocs.filter(d => d.section === 'civil' || CIVIL_IDS.includes(d.subject));
     const pcbPrc   = prcDocs.filter(d => d.section === 'pcb'   || PCB_IDS.includes(d.subject));
+    const ntPrc    = prcDocs.filter(d => d.section === 'nontech' || NONTECH_IDS.includes(d.subject));
+    const NT_SUBJS = [
+      {id:'history',icon:'🏛️',name:'History'},{id:'polity',icon:'⚖️',name:'Polity'},
+      {id:'geography',icon:'🗺️',name:'Geography'},{id:'general-science',icon:'🔬',name:'General Science'},
+      {id:'economy',icon:'💰',name:'Economy'},{id:'current-affairs',icon:'📰',name:'Current Affairs'},
+      {id:'environment',icon:'🌍',name:'Environment'},{id:'hindi-grammar',icon:'📝',name:'Hindi Grammar'},
+      {id:'hindi-sahitya',icon:'📚',name:'Hindi Sahitya'},{id:'reasoning',icon:'🧠',name:'Reasoning'},
+      {id:'quantitative-aptitude',icon:'🔢',name:'Quantitative Aptitude'},{id:'english',icon:'🔤',name:'English'}
+    ];
     wrap.innerHTML += buildBreakdown('✏️ Civil Practice', civilPrc, SUBJECTS_UPPSC_MAINS, '#10b981');
     wrap.innerHTML += buildBreakdown('🌿 PCB Practice', pcbPrc, SUBJECTS_PCB_NOTES, '#6ee7b7');
+    wrap.innerHTML += buildBreakdown('📚 Non-Tech Practice', ntPrc, NT_SUBJS, '#f59e0b');
 
     wrap.classList.remove('hidden');
     log(`Stats loaded: ${docs.length} total (${pyqDocs.length} PYQ, ${prcDocs.length} practice)`, 'ok');
