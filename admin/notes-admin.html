@@ -376,19 +376,6 @@ const SUBJECTS = [
   { id:'unit9',  name:'Unit 9 — Industrial Pollution',icon:'🏭', section:'pcb', topics:[{id:0,name:'CETP'},{id:1,name:'ZLD'},{id:2,name:'Green Chemistry'}] },
   { id:'unit10', name:'Unit 10 — Env. Chemistry',    icon:'🧪', section:'pcb', topics:[{id:0,name:'Water Analysis'},{id:1,name:'Air Monitoring'},{id:2,name:'Toxicology'}] },
   { id:'unit11', name:'Unit 11 — Fluid Mechanics',   icon:'🌊', section:'pcb', topics:[{id:0,name:'Pipe Flow'},{id:1,name:'Open Channel'},{id:2,name:'Pumps'}] },
-  { id:'pl-engg-mechanics',       name:'PL Engg Mechanics',       icon:'⚙️', section:'pcb', topics:[{id:0,name:'Statics'},{id:1,name:'Dynamics'}] },
-  { id:'pl-strength-of-materials',name:'PL SOM',                   icon:'💪', section:'pcb', topics:[{id:0,name:'Stress-Strain'},{id:1,name:'Bending'},{id:2,name:'Torsion'}] },
-  { id:'pl-structural-analysis',  name:'PL Structural Analysis',  icon:'🏛️', section:'pcb', topics:[{id:0,name:'Indeterminate'},{id:1,name:'Matrix Methods'}] },
-  { id:'pl-steel-design',         name:'PL Steel Design',         icon:'🔩', section:'pcb', topics:[{id:0,name:'Connections'},{id:1,name:'Beams'},{id:2,name:'Columns'}] },
-  { id:'pl-concrete-design',      name:'PL RCC Design',           icon:'🏗️', section:'pcb', topics:[{id:0,name:'Flexure'},{id:1,name:'Shear'},{id:2,name:'Slabs'}] },
-  { id:'pl-building-materials',   name:'PL Building Materials',   icon:'🧱', section:'pcb', topics:[{id:0,name:'Cement'},{id:1,name:'Steel'},{id:2,name:'Timber'}] },
-  { id:'pl-construction-tech',    name:'PL Construction Tech',    icon:'🏚️', section:'pcb', topics:[{id:0,name:'Earthwork'},{id:1,name:'Estimation'}] },
-  { id:'pl-geotech-foundation',   name:'PL Geotechnical',         icon:'🪨', section:'pcb', topics:[{id:0,name:'Soil'},{id:1,name:'Foundation'}] },
-  { id:'pl-fluid-mechanics',      name:'PL Fluid Mechanics',      icon:'💧', section:'pcb', topics:[{id:0,name:'Properties'},{id:1,name:'Pipe Flow'}] },
-  { id:'pl-hydrology',            name:'PL Hydrology',            icon:'🌊', section:'pcb', topics:[{id:0,name:'Hydrology'},{id:1,name:'Irrigation'}] },
-  { id:'pl-transportation',       name:'PL Transportation',       icon:'🛣️', section:'pcb', topics:[{id:0,name:'Highway'},{id:1,name:'Railway'}] },
-  { id:'pl-environmental',        name:'PL Environmental',        icon:'🌿', section:'pcb', topics:[{id:0,name:'Water'},{id:1,name:'Wastewater'}] },
-  { id:'pl-surveying-geology',    name:'PL Surveying',            icon:'🗺️', section:'pcb', topics:[{id:0,name:'Surveying'},{id:1,name:'Geology'}] },
 
   // ── GS / Non-Tech Subjects ──────────────────────────────────────────────
   { id:'polity',               name:'Polity',                   icon:'⚖️', section:'gs',
@@ -700,11 +687,15 @@ document.getElementById('refreshNotesBtn').addEventListener('click', async () =>
     try {
       const snap = await getDoc(doc(db, 'notes', s.id));
       const d = snap.data();
+      const sec = s.section || 'civil';
+      const secBadge = sec === 'gs' ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.3);margin-left:6px">GS</span>'
+        : sec === 'pcb' ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(16,185,129,.12);color:#6ee7b7;border:1px solid rgba(16,185,129,.3);margin-left:6px">PCB</span>'
+        : '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.3);margin-left:6px">Civil</span>';
       const row = document.createElement('div');
       row.className = 'notes-row';
       row.innerHTML = `
         <div class="notes-row-info">
-          <div class="notes-row-subj">${s.icon} ${s.name}</div>
+          <div class="notes-row-subj">${s.icon} ${s.name} ${secBadge}</div>
           <div class="notes-row-meta">${d.totalSections||0} sections · ${d.totalCards||0} cards · ${(d.updatedAt||'').substring(0,10)} by ${d.updatedBy||'?'}</div>
         </div>
         <div style="display:flex;gap:6px">
