@@ -113,7 +113,8 @@
         <div class="panel-title">Step 1 — Select Subject</div>
         <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap" id="notesSectionFilter">
           <button class="sec-btn active" data-sec="all" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;cursor:pointer">📋 All</button>
-          <button class="sec-btn" data-sec="civil" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">🏗️ Civil</button>
+          <button class="sec-btn" data-sec="civil" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">🏗️ AE/JE Civil</button>
+          <button class="sec-btn" data-sec="pcb" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">🌿 PCB</button>
           <button class="sec-btn" data-sec="gs" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">📚 GS / Non-Tech</button>
         </div>
         <div class="subj-grid" id="subjGrid"></div>
@@ -363,6 +364,32 @@ const SUBJECTS = [
             {id:6,name:'Photogrammetry'},{id:7,name:'Remote Sensing'},{id:8,name:'Geology'},
             {id:9,name:'Errors & Adjustments'}] },
 
+  // ── PCB / Pollution Control Subjects ────────────────────────────────────
+  { id:'unit1',  name:'Unit 1 — Water Supply',       icon:'💧', section:'pcb', topics:[{id:0,name:'Water Quality'},{id:1,name:'Treatment'},{id:2,name:'Distribution'}] },
+  { id:'unit2',  name:'Unit 2 — Wastewater',         icon:'🚰', section:'pcb', topics:[{id:0,name:'Sewage Characteristics'},{id:1,name:'Treatment'},{id:2,name:'Sludge'}] },
+  { id:'unit3',  name:'Unit 3 — Air Pollution',      icon:'💨', section:'pcb', topics:[{id:0,name:'Pollutants'},{id:1,name:'Dispersion'},{id:2,name:'Control Equipment'}] },
+  { id:'unit4',  name:'Unit 4 — Solid Waste',        icon:'🗑️', section:'pcb', topics:[{id:0,name:'MSW'},{id:1,name:'Hazardous Waste'},{id:2,name:'Bio-Medical'}] },
+  { id:'unit5',  name:'Unit 5 — Env. Legislation',   icon:'⚖️', section:'pcb', topics:[{id:0,name:'Acts'},{id:1,name:'Rules'},{id:2,name:'NGT'}] },
+  { id:'unit6',  name:'Unit 6 — EIA & Mgmt',         icon:'📋', section:'pcb', topics:[{id:0,name:'EIA Process'},{id:1,name:'ISO 14001'},{id:2,name:'LCA'}] },
+  { id:'unit7',  name:'Unit 7 — Noise & Radiation',  icon:'🔊', section:'pcb', topics:[{id:0,name:'Noise'},{id:1,name:'Radiation'}] },
+  { id:'unit8',  name:'Unit 8 — Ecology',            icon:'🌿', section:'pcb', topics:[{id:0,name:'Ecosystems'},{id:1,name:'Biodiversity'},{id:2,name:'Climate'}] },
+  { id:'unit9',  name:'Unit 9 — Industrial Pollution',icon:'🏭', section:'pcb', topics:[{id:0,name:'CETP'},{id:1,name:'ZLD'},{id:2,name:'Green Chemistry'}] },
+  { id:'unit10', name:'Unit 10 — Env. Chemistry',    icon:'🧪', section:'pcb', topics:[{id:0,name:'Water Analysis'},{id:1,name:'Air Monitoring'},{id:2,name:'Toxicology'}] },
+  { id:'unit11', name:'Unit 11 — Fluid Mechanics',   icon:'🌊', section:'pcb', topics:[{id:0,name:'Pipe Flow'},{id:1,name:'Open Channel'},{id:2,name:'Pumps'}] },
+  { id:'pl-engg-mechanics',       name:'PL Engg Mechanics',       icon:'⚙️', section:'pcb', topics:[{id:0,name:'Statics'},{id:1,name:'Dynamics'}] },
+  { id:'pl-strength-of-materials',name:'PL SOM',                   icon:'💪', section:'pcb', topics:[{id:0,name:'Stress-Strain'},{id:1,name:'Bending'},{id:2,name:'Torsion'}] },
+  { id:'pl-structural-analysis',  name:'PL Structural Analysis',  icon:'🏛️', section:'pcb', topics:[{id:0,name:'Indeterminate'},{id:1,name:'Matrix Methods'}] },
+  { id:'pl-steel-design',         name:'PL Steel Design',         icon:'🔩', section:'pcb', topics:[{id:0,name:'Connections'},{id:1,name:'Beams'},{id:2,name:'Columns'}] },
+  { id:'pl-concrete-design',      name:'PL RCC Design',           icon:'🏗️', section:'pcb', topics:[{id:0,name:'Flexure'},{id:1,name:'Shear'},{id:2,name:'Slabs'}] },
+  { id:'pl-building-materials',   name:'PL Building Materials',   icon:'🧱', section:'pcb', topics:[{id:0,name:'Cement'},{id:1,name:'Steel'},{id:2,name:'Timber'}] },
+  { id:'pl-construction-tech',    name:'PL Construction Tech',    icon:'🏚️', section:'pcb', topics:[{id:0,name:'Earthwork'},{id:1,name:'Estimation'}] },
+  { id:'pl-geotech-foundation',   name:'PL Geotechnical',         icon:'🪨', section:'pcb', topics:[{id:0,name:'Soil'},{id:1,name:'Foundation'}] },
+  { id:'pl-fluid-mechanics',      name:'PL Fluid Mechanics',      icon:'💧', section:'pcb', topics:[{id:0,name:'Properties'},{id:1,name:'Pipe Flow'}] },
+  { id:'pl-hydrology',            name:'PL Hydrology',            icon:'🌊', section:'pcb', topics:[{id:0,name:'Hydrology'},{id:1,name:'Irrigation'}] },
+  { id:'pl-transportation',       name:'PL Transportation',       icon:'🛣️', section:'pcb', topics:[{id:0,name:'Highway'},{id:1,name:'Railway'}] },
+  { id:'pl-environmental',        name:'PL Environmental',        icon:'🌿', section:'pcb', topics:[{id:0,name:'Water'},{id:1,name:'Wastewater'}] },
+  { id:'pl-surveying-geology',    name:'PL Surveying',            icon:'🗺️', section:'pcb', topics:[{id:0,name:'Surveying'},{id:1,name:'Geology'}] },
+
   // ── GS / Non-Tech Subjects ──────────────────────────────────────────────
   { id:'polity',               name:'Polity',                   icon:'⚖️', section:'gs',
     topics:[{id:0,name:'Constitution'},{id:1,name:'Fundamental Rights'},{id:2,name:'DPSP & Duties'},
@@ -465,6 +492,8 @@ function buildSubjectGrid() {
     const sec = s.section || 'civil';
     const secBadge = sec === 'gs'
       ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.3)">GS</span>'
+      : sec === 'pcb'
+      ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(16,185,129,.12);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)">PCB</span>'
       : '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.3)">Civil</span>';
     card.innerHTML = `
       <div class="subj-name">${s.icon} ${s.name}</div>

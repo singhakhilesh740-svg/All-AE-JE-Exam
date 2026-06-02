@@ -110,6 +110,11 @@
         <button class="sec-filter" data-sec="pcb" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">🌿 PCB</button>
         <button class="sec-filter" data-sec="nontech" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">📚 Non-Tech / GS</button>
       </div>
+      <div style="display:flex;gap:6px;margin-bottom:10px" id="editTypeFilter">
+        <button class="type-pill active" data-type="" style="font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;cursor:pointer">📋 All Types</button>
+        <button class="type-pill" data-type="pyq" style="font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">📝 PYQ</button>
+        <button class="type-pill" data-type="practice" style="font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">✏️ Practice</button>
+      </div>
       <div class="ctrl-row">
         <select id="examSelect" style="flex:1;min-width:200px">
           <option value="">Select an exam...</option>
@@ -313,6 +318,22 @@
     sel.value = '';
   });
 
+  // Type filter (PYQ / Practice / All)
+  let filterByType = '';
+  document.getElementById('editTypeFilter').addEventListener('click', e => {
+    const btn = e.target.closest('[data-type]');
+    if (!btn) return;
+    filterByType = btn.dataset.type;
+    document.querySelectorAll('#editTypeFilter .type-pill').forEach(b => {
+      const active = b.dataset.type === filterByType;
+      b.classList.toggle('active', active);
+      b.style.background = active ? '#1e293b' : 'transparent';
+      b.style.color = active ? '#e2e8f0' : '#94a3b8';
+      b.style.borderColor = active ? '#10b981' : '#334155';
+    });
+    if (allQuestions.length) renderList();
+  });
+
   // Load Questions
   $('loadBtn').onclick = async () => {
     currentExam = $('examSelect').value;
@@ -364,6 +385,7 @@
     let filtered = allQuestions.filter(q => {
       if (subj && q.subject !== subj) return false;
       if (yr && String(q.year) !== yr) return false;
+      if (filterByType && q.type !== filterByType) return false;
       if (search) {
         const haystack = `${q.q_num} ${q.question} ${q.subject} ${q.topic || ''}`.toLowerCase();
         if (!haystack.includes(search)) return false;
@@ -386,6 +408,7 @@
         <div class="q-meta">
           <span class="q-tag tag-ans">✅ ${letters[q.answer] || '?'}</span>
           <span class="q-tag tag-subj">${q.subject || '—'}</span>
+          ${q.type ? `<span class="q-tag" style="background:${q.type==='pyq'?'rgba(245,158,11,.15);color:#fcd34d':'rgba(16,185,129,.15);color:#6ee7b7'}">${q.type==='pyq'?'📝 PYQ':'✏️ Practice'}</span>` : ''}
           ${q.topic ? `<span class="q-tag tag-topic">${q.topic}</span>` : ''}
           ${q.year ? `<span class="q-tag tag-yr">${q.year}</span>` : ''}
         </div>
