@@ -724,7 +724,11 @@ async function openPyqSubject(subj) {
 function buildTopicChips(containerId, subjectId, onSelect) {
   const container = $(containerId);
   if (!container) return;
-  const topics = getTopicsFor(subjectId);
+  // Check civil subjects first, then GS topics
+  let topics = getTopicsFor(subjectId);
+  if (topics.length <= 1 && GS_SUB_SUBJECTS[subjectId]) {
+    topics = [{ id: 'all', label: 'All' }, ...GS_SUB_SUBJECTS[subjectId].map(t => ({ id: t.id, label: t.name }))];
+  }
   container.innerHTML = topics.map(t =>
     `<button class="topic-chip${t.id === currentTopic ? ' active' : ''}" data-topic="${t.id}">${escapeHtml(t.label)}</button>`
   ).join('');

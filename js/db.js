@@ -71,7 +71,8 @@ export async function fetchPracticeQuestions(opts = {}) {
   const { subject = null, section = null, maxCount = 10000, force = false } = opts;
   const { EXAMS } = await import('./exams.js');
   // Filter exams by section so civil Practice only queries civil exams, PCB only PCB
-  const filtered = section ? EXAMS.filter(e => e.section === section) : EXAMS;
+  // For nontech, query ALL exams since GS/Hindi questions can be uploaded to any exam
+  const filtered = (section && section !== 'nontech') ? EXAMS.filter(e => e.section === section) : EXAMS;
   const EXAM_IDS = filtered.map(e => e.id);
 
   const cacheKey = `practice:${section || 'all'}:${subject || 'all'}`;
