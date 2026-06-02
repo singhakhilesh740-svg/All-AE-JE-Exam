@@ -609,16 +609,36 @@ function renderSubjectRef() {
 }
 
 // ── Build practice delete subjects list ───────────────────────────────────
+const NONTECH_SUBJECTS_LIST = [
+  {id:'history',icon:'🏛️',name:'History'},
+  {id:'polity',icon:'⚖️',name:'Polity'},
+  {id:'geography',icon:'🗺️',name:'Geography'},
+  {id:'general-science',icon:'🔬',name:'General Science'},
+  {id:'economy',icon:'💰',name:'Economy'},
+  {id:'current-affairs',icon:'📰',name:'Current Affairs'},
+  {id:'environment',icon:'🌍',name:'Environment'},
+  {id:'hindi-grammar',icon:'📝',name:'Hindi Grammar'},
+  {id:'hindi-sahitya',icon:'📚',name:'Hindi Sahitya'},
+  {id:'reasoning',icon:'🧠',name:'Reasoning'},
+  {id:'quantitative-aptitude',icon:'🔢',name:'Quantitative Aptitude'},
+  {id:'english',icon:'🔤',name:'English'},
+];
+
 function buildDelSubjectList() {
-  const allSubjects = [...SUBJECTS_UPPSC_MAINS, ...SUBJECTS_PCB_NOTES];
+  const allSubjects = [...SUBJECTS_UPPSC_MAINS, ...SUBJECTS_PCB_NOTES, ...NONTECH_SUBJECTS_LIST];
   const container = $('delSubjectList');
   container.innerHTML = '';
   allSubjects.forEach(s => {
     const row = document.createElement('div');
     row.style.cssText = 'display:flex;align-items:center;gap:10px;background:#0f172a;padding:8px 12px;border-radius:8px;border:1px solid #1e293b';
-    const secTag = SUBJECTS_PCB_NOTES.find(p => p.id === s.id)
-      ? '<span style="font-size:10px;color:#6ee7b7;padding:1px 5px;border-radius:3px;background:rgba(16,185,129,.1);border:1px solid #10b981">PCB</span>'
-      : '<span style="font-size:10px;color:#93c5fd;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,.1);border:1px solid #3b82f6">Civil</span>';
+    let secTag;
+    if (NONTECH_SUBJECTS_LIST.find(n => n.id === s.id)) {
+      secTag = '<span style="font-size:10px;color:#fcd34d;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.1);border:1px solid #f59e0b">GS</span>';
+    } else if (SUBJECTS_PCB_NOTES.find(p => p.id === s.id)) {
+      secTag = '<span style="font-size:10px;color:#6ee7b7;padding:1px 5px;border-radius:3px;background:rgba(16,185,129,.1);border:1px solid #10b981">PCB</span>';
+    } else {
+      secTag = '<span style="font-size:10px;color:#93c5fd;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,.1);border:1px solid #3b82f6">Civil</span>';
+    }
     row.innerHTML = `
       <input type="checkbox" id="del_${s.id}" value="${s.id}" checked style="width:16px;height:16px;cursor:pointer;accent-color:#ef4444">
       <label for="del_${s.id}" style="flex:1;font-size:13px;color:#e2e8f0;cursor:pointer">${s.icon||'📖'} ${s.name}</label>
