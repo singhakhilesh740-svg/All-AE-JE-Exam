@@ -111,6 +111,11 @@
       <!-- Step 1: Subject -->
       <div class="panel">
         <div class="panel-title">Step 1 — Select Subject</div>
+        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap" id="notesSectionFilter">
+          <button class="sec-btn active" data-sec="all" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;cursor:pointer">📋 All</button>
+          <button class="sec-btn" data-sec="civil" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">🏗️ Civil</button>
+          <button class="sec-btn" data-sec="gs" style="font-size:12px;padding:6px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;cursor:pointer">📚 GS / Non-Tech</button>
+        </div>
         <div class="subj-grid" id="subjGrid"></div>
       </div>
 
@@ -352,11 +357,56 @@ const SUBJECTS = [
             {id:3,name:'Water Distribution'},{id:4,name:'Sewage Treatment'},{id:5,name:'BOD & COD'},
             {id:6,name:'Sewer Design'},{id:7,name:'Air Pollution'},{id:8,name:'Solid Waste'},
             {id:9,name:'Self-purification'}] },
-  { id:'surveying-geology',    name:'Surveying & Geology',      icon:'🗺️',
+  { id:'surveying-geology',    name:'Surveying & Geology',      icon:'🗺️', section:'civil',
     topics:[{id:0,name:'Chain & Compass'},{id:1,name:'Levelling & Contouring'},{id:2,name:'Theodolite'},
             {id:3,name:'Tacheometry'},{id:4,name:'Triangulation'},{id:5,name:'Curves'},
             {id:6,name:'Photogrammetry'},{id:7,name:'Remote Sensing'},{id:8,name:'Geology'},
             {id:9,name:'Errors & Adjustments'}] },
+
+  // ── GS / Non-Tech Subjects ──────────────────────────────────────────────
+  { id:'polity',               name:'Polity',                   icon:'⚖️', section:'gs',
+    topics:[{id:0,name:'Constitution'},{id:1,name:'Fundamental Rights'},{id:2,name:'DPSP & Duties'},
+            {id:3,name:'Parliament'},{id:4,name:'Executive'},{id:5,name:'Judiciary'},
+            {id:6,name:'Federalism'},{id:7,name:'Elections & Bodies'},{id:8,name:'Amendments'},
+            {id:9,name:'Emergency'}] },
+  { id:'history',              name:'History',                  icon:'🏛️', section:'gs',
+    topics:[{id:0,name:'Ancient India'},{id:1,name:'Medieval India'},{id:2,name:'Modern India'},
+            {id:3,name:'Freedom Struggle'},{id:4,name:'Post-Independence'},{id:5,name:'Art & Culture'}] },
+  { id:'geography',            name:'Geography',                icon:'🗺️', section:'gs',
+    topics:[{id:0,name:'Physical Features'},{id:1,name:'Climate'},{id:2,name:'Rivers & Drainage'},
+            {id:3,name:'Soils & Vegetation'},{id:4,name:'Natural Resources'},{id:5,name:'Agriculture'},
+            {id:6,name:'Industry'},{id:7,name:'Population'},{id:8,name:'World Geography'}] },
+  { id:'general-science',      name:'General Science',          icon:'🔬', section:'gs',
+    topics:[{id:0,name:'Physics'},{id:1,name:'Chemistry'},{id:2,name:'Biology'},
+            {id:3,name:'Science & Technology'},{id:4,name:'Health & Disease'},{id:5,name:'Space Science'}] },
+  { id:'economy',              name:'Economy',                  icon:'💰', section:'gs',
+    topics:[{id:0,name:'Basic Concepts'},{id:1,name:'National Income'},{id:2,name:'Banking & RBI'},
+            {id:3,name:'Fiscal Policy'},{id:4,name:'Planning & NITI'},{id:5,name:'Agriculture Economy'},
+            {id:6,name:'International Trade'}] },
+  { id:'current-affairs',      name:'Current Affairs',          icon:'📰', section:'gs',
+    topics:[{id:0,name:'National'},{id:1,name:'International'},{id:2,name:'Awards & Honors'},
+            {id:3,name:'Sports'},{id:4,name:'Schemes & Programs'}] },
+  { id:'environment',          name:'Environment',              icon:'🌍', section:'gs',
+    topics:[{id:0,name:'Ecology Basics'},{id:1,name:'Biodiversity'},{id:2,name:'Climate Change'},
+            {id:3,name:'Environmental Laws'},{id:4,name:'Pollution'}] },
+  { id:'hindi-grammar',        name:'Hindi Grammar (व्याकरण)',   icon:'📝', section:'gs',
+    topics:[{id:0,name:'वर्णमाला & संधि'},{id:1,name:'समास'},{id:2,name:'कारक & विभक्ति'},
+            {id:3,name:'काल & क्रिया'},{id:4,name:'अलंकार'},{id:5,name:'रस & छंद'},
+            {id:6,name:'मुहावरे & लोकोक्तियाँ'}] },
+  { id:'hindi-sahitya',        name:'Hindi Literature (साहित्य)', icon:'📚', section:'gs',
+    topics:[{id:0,name:'भक्तिकाल'},{id:1,name:'रीतिकाल'},{id:2,name:'आधुनिककाल'},
+            {id:3,name:'कवि परिचय'},{id:4,name:'गद्य साहित्य'}] },
+  { id:'reasoning',            name:'Logical Reasoning',        icon:'🧠', section:'gs',
+    topics:[{id:0,name:'Analogy'},{id:1,name:'Series'},{id:2,name:'Coding-Decoding'},
+            {id:3,name:'Blood Relations'},{id:4,name:'Direction Sense'},{id:5,name:'Syllogism'},
+            {id:6,name:'Puzzles & Seating'}] },
+  { id:'quantitative-aptitude',name:'Quantitative Aptitude',    icon:'🔢', section:'gs',
+    topics:[{id:0,name:'Number System'},{id:1,name:'Percentage & Ratio'},{id:2,name:'Profit & Loss'},
+            {id:3,name:'Time & Work'},{id:4,name:'Speed & Distance'},{id:5,name:'Algebra & Geometry'},
+            {id:6,name:'Data Interpretation'}] },
+  { id:'english',              name:'English Language',          icon:'🔤', section:'gs',
+    topics:[{id:0,name:'Grammar Rules'},{id:1,name:'Vocabulary'},{id:2,name:'Comprehension'},
+            {id:3,name:'Error Spotting'},{id:4,name:'Idioms & Phrases'}] },
 ];
 
 // ── State ─────────────────────────────────────────────────────────────────────
@@ -401,23 +451,43 @@ function setupTabs() {
 }
 
 // ── Subject Grid ──────────────────────────────────────────────────────────────
+let notesFilterSection = 'all';
+
 function buildSubjectGrid() {
   const grid = document.getElementById('subjGrid');
   grid.innerHTML = '';
-  SUBJECTS.forEach(s => {
+  const filtered = notesFilterSection === 'all' ? SUBJECTS : SUBJECTS.filter(s => (s.section || 'civil') === notesFilterSection);
+  filtered.forEach(s => {
     const card = document.createElement('div');
     card.className = 'subj-card';
     card.dataset.id = s.id;
     const hasNote = existingInFS[s.id];
+    const sec = s.section || 'civil';
+    const secBadge = sec === 'gs'
+      ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.3)">GS</span>'
+      : '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.3)">Civil</span>';
     card.innerHTML = `
       <div class="subj-name">${s.icon} ${s.name}</div>
-      <div class="subj-id">${s.id}</div>
+      <div class="subj-id">${s.id} ${secBadge}</div>
       <span class="subj-badge ${hasNote ? 'badge-has' : 'badge-empty'}">${hasNote ? '✓ Has Notes' : 'No Notes'}</span>
     `;
     card.addEventListener('click', () => selectSubject(s));
     grid.appendChild(card);
   });
 }
+
+// Section filter click handler
+document.getElementById('notesSectionFilter').addEventListener('click', e => {
+  const btn = e.target.closest('[data-sec]');
+  if (!btn) return;
+  notesFilterSection = btn.dataset.sec;
+  document.querySelectorAll('#notesSectionFilter .sec-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.sec === notesFilterSection);
+    b.style.background = b.dataset.sec === notesFilterSection ? '#1e293b' : 'transparent';
+    b.style.color = b.dataset.sec === notesFilterSection ? '#e2e8f0' : '#94a3b8';
+  });
+  buildSubjectGrid();
+});
 
 function selectSubject(s) {
   selectedSubj = s;
