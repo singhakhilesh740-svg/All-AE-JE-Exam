@@ -525,12 +525,19 @@ function selectSubject(s) {
 async function checkExistingNotes() {
   try {
     const results = await Promise.all(SUBJECTS.map(async s => {
-      const ref = doc(db, 'notes', s.id);
-      const snap = await getDoc(ref);
-      return { id: s.id, exists: snap.exists() };
+      try {
+        const ref = doc(db, 'notes', s.id);
+        const snap = await getDoc(ref);
+        return { id: s.id, exists: snap.exists() };
+      } catch(e) {
+        console.warn(`checkExistingNotes: error for ${s.id}:`, e.message);
+        return { id: s.id, exists: false };
+      }
     }));
     results.forEach(r => existingInFS[r.id] = r.exists);
-    buildSubjectGrid();   // re-render with badges
+    const found = results.filter(r => r.exists).length;
+    console.log(`checkExistingNotes: ${found}/${SUBJECTS.length} subjects have notes in Firestore`);
+    buildSubjectGrid();
   } catch(e) {
     console.error('checkExistingNotes:', e);
   }
@@ -675,34 +682,44 @@ let editingCardRef  = null;   // { sectionIdx, cardIdx } for modal
 
 document.getElementById('refreshNotesBtn').addEventListener('click', async () => {
   const list = document.getElementById('notesList');
-  list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:10px">Loading...</div>';
+  list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:10px">Loading all subjects...</div>';
   await checkExistingNotes();
-  const existing = SUBJECTS.filter(s => existingInFS[s.id]);
-  if (!existing.length) {
-    list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:10px">No notes found in Firestore. Use Migrate tab to push existing JSON notes.</div>';
-    return;
-  }
+
   list.innerHTML = '';
-  for (const s of existing) {
-    try {
-      const snap = await getDoc(doc(db, 'notes', s.id));
-      const d = snap.data();
-      const sec = s.section || 'civil';
-      const secBadge = sec === 'gs' ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.3);margin-left:6px">GS</span>'
-        : sec === 'pcb' ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(16,185,129,.12);color:#6ee7b7;border:1px solid rgba(16,185,129,.3);margin-left:6px">PCB</span>'
-        : '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.3);margin-left:6px">Civil</span>';
+  for (const s of SUBJECTS) {
+    const hasNotes = existingInFS[s.id];
+    const sec = s.section || 'civil';
+    const secBadge = sec === 'gs' ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.3);margin-left:6px">GS</span>'
+      : sec === 'pcb' ? '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(16,185,129,.12);color:#6ee7b7;border:1px solid rgba(16,185,129,.3);margin-left:6px">PCB</span>'
+      : '<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.3);margin-left:6px">Civil</span>';
+
+    if (hasNotes) {
+      try {
+        const snap = await getDoc(doc(db, 'notes', s.id));
+        const d = snap.data() || {};
+        const row = document.createElement('div');
+        row.className = 'notes-row';
+        row.innerHTML = `
+          <div class="notes-row-info">
+            <div class="notes-row-subj">${s.icon} ${s.name} ${secBadge}</div>
+            <div class="notes-row-meta">${d.totalSections||0} sections · ${d.totalCards||0} cards · ${(d.updatedAt||'').substring(0,10)} by ${d.updatedBy||'?'}</div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="btn-blue" style="font-size:11px;padding:5px 10px" onclick="openSubjectEditor('${s.id}')">✏️ Edit</button>
+          </div>`;
+        list.appendChild(row);
+      } catch(e) { console.error(e); }
+    } else {
       const row = document.createElement('div');
       row.className = 'notes-row';
+      row.style.opacity = '0.5';
       row.innerHTML = `
         <div class="notes-row-info">
           <div class="notes-row-subj">${s.icon} ${s.name} ${secBadge}</div>
-          <div class="notes-row-meta">${d.totalSections||0} sections · ${d.totalCards||0} cards · ${(d.updatedAt||'').substring(0,10)} by ${d.updatedBy||'?'}</div>
-        </div>
-        <div style="display:flex;gap:6px">
-          <button class="btn-blue" style="font-size:11px;padding:5px 10px" onclick="openSubjectEditor('${s.id}')">✏️ Edit</button>
+          <div class="notes-row-meta" style="color:#64748b">No notes in Firestore yet</div>
         </div>`;
       list.appendChild(row);
-    } catch(e) { console.error(e); }
+    }
   }
 });
 
