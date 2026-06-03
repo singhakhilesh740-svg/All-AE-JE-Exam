@@ -1,0 +1,3481 @@
+{
+  "unit1": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "WATER QUALITY PARAMETERS"
+      },
+      {
+        "id": 1,
+        "name": "SOURCES, QUANTITY & POPULATION FORECASTING"
+      },
+      {
+        "id": 2,
+        "name": "WATER TREATMENT PROCESSES"
+      },
+      {
+        "id": 3,
+        "name": "DISTRIBUTION SYSTEM"
+      },
+      {
+        "id": 4,
+        "name": "GATE ES 2026 ADDITIONS (Purple Section)"
+      },
+      {
+        "id": 5,
+        "name": "KEY FORMULAE & EXAM STRATEGY"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "WATER QUALITY PARAMETERS",
+        "cards": [
+          {
+            "heading": "1.1 PHYSICAL PARAMETERS",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 CHEMICAL PARAMETERS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 BIOLOGICAL PARAMETERS",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.4 IS 10500:2012 vs WHO GUIDELINES",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "SOURCES, QUANTITY & POPULATION FORECASTING",
+        "cards": [
+          {
+            "heading": "2.1 SURFACE WATER vs GROUNDWATER SOURCES",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.2 POPULATION FORECASTING METHODS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.3 PER CAPITA DEMAND & VARIATIONS (CPHEEO)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "2.4 DESIGN PERIOD & FIRE DEMAND",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "WATER TREATMENT PROCESSES",
+        "cards": [
+          {
+            "heading": "3.1 SCREENING & PLAIN SEDIMENTATION",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 COAGULATION & FLOCCULATION",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.3 FILTRATION (SSF, RSF, Pressure Filter)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.4 BACKWASHING & FILTER RUNS",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "3.5 DISINFECTION (Chlorination, Ozone, UV)",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "3.6 SOFTENING (Lime-Soda, Zeolite, Ion Exchange)",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "3.7 AERATION & IRON/MANGANESE REMOVAL",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.8 FLUORIDATION & DEFLUORIDATION",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.9 DESALINATION (RO, Electrodialysis)",
+            "color": "purple",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "DISTRIBUTION SYSTEM",
+        "cards": [
+          {
+            "heading": "4.1 PIPE NETWORKS & HARDY CROSS METHOD",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 SERVICE RESERVOIRS (ESR & GLSR)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 VALVES, METERS & HYDRANTS",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 LEAKAGE DETECTION & NRW",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "GATE ES 2026 ADDITIONS (Purple Section)",
+        "cards": [
+          {
+            "heading": "5.1 HYDROLOGICAL CYCLE & WATER BALANCE",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "5.2 GROUNDWATER HYDRAULICS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "5.3 OXYGEN SAG CURVE (Streeter-Phelps)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "5.4 EUTROPHICATION & LAKE STRATIFICATION",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "5.5 REACTOR DESIGN & KINETICS",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "5.6 ENVIRONMENTAL HYDRAULICS",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      },
+      {
+        "topic_name": "KEY FORMULAE & EXAM STRATEGY",
+        "cards": [
+          {
+            "heading": "TOP 15 FORMULAE TO MEMORISE:",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "HIGHEST PROBABILITY QUESTIONS (Memorise These Topics):",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS (Important but Less Frequent):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "GATE ES ADDITIONS (High Weight in GATE, Skip if UPPCB-only):",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "MUST-MEMORISE STANDARDS SUMMARY (IS 10500:2012):",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 5
+      }
+    ]
+  },
+  "unit2": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "SEWAGE CHARACTERISTICS"
+      },
+      {
+        "id": 1,
+        "name": "SEWER SYSTEM DESIGN"
+      },
+      {
+        "id": 2,
+        "name": "WASTEWATER TREATMENT PROCESSES"
+      },
+      {
+        "id": 3,
+        "name": "SLUDGE TREATMENT & DISPOSAL"
+      },
+      {
+        "id": 4,
+        "name": "EFFLUENT STANDARDS & INDUSTRIAL WASTEWATER"
+      },
+      {
+        "id": 5,
+        "name": "HIGH-YIELD MCQ REVISION LIST"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "SEWAGE CHARACTERISTICS",
+        "cards": [
+          {
+            "heading": "1.1 PHYSICAL CHARACTERISTICS",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 CHEMICAL OXYGEN DEMAND (COD) & BOD & TOC",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 BOD KINETICS (First-order)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.4 BOD TEST PROCEDURE (IS 3025 / APHA 5210)",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "1.5 NITROGEN FORMS IN WASTEWATER",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "1.6 PHOSPHORUS IN WASTEWATER",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "SEWER SYSTEM DESIGN",
+        "cards": [
+          {
+            "heading": "2.1 TYPES OF SEWER SYSTEMS",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.2 SEWAGE FLOW ESTIMATION",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.3 HYDRAULIC DESIGN — MANNING'S EQUATION",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "2.4 SELF-CLEANSING VELOCITY (SCV)",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "2.5 SEWER APPURTENANCES",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "2.6 PUMPING STATIONS",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "WASTEWATER TREATMENT PROCESSES",
+        "cards": [
+          {
+            "heading": "3.1 PRELIMINARY TREATMENT",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 PRIMARY SEDIMENTATION",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.3 ACTIVATED SLUDGE PROCESS (ASP)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.4 VARIATIONS OF ACTIVATED SLUDGE",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "3.5 OXYGEN & POWER REQUIREMENT",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "3.6 TRICKLING FILTER (TF)",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "3.7 STABILISATION PONDS (WSP)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.8 ROTATING BIOLOGICAL CONTACTOR (RBC)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.9 UPFLOW ANAEROBIC SLUDGE BLANKET (UASB)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.10 TERTIARY TREATMENT",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "3.11 DISINFECTION",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "SLUDGE TREATMENT & DISPOSAL",
+        "cards": [
+          {
+            "heading": "4.1 SLUDGE CHARACTERISTICS",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 THICKENING",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 DIGESTION",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 DEWATERING",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "4.5 SLUDGE DISPOSAL",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "EFFLUENT STANDARDS & INDUSTRIAL WASTEWATER",
+        "cards": [
+          {
+            "heading": "5.1 CPCB GENERAL EFFLUENT STANDARDS (Schedule VI, E(P) Rules 1986)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "5.2 STP EFFLUENT STANDARDS (NGT-revised / MoEFCC 2017)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "5.3 INDUSTRIAL-SPECIFIC STANDARDS (examples)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "5.4 ZERO LIQUID DISCHARGE (ZLD)",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "5.5 CETP (Common Effluent Treatment Plant)",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      },
+      {
+        "topic_name": "HIGH-YIELD MCQ REVISION LIST",
+        "cards": [
+          {
+            "heading": "MUST-KNOW FACTS (High Probability Qs):",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS:",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "GATE ES ADDITIONS (High Weight in GATE):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "MUST-MEMORISE STANDARDS SUMMARY (CPCB Inland Discharge):",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 5
+      }
+    ]
+  },
+  "unit3": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "FUNDAMENTALS OF AIR POLLUTION"
+      },
+      {
+        "id": 1,
+        "name": "SPECIFIC POLLUTANTS & HEALTH EFFECTS"
+      },
+      {
+        "id": 2,
+        "name": "METEOROLOGY & DISPERSION"
+      },
+      {
+        "id": 3,
+        "name": "AIR POLLUTION CONTROL EQUIPMENT"
+      },
+      {
+        "id": 4,
+        "name": "STANDARDS & MONITORING"
+      },
+      {
+        "id": 5,
+        "name": "HIGH-YIELD MCQ REVISION LIST"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "FUNDAMENTALS OF AIR POLLUTION",
+        "cards": [
+          {
+            "heading": "1.1 STRUCTURE OF ATMOSPHERE",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 CLASSIFICATION OF POLLUTANTS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 PARTICULATE MATTER CLASSIFICATION",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.4 SOURCES OF POLLUTION",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "SPECIFIC POLLUTANTS & HEALTH EFFECTS",
+        "cards": [
+          {
+            "heading": "2.1 PARTICULATE MATTER (PM)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.2 SULPHUR DIOXIDE (SO₂)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.3 OXIDES OF NITROGEN (NOₓ)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "2.4 CARBON MONOXIDE (CO)",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "2.5 VOCs & HYDROCARBONS",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "2.6 LEAD (Pb)",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "2.7 GHGs & GLOBAL WARMING POTENTIAL (GWP, 100-yr, IPCC AR6)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.8 ACID RAIN",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.9 PHOTOCHEMICAL SMOG",
+            "color": "purple",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "METEOROLOGY & DISPERSION",
+        "cards": [
+          {
+            "heading": "3.1 LAPSE RATES & STABILITY",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 PLUME BEHAVIOUR",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.3 PASQUILL STABILITY CLASSES",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.4 INVERSIONS & MIXING HEIGHT",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "3.5 GAUSSIAN PLUME MODEL",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "3.6 PLUME RISE — HOLLAND'S FORMULA",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "3.7 WIND ROSE DIAGRAM",
+            "color": "blue",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "AIR POLLUTION CONTROL EQUIPMENT",
+        "cards": [
+          {
+            "heading": "4.1 GRAVITY SETTLING CHAMBER",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 CYCLONE SEPARATOR",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 ELECTROSTATIC PRECIPITATOR (ESP)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 FABRIC FILTER / BAG HOUSE",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "4.5 WET SCRUBBERS",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "4.6 COMPARISON OF PM CONTROL EQUIPMENT",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "4.7 GASEOUS POLLUTANT CONTROL",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.8 FLUE GAS DESULPHURISATION (FGD)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.9 NOₓ CONTROL",
+            "color": "purple",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "STANDARDS & MONITORING",
+        "cards": [
+          {
+            "heading": "5.1 NAAQS 2009 (MoEFCC, India)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "5.2 AIR QUALITY INDEX (AQI)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "5.3 BS-VI VEHICLE EMISSION NORMS (April 2020)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "5.4 CPCB STACK EMISSION STANDARDS (examples)",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "5.5 MONITORING NETWORKS",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "5.6 AIR MONITORING INSTRUMENTS",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      },
+      {
+        "topic_name": "HIGH-YIELD MCQ REVISION LIST",
+        "cards": [
+          {
+            "heading": "MUST-KNOW FACTS (High Probability Qs):",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS:",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "GATE ES ADDITIONS (High Weight in GATE):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "MUST-MEMORISE STANDARDS SUMMARY (NAAQS 2009 India):",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 5
+      }
+    ]
+  },
+  "unit4": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "MUNICIPAL SOLID WASTE (MSW)"
+      },
+      {
+        "id": 1,
+        "name": "COLLECTION & TRANSPORT"
+      },
+      {
+        "id": 2,
+        "name": "TREATMENT & DISPOSAL"
+      },
+      {
+        "id": 3,
+        "name": "HAZARDOUS WASTE"
+      },
+      {
+        "id": 4,
+        "name": "BIO-MEDICAL WASTE (BMW)"
+      },
+      {
+        "id": 5,
+        "name": "E-WASTE & PLASTIC WASTE"
+      },
+      {
+        "id": 6,
+        "name": "HIGH-YIELD MCQ REVISION LIST"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "MUNICIPAL SOLID WASTE (MSW)",
+        "cards": [
+          {
+            "heading": "1.1 DEFINITION & SOURCES",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 COMPOSITION OF INDIAN MSW",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 CHARACTERISATION",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.4 SWM RULES 2016 — KEY PROVISIONS",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "COLLECTION & TRANSPORT",
+        "cards": [
+          {
+            "heading": "2.1 COLLECTION SYSTEMS",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.2 ROUTE OPTIMISATION",
+            "color": "green",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "TREATMENT & DISPOSAL",
+        "cards": [
+          {
+            "heading": "3.1 COMPOSTING",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 TYPES OF COMPOSTING",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.3 ANAEROBIC DIGESTION (BIOMETHANATION) OF MSW",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.4 INCINERATION",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "3.5 REFUSE-DERIVED FUEL (RDF)",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "3.6 MATERIALS RECOVERY FACILITY (MRF)",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "3.7 SANITARY LANDFILL",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.8 LEACHATE",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.9 LANDFILL GAS (LFG)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.10 WASTE-TO-ENERGY (WtE)",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "HAZARDOUS WASTE",
+        "cards": [
+          {
+            "heading": "4.1 DEFINITION & CLASSIFICATION",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 COMMON HAZARDOUS WASTES IN INDIA",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 BASEL CONVENTION (1989; in force 1992)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 HAZARDOUS WASTE TREATMENT & DISPOSAL",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "4.5 SECURE LANDFILL (HW LANDFILL) & TSDF",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "BIO-MEDICAL WASTE (BMW)",
+        "cards": [
+          {
+            "heading": "5.1 BMW DEFINITION & CATEGORIES",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "5.2 COLOUR CODING (BMW Rules 2016 — 4 categories)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "5.3 BMW TREATMENT TECHNOLOGIES",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "5.4 BMW EMISSION STANDARDS (Incinerator)",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      },
+      {
+        "topic_name": "E-WASTE & PLASTIC WASTE",
+        "cards": [
+          {
+            "heading": "6.1 E-WASTE (MANAGEMENT) RULES 2022",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "6.2 PLASTIC WASTE MANAGEMENT RULES 2016 (amended 2021, 2022)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "6.3 C&D WASTE MANAGEMENT RULES 2016",
+            "color": "purple",
+            "points": []
+          }
+        ],
+        "topic_id": 5
+      },
+      {
+        "topic_name": "HIGH-YIELD MCQ REVISION LIST",
+        "cards": [
+          {
+            "heading": "MUST-KNOW FACTS (High Probability Qs):",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS:",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "GATE ES ADDITIONS (High Weight in GATE):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "MUST-MEMORISE STANDARDS & RULES SUMMARY:",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 6
+      }
+    ]
+  },
+  "unit5": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "CONSTITUTIONAL PROVISIONS"
+      },
+      {
+        "id": 1,
+        "name": "KEY ENVIRONMENTAL ACTS"
+      },
+      {
+        "id": 2,
+        "name": "RULES & NOTIFICATIONS"
+      },
+      {
+        "id": 3,
+        "name": "INTERNATIONAL CONVENTIONS"
+      },
+      {
+        "id": 4,
+        "name": "KEY INSTITUTIONS"
+      },
+      {
+        "id": 5,
+        "name": "HIGH-YIELD MCQ REVISION LIST"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "CONSTITUTIONAL PROVISIONS",
+        "cards": [
+          {
+            "heading": "1.1 KEY ARTICLES",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 SEVENTH SCHEDULE — DIVISION OF SUBJECTS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 42ND AMENDMENT (1976) — ENVIRONMENT-RELATED CHANGES",
+            "color": "purple",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "KEY ENVIRONMENTAL ACTS",
+        "cards": [
+          {
+            "heading": "2.1 WATER (PREVENTION & CONTROL OF POLLUTION) ACT, 1974",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.2 WATER (PREVENTION & CONTROL OF POLLUTION) CESS ACT, 1977",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.3 AIR (PREVENTION & CONTROL OF POLLUTION) ACT, 1981",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "2.4 ENVIRONMENT (PROTECTION) ACT, 1986 [\"UMBRELLA ACT\"]",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "2.5 WILDLIFE (PROTECTION) ACT, 1972",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "2.6 FOREST (CONSERVATION) ACT, 1980",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "2.7 BIOLOGICAL DIVERSITY ACT, 2002",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.8 NATIONAL GREEN TRIBUNAL (NGT) ACT, 2010",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.9 PUBLIC LIABILITY INSURANCE (PLI) ACT, 1991",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "2.10 OTHER KEY LAWS (BRIEF)",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "RULES & NOTIFICATIONS",
+        "cards": [
+          {
+            "heading": "3.1 EIA NOTIFICATION 2006",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 CRZ NOTIFICATION 2019",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.3 NOISE POLLUTION (REGULATION & CONTROL) RULES, 2000",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.4 OZONE DEPLETING SUBSTANCES (ODS) RULES, 2000",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "3.5 WETLAND (CONSERVATION & MANAGEMENT) RULES, 2017",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "INTERNATIONAL CONVENTIONS",
+        "cards": [
+          {
+            "heading": "4.1 MAJOR CONVENTIONS — TIMELINE",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 STOCKHOLM CONFERENCE 1972 & FOLLOW-UP",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 CLIMATE — UNFCCC, KYOTO, PARIS",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 OZONE — VIENNA, MONTREAL, KIGALI",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "4.5 BIODIVERSITY — CBD, NAGOYA, CARTAGENA",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "4.6 CITES (1973, in force 1975)",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "4.7 BASEL, ROTTERDAM, STOCKHOLM (BRS) \"Chemical Conventions\"",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.8 RAMSAR & OTHER",
+            "color": "green",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "KEY INSTITUTIONS",
+        "cards": [
+          {
+            "heading": "5.1 REGULATORY BODIES",
+            "color": "blue",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      },
+      {
+        "topic_name": "HIGH-YIELD MCQ REVISION LIST",
+        "cards": [
+          {
+            "heading": "MUST-KNOW FACTS (High Probability Qs):",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS:",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "GATE ES ADDITIONS (High Weight in GATE):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "MUST-MEMORISE SUMMARY (LAWS, CONVENTIONS & PRINCIPLES):",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 5
+      }
+    ]
+  },
+  "unit6": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "EIA — CONCEPT, HISTORY & PROCESS"
+      },
+      {
+        "id": 1,
+        "name": "ENVIRONMENTAL MANAGEMENT SYSTEMS (EMS)"
+      },
+      {
+        "id": 2,
+        "name": "ENVIRONMENTAL INDICES"
+      },
+      {
+        "id": 3,
+        "name": "CSR, EPR & GREEN INITIATIVES"
+      },
+      {
+        "id": 4,
+        "name": "HIGH-YIELD MCQ REVISION LIST"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "EIA — CONCEPT, HISTORY & PROCESS",
+        "cards": [
+          {
+            "heading": "1.1 DEFINITION & OBJECTIVES",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 HISTORICAL EVOLUTION",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 EIA NOTIFICATION 2006 — STRUCTURE",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.4 EIA PROCESS — 4 STAGES",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "1.5 SCREENING DETAILS",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "1.6 SCOPING — TERMS OF REFERENCE (ToR)",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "1.7 BASELINE DATA & IMPACT PREDICTION",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.8 IMPACT PREDICTION METHODS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.9 EIS & EMP",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.10 PUBLIC CONSULTATION",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "1.11 APPRAISAL & EC VALIDITY",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "ENVIRONMENTAL MANAGEMENT SYSTEMS (EMS)",
+        "cards": [
+          {
+            "heading": "2.1 ISO 14000 SERIES — OVERVIEW",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.2 ISO 14001:2015 — EMS REQUIREMENTS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.3 ENVIRONMENTAL ASPECT vs IMPACT",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "2.4 ENVIRONMENTAL AUDIT",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "2.5 BENEFITS & LIMITATIONS OF EMS",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "ENVIRONMENTAL INDICES",
+        "cards": [
+          {
+            "heading": "3.1 WATER QUALITY INDEX (WQI)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 AIR QUALITY INDEX (AQI) — INDIA",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.3 ECOLOGICAL FOOTPRINT & CARRYING CAPACITY",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.4 OTHER ENVIRONMENTAL INDICES",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "CSR, EPR & GREEN INITIATIVES",
+        "cards": [
+          {
+            "heading": "4.1 CORPORATE SOCIAL RESPONSIBILITY (CSR)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 EXTENDED PRODUCER RESPONSIBILITY (EPR)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 GREEN BUILDING RATING SYSTEMS",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 CARBON FOOTPRINT & SCOPE EMISSIONS (GHG PROTOCOL)",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "4.5 ECO-LABELLING (ISO 14020 series)",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "4.6 INDIAN GREEN POLICY INITIATIVES",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "HIGH-YIELD MCQ REVISION LIST",
+        "cards": [
+          {
+            "heading": "MUST-KNOW FACTS (High Probability Qs):",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS:",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "GATE ES ADDITIONS (High Weight in GATE):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "MUST-MEMORISE SUMMARY (UNIT 6):",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      }
+    ]
+  },
+  "unit7": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "SOUND & NOISE BASICS"
+      },
+      {
+        "id": 1,
+        "name": "MUST-MEMORISE STANDARDS & VALUES"
+      },
+      {
+        "id": 2,
+        "name": "NOISE REDUCTION QUICK TIPS"
+      },
+      {
+        "id": 3,
+        "name": "RADIATION QUICK FACTS"
+      },
+      {
+        "id": 4,
+        "name": "EXAM STRATEGIES"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "SOUND & NOISE BASICS",
+        "cards": [
+          {
+            "heading": "SOUND & NOISE BASICS",
+            "color": "blue",
+            "points": [
+              "Acoustic waves causing vibration in air, measurable and predictable",
+              "Unwanted sound that is objectionable, annoying, or harmful to health",
+              "20 Hz–20 kHz (human hearing range)",
+              "<20 Hz (ex: earthquakes, volcano rumble)",
+              ">20 kHz (ex: bats, medical ultrasound)",
+              "Quantifies acoustic pressure relative to reference pressure (20 µPa)",
+              "Human ear is not equally sensitive to all frequencies; we hear mid-frequencies (1–5 kHz) louder than very low or very high frequencies",
+              "Emphasizes frequencies 1–5 kHz; de-emphasizes <500 Hz and >6 kHz"
+            ],
+            "alert": "SPL is logarithmic, not linear. Every 10 dB increase = 10× sound pressure; 3 dB ≈ just noticeable change"
+          },
+          {
+            "heading": "SOUND & NOISE BASICS (contd.)",
+            "color": "green",
+            "points": [
+              "dBA or LAeq (for energy-equivalent level)",
+              "80 dB @ 100 Hz sounds quieter than 80 dB @ 1 kHz in real life; A-weighting captures this",
+              "where i = measurement intervals; T = total duration",
+              "I ∝ 1/r²",
+              "For every doubling of distance, SPL drops ~6 dB",
+              "80 dB @ 10 m → 74 dB @ 20 m (6 dB drop)",
+              "Textile mills (100 dB)",
+              "Steel plants (90–100 dB)"
+            ]
+          },
+          {
+            "heading": "SOUND & NOISE BASICS (contd.)",
+            "color": "purple",
+            "points": [
+              "Mining & quarrying (85–95 dB)",
+              "Chemical factories (80–95 dB)",
+              "Road (70–85 dB)",
+              "Rail (80–100 dB)",
+              "Airport (140–180 dB at source)",
+              "Heavy vehicles (80–90 dB)",
+              "Demolition (110–130 dB)",
+              "Pile driving (100–110 dB)"
+            ]
+          },
+          {
+            "heading": "SOUND & NOISE BASICS (contd.)",
+            "color": "amber",
+            "points": [
+              "Concrete cutting (85–95 dB)",
+              "Drilling (80–90 dB)",
+              "NAMP (National Ambient Monitoring Programme) uses CAAQMS-type networks",
+              "Fine up to ₹1 lakh, imprisonment up to 3 months, or both (Environment Act 1986)",
+              "If industrial zone SPL (75 dB) measured in residential area (limit 55 dB), prosecution under Water Act/EP Act",
+              "Restricted to 6 AM–10 PM in residential areas (further restricted in silence zones)",
+              "Areas within 100 m of hospitals, schools, courts, senior citizen homes—no amplified music, DJs, horn honking allowed any time",
+              "Temporary exemptions may be granted for festivals/cultural events"
+            ]
+          },
+          {
+            "heading": "SOUND & NOISE BASICS (contd.)",
+            "color": "cyan",
+            "points": [
+              "Events must NOT operate 10 PM–6 AM in residential areas",
+              "SPL <75 dBA still enforced in commercial zones during events",
+              "Zero tolerance in silence zones (hospitals, courts) even during festivals",
+              "Remove or shut down source (ideal but often impractical)",
+              "Replace loud equipment with quieter alternatives (ex: electric vehicles vs IC engines)",
+              "Mufflers, silencers, low-vibration machines",
+              "Barriers, distance, absorption (most practical for existing sources)",
+              "Ear plugs, earmuffs (last resort; personal responsibility)"
+            ]
+          },
+          {
+            "heading": "SOUND & NOISE BASICS (contd.)",
+            "color": "red",
+            "points": [
+              "Actual SPL reduction achieved by a barrier in real environment (accounts for diffraction, ground effects); typically 5–10 dBA less than TL",
+              "NRR 20–33 dB; foam must be compressed, inserted, held in place 10 sec; single-use",
+              "NRR 20–30 dB; reusable; less effective if hair/glasses on seal surface",
+              "NRR ≈ higher NRR + 5 dB (not additive)",
+              "NRR 20–25 dB; intermediate between plugs and muffs",
+              "Higher comfort, NRR 20–30 dB; expensive",
+              "Attenuation in dB under ideal lab conditions; real-world reduction is 50–75% of stated NRR (due to improper insertion, movement, etc.)",
+              "Accounts for type of radiation. Ex: Alpha has QF=20 (most damaging if ingested); Beta/Gamma QF=1"
+            ]
+          },
+          {
+            "heading": "SOUND & NOISE BASICS (contd.)",
+            "color": "blue",
+            "points": [
+              "Power absorbed per unit mass (W/kg). Mobile phones limited to 2 W/kg (ICNIRP); India uses 2 W/kg for head/trunk",
+              "Central legislation; authorizes production, use, possession of radioactive materials in India",
+              "Statutory body under DAE; sets radiation safety codes, issues licenses, inspects facilities, prosecutes violations",
+              "Operates 24 reactors; generates 3.3% of India's electricity",
+              "R&D; manages waste, decommissioning",
+              "Prescribe dose limits, contamination levels, waste management protocols"
+            ]
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Formulas",
+            "color": "green",
+            "points": [],
+            "formulas": [
+              {
+                "label": "Formula",
+                "text": "where P = measured sound pressure (Pa) | P₀ = reference pressure (20 µPa)"
+              },
+              {
+                "label": "Formula",
+                "text": "Doubling barrier thickness increases TL by ~3 dB"
+              },
+              {
+                "label": "Formula",
+                "text": "Adding two equal SPLs increases by 3 dB. Two 80 dB sources = 83 dB (not 160!)"
+              },
+              {
+                "label": "@ 88 dB (3 dB higher), exposure time is HALF",
+                "text": "8 hr / 2 = 4 hr"
+              },
+              {
+                "label": "Formula",
+                "text": "Doubling mass → +3 dB TL. Doubling frequency → +6 dB TL"
+              }
+            ],
+            "alert": "High-yield topic for numericals. If a question gives SPL @ one distance, ask for SPL @ another—use inverse-square law."
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 1",
+            "color": "purple",
+            "points": [],
+            "table": {
+              "headers": [
+                "Term",
+                "Full Name",
+                "Definition & Use"
+              ],
+              "rows": [
+                [
+                  "Sound Pressure Level",
+                  "Instantaneous acoustic pressure; rarely used for environmental noise"
+                ],
+                [
+                  "Energy-Equivalent Level"
+                ],
+                [
+                  "Level Exceeded 10% of Time",
+                  "Sound level exceeded for 10% of measurement period (loud peaks); used for traffic noise"
+                ],
+                [
+                  "Level Exceeded 90% of Time",
+                  "Background/ambient level (quiet periods); 90% of time noise is above this level"
+                ],
+                [
+                  "Day-Night Level",
+                  "24-hr weighted level; nighttime (10 PM–6 AM) levels penalized +10 dB to account for sleep disruption"
+                ],
+                [
+                  "Nighttime Level",
+                  "Average level during night (10 PM–6 AM)"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 2",
+            "color": "amber",
+            "points": [],
+            "table": {
+              "headers": [
+                "Zone Type",
+                "Leq Daytime (6 AM–10 PM)",
+                "Leq Nighttime (10 PM–6 AM)",
+                "Land Use"
+              ],
+              "rows": [
+                [
+                  "Colonies, residential areas"
+                ],
+                [
+                  "Market areas, offices, shops"
+                ],
+                [
+                  "Factories, workshops, industrial estates"
+                ],
+                [
+                  "Hospitals, schools, senior citizen homes, courts"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 3",
+            "color": "cyan",
+            "points": [],
+            "table": {
+              "headers": [
+                "Technique",
+                "Mechanism",
+                "Reduction (dB)",
+                "Applications"
+              ],
+              "rows": [
+                [
+                  "Rigid box around source; sound trapped inside",
+                  "10–30 dBA",
+                  "Compressors, generators, diesel pumps"
+                ],
+                [
+                  "Absorptive material; expansion chambers",
+                  "10–20 dBA",
+                  "Vehicle exhaust, air compressor outlets"
+                ],
+                [
+                  "Viscoelastic coating on vibrating surfaces; energy dissipated as heat",
+                  "5–15 dBA",
+                  "Metal sheets, engine blocks, ductwork"
+                ],
+                [
+                  "Elastic supports (springs, rubber pads) decouple equipment from floor",
+                  "10–20 dBA",
+                  "Motors, pumps, compressors, machinery mounted on resilient pads"
+                ],
+                [
+                  "Dense, rigid walls block/reflect sound; gap reduces effectiveness",
+                  "5–15 dBA per barrier",
+                  "Highway noise barriers, factory perimeter walls"
+                ],
+                [
+                  "Porous materials (foam, mineral wool, fiberglass) convert sound to heat",
+                  "5–20 dBA",
+                  "Acoustic ceiling tiles, wall panels, pipe lagging"
+                ],
+                [
+                  "Inverse-square law: 6 dB per distance doubling",
+                  "6 dBA per 2× distance",
+                  "Urban planning, industrial zone designation"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 4",
+            "color": "red",
+            "points": [],
+            "table": {
+              "headers": [
+                "Daily Exposure Time",
+                "Max Permissible Level (dBA)",
+                "Notes"
+              ],
+              "rows": [
+                [
+                  "8 hours (40 hr/week)",
+                  "Safe daily limit; hearing protection required above this"
+                ],
+                [
+                  "4 hours",
+                  "Reduce exposure time by half = increase limit by 3 dB"
+                ],
+                [
+                  "2 hours",
+                  "Exchange rule: 3 dB for every 50% reduction in exposure"
+                ],
+                [
+                  "1 hour",
+                  "Short-term exposures"
+                ],
+                [
+                  "<15 min",
+                  "Very short exposures; cumulative hearing damage still possible"
+                ],
+                [
+                  "Peak/Impulse",
+                  "(gunfire, explosions, impact); risk of acoustic trauma"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 5",
+            "color": "blue",
+            "points": [],
+            "table": {
+              "headers": [
+                "Type",
+                "Energy",
+                "Examples",
+                "Effect on Matter"
+              ],
+              "rows": [
+                [
+                  ">10 eV (high)",
+                  "Alpha (α), Beta (β), Gamma (γ), X-rays, cosmic rays",
+                  "Knock electrons off atoms → ions; DNA damage; cancer risk"
+                ],
+                [
+                  "<10 eV (low)",
+                  "Radio, microwave, IR, visible, UV-A",
+                  "Heat or excite electrons; less cell damage than ionising"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 6",
+            "color": "green",
+            "points": [],
+            "table": {
+              "headers": [
+                "Radiation Type",
+                "Composition",
+                "Penetration",
+                "Shielding"
+              ],
+              "rows": [
+                [
+                  "Helium nucleus (2p + 2n)",
+                  "Paper/skin only",
+                  "Paper, clothing (easily stopped)"
+                ],
+                [
+                  "Electron or positron",
+                  "Plastic/aluminum",
+                  "Aluminum foil, acrylic (~1 cm)"
+                ],
+                [
+                  "Photon (electromagnetic wave)",
+                  "Lead/concrete (penetrating)",
+                  "Lead (5 cm), concrete (30 cm)"
+                ],
+                [
+                  "Photon (produced by electron collision)",
+                  "Lead/concrete",
+                  "Lead aprons, concrete walls"
+                ],
+                [
+                  "Uncharged particles",
+                  "Water/paraffin (highly penetrating)",
+                  "Hydrogenous material (water, paraffin)"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 7",
+            "color": "purple",
+            "points": [],
+            "table": {
+              "headers": [
+                "Unit",
+                "Full Name",
+                "Measures",
+                "SI Unit",
+                "Legacy Unit"
+              ],
+              "rows": [
+                [
+                  "Absorbed Dose",
+                  "Energy absorbed per unit mass (1 J/kg)",
+                  "100 Rad"
+                ],
+                [
+                  "Dose Equivalent",
+                  "Biological effect; accounts for radiation type quality factor (QF)",
+                  "100 Rem"
+                ],
+                [
+                  "Activity",
+                  "Decays per second (1 decay/s)",
+                  "1 Ci = 3.7×10¹⁰ Bq"
+                ],
+                [
+                  "Activity (Legacy)",
+                  "3.7×10¹⁰ decays/second",
+                  "—"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 8",
+            "color": "amber",
+            "points": [],
+            "table": {
+              "headers": [
+                "Category",
+                "Annual Limit (mSv)",
+                "Notes"
+              ],
+              "rows": [
+                [
+                  "Safe lifetime exposure without significant health risk"
+                ],
+                [
+                  "Annual limit for people working with radiation"
+                ],
+                [
+                  "(once declared)",
+                  "During pregnancy, limit reduces 10-fold to protect fetus"
+                ],
+                [
+                  "(whole body)",
+                  "Lethal within hours; multi-organ failure"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 9",
+            "color": "cyan",
+            "points": [],
+            "table": {
+              "headers": [
+                "Waste Class",
+                "Activity Level",
+                "Half-Life",
+                "Storage Duration"
+              ],
+              "rows": [
+                [
+                  "<1 Bq/g",
+                  "—",
+                  "No special storage; disposal as regular waste"
+                ],
+                [
+                  "1–10⁵ Bq/g",
+                  "Short-lived (<30 yr)",
+                  "6–10 years decay storage → shallow land burial"
+                ],
+                [
+                  "10⁵–10⁷ Bq/g",
+                  "Long-lived",
+                  "Concrete/bitumen matrix; stored 30–50 years"
+                ],
+                [
+                  ">10⁷ Bq/g",
+                  "Very long-lived (>1000 yr)",
+                  "Deep geological repository (India: BARC research)"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "SOUND & NOISE BASICS — Table 10",
+            "color": "red",
+            "points": [],
+            "table": {
+              "headers": [
+                "Type",
+                "Frequency Range",
+                "Health Effects",
+                "Sources"
+              ],
+              "rows": [
+                [
+                  "10–400 nm",
+                  "Skin cancer (melanoma), cataracts, immune suppression",
+                  "Sun, welding arcs, germicidal lamps"
+                ],
+                [
+                  "700 nm–1 mm",
+                  "Thermal burns, cataract (chronic exposure)",
+                  "Heat lamps, furnaces, welding"
+                ],
+                [
+                  "1 mm–1 m (~1–300 GHz)",
+                  "Dielectric heating; cataracts, reproductive effects (high exposure)",
+                  "Mobile towers, radar, microwave ovens"
+                ],
+                [
+                  "30 kHz–300 MHz",
+                  "Thermal effects (low); possible non-thermal effects under study",
+                  "Radio/TV broadcasting, wireless networks"
+                ],
+                [
+                  "Extremely Low Frequency (ELF) <300 Hz",
+                  "Childhood leukemia (disputed); neuro-behavioral effects",
+                  "Power lines, electrical appliances, transformers"
+                ]
+              ]
+            }
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "MUST-MEMORISE STANDARDS & VALUES",
+        "cards": [
+          {
+            "heading": "MUST-MEMORISE STANDARDS & VALUES — Reference Table",
+            "color": "blue",
+            "points": [],
+            "table": {
+              "headers": [
+                "Parameter",
+                "Value",
+                "Reference / Zone"
+              ],
+              "rows": [
+                [
+                  "6 AM–10 PM | Noise Rules 2000"
+                ],
+                [
+                  "10 PM–6 AM | Noise Rules 2000"
+                ],
+                [
+                  "6 AM–10 PM | Noise Rules 2000"
+                ],
+                [
+                  "10 PM–6 AM | Noise Rules 2000"
+                ],
+                [
+                  "6 AM–10 PM | Noise Rules 2000"
+                ],
+                [
+                  "10 PM–6 AM | Noise Rules 2000"
+                ],
+                [
+                  "Hospital/School/Court | Anytime 6 AM–10 PM"
+                ],
+                [
+                  "Hospital/School/Court | Anytime 10 PM–6 AM"
+                ],
+                [
+                  "Factories, construction; hearing protection req'd above"
+                ],
+                [
+                  "Gunfire, explosions; risk of acoustic trauma"
+                ],
+                [
+                  "AERB | General population"
+                ],
+                [
+                  "AERB | Radiation workers"
+                ],
+                [
+                  "Whole-body exposure; multi-organ failure"
+                ]
+              ]
+            }
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "NOISE REDUCTION QUICK TIPS",
+        "cards": [
+          {
+            "heading": "NOISE REDUCTION QUICK TIPS",
+            "color": "blue",
+            "points": [
+              "6 dB reduction per doubling of distance",
+              "Two equal sources = +3 dB (not 2×). Adding 10 sources ≈ +10 dB",
+              "10–30 dB reduction (most effective)",
+              "5–15 dB (depends on frequency & mass)",
+              "10–20 dB (typical for exhaust)",
+              "+3 dB → ÷2 time; −3 dB → ×2 time"
+            ]
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "RADIATION QUICK FACTS",
+        "cards": [
+          {
+            "heading": "RADIATION QUICK FACTS",
+            "color": "blue",
+            "points": [
+              "Stopped by paper; dangerous if ingested/inhaled (QF=20)",
+              "Stopped by aluminum; less damaging than alpha (QF=1)",
+              "Requires lead/concrete; most penetrating (QF=1)",
+              "Store 6–10 years → decay → regular waste",
+              "Deep geological storage required (thousands of years)",
+              "1 mSv/yr; Worker: 50 mSv/yr",
+              "2–3 mSv/yr (natural; varies by location)"
+            ]
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "EXAM STRATEGIES",
+        "cards": [
+          {
+            "heading": "EXAM STRATEGIES",
+            "color": "blue",
+            "points": [
+              "Memorise 4 zones + day/night splits. 80% of MCQs test standard matching.",
+              "Most common numerical. Practice 5 problems on distance-based SPL reduction.",
+              "Know the 10×log(n) rule for n identical sources.",
+              "85 dB safe for 8 hr; 3 dB rule for time reduction.",
+              "Distinguish Gray (absorbed), Sievert (effect), Becquerel (activity).",
+              "Radiation = federal (AERB); Noise = state (UPPCB). Different jurisdictions.",
+              "Know Enclosure > Barrier > Isolation > Absorption ranking for reduction."
+            ]
+          }
+        ],
+        "topic_id": 4
+      }
+    ]
+  },
+  "unit8": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "ECOSYSTEM CONCEPTS"
+      },
+      {
+        "id": 1,
+        "name": "TYPES OF ECOSYSTEMS"
+      },
+      {
+        "id": 2,
+        "name": "BIODIVERSITY"
+      },
+      {
+        "id": 3,
+        "name": "CLIMATE CHANGE & GLOBAL ISSUES"
+      },
+      {
+        "id": 4,
+        "name": "NATURAL RESOURCES"
+      },
+      {
+        "id": 5,
+        "name": "HIGH-YIELD MCQ REVISION LIST"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "ECOSYSTEM CONCEPTS",
+        "cards": [
+          {
+            "heading": "1.1 BASIC TERMS",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 STRUCTURE OF ECOSYSTEM",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 FOOD CHAIN, FOOD WEB & TROPHIC LEVELS",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.4 LINDEMANN'S 10% LAW (1942)",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "1.5 ECOLOGICAL PYRAMIDS",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "1.6 ECOSYSTEM PRODUCTIVITY",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "1.7 BIOGEOCHEMICAL CYCLES",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.7.1 CARBON CYCLE",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.7.2 NITROGEN CYCLE",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.7.3 PHOSPHORUS CYCLE",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "1.7.4 SULPHUR CYCLE",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "1.7.5 WATER (HYDROLOGICAL) CYCLE",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "TYPES OF ECOSYSTEMS",
+        "cards": [
+          {
+            "heading": "2.1 TERRESTRIAL ECOSYSTEMS",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.3 AQUATIC ECOSYSTEMS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.6 ECOLOGICAL SUCCESSION",
+            "color": "purple",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "BIODIVERSITY",
+        "cards": [
+          {
+            "heading": "3.1 LEVELS OF BIODIVERSITY",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 GLOBAL BIODIVERSITY HOTSPOTS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.3 IUCN RED LIST CATEGORIES (2001 system)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.4 BIODIVERSITY CONSERVATION — IN-SITU vs EX-SITU",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "3.5 BIOSPHERE RESERVES (BRs)",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "3.6 PROJECT TIGER & OTHER SPECIES PROGRAMMES",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "3.7 INVASIVE ALIEN SPECIES (IAS)",
+            "color": "blue",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "CLIMATE CHANGE & GLOBAL ISSUES",
+        "cards": [
+          {
+            "heading": "4.1 ENHANCED GREENHOUSE EFFECT",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 IPCC AR6 KEY FINDINGS (2021–22)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 CLIMATE CHANGE — INDIA SPECIFIC",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 ADAPTATION vs MITIGATION",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "4.5 CARBON SEQUESTRATION",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "NATURAL RESOURCES",
+        "cards": [
+          {
+            "heading": "5.1 CLASSIFICATION",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "5.2 FOREST RESOURCES — INDIA",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "5.3 WATER RESOURCES",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "5.4 SOIL RESOURCES",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "5.5 ENERGY RESOURCES",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "5.6 MINERAL RESOURCES",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      },
+      {
+        "topic_name": "HIGH-YIELD MCQ REVISION LIST",
+        "cards": [
+          {
+            "heading": "MUST-KNOW FACTS (High Probability Qs):",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS:",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "GATE ES ADDITIONS (High Weight in GATE):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "MUST-MEMORISE SUMMARY (UNIT 8):",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 5
+      }
+    ]
+  },
+  "unit9": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "SECTOR-SPECIFIC INDUSTRIAL POLLUTION"
+      },
+      {
+        "id": 1,
+        "name": "ZERO LIQUID DISCHARGE (ZLD)"
+      },
+      {
+        "id": 2,
+        "name": "COMMON EFFLUENT TREATMENT PLANT (CETP)"
+      },
+      {
+        "id": 3,
+        "name": "CLEANER PRODUCTION (CP) & END-OF-PIPE"
+      },
+      {
+        "id": 4,
+        "name": "GREEN CHEMISTRY & INDUSTRIAL ECOLOGY"
+      },
+      {
+        "id": 5,
+        "name": "CARBON TRADING & CDM"
+      },
+      {
+        "id": 6,
+        "name": "HIGH-YIELD MCQ REVISION LIST"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "SECTOR-SPECIFIC INDUSTRIAL POLLUTION",
+        "cards": [
+          {
+            "heading": "1.1 17 CATEGORIES OF HIGHLY POLLUTING INDUSTRIES (CPCB)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 PULP & PAPER INDUSTRY",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 LEATHER / TANNERY",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.4 TEXTILE INDUSTRY (DYEING & PROCESSING)",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "1.5 SUGAR & DISTILLERY",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "1.6 ELECTROPLATING & METAL FINISHING",
+            "color": "red",
+            "points": []
+          },
+          {
+            "heading": "1.7 THERMAL POWER PLANTS",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.8 CEMENT INDUSTRY",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.9 OTHER MAJOR SECTORS — QUICK REFERENCE",
+            "color": "purple",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "ZERO LIQUID DISCHARGE (ZLD)",
+        "cards": [
+          {
+            "heading": "2.1 ZLD CONCEPT",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.2 TYPICAL ZLD TRAIN",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.3 KEY UNIT OPERATIONS IN ZLD",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "2.4 ECONOMICS & CHALLENGES",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "COMMON EFFLUENT TREATMENT PLANT (CETP)",
+        "cards": [
+          {
+            "heading": "3.1 CETP CONCEPT",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 CETP DESIGN",
+            "color": "green",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "CLEANER PRODUCTION (CP) & END-OF-PIPE",
+        "cards": [
+          {
+            "heading": "4.1 CP — DEFINITION (UNEP, 1990)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 CP HIERARCHY (PREVENTION vs END-OF-PIPE)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 CP ASSESSMENT METHODOLOGY (UNEP/UNIDO 6 phases)",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 LIFE CYCLE ASSESSMENT (LCA) FOR INDUSTRIAL PRODUCTS",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "GREEN CHEMISTRY & INDUSTRIAL ECOLOGY",
+        "cards": [
+          {
+            "heading": "5.1 GREEN CHEMISTRY — 12 PRINCIPLES (Anastas & Warner, 1998)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "5.2 INDUSTRIAL ECOLOGY (IE)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "5.3 KALUNDBORG SYMBIOSIS (DENMARK) — CASE STUDY",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "5.4 OTHER IE CONCEPTS",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      },
+      {
+        "topic_name": "CARBON TRADING & CDM",
+        "cards": [
+          {
+            "heading": "6.1 KYOTO MECHANISMS & INDIA",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "6.2 PARIS AGREEMENT — ARTICLE 6 MECHANISMS (post-Kyoto)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "6.3 INDIAN CARBON MARKET — CCTS 2023",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "6.4 OTHER MARKET-BASED INSTRUMENTS",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 5
+      },
+      {
+        "topic_name": "HIGH-YIELD MCQ REVISION LIST",
+        "cards": [
+          {
+            "heading": "MUST-KNOW FACTS (High Probability Qs):",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS:",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "GATE ES ADDITIONS (Higher Weight in GATE):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "MUST-MEMORISE SUMMARY (UNIT 9):",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 6
+      }
+    ]
+  },
+  "unit10": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "WATER ANALYSIS METHODS"
+      },
+      {
+        "id": 1,
+        "name": "MICROBIOLOGICAL ANALYSIS"
+      },
+      {
+        "id": 2,
+        "name": "HEAVY METALS & ADVANCED ANALYSIS"
+      },
+      {
+        "id": 3,
+        "name": "AIR MONITORING METHODS"
+      },
+      {
+        "id": 4,
+        "name": "ENVIRONMENTAL CHEMISTRY FUNDAMENTALS"
+      },
+      {
+        "id": 5,
+        "name": "TOXICOLOGY & RISK ASSESSMENT"
+      },
+      {
+        "id": 6,
+        "name": "KEY STANDARDS & CRITICAL VALUES (MEMORY)"
+      },
+      {
+        "id": 7,
+        "name": "EXAM STRATEGY & HIGH-YIELD TOPICS"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "WATER ANALYSIS METHODS",
+        "cards": [
+          {
+            "heading": "1.1 DISSOLVED OXYGEN (DO) - WINKLER'S METHOD (Standard APHA)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "1.2 BIOCHEMICAL OXYGEN DEMAND (BOD5)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "1.3 CHEMICAL OXYGEN DEMAND (COD) - OPEN REFLUX DICHROMATE METHOD",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "1.4 HARDNESS: EDTA TITRATION",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "1.5 TURBIDITY, COLOUR, ODOUR, CHLORINE RESIDUAL",
+            "color": "cyan",
+            "points": []
+          },
+          {
+            "heading": "1.6 JAR TEST",
+            "color": "red",
+            "points": []
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "MICROBIOLOGICAL ANALYSIS",
+        "cards": [
+          {
+            "heading": "2.1 COLIFORM TESTING: MPN (Most Probable Number) METHOD",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "2.2 COLIFORM TESTING: MEMBRANE FILTER (MF) METHOD",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "2.3 THERMOTOLERANT (FECAL) COLIFORMS",
+            "color": "purple",
+            "points": []
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "HEAVY METALS & ADVANCED ANALYSIS",
+        "cards": [
+          {
+            "heading": "3.1 ATOMIC ABSORPTION SPECTROSCOPY (AAS)",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "3.2 ICP-OES (Inductively Coupled Plasma - Optical Emission Spectrometry)",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "3.3 FLUORIDE ANALYSIS: SPADNS METHOD",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "3.4 ARSENIC ANALYSIS (ppb Level)",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "AIR MONITORING METHODS",
+        "cards": [
+          {
+            "heading": "4.1 HIGH VOLUME SAMPLER (HVS) FOR PARTICULATE MATTER",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "4.2 SO₂ MEASUREMENT: WEST-GAEKE METHOD",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "4.3 NOx MEASUREMENT: CHEMILUMINESCENCE ANALYSER",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "4.4 CARBON MONOXIDE (CO): NDIR (Non-Dispersive Infrared) ANALYSER",
+            "color": "amber",
+            "points": []
+          },
+          {
+            "heading": "4.5 NAMP & CAAQMS MONITORING NETWORK",
+            "color": "cyan",
+            "points": []
+          }
+        ],
+        "topic_id": 3
+      },
+      {
+        "topic_name": "ENVIRONMENTAL CHEMISTRY FUNDAMENTALS",
+        "cards": [
+          {
+            "heading": "5.1 pH, ALKALINITY & BUFFER CAPACITY",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "5.2 REDOX POTENTIAL (ORP/Eh) & Eh-pH DIAGRAMS",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "5.3 BIOACCUMULATION & BIOMAGNIFICATION",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "5.4 PERSISTENCE & DEGRADATION PATHWAYS",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 4
+      },
+      {
+        "topic_name": "TOXICOLOGY & RISK ASSESSMENT",
+        "cards": [
+          {
+            "heading": "6.1 TOXICITY PARAMETERS: LD50, LC50, NOAEL, LOAEL, RfD",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "6.2 SYNERGISM VS ANTAGONISM",
+            "color": "green",
+            "points": []
+          }
+        ],
+        "topic_id": 5
+      },
+      {
+        "topic_name": "KEY STANDARDS & CRITICAL VALUES (MEMORY)",
+        "cards": [
+          {
+            "heading": "KEY STANDARDS & CRITICAL VALUES (MEMORY) — Reference Table",
+            "color": "blue",
+            "points": [],
+            "table": {
+              "headers": [
+                "Parameter",
+                "Standard / Limit",
+                "Regulation / Source"
+              ],
+              "rows": [
+                [
+                  "pH",
+                  "6.5-8.5",
+                  "Desirable & no relaxation"
+                ],
+                [
+                  "Turbidity",
+                  "1 NTU (des.); 5 NTU (perm.)",
+                  "Desirable 1, Permissible 5"
+                ],
+                [
+                  "Colour",
+                  "5 Hazen (des.); 15 Hazen (perm.)",
+                  "True colour units"
+                ],
+                [
+                  "Total Coliform",
+                  "ABSENT (0 MPN/100 mL)",
+                  "No relaxation - strict"
+                ],
+                [
+                  "Fecal Coliform / E. coli",
+                  "Shall not be detectable",
+                  "No relaxation"
+                ],
+                [
+                  "Free Chlorine Residual",
+                  "≥ 0.2 mg/L at consumer end",
+                  "Minimum for protection during distribution"
+                ],
+                [
+                  "Hardness (Total)",
+                  "200 mg/L (des.); 600 mg/L (perm.)",
+                  "As CaCO₃"
+                ],
+                [
+                  "Fluoride",
+                  "1.0 mg/L (des.); 1.5 mg/L (perm.)",
+                  "Optical < 0.5 is caries risk, >3 is fluorosis"
+                ],
+                [
+                  "Arsenic",
+                  "0.01 mg/L (10 ppb)",
+                  "WHO guideline"
+                ],
+                [
+                  "BOD",
+                  "≤ 30 mg/L",
+                  "Schedule VI"
+                ],
+                [
+                  "COD",
+                  "≤ 250 mg/L",
+                  "Schedule VI"
+                ],
+                [
+                  "Suspended Solids (SS)",
+                  "100 mg/L (old: 50 mg/L new)",
+                  "Schedule VI"
+                ],
+                [
+                  "pH",
+                  "6.0-8.5 (old); 5.5-9.0 (new)",
+                  "Schedule VI"
+                ],
+                [
+                  "DO (dissolved oxygen)",
+                  "> 4 mg/L",
+                  "CPCB River Standard for healthy stream"
+                ],
+                [
+                  "PM₂.₅",
+                  "60 μg/m³",
+                  "24-hr (Annual: 40 μg/m³)"
+                ],
+                [
+                  "PM₁₀",
+                  "100 μg/m³",
+                  "24-hr (Annual: 60 μg/m³)"
+                ],
+                [
+                  "SO₂",
+                  "80 μg/m³",
+                  "Industrial/residential/rural"
+                ],
+                [
+                  "NO₂",
+                  "80 μg/m³",
+                  "Industrial/residential/rural"
+                ],
+                [
+                  "CO",
+                  "2 mg/m³ (8-hr); 4 mg/m³ (1-hr)",
+                  "Industrial/residential/rural"
+                ]
+              ]
+            }
+          }
+        ],
+        "topic_id": 6
+      },
+      {
+        "topic_name": "EXAM STRATEGY & HIGH-YIELD TOPICS",
+        "cards": [
+          {
+            "heading": "TOP 10 FORMULAE TO MEMORISE (For Quick Calculation Questions):",
+            "color": "blue",
+            "points": []
+          },
+          {
+            "heading": "HIGHEST PROBABILITY QUESTIONS (Memorise These Topics):",
+            "color": "green",
+            "points": []
+          },
+          {
+            "heading": "MEDIUM-YIELD TOPICS (Important but Less Frequent):",
+            "color": "purple",
+            "points": []
+          },
+          {
+            "heading": "CRITICAL EXAM-DAY TIPS:",
+            "color": "amber",
+            "points": []
+          }
+        ],
+        "topic_id": 7
+      }
+    ]
+  },
+  "unit11": {
+    "topics": [
+      {
+        "id": 0,
+        "name": "FLUID PROPERTIES & HYDROSTATICS"
+      },
+      {
+        "id": 1,
+        "name": "MUST-MEMORISE CONSTANTS & FORMULAS"
+      },
+      {
+        "id": 2,
+        "name": "QUICK DESIGN CHECKLIST"
+      },
+      {
+        "id": 3,
+        "name": "EXAM STRATEGIES"
+      }
+    ],
+    "notes": [
+      {
+        "topic_name": "FLUID PROPERTIES & HYDROSTATICS",
+        "cards": [
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS",
+            "color": "blue",
+            "points": [
+              "Substance that continuously deforms under shear stress; includes liquids and gases",
+              "Only vertical component matters; horizontal pressure = 0",
+              "P_abs = P_atm + P_gauge",
+              "P_gauge = P_abs − P_atm (pressure above atmospheric)",
+              "Negative gauge pressure (below atmospheric)",
+              "Buoyant force = Weight of object (equilibrium)",
+              "Distance between center of gravity (G) and metacenter (M); determines vessel stability",
+              "GM > 0 (M above G) → vessel returns to upright after tilt"
+            ],
+            "alert": "Water @ 20°C: ρ = 1000 kg/m³, γ = 9810 N/m³, μ = 10⁻³ Pa·s, ν = 10⁻⁶ m²/s. These are high-yield constants for numericals."
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS (contd.)",
+            "color": "green",
+            "points": [
+              "GM < 0 (M below G) → vessel capsizes",
+              "where BM = metacentric radius, BG = distance from buoyancy center to gravity",
+              "Volume of fluid passing per unit time; Q = A × V",
+              "(narrower section = faster flow)",
+              "(wider section = slower flow)",
+              "Pipe length L, velocity V², friction factor f",
+              "Larger diameter D",
+              "Depends on Reynolds number & pipe roughness (ε)"
+            ]
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS (contd.)",
+            "color": "purple",
+            "points": [
+              "(independent of roughness)",
+              "(depends on Re & relative roughness ε/D)",
+              "Graphical plot of Darcy friction factor vs Reynolds number for different relative roughness (ε/D). High-yield for locating f values; may be provided in exam.",
+              "System of interconnected pipes; water distribution systems are networks",
+              "Iterative solution for unknown flows in looped networks",
+              "At each junction, inflow = outflow (continuity); around each loop, sum of head losses = 0",
+              "Assume initial flows → calculate head losses → correct flows → repeat until convergence",
+              "Water supply distribution, sewage collection, industrial process piping"
+            ]
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS (contd.)",
+            "color": "amber",
+            "points": [
+              "Multiple paths between points (loops); more complex; Hardy Cross or matrix methods required",
+              "Positive displacement pump; uses rotating impeller to impart kinetic energy to fluid",
+              "Impeller, casing, suction port, discharge port, shaft, bearings",
+              "Impeller rotates → throws fluid radially outward → pressure build-up → discharge through outlet",
+              "High discharge, suitable for high flow rates, smooth operation, low maintenance",
+              "Cannot self-prime (needs priming), low discharge head for small pumps",
+              "Minimum suction head required by pump (given by manufacturer)",
+              "Actual suction head available at site"
+            ]
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS (contd.)",
+            "color": "cyan",
+            "points": [
+              "NPSH_a > NPSH_r (if violated → cavitation occurs)",
+              "Vapor bubbles form in suction → collapse near impeller → noise, vibration, erosion, performance drop",
+              "Reduce suction lift, minimize suction losses, increase inlet pressure, cool liquid",
+              "Intersection of pump curve (H vs Q) and system curve (friction losses)",
+              "Optimal discharge on pump curve; highest efficiency",
+              "Reducing flow by closing discharge valve; moves operating point, reduces efficiency",
+              "Efficient method to vary flow; adjusts entire pump curve",
+              "Both pump to same header; useful for high discharge (ex: water supply from multiple sources)"
+            ]
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS (contd.)",
+            "color": "red",
+            "points": [
+              "Flow with free surface exposed to atmosphere (rivers, canals, sewers with partial flow)",
+              "Pressure at surface = atmospheric (constant); slope drives flow",
+              "Depth & velocity constant along channel (Chezy/Manning apply)",
+              "Depth/velocity changes; more complex analysis needed",
+              "Both empirical for uniform flow; Manning preferred in practice (n values well-documented)",
+              "For rectangular channel: R = (B × D) / (B + 2D) where B = width, D = depth",
+              "Sudden transition from supercritical to subcritical flow; violent, turbulent; significant energy loss",
+              "Supercritical flow (F > 1) transitions to subcritical (F < 1)"
+            ]
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS (contd.)",
+            "color": "blue",
+            "points": [
+              "Spillway toe, downstream constriction, sudden slope change",
+              "Rapid rise in water surface, large surface waves, air entrainment, noise",
+              "Significant; used in dissipators to protect downstream channel",
+              "Stilling basin design, spillway energy dissipation, channel protection",
+              "Sudden pressure rise/fall due to rapid valve closure or pump shutdown; can damage pipes (explosion or implosion)",
+              "Rapid deceleration of water column → momentum transfer → pressure spike",
+              "Can exceed 2× system pressure; depends on velocity change & closure time",
+              "Slow valve closure, surge tanks, relief valves, air chambers"
+            ]
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Formulas",
+            "color": "green",
+            "points": [],
+            "formulas": [
+              {
+                "label": "Formula",
+                "text": "where ρ = density (kg/m³) | g = 9.81 m/s² | h = depth (m)"
+              },
+              {
+                "label": "Formula",
+                "text": "where V = volume of object submerged (m³)"
+              },
+              {
+                "label": "Formula",
+                "text": "where ρ = density | v = velocity | D = diameter | μ = dynamic viscosity | ν = kinematic viscosity"
+              },
+              {
+                "label": "Formula",
+                "text": "If pipe narrows, velocity increases (to maintain constant flow)"
+              },
+              {
+                "label": "Formula",
+                "text": "where f = Darcy friction factor | L = pipe length (m) | D = diameter (m) | V = velocity (m/s) | g = 9.81 m/s²"
+              },
+              {
+                "label": "Formula",
+                "text": "where K = loss coefficient (dimensionless); depends on fitting type"
+              },
+              {
+                "label": "Formula",
+                "text": "Axial flow (low head, high Q)"
+              },
+              {
+                "label": "Formula",
+                "text": "where P_atm = atmospheric pressure | P_vapor = vapor pressure of liquid | h_f,suction = suction line losses"
+              },
+              {
+                "label": "Formula",
+                "text": "Small speed changes dramatically affect power (cubic relationship)."
+              },
+              {
+                "label": "Formula",
+                "text": "where n = Manning's roughness coefficient | R = hydraulic radius = A/P | A = cross-sectional area | P = wetted perimeter | S = bed slope"
+              },
+              {
+                "label": "Formula",
+                "text": "where V = velocity | g = 9.81 m/s² | D_m = hydraulic depth = A/B (mean depth for rectangular channel)"
+              },
+              {
+                "label": "Formula",
+                "text": "where q = discharge per unit width = Q/B"
+              },
+              {
+                "label": "Formula",
+                "text": "where y₁ = upstream depth, y₂ = downstream depth, F₁ = upstream Froude number"
+              }
+            ],
+            "alert": "High-yield for floating structures (docks, boats, water treatment tanks). If a question asks about stability of storage tanks, check metacentric height."
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Table 1",
+            "color": "purple",
+            "points": [],
+            "table": {
+              "headers": [
+                "Property",
+                "Symbol",
+                "SI Unit",
+                "Definition / Significance"
+              ],
+              "rows": [
+                [
+                  "ρ",
+                  "kg/m³",
+                  "Mass per unit volume; water ≈ 1000 kg/m³ @ 4°C"
+                ],
+                [
+                  "γ = ρg",
+                  "N/m³",
+                  "Weight per unit volume; γwater ≈ 9810 N/m³"
+                ],
+                [
+                  "d = ρfluid/ρwater",
+                  "Dimensionless",
+                  "Density ratio; d=1 for water"
+                ],
+                [
+                  "μ",
+                  "Pa·s (N·s/m²)",
+                  "Resistance to flow; water @ 20°C ≈ 0.001 Pa·s"
+                ],
+                [
+                  "ν = μ/ρ",
+                  "m²/s",
+                  "Dynamic viscosity / density; affects flow patterns"
+                ],
+                [
+                  "σ",
+                  "N/m",
+                  "Force per unit length at liquid surface; capillarity effect"
+                ],
+                [
+                  "K",
+                  "Pa",
+                  "Resistance to compression; water ≈ 2.1×10⁹ Pa"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Table 2",
+            "color": "amber",
+            "points": [],
+            "table": {
+              "headers": [
+                "Manometer Type",
+                "Application",
+                "Pressure Range"
+              ],
+              "rows": [
+                [
+                  "Pressure difference measurement; simple",
+                  "0–50 kPa"
+                ],
+                [
+                  "Low pressures; gauge pressure only",
+                  "0–10 kPa"
+                ],
+                [
+                  "Very low pressures; enhanced readability",
+                  "0–1 kPa"
+                ],
+                [
+                  "Atmospheric pressure; reference (101.325 kPa = 760 mmHg)",
+                  "Atmospheric only"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Table 3",
+            "color": "cyan",
+            "points": [],
+            "table": {
+              "headers": [
+                "Classification",
+                "Type 1",
+                "Type 2",
+                "Significance"
+              ],
+              "rows": [
+                [
+                  "Steady Flow",
+                  "Unsteady Flow",
+                  "Properties don't change (steady) vs change (unsteady) with time"
+                ],
+                [
+                  "Uniform Flow",
+                  "Non-uniform Flow",
+                  "Velocity same (uniform) vs different (non-uniform) across section"
+                ],
+                [
+                  "Laminar (Re < 2300)",
+                  "Turbulent (Re > 4000)",
+                  "Smooth/parallel layers vs chaotic eddies"
+                ],
+                [
+                  "Ideal Flow",
+                  "Real Flow",
+                  "No friction losses (ideal) vs friction losses (real)"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Table 4",
+            "color": "red",
+            "points": [],
+            "table": {
+              "headers": [
+                "Fitting Type",
+                "K Value",
+                "Notes"
+              ],
+              "rows": [
+                [
+                  "Sudden Expansion",
+                  "0.3–0.5",
+                  "Dependent on area ratio; highest loss"
+                ],
+                [
+                  "Sudden Contraction",
+                  "0.04–0.5",
+                  "Varies with contraction ratio"
+                ],
+                [
+                  "90° Elbow (flanged)",
+                  "0.27–0.3",
+                  "Smooth turns reduce K; threaded = higher"
+                ],
+                [
+                  "45° Elbow (flanged)",
+                  "0.16",
+                  "Less loss than 90°"
+                ],
+                [
+                  "Gate Valve (open)",
+                  "0.2",
+                  "Fully open; partially closed → much higher K"
+                ],
+                [
+                  "Check Valve",
+                  "2.0–2.5",
+                  "High loss; prevents backflow"
+                ],
+                [
+                  "Exit (pipe to reservoir)",
+                  "1.0",
+                  "Full kinetic energy lost"
+                ],
+                [
+                  "Entrance (reservoir to pipe)",
+                  "0.5 (sharp) to 0.05 (rounded)",
+                  "Rounded inlets reduce loss"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Table 5",
+            "color": "blue",
+            "points": [],
+            "table": {
+              "headers": [
+                "Parameter",
+                "Symbol",
+                "Definition / Formula"
+              ],
+              "rows": [
+                [
+                  "H",
+                  "Energy per unit weight added by pump (m); measured from discharge minus suction (gauge)"
+                ],
+                [
+                  "Q",
+                  "Volume of fluid pumped per unit time (m³/s or l/s)"
+                ],
+                [
+                  "P_h",
+                  "(Watts); power transferred to fluid"
+                ],
+                [
+                  "P_brake",
+                  "Actual input power from motor; P_brake = P_h / η"
+                ],
+                [
+                  "η",
+                  "(typically 0.7–0.85 for centrifugal pumps)"
+                ],
+                [
+                  "Ns",
+                  "(N in rpm, Q in m³/s, H in m); pump classification"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Table 6",
+            "color": "green",
+            "points": [],
+            "table": {
+              "headers": [
+                "Configuration",
+                "Effect on Head",
+                "Effect on Discharge",
+                "Use Case"
+              ],
+              "rows": [
+                [
+                  "H_total = H₁ + H₂ (heads add)",
+                  "Q_total = Q₁ = Q₂ (same flow)",
+                  "High head requirement; same discharge"
+                ],
+                [
+                  "H_total = H₁ = H₂ (same head)",
+                  "Q_total = Q₁ + Q₂ (flows add)",
+                  "High discharge requirement; same head"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Table 7",
+            "color": "purple",
+            "points": [],
+            "table": {
+              "headers": [
+                "Channel Type",
+                "Manning's n",
+                "Condition"
+              ],
+              "rows": [
+                [
+                  "Concrete (smooth)",
+                  "0.012–0.015",
+                  "New, clean"
+                ],
+                [
+                  "Concrete (rough)",
+                  "0.018–0.025",
+                  "Old, algae growth"
+                ],
+                [
+                  "Natural earth channel",
+                  "0.025–0.035",
+                  "Straight, clean"
+                ],
+                [
+                  "Natural earth (with weeds)",
+                  "0.035–0.050",
+                  "Dense vegetation"
+                ],
+                [
+                  "River (clean)",
+                  "0.030–0.040",
+                  "Straight reach"
+                ],
+                [
+                  "River (meandering)",
+                  "0.040–0.060",
+                  "Bends, vegetation"
+                ],
+                [
+                  "Sewer (concrete pipe)",
+                  "0.011–0.015",
+                  "Clean; gravity flow"
+                ]
+              ]
+            }
+          },
+          {
+            "heading": "FLUID PROPERTIES & HYDROSTATICS — Table 8",
+            "color": "amber",
+            "points": [],
+            "table": {
+              "headers": [
+                "Protection Device",
+                "Principle",
+                "Application"
+              ],
+              "rows": [
+                [
+                  "Open reservoir on pipeline; water level rises/falls to absorb pressure changes",
+                  "Hydropower penstocks, long transmission lines"
+                ],
+                [
+                  "Sealed tank with trapped air; air compresses to absorb surge",
+                  "Pump discharge lines, household water systems"
+                ],
+                [
+                  "Opens automatically when pressure exceeds threshold; diverts flow",
+                  "Pressure systems, pump discharge"
+                ],
+                [
+                  "Gradual valve closure (motorized operators); reduces rate of momentum change",
+                  "Check valves, isolation valves on critical systems"
+                ]
+              ]
+            }
+          }
+        ],
+        "topic_id": 0
+      },
+      {
+        "topic_name": "MUST-MEMORISE CONSTANTS & FORMULAS",
+        "cards": [
+          {
+            "heading": "MUST-MEMORISE CONSTANTS & FORMULAS — Reference Table",
+            "color": "blue",
+            "points": [],
+            "table": {
+              "headers": [
+                "Parameter",
+                "Value / Formula",
+                "SI Unit / Notes"
+              ],
+              "rows": [
+                [
+                  "kg/m³"
+                ],
+                [
+                  "m/s²"
+                ],
+                [
+                  "m²/s"
+                ],
+                [
+                  "Dimensionless"
+                ],
+                [
+                  "Dimensionless"
+                ],
+                [
+                  "Smooth; most common for engineering"
+                ],
+                [
+                  "Natural channels"
+                ],
+                [
+                  "Typical operating range"
+                ],
+                [
+                  "Watts; Q in m³/s, H in m"
+                ],
+                [
+                  "Major loss in pipes"
+                ],
+                [
+                  "Open channel flow"
+                ],
+                [
+                  "F < 1 = subcritical; F > 1 = supercritical"
+                ],
+                [
+                  "q = Q/B (discharge per width)"
+                ]
+              ]
+            }
+          }
+        ],
+        "topic_id": 1
+      },
+      {
+        "topic_name": "QUICK DESIGN CHECKLIST",
+        "cards": [
+          {
+            "heading": "QUICK DESIGN CHECKLIST",
+            "color": "blue",
+            "points": [
+              "Check Re (laminar/turbulent) → find f (Moody chart or correlation) → calculate hf (Darcy) → add minor losses → total head loss",
+              "Required Q and H → read pump curve → check operating point on system curve → verify NPSH available > NPSH required",
+              "Given Q, slope, Manning's n → solve Manning iteratively for depth D or use nomographs",
+              "Check Froude number; if F₁ > 1 and abrupt transition, jump occurs → major energy loss",
+              "Rapid valve closure → pressure surge → install relief valve or surge tank if needed"
+            ]
+          }
+        ],
+        "topic_id": 2
+      },
+      {
+        "topic_name": "EXAM STRATEGIES",
+        "cards": [
+          {
+            "heading": "EXAM STRATEGIES",
+            "color": "blue",
+            "points": [
+              "Reynolds, Continuity, Darcy-Weisbach, Manning, Froude, Pump Power. Know derivations + numerical patterns.",
+              "Understand how to use it; may be provided in exam. Know relative roughness concept.",
+              "High-frequency numerical topic. Practice speed change scenarios (1.5×, 2×, 0.8×).",
+              "Closed pipes use Darcy; open channels use Manning. Don't mix formulas.",
+              "Critical for pump questions. NPSH_a > NPSH_r always required.",
+              "Conceptual; may ask principle but unlikely to solve in exam time.",
+              "Recognize by F₁ > 1 → F₂ < 1 transition; causes energy loss; used in stilling basins."
+            ]
+          }
+        ],
+        "topic_id": 3
+      }
+    ]
+  }
+}

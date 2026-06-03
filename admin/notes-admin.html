@@ -250,7 +250,7 @@
           🏗️ <strong>Civil</strong> — from <code>notes-combined.json</code><br>
           📚 <strong>GS</strong> — from <code>gs-polity.json</code>, <code>gs-history.json</code>, <code>gs-geography.json</code>, <code>gs-science.json</code><br>
           📝 <strong>Hindi</strong> — from <code>hindi-notes.json</code><br>
-          🌿 <strong>PCB</strong> — HTML only, needs manual JSON upload<br>
+          🌿 <strong>PCB</strong> — from <code>pcb-notes-combined.json</code> (auto-converted from HTML)<br>
           Already-uploaded subjects will be skipped.
         </div>
         <div class="btn-row">
@@ -1078,10 +1078,19 @@ async function runMigration(dryRun) {
     logEl.innerHTML += `<span class="err">❌ hindi-notes.json: ${e.message}</span>\n`;
   }
 
-  // ── 4. PCB units — info only ────────────────────────────────────────────
-  logEl.innerHTML += `\n<span class="info" style="color:#6ee7b7;font-weight:700">── 🌿 PCB Units ──</span>\n`;
-  logEl.innerHTML += `<span class="warn">  ℹ️ PCB notes are HTML files (data/pcb/unit*.html) — not JSON. They cannot be auto-migrated.</span>\n`;
-  logEl.innerHTML += `<span class="warn">  ℹ️ To add PCB notes to Firestore: create JSON notes → Upload Notes tab → 🌿 PCB → select unit → upload.</span>\n`;
+  // ── 4. PCB units from pcb-notes-combined.json ────────────────────────────
+  logEl.innerHTML += `\n<span class="info" style="color:#6ee7b7;font-weight:700">── 🌿 PCB Units (from pcb-notes-combined.json) ──</span>\n`;
+  try {
+    const r = await fetch('../data/pcb-notes-combined.json?v=' + Date.now(), { cache:'no-cache' });
+    const pcbData = await r.json();
+    logEl.innerHTML += `<span class="ok">✅ Loaded pcb-notes-combined.json: ${Object.keys(pcbData).length} units</span>\n`;
+    for (const [unitId, data] of Object.entries(pcbData)) {
+      const subj = SUBJECTS.find(s => s.id === unitId);
+      await migrateOne(unitId, data.notes || [], subj?.name || unitId, subj?.topics || data.topics || [], 'pcb-json');
+    }
+  } catch(e) {
+    logEl.innerHTML += `<span class="err">❌ pcb-notes-combined.json: ${e.message}</span>\n`;
+  }
 
   // ── Summary ─────────────────────────────────────────────────────────────
   logEl.innerHTML += `\n<span class="${dryRun?'info':'ok'}" style="font-weight:700">── Done: ${migrated} ${dryRun?'would migrate':'migrated'}, ${skipped} skipped, ${errors} errors ──</span>\n`;

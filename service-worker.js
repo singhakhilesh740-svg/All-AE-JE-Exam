@@ -1,5 +1,5 @@
 // service-worker.js — PWA caching v19-pwa
-const CACHE_NAME = 'ae-civil-v28-nontech-practice';
+const CACHE_NAME = 'ae-civil-v29-pcb-notes-migrate';
 const STATIC_ASSETS = [
   './',
   './index.html',
