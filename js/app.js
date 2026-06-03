@@ -34,6 +34,13 @@ let quizRoute       = null;
 // Which category section we're in: 'civil' | 'pcb' | 'nontech'
 let activeSection   = 'civil';
 
+// Non-tech subject IDs — used to filter GS/Hindi PYQ questions
+const NONTECH_SUBJECT_IDS = [
+  'polity','history','geography','general-science','economy',
+  'current-affairs','environment','hindi-grammar','hindi-sahitya',
+  'reasoning','quantitative-aptitude','english'
+];
+
 // ── GS Subjects & Sub-subjects ─────────────────────────────────────────────
 const GS_SUB_SUBJECTS = {
   'history': [
@@ -551,7 +558,7 @@ function renderExamList(section) {
   container.innerHTML = '';
   // Filter exams by section field (now properly set in exams.js)
   const filtered = section === 'nontech'
-    ? EXAMS.filter(e => e.section === 'civil') // non-tech reuses civil exams for now
+    ? EXAMS  // non-tech questions can be uploaded to any exam
     : EXAMS.filter(e => e.section === section);
   if (!filtered.length) {
     container.innerHTML = '<div class="empty-state"><div class="empty-icon">📜</div><h3>No exams yet</h3><p>Exams will appear here.</p></div>';
@@ -587,7 +594,23 @@ on('pyqModeYear', () => {
 });
 
 on('pyqModeSubject', () => {
-  const subjectList = activeSection === 'pcb' ? SUBJECTS_PCB_NOTES : SUBJECTS_UPPSC_MAINS;
+  const GS_SUBJ_LIST = NONTECH_SUBJECT_IDS.map(id => ({
+    id, name: { polity:'Polity', history:'History', geography:'Geography',
+      'general-science':'General Science', economy:'Economy',
+      'current-affairs':'Current Affairs', environment:'Environment',
+      'hindi-grammar':'Hindi Grammar', 'hindi-sahitya':'Hindi Literature',
+      reasoning:'Reasoning', 'quantitative-aptitude':'Quantitative Aptitude', english:'English'
+    }[id] || id,
+    icon: { polity:'⚖️', history:'🏛️', geography:'🗺️', 'general-science':'🔬',
+      economy:'💰', 'current-affairs':'📰', environment:'🌍',
+      'hindi-grammar':'📝', 'hindi-sahitya':'📚', reasoning:'🧠',
+      'quantitative-aptitude':'🔢', english:'🔤'
+    }[id] || '📖',
+    description: 'PYQ Questions'
+  }));
+  const subjectList = activeSection === 'pcb' ? SUBJECTS_PCB_NOTES
+    : activeSection === 'nontech' ? GS_SUBJ_LIST
+    : SUBJECTS_UPPSC_MAINS;
   $('pyqSubjectsTitle').textContent = currentExam.name + ' — Subject-wise';
   $('pyqSubjectsSub').textContent   = 'Pick a subject';
   renderSubjectList('pyqSubjectList', subjectList, openPyqSubject);
@@ -598,9 +621,13 @@ async function renderYearList() {
   const container = $('pyqYearList');
   container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim)">Loading...</div>';
   try {
-    const questions = await fetchQuestions({ exam: currentExam.id, type: 'pyq', maxCount: 10000 });
+    let questions = await fetchQuestions({ exam: currentExam.id, type: 'pyq', maxCount: 10000 });
+    // In non-tech section, only show GS/Hindi questions
+    if (activeSection === 'nontech') {
+      questions = questions.filter(q => NONTECH_SUBJECT_IDS.includes(q.subject));
+    }
     if (!questions.length) {
-      container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><h3>No PYQ uploaded yet</h3><p>Upload questions via admin panel first.</p></div>';
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><h3>No PYQ uploaded yet</h3><p>Upload GS/Hindi questions via admin panel first.</p></div>';
       return;
     }
     const groups = {};
