@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Exam Manager</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;padding:20px;min-height:100vh}
+h1{font-size:20px;color:#f59e0b;margin-bottom:4px}
+.subtitle{font-size:13px;color:#64748b;margin-bottom:18px}
+label{display:block;font-size:12px;color:#94a3b8;margin:10px 0 4px}
+input,select,textarea{width:100%;padding:9px 12px;background:#1e293b;border:1px solid #334155;border-radius:8px;color:#f1f5f9;font-size:13px;font-family:inherit}
+input:focus,select:focus{outline:none;border-color:#f59e0b}
+.panel{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:16px;margin-bottom:16px}
+.panel-title{font-size:13px;font-weight:700;color:#f59e0b;margin-bottom:12px}
+.sec-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.sec-tab{padding:8px 16px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.sec-tab.active.civil{border-color:#3b82f6;color:#93c5fd;background:rgba(59,130,246,.1)}
+.sec-tab.active.pcb{border-color:#10b981;color:#6ee7b7;background:rgba(16,185,129,.1)}
+.sec-tab.active.nontech{border-color:#f59e0b;color:#fcd34d;background:rgba(245,158,11,.1)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn-primary{padding:9px 18px;background:#10b981;border:none;border-radius:8px;color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
+.btn-primary:disabled{opacity:.5;cursor:wait}
+.btn-danger{padding:7px 12px;background:rgba(239,68,68,.15);border:1px solid #ef4444;border-radius:6px;color:#ef4444;font-size:12px;cursor:pointer;font-family:inherit}
+.btn-edit{padding:7px 12px;background:rgba(59,130,246,.15);border:1px solid #3b82f6;border-radius:6px;color:#93c5fd;font-size:12px;cursor:pointer;font-family:inherit}
+.btn-secondary{padding:9px 18px;background:#334155;border:none;border-radius:8px;color:#e2e8f0;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit}
+.exam-grid{display:flex;flex-direction:column;gap:8px}
+.exam-card{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.exam-icon{font-size:24px;flex-shrink:0}
+.exam-info{flex:1;min-width:0}
+.exam-name{font-size:14px;font-weight:700;color:#f1f5f9}
+.exam-id{font-size:11px;color:#64748b;font-family:monospace;margin-top:2px}
+.exam-state{font-size:11px;color:#94a3b8;margin-top:2px}
+.exam-actions{display:flex;gap:6px;flex-shrink:0}
+.badge{font-size:9px;padding:2px 7px;border-radius:12px;font-weight:700;display:inline-block;margin-left:6px}
+.badge-builtin{background:rgba(100,116,139,.2);color:#94a3b8;border:1px solid #475569}
+.badge-custom{background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.4)}
+.badge-inactive{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.4)}
+.log{background:#0a0f1a;border:1px solid #1e293b;border-radius:8px;padding:10px;font-size:12px;font-family:monospace;white-space:pre-wrap;max-height:100px;overflow-y:auto;margin-top:10px}
+.log .ok{color:#10b981} .log .err{color:#ef4444} .log .info{color:#60a5fa} .log .warn{color:#f59e0b}
+.toggle-switch{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#94a3b8}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.slider{width:36px;height:20px;background:#334155;border-radius:10px;transition:.2s;flex-shrink:0}
+.slider:before{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.2s}
+input:checked+.slider{background:#10b981}
+input:checked+.slider:before{transform:translateX(16px)}
+.divider{height:1px;background:#1e293b;margin:14px 0}
+.subjects-preview{font-size:11px;color:#64748b;margin-top:8px;padding:8px;background:#0f172a;border-radius:6px;border:1px solid #1e293b;line-height:1.8}
+.icon-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.icon-btn{padding:6px 10px;background:#0f172a;border:1px solid #334155;border-radius:6px;font-size:18px;cursor:pointer;transition:all .1s}
+.icon-btn.selected{border-color:#f59e0b;background:rgba(245,158,11,.1)}
+</style>
+</head>
+<body>
+
+<h1>🏛️ Exam Manager</h1>
+<p class="subtitle">Add, edit, and manage exams across all sections. Built-in exams cannot be deleted.</p>
+
+<!-- Section Filter -->
+<div class="sec-tabs">
+  <button class="sec-tab active civil" data-sec="civil">🏗️ AE/JE Civil</button>
+  <button class="sec-tab" data-sec="pcb">🌿 PCB</button>
+  <button class="sec-tab" data-sec="nontech">📚 Non-Tech / GS</button>
+</div>
+
+<!-- Exam List -->
+<div class="panel">
+  <div class="panel-title" id="listTitle">📋 AE/JE Civil Exams</div>
+  <div class="exam-grid" id="examList">
+    <div style="color:#64748b;font-size:13px;text-align:center;padding:20px">Loading...</div>
+  </div>
+</div>
+
+<!-- Add / Edit Form -->
+<div class="panel" id="formPanel">
+  <div class="panel-title" id="formTitle">➕ Add New Exam</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div>
+      <label>Exam Full Name *</label>
+      <input type="text" id="fName" placeholder="e.g. MPPSC Assistant Engineer 2025">
+    </div>
+    <div>
+      <label>Short Name *</label>
+      <input type="text" id="fShortName" placeholder="e.g. MPPSC AE">
+    </div>
+    <div>
+      <label>State / Region *</label>
+      <input type="text" id="fState" placeholder="e.g. Madhya Pradesh" list="stateList">
+      <datalist id="stateList">
+        <option value="Andhra Pradesh"><option value="Bihar"><option value="Central (National)">
+        <option value="Chhattisgarh"><option value="Delhi"><option value="Gujarat">
+        <option value="Haryana"><option value="Himachal Pradesh"><option value="Jharkhand">
+        <option value="Karnataka"><option value="Kerala"><option value="Madhya Pradesh">
+        <option value="Maharashtra"><option value="Odisha"><option value="Punjab">
+        <option value="Rajasthan"><option value="Tamil Nadu"><option value="Telangana">
+        <option value="Uttar Pradesh"><option value="Uttarakhand"><option value="West Bengal">
+      </datalist>
+    </div>
+    <div>
+      <label>Exam ID (auto-generated)</label>
+      <input type="text" id="fId" placeholder="e.g. mppsc-ae" style="font-family:monospace;color:#f59e0b">
+    </div>
+  </div>
+
+  <label>Section *</label>
+  <select id="fSection">
+    <option value="civil">🏗️ AE/JE Civil</option>
+    <option value="pcb">🌿 Pollution Control Board</option>
+    <option value="nontech">📚 Non-Tech / GS</option>
+  </select>
+
+  <label>Icon (Emoji)</label>
+  <div style="display:flex;align-items:center;gap:10px">
+    <input type="text" id="fIcon" value="🏛️" style="width:80px;font-size:22px;text-align:center" maxlength="2">
+    <div class="icon-grid">
+      <button class="icon-btn" onclick="setIcon('🏛️')">🏛️</button>
+      <button class="icon-btn" onclick="setIcon('🏗️')">🏗️</button>
+      <button class="icon-btn" onclick="setIcon('🏢')">🏢</button>
+      <button class="icon-btn" onclick="setIcon('🎓')">🎓</button>
+      <button class="icon-btn" onclick="setIcon('🌿')">🌿</button>
+      <button class="icon-btn" onclick="setIcon('🌱')">🌱</button>
+      <button class="icon-btn" onclick="setIcon('🔬')">🔬</button>
+      <button class="icon-btn" onclick="setIcon('🏜️')">🏜️</button>
+      <button class="icon-btn" onclick="setIcon('🌊')">🌊</button>
+      <button class="icon-btn" onclick="setIcon('🏘️')">🏘️</button>
+      <button class="icon-btn" onclick="setIcon('🌾')">🌾</button>
+      <button class="icon-btn" onclick="setIcon('🏔️')">🏔️</button>
+      <button class="icon-btn" onclick="setIcon('📚')">📚</button>
+      <button class="icon-btn" onclick="setIcon('✏️')">✏️</button>
+      <button class="icon-btn" onclick="setIcon('⚙️')">⚙️</button>
+    </div>
+  </div>
+
+  <label style="margin-top:14px">Active Status</label>
+  <label class="toggle-switch">
+    <input type="checkbox" id="fActive" checked>
+    <div class="slider"></div>
+    Active (visible in app)
+  </label>
+
+  <div class="divider"></div>
+
+  <div id="subjectsPreview" class="subjects-preview"></div>
+
+  <div class="btn-row">
+    <button class="btn-primary" id="saveBtn">💾 Save Exam</button>
+    <button class="btn-secondary" id="cancelBtn" style="display:none">✕ Cancel</button>
+  </div>
+  <div class="log" id="formLog" style="display:none"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey: "AIzaSyBZ3IzWrTWv1JEipfKsJiCCVuNbCxcuFMs",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:c5e98dd96fded6b47f0ce4"
+});
+const auth = initializeApp ? getAuth(app) : getAuth();
+const db = getFirestore(app);
+
+let currentUser = null;
+let currentSection = 'civil';
+let editingId = null;
+let allExams = []; // combined built-in + custom
+
+// ── Built-in exams (from exams.js logic) ─────────────────────────────────
+const BUILTIN_EXAMS = [
+  {id:'uppsc-ae',name:'UPPSC AE',fullName:'UP PSC – Assistant Engineer',icon:'🏛️',state:'Uttar Pradesh',section:'civil',builtin:true},
+  {id:'uppsc-polytechnic',name:'UPPSC Polytechnic Lecturer',fullName:'UPPSC Polytechnic Lecturer – Civil',icon:'🎓',state:'Uttar Pradesh',section:'civil',builtin:true},
+  {id:'bpsc-ae',name:'BPSC AE',fullName:'Bihar PSC – Assistant Engineer',icon:'🏢',state:'Bihar',section:'civil',builtin:true},
+  {id:'cgpsc-ae',name:'CGPSC AE',fullName:'Chhattisgarh PSC – Assistant Engineer',icon:'🏗️',state:'Chhattisgarh',section:'civil',builtin:true},
+  {id:'gpsc-ae',name:'GPSC Civil Engineering',fullName:'Gujarat Engineering Service (Civil)',icon:'🏬',state:'Gujarat',section:'civil',builtin:true},
+  {id:'tspsc-ae',name:'TSPSC AE',fullName:'Telangana PSC – Assistant Engineer',icon:'🏘️',state:'Telangana',section:'civil',builtin:true},
+  {id:'hpsc-ae',name:'HPSC AE',fullName:'Haryana PSC – Assistant Engineer',icon:'🌾',state:'Haryana',section:'civil',builtin:true},
+  {id:'ukpsc-ae',name:'UKPSC AE',fullName:'Uttarakhand PSC – Assistant Engineer',icon:'🏔️',state:'Uttarakhand',section:'civil',builtin:true},
+  {id:'uppcb-aee',name:'UPPCB AEE',fullName:'UP Pollution Control Board – AEE',icon:'🌿',state:'Uttar Pradesh',section:'pcb',builtin:true},
+  {id:'gpcb-aee',name:'GPCB AEE',fullName:'Gujarat PCB – AEE',icon:'🌱',state:'Gujarat',section:'pcb',builtin:true},
+  {id:'cpcb-scientist',name:'CPCB Scientist-B',fullName:'Central PCB – Scientist B',icon:'🔬',state:'Central (National)',section:'pcb',builtin:true},
+  {id:'rspcb-aee',name:'RSPCB AEE',fullName:'Rajasthan PCB – AEE/JEE',icon:'🏜️',state:'Rajasthan',section:'pcb',builtin:true},
+  {id:'bpsc-aee',name:'BPSC AEE',fullName:'Bihar PSC – Asst. Environmental Engineer',icon:'🌊',state:'Bihar',section:'pcb',builtin:true},
+];
+
+// Subjects info per section
+const SECTION_SUBJECTS = {
+  civil: ['Engg. Mechanics','Strength of Materials','Structural Analysis','Steel Design','Concrete Design','Building Materials','Construction Tech','Geotechnical Engg','Fluid Mechanics','Hydrology & Irrigation','Transportation Engg','Environmental Engg','Surveying & Geology'],
+  pcb:   ['Unit 1 — Water Supply','Unit 2 — Wastewater','Unit 3 — Air Pollution','Unit 4 — Solid Waste','Unit 5 — Env. Legislation','Unit 6 — EIA & Mgmt','Unit 7 — Noise & Radiation','Unit 8 — Ecology','Unit 9 — Industrial Pollution','Unit 10 — Env. Chemistry','Unit 11 — Fluid Mechanics'],
+  nontech: ['Polity','History','Geography','General Science','Economy','Current Affairs','Environment','Hindi Grammar','Hindi Literature','Reasoning','Quantitative Aptitude','English'],
+};
+
+const $ = id => document.getElementById(id);
+const log = (msg, cls='info') => {
+  const el = $('formLog');
+  el.style.display = '';
+  el.innerHTML += `<span class="${cls}">${msg}</span>\n`;
+  el.scrollTop = 9999;
+};
+
+// ── Auth ──────────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  if (user) loadExams();
+  else signInWithPopup(auth, new GoogleAuthProvider()).catch(e => console.error(e));
+});
+
+// ── Load all exams ────────────────────────────────────────────────────────
+async function loadExams() {
+  try {
+    const snap = await getDocs(collection(db, 'exams_config'));
+    const custom = [];
+    snap.forEach(d => custom.push({ ...d.data(), id: d.id, builtin: false }));
+    allExams = [...BUILTIN_EXAMS, ...custom];
+    renderList();
+    updateSubjectsPreview();
+  } catch(e) {
+    console.error('loadExams:', e);
+    allExams = [...BUILTIN_EXAMS];
+    renderList();
+  }
+}
+
+// ── Render exam list ──────────────────────────────────────────────────────
+function renderList() {
+  const container = $('examList');
+  const secNames = {civil:'🏗️ AE/JE Civil Exams',pcb:'🌿 Pollution Control Board Exams',nontech:'📚 Non-Tech / GS Exams'};
+  $('listTitle').textContent = secNames[currentSection];
+  const filtered = allExams.filter(e => e.section === currentSection);
+
+  if (!filtered.length) {
+    container.innerHTML = '<div style="color:#64748b;font-size:13px;text-align:center;padding:20px">No exams in this section yet. Add one below.</div>';
+    return;
+  }
+
+  container.innerHTML = '';
+  filtered.forEach(exam => {
+    const card = document.createElement('div');
+    card.className = 'exam-card';
+    const statusBadge = !exam.active && exam.active !== undefined ? '<span class="badge badge-inactive">Inactive</span>' : '';
+    const typeBadge = exam.builtin ? '<span class="badge badge-builtin">Built-in</span>' : '<span class="badge badge-custom">Custom</span>';
+    card.innerHTML = `
+      <div class="exam-icon">${exam.icon || '🏛️'}</div>
+      <div class="exam-info">
+        <div class="exam-name">${exam.name}${typeBadge}${statusBadge}</div>
+        <div class="exam-id">${exam.id}</div>
+        <div class="exam-state">📍 ${exam.state || '—'}</div>
+      </div>
+      <div class="exam-actions">
+        ${!exam.builtin ? `<button class="btn-edit" onclick="editExam('${exam.id}')">✏️ Edit</button>` : ''}
+        ${!exam.builtin ? `<button class="btn-danger" onclick="deleteExam('${exam.id}')">🗑️</button>` : ''}
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+// ── Section tabs ──────────────────────────────────────────────────────────
+document.querySelectorAll('.sec-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sec-tab').forEach(b => b.classList.remove('active','civil','pcb','nontech'));
+    btn.classList.add('active', btn.dataset.sec);
+    currentSection = btn.dataset.sec;
+    $('fSection').value = currentSection;
+    renderList();
+    updateSubjectsPreview();
+  });
+});
+
+// ── Auto-generate ID ──────────────────────────────────────────────────────
+$('fName').addEventListener('input', () => {
+  if (editingId) return;
+  const id = $('fName').value.trim()
+    .toLowerCase().replace(/[^a-z0-9\s]/g,'').replace(/\s+/g,'-')
+    .replace(/-+/g,'-').substring(0,30);
+  $('fId').value = id;
+});
+
+$('fSection').addEventListener('change', updateSubjectsPreview);
+
+function updateSubjectsPreview() {
+  const sec = $('fSection').value || currentSection;
+  const subjs = SECTION_SUBJECTS[sec] || [];
+  $('subjectsPreview').innerHTML = `<strong style="color:#94a3b8">Subjects auto-assigned (${subjs.length}):</strong><br>` +
+    subjs.map(s => `<span style="color:#e2e8f0">• ${s}</span>`).join('<br>');
+}
+
+window.setIcon = (emoji) => {
+  $('fIcon').value = emoji;
+  document.querySelectorAll('.icon-btn').forEach(b => b.classList.toggle('selected', b.textContent === emoji));
+};
+
+// ── Save exam ─────────────────────────────────────────────────────────────
+$('saveBtn').addEventListener('click', async () => {
+  const name      = $('fName').value.trim();
+  const shortName = $('fShortName').value.trim();
+  const state     = $('fState').value.trim();
+  const id        = $('fId').value.trim();
+  const section   = $('fSection').value;
+  const icon      = $('fIcon').value.trim() || '🏛️';
+  const active    = $('fActive').checked;
+
+  if (!name || !shortName || !state || !id) {
+    log('❌ Fill in all required fields (Name, Short Name, State, ID)', 'err'); return;
+  }
+  if (!/^[a-z0-9-]+$/.test(id)) {
+    log('❌ Exam ID must be lowercase letters, numbers, hyphens only', 'err'); return;
+  }
+  // Check if ID conflicts with builtin
+  if (!editingId && BUILTIN_EXAMS.find(e => e.id === id)) {
+    log(`❌ ID "${id}" is already used by a built-in exam`, 'err'); return;
+  }
+
+  $('saveBtn').disabled = true;
+  $('saveBtn').textContent = '⏳ Saving...';
+
+  try {
+    await setDoc(doc(db, 'exams_config', id), {
+      name: shortName,
+      fullName: name,
+      state, section, icon, active,
+      updatedAt: new Date().toISOString(),
+      updatedBy: currentUser.email
+    });
+
+    log(`✅ Exam "${shortName}" saved! ID: ${id}`, 'ok');
+    log(`ℹ️ Subjects: all ${SECTION_SUBJECTS[section]?.length} ${section} subjects auto-assigned`, 'info');
+
+    // Refresh list
+    await loadExams();
+    resetForm();
+  } catch(e) {
+    log(`❌ Error: ${e.message}`, 'err');
+  }
+  $('saveBtn').disabled = false;
+  $('saveBtn').textContent = '💾 Save Exam';
+});
+
+// ── Edit exam ─────────────────────────────────────────────────────────────
+window.editExam = async (examId) => {
+  const exam = allExams.find(e => e.id === examId);
+  if (!exam) return;
+  editingId = examId;
+  $('formTitle').textContent = `✏️ Editing: ${exam.name}`;
+  $('fName').value      = exam.fullName || exam.name;
+  $('fShortName').value = exam.name;
+  $('fState').value     = exam.state || '';
+  $('fId').value        = exam.id;
+  $('fSection').value   = exam.section;
+  $('fIcon').value      = exam.icon || '🏛️';
+  $('fActive').checked  = exam.active !== false;
+  $('cancelBtn').style.display = '';
+  $('formPanel').scrollIntoView({ behavior:'smooth' });
+  updateSubjectsPreview();
+};
+
+// ── Delete exam ───────────────────────────────────────────────────────────
+window.deleteExam = async (examId) => {
+  const exam = allExams.find(e => e.id === examId);
+  if (!confirm(`Delete exam "${exam?.name}"? This won't delete questions — only removes it from the exam list.`)) return;
+  try {
+    await deleteDoc(doc(db, 'exams_config', examId));
+    log(`✅ Deleted "${exam?.name}"`, 'ok');
+    await loadExams();
+  } catch(e) {
+    log(`❌ ${e.message}`, 'err');
+  }
+};
+
+// ── Cancel edit ───────────────────────────────────────────────────────────
+$('cancelBtn').addEventListener('click', resetForm);
+
+function resetForm() {
+  editingId = null;
+  $('formTitle').textContent = '➕ Add New Exam';
+  $('fName').value = $('fShortName').value = $('fState').value = $('fId').value = '';
+  $('fIcon').value = '🏛️';
+  $('fSection').value = currentSection;
+  $('fActive').checked = true;
+  $('cancelBtn').style.display = 'none';
+  $('formLog').style.display = 'none';
+  $('formLog').innerHTML = '';
+  updateSubjectsPreview();
+}
+
+updateSubjectsPreview();
+</script>
+</body>
+</html>

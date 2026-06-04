@@ -17,7 +17,8 @@ import {
   submitQuestionReport,
 } from './db.js';
 import * as Quiz from './quiz.js';
-import { EXAMS, getExamById } from './exams.js';
+import { EXAMS, getAllExams, getExamById, loadDynamicExams } from './exams.js';
+import { db } from './firebase-config.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from './subjects.js';
 import { renderNotesContent, loadNotesForSubject } from './notes.js';
 import { SUBJECTS_PCB_NOTES, loadPCBUnit, renderPCBNotesContent } from './pcb-notes.js';
@@ -132,6 +133,8 @@ document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
 watchAuth(
   async user => {
     currentUser = user;
+    // Load custom exams from Firestore (non-blocking)
+    loadDynamicExams(db).catch(() => {});
     try {
       const displayName = user.name ? user.name.split(' ')[0] : (user.mobile || 'Student');
       const nameEl = $('userName');
@@ -558,8 +561,8 @@ function renderExamList(section) {
   container.innerHTML = '';
   // Filter exams by section field (now properly set in exams.js)
   const filtered = section === 'nontech'
-    ? EXAMS  // non-tech questions can be uploaded to any exam
-    : EXAMS.filter(e => e.section === section);
+    ? getAllExams()  // non-tech questions can be uploaded to any exam
+    : getAllExams().filter(e => e.section === section);
   if (!filtered.length) {
     container.innerHTML = '<div class="empty-state"><div class="empty-icon">📜</div><h3>No exams yet</h3><p>Exams will appear here.</p></div>';
     return;
