@@ -15,6 +15,7 @@ import {
   isQuestionBookmarked,
   fetchBookmarkedQuestions,
   submitQuestionReport,
+  startSessionTracker,
 } from './db.js';
 import * as Quiz from './quiz.js';
 import { EXAMS, getAllExams, getExamById, loadDynamicExams } from './exams.js';
@@ -133,6 +134,7 @@ document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
 watchAuth(
   async user => {
     currentUser = user;
+    startSessionTracker(user.uid);
     // Load custom exams FIRST so they appear in exam lists
     await loadDynamicExams(db).catch(() => {});
     try {

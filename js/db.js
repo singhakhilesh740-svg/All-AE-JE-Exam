@@ -11,6 +11,7 @@ import {
   addDoc,
   serverTimestamp,
   deleteDoc,
+  increment,
   limit
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -300,5 +301,47 @@ export async function submitQuestionReport({ q, issueType, userMsg, currentUser,
   } catch (err) {
     console.error('submitQuestionReport error:', err);
     return false;
+  }
+}
+
+// ─── Session Time Tracker ─────────────────────────────────────────────────────
+// Tracks daily usage time by sending a heartbeat every 5 minutes.
+// Stores: users/{uid}/sessions/{YYYY-MM-DD} → { totalMinutes, lastHeartbeat }
+
+let _sessionInterval = null;
+let _sessionUserId   = null;
+
+export function startSessionTracker(userId) {
+  if (_sessionInterval) clearInterval(_sessionInterval);
+  _sessionUserId = userId;
+
+  // Send first heartbeat immediately
+  _sendHeartbeat();
+
+  // Then every 5 minutes while page is visible
+  _sessionInterval = setInterval(() => {
+    if (!document.hidden) _sendHeartbeat();
+  }, 5 * 60 * 1000);
+
+  // Pause/resume on visibility change
+  document.addEventListener('visibilitychange', _onVisChange);
+}
+
+function _onVisChange() {
+  if (!document.hidden && _sessionUserId) _sendHeartbeat();
+}
+
+async function _sendHeartbeat() {
+  if (!_sessionUserId) return;
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  try {
+    const ref = doc(db, 'users', _sessionUserId, 'sessions', today);
+    await setDoc(ref, {
+      totalMinutes: increment(5),
+      lastHeartbeat: new Date().toISOString(),
+      date: today
+    }, { merge: true });
+  } catch (e) {
+    // Silently fail — don't break the app for analytics
   }
 }

@@ -12,69 +12,94 @@
     .sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
     a{color:#f59e0b;text-decoration:none;font-size:13px}
 
-    /* Stats Cards */
     .stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
     .stat{background:#1e293b;padding:14px 18px;border-radius:12px;text-align:center;border:1px solid #334155;flex:1;min-width:100px}
     .stat-num{font-size:28px;font-weight:700}
     .stat-lbl{font-size:11px;color:#64748b;margin-top:3px}
     .blue{color:#60a5fa} .green{color:#10b981} .orange{color:#f59e0b} .purple{color:#a855f7}
 
-    /* Search & Filters */
     .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
     .search-input{flex:1;min-width:200px;padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#f1f5f9;font-size:13px;font-family:inherit}
     .search-input::placeholder{color:#475569}
     .filter-btn{padding:8px 14px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer}
     .filter-btn.active{border-color:#60a5fa;color:#60a5fa;background:rgba(96,165,250,.08)}
 
-    /* User Cards */
-    .user-card{background:#1e293b;border-radius:12px;padding:14px 16px;margin-bottom:8px;border:1px solid #334155;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .user-card{background:#1e293b;border-radius:12px;padding:14px 16px;margin-bottom:8px;border:1px solid #334155;display:flex;align-items:center;gap:12px;flex-wrap:wrap;cursor:pointer;transition:all .15s}
+    .user-card:hover{border-color:#60a5fa;background:#162032}
     .user-avatar{width:40px;height:40px;border-radius:50%;background:#334155;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#60a5fa;flex-shrink:0}
     .user-info{flex:1;min-width:180px}
     .user-name{font-size:14px;font-weight:600;color:#f1f5f9}
     .user-email{font-size:12px;color:#64748b;margin-top:2px}
-    .user-meta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .user-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
     .meta-item{font-size:11px;padding:4px 8px;border-radius:6px;background:#0f172a;color:#94a3b8;border:1px solid #1e293b}
     .meta-item.active-now{background:rgba(16,185,129,.1);color:#10b981;border-color:rgba(16,185,129,.3)}
     .meta-item.active-today{background:rgba(96,165,250,.1);color:#60a5fa;border-color:rgba(96,165,250,.3)}
     .meta-item.active-week{background:rgba(245,158,11,.1);color:#f59e0b;border-color:rgba(245,158,11,.3)}
     .meta-item.inactive{background:rgba(100,116,139,.1);color:#475569}
 
-    /* Table header */
     .table-header{display:flex;align-items:center;gap:12px;padding:8px 16px;font-size:11px;color:#475569;font-weight:600;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #1e293b;margin-bottom:8px}
     .th-avatar{width:40px;flex-shrink:0}
     .th-info{flex:1;min-width:180px}
-    .th-meta{display:flex;gap:12px;flex-wrap:wrap}
 
     .login-wrap{text-align:center;padding:60px 20px}
     .login-wrap p{color:#94a3b8;margin-bottom:20px}
     .btn-login{background:#60a5fa;color:#0f172a;font-size:14px;padding:10px 24px;border:none;border-radius:8px;font-weight:700;cursor:pointer}
     .hidden{display:none!important}
     .empty{text-align:center;padding:40px;color:#475569;font-size:14px}
-    .loading{text-align:center;padding:40px;color:#64748b}
     .sort-btn{background:none;border:none;color:#64748b;cursor:pointer;font-size:11px;font-weight:600}
     .sort-btn:hover{color:#f1f5f9}
     .export-btn{padding:8px 16px;border-radius:8px;background:#334155;color:#f1f5f9;border:none;font-size:12px;font-weight:600;cursor:pointer}
+
+    /* ── Detail Modal ───────────────────────────────────────── */
+    .detail-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:999;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+    .detail-box{background:#1e293b;border-radius:16px;padding:20px;max-width:800px;width:100%;border:1px solid #334155;margin:20px 0}
+    .detail-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .detail-header h2{color:#60a5fa;font-size:18px}
+    .detail-close{background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;padding:4px 8px}
+
+    .detail-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .d-stat{background:#0f172a;padding:10px 14px;border-radius:10px;text-align:center;border:1px solid #334155;flex:1;min-width:80px}
+    .d-stat-num{font-size:22px;font-weight:700}
+    .d-stat-lbl{font-size:10px;color:#64748b;margin-top:2px}
+
+    .detail-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+    .d-tab{padding:7px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+    .d-tab.active{border-color:#60a5fa;color:#60a5fa;background:rgba(96,165,250,.08)}
+
+    .detail-content{max-height:400px;overflow-y:auto}
+    .d-item{background:#0f172a;border:1px solid #1e293b;border-radius:8px;padding:10px 12px;margin-bottom:6px;font-size:12px;color:#e2e8f0;line-height:1.5}
+    .d-item-meta{font-size:10px;color:#64748b;margin-top:4px;display:flex;gap:8px;flex-wrap:wrap}
+    .d-tag{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:600;display:inline-block}
+    .d-tag-correct{background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+    .d-tag-wrong{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3)}
+    .d-tag-subj{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+    .d-tag-exam{background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3)}
+    .d-tag-bk{background:rgba(168,85,247,.15);color:#a855f7;border:1px solid rgba(168,85,247,.3)}
+    .d-loading{text-align:center;padding:20px;color:#64748b;font-size:13px}
+
+    /* Session chart */
+    .session-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:11px}
+    .session-date{width:80px;color:#94a3b8;text-align:right;flex-shrink:0}
+    .session-bar-wrap{flex:1;background:#0f172a;border-radius:4px;height:20px;overflow:hidden;border:1px solid #1e293b}
+    .session-bar{height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px;transition:width .3s;display:flex;align-items:center;padding-left:6px;font-size:10px;color:#fff;font-weight:600;min-width:0}
   </style>
 </head>
 <body>
 <div class="container">
   <h1>👥 Users Dashboard</h1>
   <p class="sub">
-    Registered users & login activity ·
+    User activity, attempts & bookmarks ·
     <a href="feedback-admin.html">Feedback →</a> ·
     <a href="reports-admin.html">Reports →</a> ·
     <a href="upload.html">Upload →</a>
   </p>
 
-  <!-- LOGIN -->
   <div id="loginPanel" class="login-wrap">
     <p>Sign in with admin account to view users.</p>
     <button class="btn-login" id="loginBtn">🔐 Login with Google</button>
   </div>
 
-  <!-- MAIN -->
   <div id="mainPanel" class="hidden">
-    <!-- Stats -->
     <div class="stats">
       <div class="stat"><div class="stat-num blue" id="statTotal">0</div><div class="stat-lbl">Total Users</div></div>
       <div class="stat"><div class="stat-num green" id="statToday">0</div><div class="stat-lbl">Active Today</div></div>
@@ -82,7 +107,6 @@
       <div class="stat"><div class="stat-num purple" id="statMobile">0</div><div class="stat-lbl">Mobile Users</div></div>
     </div>
 
-    <!-- Controls -->
     <div class="controls">
       <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search by name or email..." />
       <button class="filter-btn active" data-filter="all">All</button>
@@ -92,25 +116,52 @@
       <button class="export-btn" id="exportBtn">📥 Export CSV</button>
     </div>
 
-    <!-- User List -->
     <div class="table-header">
       <div class="th-avatar"></div>
       <div class="th-info">
         User <button class="sort-btn" data-sort="name">↕ Name</button>
       </div>
-      <div class="th-meta">
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
         <button class="sort-btn" data-sort="lastLogin">↕ Last Login</button>
         <button class="sort-btn" data-sort="loginCount">↕ Logins</button>
       </div>
     </div>
-    <div id="userList"><div class="loading">Loading users…</div></div>
+    <div id="userList"><div class="empty">Loading users…</div></div>
+  </div>
+</div>
+
+<!-- USER DETAIL MODAL -->
+<div id="detailModal" class="detail-overlay" style="display:none">
+  <div class="detail-box">
+    <div class="detail-header">
+      <h2 id="detailName">👤 User</h2>
+      <button class="detail-close" id="detailCloseBtn">✕</button>
+    </div>
+    <div id="detailMeta" style="font-size:12px;color:#64748b;margin-bottom:14px"></div>
+
+    <div class="detail-stats">
+      <div class="d-stat"><div class="d-stat-num green" id="dStatTime">—</div><div class="d-stat-lbl">Today (mins)</div></div>
+      <div class="d-stat"><div class="d-stat-num blue" id="dStatAttempts">—</div><div class="d-stat-lbl">Attempted</div></div>
+      <div class="d-stat"><div class="d-stat-num orange" id="dStatCorrect">—</div><div class="d-stat-lbl">Correct</div></div>
+      <div class="d-stat"><div class="d-stat-num purple" id="dStatBookmarks">—</div><div class="d-stat-lbl">Bookmarks</div></div>
+    </div>
+
+    <div class="detail-tabs">
+      <button class="d-tab active" data-dtab="sessions">⏱️ Sessions</button>
+      <button class="d-tab" data-dtab="attempts">📝 Attempts</button>
+      <button class="d-tab" data-dtab="bookmarks">⭐ Bookmarks</button>
+    </div>
+
+    <div class="detail-content" id="detailContent">
+      <div class="d-loading">Select a user to view details</div>
+    </div>
   </div>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, query, orderBy, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const app = initializeApp({
     apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
@@ -123,22 +174,30 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
   const ADMIN = '112ce0489@gmail.com';
+  const $ = id => document.getElementById(id);
 
   let allUsers = [];
   let currentFilter = 'all';
   let currentSort = 'lastLogin';
   let sortDir = 'desc';
 
-  document.getElementById('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
+  // Detail state
+  let detailUser = null;
+  let detailAttempts = [];
+  let detailBookmarks = [];
+  let detailSessions = [];
+  let detailTab = 'sessions';
+
+  $('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
 
   onAuthStateChanged(auth, user => {
     if (user && user.email === ADMIN) {
-      document.getElementById('loginPanel').classList.add('hidden');
-      document.getElementById('mainPanel').classList.remove('hidden');
+      $('loginPanel').classList.add('hidden');
+      $('mainPanel').classList.remove('hidden');
       loadUsers();
     } else {
-      document.getElementById('loginPanel').classList.remove('hidden');
-      document.getElementById('mainPanel').classList.add('hidden');
+      $('loginPanel').classList.remove('hidden');
+      $('mainPanel').classList.add('hidden');
     }
   });
 
@@ -150,18 +209,17 @@
     renderUsers();
   }
 
-  function getTimestamp(user, field) {
-    const val = user[field];
-    if (!val) return 0;
-    if (val.seconds) return val.seconds * 1000;
-    if (val instanceof Date) return val.getTime();
+  function getTs(user, field) {
+    const v = user[field];
+    if (!v) return 0;
+    if (v.seconds) return v.seconds * 1000;
+    if (typeof v === 'string') return new Date(v).getTime();
     return 0;
   }
 
   function timeAgo(ts) {
     if (!ts) return 'Never';
-    const now = Date.now();
-    const diff = now - ts;
+    const diff = Date.now() - ts;
     const mins = Math.floor(diff / 60000);
     if (mins < 1) return 'Just now';
     if (mins < 60) return mins + 'm ago';
@@ -169,93 +227,234 @@
     if (hrs < 24) return hrs + 'h ago';
     const days = Math.floor(hrs / 24);
     if (days < 7) return days + 'd ago';
-    return new Date(ts).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+    return new Date(ts).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
   }
 
-  function isToday(ts) {
-    if (!ts) return false;
-    const d = new Date(ts);
-    const now = new Date();
-    return d.toDateString() === now.toDateString();
-  }
-
-  function isThisWeek(ts) {
-    if (!ts) return false;
-    return (Date.now() - ts) < 7 * 24 * 60 * 60 * 1000;
-  }
+  function isToday(ts) { return ts && new Date(ts).toDateString() === new Date().toDateString(); }
+  function isThisWeek(ts) { return ts && (Date.now() - ts) < 7*24*60*60*1000; }
 
   function updateStats() {
-    document.getElementById('statTotal').textContent = allUsers.length;
-    const today = allUsers.filter(u => isToday(getTimestamp(u, 'lastLogin'))).length;
-    const week = allUsers.filter(u => isThisWeek(getTimestamp(u, 'lastLogin'))).length;
-    const mobile = allUsers.filter(u => u.lastDevice === 'mobile').length;
-    document.getElementById('statToday').textContent = today;
-    document.getElementById('statWeek').textContent = week;
-    document.getElementById('statMobile').textContent = mobile;
+    $('statTotal').textContent = allUsers.length;
+    $('statToday').textContent = allUsers.filter(u => isToday(getTs(u,'lastLogin'))).length;
+    $('statWeek').textContent = allUsers.filter(u => isThisWeek(getTs(u,'lastLogin'))).length;
+    $('statMobile').textContent = allUsers.filter(u => u.lastDevice === 'mobile').length;
   }
 
   function renderUsers() {
-    const list = document.getElementById('userList');
-    const searchTerm = (document.getElementById('searchInput').value || '').toLowerCase();
-
+    const list = $('userList');
+    const search = ($('searchInput').value || '').toLowerCase();
     let users = [...allUsers];
 
-    // Filter
-    if (currentFilter === 'today') users = users.filter(u => isToday(getTimestamp(u, 'lastLogin')));
-    else if (currentFilter === 'week') users = users.filter(u => isThisWeek(getTimestamp(u, 'lastLogin')));
-    else if (currentFilter === 'inactive') users = users.filter(u => !isThisWeek(getTimestamp(u, 'lastLogin')));
+    if (currentFilter === 'today') users = users.filter(u => isToday(getTs(u,'lastLogin')));
+    else if (currentFilter === 'week') users = users.filter(u => isThisWeek(getTs(u,'lastLogin')));
+    else if (currentFilter === 'inactive') users = users.filter(u => !isThisWeek(getTs(u,'lastLogin')));
 
-    // Search
-    if (searchTerm) {
-      users = users.filter(u =>
-        (u.name || '').toLowerCase().includes(searchTerm) ||
-        (u.email || '').toLowerCase().includes(searchTerm)
-      );
-    }
+    if (search) users = users.filter(u =>
+      (u.name||'').toLowerCase().includes(search) || (u.email||'').toLowerCase().includes(search));
 
-    // Sort
-    users.sort((a, b) => {
+    users.sort((a,b) => {
       let va, vb;
-      if (currentSort === 'name') { va = (a.name || '').toLowerCase(); vb = (b.name || '').toLowerCase(); }
-      else if (currentSort === 'loginCount') { va = a.loginCount || 0; vb = b.loginCount || 0; }
-      else { va = getTimestamp(a, 'lastLogin'); vb = getTimestamp(b, 'lastLogin'); }
-      return sortDir === 'desc' ? (vb > va ? 1 : -1) : (va > vb ? 1 : -1);
+      if (currentSort==='name'){va=(a.name||'').toLowerCase();vb=(b.name||'').toLowerCase();}
+      else if (currentSort==='loginCount'){va=a.loginCount||0;vb=b.loginCount||0;}
+      else{va=getTs(a,'lastLogin');vb=getTs(b,'lastLogin');}
+      return sortDir==='desc'?(vb>va?1:-1):(va>vb?1:-1);
     });
 
     if (!users.length) { list.innerHTML = '<div class="empty">No users found</div>'; return; }
 
     list.innerHTML = users.map(u => {
-      const ts = getTimestamp(u, 'lastLogin');
+      const ts = getTs(u,'lastLogin');
       const ago = timeAgo(ts);
-      const initials = ((u.name || u.email || '?')[0] || '?').toUpperCase();
-      let activityClass = 'inactive';
-      if (isToday(ts)) activityClass = 'active-today';
-      if ((Date.now() - ts) < 30 * 60000) activityClass = 'active-now';
-      else if (isThisWeek(ts)) activityClass = 'active-week';
+      const initials = ((u.name||u.email||'?')[0]||'?').toUpperCase();
+      let actClass = 'inactive';
+      if ((Date.now()-ts)<30*60000) actClass='active-now';
+      else if (isToday(ts)) actClass='active-today';
+      else if (isThisWeek(ts)) actClass='active-week';
 
       return `
-        <div class="user-card">
+        <div class="user-card" data-uid="${u.uid}">
           <div class="user-avatar">${esc(initials)}</div>
           <div class="user-info">
-            <div class="user-name">${esc(u.name || 'No Name')}</div>
-            <div class="user-email">${esc(u.email || 'No Email')}${u.mobile ? ' · ' + esc(u.mobile) : ''}</div>
-            <div class="user-email" style="color:#f59e0b;font-size:10px;margin-top:2px">${u.state ? '📍 ' + esc(u.state) : ''}${u.preparingFor ? ' · 📝 ' + esc(u.preparingFor) : ''}</div>
+            <div class="user-name">${esc(u.name||'No Name')}</div>
+            <div class="user-email">${esc(u.email||'No Email')}${u.mobile?' · '+esc(u.mobile):''}</div>
+            <div class="user-email" style="color:#f59e0b;font-size:10px;margin-top:2px">${u.state?'📍 '+esc(u.state):''}${u.preparingFor?' · 📝 '+esc(u.preparingFor):''}</div>
           </div>
           <div class="user-meta">
-            <span class="meta-item ${activityClass}">🕐 ${ago}</span>
-            <span class="meta-item">🔑 ${u.loginCount || 0} logins</span>
-            <span class="meta-item">${u.lastDevice === 'mobile' ? '📱' : '💻'} ${u.lastDevice || '—'}</span>
+            <span class="meta-item ${actClass}">🕐 ${ago}</span>
+            <span class="meta-item">🔑 ${u.loginCount||0}</span>
+            <span class="meta-item">${u.lastDevice==='mobile'?'📱':'💻'}</span>
           </div>
         </div>`;
     }).join('');
+
+    // Click to open detail
+    document.querySelectorAll('.user-card').forEach(card => {
+      card.addEventListener('click', () => openUserDetail(card.dataset.uid));
+    });
   }
+
+  // ── USER DETAIL ───────────────────────────────────────────────
+  async function openUserDetail(uid) {
+    const user = allUsers.find(u => u.uid === uid);
+    if (!user) return;
+    detailUser = user;
+    detailTab = 'sessions';
+
+    $('detailName').textContent = '👤 ' + (user.name || user.email || 'User');
+    $('detailMeta').innerHTML = `${esc(user.email||'')} ${user.mobile?'· '+esc(user.mobile):''} · Joined: ${user.joinedAt ? new Date(user.joinedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '—'} · ${user.loginCount||0} total logins · ${user.lastDevice==='mobile'?'📱 Mobile':'💻 Desktop'}`;
+
+    // Reset stats
+    $('dStatTime').textContent = '…';
+    $('dStatAttempts').textContent = '…';
+    $('dStatCorrect').textContent = '…';
+    $('dStatBookmarks').textContent = '…';
+    $('detailContent').innerHTML = '<div class="d-loading">⏳ Loading user data...</div>';
+    $('detailModal').style.display = 'flex';
+
+    // Set active tab
+    document.querySelectorAll('.d-tab').forEach(t => t.classList.toggle('active', t.dataset.dtab === 'sessions'));
+
+    // Load all data in parallel
+    try {
+      const [sessSnap, attSnap, bkSnap] = await Promise.all([
+        getDocs(collection(db, 'users', uid, 'sessions')),
+        getDocs(collection(db, 'users', uid, 'attempts')),
+        getDocs(collection(db, 'users', uid, 'bookmarks')),
+      ]);
+
+      detailSessions = [];
+      sessSnap.forEach(d => detailSessions.push({ id: d.id, ...d.data() }));
+      detailSessions.sort((a,b) => (b.date||b.id).localeCompare(a.date||a.id));
+
+      detailAttempts = [];
+      attSnap.forEach(d => detailAttempts.push({ id: d.id, ...d.data() }));
+      detailAttempts.sort((a,b) => (b.attemptedAt||'').localeCompare(a.attemptedAt||''));
+
+      detailBookmarks = [];
+      bkSnap.forEach(d => detailBookmarks.push({ id: d.id, ...d.data() }));
+      detailBookmarks.sort((a,b) => (b.savedAt||'').localeCompare(a.savedAt||''));
+
+      // Stats
+      const today = new Date().toISOString().slice(0,10);
+      const todaySession = detailSessions.find(s => s.date === today || s.id === today);
+      $('dStatTime').textContent = todaySession ? todaySession.totalMinutes : 0;
+      $('dStatAttempts').textContent = detailAttempts.length;
+      const correct = detailAttempts.filter(a => a.isCorrect).length;
+      $('dStatCorrect').textContent = correct + (detailAttempts.length ? ` (${Math.round(correct/detailAttempts.length*100)}%)` : '');
+      $('dStatBookmarks').textContent = detailBookmarks.length;
+
+      renderDetailTab();
+    } catch (err) {
+      console.error(err);
+      $('detailContent').innerHTML = `<div class="d-loading" style="color:#ef4444">❌ Error loading: ${err.message}</div>`;
+    }
+  }
+
+  function renderDetailTab() {
+    const c = $('detailContent');
+
+    if (detailTab === 'sessions') {
+      if (!detailSessions.length) { c.innerHTML = '<div class="d-loading">No session data yet. Sessions are recorded after deploying the tracker update.</div>'; return; }
+      const maxMins = Math.max(...detailSessions.map(s => s.totalMinutes || 0), 1);
+      c.innerHTML = `<div style="font-size:11px;color:#64748b;margin-bottom:10px">Daily usage (last ${detailSessions.length} days)</div>` +
+        detailSessions.slice(0, 30).map(s => {
+          const mins = s.totalMinutes || 0;
+          const pct = Math.round((mins / maxMins) * 100);
+          const label = mins >= 60 ? `${Math.floor(mins/60)}h ${mins%60}m` : `${mins}m`;
+          const dateLabel = s.date || s.id;
+          return `<div class="session-bar-row">
+            <div class="session-date">${dateLabel}</div>
+            <div class="session-bar-wrap"><div class="session-bar" style="width:${Math.max(pct,2)}%">${label}</div></div>
+          </div>`;
+        }).join('');
+      return;
+    }
+
+    if (detailTab === 'attempts') {
+      if (!detailAttempts.length) { c.innerHTML = '<div class="d-loading">No attempts recorded.</div>'; return; }
+
+      // Subject-wise breakdown
+      const subjGroups = {};
+      detailAttempts.forEach(a => {
+        const s = a.subject || 'unknown';
+        if (!subjGroups[s]) subjGroups[s] = { total: 0, correct: 0 };
+        subjGroups[s].total++;
+        if (a.isCorrect) subjGroups[s].correct++;
+      });
+      const subjSummary = Object.entries(subjGroups)
+        .sort((a,b) => b[1].total - a[1].total)
+        .map(([s, v]) => `<span class="d-tag d-tag-subj">${s.replace(/-/g,' ')}: ${v.correct}/${v.total}</span>`)
+        .join(' ');
+
+      c.innerHTML = `<div style="margin-bottom:10px;line-height:2">${subjSummary}</div>` +
+        detailAttempts.slice(0, 100).map(a => {
+          const q = a.question || a.questionId || a.id;
+          const preview = typeof q === 'string' ? q.slice(0, 120) : a.id;
+          const letters = ['A','B','C','D'];
+          return `<div class="d-item">
+            ${esc(preview)}${q.length > 120 ? '…' : ''}
+            <div class="d-item-meta">
+              <span class="d-tag ${a.isCorrect ? 'd-tag-correct' : 'd-tag-wrong'}">${a.isCorrect ? '✓ Correct' : '✗ Wrong'} — ${letters[a.selectedIndex] || '?'}</span>
+              <span class="d-tag d-tag-exam">${a.examId || '—'}</span>
+              ${a.subject ? `<span class="d-tag d-tag-subj">${a.subject.replace(/-/g,' ')}</span>` : ''}
+              <span style="color:#475569">${a.attemptedAt ? new Date(a.attemptedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : ''}</span>
+            </div>
+          </div>`;
+        }).join('') +
+        (detailAttempts.length > 100 ? `<div class="d-loading">Showing 100 of ${detailAttempts.length}</div>` : '');
+      return;
+    }
+
+    if (detailTab === 'bookmarks') {
+      if (!detailBookmarks.length) { c.innerHTML = '<div class="d-loading">No bookmarks saved.</div>'; return; }
+
+      // Group by subject
+      const subjGroups = {};
+      detailBookmarks.forEach(b => {
+        const s = b.subject || 'other';
+        if (!subjGroups[s]) subjGroups[s] = [];
+        subjGroups[s].push(b);
+      });
+
+      c.innerHTML = Object.entries(subjGroups)
+        .sort((a,b) => b[1].length - a[1].length)
+        .map(([subj, items]) => {
+          const header = `<div style="font-size:12px;font-weight:700;color:#a855f7;margin:10px 0 6px;padding:6px 10px;background:rgba(168,85,247,.08);border-radius:8px">
+            ⭐ ${subj.replace(/-/g,' ')} — ${items.length} bookmark${items.length > 1 ? 's' : ''}</div>`;
+          const cards = items.map(b => {
+            const preview = (b.question || '').slice(0, 120);
+            return `<div class="d-item">
+              ${esc(preview)}${(b.question||'').length > 120 ? '…' : ''}
+              <div class="d-item-meta">
+                <span class="d-tag d-tag-bk">⭐ Bookmarked</span>
+                <span class="d-tag d-tag-exam">${b.examId || '—'}</span>
+                <span style="color:#475569">${b.savedAt ? new Date(b.savedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) : ''}</span>
+              </div>
+            </div>`;
+          }).join('');
+          return header + cards;
+        }).join('');
+    }
+  }
+
+  // Detail tabs
+  document.querySelectorAll('.d-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.d-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      detailTab = btn.dataset.dtab;
+      renderDetailTab();
+    });
+  });
+
+  // Close detail
+  $('detailCloseBtn').onclick = () => { $('detailModal').style.display = 'none'; };
+  $('detailModal').addEventListener('click', e => { if (e.target === $('detailModal')) $('detailModal').style.display = 'none'; });
 
   function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-  // Search
-  document.getElementById('searchInput').addEventListener('input', renderUsers);
+  $('searchInput').addEventListener('input', renderUsers);
 
-  // Filters
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -265,22 +464,20 @@
     });
   });
 
-  // Sort
   document.querySelectorAll('.sort-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      if (currentSort === btn.dataset.sort) sortDir = sortDir === 'desc' ? 'asc' : 'desc';
+      if (currentSort === btn.dataset.sort) sortDir = sortDir==='desc'?'asc':'desc';
       else { currentSort = btn.dataset.sort; sortDir = 'desc'; }
       renderUsers();
     });
   });
 
-  // Export CSV
-  document.getElementById('exportBtn').addEventListener('click', () => {
+  $('exportBtn').addEventListener('click', () => {
     const header = 'Name,Email,Mobile,Last Login,Login Count,Device\n';
     const rows = allUsers.map(u => {
-      const ts = getTimestamp(u, 'lastLogin');
+      const ts = getTs(u,'lastLogin');
       const date = ts ? new Date(ts).toLocaleString('en-IN') : 'Never';
-      return `"${u.name || ''}","${u.email || ''}","${u.mobile || ''}","${date}",${u.loginCount || 0},"${u.lastDevice || ''}"`;
+      return `"${u.name||''}","${u.email||''}","${u.mobile||''}","${date}",${u.loginCount||0},"${u.lastDevice||''}"`;
     }).join('\n');
     const blob = new Blob([header + rows], { type: 'text/csv' });
     const a = document.createElement('a');

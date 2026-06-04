@@ -41,9 +41,10 @@ service cloud.firestore {
       allow read:  if isLoggedIn();
       allow write: if isOwner(userId);
 
-      // Subcollections (attempts, bookmarks) — owner only.
+      // Subcollections (attempts, bookmarks, sessions) — owner can read/write, admin can read.
       match /{subCollection}/{docId} {
-        allow read, write: if isOwner(userId);
+        allow read:  if isOwner(userId) || isAdmin();
+        allow write: if isOwner(userId);
       }
     }
 
