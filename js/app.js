@@ -625,12 +625,8 @@ async function renderYearList() {
   container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim)">Loading...</div>';
   try {
     let questions = await fetchQuestions({ exam: currentExam.id, type: 'pyq', maxCount: 10000 });
-    // In non-tech section, only show GS/Hindi questions
-    if (activeSection === 'nontech') {
-      questions = questions.filter(q => NONTECH_SUBJECT_IDS.includes(q.subject));
-    }
     if (!questions.length) {
-      container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><h3>No PYQ uploaded yet</h3><p>Upload GS/Hindi questions via admin panel first.</p></div>';
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><h3>No PYQ uploaded yet</h3><p>Upload questions via admin panel first.</p></div>';
       return;
     }
     const groups = {};
