@@ -60,6 +60,29 @@
     .rm-opt{font-size:12px;padding:6px 10px;border-radius:6px;background:#0f172a;color:#94a3b8;border:1px solid #1e293b}
     .rm-correct{background:rgba(16,185,129,.12);color:#10b981;border:1px solid rgba(16,185,129,.3);font-weight:700}
     .rm-wrong{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);text-decoration:line-through}
+
+    /* ── Inline Edit Modal ─────────────────────────────────────────────── */
+    .edit-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1001;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+    .edit-box{background:#1e293b;border-radius:16px;padding:20px;max-width:700px;width:100%;border:1px solid #334155;margin:20px 0}
+    .edit-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .edit-header h2{color:#60a5fa;font-size:18px}
+    .edit-close{background:none;border:none;color:#94a3b8;font-size:24px;cursor:pointer;padding:4px 8px}
+    .edit-label{font-size:12px;color:#94a3b8;display:block;margin:12px 0 4px;font-weight:600}
+    .edit-label:first-child{margin-top:0}
+    .edit-textarea{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:10px;font-size:13px;font-family:inherit;resize:vertical;line-height:1.6}
+    .edit-textarea:focus{outline:none;border-color:#60a5fa}
+    .edit-input{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit}
+    .edit-input:focus{outline:none;border-color:#60a5fa}
+    .eopt-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+    .eopt-circle{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;border:2px solid #334155;color:#94a3b8;cursor:pointer;transition:all .15s}
+    .eopt-circle.is-correct{background:#10b981;color:#fff;border-color:#10b981}
+    .eopt-circle:hover{border-color:#60a5fa}
+    .eopt-hint{font-size:10px;color:#475569;margin-bottom:8px}
+    .edit-status{padding:10px;border-radius:8px;font-size:13px;margin-top:10px;display:none}
+    .edit-status.ok{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.3);display:block}
+    .edit-status.err{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);display:block}
+    .btn-edit-q{background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd}
+    .btn-edit-q:hover{background:rgba(59,130,246,.25)}
   </style>
 </head>
 <body>
@@ -135,6 +158,61 @@
         <button class="btn-resolve" id="rmApplyBtn" style="flex:1">✅ Apply Fix & Resolve</button>
         <button class="btn-dismiss" id="rmCancelBtn">Cancel</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- INLINE EDIT MODAL -->
+<div id="editModal" class="edit-overlay" style="display:none">
+  <div class="edit-box">
+    <div class="edit-header">
+      <h2>✏️ Edit Question <span id="editQLabel" style="color:#f59e0b"></span></h2>
+      <button class="edit-close" id="editCloseBtn">✕</button>
+    </div>
+
+    <label class="edit-label">Question Text</label>
+    <textarea class="edit-textarea" id="editQuestion" rows="3"></textarea>
+
+    <label class="edit-label">Options <span class="eopt-hint">(click letter circle to mark correct)</span></label>
+    <div class="eopt-row"><div class="eopt-circle" id="eOptA" data-idx="0">A</div><input type="text" class="edit-input" id="editOptA" style="flex:1"/></div>
+    <div class="eopt-row"><div class="eopt-circle" id="eOptB" data-idx="1">B</div><input type="text" class="edit-input" id="editOptB" style="flex:1"/></div>
+    <div class="eopt-row"><div class="eopt-circle" id="eOptC" data-idx="2">C</div><input type="text" class="edit-input" id="editOptC" style="flex:1"/></div>
+    <div class="eopt-row"><div class="eopt-circle" id="eOptD" data-idx="3">D</div><input type="text" class="edit-input" id="editOptD" style="flex:1"/></div>
+
+    <label class="edit-label">Explanation / Solution</label>
+    <textarea class="edit-textarea" id="editExplanation" rows="4"></textarea>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      <div style="flex:1;min-width:120px">
+        <label class="edit-label">Subject</label>
+        <input type="text" class="edit-input" id="editSubject"/>
+      </div>
+      <div style="flex:1;min-width:120px">
+        <label class="edit-label">Topic</label>
+        <input type="text" class="edit-input" id="editTopic"/>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="flex:1;min-width:80px">
+        <label class="edit-label">Year</label>
+        <input type="number" class="edit-input" id="editYear"/>
+      </div>
+      <div style="flex:1;min-width:80px">
+        <label class="edit-label">Q Number</label>
+        <input type="number" class="edit-input" id="editQNum"/>
+      </div>
+    </div>
+
+    <label class="edit-label" style="margin-top:10px">
+      <input type="checkbox" id="editAutoResolve" checked style="margin-right:6px"/>
+      Auto-resolve this report after saving
+    </label>
+
+    <div id="editStatus" class="edit-status"></div>
+
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn-resolve" id="editSaveBtn" style="flex:2">💾 Save & Fix</button>
+      <button class="btn-dismiss" id="editCancelBtn">Cancel</button>
     </div>
   </div>
 </div>
@@ -265,6 +343,7 @@ function renderReports() {
 
     const resolveBtn  = r.status !== 'resolved'  ? `<button class="btn-resolve"  onclick="setStatus('${r.id}','resolved')">✓ Resolve</button>` : '';
     const aiBtn       = r.status === 'pending'   ? `<button class="btn-ai" id="ai-${r.id}" onclick="aiResolve('${r.id}')">🤖 AI Resolve</button>` : '';
+    const editBtn     = `<button class="btn-edit-q" onclick="openEditQuestion('${r.id}')">✏️ Edit</button>`;
     const dismissBtn  = r.status !== 'dismissed' ? `<button class="btn-dismiss" onclick="setStatus('${r.id}','dismissed')">— Dismiss</button>` : '';
     const pendingBtn  = r.status !== 'pending'   ? `<button class="btn-dismiss" onclick="setStatus('${r.id}','pending')">↩ Pending</button>` : '';
     const deleteBtn   = `<button class="btn-delete" onclick="deleteReport('${r.id}')">🗑 Delete</button>`;
@@ -285,7 +364,7 @@ function renderReports() {
         ${userMsgHtml}
         <div class="rc-user-meta">👤 ${r.reported_by || 'anonymous'}</div>
         <div class="rc-actions">
-          ${aiBtn}${resolveBtn}${pendingBtn}${dismissBtn}${deleteBtn}
+          ${aiBtn}${editBtn}${resolveBtn}${pendingBtn}${dismissBtn}${deleteBtn}
         </div>
       </div>`;
   }).join('');
@@ -438,6 +517,159 @@ function showResolveModal(reportId, report, qDocId, examId, ai) {
   document.getElementById('rmCancelBtn').onclick = () => { modal.style.display = 'none'; };
   modal.style.display = 'block';
 }
+
+// ── INLINE EDIT QUESTION ──────────────────────────────────────────────────────
+let editingReportId = null;
+let editingQDocId   = null;
+let editingExamId   = null;
+let editSelectedAns = 0;
+
+function updateEditAnswerUI() {
+  ['eOptA','eOptB','eOptC','eOptD'].forEach((id, i) => {
+    $(id).classList.toggle('is-correct', i === editSelectedAns);
+  });
+}
+
+['eOptA','eOptB','eOptC','eOptD'].forEach((id, i) => {
+  $(id).addEventListener('click', () => { editSelectedAns = i; updateEditAnswerUI(); });
+});
+
+$('editCloseBtn').onclick = () => { $('editModal').style.display = 'none'; };
+$('editCancelBtn').onclick = () => { $('editModal').style.display = 'none'; };
+$('editModal').addEventListener('click', e => { if (e.target === $('editModal')) $('editModal').style.display = 'none'; });
+
+window.openEditQuestion = async (reportId) => {
+  const r = allReports.find(x => x.id === reportId);
+  if (!r) return;
+
+  const examId = r.exam_id;
+  if (!examId) { alert('Report has no exam_id — cannot locate question in Firestore.'); return; }
+
+  // Show modal with loading state
+  $('editQLabel').textContent = `Q.${r.q_num || '?'} · ${examId}`;
+  $('editQuestion').value = r.question || '';
+  $('editOptA').value = (r.options && r.options[0]) || '';
+  $('editOptB').value = (r.options && r.options[1]) || '';
+  $('editOptC').value = (r.options && r.options[2]) || '';
+  $('editOptD').value = (r.options && r.options[3]) || '';
+  $('editExplanation').value = r.explanation || '';
+  $('editSubject').value = r.subject || '';
+  $('editTopic').value = r.topic || '';
+  $('editYear').value = r.year || '';
+  $('editQNum').value = r.q_num || '';
+  editSelectedAns = r.correct_ans ?? 0;
+  updateEditAnswerUI();
+  $('editStatus').className = 'edit-status';
+  $('editStatus').style.display = 'none';
+  $('editSaveBtn').disabled = false;
+  $('editSaveBtn').textContent = '💾 Save & Fix';
+  $('editModal').style.display = 'flex';
+  editingReportId = reportId;
+
+  // Find actual question doc in Firestore to get its docId
+  try {
+    const qSnap = await getDocs(query(
+      collection(db, 'exams', examId, 'questions'),
+      where('question', '==', r.question)
+    ));
+    let foundId = null, foundData = null;
+    qSnap.forEach(d => { if (!foundId) { foundId = d.id; foundData = d.data(); } });
+
+    if (!foundId) {
+      $('editStatus').textContent = '⚠️ Question not found in Firestore. You can still edit — a new doc will be created on save.';
+      $('editStatus').className = 'edit-status err';
+      editingQDocId = null;
+      editingExamId = examId;
+      return;
+    }
+
+    editingQDocId = foundId;
+    editingExamId = examId;
+
+    // Populate from actual Firestore data (may differ from report snapshot)
+    $('editQuestion').value = foundData.question || r.question || '';
+    if (foundData.options) {
+      $('editOptA').value = foundData.options[0] || '';
+      $('editOptB').value = foundData.options[1] || '';
+      $('editOptC').value = foundData.options[2] || '';
+      $('editOptD').value = foundData.options[3] || '';
+    }
+    $('editExplanation').value = foundData.explanation || '';
+    $('editSubject').value = foundData.subject || r.subject || '';
+    $('editTopic').value = foundData.topic || r.topic || '';
+    $('editYear').value = foundData.year || r.year || '';
+    $('editQNum').value = foundData.q_num || r.q_num || '';
+    editSelectedAns = foundData.answer ?? r.correct_ans ?? 0;
+    updateEditAnswerUI();
+
+    $('editStatus').textContent = '✅ Question loaded from Firestore — ready to edit.';
+    $('editStatus').className = 'edit-status ok';
+
+  } catch (err) {
+    console.error('Error finding question:', err);
+    $('editStatus').textContent = '⚠️ Could not fetch question: ' + err.message;
+    $('editStatus').className = 'edit-status err';
+    editingQDocId = null;
+    editingExamId = examId;
+  }
+};
+
+$('editSaveBtn').onclick = async () => {
+  if (!editingExamId) return;
+  $('editSaveBtn').disabled = true;
+  $('editSaveBtn').textContent = '⏳ Saving...';
+
+  try {
+    const updated = {
+      question:    $('editQuestion').value.trim(),
+      options: [
+        $('editOptA').value.trim(),
+        $('editOptB').value.trim(),
+        $('editOptC').value.trim(),
+        $('editOptD').value.trim(),
+      ],
+      answer:      editSelectedAns,
+      explanation: $('editExplanation').value.trim(),
+      subject:     $('editSubject').value.trim() || null,
+      topic:       $('editTopic').value.trim() || null,
+      year:        parseInt($('editYear').value) || null,
+      q_num:       parseInt($('editQNum').value) || null,
+    };
+
+    if (editingQDocId) {
+      await updateDoc(doc(db, 'exams', editingExamId, 'questions', editingQDocId), updated);
+    } else {
+      // Question not found earlier — create new (shouldn't happen normally)
+      const { setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+      const newRef = doc(collection(db, 'exams', editingExamId, 'questions'));
+      await setDoc(newRef, { ...updated, type: 'pyq', section: 'civil', tier: 'free', createdAt: new Date().toISOString() });
+    }
+
+    // Auto-resolve report if checked
+    if ($('editAutoResolve').checked && editingReportId) {
+      await updateDoc(doc(db, 'reports', editingReportId), {
+        status: 'resolved',
+        admin_edit: {
+          edited_at: new Date().toISOString(),
+          edited_by: 'Admin (inline edit)',
+          changes: 'Question edited from reports page'
+        }
+      });
+    }
+
+    $('editStatus').textContent = '✅ Question saved successfully!';
+    $('editStatus').className = 'edit-status ok';
+
+    setTimeout(() => { $('editModal').style.display = 'none'; }, 900);
+
+  } catch (err) {
+    console.error('Save error:', err);
+    $('editStatus').textContent = '❌ Error: ' + err.message;
+    $('editStatus').className = 'edit-status err';
+  }
+  $('editSaveBtn').disabled = false;
+  $('editSaveBtn').textContent = '💾 Save & Fix';
+};
 </script>
 </body>
 </html>
