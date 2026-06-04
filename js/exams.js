@@ -10,6 +10,8 @@ export const EXAMS = [
   { id:'tspsc-ae',          name:'TSPSC AE',                    fullName:'Telangana PSC – Assistant Engineer',                                icon:'🏘️', state:'Telangana',      section:'civil' },
   { id:'hpsc-ae',           name:'HPSC AE',                     fullName:'Haryana PSC – Assistant Engineer (Civil)',                          icon:'🌾', state:'Haryana',         section:'civil' },
   { id:'ukpsc-ae',          name:'UKPSC AE',                    fullName:'Uttarakhand PSC – Assistant Engineer (Civil)',                      icon:'🏔️', state:'Uttarakhand',    section:'civil' },
+  // PSU
+  { id:'coal-india-mt',     name:'Coal India MT',               fullName:'Coal India Limited – Management Trainee (Civil)',                   icon:'⛏️', state:'Central/PSU',    section:'civil' },
   // PCB
   { id:'uppcb-aee',         name:'UPPCB AEE',                   fullName:'UP Pollution Control Board – Assistant Environmental Engineer',     icon:'🌿', state:'Uttar Pradesh',  section:'pcb' },
   { id:'gpcb-aee',          name:'GPCB AEE',                    fullName:'Gujarat Pollution Control Board – AEE',                            icon:'🌱', state:'Gujarat',         section:'pcb' },
