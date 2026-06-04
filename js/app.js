@@ -789,30 +789,105 @@ function renderBookmarksList() {
   list.classList.remove('hidden'); empty.classList.add('hidden');
   practiceBtn.classList.remove('hidden');
   practiceBtn.textContent = `Practice all (${allBookmarks.length})`;
-  allBookmarks.forEach((q, idx) => {
-    const preview = q.question.length > 100 ? q.question.substring(0, 100) + '…' : q.question;
-    const subjectLabel = q.subject ? q.subject.replace(/-/g, ' ') : '';
-    const examLabel = q.examId ? q.examId.replace(/-/g, ' ').toUpperCase() : '';
-    const card = document.createElement('button');
-    card.className = 'bookmark-card';
-    card.innerHTML = `
-      <div class="bookmark-num">${idx + 1}</div>
-      <div class="bookmark-content">
-        <div class="bookmark-subject">${escapeHtml(examLabel)} · ${escapeHtml(subjectLabel)}</div>
-        <div class="bookmark-text">${escapeHtml(preview)}</div>
+
+  // ── Subject name & icon lookup ────────────────────────────────────────
+  const subjectMeta = {};
+  SUBJECTS_UPPSC_MAINS.forEach(s => { subjectMeta[s.id] = { name: s.name, icon: s.icon }; });
+  (SUBJECTS_PCB_NOTES || []).forEach(s => { subjectMeta[s.id] = { name: s.name, icon: s.icon || '🌿' }; });
+  const nontechMap = {
+    polity:'⚖️ Polity', history:'🏛️ History', geography:'🗺️ Geography',
+    'general-science':'🔬 General Science', economy:'💰 Economy',
+    'current-affairs':'📰 Current Affairs', environment:'🌍 Environment',
+    'hindi-grammar':'📝 Hindi Grammar', 'hindi-sahitya':'📚 Hindi Literature',
+    reasoning:'🧠 Reasoning', 'quantitative-aptitude':'🔢 Quantitative Aptitude', english:'🔤 English'
+  };
+  Object.entries(nontechMap).forEach(([id, label]) => {
+    if (!subjectMeta[id]) subjectMeta[id] = { name: label.slice(2).trim(), icon: label.slice(0,2) };
+  });
+
+  // ── Group by subject ──────────────────────────────────────────────────
+  const groups = {};
+  allBookmarks.forEach(q => {
+    const subj = q.subject || 'other';
+    if (!groups[subj]) groups[subj] = [];
+    groups[subj].push(q);
+  });
+
+  // Sort groups: more bookmarks first
+  const sortedKeys = Object.keys(groups).sort((a, b) => groups[b].length - groups[a].length);
+
+  sortedKeys.forEach(subj => {
+    const questions = groups[subj];
+    const meta = subjectMeta[subj] || { name: subj.replace(/-/g, ' '), icon: '📖' };
+    const groupId = 'bkmk-grp-' + subj.replace(/[^a-z0-9]/g, '-');
+
+    // ── Subject header (collapsible) ─────────────────────────────────────
+    const header = document.createElement('div');
+    header.className = 'bookmark-group-header';
+    header.innerHTML = `
+      <div class="bookmark-group-icon">${meta.icon}</div>
+      <div class="bookmark-group-info">
+        <div class="bookmark-group-name">${escapeHtml(meta.name)}</div>
+        <div class="bookmark-group-count">${questions.length} question${questions.length > 1 ? 's' : ''}</div>
       </div>
-      <div class="bookmark-arrow">›</div>
+      <button class="bookmark-group-practice" data-subj="${subj}">Practice</button>
+      <div class="bookmark-group-chevron">▾</div>
     `;
-    card.addEventListener('click', () => {
+    header.addEventListener('click', (e) => {
+      if (e.target.classList.contains('bookmark-group-practice')) return;
+      const body = document.getElementById(groupId);
+      const chevron = header.querySelector('.bookmark-group-chevron');
+      if (body.classList.contains('hidden')) {
+        body.classList.remove('hidden');
+        chevron.textContent = '▾';
+        header.classList.remove('collapsed');
+      } else {
+        body.classList.add('hidden');
+        chevron.textContent = '▸';
+        header.classList.add('collapsed');
+      }
+    });
+    // Practice button for this subject
+    header.querySelector('.bookmark-group-practice').addEventListener('click', (e) => {
+      e.stopPropagation();
       quizSource = 'bookmarksScreen';
       quizRoute  = 'bookmarks';
-      Quiz.startQuiz(allBookmarks);
-      for (let i = 0; i < idx; i++) Quiz.next();
+      Quiz.startQuiz(questions);
       showScreen('quizScreen');
       $('quizTopicBar').innerHTML = '';
       renderQuiz();
     });
-    list.appendChild(card);
+    list.appendChild(header);
+
+    // ── Question cards inside this group ──────────────────────────────────
+    const body = document.createElement('div');
+    body.id = groupId;
+    body.className = 'bookmark-group-body';
+    questions.forEach((q, idx) => {
+      const preview = q.question.length > 100 ? q.question.substring(0, 100) + '…' : q.question;
+      const examLabel = q.examId ? q.examId.replace(/-/g, ' ').toUpperCase() : '';
+      const card = document.createElement('button');
+      card.className = 'bookmark-card';
+      card.innerHTML = `
+        <div class="bookmark-num">${idx + 1}</div>
+        <div class="bookmark-content">
+          <div class="bookmark-subject">${escapeHtml(examLabel)}</div>
+          <div class="bookmark-text">${escapeHtml(preview)}</div>
+        </div>
+        <div class="bookmark-arrow">›</div>
+      `;
+      card.addEventListener('click', () => {
+        quizSource = 'bookmarksScreen';
+        quizRoute  = 'bookmarks';
+        Quiz.startQuiz(questions);
+        for (let i = 0; i < idx; i++) Quiz.next();
+        showScreen('quizScreen');
+        $('quizTopicBar').innerHTML = '';
+        renderQuiz();
+      });
+      body.appendChild(card);
+    });
+    list.appendChild(body);
   });
 }
 

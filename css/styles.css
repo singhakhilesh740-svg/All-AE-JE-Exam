@@ -391,6 +391,33 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
 .bookmark-text { font-size: 13px; color: var(--text); line-height: 1.5; }
 .bookmark-arrow { font-size: 18px; color: var(--text-dim); flex-shrink: 0; }
 
+/* ── Bookmark subject groups ─────────────────────────────────────────── */
+.bookmark-group-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; margin-top: 10px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 12px; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  user-select: none;
+}
+.bookmark-group-header:first-child { margin-top: 0; }
+.bookmark-group-header:active { background: var(--surface); }
+.bookmark-group-header.collapsed { margin-bottom: 0; border-radius: 12px; }
+.bookmark-group-icon { font-size: 26px; flex-shrink: 0; }
+.bookmark-group-info { flex: 1; min-width: 0; }
+.bookmark-group-name { font-size: 14px; font-weight: 700; color: var(--text); }
+.bookmark-group-count { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.bookmark-group-practice {
+  padding: 6px 14px; background: var(--accent); color: #fff;
+  border: none; border-radius: 8px; font-size: 12px;
+  font-weight: 700; cursor: pointer; flex-shrink: 0;
+  font-family: inherit; transition: opacity 0.15s;
+}
+.bookmark-group-practice:active { opacity: 0.8; }
+.bookmark-group-chevron { font-size: 14px; color: var(--text-dim); flex-shrink: 0; transition: transform 0.2s; }
+.bookmark-group-body { display: flex; flex-direction: column; gap: 6px; padding: 6px 0 4px; }
+.bookmark-group-body.hidden { display: none; }
+
 /* ===== Quiz Screen ===== */
 .quiz-header {
   display: flex; align-items: center;
