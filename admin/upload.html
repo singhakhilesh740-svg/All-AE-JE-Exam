@@ -332,7 +332,7 @@
 
 <script type="module">
 import { auth, db, googleProvider } from '../js/firebase-config.js';
-import { EXAMS, getExamsBySection } from '../js/exams.js';
+import { EXAMS, getAllExams, getExamsBySection, loadDynamicExams } from '../js/exams.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from '../js/subjects.js';
 import { SUBJECTS_PCB_NOTES } from '../js/pcb-notes.js';
 import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -375,10 +375,12 @@ function log(msg, type='info') {
 $('clearLogBtn').onclick = () => { $('log').innerHTML = 'Log cleared.\n'; };
 
 // ── Auth ──────────────────────────────────────────────────────────────────
-function enterAdmin(email) {
+async function enterAdmin(email) {
   $('loginPanel').classList.add('hidden');
   $('mainPanel').classList.remove('hidden');
   log(`✅ Signed in as ${email}`, 'ok');
+  // Load custom exams from Firestore before building dropdowns
+  try { await loadDynamicExams(db); } catch(e) {}
   initUI();
 }
 
@@ -482,9 +484,9 @@ function initUI() {
 }
 
 function rebuildExamDropdowns() {
-  const exams = currentSection === 'nontech' ? EXAMS : getExamsBySection(currentSection);
+  const exams = currentSection === 'nontech' ? getAllExams() : getExamsBySection(currentSection);
   const opts  = exams.map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
-  const allOpts = EXAMS.map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
+  const allOpts = getAllExams().map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
 
   $('examSel').innerHTML     = opts;
   $('statsExamSel').innerHTML = `<option value="__all__">📊 All Exams (Combined)</option>` + allOpts;
@@ -929,7 +931,7 @@ $('loadStatsBtn').onclick = async () => {
   try {
     let docs = [];
     if (examId === '__all__') {
-      const results = await Promise.all(EXAMS.map(e =>
+      const results = await Promise.all(getAllExams().map(e =>
         getDocs(collection(db,'exams',e.id,'questions')).then(s => s.docs.map(d=>d.data()))
       ));
       docs = results.flat();

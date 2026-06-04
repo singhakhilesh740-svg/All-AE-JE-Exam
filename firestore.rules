@@ -48,6 +48,13 @@ service cloud.firestore {
     }
 
 
+    // ── Custom Exams Config ────────────────────────────────────────────────
+    // Any logged-in user can read (so app can load custom exams); only admin can write.
+    match /exams_config/{examId} {
+      allow read:  if isLoggedIn();
+      allow write: if isAdmin();
+    }
+
     // ── Reports ────────────────────────────────────────────────────────────
     // Any logged-in user can create a report; only admin can read/update/delete.
     match /reports/{reportId} {

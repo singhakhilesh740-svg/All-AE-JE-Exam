@@ -264,6 +264,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   import { getFirestore, collection, query, orderBy, where, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAllExams, getExamsBySection, loadDynamicExams } from '../js/exams.js';
 
   const app = initializeApp({
     apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
@@ -286,15 +287,27 @@
 
   // Auth
   $('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(auth, async user => {
     if (user && user.email === ADMIN) {
       $('loginPanel').classList.add('hidden');
       $('mainPanel').classList.remove('hidden');
+      // Load custom exams then rebuild dropdown
+      await loadDynamicExams(db).catch(() => {});
+      buildExamDropdown();
     } else {
       $('loginPanel').classList.remove('hidden');
       $('mainPanel').classList.add('hidden');
     }
   });
+
+  function buildExamDropdown() {
+    const civilGrp = $('examGrpCivil');
+    const pcbGrp   = $('examGrpPCB');
+    civilGrp.innerHTML = getAllExams().filter(e => e.section === 'civil')
+      .map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
+    pcbGrp.innerHTML   = getAllExams().filter(e => e.section === 'pcb')
+      .map(e => `<option value="${e.id}">${e.icon} ${e.name} — ${e.state}</option>`).join('');
+  }
 
   // Subject lists per section
   const CIVIL_SUBJECTS = [
@@ -384,7 +397,7 @@
   updatePracticeSubjects();
 
   // All exam IDs for practice mode
-  const ALL_EXAM_IDS = ['uppsc-ae','uppsc-polytechnic','bpsc-ae','cgpsc-ae','gpsc-ae','tspsc-ae','hpsc-ae','ukpsc-ae','uppcb-aee','gpcb-aee','cpcb-scientist','rspcb-aee','bpsc-aee'];
+  const ALL_EXAM_IDS = getAllExams().map(e => e.id);
 
   // Load Questions
   $('loadBtn').onclick = async () => {
