@@ -732,7 +732,7 @@ function validateAndBuild(raw, i, opts) {
     answer:      raw.answer,
     explanation: raw.explanation ? String(raw.explanation).trim() : '',
     subject,
-    exam:        raw.exam || defaultExam,
+    exam:        defaultType === 'pyq' ? defaultExam : (raw.exam || defaultExam),
     type,
     topic,
     section,
