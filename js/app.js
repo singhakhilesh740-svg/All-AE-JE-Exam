@@ -133,8 +133,8 @@ document.querySelectorAll('.back-btn[data-back]').forEach(btn => {
 watchAuth(
   async user => {
     currentUser = user;
-    // Load custom exams from Firestore (non-blocking)
-    loadDynamicExams(db).catch(() => {});
+    // Load custom exams FIRST so they appear in exam lists
+    await loadDynamicExams(db).catch(() => {});
     try {
       const displayName = user.name ? user.name.split(' ')[0] : (user.mobile || 'Student');
       const nameEl = $('userName');

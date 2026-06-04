@@ -69,10 +69,11 @@ export async function fetchQuestions(opts = {}) {
 // Automatically includes any exam added to exams.js — no changes needed here
 export async function fetchPracticeQuestions(opts = {}) {
   const { subject = null, section = null, maxCount = 10000, force = false } = opts;
-  const { EXAMS } = await import('./exams.js');
+  const { getAllExams } = await import('./exams.js');
+  const _allExams = getAllExams();
   // Filter exams by section so civil Practice only queries civil exams, PCB only PCB
   // For nontech, query ALL exams since GS/Hindi questions can be uploaded to any exam
-  const filtered = (section && section !== 'nontech') ? EXAMS.filter(e => e.section === section) : EXAMS;
+  const filtered = (section && section !== 'nontech') ? _allExams.filter(e => e.section === section) : _allExams;
   const EXAM_IDS = filtered.map(e => e.id);
 
   const cacheKey = `practice:${section || 'all'}:${subject || 'all'}`;
