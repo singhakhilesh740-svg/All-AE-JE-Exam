@@ -297,6 +297,11 @@ window.setIcon = (emoji) => {
 
 // ── Save exam ─────────────────────────────────────────────────────────────
 $('saveBtn').addEventListener('click', async () => {
+  if (!currentUser) {
+    log('❌ Not logged in. Please wait for Google login or refresh.', 'err');
+    signInWithPopup(auth, new GoogleAuthProvider()).catch(e => log('Login failed: ' + e.message, 'err'));
+    return;
+  }
   const name      = $('fName').value.trim();
   const shortName = $('fShortName').value.trim();
   const state     = $('fState').value.trim();
@@ -325,7 +330,7 @@ $('saveBtn').addEventListener('click', async () => {
       fullName: name,
       state, section, icon, active,
       updatedAt: new Date().toISOString(),
-      updatedBy: currentUser.email
+      updatedBy: currentUser?.email || 'admin'
     });
 
     log(`✅ Exam "${shortName}" saved! ID: ${id}`, 'ok');
