@@ -33,10 +33,8 @@ service cloud.firestore {
     }
 
     // ── Users ──────────────────────────────────────────────────────────────
-    // READ: any logged-in user can read user docs. Required so the Google-login
-    //   merge query (where('email','==',...)) works. Trade-off: a logged-in user
-    //   could read other users' name/email/mobile. Acceptable here; tighten later.
-    // WRITE: only the owner can write their own doc.
+    // READ: any logged-in user can read user docs (needed for Google-login merge).
+    // WRITE: only the owner can write their own doc (includes fcmToken field).
     match /users/{userId} {
       allow read:  if isLoggedIn();
       allow write: if isOwner(userId);
@@ -48,26 +46,31 @@ service cloud.firestore {
       }
     }
 
-
     // ── Custom Exams Config ────────────────────────────────────────────────
-    // Any logged-in user can read (so app can load custom exams); only admin can write.
     match /exams_config/{examId} {
       allow read:  if isLoggedIn();
       allow write: if isAdmin();
     }
 
     // ── Reports ────────────────────────────────────────────────────────────
-    // Any logged-in user can create a report; only admin can read/update/delete.
+    // Any logged-in user can create; only admin can read/update/delete.
     match /reports/{reportId} {
       allow create: if isLoggedIn();
       allow read, update, delete: if isAdmin();
     }
 
     // ── Feedback ──────────────────────────────────────────────────────────
-    // Any logged-in user can submit feedback; only admin can read/manage.
     match /feedback/{feedbackId} {
       allow create: if isLoggedIn();
       allow read, update, delete: if isAdmin();
+    }
+
+    // ── Notifications (broadcast) ──────────────────────────────────────────
+    // Admin creates; all logged-in users can read (for in-app notification history).
+    // Cloud Function adds sent:true / sentAt after broadcasting via FCM.
+    match /notifications/{notifId} {
+      allow create, update, delete: if isAdmin();
+      allow read:                   if isLoggedIn();
     }
 
     // ── Deny everything else ────────────────────────────────────────────────

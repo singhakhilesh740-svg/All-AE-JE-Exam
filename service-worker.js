@@ -1,5 +1,5 @@
-// service-worker.js — PWA caching v19-pwa
-const CACHE_NAME = 'ae-civil-v33-exam-manager';
+// service-worker.js — PWA caching v20-notifications
+const CACHE_NAME = 'ae-civil-v34-notifications';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -86,4 +86,43 @@ self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
+});
+
+// ── Push notification click handler ─────────────────────────────────────────
+// Handles clicks on notifications shown by THIS service worker.
+// (FCM background notifications are handled by firebase-messaging-sw.js)
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+
+  const targetUrl = e.notification.data?.url || '/';
+
+  e.waitUntil(
+    clients
+      .matchAll({ type: 'window', includeUncontrolled: true })
+      .then((windowClients) => {
+        for (const client of windowClients) {
+          if (client.url.includes(self.location.origin) && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        if (clients.openWindow) return clients.openWindow(targetUrl);
+      })
+  );
+});
+
+// ── Push event (non-FCM fallback) ────────────────────────────────────────────
+self.addEventListener('push', (e) => {
+  if (!e.data) return;
+  try {
+    const payload = e.data.json();
+    const title   = payload.title || 'AE/JE Civil';
+    const options = {
+      body:    payload.body  || '',
+      icon:    '/icon-192.png',
+      badge:   '/icon-192.png',
+      data:    payload.data  || {},
+      vibrate: [200, 100, 200],
+    };
+    e.waitUntil(self.registration.showNotification(title, options));
+  } catch (_) {}
 });
