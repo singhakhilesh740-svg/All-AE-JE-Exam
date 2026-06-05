@@ -20,6 +20,9 @@ import {
 import * as Quiz from './quiz.js';
 import { EXAMS, getAllExams, getExamById, loadDynamicExams } from './exams.js';
 import { db } from './firebase-config.js';
+import {
+  collection, getDocs, orderBy, query, limit, where, doc, setDoc, getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { initNotifications } from './notifications.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from './subjects.js';
 import { renderNotesContent, loadNotesForSubject } from './notes.js';
@@ -113,6 +116,100 @@ function showScreen(id) {
   window.scrollTo(0, 0);
 }
 
+// ── In-app notification popup on login ────────────────────────────────────────
+// Shows a popup for any notification sent after the user's last seen timestamp.
+async function checkAndShowNotifications(uid) {
+  try {
+    // Get user's last notification seen time
+    const userRef = doc(db, 'users', uid);
+    const userSnap = await getDoc(userRef);
+    const lastSeen = userSnap.data()?.lastNotifSeen || 0;
+
+    // Fetch latest notifications after lastSeen
+    const snap = await getDocs(
+      query(
+        collection(db, 'notifications'),
+        orderBy('createdAt', 'desc'),
+        limit(5)
+      )
+    );
+
+    const unseen = [];
+    snap.forEach(d => {
+      const n = d.data();
+      if (!n.createdAt) return;
+      const ts = n.createdAt.toMillis ? n.createdAt.toMillis() : 0;
+      if (ts > lastSeen && n.sent === true) {
+        unseen.push({ id: d.id, title: n.title || '', body: n.body || '', ts });
+      }
+    });
+
+    if (unseen.length === 0) return;
+
+    // Show popup for the latest unseen notification
+    const latest = unseen[0];
+    showNotifPopup(latest.title, latest.body, unseen.length);
+
+    // Update lastNotifSeen to now
+    await setDoc(userRef, { lastNotifSeen: Date.now() }, { merge: true });
+
+  } catch (err) {
+    console.log('[Notif] check error:', err.message);
+  }
+}
+
+function showNotifPopup(title, body, count) {
+  // Remove existing popup if any
+  const existing = document.getElementById('notifPopup');
+  if (existing) existing.remove();
+
+  const popup = document.createElement('div');
+  popup.id = 'notifPopup';
+  popup.innerHTML = `
+    <div id="notifPopupInner">
+      <div id="notifPopupHeader">
+        <span>🔔 ${count > 1 ? count + ' New Notifications' : 'New Notification'}</span>
+        <button onclick="document.getElementById('notifPopup').remove()" id="notifPopupClose">✕</button>
+      </div>
+      <div id="notifPopupTitle">${title}</div>
+      <div id="notifPopupBody">${body}</div>
+    </div>
+  `;
+  popup.style.cssText = `
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,0.6);z-index:9999;
+    display:flex;align-items:center;justify-content:center;padding:20px;
+  `;
+  const inner = popup.querySelector('#notifPopupInner');
+  inner.style.cssText = `
+    background:#1e293b;border:1px solid #f59e0b;border-radius:16px;
+    padding:20px;max-width:380px;width:100%;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  `;
+  popup.querySelector('#notifPopupHeader').style.cssText = `
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:12px;
+  `;
+  popup.querySelector('#notifPopupHeader span').style.cssText = `
+    font-size:13px;font-weight:700;color:#f59e0b;
+  `;
+  popup.querySelector('#notifPopupClose').style.cssText = `
+    background:none;border:none;color:#64748b;font-size:18px;
+    cursor:pointer;padding:0 4px;line-height:1;
+  `;
+  popup.querySelector('#notifPopupTitle').style.cssText = `
+    font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:8px;line-height:1.4;
+  `;
+  popup.querySelector('#notifPopupBody').style.cssText = `
+    font-size:13px;color:#94a3b8;line-height:1.6;
+  `;
+  // Close on backdrop click
+  popup.addEventListener('click', e => {
+    if (e.target === popup) popup.remove();
+  });
+  document.body.appendChild(popup);
+}
+
 function toast(msg, ms = 2000) {
   const t = $('toast');
   t.textContent = msg;
@@ -148,6 +245,8 @@ watchAuth(
         await openProfileScreen();
       } else {
         showScreen('homeScreen');
+        // Show any unseen notifications as popup
+        checkAndShowNotifications(user.uid).catch(() => {});
       }
     } catch (e) {
       console.error('[Auth] routing error:', e);
