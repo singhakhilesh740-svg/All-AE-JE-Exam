@@ -1,0 +1,11 @@
+{
+  "name": "ae-exam-functions",
+  "scripts": { "deploy": "firebase deploy --only functions" },
+  "engines": { "node": "22" },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^6.0.0"
+  },
+  "private": true
+}
