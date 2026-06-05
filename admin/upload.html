@@ -106,6 +106,16 @@
     .badge-civil{background:rgba(59,130,246,.2);color:#93c5fd;border:1px solid #3b82f6}
     .badge-pcb{background:rgba(16,185,129,.2);color:#6ee7b7;border:1px solid #10b981}
     .badge-nontech{background:rgba(245,158,11,.2);color:#fcd34d;border:1px solid #f59e0b}
+
+    /* Notification broadcast panel */
+    .notif-panel{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:16px;margin-top:14px}
+    .notif-panel h3{color:#f59e0b;font-size:14px;font-weight:700;margin-bottom:10px}
+    .notif-input{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:13px;font-family:inherit;margin-bottom:8px;box-sizing:border-box}
+    .notif-input:focus{outline:none;border-color:#f59e0b}
+    .btn-notif{background:#f59e0b;color:#1f2937;font-weight:700;font-size:13px;padding:10px 18px;border:none;border-radius:8px;cursor:pointer}
+    .btn-notif:disabled{opacity:.5;cursor:not-allowed}
+    .btn-skip{background:#334155;color:#94a3b8;font-size:13px;padding:10px 14px;border:none;border-radius:8px;cursor:pointer}
+    .notif-sent{font-size:12px;color:#10b981;margin-top:8px;display:none}
   </style>
 </head>
 <body>
@@ -233,6 +243,20 @@
       <div class="progress-wrap hidden" id="progressWrap">
         <div class="progress-fill" id="progressFill"></div>
       </div>
+
+<!-- Notification broadcast panel — shown after upload success -->
+<div id="notifBroadcastPanel" class="notif-panel hidden">
+  <h3>&#128226; Notify Users About New Content?</h3>
+  <p style="font-size:12px;color:#64748b;margin-bottom:10px">Send a push notification to all app users.</p>
+  <input id="notifTitle" class="notif-input" type="text" placeholder="e.g. New GPSC GES Civil 2025 Questions Added!">
+  <textarea id="notifBody" class="notif-input" rows="2" placeholder="e.g. 298 PYQs from GPSC GES Civil 2025 are now live. Start practising!"></textarea>
+  <div style="display:flex;gap:8px">
+    <button class="btn-notif" id="sendNotifBtn">&#128276; Send Notification</button>
+    <button class="btn-skip"  id="skipNotifBtn">Skip</button>
+  </div>
+  <div class="notif-sent" id="notifSentMsg">&#10003; Notification queued — users will receive it shortly.</div>
+</div>
+
     </div>
 
     <!-- STEP 3: Preview -->
@@ -336,7 +360,7 @@ import { EXAMS, getAllExams, getExamsBySection, loadDynamicExams } from '../js/e
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from '../js/subjects.js';
 import { SUBJECTS_PCB_NOTES } from '../js/pcb-notes.js';
 import { signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { doc, writeBatch, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { doc, writeBatch, collection, addDoc, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const ADMIN_EMAILS = ['112ce0489@gmail.com'];
 const ADMIN_PIN    = '1947';
@@ -876,6 +900,15 @@ $('uploadBtn').onclick = async () => {
     log(`✅ Done! ${uploaded} questions uploaded to [${currentSection}] → exam: ${valid[0].exam}`, 'ok');
     validatedQuestions = [];
 
+    // Show notification broadcast panel
+    document.getElementById('notifBroadcastPanel').classList.remove('hidden');
+    const examLabel = valid[0].exam || currentSection;
+    document.getElementById('notifTitle').value = `📚 New Questions Added — ${examLabel.toUpperCase()}`;
+    document.getElementById('notifBody').value = `${valid.length} new questions are now live. Open the app to practise!`;
+    document.getElementById('sendNotifBtn').disabled = false;
+    document.getElementById('sendNotifBtn').textContent = '🔔 Send Notification';
+    document.getElementById('notifSentMsg').style.display = 'none';
+
     // ── Post-upload verification ──────────────────────────────────────────
     log('🔍 Verifying upload — re-fetching from Firestore...', 'info');
     try {
@@ -1101,6 +1134,45 @@ $('delExecuteBtn').onclick = async () => {
     if (delSelectedType === 'pyq') $('delPyqLoadBtn').click();
   } catch(e) { log('❌ Delete error: ' + e.message, 'err'); }
 };
+
+// ── Broadcast notification to all users ──────────────────────────────────────
+async function broadcastNotification(title, body) {
+  try {
+    await addDoc(collection(db, 'notifications'), {
+      title: title || '📚 New Content Added!',
+      body:  body  || 'New study material is now available in the app.',
+      section:   currentSection || 'civil',
+      createdBy: 'admin',
+      createdAt: serverTimestamp(),
+      sent: false,
+    });
+    return true;
+  } catch (err) {
+    console.error('Broadcast notification error:', err);
+    return false;
+  }
+}
+
+document.getElementById('sendNotifBtn').addEventListener('click', async () => {
+  const title = document.getElementById('notifTitle').value.trim();
+  const body  = document.getElementById('notifBody').value.trim();
+  if (!title) { alert('Please enter a notification title.'); return; }
+  document.getElementById('sendNotifBtn').disabled = true;
+  document.getElementById('sendNotifBtn').textContent = '⏳ Sending…';
+  const ok = await broadcastNotification(title, body);
+  if (ok) {
+    document.getElementById('notifSentMsg').style.display = 'block';
+    document.getElementById('sendNotifBtn').textContent = '✅ Sent';
+  } else {
+    document.getElementById('sendNotifBtn').disabled = false;
+    document.getElementById('sendNotifBtn').textContent = '🔔 Send Notification';
+    alert('Failed to queue notification. Check console.');
+  }
+});
+
+document.getElementById('skipNotifBtn').addEventListener('click', () => {
+  document.getElementById('notifBroadcastPanel').classList.add('hidden');
+});
 </script>
 </body>
 </html>

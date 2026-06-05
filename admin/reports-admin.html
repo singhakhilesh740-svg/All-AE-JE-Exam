@@ -83,6 +83,16 @@
     .edit-status.err{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);display:block}
     .btn-edit-q{background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd}
     .btn-edit-q:hover{background:rgba(59,130,246,.25)}
+
+    /* Reply-before-action modal */
+    .reply-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
+    .reply-box{background:#1e293b;border-radius:14px;padding:22px;max-width:480px;width:100%;border:1px solid #334155}
+    .reply-box h3{color:#f59e0b;font-size:16px;margin-bottom:6px}
+    .reply-box p{font-size:12px;color:#64748b;margin-bottom:12px}
+    .reply-textarea{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:10px;font-size:13px;font-family:inherit;resize:vertical;min-height:70px;line-height:1.5}
+    .reply-textarea:focus{outline:none;border-color:#f59e0b}
+    .reply-hint{font-size:11px;color:#475569;margin:6px 0 14px}
+    .reply-actions{display:flex;gap:8px}
   </style>
 </head>
 <body>
@@ -371,9 +381,35 @@ function renderReports() {
 }
 
 // ── Actions ───────────────────────────────────────────
-window.setStatus = async (id, status) => {
-  await updateDoc(doc(db, 'reports', id), { status });
+let _pendingAction = null;
+
+window.closeReplyModal = () => {
+  document.getElementById('replyModal').style.display = 'none';
+  _pendingAction = null;
 };
+
+window.setStatus = (id, status) => {
+  _pendingAction = { id, status };
+  const isResolve = status === 'resolved';
+  document.getElementById('replyModalTitle').textContent =
+    isResolve ? '\u2705 Resolve Report' : '\u2014 Dismiss / Set Pending';
+  document.getElementById('replyConfirmBtn').style.background =
+    isResolve ? '#10b981' : '#475569';
+  document.getElementById('replyConfirmBtn').style.color =
+    isResolve ? '#022c22' : '#f1f5f9';
+  document.getElementById('replyText').value = '';
+  document.getElementById('replyModal').style.display = 'flex';
+};
+
+document.getElementById('replyConfirmBtn').addEventListener('click', async () => {
+  if (!_pendingAction) return;
+  const { id, status } = _pendingAction;
+  const adminReply = document.getElementById('replyText').value.trim();
+  const updateData = { status };
+  if (adminReply) updateData.admin_reply = adminReply;
+  await updateDoc(doc(db, 'reports', id), updateData);
+  closeReplyModal();
+});
 
 window.deleteReport = async (id) => {
   if (!confirm('Delete this report permanently?')) return;
@@ -494,8 +530,10 @@ function showResolveModal(reportId, report, qDocId, examId, ai) {
       if (newExp) updateData.explanation = newExp;
       await updateDoc(doc(db, 'exams', examId, 'questions', qDocId), updateData);
 
+      const replyMsg = `AI reviewed: ${ai.answer_correct ? 'Answer was correct.' : `Answer corrected to ${['A','B','C','D'][newAns]}.`} ${newExp ? 'Explanation updated.' : ''}`.trim();
       await updateDoc(doc(db, 'reports', reportId), {
         status: 'resolved',
+        admin_reply: replyMsg,
         ai_resolution: {
           old_answer: report.correct_ans,
           new_answer: newAns,
@@ -649,6 +687,7 @@ $('editSaveBtn').onclick = async () => {
     if ($('editAutoResolve').checked && editingReportId) {
       await updateDoc(doc(db, 'reports', editingReportId), {
         status: 'resolved',
+        admin_reply: 'Your reported question has been reviewed and corrected. Thank you!',
         admin_edit: {
           edited_at: new Date().toISOString(),
           edited_by: 'Admin (inline edit)',
@@ -671,5 +710,24 @@ $('editSaveBtn').onclick = async () => {
   $('editSaveBtn').textContent = '💾 Save & Fix';
 };
 </script>
+
+<!-- REPLY MODAL -->
+<div id="replyModal" class="reply-overlay" style="display:none">
+  <div class="reply-box">
+    <h3 id="replyModalTitle">Resolve Report</h3>
+    <p>Send an optional message to the user explaining what was done.</p>
+    <textarea id="replyText" class="reply-textarea"
+      placeholder="e.g. Answer corrected — the correct answer is B. Explanation updated."></textarea>
+    <div class="reply-hint">&#9888; User receives a push notification ONLY if you write a message here.</div>
+    <div class="reply-actions">
+      <button id="replyConfirmBtn" style="flex:2;padding:10px;border-radius:8px;border:none;font-weight:700;font-size:13px;cursor:pointer;background:#10b981;color:#022c22">
+        &#10003; Confirm
+      </button>
+      <button onclick="closeReplyModal()" style="padding:10px 16px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;background:#334155;color:#94a3b8">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
