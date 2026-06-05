@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>FCM Debug</title>
+  <style>
+    body{font-family:monospace;background:#0f172a;color:#f1f5f9;padding:20px}
+    h2{color:#f59e0b;margin-bottom:16px}
+    .check{padding:10px;margin:6px 0;border-radius:8px;font-size:13px}
+    .ok{background:rgba(16,185,129,.15);border:1px solid #10b981;color:#10b981}
+    .fail{background:rgba(239,68,68,.15);border:1px solid #ef4444;color:#ef4444}
+    .warn{background:rgba(245,158,11,.15);border:1px solid #f59e0b;color:#f59e0b}
+    .info{background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd}
+    button{background:#f59e0b;color:#1f2937;border:none;padding:10px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;margin:4px}
+    #log{margin-top:16px}
+    .token-box{background:#0a1122;border:1px solid #334155;padding:10px;border-radius:8px;word-break:break-all;font-size:11px;color:#64748b;margin-top:8px}
+  </style>
+</head>
+<body>
+<h2>🔍 FCM Notification Debugger</h2>
+<p style="color:#64748b;font-size:12px;margin-bottom:16px">
+  Open this page from your live GitHub Pages site, NOT from file://
+</p>
+
+<button onclick="runAllChecks()">▶ Run All Checks</button>
+<button onclick="requestPermission()">🔔 Request Permission</button>
+<button onclick="getToken()">🔑 Get FCM Token</button>
+<button onclick="sendTestNotif()">📤 Send Test Notification</button>
+
+<div id="log"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getMessaging, getToken, isSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+
+const VAPID_KEY = "BJpkg3o_KoXb-RzruqQozOgr68rUkqaUlnOkz1ttj0QM3ONM111DsR-D39GWg3nanDtYxHRwnDA0ZnnoruK0wG4";
+const SUBSCRIBE_URL = "https://asia-south1-ae-exam-app.cloudfunctions.net/subscribeToTopic";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+
+const app = initializeApp(firebaseConfig);
+const log = (msg, type='info') => {
+  const d = document.createElement('div');
+  d.className = `check ${type}`;
+  d.innerHTML = msg;
+  document.getElementById('log').appendChild(d);
+};
+
+window.runAllChecks = async () => {
+  document.getElementById('log').innerHTML = '';
+
+  // 1. HTTPS check
+  if (location.protocol === 'https:') log('✅ Running on HTTPS: ' + location.hostname, 'ok');
+  else log('❌ NOT on HTTPS! Push notifications require HTTPS. Use your github.io URL.', 'fail');
+
+  // 2. Notification API
+  if ('Notification' in window) log('✅ Notification API supported', 'ok');
+  else log('❌ Notification API NOT supported in this browser', 'fail');
+
+  // 3. Service Worker
+  if ('serviceWorker' in navigator) log('✅ Service Worker supported', 'ok');
+  else log('❌ Service Worker NOT supported', 'fail');
+
+  // 4. Permission status
+  const perm = Notification.permission;
+  if (perm === 'granted') log('✅ Notification permission: GRANTED', 'ok');
+  else if (perm === 'denied') log('❌ Notification permission: DENIED — user must reset in browser settings', 'fail');
+  else log('⚠️ Notification permission: not asked yet — click "Request Permission"', 'warn');
+
+  // 5. FCM supported
+  const supported = await isSupported();
+  if (supported) log('✅ Firebase Messaging supported in this browser', 'ok');
+  else log('❌ Firebase Messaging NOT supported (try Chrome)', 'fail');
+
+  // 6. Service workers registered
+  const regs = await navigator.serviceWorker.getRegistrations();
+  if (regs.length > 0) {
+    regs.forEach(r => log(`✅ Service Worker registered: ${r.scope} — state: ${r.active?.state || 'unknown'}`, 'ok'));
+  } else {
+    log('❌ No service workers registered! firebase-messaging-sw.js may be missing.', 'fail');
+  }
+
+  // 7. Check firebase-messaging-sw.js exists
+  try {
+    const r = await fetch('/firebase-messaging-sw.js');
+    if (r.ok) log('✅ firebase-messaging-sw.js found at root ✔', 'ok');
+    else log('❌ firebase-messaging-sw.js NOT found (404) — push file to root of repo!', 'fail');
+  } catch(e) {
+    log('⚠️ Could not check firebase-messaging-sw.js: ' + e.message, 'warn');
+  }
+
+  // 8. Check notifications.js exists
+  try {
+    const r = await fetch('/js/notifications.js');
+    if (r.ok) log('✅ js/notifications.js found', 'ok');
+    else log('❌ js/notifications.js NOT found', 'fail');
+  } catch(e) {}
+};
+
+window.requestPermission = async () => {
+  const perm = await Notification.requestPermission();
+  if (perm === 'granted') log('✅ Permission GRANTED!', 'ok');
+  else log('❌ Permission ' + perm, 'fail');
+};
+
+window.getToken = async () => {
+  try {
+    const messaging = getMessaging(app);
+    const reg = await navigator.serviceWorker.ready;
+    const token = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: reg });
+    if (token) {
+      log('✅ FCM Token obtained!', 'ok');
+      log(`<div class="token-box">Token: ${token}</div>`, 'info');
+
+      // Try subscribing
+      const res = await fetch(SUBSCRIBE_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ token, topic: 'all_users' })
+      });
+      const data = await res.json();
+      if (data.success) log('✅ Subscribed to all_users topic!', 'ok');
+      else log('❌ Subscribe failed: ' + data.error, 'fail');
+    } else {
+      log('❌ No token received', 'fail');
+    }
+  } catch(e) {
+    log('❌ getToken error: ' + e.message, 'fail');
+  }
+};
+
+window.sendTestNotif = () => {
+  if (Notification.permission === 'granted') {
+    new Notification('✅ Test Notification', { body: 'If you see this, notifications work!', icon: '/icon-192.png' });
+    log('✅ Test notification sent — did you see it?', 'ok');
+  } else {
+    log('❌ Permission not granted yet', 'fail');
+  }
+};
+</script>
+</body>
+</html>
