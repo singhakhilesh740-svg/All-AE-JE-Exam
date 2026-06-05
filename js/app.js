@@ -20,6 +20,7 @@ import {
 import * as Quiz from './quiz.js';
 import { EXAMS, getAllExams, getExamById, loadDynamicExams } from './exams.js';
 import { db } from './firebase-config.js';
+import { initNotifications } from './notifications.js';
 import { SUBJECTS_UPPSC_MAINS, getTopicsFor } from './subjects.js';
 import { renderNotesContent, loadNotesForSubject } from './notes.js';
 import { SUBJECTS_PCB_NOTES, loadPCBUnit, renderPCBNotesContent } from './pcb-notes.js';
@@ -135,6 +136,7 @@ watchAuth(
   async user => {
     currentUser = user;
     startSessionTracker(user.uid);
+    initNotifications(user.uid, toast).catch(() => {});
     // Load custom exams FIRST so they appear in exam lists
     await loadDynamicExams(db).catch(() => {});
     try {

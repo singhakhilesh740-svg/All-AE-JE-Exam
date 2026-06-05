@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getMessaging, isSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
@@ -23,4 +24,16 @@ const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope('profile');
 googleProvider.addScope('email');
 
-export { app, auth, db, googleProvider, RecaptchaVerifier, signInWithPhoneNumber };
+// Messaging — only initialise in browsers that support it.
+// Safari < 16.4 and some older Android WebViews don't support Push API.
+// isSupported() returns a Promise<boolean>, so we lazily initialise.
+let _messaging = null;
+async function getMessagingInstance() {
+  if (_messaging) return _messaging;
+  const supported = await isSupported();
+  if (!supported) return null;
+  _messaging = getMessaging(app);
+  return _messaging;
+}
+
+export { app, auth, db, googleProvider, RecaptchaVerifier, signInWithPhoneNumber, getMessagingInstance };
