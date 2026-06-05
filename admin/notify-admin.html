@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Notify Users — Admin</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
+    .container{max-width:600px;margin:0 auto}
+    h1{color:#f59e0b;font-size:22px;margin-bottom:4px}
+    .sub{color:#94a3b8;font-size:13px;margin-bottom:24px}
+    a{color:#60a5fa;text-decoration:none;font-size:13px}
+
+    /* Login */
+    .login-wrap{text-align:center;padding:60px 20px}
+    .login-wrap p{color:#94a3b8;margin-bottom:20px;font-size:14px}
+    .btn-login{background:#f59e0b;color:#1f2937;font-size:14px;padding:10px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:700}
+
+    /* Card */
+    .card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:20px;margin-bottom:16px}
+    .card-title{font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+
+    /* Form */
+    label{font-size:12px;color:#94a3b8;display:block;margin-bottom:5px;font-weight:600}
+    input[type=text],textarea,select{
+      width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;
+      border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;
+      margin-bottom:14px;outline:none;transition:border .15s
+    }
+    input[type=text]:focus,textarea:focus,select:focus{border-color:#f59e0b}
+    textarea{resize:vertical;min-height:80px;line-height:1.5}
+
+    /* Buttons */
+    .btn-send{width:100%;background:#f59e0b;color:#1f2937;font-weight:700;font-size:14px;
+      padding:12px;border:none;border-radius:10px;cursor:pointer;transition:opacity .15s}
+    .btn-send:hover{opacity:.9}
+    .btn-send:disabled{opacity:.5;cursor:not-allowed}
+
+    /* Templates */
+    .tpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+    .tpl-btn{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:10px;
+      text-align:left;cursor:pointer;transition:all .15s;color:#94a3b8;font-size:12px}
+    .tpl-btn:hover{border-color:#f59e0b;color:#f59e0b}
+    .tpl-btn .tpl-icon{font-size:16px;display:block;margin-bottom:4px}
+    .tpl-btn .tpl-name{font-weight:600;display:block;margin-bottom:2px;color:#e2e8f0}
+
+    /* Preview */
+    .preview-box{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:14px;margin-bottom:14px}
+    .preview-label{font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;font-weight:700}
+    .notif-mock{background:#1e293b;border-radius:10px;padding:12px;border:1px solid #334155;display:flex;gap:10px;align-items:flex-start}
+    .notif-icon{width:36px;height:36px;border-radius:8px;background:#f59e0b;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .notif-title{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:3px}
+    .notif-body{font-size:12px;color:#94a3b8;line-height:1.4}
+    .notif-time{font-size:10px;color:#475569;margin-top:4px}
+
+    /* Status */
+    .status-box{padding:12px 16px;border-radius:10px;font-size:13px;margin-top:12px;display:none;text-align:center;font-weight:600}
+    .status-ok{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.3);display:block}
+    .status-err{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);display:block}
+
+    /* History */
+    .history-item{background:#0f172a;border-radius:8px;padding:12px;margin-bottom:8px;border:1px solid #1e293b}
+    .hi-title{font-size:13px;font-weight:600;color:#e2e8f0;margin-bottom:3px}
+    .hi-body{font-size:12px;color:#64748b;margin-bottom:5px}
+    .hi-meta{font-size:11px;color:#334155;display:flex;gap:8px;flex-wrap:wrap}
+    .hi-sent{color:#10b981}
+    .hi-pending{color:#f59e0b}
+    .empty{text-align:center;padding:30px;color:#334155;font-size:13px}
+    .hidden{display:none!important}
+
+    /* Char counter */
+    .char-count{font-size:11px;color:#475569;text-align:right;margin-top:-10px;margin-bottom:10px}
+    .char-warn{color:#f59e0b}
+    .char-over{color:#ef4444}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🔔 Send Notification</h1>
+  <p class="sub">Broadcast push notifications to all app users · <a href="index.html">← Admin Panel</a></p>
+
+  <!-- LOGIN -->
+  <div id="loginPanel" class="login-wrap">
+    <p>Sign in with admin account to send notifications.</p>
+    <button class="btn-login" id="loginBtn">🔐 Login with Google</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainPanel" class="hidden">
+
+    <!-- Quick Templates -->
+    <div class="card">
+      <div class="card-title">⚡ Quick Templates</div>
+      <div class="tpl-grid" id="templateGrid">
+        <button class="tpl-btn" data-title="📚 New Questions Added!" data-body="New PYQ questions are now live. Open the app and start practising!">
+          <span class="tpl-icon">📚</span>
+          <span class="tpl-name">New Questions</span>
+          <span>PYQ upload alert</span>
+        </button>
+        <button class="tpl-btn" data-title="📝 New Notes Available!" data-body="Fresh study notes have been added. Check them out in the Notes section!">
+          <span class="tpl-icon">📝</span>
+          <span class="tpl-name">New Notes</span>
+          <span>Notes upload alert</span>
+        </button>
+        <button class="tpl-btn" data-title="🎯 New Mock Test Live!" data-body="A new mock test is available. Test your preparation now!">
+          <span class="tpl-icon">🎯</span>
+          <span class="tpl-name">Mock Test</span>
+          <span>Test announcement</span>
+        </button>
+        <button class="tpl-btn" data-title="⚠️ App Update Available" data-body="A new version of the app is live with improvements. Reload the app to get the latest version.">
+          <span class="tpl-icon">⚠️</span>
+          <span class="tpl-name">App Update</span>
+          <span>Update notice</span>
+        </button>
+        <button class="tpl-btn" data-title="🏆 Exam Date Announced!" data-body="Check the latest exam schedule and start your preparation. Details in the app.">
+          <span class="tpl-icon">🏆</span>
+          <span class="tpl-name">Exam Alert</span>
+          <span>Exam date notice</span>
+        </button>
+        <button class="tpl-btn" data-title="💡 Study Tip of the Day" data-body="Consistency beats intensity. Study 2 hours daily rather than 10 hours once a week!">
+          <span class="tpl-icon">💡</span>
+          <span class="tpl-name">Study Tip</span>
+          <span>Motivational</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Compose -->
+    <div class="card">
+      <div class="card-title">✍️ Compose Notification</div>
+
+      <label>Notification Title *</label>
+      <input type="text" id="notifTitle" placeholder="e.g. 📚 New GPSC GES Civil 2025 Questions Added!" maxlength="100">
+      <div class="char-count" id="titleCount">0 / 100</div>
+
+      <label>Message Body *</label>
+      <textarea id="notifBody" placeholder="e.g. 298 new PYQs from GPSC GES Civil 2025 are now live. Open the app and start practising!" maxlength="200"></textarea>
+      <div class="char-count" id="bodyCount">0 / 200</div>
+
+      <label>Target Audience</label>
+      <select id="notifTarget">
+        <option value="all_users">🌍 All Users</option>
+      </select>
+
+      <!-- Live Preview -->
+      <div class="preview-box">
+        <div class="preview-label">📱 Preview</div>
+        <div class="notif-mock">
+          <div class="notif-icon">📖</div>
+          <div>
+            <div class="notif-title" id="previewTitle">Notification Title</div>
+            <div class="notif-body" id="previewBody">Your message will appear here...</div>
+            <div class="notif-time">now · AE/JE Civil</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-send" id="sendBtn">🔔 Send to All Users</button>
+      <div class="status-box" id="statusBox"></div>
+    </div>
+
+    <!-- Notification History -->
+    <div class="card">
+      <div class="card-title">📜 Sent Notifications <span style="font-size:12px;color:#64748b;font-weight:400">(last 10)</span></div>
+      <div id="historyList"><div class="empty">No notifications sent yet.</div></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, orderBy, query, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+
+const ADMIN_EMAIL = '112ce0489@gmail.com';
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const $    = id => document.getElementById(id);
+
+// ── Auth ─────────────────────────────────────────────────────────────────────
+$('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
+
+onAuthStateChanged(auth, user => {
+  if (user && user.email === ADMIN_EMAIL) {
+    $('loginPanel').classList.add('hidden');
+    $('mainPanel').classList.remove('hidden');
+    loadHistory();
+  } else if (user) {
+    alert('Access denied. Admin only.');
+    auth.signOut();
+  }
+});
+
+// ── Templates ────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tpl-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $('notifTitle').value = btn.dataset.title;
+    $('notifBody').value  = btn.dataset.body;
+    updatePreview();
+    updateCounts();
+    // Scroll to compose
+    document.querySelector('.card:nth-child(2)').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ── Live preview ──────────────────────────────────────────────────────────────
+function updatePreview() {
+  const title = $('notifTitle').value.trim() || 'Notification Title';
+  const body  = $('notifBody').value.trim()  || 'Your message will appear here...';
+  $('previewTitle').textContent = title;
+  $('previewBody').textContent  = body;
+}
+
+function updateCounts() {
+  const tLen = $('notifTitle').value.length;
+  const bLen = $('notifBody').value.length;
+  $('titleCount').textContent = `${tLen} / 100`;
+  $('titleCount').className   = 'char-count' + (tLen > 90 ? ' char-warn' : '');
+  $('bodyCount').textContent  = `${bLen} / 200`;
+  $('bodyCount').className    = 'char-count' + (bLen > 180 ? ' char-warn' : '') + (bLen >= 200 ? ' char-over' : '');
+}
+
+$('notifTitle').addEventListener('input', () => { updatePreview(); updateCounts(); });
+$('notifBody').addEventListener('input',  () => { updatePreview(); updateCounts(); });
+
+// ── Send ──────────────────────────────────────────────────────────────────────
+$('sendBtn').addEventListener('click', async () => {
+  const title = $('notifTitle').value.trim();
+  const body  = $('notifBody').value.trim();
+
+  if (!title) { showStatus('Please enter a notification title.', false); return; }
+  if (!body)  { showStatus('Please enter a message body.', false); return; }
+
+  if (!confirm(`Send this notification to ALL users?\n\nTitle: ${title}\nMessage: ${body}`)) return;
+
+  $('sendBtn').disabled = true;
+  $('sendBtn').textContent = '⏳ Sending…';
+  hideStatus();
+
+  try {
+    await addDoc(collection(db, 'notifications'), {
+      title,
+      body,
+      topic:     'all_users',
+      section:   'general',
+      createdBy: 'admin',
+      createdAt: serverTimestamp(),
+      sent:      false,
+    });
+
+    showStatus('✅ Notification queued! Users will receive it within seconds.', true);
+    $('notifTitle').value = '';
+    $('notifBody').value  = '';
+    updatePreview();
+    updateCounts();
+    setTimeout(loadHistory, 3000);  // reload history after 3s to show sent status
+  } catch (err) {
+    showStatus('❌ Error: ' + err.message, false);
+  }
+
+  $('sendBtn').disabled = false;
+  $('sendBtn').textContent = '🔔 Send to All Users';
+});
+
+// ── History ───────────────────────────────────────────────────────────────────
+async function loadHistory() {
+  try {
+    const snap = await getDocs(
+      query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(10))
+    );
+    if (snap.empty) {
+      $('historyList').innerHTML = '<div class="empty">No notifications sent yet.</div>';
+      return;
+    }
+    $('historyList').innerHTML = snap.docs.map(d => {
+      const n = d.data();
+      const date = n.createdAt?.toDate
+        ? n.createdAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
+        : 'Just now';
+      const sentBadge = n.sent
+        ? `<span class="hi-sent">✅ Sent</span>`
+        : `<span class="hi-pending">⏳ Queued</span>`;
+      return `
+        <div class="history-item">
+          <div class="hi-title">${n.title || ''}</div>
+          <div class="hi-body">${n.body || ''}</div>
+          <div class="hi-meta">
+            ${sentBadge}
+            <span>🌍 ${n.topic || 'all_users'}</span>
+            <span>🕐 ${date}</span>
+          </div>
+        </div>`;
+    }).join('');
+  } catch (err) {
+    $('historyList').innerHTML = '<div class="empty">Failed to load history.</div>';
+  }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function showStatus(msg, ok) {
+  const el = $('statusBox');
+  el.textContent = msg;
+  el.className = 'status-box ' + (ok ? 'status-ok' : 'status-err');
+}
+function hideStatus() {
+  $('statusBox').className = 'status-box';
+}
+</script>
+</body>
+</html>
