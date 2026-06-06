@@ -431,7 +431,7 @@ on('civilPYQ', () => {
 
 on('civilBookmarks', async () => {
   $('bookmarksBackBtn').onclick = () => showScreen('civilHomeScreen');
-  await loadAndShowBookmarks();
+  await loadAndShowBookmarks('civil');
   showScreen('bookmarksScreen');
 });
 
@@ -459,7 +459,7 @@ on('pcbPYQ', () => {
 
 on('pcbBookmarks', async () => {
   $('bookmarksBackBtn').onclick = () => showScreen('pcbHomeScreen');
-  await loadAndShowBookmarks();
+  await loadAndShowBookmarks('pcb');
   showScreen('bookmarksScreen');
 });
 
@@ -489,6 +489,12 @@ on('nonTechPYQ', () => {
   $('pyqExamsTitle').textContent = '📜 Non-Tech — PYQ';
   renderExamList('nontech');
   showScreen('pyqExamsScreen');
+});
+
+on('nonTechBookmarks', async () => {
+  $('bookmarksBackBtn').onclick = () => showScreen('nonTechHomeScreen');
+  await loadAndShowBookmarks('nontech');
+  showScreen('bookmarksScreen');
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -876,10 +882,30 @@ function buildTopicChips(containerId, subjectId, onSelect) {
 // BOOKMARKS FLOW
 // ══════════════════════════════════════════════════════════════════════════════
 
-async function loadAndShowBookmarks() {
+async function loadAndShowBookmarks(section = null) {
   if (!currentUser) { toast('Please sign in to view bookmarks'); return; }
-  allBookmarks = await fetchBookmarkedQuestions(currentUser.uid);
+  const all = await fetchBookmarkedQuestions(currentUser.uid);
+  if (section) {
+    allBookmarks = all.filter(q => {
+      const s = (q.section || '').toLowerCase();
+      if (section === 'civil')   return s === 'civil'   || (!s && !_isPCB(q) && !_isNonTech(q));
+      if (section === 'pcb')     return s === 'pcb';
+      if (section === 'nontech') return s === 'nontech';
+      return true;
+    });
+  } else {
+    allBookmarks = all;
+  }
   renderBookmarksList();
+}
+
+function _isPCB(q) {
+  const ex = (q.examId || q.exam || '').toLowerCase();
+  return ex.includes('pcb') || ex.includes('pollution') || (q.subject||'').toLowerCase().includes('unit');
+}
+function _isNonTech(q) {
+  const nonTechSubjs = ['polity','history','geography','general-science','economy','current-affairs','environment','hindi','reasoning','quantitative-aptitude','english'];
+  return nonTechSubjs.some(s => (q.subject||'').toLowerCase().includes(s));
 }
 
 function renderBookmarksList() {
@@ -1210,7 +1236,7 @@ on('quizBookmarkBtn', async () => {
       toast('Removed from bookmarks');
     } else toast('Failed to remove bookmark');
   } else {
-    const ok = await addBookmark(currentUser.uid, qWithExam);
+    const ok = await addBookmark(currentUser.uid, { ...qWithExam, section: activeSection });
     if (ok) {
       $('quizBookmarkBtn').textContent = '★'; $('quizBookmarkBtn').dataset.marked = '1';
       allBookmarks.unshift(qWithExam);
