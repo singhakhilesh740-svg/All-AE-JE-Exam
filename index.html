@@ -20,6 +20,79 @@
       -webkit-touch-callout: none;
     }
     input, textarea { -webkit-user-select: text; user-select: text; }
+
+    /* ── Header badge buttons ── */
+    .hdr-badge-btn { position: relative; }
+    .hdr-badge {
+      position: absolute; top: 2px; right: 2px;
+      background: #ef4444; color: #fff;
+      font-size: 9px; font-weight: 800; line-height: 1;
+      min-width: 16px; height: 16px;
+      border-radius: 8px; padding: 0 4px;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--bg, #0f172a);
+    }
+    .hdr-badge.hidden { display: none; }
+
+    /* ── Slide-up drawer ── */
+    .inbox-drawer {
+      position: fixed; inset: 0; z-index: 8000;
+      display: flex; flex-direction: column;
+      background: transparent;
+    }
+    .inbox-drawer.hidden { display: none; }
+    .inbox-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.6);
+    }
+    .inbox-panel {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      max-height: 82vh;
+      background: #0f172a;
+      border-radius: 20px 20px 0 0;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .inbox-handle {
+      width: 40px; height: 4px;
+      background: #334155; border-radius: 2px;
+      margin: 12px auto 0;
+    }
+    .inbox-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .inbox-title { font-size: 16px; font-weight: 700; color: #f1f5f9; }
+    .inbox-close {
+      background: none; border: none; color: #64748b;
+      font-size: 22px; cursor: pointer; line-height: 1; padding: 0 4px;
+    }
+    .inbox-body { overflow-y: auto; padding: 12px 14px 24px; flex: 1; }
+    .inbox-empty {
+      text-align: center; padding: 40px 20px;
+      color: #334155; font-size: 13px;
+    }
+    .inbox-item {
+      background: #1e293b; border-radius: 12px;
+      padding: 14px; margin-bottom: 10px;
+      border-left: 3px solid #334155;
+    }
+    .inbox-item.unread { border-left-color: #f59e0b; }
+    .inbox-item-title {
+      font-size: 14px; font-weight: 700;
+      color: #f1f5f9; margin-bottom: 5px; line-height: 1.3;
+    }
+    .inbox-item-body { font-size: 13px; color: #94a3b8; line-height: 1.5; }
+    .inbox-item-meta { font-size: 11px; color: #475569; margin-top: 7px; }
+    .inbox-item-tag {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;
+      background: rgba(245,158,11,.15); color: #f59e0b;
+    }
+    .inbox-item-tag.msg-tag {
+      background: rgba(99,102,241,.15); color: #818cf8;
+    }
   </style>
 
   <!-- ✅ TEMP: Hide OTP login — remove this block to re-enable -->
@@ -86,6 +159,14 @@
         <span class="header-sub">Select Exam Category</span>
       </div>
       <div class="header-right">
+        <button id="msgBtn" class="btn-icon hdr-badge-btn" title="Messages">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span class="hdr-badge hidden" id="msgBadge">0</span>
+        </button>
+        <button id="notifBtn" class="hdr-badge-btn btn-icon" title="Notifications">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="hdr-badge hidden" id="notifBadge">0</span>
+        </button>
         <button id="editProfileBtn" class="btn-icon" title="My Profile">👤</button>
         <button id="logoutBtn" class="btn-icon" title="Logout">⏻</button>
       </div>
@@ -345,11 +426,6 @@
           <div class="tile-icon">📜</div>
           <div class="tile-title">PYQ</div>
           <div class="tile-sub">Previous year questions</div>
-        </button>
-        <button class="home-tile tile-bookmarks" id="nonTechBookmarks">
-          <div class="tile-icon">⭐</div>
-          <div class="tile-title">Bookmarks</div>
-          <div class="tile-sub">Saved questions</div>
         </button>
       </div>
     </main>
@@ -894,5 +970,35 @@
     });
   </script>
 
+
+<!-- ── Notification Drawer ── -->
+<div id="notifDrawer" class="inbox-drawer hidden">
+  <div class="inbox-backdrop" id="notifBackdrop"></div>
+  <div class="inbox-panel">
+    <div class="inbox-handle"></div>
+    <div class="inbox-header">
+      <span class="inbox-title">🔔 Notifications</span>
+      <button class="inbox-close" id="notifDrawerClose">✕</button>
+    </div>
+    <div class="inbox-body" id="notifDrawerBody">
+      <div class="inbox-empty">No notifications yet.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Messages Drawer ── -->
+<div id="msgDrawer" class="inbox-drawer hidden">
+  <div class="inbox-backdrop" id="msgBackdrop"></div>
+  <div class="inbox-panel">
+    <div class="inbox-handle"></div>
+    <div class="inbox-header">
+      <span class="inbox-title">✉️ Messages from Admin</span>
+      <button class="inbox-close" id="msgDrawerClose">✕</button>
+    </div>
+    <div class="inbox-body" id="msgDrawerBody">
+      <div class="inbox-empty">No messages yet.</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
