@@ -116,151 +116,107 @@ function showScreen(id) {
   window.scrollTo(0, 0);
 }
 
-// ── In-app notification popup on login ────────────────────────────────────────
-// Shows a popup for any notification sent after the user's last seen timestamp.
-async function checkAndShowNotifications(uid) {
-  try {
-    // Get user's last notification seen time
-    const userRef = doc(db, 'users', uid);
-    const userSnap = await getDoc(userRef);
-    const lastSeen = userSnap.data()?.lastNotifSeen || 0;
+// ══════════════════════════════════════════════════════════════════════════
+// INBOX — Notification Bell + Message Icon
+// Reliable approach:
+//   Notifications → compare createdAt of each notif vs stored lastNotifSeenAt
+//   Messages      → store array of seen IDs (seenReportIds, seenFeedbackIds)
+//   Badges clear ONLY when user opens the drawer (marks as read)
+// ══════════════════════════════════════════════════════════════════════════
 
-    // Fetch latest notifications after lastSeen
+async function checkAndShowNotifications(uid) {
+  // Shows a one-time popup on login for newest unseen notification
+  try {
+    const userRef  = doc(db, 'users', uid);
+    const userSnap = await getDoc(userRef);
+    const userData = userSnap.data() || {};
+    const lastNotifSeenAt = userData.lastNotifSeenAt || 0;
+
     const snap = await getDocs(
-      query(
-        collection(db, 'notifications'),
-        orderBy('createdAt', 'desc'),
-        limit(5)
-      )
+      query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(5))
     );
 
-    const unseen = [];
+    let latestUnseen = null;
+    let unseenCount  = 0;
     snap.forEach(d => {
-      const n = d.data();
-      if (!n.createdAt) return;
-      const ts = n.createdAt.toMillis ? n.createdAt.toMillis() : 0;
-      if (ts > lastSeen && n.sent === true) {
-        unseen.push({ id: d.id, title: n.title || '', body: n.body || '', ts });
+      const n  = d.data();
+      const ts = n.createdAt?.toMillis ? n.createdAt.toMillis() : 0;
+      if (n.sent && ts > lastNotifSeenAt) {
+        unseenCount++;
+        if (!latestUnseen) latestUnseen = { title: n.title || '', body: n.body || '' };
       }
     });
 
-    if (unseen.length === 0) return;
-
-    // Show popup for the latest unseen notification
-    const latest = unseen[0];
-    showNotifPopup(latest.title, latest.body, unseen.length);
-
-    // Update lastNotifSeen to now
-    await setDoc(userRef, { lastNotifSeen: Date.now() }, { merge: true });
-
-  } catch (err) {
-    console.log('[Notif] check error:', err.message);
-  }
+    if (!latestUnseen) return;
+    showNotifPopup(latestUnseen.title, latestUnseen.body, unseenCount);
+    // Mark popup as seen (don't clear badge — user must open drawer for that)
+    await setDoc(userRef, { lastNotifSeenAt: Date.now() }, { merge: true });
+  } catch (err) { console.log('[Notif] popup error:', err.message); }
 }
 
 function showNotifPopup(title, body, count) {
-  // Remove existing popup if any
   const existing = document.getElementById('notifPopup');
   if (existing) existing.remove();
-
   const popup = document.createElement('div');
   popup.id = 'notifPopup';
+  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.65);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
   popup.innerHTML = `
-    <div id="notifPopupInner">
-      <div id="notifPopupHeader">
-        <span>🔔 ${count > 1 ? count + ' New Notifications' : 'New Notification'}</span>
-        <button onclick="document.getElementById('notifPopup').remove()" id="notifPopupClose">✕</button>
+    <div style="background:#1e293b;border:1px solid #f59e0b;border-radius:16px;padding:22px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <span style="font-size:13px;font-weight:700;color:#f59e0b;">🔔 ${count > 1 ? count + ' New Notifications' : 'New Notification'}</span>
+        <button onclick="document.getElementById('notifPopup').remove()" style="background:none;border:none;color:#64748b;font-size:20px;cursor:pointer;line-height:1;padding:0 4px;">✕</button>
       </div>
-      <div id="notifPopupTitle">${title}</div>
-      <div id="notifPopupBody">${body}</div>
-    </div>
-  `;
-  popup.style.cssText = `
-    position:fixed;top:0;left:0;right:0;bottom:0;
-    background:rgba(0,0,0,0.6);z-index:9999;
-    display:flex;align-items:center;justify-content:center;padding:20px;
-  `;
-  const inner = popup.querySelector('#notifPopupInner');
-  inner.style.cssText = `
-    background:#1e293b;border:1px solid #f59e0b;border-radius:16px;
-    padding:20px;max-width:380px;width:100%;
-    box-shadow:0 20px 60px rgba(0,0,0,0.5);
-  `;
-  popup.querySelector('#notifPopupHeader').style.cssText = `
-    display:flex;justify-content:space-between;align-items:center;
-    margin-bottom:12px;
-  `;
-  popup.querySelector('#notifPopupHeader span').style.cssText = `
-    font-size:13px;font-weight:700;color:#f59e0b;
-  `;
-  popup.querySelector('#notifPopupClose').style.cssText = `
-    background:none;border:none;color:#64748b;font-size:18px;
-    cursor:pointer;padding:0 4px;line-height:1;
-  `;
-  popup.querySelector('#notifPopupTitle').style.cssText = `
-    font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:8px;line-height:1.4;
-  `;
-  popup.querySelector('#notifPopupBody').style.cssText = `
-    font-size:13px;color:#94a3b8;line-height:1.6;
-  `;
-  // Close on backdrop click
-  popup.addEventListener('click', e => {
-    if (e.target === popup) popup.remove();
-  });
+      <div style="font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:8px;line-height:1.4;">${title}</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.6;">${body}</div>
+    </div>`;
+  popup.addEventListener('click', e => { if (e.target === popup) popup.remove(); });
   document.body.appendChild(popup);
 }
 
-// ══════════════════════════════════════════════════════════════════════════
-// INBOX: Notification Bell + Message Icon
-// ══════════════════════════════════════════════════════════════════════════
-
-// ── Load badge counts after login ─────────────────────────────────────────
+// ── Load badge counts ─────────────────────────────────────────────────────
 async function loadInboxCounts(uid) {
   try {
-    const userSnap = await getDoc(doc(db, 'users', uid));
+    const userRef  = doc(db, 'users', uid);
+    const userSnap = await getDoc(userRef);
     const userData = userSnap.data() || {};
-    const lastNotifSeen   = userData.lastNotifSeen   || 0;
-    const lastMessageSeen = userData.lastMessageSeen || 0;
 
-    // Count unseen broadcasts
+    // ── Notification badge ─────────────────────────────────────────────
+    // Compare each notification's createdAt vs lastNotifBadgeCleared
+    const lastNotifBadgeCleared = userData.lastNotifBadgeCleared || 0;
     const notifSnap = await getDocs(
       query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(20))
     );
     let notifCount = 0;
     notifSnap.forEach(d => {
-      const n = d.data();
-      if (!n.createdAt) return;
-      const ts = n.createdAt.toMillis ? n.createdAt.toMillis() : 0;
-      if (ts > lastNotifSeen && n.sent === true) notifCount++;
+      const n  = d.data();
+      const ts = n.createdAt?.toMillis ? n.createdAt.toMillis() : 0;
+      if (n.sent && ts > lastNotifBadgeCleared) notifCount++;
     });
 
-    // Count unseen admin replies (reports + feedback)
+    // ── Message badge ─────────────────────────────────────────────────
+    // Use arrays of seen IDs — reliable regardless of timestamps
+    const seenReportIds   = userData.seenReportIds   || [];
+    const seenFeedbackIds = userData.seenFeedbackIds  || [];
+
     let msgCount = 0;
+
     const rSnap = await getDocs(
       query(collection(db, 'reports'), where('user_uid', '==', uid))
     );
     rSnap.forEach(d => {
-      const r = d.data();
-      if (!r.admin_reply) return;
-      const ts = r.updatedAt ? (r.updatedAt.toMillis ? r.updatedAt.toMillis() : 0) : 0;
-      if (ts > lastMessageSeen || lastMessageSeen === 0) msgCount++;
+      if (d.data().admin_reply && !seenReportIds.includes(d.id)) msgCount++;
     });
+
     const fSnap = await getDocs(
       query(collection(db, 'feedback'), where('user_uid', '==', uid))
     );
     fSnap.forEach(d => {
-      const f = d.data();
-      if (!f.admin_reply) return;
-      const ts = f.repliedAt ? (f.repliedAt.toMillis ? f.repliedAt.toMillis() : 0) : 0;
-      if (ts > lastMessageSeen || lastMessageSeen === 0) msgCount++;
+      if (d.data().admin_reply && !seenFeedbackIds.includes(d.id)) msgCount++;
     });
 
-    // Update badges
     _setBadge('notifBadge', notifCount);
     _setBadge('msgBadge',   msgCount);
-  } catch (err) {
-    console.log('[Inbox] count error:', err.message);
-  }
+  } catch (err) { console.log('[Inbox] count error:', err.message); }
 }
 
 function _setBadge(id, count) {
@@ -278,30 +234,32 @@ function _setBadge(id, count) {
 async function openNotifDrawer(uid) {
   const drawer = document.getElementById('notifDrawer');
   const body   = document.getElementById('notifDrawerBody');
+  if (!drawer) return;
   drawer.classList.remove('hidden');
   body.innerHTML = '<div class="inbox-empty">Loading…</div>';
 
   try {
-    const userSnap = await getDoc(doc(db, 'users', uid));
-    const lastSeen = (userSnap.data() || {}).lastNotifSeen || 0;
-
     const snap = await getDocs(
       query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(20))
     );
 
     if (snap.empty) { body.innerHTML = '<div class="inbox-empty">No notifications yet.</div>'; return; }
 
+    // Read lastNotifBadgeCleared to know which are "new"
+    const userSnap = await getDoc(doc(db, 'users', uid));
+    const lastCleared = (userSnap.data() || {}).lastNotifBadgeCleared || 0;
+
     body.innerHTML = '';
     snap.forEach(d => {
-      const n = d.data();
+      const n  = d.data();
       if (!n.sent) return;
-      const ts = n.createdAt?.toMillis ? n.createdAt.toMillis() : 0;
-      const isUnread = ts > lastSeen;
-      const date = n.createdAt?.toDate
+      const ts    = n.createdAt?.toMillis ? n.createdAt.toMillis() : 0;
+      const isNew = ts > lastCleared;
+      const date  = n.createdAt?.toDate
         ? n.createdAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
         : '';
       const item = document.createElement('div');
-      item.className = 'inbox-item' + (isUnread ? ' unread' : '');
+      item.className = 'inbox-item' + (isNew ? ' unread' : '');
       item.innerHTML = `
         <div class="inbox-item-tag">📢 Announcement</div>
         <div class="inbox-item-title">${n.title || ''}</div>
@@ -310,11 +268,12 @@ async function openNotifDrawer(uid) {
       body.appendChild(item);
     });
 
-    // Mark as seen
-    await setDoc(doc(db, 'users', uid), { lastNotifSeen: Date.now() }, { merge: true });
+    // Clear badge — store current time so future logins start fresh from here
+    await setDoc(doc(db, 'users', uid), { lastNotifBadgeCleared: Date.now() }, { merge: true });
     _setBadge('notifBadge', 0);
   } catch (err) {
     body.innerHTML = '<div class="inbox-empty">Failed to load.</div>';
+    console.error('[NotifDrawer]', err);
   }
 }
 
@@ -322,48 +281,49 @@ async function openNotifDrawer(uid) {
 async function openMsgDrawer(uid) {
   const drawer = document.getElementById('msgDrawer');
   const body   = document.getElementById('msgDrawerBody');
+  if (!drawer) return;
   drawer.classList.remove('hidden');
   body.innerHTML = '<div class="inbox-empty">Loading…</div>';
 
   try {
-    const messages = [];
+    const messages   = [];
+    const newRptIds  = [];
+    const newFbIds   = [];
 
-    // Fetch report replies
     const rSnap = await getDocs(
       query(collection(db, 'reports'), where('user_uid', '==', uid))
     );
     rSnap.forEach(d => {
       const r = d.data();
       if (!r.admin_reply) return;
-      const ts = r.updatedAt?.toMillis ? r.updatedAt.toMillis() : 0;
       const date = r.updatedAt?.toDate
         ? r.updatedAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
         : '';
       messages.push({
         tag: '🚩 Report Reply', tagClass: '',
         title: r.admin_reply,
-        body: r.question ? `Re: "${(r.question).substring(0, 80)}…"` : '',
-        date, ts
+        body: r.question ? `Re: "${r.question.substring(0, 80)}…"` : '',
+        date, sortKey: r.updatedAt?.toMillis ? r.updatedAt.toMillis() : 0
       });
+      newRptIds.push(d.id);
     });
 
-    // Fetch feedback replies
     const fSnap = await getDocs(
       query(collection(db, 'feedback'), where('user_uid', '==', uid))
     );
     fSnap.forEach(d => {
       const f = d.data();
       if (!f.admin_reply) return;
-      const ts = f.repliedAt?.toMillis ? f.repliedAt.toMillis() : 0;
       const date = f.repliedAt?.toDate
         ? f.repliedAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
         : '';
       messages.push({
         tag: '💬 Feedback Reply', tagClass: 'msg-tag',
         title: f.admin_reply,
-        body: f.message ? `Re: "${(f.message).substring(0, 80)}…"` : '',
-        date, ts
+        body: f.message ? `Re: "${f.message.substring(0, 80)}…"` : '',
+        date, sortKey: f.repliedAt?.toMillis ? f.repliedAt.toMillis() : 0
       });
+      newFbIds.push(d.id);
     });
 
     if (messages.length === 0) {
@@ -371,25 +331,28 @@ async function openMsgDrawer(uid) {
       return;
     }
 
-    // Sort newest first
-    messages.sort((a, b) => b.ts - a.ts);
+    messages.sort((a, b) => b.sortKey - a.sortKey);
     body.innerHTML = '';
     messages.forEach(m => {
       const item = document.createElement('div');
-      item.className = 'inbox-item unread';
+      item.className = 'inbox-item';
       item.innerHTML = `
         <div class="inbox-item-tag ${m.tagClass}">${m.tag}</div>
         <div class="inbox-item-title">${m.title}</div>
         ${m.body ? `<div class="inbox-item-body">${m.body}</div>` : ''}
-        <div class="inbox-item-meta">🕐 ${m.date}</div>`;
+        ${m.date ? `<div class="inbox-item-meta">🕐 ${m.date}</div>` : ''}`;
       body.appendChild(item);
     });
 
-    // Mark messages as seen
-    await setDoc(doc(db, 'users', uid), { lastMessageSeen: Date.now() }, { merge: true });
+    // Mark all as seen — save IDs so badge won't reappear next login
+    await setDoc(doc(db, 'users', uid), {
+      seenReportIds:   newRptIds,
+      seenFeedbackIds: newFbIds,
+    }, { merge: true });
     _setBadge('msgBadge', 0);
   } catch (err) {
     body.innerHTML = '<div class="inbox-empty">Failed to load.</div>';
+    console.error('[MsgDrawer]', err);
   }
 }
 
@@ -571,22 +534,11 @@ on('saveProfileBtn', async () => {
 
 on('logoutBtn', async () => { await logout(); toast('Logged out'); });
 
-// ── Inbox drawer buttons ──────────────────────────────────────────────────
+// Inbox drawer wiring
 const _notifBtn = document.getElementById('notifBtn');
 const _msgBtn   = document.getElementById('msgBtn');
-
-if (_notifBtn) {
-  _notifBtn.addEventListener('click', () => {
-    if (currentUser) openNotifDrawer(currentUser.uid);
-  });
-}
-if (_msgBtn) {
-  _msgBtn.addEventListener('click', () => {
-    if (currentUser) openMsgDrawer(currentUser.uid);
-  });
-}
-
-// Close drawers
+if (_notifBtn) _notifBtn.addEventListener('click', () => { if (currentUser) openNotifDrawer(currentUser.uid); });
+if (_msgBtn)   _msgBtn.addEventListener('click',   () => { if (currentUser) openMsgDrawer(currentUser.uid); });
 ['notifDrawerClose','notifBackdrop'].forEach(id => {
   const el = document.getElementById(id);
   if (el) el.addEventListener('click', () => document.getElementById('notifDrawer').classList.add('hidden'));
