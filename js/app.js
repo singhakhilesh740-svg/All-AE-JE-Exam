@@ -118,52 +118,52 @@ function showScreen(id) {
 
 // ══════════════════════════════════════════════════════════════════════════
 // INBOX — Notification Bell + Message Icon
-// Reliable approach:
-//   Notifications → compare createdAt of each notif vs stored lastNotifSeenAt
-//   Messages      → store array of seen IDs (seenReportIds, seenFeedbackIds)
-//   Badges clear ONLY when user opens the drawer (marks as read)
+// Uses localStorage for seen-state (instant, no Firestore cache issues)
 // ══════════════════════════════════════════════════════════════════════════
 
+// ── localStorage helpers ──────────────────────────────────────────────────
+function _lsGet(key, fallback) {
+  try { const v = localStorage.getItem(key); return v !== null ? JSON.parse(v) : fallback; }
+  catch { return fallback; }
+}
+function _lsSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+}
+
+// ── Show one-time popup on login for newest unseen broadcast ──────────────
 async function checkAndShowNotifications(uid) {
-  // Shows a one-time popup on login for newest unseen notification
   try {
-    const userRef  = doc(db, 'users', uid);
-    const userSnap = await getDoc(userRef);
-    const userData = userSnap.data() || {};
-    const lastNotifSeenAt = userData.lastNotifSeenAt || 0;
+    const lastPopupAt = _lsGet(`notif_popup_${uid}`, 0);
 
     const snap = await getDocs(
       query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(5))
     );
 
-    let latestUnseen = null;
-    let unseenCount  = 0;
+    let latest = null;
+    let count  = 0;
     snap.forEach(d => {
       const n  = d.data();
       const ts = n.createdAt?.toMillis ? n.createdAt.toMillis() : 0;
-      if (n.sent && ts > lastNotifSeenAt) {
-        unseenCount++;
-        if (!latestUnseen) latestUnseen = { title: n.title || '', body: n.body || '' };
-      }
+      if (n.sent && ts > lastPopupAt) { count++; if (!latest) latest = n; }
     });
 
-    if (!latestUnseen) return;
-    showNotifPopup(latestUnseen.title, latestUnseen.body, unseenCount);
-    // Mark popup as seen (don't clear badge — user must open drawer for that)
-    await setDoc(userRef, { lastNotifSeenAt: Date.now() }, { merge: true });
+    if (!latest) return;
+    showNotifPopup(latest.title || '', latest.body || '', count);
+    // Save timestamp so popup won't show again next login for these notifications
+    _lsSet(`notif_popup_${uid}`, Date.now());
   } catch (err) { console.log('[Notif] popup error:', err.message); }
 }
 
 function showNotifPopup(title, body, count) {
-  const existing = document.getElementById('notifPopup');
-  if (existing) existing.remove();
+  const ex = document.getElementById('notifPopup');
+  if (ex) ex.remove();
   const popup = document.createElement('div');
   popup.id = 'notifPopup';
   popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.65);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
   popup.innerHTML = `
     <div style="background:#1e293b;border:1px solid #f59e0b;border-radius:16px;padding:22px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <span style="font-size:13px;font-weight:700;color:#f59e0b;">🔔 ${count > 1 ? count + ' New Notifications' : 'New Notification'}</span>
+        <span style="font-size:13px;font-weight:700;color:#f59e0b;">🔔 ${count > 1 ? count+' New Notifications' : 'New Notification'}</span>
         <button onclick="document.getElementById('notifPopup').remove()" style="background:none;border:none;color:#64748b;font-size:20px;cursor:pointer;line-height:1;padding:0 4px;">✕</button>
       </div>
       <div style="font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:8px;line-height:1.4;">${title}</div>
@@ -173,16 +173,12 @@ function showNotifPopup(title, body, count) {
   document.body.appendChild(popup);
 }
 
-// ── Load badge counts ─────────────────────────────────────────────────────
+// ── Load badge counts on login ────────────────────────────────────────────
 async function loadInboxCounts(uid) {
   try {
-    const userRef  = doc(db, 'users', uid);
-    const userSnap = await getDoc(userRef);
-    const userData = userSnap.data() || {};
-
     // ── Notification badge ─────────────────────────────────────────────
-    // Compare each notification's createdAt vs lastNotifBadgeCleared
-    const lastNotifBadgeCleared = userData.lastNotifBadgeCleared || 0;
+    // lastNotifBadgeCleared = timestamp stored in localStorage
+    const lastCleared = _lsGet(`notif_cleared_${uid}`, 0);
     const notifSnap = await getDocs(
       query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(20))
     );
@@ -190,28 +186,27 @@ async function loadInboxCounts(uid) {
     notifSnap.forEach(d => {
       const n  = d.data();
       const ts = n.createdAt?.toMillis ? n.createdAt.toMillis() : 0;
-      if (n.sent && ts > lastNotifBadgeCleared) notifCount++;
+      if (n.sent && ts > lastCleared) notifCount++;
     });
 
     // ── Message badge ─────────────────────────────────────────────────
-    // Use arrays of seen IDs — reliable regardless of timestamps
-    const seenReportIds   = userData.seenReportIds   || [];
-    const seenFeedbackIds = userData.seenFeedbackIds  || [];
-
+    // seenIds stored in localStorage — no Firestore read needed
+    const seenRptIds = _lsGet(`seen_reports_${uid}`, []);
+    const seenFbIds  = _lsGet(`seen_feedback_${uid}`, []);
     let msgCount = 0;
 
     const rSnap = await getDocs(
       query(collection(db, 'reports'), where('user_uid', '==', uid))
     );
     rSnap.forEach(d => {
-      if (d.data().admin_reply && !seenReportIds.includes(d.id)) msgCount++;
+      if (d.data().admin_reply && !seenRptIds.includes(d.id)) msgCount++;
     });
 
     const fSnap = await getDocs(
       query(collection(db, 'feedback'), where('user_uid', '==', uid))
     );
     fSnap.forEach(d => {
-      if (d.data().admin_reply && !seenFeedbackIds.includes(d.id)) msgCount++;
+      if (d.data().admin_reply && !seenFbIds.includes(d.id)) msgCount++;
     });
 
     _setBadge('notifBadge', notifCount);
@@ -222,12 +217,8 @@ async function loadInboxCounts(uid) {
 function _setBadge(id, count) {
   const el = document.getElementById(id);
   if (!el) return;
-  if (count > 0) {
-    el.textContent = count > 9 ? '9+' : count;
-    el.classList.remove('hidden');
-  } else {
-    el.classList.add('hidden');
-  }
+  if (count > 0) { el.textContent = count > 9 ? '9+' : count; el.classList.remove('hidden'); }
+  else el.classList.add('hidden');
 }
 
 // ── Open Notification Drawer ──────────────────────────────────────────────
@@ -239,15 +230,12 @@ async function openNotifDrawer(uid) {
   body.innerHTML = '<div class="inbox-empty">Loading…</div>';
 
   try {
+    const lastCleared = _lsGet(`notif_cleared_${uid}`, 0);
     const snap = await getDocs(
       query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(20))
     );
 
     if (snap.empty) { body.innerHTML = '<div class="inbox-empty">No notifications yet.</div>'; return; }
-
-    // Read lastNotifBadgeCleared to know which are "new"
-    const userSnap = await getDoc(doc(db, 'users', uid));
-    const lastCleared = (userSnap.data() || {}).lastNotifBadgeCleared || 0;
 
     body.innerHTML = '';
     snap.forEach(d => {
@@ -268,12 +256,11 @@ async function openNotifDrawer(uid) {
       body.appendChild(item);
     });
 
-    // Clear badge — store current time so future logins start fresh from here
-    await setDoc(doc(db, 'users', uid), { lastNotifBadgeCleared: Date.now() }, { merge: true });
+    // ✅ Save to localStorage INSTANTLY — no network, no cache issues
+    _lsSet(`notif_cleared_${uid}`, Date.now());
     _setBadge('notifBadge', 0);
   } catch (err) {
     body.innerHTML = '<div class="inbox-empty">Failed to load.</div>';
-    console.error('[NotifDrawer]', err);
   }
 }
 
@@ -286,9 +273,9 @@ async function openMsgDrawer(uid) {
   body.innerHTML = '<div class="inbox-empty">Loading…</div>';
 
   try {
-    const messages   = [];
-    const newRptIds  = [];
-    const newFbIds   = [];
+    const messages  = [];
+    const rptIds    = [];
+    const fbIds     = [];
 
     const rSnap = await getDocs(
       query(collection(db, 'reports'), where('user_uid', '==', uid))
@@ -299,13 +286,10 @@ async function openMsgDrawer(uid) {
       const date = r.updatedAt?.toDate
         ? r.updatedAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
         : '';
-      messages.push({
-        tag: '🚩 Report Reply', tagClass: '',
-        title: r.admin_reply,
-        body: r.question ? `Re: "${r.question.substring(0, 80)}…"` : '',
-        date, sortKey: r.updatedAt?.toMillis ? r.updatedAt.toMillis() : 0
-      });
-      newRptIds.push(d.id);
+      messages.push({ tag:'🚩 Report Reply', tagCls:'', title:r.admin_reply,
+        body: r.question ? `Re: "${r.question.substring(0,80)}…"` : '', date,
+        sort: r.updatedAt?.toMillis ? r.updatedAt.toMillis() : 0 });
+      rptIds.push(d.id);
     });
 
     const fSnap = await getDocs(
@@ -317,42 +301,35 @@ async function openMsgDrawer(uid) {
       const date = f.repliedAt?.toDate
         ? f.repliedAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
         : '';
-      messages.push({
-        tag: '💬 Feedback Reply', tagClass: 'msg-tag',
-        title: f.admin_reply,
-        body: f.message ? `Re: "${f.message.substring(0, 80)}…"` : '',
-        date, sortKey: f.repliedAt?.toMillis ? f.repliedAt.toMillis() : 0
-      });
-      newFbIds.push(d.id);
+      messages.push({ tag:'💬 Feedback Reply', tagCls:'msg-tag', title:f.admin_reply,
+        body: f.message ? `Re: "${f.message.substring(0,80)}…"` : '', date,
+        sort: f.repliedAt?.toMillis ? f.repliedAt.toMillis() : 0 });
+      fbIds.push(d.id);
     });
 
-    if (messages.length === 0) {
+    if (!messages.length) {
       body.innerHTML = '<div class="inbox-empty">No messages from admin yet.</div>';
-      return;
+    } else {
+      messages.sort((a,b) => b.sort - a.sort);
+      body.innerHTML = '';
+      messages.forEach(m => {
+        const item = document.createElement('div');
+        item.className = 'inbox-item';
+        item.innerHTML = `
+          <div class="inbox-item-tag ${m.tagCls}">${m.tag}</div>
+          <div class="inbox-item-title">${m.title}</div>
+          ${m.body ? `<div class="inbox-item-body">${m.body}</div>` : ''}
+          ${m.date ? `<div class="inbox-item-meta">🕐 ${m.date}</div>` : ''}`;
+        body.appendChild(item);
+      });
     }
 
-    messages.sort((a, b) => b.sortKey - a.sortKey);
-    body.innerHTML = '';
-    messages.forEach(m => {
-      const item = document.createElement('div');
-      item.className = 'inbox-item';
-      item.innerHTML = `
-        <div class="inbox-item-tag ${m.tagClass}">${m.tag}</div>
-        <div class="inbox-item-title">${m.title}</div>
-        ${m.body ? `<div class="inbox-item-body">${m.body}</div>` : ''}
-        ${m.date ? `<div class="inbox-item-meta">🕐 ${m.date}</div>` : ''}`;
-      body.appendChild(item);
-    });
-
-    // Mark all as seen — save IDs so badge won't reappear next login
-    await setDoc(doc(db, 'users', uid), {
-      seenReportIds:   newRptIds,
-      seenFeedbackIds: newFbIds,
-    }, { merge: true });
+    // ✅ Save seen IDs to localStorage INSTANTLY
+    _lsSet(`seen_reports_${uid}`,  rptIds);
+    _lsSet(`seen_feedback_${uid}`, fbIds);
     _setBadge('msgBadge', 0);
   } catch (err) {
     body.innerHTML = '<div class="inbox-empty">Failed to load.</div>';
-    console.error('[MsgDrawer]', err);
   }
 }
 
