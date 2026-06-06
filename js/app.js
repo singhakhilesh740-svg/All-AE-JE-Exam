@@ -210,6 +210,189 @@ function showNotifPopup(title, body, count) {
   document.body.appendChild(popup);
 }
 
+// ══════════════════════════════════════════════════════════════════════════
+// INBOX: Notification Bell + Message Icon
+// ══════════════════════════════════════════════════════════════════════════
+
+// ── Load badge counts after login ─────────────────────────────────────────
+async function loadInboxCounts(uid) {
+  try {
+    const userSnap = await getDoc(doc(db, 'users', uid));
+    const userData = userSnap.data() || {};
+    const lastNotifSeen   = userData.lastNotifSeen   || 0;
+    const lastMessageSeen = userData.lastMessageSeen || 0;
+
+    // Count unseen broadcasts
+    const notifSnap = await getDocs(
+      query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(20))
+    );
+    let notifCount = 0;
+    notifSnap.forEach(d => {
+      const n = d.data();
+      if (!n.createdAt) return;
+      const ts = n.createdAt.toMillis ? n.createdAt.toMillis() : 0;
+      if (ts > lastNotifSeen && n.sent === true) notifCount++;
+    });
+
+    // Count unseen admin replies (reports + feedback)
+    let msgCount = 0;
+    const rSnap = await getDocs(
+      query(collection(db, 'reports'), where('user_uid', '==', uid))
+    );
+    rSnap.forEach(d => {
+      const r = d.data();
+      if (!r.admin_reply) return;
+      const ts = r.updatedAt ? (r.updatedAt.toMillis ? r.updatedAt.toMillis() : 0) : 0;
+      if (ts > lastMessageSeen || lastMessageSeen === 0) msgCount++;
+    });
+    const fSnap = await getDocs(
+      query(collection(db, 'feedback'), where('user_uid', '==', uid))
+    );
+    fSnap.forEach(d => {
+      const f = d.data();
+      if (!f.admin_reply) return;
+      const ts = f.repliedAt ? (f.repliedAt.toMillis ? f.repliedAt.toMillis() : 0) : 0;
+      if (ts > lastMessageSeen || lastMessageSeen === 0) msgCount++;
+    });
+
+    // Update badges
+    _setBadge('notifBadge', notifCount);
+    _setBadge('msgBadge',   msgCount);
+  } catch (err) {
+    console.log('[Inbox] count error:', err.message);
+  }
+}
+
+function _setBadge(id, count) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (count > 0) {
+    el.textContent = count > 9 ? '9+' : count;
+    el.classList.remove('hidden');
+  } else {
+    el.classList.add('hidden');
+  }
+}
+
+// ── Open Notification Drawer ──────────────────────────────────────────────
+async function openNotifDrawer(uid) {
+  const drawer = document.getElementById('notifDrawer');
+  const body   = document.getElementById('notifDrawerBody');
+  drawer.classList.remove('hidden');
+  body.innerHTML = '<div class="inbox-empty">Loading…</div>';
+
+  try {
+    const userSnap = await getDoc(doc(db, 'users', uid));
+    const lastSeen = (userSnap.data() || {}).lastNotifSeen || 0;
+
+    const snap = await getDocs(
+      query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(20))
+    );
+
+    if (snap.empty) { body.innerHTML = '<div class="inbox-empty">No notifications yet.</div>'; return; }
+
+    body.innerHTML = '';
+    snap.forEach(d => {
+      const n = d.data();
+      if (!n.sent) return;
+      const ts = n.createdAt?.toMillis ? n.createdAt.toMillis() : 0;
+      const isUnread = ts > lastSeen;
+      const date = n.createdAt?.toDate
+        ? n.createdAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
+        : '';
+      const item = document.createElement('div');
+      item.className = 'inbox-item' + (isUnread ? ' unread' : '');
+      item.innerHTML = `
+        <div class="inbox-item-tag">📢 Announcement</div>
+        <div class="inbox-item-title">${n.title || ''}</div>
+        <div class="inbox-item-body">${n.body || ''}</div>
+        <div class="inbox-item-meta">🕐 ${date}</div>`;
+      body.appendChild(item);
+    });
+
+    // Mark as seen
+    await setDoc(doc(db, 'users', uid), { lastNotifSeen: Date.now() }, { merge: true });
+    _setBadge('notifBadge', 0);
+  } catch (err) {
+    body.innerHTML = '<div class="inbox-empty">Failed to load.</div>';
+  }
+}
+
+// ── Open Message Drawer ───────────────────────────────────────────────────
+async function openMsgDrawer(uid) {
+  const drawer = document.getElementById('msgDrawer');
+  const body   = document.getElementById('msgDrawerBody');
+  drawer.classList.remove('hidden');
+  body.innerHTML = '<div class="inbox-empty">Loading…</div>';
+
+  try {
+    const messages = [];
+
+    // Fetch report replies
+    const rSnap = await getDocs(
+      query(collection(db, 'reports'), where('user_uid', '==', uid))
+    );
+    rSnap.forEach(d => {
+      const r = d.data();
+      if (!r.admin_reply) return;
+      const ts = r.updatedAt?.toMillis ? r.updatedAt.toMillis() : 0;
+      const date = r.updatedAt?.toDate
+        ? r.updatedAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
+        : '';
+      messages.push({
+        tag: '🚩 Report Reply', tagClass: '',
+        title: r.admin_reply,
+        body: r.question ? `Re: "${(r.question).substring(0, 80)}…"` : '',
+        date, ts
+      });
+    });
+
+    // Fetch feedback replies
+    const fSnap = await getDocs(
+      query(collection(db, 'feedback'), where('user_uid', '==', uid))
+    );
+    fSnap.forEach(d => {
+      const f = d.data();
+      if (!f.admin_reply) return;
+      const ts = f.repliedAt?.toMillis ? f.repliedAt.toMillis() : 0;
+      const date = f.repliedAt?.toDate
+        ? f.repliedAt.toDate().toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
+        : '';
+      messages.push({
+        tag: '💬 Feedback Reply', tagClass: 'msg-tag',
+        title: f.admin_reply,
+        body: f.message ? `Re: "${(f.message).substring(0, 80)}…"` : '',
+        date, ts
+      });
+    });
+
+    if (messages.length === 0) {
+      body.innerHTML = '<div class="inbox-empty">No messages from admin yet.</div>';
+      return;
+    }
+
+    // Sort newest first
+    messages.sort((a, b) => b.ts - a.ts);
+    body.innerHTML = '';
+    messages.forEach(m => {
+      const item = document.createElement('div');
+      item.className = 'inbox-item unread';
+      item.innerHTML = `
+        <div class="inbox-item-tag ${m.tagClass}">${m.tag}</div>
+        <div class="inbox-item-title">${m.title}</div>
+        ${m.body ? `<div class="inbox-item-body">${m.body}</div>` : ''}
+        <div class="inbox-item-meta">🕐 ${m.date}</div>`;
+      body.appendChild(item);
+    });
+
+    // Mark messages as seen
+    await setDoc(doc(db, 'users', uid), { lastMessageSeen: Date.now() }, { merge: true });
+    _setBadge('msgBadge', 0);
+  } catch (err) {
+    body.innerHTML = '<div class="inbox-empty">Failed to load.</div>';
+  }
+}
+
 function toast(msg, ms = 2000) {
   const t = $('toast');
   t.textContent = msg;
@@ -247,6 +430,7 @@ watchAuth(
         showScreen('homeScreen');
         // Show any unseen notifications as popup
         checkAndShowNotifications(user.uid).catch(() => {});
+        loadInboxCounts(user.uid).catch(() => {});
       }
     } catch (e) {
       console.error('[Auth] routing error:', e);
@@ -387,6 +571,31 @@ on('saveProfileBtn', async () => {
 
 on('logoutBtn', async () => { await logout(); toast('Logged out'); });
 
+// ── Inbox drawer buttons ──────────────────────────────────────────────────
+const _notifBtn = document.getElementById('notifBtn');
+const _msgBtn   = document.getElementById('msgBtn');
+
+if (_notifBtn) {
+  _notifBtn.addEventListener('click', () => {
+    if (currentUser) openNotifDrawer(currentUser.uid);
+  });
+}
+if (_msgBtn) {
+  _msgBtn.addEventListener('click', () => {
+    if (currentUser) openMsgDrawer(currentUser.uid);
+  });
+}
+
+// Close drawers
+['notifDrawerClose','notifBackdrop'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', () => document.getElementById('notifDrawer').classList.add('hidden'));
+});
+['msgDrawerClose','msgBackdrop'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', () => document.getElementById('msgDrawer').classList.add('hidden'));
+});
+
 // ══════════════════════════════════════════════════════════════════════════════
 // HOME — 3 category tiles
 // ══════════════════════════════════════════════════════════════════════════════
@@ -431,7 +640,7 @@ on('civilPYQ', () => {
 
 on('civilBookmarks', async () => {
   $('bookmarksBackBtn').onclick = () => showScreen('civilHomeScreen');
-  await loadAndShowBookmarks('civil');
+  await loadAndShowBookmarks();
   showScreen('bookmarksScreen');
 });
 
@@ -459,7 +668,7 @@ on('pcbPYQ', () => {
 
 on('pcbBookmarks', async () => {
   $('bookmarksBackBtn').onclick = () => showScreen('pcbHomeScreen');
-  await loadAndShowBookmarks('pcb');
+  await loadAndShowBookmarks();
   showScreen('bookmarksScreen');
 });
 
@@ -489,12 +698,6 @@ on('nonTechPYQ', () => {
   $('pyqExamsTitle').textContent = '📜 Non-Tech — PYQ';
   renderExamList('nontech');
   showScreen('pyqExamsScreen');
-});
-
-on('nonTechBookmarks', async () => {
-  $('bookmarksBackBtn').onclick = () => showScreen('nonTechHomeScreen');
-  await loadAndShowBookmarks('nontech');
-  showScreen('bookmarksScreen');
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -882,30 +1085,10 @@ function buildTopicChips(containerId, subjectId, onSelect) {
 // BOOKMARKS FLOW
 // ══════════════════════════════════════════════════════════════════════════════
 
-async function loadAndShowBookmarks(section = null) {
+async function loadAndShowBookmarks() {
   if (!currentUser) { toast('Please sign in to view bookmarks'); return; }
-  const all = await fetchBookmarkedQuestions(currentUser.uid);
-  if (section) {
-    allBookmarks = all.filter(q => {
-      const s = (q.section || '').toLowerCase();
-      if (section === 'civil')   return s === 'civil'   || (!s && !_isPCB(q) && !_isNonTech(q));
-      if (section === 'pcb')     return s === 'pcb';
-      if (section === 'nontech') return s === 'nontech';
-      return true;
-    });
-  } else {
-    allBookmarks = all;
-  }
+  allBookmarks = await fetchBookmarkedQuestions(currentUser.uid);
   renderBookmarksList();
-}
-
-function _isPCB(q) {
-  const ex = (q.examId || q.exam || '').toLowerCase();
-  return ex.includes('pcb') || ex.includes('pollution') || (q.subject||'').toLowerCase().includes('unit');
-}
-function _isNonTech(q) {
-  const nonTechSubjs = ['polity','history','geography','general-science','economy','current-affairs','environment','hindi','reasoning','quantitative-aptitude','english'];
-  return nonTechSubjs.some(s => (q.subject||'').toLowerCase().includes(s));
 }
 
 function renderBookmarksList() {
@@ -1236,7 +1419,7 @@ on('quizBookmarkBtn', async () => {
       toast('Removed from bookmarks');
     } else toast('Failed to remove bookmark');
   } else {
-    const ok = await addBookmark(currentUser.uid, { ...qWithExam, section: activeSection });
+    const ok = await addBookmark(currentUser.uid, qWithExam);
     if (ok) {
       $('quizBookmarkBtn').textContent = '★'; $('quizBookmarkBtn').dataset.marked = '1';
       allBookmarks.unshift(qWithExam);
