@@ -39,12 +39,22 @@
     .btn-resolve{background:#10b981;color:#022c22}
     .btn-dismiss{background:#334155;color:#94a3b8}
     .btn-delete{background:#ef4444;color:#fff}
+    .btn-reply{background:#818cf8;color:#fff}
     .btn-login{background:#f59e0b;color:#1f2937;font-size:14px;padding:10px 24px}
     .login-wrap{text-align:center;padding:60px 20px}
     .login-wrap p{color:#94a3b8;margin-bottom:20px}
     .hidden{display:none!important}
     .empty{text-align:center;padding:40px;color:#475569;font-size:14px}
     .loading{text-align:center;padding:40px;color:#64748b}
+
+    .reply-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;display:none}
+    .reply-box{background:#1e293b;border-radius:14px;padding:22px;max-width:480px;width:100%;border:1px solid #334155}
+    .reply-box h3{color:#818cf8;font-size:15px;margin-bottom:8px}
+    .reply-box p{font-size:12px;color:#64748b;margin-bottom:10px}
+    .reply-textarea{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:10px;font-size:13px;font-family:inherit;resize:vertical;min-height:70px}
+    .reply-textarea:focus{outline:none;border-color:#818cf8}
+    .reply-actions{display:flex;gap:8px;margin-top:12px}
+    .btn-reply{background:#818cf8;color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}
   </style>
 </head>
 <body>
@@ -112,7 +122,7 @@
     }
   });
 
-  async function loadFeedback() {
+  window.loadFeedback = async function loadFeedback() {
     const snap = await getDocs(query(collection(db, 'feedback'), orderBy('timestamp', 'desc')));
     allFeedback = [];
     snap.forEach(d => allFeedback.push({ id: d.id, ...d.data() }));
@@ -150,8 +160,10 @@
           <div class="fb-actions">
             ${f.status !== 'resolved' ? `<button class="btn-resolve" onclick="resolveFB('${f.id}')">✅ Resolve</button>` : ''}
             ${f.status !== 'dismissed' ? `<button class="btn-dismiss" onclick="dismissFB('${f.id}')">🚫 Dismiss</button>` : ''}
+            <button class="btn-reply" onclick="openReplyFB('${f.id}', '${(f.message||'').substring(0,40).replace(/'/g,'').replace(/`/g,'')}')">💬 Reply</button>
             <button class="btn-delete" onclick="deleteFB('${f.id}')">🗑️ Delete</button>
           </div>
+          ${f.admin_reply ? `<div style="margin-top:8px;padding:8px 10px;background:#0f172a;border-radius:8px;border-left:3px solid #818cf8;font-size:12px;color:#818cf8"><strong>✉️ Your reply:</strong> ${escHtml(f.admin_reply)}</div>` : ''}
         </div>`;
     }).join('');
   }
@@ -169,6 +181,65 @@
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderList(btn.dataset.filter);
+  });
+</script>
+
+<!-- Reply Modal -->
+<div id="replyFBModal" class="reply-overlay">
+  <div class="reply-box">
+    <h3>💬 Reply to Feedback</h3>
+    <p id="replyFBPreview" style="color:#64748b;font-size:12px;margin-bottom:10px;font-style:italic;"></p>
+    <textarea id="replyFBText" class="reply-textarea" placeholder="Type your reply to the user..."></textarea>
+    <div class="reply-actions">
+      <button id="replyFBConfirm" class="btn-reply" style="flex:2;padding:10px;">✓ Send Reply</button>
+      <button onclick="closeReplyFB()" style="flex:1;padding:10px;background:#334155;color:#94a3b8;border:none;border-radius:8px;cursor:pointer;font-size:13px;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { getFirestore, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+  const _app = getApps().length ? getApps()[0] : null;
+  const _db  = _app ? getFirestore(_app) : null;
+
+  let _replyFBId = null;
+
+  window.openReplyFB = (id, preview) => {
+    _replyFBId = id;
+    document.getElementById('replyFBPreview').textContent = preview ? `"${preview}..."` : '';
+    document.getElementById('replyFBText').value = '';
+    document.getElementById('replyFBModal').style.display = 'flex';
+  };
+
+  window.closeReplyFB = () => {
+    document.getElementById('replyFBModal').style.display = 'none';
+    _replyFBId = null;
+  };
+
+  document.getElementById('replyFBConfirm').addEventListener('click', async () => {
+    if (!_replyFBId || !_db) return;
+    const reply = document.getElementById('replyFBText').value.trim();
+    if (!reply) { alert('Please type a reply first.'); return; }
+
+    document.getElementById('replyFBConfirm').textContent = '⏳ Sending…';
+    document.getElementById('replyFBConfirm').disabled = true;
+
+    try {
+      await updateDoc(doc(_db, 'feedback', _replyFBId), {
+        admin_reply: reply,
+        repliedAt: serverTimestamp(),
+        status: 'resolved'
+      });
+      closeReplyFB();
+      alert('✅ Reply sent! User will see it in their Messages inbox.');
+      window.loadFeedback && window.loadFeedback();
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
+    document.getElementById('replyFBConfirm').textContent = '✓ Send Reply';
+    document.getElementById('replyFBConfirm').disabled = false;
   });
 </script>
 </body>
