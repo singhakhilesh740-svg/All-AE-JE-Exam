@@ -1248,7 +1248,8 @@ on('practiceBookmarksBtn', () => {
 let _ntCurrentSection    = null;
 let _ntCurrentSubsection = null;
 let _ntActiveTab         = 'notes';
-let _ntActiveSubject     = 'all';
+let _ntActiveSubject     = 'all';   // subject name or 'all'
+let _ntActiveChapter     = 'all';   // chapter name or 'all'
 
 function renderNTSubsectionList(containerId, subsections, section, backScreen) {
   const container = $(containerId);
@@ -1261,7 +1262,7 @@ function renderNTSubsectionList(containerId, subsections, section, backScreen) {
       <div class="subject-icon">${sub.icon || '📖'}</div>
       <div class="subject-info">
         <div class="subject-name">${escapeHtml(sub.name)}</div>
-        <div class="subject-desc">${escapeHtml((sub.subjects || sub.description ? (sub.subjects||[]).slice(0,4).join(' · ') || sub.description : ''))}</div>
+        <div class="subject-desc">${escapeHtml((sub.subjects||[]).slice(0,4).map(s=>typeof s==='string'?s:s.name).join(' · '))}</div>
       </div>
       <div class="subject-arrow">›</div>
     `;
@@ -1275,6 +1276,7 @@ function openNTSubsection(sub, section, backScreen) {
   _ntCurrentSubsection = sub;
   _ntActiveTab         = 'notes';
   _ntActiveSubject     = 'all';
+  _ntActiveChapter     = 'all';
 
   $('ntSubsectionTitle').textContent = sub.icon + ' ' + sub.name;
   $('ntSubsectionSub').textContent   = 'Select a tab to study';
@@ -1300,25 +1302,85 @@ function _renderNTSubjectFilter(subjects) {
   const bar = $('ntSubjectFilterBar');
   if (!bar) return;
   bar.innerHTML = '';
+  _ntActiveSubject = 'all';
+  _ntActiveChapter = 'all';
+
   if (!subjects || subjects.length === 0) { bar.style.display = 'none'; return; }
   bar.style.display = '';
-  _ntActiveSubject = 'all';
 
-  const addChip = (label, value) => {
-    const btn = document.createElement('button');
-    btn.className = 'topic-chip' + (value === _ntActiveSubject ? ' active' : '');
-    btn.textContent = label;
-    btn.onclick = () => {
-      bar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
-      _ntActiveSubject = value;
+  // ── Row 1: Subject chips ──────────────────────────────────────────────────
+  const subjRow = document.createElement('div');
+  subjRow.style.cssText = 'display:flex;flex-wrap:wrap;gap:5px;padding:6px 12px 4px;border-bottom:1px solid var(--border)';
+
+  const chapRow = document.createElement('div');
+  chapRow.style.cssText = 'display:flex;flex-wrap:wrap;gap:5px;padding:4px 12px 6px;';
+  chapRow.id = 'ntChapterFilterRow';
+
+  function renderChapterChips(subjName) {
+    chapRow.innerHTML = '';
+    _ntActiveChapter = 'all';
+    const subj = subjects.find(s => (typeof s === 'string' ? s : s.name) === subjName);
+    const chapters = (subj && typeof subj === 'object' && subj.chapters) ? subj.chapters : [];
+    if (chapters.length === 0) { chapRow.style.display = 'none'; return; }
+    chapRow.style.display = 'flex';
+
+    const allC = document.createElement('button');
+    allC.className = 'topic-chip active';
+    allC.textContent = 'All Chapters';
+    allC.onclick = () => {
+      chapRow.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      allC.classList.add('active');
+      _ntActiveChapter = 'all';
       _loadNTTabContent();
     };
-    bar.appendChild(btn);
-  };
+    chapRow.appendChild(allC);
 
-  addChip('All', 'all');
-  subjects.forEach(s => addChip(s, s));
+    chapters.forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'topic-chip';
+      btn.textContent = ch.name;
+      btn.onclick = () => {
+        chapRow.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        _ntActiveChapter = ch.name;
+        _loadNTTabContent();
+      };
+      chapRow.appendChild(btn);
+    });
+  }
+
+  // All subjects chip
+  const allS = document.createElement('button');
+  allS.className = 'topic-chip active';
+  allS.textContent = 'All Subjects';
+  allS.onclick = () => {
+    subjRow.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+    allS.classList.add('active');
+    _ntActiveSubject = 'all';
+    chapRow.innerHTML = ''; chapRow.style.display = 'none';
+    _ntActiveChapter = 'all';
+    _loadNTTabContent();
+  };
+  subjRow.appendChild(allS);
+
+  subjects.forEach(s => {
+    const name = typeof s === 'string' ? s : s.name;
+    const btn = document.createElement('button');
+    btn.className = 'topic-chip';
+    btn.textContent = name;
+    btn.onclick = () => {
+      subjRow.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      _ntActiveSubject = name;
+      renderChapterChips(name);
+      _loadNTTabContent();
+    };
+    subjRow.appendChild(btn);
+  });
+
+  bar.appendChild(subjRow);
+  bar.appendChild(chapRow);
+  chapRow.style.display = 'none';
 }
 
 async function _loadNTTabContent() {

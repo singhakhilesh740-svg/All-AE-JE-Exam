@@ -13,52 +13,61 @@
     .sec-btn{padding:8px 16px;border-radius:8px;border:2px solid #334155;background:transparent;color:#64748b;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;font-family:inherit}
     .sec-btn.active{color:#f59e0b;border-color:#f59e0b;background:rgba(245,158,11,.1)}
     .panel{display:none}.panel.active{display:block}
+    /* Subsection card */
     .card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:16px;margin-bottom:12px}
     .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .card-title{font-size:14px;font-weight:700;color:#f1f5f9}
     .card-id{font-size:11px;color:#475569;background:#0f172a;padding:2px 6px;border-radius:4px;font-family:monospace}
-    .auth-input,textarea{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px 12px;color:#f1f5f9;font-size:13px;font-family:inherit;outline:none;transition:border-color .15s}
-    textarea{width:100%;min-height:50px;resize:vertical;font-size:12px}
-    .auth-input:focus,textarea:focus{border-color:#f59e0b}
-    .btn{padding:8px 14px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s}
-    .btn-sm{padding:5px 10px;font-size:11px}
-    .btn-primary{background:#f59e0b;color:#000}
-    .btn-primary:hover{background:#fbbf24}
-    .btn-danger{background:#ef4444;color:#fff}
-    .btn-danger:hover{background:#dc2626}
-    .btn-ghost{background:#1e293b;border:1px solid #334155;color:#94a3b8}
-    .btn-ghost:hover{background:#0f172a}
-    .btn-purple{background:#a78bfa;color:#0f172a}
-    .add-subsection-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #f59e0b;color:#f59e0b;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999}
-    .loading{color:#64748b;font-size:13px;padding:20px 0}
-    .icon-input{width:60px}
-    .info{font-size:11px;color:#475569;margin-bottom:12px;line-height:1.5}
-    .aptitude-note{background:rgba(139,92,246,0.1);border:1px solid #6d28d9;border-radius:8px;padding:12px;font-size:13px;color:#a78bfa;margin-bottom:16px}
-
-    /* Subject cards inside subsection */
-    .subj-card{background:#0f172a;border:1px solid #334155;border-radius:8px;margin-bottom:8px;overflow:hidden}
-    .subj-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;cursor:pointer;user-select:none;transition:background .15s}
-    .subj-header:hover{background:rgba(245,158,11,.05)}
+    /* Subject card (level 2) */
+    .subj-card{background:#0f172a;border:1px solid #334155;border-radius:8px;margin-bottom:8px}
+    .subj-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;cursor:pointer;user-select:none}
+    .subj-header:hover{background:rgba(245,158,11,.04);border-radius:8px}
     .subj-name{font-size:13px;font-weight:600;color:#f1f5f9;display:flex;align-items:center;gap:6px}
-    .subj-name .arrow{font-size:10px;color:#64748b;transition:transform .2s}
-    .subj-name .arrow.open{transform:rotate(90deg)}
-    .subj-badge{font-size:10px;color:#64748b;background:#1e293b;padding:2px 6px;border-radius:4px}
-    .subj-actions{display:flex;gap:4px}
+    .arrow{font-size:10px;color:#64748b;transition:transform .2s;display:inline-block}
+    .arrow.open{transform:rotate(90deg)}
+    .badge{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600}
+    .badge-subj{background:#1e293b;color:#64748b}
+    .badge-chap{background:rgba(59,130,246,.15);color:#60a5fa}
+    .badge-topic{background:rgba(16,185,129,.12);color:#34d399}
     .subj-body{padding:0 12px 12px;display:none}
     .subj-body.open{display:block}
-    .topic-chips{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}
-    .topic-chip{background:#1e293b;border:1px solid #334155;border-radius:5px;padding:3px 8px;font-size:11px;color:#94a3b8;display:flex;align-items:center;gap:4px}
-    .topic-chip .tdel{cursor:pointer;color:#ef4444;font-weight:700;font-size:12px}
-    .add-topic-row{display:flex;gap:6px;margin-top:6px}
-    .bulk-area{margin-top:8px;padding-top:8px;border-top:1px dashed #334155}
-    .bulk-label{font-size:10px;color:#64748b;margin-bottom:4px}
+    /* Chapter card (level 3) */
+    .chap-card{background:#0c1322;border:1px solid #1e293b;border-radius:6px;margin-bottom:6px}
+    .chap-header{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;cursor:pointer;user-select:none}
+    .chap-header:hover{background:rgba(96,165,250,.04);border-radius:6px}
+    .chap-name{font-size:12px;font-weight:600;color:#cbd5e1;display:flex;align-items:center;gap:5px}
+    .chap-body{padding:0 10px 10px;display:none}
+    .chap-body.open{display:block}
+    /* Topic chips (level 4) */
+    .chip-wrap{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0 6px}
+    .t-chip{background:#1e293b;border:1px solid #334155;border-radius:4px;padding:3px 7px;font-size:10px;color:#94a3b8;display:flex;align-items:center;gap:3px}
+    .t-chip .x{cursor:pointer;color:#ef4444;font-weight:700;font-size:11px}
+    /* Inputs */
+    .auth-input,textarea{background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;color:#f1f5f9;font-size:12px;font-family:inherit;outline:none;transition:border-color .15s}
+    textarea{width:100%;resize:vertical;font-family:inherit}
+    .auth-input:focus,textarea:focus{border-color:#f59e0b}
+    .btn{padding:6px 12px;border-radius:6px;border:none;font-weight:600;font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+    .btn-primary{background:#f59e0b;color:#000}
+    .btn-blue{background:#3b82f6;color:#fff}
+    .btn-green{background:#10b981;color:#fff}
+    .btn-purple{background:#a78bfa;color:#0f172a}
+    .btn-danger{background:#ef4444;color:#fff}
+    .btn-ghost{background:transparent;border:1px solid #334155;color:#94a3b8}
+    .row{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}
+    .add-subsection-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .bulk-box{border-top:1px dashed #334155;margin-top:8px;padding-top:8px}
+    .bulk-lbl{font-size:10px;color:#64748b;margin-bottom:3px}
+    .section-lbl{font-size:11px;font-weight:700;color:#94a3b8;margin:10px 0 5px;text-transform:uppercase;letter-spacing:.04em}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #f59e0b;color:#f59e0b;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999}
+    .loading{color:#64748b;font-size:13px;padding:20px 0}
+    .icon-input{width:56px}
+    .aptitude-note{background:rgba(139,92,246,.1);border:1px solid #6d28d9;border-radius:8px;padding:12px;font-size:12px;color:#a78bfa;margin-bottom:16px}
+    .empty-topics{font-size:10px;color:#475569;font-style:italic}
   </style>
 </head>
 <body>
-
   <h1>📚 Non-Tech Section Config</h1>
-  <div class="sub">Manage subsections, subjects, and topics. Click any subject to expand and add topics inside it.</div>
+  <div class="sub">4-level structure: Subsection → Subject → Chapter → Topics &nbsp;|&nbsp; Click any row to expand</div>
 
   <div class="section-tabs">
     <button class="sec-btn active" data-sec="gs">🌍 General Studies</button>
@@ -67,45 +76,38 @@
     <button class="sec-btn" data-sec="aptitude">🧮 Aptitude</button>
   </div>
 
-  <!-- General Studies Panel -->
   <div class="panel active" id="panel-gs">
-    <p class="info">Subjects shown in GS. Click a subject to expand → add topics inside it.</p>
     <div class="add-subsection-row">
-      <input class="auth-input icon-input" id="gs-icon" placeholder="Icon" value="📘"/>
-      <input class="auth-input" id="gs-name" placeholder="Subject name (e.g. Environment)" style="flex:1"/>
-      <input class="auth-input" id="gs-id" placeholder="ID (e.g. environment)" style="flex:1"/>
-      <button class="btn btn-primary" id="gs-add-btn">+ Add</button>
+      <input class="auth-input icon-input" id="gs-icon" placeholder="🌍"/>
+      <input class="auth-input" id="gs-name" placeholder="Subject name" style="flex:1"/>
+      <input class="auth-input" id="gs-id" placeholder="id-slug" style="flex:1"/>
+      <button class="btn btn-primary" onclick="addSubsection('gs','gs-icon','gs-name','gs-id','gs-list')">+ Add</button>
     </div>
     <div id="gs-list" class="loading">Loading…</div>
   </div>
 
-  <!-- State GK Panel -->
   <div class="panel" id="panel-stategk">
-    <p class="info">States available for State GK.</p>
     <div class="add-subsection-row">
-      <input class="auth-input icon-input" id="sgk-icon" placeholder="Icon" value="🗺️"/>
+      <input class="auth-input icon-input" id="sgk-icon" placeholder="🗺️"/>
       <input class="auth-input" id="sgk-name" placeholder="State name" style="flex:1"/>
-      <input class="auth-input" id="sgk-id" placeholder="ID (e.g. gujarat)" style="flex:1"/>
-      <button class="btn btn-primary" id="sgk-add-btn">+ Add</button>
+      <input class="auth-input" id="sgk-id" placeholder="id-slug" style="flex:1"/>
+      <button class="btn btn-primary" onclick="addSubsection('stategk','sgk-icon','sgk-name','sgk-id','sgk-list')">+ Add</button>
     </div>
     <div id="sgk-list" class="loading">Loading…</div>
   </div>
 
-  <!-- Language Panel -->
   <div class="panel" id="panel-language">
-    <p class="info">Languages available.</p>
     <div class="add-subsection-row">
-      <input class="auth-input icon-input" id="lang-icon" placeholder="Icon" value="🔤"/>
+      <input class="auth-input icon-input" id="lang-icon" placeholder="🔤"/>
       <input class="auth-input" id="lang-name" placeholder="Language name" style="flex:1"/>
-      <input class="auth-input" id="lang-id" placeholder="ID (e.g. sanskrit)" style="flex:1"/>
-      <button class="btn btn-primary" id="lang-add-btn">+ Add</button>
+      <input class="auth-input" id="lang-id" placeholder="id-slug" style="flex:1"/>
+      <button class="btn btn-primary" onclick="addSubsection('language','lang-icon','lang-name','lang-id','lang-list')">+ Add</button>
     </div>
     <div id="lang-list" class="loading">Loading…</div>
   </div>
 
-  <!-- Aptitude Panel -->
   <div class="panel" id="panel-aptitude">
-    <div class="aptitude-note">⚙️ Aptitude subsections (LR & QA) are fixed. You can manage their subjects and topics below.</div>
+    <div class="aptitude-note">⚙️ Aptitude subsections are fixed (LR & QA). Manage their subjects, chapters, and topics below.</div>
     <div id="apt-list" class="loading">Loading…</div>
   </div>
 
@@ -113,379 +115,511 @@
 
 <script type="module">
 import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const ADMIN_EMAIL = '112ce0489@gmail.com';
-const cfg = {
-  apiKey:"AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",authDomain:"ae-exam-app.firebaseapp.com",
-  projectId:"ae-exam-app",storageBucket:"ae-exam-app.firebasestorage.app",
-  messagingSenderId:"101353507688",appId:"1:101353507688:web:82b31f2d6096387d7aa4dd"
-};
+const cfg = {apiKey:"AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",authDomain:"ae-exam-app.firebaseapp.com",projectId:"ae-exam-app",storageBucket:"ae-exam-app.firebasestorage.app",messagingSenderId:"101353507688",appId:"1:101353507688:web:82b31f2d6096387d7aa4dd"};
 const app = getApps().length ? getApp() : initializeApp(cfg);
 const auth = getAuth(app), db = getFirestore(app);
 const NT_DOC = doc(db, 'nt_config', 'subsections');
 
-// ── Defaults ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA MODEL
+// subjects: [ { name, chapters: [ { name, topics: [] } ] } ]
+// ─────────────────────────────────────────────────────────────────────────────
+
 const DEFAULTS = {
-  gs: [
-    { id:'polity', icon:'⚖️', name:'Polity', subjects:[
-      {name:'Constitution',topics:[]},{name:'Fundamental Rights',topics:[]},{name:'Parliament',topics:[]},
-      {name:'Judiciary',topics:[]},{name:'DPSP',topics:[]},{name:'Elections',topics:[]},
-      {name:'Amendments',topics:[]},{name:'Emergency',topics:[]}
+  gs:[
+    {id:'polity',icon:'⚖️',name:'Polity',subjects:[
+      {name:'Constitutional Framework',chapters:[{name:'Making of Constitution',topics:[]},{name:'Preamble & Salient Features',topics:[]},{name:'Schedules & Parts',topics:[]},{name:'Citizenship',topics:[]}]},
+      {name:'Fundamental Rights',chapters:[{name:'Right to Equality (14-18)',topics:[]},{name:'Right to Freedom (19-22)',topics:[]},{name:'Right against Exploitation',topics:[]},{name:'Right to Religion',topics:[]},{name:'Cultural & Educational Rights',topics:[]},{name:'Right to Constitutional Remedies & Writs',topics:[]}]},
+      {name:'DPSP & Duties',chapters:[{name:'Directive Principles',topics:[]},{name:'Fundamental Duties',topics:[]}]},
+      {name:'Union Government',chapters:[{name:'President',topics:[]},{name:'Vice President',topics:[]},{name:'Prime Minister & Cabinet',topics:[]},{name:'Parliament',topics:[]},{name:'Attorney General & CAG',topics:[]}]},
+      {name:'State Government',chapters:[{name:'Governor',topics:[]},{name:'Chief Minister & Cabinet',topics:[]},{name:'State Legislature',topics:[]}]},
+      {name:'Judiciary',chapters:[{name:'Supreme Court',topics:[]},{name:'High Court',topics:[]},{name:'Subordinate Courts & Tribunals',topics:[]},{name:'Judicial Review & PIL',topics:[]}]},
+      {name:'Federalism',chapters:[{name:'Centre-State Relations',topics:[]},{name:'7th Schedule',topics:[]},{name:'Finance Commission',topics:[]},{name:'Interstate Relations',topics:[]}]},
+      {name:'Local Government',chapters:[{name:'Panchayati Raj (73rd)',topics:[]},{name:'Municipalities (74th)',topics:[]},{name:'PESA Act',topics:[]}]},
+      {name:'Constitutional Bodies',chapters:[{name:'Election Commission',topics:[]},{name:'UPSC & SPSC',topics:[]},{name:'CAG & Finance Commission',topics:[]},{name:'National Commissions',topics:[]}]},
+      {name:'Statutory & Quasi-Judicial Bodies',chapters:[{name:'NHRC & SHRCs',topics:[]},{name:'CIC & CVC',topics:[]},{name:'Lokpal & Lokayukta',topics:[]},{name:'NITI Aayog & Regulators',topics:[]}]},
+      {name:'Emergency Provisions',chapters:[{name:'National Emergency (352)',topics:[]},{name:'President Rule (356)',topics:[]},{name:'Financial Emergency (360)',topics:[]}]},
+      {name:'Amendments & Schedules',chapters:[{name:'Amendment Procedure (368)',topics:[]},{name:'Important Amendments',topics:[]},{name:'Basic Structure Doctrine',topics:[]},{name:'All 12 Schedules',topics:[]}]},
     ]},
-    { id:'history', icon:'🏛️', name:'History', subjects:[
-      {name:'Ancient India',topics:[]},{name:'Medieval India',topics:[]},{name:'Modern India',topics:[]},
-      {name:'Freedom Struggle',topics:[]},{name:'Art & Culture',topics:[]}
+    {id:'history',icon:'🏛️',name:'History',subjects:[
+      {name:'Ancient India',chapters:[{name:'Prehistory & Indus Valley',topics:[]},{name:'Vedic Period',topics:[]},{name:'Mahajanapadas & Buddhism',topics:[]},{name:'Mauryan Empire',topics:[]},{name:'Post-Mauryan Period',topics:[]},{name:'Gupta Empire',topics:[]},{name:'Post-Gupta Period',topics:[]}]},
+      {name:'Medieval India',chapters:[{name:'Early Medieval Period',topics:[]},{name:'Delhi Sultanate',topics:[]},{name:'Vijayanagara & Bahmani',topics:[]},{name:'Mughal Empire',topics:[]},{name:'Maratha Empire',topics:[]},{name:'Regional Kingdoms',topics:[]},{name:'Medieval Society & Culture',topics:[]}]},
+      {name:'Modern India',chapters:[{name:'European Entry & British Expansion',topics:[]},{name:'Governor Generals & Viceroys',topics:[]},{name:'Economic Impact of British Rule',topics:[]},{name:'Social & Religious Reforms',topics:[]},{name:'Press & Education',topics:[]}]},
+      {name:'Freedom Struggle',chapters:[{name:'Early Revolts & 1857',topics:[]},{name:'Indian National Congress',topics:[]},{name:'Partition of Bengal & Swadeshi',topics:[]},{name:'Non-Cooperation Movement',topics:[]},{name:'Civil Disobedience Movement',topics:[]},{name:'Quit India Movement',topics:[]},{name:'Revolutionary Movements',topics:[]},{name:'Cabinet Mission & Independence',topics:[]}]},
+      {name:'Art & Culture',chapters:[{name:'Architecture',topics:[]},{name:'Sculpture & Painting',topics:[]},{name:'Literature & Languages',topics:[]},{name:'Music & Dance',topics:[]},{name:'Festivals & Traditions',topics:[]}]},
     ]},
-    { id:'geography', icon:'🗺️', name:'Geography', subjects:[
-      {name:'Physical Geography',topics:[]},{name:'Indian Geography',topics:[]},{name:'World Geography',topics:[]},
-      {name:'Climate',topics:[]},{name:'Rivers',topics:[]},{name:'Resources',topics:[]}
+    {id:'geography',icon:'🗺️',name:'Geography',subjects:[
+      {name:'Physical Geography',chapters:[{name:'Earth & Universe',topics:[]},{name:'Landforms',topics:[]},{name:'Drainage Systems',topics:[]},{name:'Climate & Atmosphere',topics:[]},{name:'Soils',topics:[]},{name:'Natural Vegetation',topics:[]}]},
+      {name:'Indian Geography',chapters:[{name:'Location & Physical Divisions',topics:[]},{name:'Himalayas',topics:[]},{name:'Northern Plains',topics:[]},{name:'Peninsular Plateau',topics:[]},{name:'Coastal Plains & Islands',topics:[]},{name:'Indian Rivers',topics:[]},{name:'Indian Climate',topics:[]},{name:'Indian Soils',topics:[]},{name:'Indian Forests',topics:[]}]},
+      {name:'World Geography',chapters:[{name:'Continents & Oceans',topics:[]},{name:'World Climate Zones',topics:[]},{name:'World Rivers & Lakes',topics:[]},{name:'Mountain Ranges',topics:[]},{name:'Deserts of World',topics:[]}]},
+      {name:'Economic Geography',chapters:[{name:'Agriculture in India',topics:[]},{name:'Industries in India',topics:[]},{name:'Minerals & Energy Resources',topics:[]},{name:'Transport & Communication',topics:[]},{name:'Trade & Ports',topics:[]}]},
+      {name:'Human Geography',chapters:[{name:'Population',topics:[]},{name:'Urbanisation',topics:[]},{name:'Migration',topics:[]}]},
     ]},
-    { id:'general-science', icon:'🔬', name:'General Science', subjects:[
-      {name:'Physics',topics:[]},{name:'Chemistry',topics:[]},{name:'Biology',topics:[]},
-      {name:'Technology',topics:[]},{name:'Health & Disease',topics:[]}
+    {id:'general-science',icon:'🔬',name:'General Science',subjects:[
+      {name:'Physics',chapters:[{name:'Motion & Laws',topics:[]},{name:'Work, Energy & Power',topics:[]},{name:'Sound & Light',topics:[]},{name:'Heat & Thermodynamics',topics:[]},{name:'Electricity & Magnetism',topics:[]},{name:'Modern Physics',topics:[]}]},
+      {name:'Chemistry',chapters:[{name:'Matter & States',topics:[]},{name:'Atoms & Molecules',topics:[]},{name:'Chemical Reactions',topics:[]},{name:'Acids, Bases & Salts',topics:[]},{name:'Metals & Non-Metals',topics:[]},{name:'Carbon Compounds',topics:[]},{name:'Periodic Table',topics:[]}]},
+      {name:'Biology',chapters:[{name:'Cell Biology',topics:[]},{name:'Plant Kingdom',topics:[]},{name:'Animal Kingdom',topics:[]},{name:'Human Body Systems',topics:[]},{name:'Diseases & Immunity',topics:[]},{name:'Genetics & Evolution',topics:[]}]},
+      {name:'Technology',chapters:[{name:'Computers & IT',topics:[]},{name:'Space Technology',topics:[]},{name:'Defence Technology',topics:[]},{name:'Biotechnology',topics:[]},{name:'Nanotechnology',topics:[]}]},
+      {name:'Health & Disease',chapters:[{name:'Nutrition & Diet',topics:[]},{name:'Communicable Diseases',topics:[]},{name:'Non-Communicable Diseases',topics:[]},{name:'Vaccines & Drugs',topics:[]}]},
     ]},
-    { id:'economy', icon:'💹', name:'Economy', subjects:[
-      {name:'Indian Economy',topics:[]},{name:'Banking',topics:[]},{name:'Budget',topics:[]},
-      {name:'Agriculture',topics:[]},{name:'Trade',topics:[]}
+    {id:'economy',icon:'💹',name:'Economy',subjects:[
+      {name:'Indian Economy',chapters:[{name:'National Income',topics:[]},{name:'Economic Planning',topics:[]},{name:'Poverty & Unemployment',topics:[]},{name:'Inflation',topics:[]},{name:'Money & Banking',topics:[]},{name:'Capital Market',topics:[]}]},
+      {name:'Banking',chapters:[{name:'RBI & Monetary Policy',topics:[]},{name:'Commercial Banks',topics:[]},{name:'Financial Inclusion',topics:[]},{name:'Digital Payments',topics:[]}]},
+      {name:'Budget',chapters:[{name:'Union Budget Concepts',topics:[]},{name:'Fiscal Policy',topics:[]},{name:'Taxation',topics:[]},{name:'GST',topics:[]}]},
+      {name:'Agriculture',chapters:[{name:'Agricultural Sector',topics:[]},{name:'Green Revolution',topics:[]},{name:'Agricultural Schemes',topics:[]},{name:'Food Security',topics:[]}]},
+      {name:'Trade',chapters:[{name:'International Trade',topics:[]},{name:'Balance of Payments',topics:[]},{name:'WTO',topics:[]},{name:'FDI & FPI',topics:[]}]},
     ]},
-    { id:'current-affairs', icon:'📰', name:'Current Affairs', subjects:[
-      {name:'National',topics:[]},{name:'International',topics:[]},{name:'Awards',topics:[]},
-      {name:'Sports',topics:[]},{name:'Science & Tech',topics:[]}
+    {id:'current-affairs',icon:'📰',name:'Current Affairs',subjects:[
+      {name:'National',chapters:[{name:'Government Schemes',topics:[]},{name:'Constitutional Developments',topics:[]},{name:'Economic News',topics:[]}]},
+      {name:'International',chapters:[{name:'Bilateral Relations',topics:[]},{name:'International Organisations',topics:[]},{name:'Global Issues',topics:[]}]},
+      {name:'Awards',chapters:[{name:'National Awards',topics:[]},{name:'International Awards',topics:[]},{name:'Nobel Prizes',topics:[]}]},
+      {name:'Sports',chapters:[{name:'National Sports Events',topics:[]},{name:'International Sports',topics:[]},{name:'Olympics & CWG',topics:[]}]},
+      {name:'Science & Tech',chapters:[{name:'Space Missions',topics:[]},{name:'Defence Tech',topics:[]},{name:'Recent Discoveries',topics:[]}]},
     ]},
-    { id:'environment', icon:'🌿', name:'Environment', subjects:[
-      {name:'Ecology',topics:[]},{name:'Biodiversity',topics:[]},{name:'Climate Change',topics:[]},
-      {name:'Pollution',topics:[]},{name:'Conservation',topics:[]}
+    {id:'environment',icon:'🌿',name:'Environment',subjects:[
+      {name:'Ecology',chapters:[{name:'Ecosystem',topics:[]},{name:'Food Chain & Web',topics:[]},{name:'Energy Flow',topics:[]},{name:'Biogeochemical Cycles',topics:[]}]},
+      {name:'Biodiversity',chapters:[{name:'Types of Biodiversity',topics:[]},{name:'Hotspots',topics:[]},{name:'Endangered Species',topics:[]},{name:'Protected Areas',topics:[]}]},
+      {name:'Climate Change',chapters:[{name:'Greenhouse Effect',topics:[]},{name:'Global Warming',topics:[]},{name:'International Agreements',topics:[]},{name:'Carbon Credits',topics:[]}]},
+      {name:'Pollution',chapters:[{name:'Air Pollution',topics:[]},{name:'Water Pollution',topics:[]},{name:'Soil Pollution',topics:[]},{name:'Noise & Radiation Pollution',topics:[]}]},
+      {name:'Conservation',chapters:[{name:'Wildlife Protection Act',topics:[]},{name:'Forest Conservation',topics:[]},{name:'Environmental Laws',topics:[]},{name:'NGT & Tribunals',topics:[]}]},
     ]},
-    { id:'reasoning', icon:'🧩', name:'Reasoning', subjects:[
-      {name:'Analogy',topics:[]},{name:'Series',topics:[]},{name:'Coding-Decoding',topics:[]},
-      {name:'Blood Relations',topics:[]},{name:'Direction',topics:[]}
+    {id:'reasoning',icon:'🧩',name:'Reasoning',subjects:[
+      {name:'Analogy',chapters:[{name:'Word Analogy',topics:[]},{name:'Number Analogy',topics:[]},{name:'Letter Analogy',topics:[]}]},
+      {name:'Series',chapters:[{name:'Number Series',topics:[]},{name:'Letter Series',topics:[]},{name:'Mixed Series',topics:[]}]},
+      {name:'Coding-Decoding',chapters:[{name:'Letter Coding',topics:[]},{name:'Number Coding',topics:[]},{name:'Symbol Coding',topics:[]}]},
+      {name:'Blood Relations',chapters:[{name:'Family Tree',topics:[]},{name:'Coded Relations',topics:[]}]},
+      {name:'Direction',chapters:[{name:'Direction Sense',topics:[]},{name:'Distance Problems',topics:[]}]},
     ]},
   ],
-  stategk: [
-    { id:'mp', icon:'🟠', name:'Madhya Pradesh', subjects:[
-      {name:'History',topics:[]},{name:'Geography',topics:[]},{name:'Culture',topics:[]},
-      {name:'Economy',topics:[]},{name:'Polity',topics:[]},{name:'Current Affairs',topics:[]}
+  stategk:[
+    {id:'mp',icon:'🟠',name:'Madhya Pradesh',subjects:[
+      {name:'History',chapters:[{name:'Ancient History of MP',topics:[]},{name:'Medieval History of MP',topics:[]},{name:'Modern History of MP',topics:[]},{name:'Freedom Struggle in MP',topics:[]}]},
+      {name:'Geography',chapters:[{name:'Location & Physical Features',topics:[]},{name:'Rivers of MP',topics:[]},{name:'Climate & Forests',topics:[]},{name:'Districts & Divisions',topics:[]}]},
+      {name:'Culture',chapters:[{name:'Tribes of MP',topics:[]},{name:'Folk Art & Dance',topics:[]},{name:'Temples & Heritage Sites',topics:[]},{name:'Festivals',topics:[]}]},
+      {name:'Economy',chapters:[{name:'Agriculture',topics:[]},{name:'Industries',topics:[]},{name:'Tourism',topics:[]},{name:'State Schemes',topics:[]}]},
+      {name:'Polity',chapters:[{name:'State Government Structure',topics:[]},{name:'State Legislature',topics:[]},{name:'Local Self Government',topics:[]}]},
+      {name:'Current Affairs',chapters:[{name:'Recent Events',topics:[]},{name:'Awards & Honours',topics:[]},{name:'Sports',topics:[]}]},
     ]},
-    { id:'chhattisgarh', icon:'🟡', name:'Chhattisgarh', subjects:[
-      {name:'History',topics:[]},{name:'Geography',topics:[]},{name:'Culture',topics:[]},
-      {name:'Economy',topics:[]},{name:'Polity',topics:[]},{name:'Current Affairs',topics:[]}
-    ]},
-  ],
-  language: [
-    { id:'hindi', icon:'📖', name:'Hindi', subjects:[
-      {name:'व्याकरण',topics:[]},{name:'संधि-समास',topics:[]},{name:'अलंकार',topics:[]},
-      {name:'रस-छंद',topics:[]},{name:'साहित्य',topics:[]},{name:'कवि',topics:[]},{name:'उपन्यास',topics:[]}
-    ]},
-    { id:'english', icon:'🔤', name:'English', subjects:[
-      {name:'Grammar',topics:[]},{name:'Vocabulary',topics:[]},{name:'Comprehension',topics:[]},
-      {name:'Error Spotting',topics:[]},{name:'Sentence Improvement',topics:[]}
+    {id:'chhattisgarh',icon:'🟡',name:'Chhattisgarh',subjects:[
+      {name:'History',chapters:[{name:'Ancient History of CG',topics:[]},{name:'Medieval History of CG',topics:[]},{name:'Modern & Formation of CG',topics:[]}]},
+      {name:'Geography',chapters:[{name:'Location & Physical Features',topics:[]},{name:'Rivers of CG',topics:[]},{name:'Minerals & Forests',topics:[]},{name:'Districts',topics:[]}]},
+      {name:'Culture',chapters:[{name:'Tribes of CG',topics:[]},{name:'Folk Art & Dance',topics:[]},{name:'Heritage Sites',topics:[]},{name:'Festivals',topics:[]}]},
+      {name:'Economy',chapters:[{name:'Agriculture',topics:[]},{name:'Mining & Industries',topics:[]},{name:'State Schemes',topics:[]}]},
+      {name:'Polity',chapters:[{name:'State Government',topics:[]},{name:'Local Government',topics:[]}]},
+      {name:'Current Affairs',chapters:[{name:'Recent Events',topics:[]},{name:'Awards & Sports',topics:[]}]},
     ]},
   ],
-  aptitude: [
-    { id:'logical-reasoning', icon:'🧠', name:'Logical Reasoning', subjects:[
-      {name:'Analogy',topics:[]},{name:'Series',topics:[]},{name:'Coding-Decoding',topics:[]},
-      {name:'Blood Relations',topics:[]},{name:'Direction',topics:[]},{name:'Syllogism',topics:[]},
-      {name:'Puzzle',topics:[]},{name:'Clock & Calendar',topics:[]}
+  language:[
+    {id:'hindi',icon:'📖',name:'Hindi',subjects:[
+      {name:'व्याकरण',chapters:[{name:'वर्णमाला',topics:[]},{name:'संज्ञा व सर्वनाम',topics:[]},{name:'विशेषण व क्रिया',topics:[]},{name:'काल',topics:[]},{name:'कारक',topics:[]},{name:'वाच्य',topics:[]}]},
+      {name:'संधि-समास',chapters:[{name:'संधि',topics:[]},{name:'समास',topics:[]}]},
+      {name:'अलंकार',chapters:[{name:'शब्दालंकार',topics:[]},{name:'अर्थालंकार',topics:[]}]},
+      {name:'रस-छंद',chapters:[{name:'रस',topics:[]},{name:'छंद',topics:[]}]},
+      {name:'साहित्य',chapters:[{name:'आदिकाल',topics:[]},{name:'भक्तिकाल',topics:[]},{name:'रीतिकाल',topics:[]},{name:'आधुनिककाल',topics:[]}]},
+      {name:'कवि-लेखक',chapters:[{name:'प्रमुख कवि',topics:[]},{name:'प्रमुख लेखक',topics:[]}]},
     ]},
-    { id:'quantitative-aptitude', icon:'🔢', name:'Quantitative Aptitude', subjects:[
-      {name:'Number System',topics:[]},{name:'Percentage',topics:[]},{name:'Ratio',topics:[]},
-      {name:'Profit & Loss',topics:[]},{name:'Time & Work',topics:[]},{name:'Time & Distance',topics:[]},
-      {name:'SI & CI',topics:[]},{name:'Geometry',topics:[]},{name:'Mensuration',topics:[]},
-      {name:'Data Interpretation',topics:[]}
+    {id:'english',icon:'🔤',name:'English',subjects:[
+      {name:'Grammar',chapters:[{name:'Tenses',topics:[]},{name:'Articles',topics:[]},{name:'Prepositions',topics:[]},{name:'Subject-Verb Agreement',topics:[]},{name:'Voice',topics:[]},{name:'Narration',topics:[]}]},
+      {name:'Vocabulary',chapters:[{name:'Synonyms & Antonyms',topics:[]},{name:'One Word Substitution',topics:[]},{name:'Idioms & Phrases',topics:[]}]},
+      {name:'Comprehension',chapters:[{name:'Reading Comprehension',topics:[]},{name:'Para Jumbles',topics:[]}]},
+      {name:'Error Spotting',chapters:[{name:'Common Errors',topics:[]},{name:'Sentence Correction',topics:[]}]},
+    ]},
+  ],
+  aptitude:[
+    {id:'logical-reasoning',icon:'🧠',name:'Logical Reasoning',subjects:[
+      {name:'Analogy',chapters:[{name:'Word & Number Analogy',topics:[]},{name:'Letter Analogy',topics:[]}]},
+      {name:'Series',chapters:[{name:'Number Series',topics:[]},{name:'Letter & Mixed Series',topics:[]}]},
+      {name:'Coding-Decoding',chapters:[{name:'Letter & Number Coding',topics:[]}]},
+      {name:'Blood Relations',chapters:[{name:'Family Tree Problems',topics:[]}]},
+      {name:'Direction',chapters:[{name:'Direction & Distance',topics:[]}]},
+      {name:'Syllogism',chapters:[{name:'Statement & Conclusions',topics:[]},{name:'Statement & Assumptions',topics:[]}]},
+      {name:'Puzzle',chapters:[{name:'Seating Arrangement',topics:[]},{name:'Scheduling Puzzle',topics:[]}]},
+      {name:'Clock & Calendar',chapters:[{name:'Clock Problems',topics:[]},{name:'Calendar Problems',topics:[]}]},
+    ]},
+    {id:'quantitative-aptitude',icon:'🔢',name:'Quantitative Aptitude',subjects:[
+      {name:'Number System',chapters:[{name:'Types of Numbers',topics:[]},{name:'LCM & HCF',topics:[]},{name:'Divisibility',topics:[]}]},
+      {name:'Percentage',chapters:[{name:'Basic Percentage',topics:[]},{name:'Applications',topics:[]}]},
+      {name:'Ratio & Proportion',chapters:[{name:'Ratio',topics:[]},{name:'Partnership',topics:[]},{name:'Mixture & Alligation',topics:[]}]},
+      {name:'Profit & Loss',chapters:[{name:'Basic P&L',topics:[]},{name:'Discount',topics:[]}]},
+      {name:'Time & Work',chapters:[{name:'Time & Work',topics:[]},{name:'Pipes & Cisterns',topics:[]}]},
+      {name:'Time & Distance',chapters:[{name:'Speed & Distance',topics:[]},{name:'Trains & Boats',topics:[]}]},
+      {name:'SI & CI',chapters:[{name:'Simple Interest',topics:[]},{name:'Compound Interest',topics:[]}]},
+      {name:'Geometry',chapters:[{name:'Lines & Angles',topics:[]},{name:'Triangles',topics:[]},{name:'Circles',topics:[]}]},
+      {name:'Mensuration',chapters:[{name:'2D Figures',topics:[]},{name:'3D Figures',topics:[]}]},
+      {name:'Data Interpretation',chapters:[{name:'Tables',topics:[]},{name:'Bar & Pie Charts',topics:[]},{name:'Line Graphs',topics:[]}]},
     ]},
   ],
 };
 
-let config = JSON.parse(JSON.stringify(DEFAULTS));
-
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
-
-/** Migrate old string subjects to {name,topics} format */
-function migrateSubjects(arr) {
-  if (!arr || !arr.length) return arr;
-  return arr.map(sub => {
-    if (!sub.subjects) { sub.subjects = []; return sub; }
-    sub.subjects = sub.subjects.map(s => {
-      if (typeof s === 'string') return { name: s, topics: [] };
-      if (!s.topics) s.topics = [];
+// ── Migration: handle old string subjects or subjects without chapters ─────────
+function migrate(arr){
+  return (arr||[]).map(sub=>{
+    sub.subjects=(sub.subjects||[]).map(s=>{
+      if(typeof s==='string') return {name:s,chapters:[]};
+      if(!s.chapters){
+        // old format had topics[] directly — wrap each topic as a chapter
+        s.chapters=(s.topics||[]).map(t=>({name:t,topics:[]}));
+        delete s.topics;
+      }
       return s;
     });
     return sub;
   });
 }
 
-async function loadConfig() {
-  try {
-    const snap = await getDoc(NT_DOC);
-    if (snap.exists()) {
-      const d = snap.data();
-      if (d.gs)       config.gs       = migrateSubjects(d.gs);
-      if (d.stategk)  config.stategk  = migrateSubjects(d.stategk);
-      if (d.language) config.language = migrateSubjects(d.language);
-      if (d.aptitude) config.aptitude = migrateSubjects(d.aptitude);
+let config = JSON.parse(JSON.stringify(DEFAULTS));
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
+
+async function loadConfig(){
+  try{
+    const snap=await getDoc(NT_DOC);
+    if(snap.exists()){
+      const d=snap.data();
+      if(d.gs)       config.gs       = migrate(d.gs);
+      if(d.stategk)  config.stategk  = migrate(d.stategk);
+      if(d.language) config.language = migrate(d.language);
+      if(d.aptitude) config.aptitude = migrate(d.aptitude);
     }
-  } catch(e) { console.warn('loadConfig', e); }
+  }catch(e){console.warn('loadConfig',e);}
 }
+async function save(){await setDoc(NT_DOC,config);toast('✅ Saved');}
 
-async function saveConfig() {
-  await setDoc(NT_DOC, config);
-  toast('✅ Saved to Firestore');
-}
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+const LIST_IDS={gs:'gs-list',stategk:'sgk-list',language:'lang-list',aptitude:'apt-list'};
 
-// ── Render ────────────────────────────────────────────────────────────────────
-function renderSection(key, listId, aptReadOnly = false) {
-  const list = document.getElementById(listId);
-  list.innerHTML = '';
-  config[key].forEach((sub, idx) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-
-    // Header
-    let headerHTML = `
+function renderSection(key,aptRO=false){
+  const list=document.getElementById(LIST_IDS[key]);
+  list.innerHTML='';
+  config[key].forEach((sub,si)=>{
+    const card=document.createElement('div');
+    card.className='card';
+    // ── subsection header
+    card.innerHTML=`
       <div class="card-header">
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:20px">${sub.icon}</span>
-          <div>
-            <div class="card-title">${sub.name}</div>
-            <span class="card-id">${sub.id}</span>
-          </div>
+          <div><div class="card-title">${sub.name}</div><span class="card-id">${sub.id}</span></div>
         </div>
-        ${!aptReadOnly ? `<button class="btn btn-danger btn-sm" onclick="deleteSubsection('${key}',${idx})">🗑 Delete</button>` : ''}
-      </div>
-      <div style="font-size:12px;color:#94a3b8;margin-bottom:6px">📂 Subjects (${(sub.subjects||[]).length}) — click to expand & manage topics</div>
-    `;
-
-    // Add subject row
-    let addSubjHTML = `
-      <div style="display:flex;gap:6px;margin-bottom:8px">
-        <input class="auth-input" placeholder="Add new subject…" style="flex:1;font-size:12px;padding:6px 10px" id="subjinput-${key}-${idx}"/>
-        <button class="btn btn-ghost btn-sm" onclick="addOneSubject('${key}',${idx})">+ Add Subject</button>
-      </div>
-      <div style="margin-bottom:8px">
-        <div style="font-size:10px;color:#64748b;margin-bottom:3px">📋 Bulk paste subjects (one per line or comma separated)</div>
-        <textarea id="bulksubj-${key}-${idx}" placeholder="Constitution&#10;Fundamental Rights&#10;Parliament" style="font-size:11px;padding:6px 10px;min-height:45px"></textarea>
-        <button class="btn btn-primary btn-sm" onclick="bulkAddSubjects('${key}',${idx})" style="margin-top:4px">📋 Add All Subjects</button>
+        ${!aptRO?`<button class="btn btn-danger" onclick="delSubsection('${key}',${si})">🗑 Delete</button>`:''}
       </div>
     `;
-
-    // Subject cards
-    let subjHTML = '';
-    (sub.subjects || []).forEach((subj, si) => {
-      const topicCount = (subj.topics || []).length;
-      subjHTML += `
-        <div class="subj-card" id="sc-${key}-${idx}-${si}">
-          <div class="subj-header" onclick="toggleSubj('${key}',${idx},${si})">
-            <div class="subj-name">
-              <span class="arrow" id="arrow-${key}-${idx}-${si}">▶</span>
-              ${subj.name}
-              <span class="subj-badge">${topicCount} topic${topicCount !== 1 ? 's' : ''}</span>
-            </div>
-            <div class="subj-actions">
-              <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteSubject('${key}',${idx},${si})">×</button>
-            </div>
-          </div>
-          <div class="subj-body" id="body-${key}-${idx}-${si}">
-            <div class="topic-chips" id="topics-${key}-${idx}-${si}"></div>
-            <div class="add-topic-row">
-              <input class="auth-input" placeholder="Add one topic…" style="flex:1;font-size:11px;padding:5px 8px" id="topicin-${key}-${idx}-${si}"/>
-              <button class="btn btn-ghost btn-sm" onclick="addOneTopic('${key}',${idx},${si})">+</button>
-            </div>
-            <div class="bulk-area">
-              <div class="bulk-label">📋 Bulk paste topics (one per line or comma separated)</div>
-              <textarea id="bulktopic-${key}-${idx}-${si}" placeholder="Preamble&#10;Salient Features&#10;Sources&#10;Schedules" style="font-size:11px;min-height:40px"></textarea>
-              <button class="btn btn-purple btn-sm" onclick="bulkAddTopics('${key}',${idx},${si})" style="margin-top:3px">📋 Add All Topics</button>
-              <button class="btn btn-ghost btn-sm" onclick="clearTopics('${key}',${idx},${si})" style="margin-top:3px;margin-left:4px">🗑 Clear Topics</button>
-            </div>
-          </div>
+    // ── add subject row (unless aptRO)
+    if(!aptRO){
+      const addSubjDiv=document.createElement('div');
+      addSubjDiv.innerHTML=`
+        <div class="section-lbl">📂 Subjects (${(sub.subjects||[]).length})</div>
+        <div class="row" style="margin-bottom:6px">
+          <input class="auth-input" style="flex:1" placeholder="Add one subject…" id="si-${key}-${si}"/>
+          <button class="btn btn-primary" onclick="addOneSubj('${key}',${si})">+ Subject</button>
+        </div>
+        <div class="bulk-box">
+          <div class="bulk-lbl">📋 Bulk add subjects (one per line or comma separated)</div>
+          <textarea id="bs-${key}-${si}" placeholder="Ancient India&#10;Medieval India&#10;Modern India" style="min-height:40px"></textarea>
+          <button class="btn btn-primary" onclick="bulkSubj('${key}',${si})" style="margin-top:3px">📋 Add All Subjects</button>
         </div>
       `;
+      card.appendChild(addSubjDiv);
+    }
+    // ── subjects
+    const subjWrap=document.createElement('div');
+    subjWrap.style.marginTop='10px';
+    (sub.subjects||[]).forEach((subj,ji)=>{
+      subjWrap.appendChild(buildSubjCard(key,si,ji,aptRO));
     });
-
-    card.innerHTML = headerHTML + addSubjHTML + subjHTML;
+    card.appendChild(subjWrap);
     list.appendChild(card);
-
-    // Render topic chips for each subject
-    (sub.subjects || []).forEach((subj, si) => renderTopicChips(key, idx, si));
   });
 }
 
-function renderTopicChips(key, idx, si) {
-  const container = document.getElementById(`topics-${key}-${idx}-${si}`);
-  if (!container) return;
-  container.innerHTML = '';
-  const topics = config[key][idx]?.subjects?.[si]?.topics || [];
-  if (topics.length === 0) {
-    container.innerHTML = '<span style="font-size:11px;color:#475569;font-style:italic">No topics yet — add below</span>';
-    return;
-  }
-  topics.forEach((t, ti) => {
-    const chip = document.createElement('span');
-    chip.className = 'topic-chip';
-    chip.innerHTML = `${t} <span class="tdel" onclick="deleteTopic('${key}',${idx},${si},${ti})">×</span>`;
-    container.appendChild(chip);
+function buildSubjCard(key,si,ji,aptRO){
+  const subj=config[key][si].subjects[ji];
+  const chapCount=(subj.chapters||[]).length;
+  const topicTotal=(subj.chapters||[]).reduce((a,c)=>a+(c.topics||[]).length,0);
+  const div=document.createElement('div');
+  div.className='subj-card';
+  div.id=`sc-${key}-${si}-${ji}`;
+  div.innerHTML=`
+    <div class="subj-header" onclick="toggleNode('sb-${key}-${si}-${ji}','sa-${key}-${si}-${ji}')">
+      <div class="subj-name">
+        <span class="arrow" id="sa-${key}-${si}-${ji}">▶</span>
+        ${subj.name}
+        <span class="badge badge-chap">${chapCount} chapters</span>
+        <span class="badge badge-topic">${topicTotal} topics</span>
+      </div>
+      <div style="display:flex;gap:4px" onclick="event.stopPropagation()">
+        ${!aptRO?`<button class="btn btn-danger" onclick="delSubj('${key}',${si},${ji})">×</button>`:''}
+      </div>
+    </div>
+    <div class="subj-body" id="sb-${key}-${si}-${ji}">
+      <!-- Add chapter controls -->
+      <div class="section-lbl" style="margin-left:0">📖 Chapters</div>
+      <div class="row" style="margin-bottom:4px">
+        <input class="auth-input" style="flex:1" placeholder="Add one chapter…" id="ci-${key}-${si}-${ji}"/>
+        <button class="btn btn-blue" onclick="addOneChap('${key}',${si},${ji})">+ Chapter</button>
+      </div>
+      <div class="bulk-box">
+        <div class="bulk-lbl">📋 Bulk add chapters (one per line or comma separated)</div>
+        <textarea id="bc-${key}-${si}-${ji}" placeholder="Vedic Period&#10;Mauryan Empire&#10;Gupta Empire" style="min-height:38px"></textarea>
+        <button class="btn btn-blue" onclick="bulkChap('${key}',${si},${ji})" style="margin-top:3px">📋 Add All Chapters</button>
+      </div>
+      <!-- Chapter list -->
+      <div id="chaplist-${key}-${si}-${ji}" style="margin-top:8px"></div>
+    </div>
+  `;
+  // render chapters
+  setTimeout(()=>renderChapters(key,si,ji),0);
+  return div;
+}
+
+function renderChapters(key,si,ji){
+  const wrap=document.getElementById(`chaplist-${key}-${si}-${ji}`);
+  if(!wrap) return;
+  wrap.innerHTML='';
+  const subj=config[key][si].subjects[ji];
+  (subj.chapters||[]).forEach((chap,ci)=>{
+    const cd=document.createElement('div');
+    cd.className='chap-card';
+    cd.id=`cc-${key}-${si}-${ji}-${ci}`;
+    cd.innerHTML=`
+      <div class="chap-header" onclick="toggleNode('cb-${key}-${si}-${ji}-${ci}','ca-${key}-${si}-${ji}-${ci}')">
+        <div class="chap-name">
+          <span class="arrow" id="ca-${key}-${si}-${ji}-${ci}">▶</span>
+          ${chap.name}
+          <span class="badge badge-topic">${(chap.topics||[]).length} topics</span>
+        </div>
+        <div onclick="event.stopPropagation()" style="display:flex;gap:3px">
+          <button class="btn btn-danger" onclick="delChap('${key}',${si},${ji},${ci})">×</button>
+        </div>
+      </div>
+      <div class="chap-body" id="cb-${key}-${si}-${ji}-${ci}">
+        <div class="chip-wrap" id="tw-${key}-${si}-${ji}-${ci}"></div>
+        <div class="row" style="margin-bottom:4px">
+          <input class="auth-input" style="flex:1" placeholder="Add one topic…" id="ti-${key}-${si}-${ji}-${ci}"/>
+          <button class="btn btn-green" onclick="addOneTopic('${key}',${si},${ji},${ci})">+</button>
+        </div>
+        <div class="bulk-box">
+          <div class="bulk-lbl">📋 Bulk add topics (one per line or comma separated)</div>
+          <textarea id="bt-${key}-${si}-${ji}-${ci}" placeholder="Rig Vedic Society&#10;Later Vedic Age&#10;Economic Life" style="min-height:36px"></textarea>
+          <div class="row" style="margin-top:3px">
+            <button class="btn btn-green" onclick="bulkTopic('${key}',${si},${ji},${ci})">📋 Add All Topics</button>
+            <button class="btn btn-ghost" onclick="clearTopics('${key}',${si},${ji},${ci})">🗑 Clear</button>
+          </div>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(cd);
+    renderTopicChips(key,si,ji,ci);
   });
 }
 
-// ── Subject operations ────────────────────────────────────────────────────────
-window.addOneSubject = (key, idx) => {
-  const inp = document.getElementById(`subjinput-${key}-${idx}`);
-  const val = inp.value.trim();
-  if (!val) return;
-  if (!config[key][idx].subjects) config[key][idx].subjects = [];
-  if (config[key][idx].subjects.find(s => s.name === val)) { toast('⚠️ Subject already exists'); return; }
-  config[key][idx].subjects.push({ name: val, topics: [] });
-  inp.value = '';
-  const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
-  renderSection(key, listIds[key], key === 'aptitude');
-  saveConfig();
+function renderTopicChips(key,si,ji,ci){
+  const wrap=document.getElementById(`tw-${key}-${si}-${ji}-${ci}`);
+  if(!wrap) return;
+  const topics=config[key][si].subjects[ji].chapters[ci].topics||[];
+  if(topics.length===0){wrap.innerHTML='<span class="empty-topics">No topics yet</span>';return;}
+  wrap.innerHTML='';
+  topics.forEach((t,ti)=>{
+    const chip=document.createElement('span');
+    chip.className='t-chip';
+    chip.innerHTML=`${t} <span class="x" onclick="delTopic('${key}',${si},${ji},${ci},${ti})">×</span>`;
+    wrap.appendChild(chip);
+  });
+}
+
+function updateBadges(key,si,ji){
+  const subj=config[key][si].subjects[ji];
+  const cc=(subj.chapters||[]).length;
+  const tc=(subj.chapters||[]).reduce((a,c)=>a+(c.topics||[]).length,0);
+  const sc=document.querySelector(`#sc-${key}-${si}-${ji} .badge-chap`);
+  const st=document.querySelector(`#sc-${key}-${si}-${ji} .badge-topic`);
+  if(sc) sc.textContent=`${cc} chapters`;
+  if(st) st.textContent=`${tc} topics`;
+}
+function updateChapBadge(key,si,ji,ci){
+  const tc=(config[key][si].subjects[ji].chapters[ci].topics||[]).length;
+  const b=document.querySelector(`#cc-${key}-${si}-${ji}-${ci} .badge-topic`);
+  if(b) b.textContent=`${tc} topics`;
+}
+
+// ── Toggle ────────────────────────────────────────────────────────────────────
+window.toggleNode=(bodyId,arrowId)=>{
+  const b=document.getElementById(bodyId);
+  const a=document.getElementById(arrowId);
+  if(!b) return;
+  const open=b.classList.toggle('open');
+  if(a) a.classList.toggle('open',open);
 };
 
-window.bulkAddSubjects = (key, idx) => {
-  const ta = document.getElementById(`bulksubj-${key}-${idx}`);
-  const raw = ta.value.trim();
-  if (!raw) { toast('⚠️ Paste subjects first'); return; }
-  const items = raw.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
-  if (!config[key][idx].subjects) config[key][idx].subjects = [];
-  let added = 0;
-  items.forEach(name => {
-    if (!config[key][idx].subjects.find(s => s.name === name)) {
-      config[key][idx].subjects.push({ name, topics: [] });
+// ── Subsection ops ────────────────────────────────────────────────────────────
+window.delSubsection=(key,si)=>{
+  if(!confirm(`Delete "${config[key][si].name}"?`)) return;
+  config[key].splice(si,1);
+  renderSection(key,key==='aptitude');
+  save();
+};
+window.addSubsection=(key,iconId,nameId,idId,listId)=>{
+  const icon=document.getElementById(iconId).value.trim()||'📘';
+  const name=document.getElementById(nameId).value.trim();
+  const id=document.getElementById(idId).value.trim().toLowerCase().replace(/\s+/g,'-');
+  if(!name||!id){toast('⚠️ Name & ID required');return;}
+  if(config[key].find(s=>s.id===id)){toast('⚠️ ID exists');return;}
+  config[key].push({id,icon,name,subjects:[]});
+  document.getElementById(nameId).value='';
+  document.getElementById(idId).value='';
+  renderSection(key,key==='aptitude');
+  save();
+};
+
+// ── Subject ops ───────────────────────────────────────────────────────────────
+window.addOneSubj=(key,si)=>{
+  const inp=document.getElementById(`si-${key}-${si}`);
+  const v=inp.value.trim();
+  if(!v) return;
+  if(!config[key][si].subjects) config[key][si].subjects=[];
+  if(config[key][si].subjects.find(s=>s.name===v)){toast('⚠️ Already exists');return;}
+  config[key][si].subjects.push({name:v,chapters:[]});
+  inp.value='';
+  renderSection(key,key==='aptitude');
+  save();
+};
+window.bulkSubj=(key,si)=>{
+  const ta=document.getElementById(`bs-${key}-${si}`);
+  const items=ta.value.split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean);
+  if(!items.length){toast('⚠️ Paste subjects first');return;}
+  if(!config[key][si].subjects) config[key][si].subjects=[];
+  let added=0;
+  items.forEach(name=>{
+    if(!config[key][si].subjects.find(s=>s.name===name)){
+      config[key][si].subjects.push({name,chapters:[]});
       added++;
     }
   });
-  ta.value = '';
-  const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
-  renderSection(key, listIds[key], key === 'aptitude');
-  saveConfig();
-  toast(`✅ Added ${added} subjects` + (items.length - added > 0 ? ` (${items.length - added} skipped)` : ''));
+  ta.value='';
+  renderSection(key,key==='aptitude');
+  save();
+  toast(`✅ Added ${added} subjects`+(items.length-added>0?` (${items.length-added} skipped)`:''));
+};
+window.delSubj=(key,si,ji)=>{
+  if(!confirm(`Delete subject "${config[key][si].subjects[ji].name}"?`)) return;
+  config[key][si].subjects.splice(ji,1);
+  renderSection(key,key==='aptitude');
+  save();
 };
 
-window.deleteSubject = (key, idx, si) => {
-  const name = config[key][idx].subjects[si].name;
-  if (!confirm(`Delete subject "${name}" and all its topics?`)) return;
-  config[key][idx].subjects.splice(si, 1);
-  const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
-  renderSection(key, listIds[key], key === 'aptitude');
-  saveConfig();
+// ── Chapter ops ───────────────────────────────────────────────────────────────
+window.addOneChap=(key,si,ji)=>{
+  const inp=document.getElementById(`ci-${key}-${si}-${ji}`);
+  const v=inp.value.trim();
+  if(!v) return;
+  if(!config[key][si].subjects[ji].chapters) config[key][si].subjects[ji].chapters=[];
+  config[key][si].subjects[ji].chapters.push({name:v,topics:[]});
+  inp.value='';
+  renderChapters(key,si,ji);
+  updateBadges(key,si,ji);
+  save();
 };
-
-// ── Topic operations ──────────────────────────────────────────────────────────
-window.toggleSubj = (key, idx, si) => {
-  const body = document.getElementById(`body-${key}-${idx}-${si}`);
-  const arrow = document.getElementById(`arrow-${key}-${idx}-${si}`);
-  const isOpen = body.classList.toggle('open');
-  arrow.classList.toggle('open', isOpen);
-};
-
-window.addOneTopic = (key, idx, si) => {
-  const inp = document.getElementById(`topicin-${key}-${idx}-${si}`);
-  const val = inp.value.trim();
-  if (!val) return;
-  if (!config[key][idx].subjects[si].topics) config[key][idx].subjects[si].topics = [];
-  if (config[key][idx].subjects[si].topics.includes(val)) { toast('⚠️ Topic already exists'); return; }
-  config[key][idx].subjects[si].topics.push(val);
-  inp.value = '';
-  renderTopicChips(key, idx, si);
-  // Update badge count
-  const badge = document.querySelector(`#sc-${key}-${idx}-${si} .subj-badge`);
-  if (badge) { const c = config[key][idx].subjects[si].topics.length; badge.textContent = `${c} topic${c !== 1 ? 's' : ''}`; }
-  saveConfig();
-};
-
-window.bulkAddTopics = (key, idx, si) => {
-  const ta = document.getElementById(`bulktopic-${key}-${idx}-${si}`);
-  const raw = ta.value.trim();
-  if (!raw) { toast('⚠️ Paste topics first'); return; }
-  const items = raw.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
-  if (!config[key][idx].subjects[si].topics) config[key][idx].subjects[si].topics = [];
-  let added = 0;
-  items.forEach(t => {
-    if (!config[key][idx].subjects[si].topics.includes(t)) {
-      config[key][idx].subjects[si].topics.push(t);
+window.bulkChap=(key,si,ji)=>{
+  const ta=document.getElementById(`bc-${key}-${si}-${ji}`);
+  const items=ta.value.split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean);
+  if(!items.length){toast('⚠️ Paste chapters first');return;}
+  if(!config[key][si].subjects[ji].chapters) config[key][si].subjects[ji].chapters=[];
+  let added=0;
+  items.forEach(name=>{
+    if(!config[key][si].subjects[ji].chapters.find(c=>c.name===name)){
+      config[key][si].subjects[ji].chapters.push({name,topics:[]});
       added++;
     }
   });
-  ta.value = '';
-  renderTopicChips(key, idx, si);
-  const badge = document.querySelector(`#sc-${key}-${idx}-${si} .subj-badge`);
-  if (badge) { const c = config[key][idx].subjects[si].topics.length; badge.textContent = `${c} topic${c !== 1 ? 's' : ''}`; }
-  saveConfig();
-  toast(`✅ Added ${added} topics` + (items.length - added > 0 ? ` (${items.length - added} skipped)` : ''));
+  ta.value='';
+  renderChapters(key,si,ji);
+  updateBadges(key,si,ji);
+  save();
+  toast(`✅ Added ${added} chapters`+(items.length-added>0?` (${items.length-added} skipped)`:''));
+};
+window.delChap=(key,si,ji,ci)=>{
+  if(!confirm(`Delete chapter "${config[key][si].subjects[ji].chapters[ci].name}"?`)) return;
+  config[key][si].subjects[ji].chapters.splice(ci,1);
+  renderChapters(key,si,ji);
+  updateBadges(key,si,ji);
+  save();
 };
 
-window.deleteTopic = (key, idx, si, ti) => {
-  config[key][idx].subjects[si].topics.splice(ti, 1);
-  renderTopicChips(key, idx, si);
-  const badge = document.querySelector(`#sc-${key}-${idx}-${si} .subj-badge`);
-  if (badge) { const c = config[key][idx].subjects[si].topics.length; badge.textContent = `${c} topic${c !== 1 ? 's' : ''}`; }
-  saveConfig();
+// ── Topic ops ─────────────────────────────────────────────────────────────────
+window.addOneTopic=(key,si,ji,ci)=>{
+  const inp=document.getElementById(`ti-${key}-${si}-${ji}-${ci}`);
+  const v=inp.value.trim();
+  if(!v) return;
+  if(!config[key][si].subjects[ji].chapters[ci].topics) config[key][si].subjects[ji].chapters[ci].topics=[];
+  if(config[key][si].subjects[ji].chapters[ci].topics.includes(v)){toast('⚠️ Already exists');return;}
+  config[key][si].subjects[ji].chapters[ci].topics.push(v);
+  inp.value='';
+  renderTopicChips(key,si,ji,ci);
+  updateChapBadge(key,si,ji,ci);
+  updateBadges(key,si,ji);
+  save();
+};
+window.bulkTopic=(key,si,ji,ci)=>{
+  const ta=document.getElementById(`bt-${key}-${si}-${ji}-${ci}`);
+  const items=ta.value.split(/[\n,;]+/).map(s=>s.trim()).filter(Boolean);
+  if(!items.length){toast('⚠️ Paste topics first');return;}
+  if(!config[key][si].subjects[ji].chapters[ci].topics) config[key][si].subjects[ji].chapters[ci].topics=[];
+  let added=0;
+  items.forEach(t=>{
+    if(!config[key][si].subjects[ji].chapters[ci].topics.includes(t)){
+      config[key][si].subjects[ji].chapters[ci].topics.push(t);
+      added++;
+    }
+  });
+  ta.value='';
+  renderTopicChips(key,si,ji,ci);
+  updateChapBadge(key,si,ji,ci);
+  updateBadges(key,si,ji);
+  save();
+  toast(`✅ Added ${added} topics`+(items.length-added>0?` (${items.length-added} skipped)`:''));
+};
+window.delTopic=(key,si,ji,ci,ti)=>{
+  config[key][si].subjects[ji].chapters[ci].topics.splice(ti,1);
+  renderTopicChips(key,si,ji,ci);
+  updateChapBadge(key,si,ji,ci);
+  updateBadges(key,si,ji);
+  save();
+};
+window.clearTopics=(key,si,ji,ci)=>{
+  const t=config[key][si].subjects[ji].chapters[ci].topics||[];
+  if(!t.length){toast('Already empty');return;}
+  if(!confirm(`Clear all ${t.length} topics?`)) return;
+  config[key][si].subjects[ji].chapters[ci].topics=[];
+  renderTopicChips(key,si,ji,ci);
+  updateChapBadge(key,si,ji,ci);
+  updateBadges(key,si,ji);
+  save();
 };
 
-window.clearTopics = (key, idx, si) => {
-  const topics = config[key][idx].subjects[si].topics || [];
-  if (topics.length === 0) { toast('Already empty'); return; }
-  if (!confirm(`Clear all ${topics.length} topics from "${config[key][idx].subjects[si].name}"?`)) return;
-  config[key][idx].subjects[si].topics = [];
-  renderTopicChips(key, idx, si);
-  const badge = document.querySelector(`#sc-${key}-${idx}-${si} .subj-badge`);
-  if (badge) badge.textContent = '0 topics';
-  saveConfig();
-};
-
-// ── Subsection operations ─────────────────────────────────────────────────────
-window.deleteSubsection = (key, idx) => {
-  if (!confirm(`Delete "${config[key][idx].name}" and all its subjects/topics?`)) return;
-  config[key].splice(idx, 1);
-  const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
-  renderSection(key, listIds[key], key === 'aptitude');
-  saveConfig();
-};
-
-function addSubsection(key, iconId, nameId, idId, listId) {
-  const icon = document.getElementById(iconId).value.trim() || '📘';
-  const name = document.getElementById(nameId).value.trim();
-  const id   = document.getElementById(idId).value.trim().toLowerCase().replace(/\s+/g,'-');
-  if (!name || !id) { toast('⚠️ Name and ID required'); return; }
-  if (config[key].find(s => s.id === id)) { toast('⚠️ ID already exists'); return; }
-  config[key].push({ id, icon, name, subjects: [] });
-  document.getElementById(nameId).value = '';
-  document.getElementById(idId).value   = '';
-  renderSection(key, listId, key === 'aptitude');
-  saveConfig();
-}
-
-// ── Wire buttons ──────────────────────────────────────────────────────────────
-document.getElementById('gs-add-btn').onclick  = () => addSubsection('gs','gs-icon','gs-name','gs-id','gs-list');
-document.getElementById('sgk-add-btn').onclick = () => addSubsection('stategk','sgk-icon','sgk-name','sgk-id','sgk-list');
-document.getElementById('lang-add-btn').onclick= () => addSubsection('language','lang-icon','lang-name','lang-id','lang-list');
-
-// Section tabs
-document.querySelectorAll('.sec-btn').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.sec-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+// ── Section tabs ──────────────────────────────────────────────────────────────
+document.querySelectorAll('.sec-btn').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('.sec-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('panel-' + btn.dataset.sec).classList.add('active');
+    document.getElementById('panel-'+btn.dataset.sec).classList.add('active');
   };
 });
 
-// Auth
-onAuthStateChanged(auth, async user => {
-  if (!user) {
-    document.body.innerHTML = '<div style="padding:40px;text-align:center"><div style="color:#ef4444;font-size:16px;margin-bottom:16px">🔒 Sign in as admin from parent page</div></div>';
-    return;
-  }
-  if (user.email !== ADMIN_EMAIL) {
-    document.body.innerHTML = '<div style="padding:40px;color:#ef4444;font-size:14px">🔒 Not admin (' + user.email + ')</div>';
+// ── Auth ──────────────────────────────────────────────────────────────────────
+onAuthStateChanged(auth,async user=>{
+  if(!user||user.email!==ADMIN_EMAIL){
+    document.body.innerHTML='<div style="padding:40px;color:#ef4444;font-size:14px">🔒 Sign in as admin from parent page</div>';
     return;
   }
   await loadConfig();
-  renderSection('gs',       'gs-list');
-  renderSection('stategk',  'sgk-list');
-  renderSection('language', 'lang-list');
-  renderSection('aptitude', 'apt-list', true);
+  renderSection('gs');
+  renderSection('stategk');
+  renderSection('language');
+  renderSection('aptitude',true);
 });
 </script>
 </body>
