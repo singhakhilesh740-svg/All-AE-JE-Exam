@@ -395,7 +395,7 @@
   </div>
 
   <!-- ===================================================
-       NON-TECH — SECTION HOME
+       NON-TECH — SECTION HOME (4 sections)
        =================================================== -->
   <div id="nonTechHomeScreen" class="screen">
     <header class="app-header">
@@ -410,26 +410,114 @@
         <button class="home-tile tile-gs" id="nonTechGS">
           <div class="tile-icon">🌍</div>
           <div class="tile-title">General Studies</div>
-          <div class="tile-sub">Polity · History · Geography · Science</div>
+          <div class="tile-sub">Polity · History · Geography · Science · Economy</div>
         </button>
-        <button class="home-tile tile-hindi" id="nonTechHindi">
-          <div class="tile-icon">📖</div>
-          <div class="tile-title">Hindi</div>
-          <div class="tile-sub">व्याकरण · साहित्य · कवि</div>
+        <button class="home-tile tile-stategk" id="nonTechStateGK">
+          <div class="tile-icon">🗺️</div>
+          <div class="tile-title">State GK</div>
+          <div class="tile-sub">MP · Chhattisgarh · Gujarat & more</div>
         </button>
-        <button class="home-tile tile-practice" id="nonTechPractice">
-          <div class="tile-icon">✏️</div>
-          <div class="tile-title">Practice Questions</div>
-          <div class="tile-sub">GS · Reasoning · Aptitude</div>
+        <button class="home-tile tile-hindi" id="nonTechLanguage">
+          <div class="tile-icon">🔤</div>
+          <div class="tile-title">Language</div>
+          <div class="tile-sub">Hindi · English · Grammar & Literature</div>
         </button>
-        <button class="home-tile tile-pyq" id="nonTechPYQ">
-          <div class="tile-icon">📜</div>
-          <div class="tile-title">PYQ</div>
-          <div class="tile-sub">Previous year questions</div>
+        <button class="home-tile tile-aptitude" id="nonTechAptitude">
+          <div class="tile-icon">🧮</div>
+          <div class="tile-title">General Aptitude</div>
+          <div class="tile-sub">Logical Reasoning · Quantitative Aptitude</div>
         </button>
       </div>
     </main>
   </div>
+
+  <!-- ===== NON-TECH: GENERAL STUDIES — SUBSECTION LIST ===== -->
+  <div id="ntGsHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🌍 General Studies</h2>
+        <span class="header-sub">Choose a subject</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="ntGsSubjectList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== NON-TECH: STATE GK — SUBSECTION LIST ===== -->
+  <div id="ntStateGkHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🗺️ State GK</h2>
+        <span class="header-sub">Choose a state</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="ntStateGkList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== NON-TECH: LANGUAGE — SUBSECTION LIST ===== -->
+  <div id="ntLanguageHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🔤 Language</h2>
+        <span class="header-sub">Choose a language</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="ntLanguageList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== NON-TECH: APTITUDE — SUBSECTION LIST ===== -->
+  <div id="ntAptitudeHomeScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2>🧮 General Aptitude</h2>
+        <span class="header-sub">Choose a section</span>
+      </div>
+    </header>
+    <main class="subjects-main">
+      <div id="ntAptitudeList" class="subjects-list"></div>
+    </main>
+  </div>
+
+  <!-- ===== NON-TECH: SUBSECTION DETAIL (shared: 4 tabs) ===== -->
+  <!-- Shown when user picks any subsection from GS / StateGK / Language / Aptitude -->
+  <div id="ntSubsectionScreen" class="screen">
+    <header class="app-header">
+      <button class="btn-icon" id="ntSubsectionBackBtn">←</button>
+      <div class="header-left" style="flex:1;margin-left:8px;">
+        <h2 id="ntSubsectionTitle">Subject</h2>
+        <span class="header-sub" id="ntSubsectionSub">Study material</span>
+      </div>
+    </header>
+    <!-- Tab bar -->
+    <div class="nt-tab-bar">
+      <button class="nt-tab active" id="ntTabNotes" data-tab="notes">📝 Notes</button>
+      <button class="nt-tab" id="ntTabPractice" data-tab="practice">✏️ Practice</button>
+      <button class="nt-tab" id="ntTabPYQ" data-tab="pyq">📜 PYQ</button>
+      <button class="nt-tab" id="ntTabBookmarks" data-tab="bookmarks">🔖 Bookmarks</button>
+    </div>
+    <!-- Subject filter chips -->
+    <div id="ntSubjectFilterBar" class="notes-topic-bar" style="padding:8px 12px;border-bottom:1px solid var(--border);"></div>
+    <!-- Content area -->
+    <main class="notes-main" id="ntSubsectionMain">
+      <div id="ntSubsectionPlaceholder" class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h3>Loading…</h3>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== NON-TECH: GS NOTES (legacy gsNotesScreen kept for sub-subject deep-dive) ===== -->
+  <div id="gsSubjectsScreen" class="screen" style="display:none"></div>
+  <div id="gsSubSubjectsScreen" class="screen" style="display:none"></div>
 
   <!-- ===== PCB NOTES: SUBJECT LIST ===== -->
   <div id="pcbNotesSubjectsScreen" class="screen">
@@ -653,35 +741,7 @@
     </div>
   </div>
 
-  <!-- ===== GS: SUBJECT LIST ===== -->
-  <div id="gsSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>🌍 General Studies</h2>
-        <span class="header-sub">Pick a subject</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="gsSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== GS: SUB-SUBJECT LIST ===== -->
-  <div id="gsSubSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="gsSubjectsScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="gsSubSubjectTitle">History</h2>
-        <span class="header-sub" id="gsSubSubjectSub">Choose a period</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="gsSubSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== GS NOTES CONTENT ===== -->
+  <!-- ===== GS NOTES CONTENT (deep-dive from subsection screen) ===== -->
   <div id="gsNotesScreen" class="screen">
     <header class="app-header">
       <button class="btn-icon" id="gsNotesBackBtn">←</button>
@@ -699,37 +759,17 @@
     </main>
   </div>
 
-  <!-- ===== HINDI: SUBJECT LIST ===== -->
-  <div id="hindiSubjectsScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="nonTechHomeScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2>📖 Hindi</h2>
-        <span class="header-sub">Pick a section</span>
-      </div>
-    </header>
-    <main class="subjects-main">
-      <div id="hindiSubjectList" class="subjects-list"></div>
-    </main>
-  </div>
-
-  <!-- ===== HINDI NOTES CONTENT ===== -->
-  <div id="hindiNotesScreen" class="screen">
-    <header class="app-header">
-      <button class="btn-icon back-btn" data-back="hindiSubjectsScreen">←</button>
-      <div class="header-left" style="flex:1;margin-left:8px;">
-        <h2 id="hindiNotesTitle">Hindi</h2>
-        <span class="header-sub" id="hindiNotesSub">Notes</span>
-      </div>
-    </header>
-    <main class="notes-main" id="hindiNotesMain">
-      <div id="hindiTopicBar" class="notes-topic-bar"></div>
-      <div id="hindiPlaceholder" class="empty-state">
-        <div class="empty-icon">📖</div>
-        <h3>Notes loading…</h3>
-      </div>
-    </main>
-  </div>
+  <!-- Hidden legacy screens (kept for JS compatibility) -->
+  <div id="hindiSubjectsScreen" class="screen" style="display:none"></div>
+  <div id="hindiNotesScreen" class="screen" style="display:none"></div>
+  <div id="gsSubjectList" style="display:none"></div>
+  <div id="hindiSubjectList" style="display:none"></div>
+  <div id="gsSubSubjectTitle" style="display:none"></div>
+  <div id="gsSubSubjectSub" style="display:none"></div>
+  <div id="gsSubSubjectList" style="display:none"></div>
+  <div id="hindiNotesTitle" style="display:none"></div>
+  <div id="hindiNotesSub" style="display:none"></div>
+  <div id="hindiNotesMain" style="display:none"><div id="hindiTopicBar"></div><div id="hindiPlaceholder"></div></div>
 
   <!-- TOAST -->
   <div id="toast" class="toast"></div>

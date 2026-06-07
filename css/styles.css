@@ -154,6 +154,33 @@ button { font: inherit; color: inherit; border: none; background: none; cursor: 
 .tile-gs    { border-color: rgba(6,182,212,0.2); }
 .tile-hindi { border-color: rgba(244,63,94,0.2); }
 
+/* NEW: State GK and Aptitude tiles */
+.tile-stategk::before  { background: #8b5cf6; }
+.tile-aptitude::before { background: #10b981; }
+.tile-stategk   { border-color: rgba(139,92,246,0.2); }
+.tile-aptitude  { border-color: rgba(16,185,129,0.2); }
+.tile-stategk .tile-title  { color: #8b5cf6; }
+.tile-aptitude .tile-title { color: #10b981; }
+.tile-gs .tile-title    { color: var(--gs-color); }
+.tile-hindi .tile-title { color: var(--hindi-color); }
+
+/* ===== NT Tab Bar ===== */
+.nt-tab-bar {
+  display: flex; background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
+  position: sticky; top: 0; z-index: 10;
+}
+.nt-tab-bar::-webkit-scrollbar { display: none; }
+.nt-tab {
+  flex: 1; min-width: 72px; padding: 10px 4px;
+  font-size: 11px; font-weight: 600; color: var(--text-dim);
+  background: none; border: none; cursor: pointer;
+  border-bottom: 2px solid transparent; white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nt-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
 /* ===== Enhanced Notes Cards — highlight colours ===== */
 .notes-card-red    { border-left-color: #ef4444; }
 .notes-card-teal   { border-left-color: #14b8a6; }

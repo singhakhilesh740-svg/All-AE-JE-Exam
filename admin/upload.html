@@ -194,27 +194,33 @@
           <input type="hidden" id="pcbTopicVal" value="all"/>
         </div>
 
-        <!-- Non-Tech: GS + Hindi subject selector -->
+        <!-- Non-Tech subject selector — updated for 4-section structure -->
         <div id="nontechPracticeOpts" class="hidden">
           <label>Subject</label>
           <select id="nontechSubjectSel">
-            <optgroup label="General Studies">
-              <option value="history">🏛️ History</option>
+            <optgroup label="🌍 General Studies">
               <option value="polity">⚖️ Polity</option>
+              <option value="history">🏛️ History</option>
               <option value="geography">🗺️ Geography</option>
               <option value="general-science">🔬 General Science</option>
-              <option value="economy">💰 Economy</option>
+              <option value="economy">💹 Economy</option>
               <option value="current-affairs">📰 Current Affairs</option>
-              <option value="environment">🌍 Environment</option>
+              <option value="environment">🌿 Environment</option>
+              <option value="reasoning">🧩 Reasoning</option>
             </optgroup>
-            <optgroup label="Hindi">
-              <option value="hindi-grammar">📝 Hindi Grammar (व्याकरण)</option>
-              <option value="hindi-sahitya">📚 Hindi Literature (साहित्य)</option>
+            <optgroup label="🗺️ State GK">
+              <option value="mp">🟠 Madhya Pradesh</option>
+              <option value="chhattisgarh">🟡 Chhattisgarh</option>
             </optgroup>
-            <optgroup label="Reasoning & Aptitude">
-              <option value="reasoning">🧠 Logical Reasoning</option>
+            <optgroup label="🔤 Language">
+              <option value="hindi">📖 Hindi</option>
+              <option value="english">🔤 English</option>
+              <option value="hindi-grammar">📝 Hindi Grammar (legacy)</option>
+              <option value="hindi-sahitya">📚 Hindi Literature (legacy)</option>
+            </optgroup>
+            <optgroup label="🧮 General Aptitude">
+              <option value="logical-reasoning">🧠 Logical Reasoning</option>
               <option value="quantitative-aptitude">🔢 Quantitative Aptitude</option>
-              <option value="english">🔤 English Language</option>
             </optgroup>
           </select>
           <label>Topic <small style="color:#64748b">(optional — default "all")</small></label>
@@ -726,9 +732,14 @@ $('templateBtn').onclick = () => {
 const CIVIL_IDS = SUBJECTS_UPPSC_MAINS.map(s => s.id);
 const PCB_IDS   = SUBJECTS_PCB_NOTES.map(s => s.id);
 const NONTECH_IDS = [
-  'history','polity','geography','general-science','economy','current-affairs','environment',
-  'hindi-grammar','hindi-sahitya',
-  'reasoning','quantitative-aptitude','english'
+  // General Studies
+  'history','polity','geography','general-science','economy','current-affairs','environment','reasoning',
+  // State GK
+  'mp','chhattisgarh','gujarat','uttar-pradesh','uttarakhand','rajasthan','bihar','jharkhand',
+  // Language
+  'hindi','english','hindi-grammar','hindi-sahitya',
+  // General Aptitude
+  'logical-reasoning','quantitative-aptitude'
 ];
 
 // ── Validate & build ──────────────────────────────────────────────────────

@@ -73,6 +73,12 @@ service cloud.firestore {
       allow read:                   if isLoggedIn();
     }
 
+    // ── NT Config (Non-Tech subsections) ──────────────────────────────────────
+    match /nt_config/{docId} {
+      allow read:  if isLoggedIn();
+      allow write: if isAdmin();
+    }
+
     // ── Deny everything else ────────────────────────────────────────────────
     match /{document=**} {
       allow read, write: if false;

@@ -90,22 +90,74 @@ const GS_SUB_SUBJECTS = {
   ],
 };
 
-const GS_SUBJECTS = [
-  { id: 'polity',         icon: '⚖️',  name: 'Polity',          description: 'Constitution, Parliament, Judiciary, Elections' },
-  { id: 'geography',      icon: '🗺️',  name: 'Geography',       description: 'Physical, Climate, Rivers, Resources, World' },
-  { id: 'history',        icon: '🏛️',  name: 'History',         description: 'Ancient, Medieval, Modern, Freedom Struggle, Culture' },
-  { id: 'general-science',icon: '🔬',  name: 'General Science', description: 'Physics, Chemistry, Biology, Technology, Health' },
+// ══════════════════════════════════════════════════════════════════════════
+// NON-TECH SECTION CONFIG
+// Subsections are loaded from Firestore (nt_config) so admin can add/delete.
+// These are the hard-coded DEFAULTS used if Firestore has no data yet.
+// ══════════════════════════════════════════════════════════════════════════
+
+// Default subsections for General Studies (subjects from image — no Hindi/English)
+const NT_GS_DEFAULT = [
+  { id: 'polity',          icon: '⚖️',  name: 'Polity',          subjects: ['Constitution','Fundamental Rights','Parliament','Judiciary','DPSP','Elections','Amendments','Emergency'] },
+  { id: 'history',         icon: '🏛️',  name: 'History',         subjects: ['Ancient India','Medieval India','Modern India','Freedom Struggle','Art & Culture'] },
+  { id: 'geography',       icon: '🗺️',  name: 'Geography',       subjects: ['Physical Geography','Indian Geography','World Geography','Climate','Rivers','Resources'] },
+  { id: 'general-science', icon: '🔬',  name: 'General Science', subjects: ['Physics','Chemistry','Biology','Technology','Health & Disease'] },
+  { id: 'economy',         icon: '💹',  name: 'Economy',         subjects: ['Indian Economy','Banking','Budget','Agriculture','Trade'] },
+  { id: 'current-affairs', icon: '📰',  name: 'Current Affairs', subjects: ['National','International','Awards','Sports','Science & Tech'] },
+  { id: 'environment',     icon: '🌿',  name: 'Environment',     subjects: ['Ecology','Biodiversity','Climate Change','Pollution','Conservation'] },
+  { id: 'reasoning',       icon: '🧩',  name: 'Reasoning',       subjects: ['Analogy','Series','Coding-Decoding','Blood Relations','Direction'] },
 ];
 
-const HINDI_SUBJECTS = [
-  { id: 'hindi-grammar', icon: '📝', name: 'Hindi Grammar (व्याकरण)',    description: 'वर्णमाला · संधि · समास · कारक · काल · अलंकार · रस' },
-  { id: 'hindi-sahitya', icon: '📚', name: 'Hindi Literature (साहित्य)', description: 'भक्तिकाल · रीतिकाल · आधुनिककाल · कवि · उपन्यास' },
+// Default subsections for State GK
+const NT_STATEGK_DEFAULT = [
+  { id: 'mp',          icon: '🟠', name: 'Madhya Pradesh',  subjects: ['History','Geography','Culture','Economy','Polity','Current Affairs'] },
+  { id: 'chhattisgarh',icon: '🟡', name: 'Chhattisgarh',   subjects: ['History','Geography','Culture','Economy','Polity','Current Affairs'] },
 ];
+
+// Default subsections for Language
+const NT_LANGUAGE_DEFAULT = [
+  { id: 'hindi',   icon: '📖', name: 'Hindi',   subjects: ['व्याकरण','संधि-समास','अलंकार','रस-छंद','साहित्य','कवि','उपन्यास'] },
+  { id: 'english', icon: '🔤', name: 'English', subjects: ['Grammar','Vocabulary','Comprehension','Error Spotting','Sentence Improvement'] },
+];
+
+// Fixed subsections for General Aptitude (not admin-editable)
+const NT_APTITUDE_FIXED = [
+  { id: 'logical-reasoning',     icon: '🧠', name: 'Logical Reasoning',     subjects: ['Analogy','Series','Coding-Decoding','Blood Relations','Direction','Syllogism','Puzzle','Clock & Calendar'] },
+  { id: 'quantitative-aptitude', icon: '🔢', name: 'Quantitative Aptitude', subjects: ['Number System','Percentage','Ratio','Profit & Loss','Time & Work','Time & Distance','SI & CI','Geometry','Mensuration','Data Interpretation'] },
+];
+
+// Live config — populated from Firestore, falls back to defaults
+let ntGsSubsections     = [...NT_GS_DEFAULT];
+let ntStateGkSubsections = [...NT_STATEGK_DEFAULT];
+let ntLanguageSubsections = [...NT_LANGUAGE_DEFAULT];
+
+// ── Load NT config from Firestore ─────────────────────────────────────────
+let _ntConfigLoaded = false;
+async function loadNTConfig(force = false) {
+  if (_ntConfigLoaded && !force) return;
+  try {
+    const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    const snap = await getDoc(doc(db, 'nt_config', 'subsections'));
+    if (snap.exists()) {
+      const d = snap.data();
+      if (Array.isArray(d.gs)       && d.gs.length)       ntGsSubsections      = d.gs;
+      if (Array.isArray(d.stategk)  && d.stategk.length)  ntStateGkSubsections = d.stategk;
+      if (Array.isArray(d.language) && d.language.length) ntLanguageSubsections = d.language;
+    }
+    _ntConfigLoaded = true;
+  } catch (e) {
+    console.warn('[NT] loadNTConfig error (using defaults):', e);
+  }
+}
+
+// Legacy compatibility (some functions reference GS_SUBJECTS)
+const GS_SUBJECTS = NT_GS_DEFAULT;
+const HINDI_SUBJECTS = NT_LANGUAGE_DEFAULT;
 
 // ── Subjects per section ────────────────────────────────────────────────────
 // Civil uses SUBJECTS_UPPSC_MAINS (imported from subjects.js)
-// PCB — reuse same list for now; swap with PCB-specific subjects when ready
 // PCB uses SUBJECTS_PCB_NOTES (unit1–unit11) for Practice and PYQ subject-wise
+
 
 // ── DOM helper ─────────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
@@ -650,31 +702,30 @@ on('pcbBookmarks', async () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// NON-TECH — 4 tiles
+// NON-TECH — 4 section tiles
 // ══════════════════════════════════════════════════════════════════════════════
 
-on('nonTechGS', () => {
-  renderGSSubjectList('gsSubjectList', GS_SUBJECTS, openGSSubject);
-  showScreen('gsSubjectsScreen');
+on('nonTechGS', async () => {
+  await loadNTConfig();
+  renderNTSubsectionList('ntGsSubjectList', ntGsSubsections, 'gs', 'ntGsHomeScreen');
+  showScreen('ntGsHomeScreen');
 });
 
-on('nonTechHindi', () => {
-  renderGSSubjectList('hindiSubjectList', HINDI_SUBJECTS, openHindiSubject);
-  showScreen('hindiSubjectsScreen');
+on('nonTechStateGK', async () => {
+  await loadNTConfig();
+  renderNTSubsectionList('ntStateGkList', ntStateGkSubsections, 'stategk', 'ntStateGkHomeScreen');
+  showScreen('ntStateGkHomeScreen');
 });
 
-on('nonTechPractice', () => {
-  $('practiceSubjectsBackBtn').onclick = () => showScreen('nonTechHomeScreen');
-  // Non-tech practice uses GS subjects
-  renderSubjectList('practiceSubjectList', GS_SUBJECTS, openPracticeSubject);
-  showScreen('practiceSubjectsScreen');
+on('nonTechLanguage', async () => {
+  await loadNTConfig();
+  renderNTSubsectionList('ntLanguageList', ntLanguageSubsections, 'language', 'ntLanguageHomeScreen');
+  showScreen('ntLanguageHomeScreen');
 });
 
-on('nonTechPYQ', () => {
-  $('pyqExamsBackBtn').onclick = () => showScreen('nonTechHomeScreen');
-  $('pyqExamsTitle').textContent = '📜 Non-Tech — PYQ';
-  renderExamList('nontech');
-  showScreen('pyqExamsScreen');
+on('nonTechAptitude', () => {
+  renderNTSubsectionList('ntAptitudeList', NT_APTITUDE_FIXED, 'aptitude', 'ntAptitudeHomeScreen');
+  showScreen('ntAptitudeHomeScreen');
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -1191,53 +1242,184 @@ on('practiceBookmarksBtn', () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// GS & HINDI NOTES FLOW
+// NON-TECH SUBSECTION SYSTEM (GS, State GK, Language, Aptitude)
 // ══════════════════════════════════════════════════════════════════════════════
 
-function renderGSSubjectList(containerId, subjects, onSelect) {
+let _ntCurrentSection    = null;
+let _ntCurrentSubsection = null;
+let _ntActiveTab         = 'notes';
+let _ntActiveSubject     = 'all';
+
+function renderNTSubsectionList(containerId, subsections, section, backScreen) {
   const container = $(containerId);
+  if (!container) return;
   container.innerHTML = '';
-  subjects.forEach(subj => {
+  subsections.forEach(sub => {
     const btn = document.createElement('button');
     btn.className = 'subject-card';
     btn.innerHTML = `
-      <div class="subject-icon">${subj.icon || '📖'}</div>
+      <div class="subject-icon">${sub.icon || '📖'}</div>
       <div class="subject-info">
-        <div class="subject-name">${escapeHtml(subj.name)}</div>
-        <div class="subject-desc">${escapeHtml(subj.description || '')}</div>
+        <div class="subject-name">${escapeHtml(sub.name)}</div>
+        <div class="subject-desc">${escapeHtml((sub.subjects || sub.description ? (sub.subjects||[]).slice(0,4).join(' · ') || sub.description : ''))}</div>
       </div>
       <div class="subject-arrow">›</div>
     `;
-    btn.addEventListener('click', () => onSelect(subj));
+    btn.addEventListener('click', () => openNTSubsection(sub, section, backScreen));
     container.appendChild(btn);
   });
 }
 
-let _currentGSSubject = null;
+function openNTSubsection(sub, section, backScreen) {
+  _ntCurrentSection    = section;
+  _ntCurrentSubsection = sub;
+  _ntActiveTab         = 'notes';
+  _ntActiveSubject     = 'all';
 
-async function openGSSubject(subj) {
-  _currentGSSubject = subj;
-  const data = await loadGSNotes(subj.id);
-  const subSubs = data ? getSubSubjects(data) : GS_SUB_SUBJECTS[subj.id];
-  if (subSubs && subSubs.length) {
-    $('gsSubSubjectTitle').textContent = subj.icon + ' ' + subj.name;
-    $('gsSubSubjectSub').textContent   = 'Choose a section';
-    renderGSSubjectList('gsSubSubjectList', subSubs, (sub) => openGSSubSubject(subj, sub, data));
-    showScreen('gsSubSubjectsScreen');
-  } else if (data) {
-    await _loadAndShowGSNotes(subj.id, subj.icon + ' ' + subj.name, 'gsSubjectsScreen', null, data);
+  $('ntSubsectionTitle').textContent = sub.icon + ' ' + sub.name;
+  $('ntSubsectionSub').textContent   = 'Select a tab to study';
+  $('ntSubsectionBackBtn').onclick   = () => showScreen(backScreen);
+
+  _renderNTSubjectFilter(sub.subjects || []);
+
+  document.querySelectorAll('.nt-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === 'notes'));
+  document.querySelectorAll('.nt-tab').forEach(tabBtn => {
+    tabBtn.onclick = () => {
+      document.querySelectorAll('.nt-tab').forEach(t => t.classList.remove('active'));
+      tabBtn.classList.add('active');
+      _ntActiveTab = tabBtn.dataset.tab;
+      _loadNTTabContent();
+    };
+  });
+
+  showScreen('ntSubsectionScreen');
+  _loadNTTabContent();
+}
+
+function _renderNTSubjectFilter(subjects) {
+  const bar = $('ntSubjectFilterBar');
+  if (!bar) return;
+  bar.innerHTML = '';
+  if (!subjects || subjects.length === 0) { bar.style.display = 'none'; return; }
+  bar.style.display = '';
+  _ntActiveSubject = 'all';
+
+  const addChip = (label, value) => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-chip' + (value === _ntActiveSubject ? ' active' : '');
+    btn.textContent = label;
+    btn.onclick = () => {
+      bar.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      _ntActiveSubject = value;
+      _loadNTTabContent();
+    };
+    bar.appendChild(btn);
+  };
+
+  addChip('All', 'all');
+  subjects.forEach(s => addChip(s, s));
+}
+
+async function _loadNTTabContent() {
+  const main = $('ntSubsectionMain');
+  const placeholder = $('ntSubsectionPlaceholder');
+  if (!main || !_ntCurrentSubsection) return;
+  const old = document.getElementById('ntSubsectionMain-rendered');
+  if (old) old.remove();
+  const oldTB = document.getElementById('ntInlineTopicBar');
+  if (oldTB) oldTB.remove();
+  if (placeholder) { placeholder.style.display = 'block'; placeholder.querySelector('h3').textContent = 'Loading…'; }
+
+  const sub = _ntCurrentSubsection, section = _ntCurrentSection, tab = _ntActiveTab, subject = _ntActiveSubject;
+
+  if      (tab === 'notes')     await _loadNTNotes(sub, section, subject, main, placeholder);
+  else if (tab === 'practice')  await _loadNTQuestions(sub, section, subject, 'practice', main, placeholder);
+  else if (tab === 'pyq')       await _loadNTQuestions(sub, section, subject, 'pyq', main, placeholder);
+  else if (tab === 'bookmarks') await _loadNTBookmarks(sub, section, subject, main, placeholder);
+}
+
+async function _loadNTNotes(sub, section, subject, main, placeholder) {
+  let notesData = null;
+  try {
+    if (section === 'gs') {
+      notesData = await loadGSNotes(sub.id);
+      if (notesData && subject !== 'all') {
+        const sub2 = getSubSubjectData(notesData, subject.toLowerCase().replace(/\s+/g,'-'));
+        if (sub2) notesData = sub2;
+      }
+    } else if (section === 'language') {
+      if (sub.id === 'hindi') notesData = await loadHindiNotes('hindi-grammar');
+      else if (sub.id === 'english') notesData = null; // English notes TBD
+    }
+  } catch(e) { console.warn('[NT] notes load err', e); }
+
+  if (notesData) {
+    if (placeholder) placeholder.style.display = 'none';
+    const topicBar = document.createElement('div');
+    topicBar.id = 'ntInlineTopicBar';
+    topicBar.className = 'notes-topic-bar';
+    topicBar.style.cssText = 'padding:8px 12px;border-bottom:1px solid var(--border);';
+    main.insertBefore(topicBar, main.firstChild);
+    renderGSNotesContent(notesData, 'ntSubsectionMain', 'ntInlineTopicBar', 'ntSubsectionPlaceholder');
   } else {
-    toast('Notes not available yet');
+    if (placeholder) { placeholder.style.display = 'block'; placeholder.querySelector('h3').textContent = 'Notes coming soon'; }
   }
 }
 
-async function openGSSubSubject(parentSubj, sub, preloadedData) {
-  await _loadAndShowGSNotes(parentSubj.id, sub.icon + ' ' + sub.name, 'gsSubSubjectsScreen', sub.id, preloadedData);
+async function _loadNTQuestions(sub, section, subject, type, main, placeholder) {
+  try {
+    const { fetchQuestions, fetchPracticeQuestions } = await import('./db.js');
+    const subjectFilter = (subject !== 'all') ? subject.toLowerCase().replace(/\s+/g,'-') : sub.id;
+    const questions = type === 'pyq'
+      ? await fetchQuestions({ subject: subjectFilter })
+      : await fetchPracticeQuestions({ subject: subjectFilter });
+    if (placeholder) placeholder.style.display = 'none';
+    const wrap = document.createElement('div');
+    wrap.id = 'ntSubsectionMain-rendered';
+    main.appendChild(wrap);
+    if (!questions || questions.length === 0) {
+      wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><h3>No questions yet</h3><p class="empty-sub">Questions for ${escapeHtml(sub.name)} will appear here once uploaded.</p></div>`;
+      return;
+    }
+    wrap.innerHTML = `<div style="padding:16px"><div class="subject-card" style="flex-direction:column;align-items:flex-start;gap:8px"><div style="font-weight:700;font-size:15px;">${escapeHtml(sub.icon + ' ' + sub.name)}</div><div style="font-size:13px;color:var(--text-dim)">${questions.length} questions available</div><button class="btn-primary" id="ntStartQuiz" style="margin-top:8px;width:100%">Start Practice ▶</button></div></div>`;
+    document.getElementById('ntStartQuiz').onclick = () => {
+      Quiz.load(questions, { subject: sub.name, type });
+      $('quizBackBtn').onclick = () => showScreen('ntSubsectionScreen');
+      renderQuiz();
+      showScreen('quizScreen');
+    };
+  } catch(e) {
+    console.error('[NT] questions load err', e);
+    if (placeholder) { placeholder.style.display = 'block'; placeholder.querySelector('h3').textContent = 'Error loading questions'; }
+  }
 }
 
+async function _loadNTBookmarks(sub, section, subject, main, placeholder) {
+  if (placeholder) placeholder.style.display = 'none';
+  const wrap = document.createElement('div');
+  wrap.id = 'ntSubsectionMain-rendered';
+  wrap.innerHTML = `<div style="padding:16px"><div class="empty-state"><div class="empty-icon">🔖</div><h3>Bookmarks</h3><p class="empty-sub">Questions you bookmark while practising ${escapeHtml(sub.name)} will appear here.</p></div></div>`;
+  main.appendChild(wrap);
+}
+
+// ── Legacy compatibility functions ──────────────────────────────────────────
+
+function renderGSSubjectList(containerId, subjects, onSelect) {
+  renderNTSubsectionList(containerId, subjects, 'gs', 'ntGsHomeScreen');
+}
+
+let _currentGSSubject = null;
+async function openGSSubject(subj) {
+  _currentGSSubject = subj;
+  openNTSubsection(subj, 'gs', 'ntGsHomeScreen');
+}
+async function openGSSubSubject(parentSubj, sub, preloadedData) {
+  await _loadAndShowGSNotes(parentSubj.id, sub.icon + ' ' + sub.name, 'ntSubsectionScreen', sub.id, preloadedData);
+}
 async function _loadAndShowGSNotes(subjectId, title, backScreen, subSubjectId, preloadedData) {
   $('gsNotesTitle').textContent = title;
-  $('gsNotesSub').textContent   = 'Topic-wise detailed notes';
+  $('gsNotesSub').textContent = 'Topic-wise detailed notes';
   $('gsPlaceholder').style.display = 'block';
   $('gsPlaceholder').querySelector('h3').textContent = 'Loading…';
   const oldEl = document.getElementById('gsNotesMain-rendered');
@@ -1249,27 +1431,12 @@ async function _loadAndShowGSNotes(subjectId, title, backScreen, subSubjectId, p
   const fullData = preloadedData || await loadGSNotes(subjectId);
   if (!fullData) { $('gsPlaceholder').querySelector('h3').textContent = 'Notes coming soon'; return; }
   let notesData = fullData;
-  if (subSubjectId) {
-    const sub = getSubSubjectData(fullData, subSubjectId);
-    if (sub) notesData = sub;
-  }
+  if (subSubjectId) { const s = getSubSubjectData(fullData, subSubjectId); if (s) notesData = s; }
   $('gsPlaceholder').style.display = 'none';
   renderGSNotesContent(notesData, 'gsNotesMain', 'gsTopicBar', 'gsPlaceholder');
 }
-
 async function openHindiSubject(subj) {
-  $('hindiNotesTitle').textContent = subj.icon + ' ' + subj.name;
-  $('hindiNotesSub').textContent   = 'Topic-wise notes';
-  $('hindiPlaceholder').style.display = 'block';
-  $('hindiPlaceholder').querySelector('h3').textContent = 'Loading…';
-  const old = document.getElementById('hindiNotesMain-rendered');
-  if (old) old.remove();
-  $('hindiTopicBar').innerHTML = '';
-  showScreen('hindiNotesScreen');
-  const data = await loadHindiNotes(subj.id);
-  if (!data) { $('hindiPlaceholder').querySelector('h3').textContent = 'Notes coming soon'; return; }
-  $('hindiPlaceholder').style.display = 'none';
-  renderGSNotesContent(data, 'hindiNotesMain', 'hindiTopicBar', 'hindiPlaceholder');
+  openNTSubsection(subj, 'language', 'ntLanguageHomeScreen');
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
