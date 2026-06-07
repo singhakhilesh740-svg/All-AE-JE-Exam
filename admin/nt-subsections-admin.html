@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Non-Tech Config — Admin</title>
+  <title>NT Subsections Admin</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:16px}
@@ -17,31 +17,48 @@
     .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .card-title{font-size:14px;font-weight:700;color:#f1f5f9}
     .card-id{font-size:11px;color:#475569;background:#0f172a;padding:2px 6px;border-radius:4px;font-family:monospace}
-    .subjects-list{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-    .subject-chip{background:#0f172a;border:1px solid #334155;border-radius:6px;padding:4px 10px;font-size:12px;color:#94a3b8;display:flex;align-items:center;gap:4px}
-    .chip-del{cursor:pointer;color:#ef4444;font-weight:700;font-size:14px;line-height:1}
-    .add-subject-row{display:flex;gap:8px;margin-top:8px}
-    .auth-input{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px 12px;color:#f1f5f9;font-size:13px;font-family:inherit;outline:none;transition:border-color .15s}
-    .auth-input:focus{border-color:#f59e0b}
+    .auth-input,textarea{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px 12px;color:#f1f5f9;font-size:13px;font-family:inherit;outline:none;transition:border-color .15s}
+    textarea{width:100%;min-height:50px;resize:vertical;font-size:12px}
+    .auth-input:focus,textarea:focus{border-color:#f59e0b}
     .btn{padding:8px 14px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s}
+    .btn-sm{padding:5px 10px;font-size:11px}
     .btn-primary{background:#f59e0b;color:#000}
     .btn-primary:hover{background:#fbbf24}
     .btn-danger{background:#ef4444;color:#fff}
     .btn-danger:hover{background:#dc2626}
     .btn-ghost{background:#1e293b;border:1px solid #334155;color:#94a3b8}
     .btn-ghost:hover{background:#0f172a}
+    .btn-purple{background:#a78bfa;color:#0f172a}
     .add-subsection-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
     .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #f59e0b;color:#f59e0b;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999}
     .loading{color:#64748b;font-size:13px;padding:20px 0}
     .icon-input{width:60px}
     .info{font-size:11px;color:#475569;margin-bottom:12px;line-height:1.5}
     .aptitude-note{background:rgba(139,92,246,0.1);border:1px solid #6d28d9;border-radius:8px;padding:12px;font-size:13px;color:#a78bfa;margin-bottom:16px}
+
+    /* Subject cards inside subsection */
+    .subj-card{background:#0f172a;border:1px solid #334155;border-radius:8px;margin-bottom:8px;overflow:hidden}
+    .subj-header{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;cursor:pointer;user-select:none;transition:background .15s}
+    .subj-header:hover{background:rgba(245,158,11,.05)}
+    .subj-name{font-size:13px;font-weight:600;color:#f1f5f9;display:flex;align-items:center;gap:6px}
+    .subj-name .arrow{font-size:10px;color:#64748b;transition:transform .2s}
+    .subj-name .arrow.open{transform:rotate(90deg)}
+    .subj-badge{font-size:10px;color:#64748b;background:#1e293b;padding:2px 6px;border-radius:4px}
+    .subj-actions{display:flex;gap:4px}
+    .subj-body{padding:0 12px 12px;display:none}
+    .subj-body.open{display:block}
+    .topic-chips{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}
+    .topic-chip{background:#1e293b;border:1px solid #334155;border-radius:5px;padding:3px 8px;font-size:11px;color:#94a3b8;display:flex;align-items:center;gap:4px}
+    .topic-chip .tdel{cursor:pointer;color:#ef4444;font-weight:700;font-size:12px}
+    .add-topic-row{display:flex;gap:6px;margin-top:6px}
+    .bulk-area{margin-top:8px;padding-top:8px;border-top:1px dashed #334155}
+    .bulk-label{font-size:10px;color:#64748b;margin-bottom:4px}
   </style>
 </head>
 <body>
 
   <h1>📚 Non-Tech Section Config</h1>
-  <div class="sub">Manage subsections shown under each Non-Tech category in the app</div>
+  <div class="sub">Manage subsections, subjects, and topics. Click any subject to expand and add topics inside it.</div>
 
   <div class="section-tabs">
     <button class="sec-btn active" data-sec="gs">🌍 General Studies</button>
@@ -52,7 +69,7 @@
 
   <!-- General Studies Panel -->
   <div class="panel active" id="panel-gs">
-    <p class="info">Subjects shown in GS (from image: Polity, History, Geography, General Science, Economy, Current Affairs, Environment, Reasoning). Hindi & English are in Language section.</p>
+    <p class="info">Subjects shown in GS. Click a subject to expand → add topics inside it.</p>
     <div class="add-subsection-row">
       <input class="auth-input icon-input" id="gs-icon" placeholder="Icon" value="📘"/>
       <input class="auth-input" id="gs-name" placeholder="Subject name (e.g. Environment)" style="flex:1"/>
@@ -64,10 +81,10 @@
 
   <!-- State GK Panel -->
   <div class="panel" id="panel-stategk">
-    <p class="info">States available for State GK. Initially: Madhya Pradesh, Chhattisgarh. Add more as needed.</p>
+    <p class="info">States available for State GK.</p>
     <div class="add-subsection-row">
       <input class="auth-input icon-input" id="sgk-icon" placeholder="Icon" value="🗺️"/>
-      <input class="auth-input" id="sgk-name" placeholder="State name (e.g. Gujarat)" style="flex:1"/>
+      <input class="auth-input" id="sgk-name" placeholder="State name" style="flex:1"/>
       <input class="auth-input" id="sgk-id" placeholder="ID (e.g. gujarat)" style="flex:1"/>
       <button class="btn btn-primary" id="sgk-add-btn">+ Add</button>
     </div>
@@ -76,10 +93,10 @@
 
   <!-- Language Panel -->
   <div class="panel" id="panel-language">
-    <p class="info">Languages available. Initially: Hindi and English.</p>
+    <p class="info">Languages available.</p>
     <div class="add-subsection-row">
       <input class="auth-input icon-input" id="lang-icon" placeholder="Icon" value="🔤"/>
-      <input class="auth-input" id="lang-name" placeholder="Language name (e.g. Sanskrit)" style="flex:1"/>
+      <input class="auth-input" id="lang-name" placeholder="Language name" style="flex:1"/>
       <input class="auth-input" id="lang-id" placeholder="ID (e.g. sanskrit)" style="flex:1"/>
       <button class="btn btn-primary" id="lang-add-btn">+ Add</button>
     </div>
@@ -88,7 +105,7 @@
 
   <!-- Aptitude Panel -->
   <div class="panel" id="panel-aptitude">
-    <div class="aptitude-note">⚙️ Aptitude subsections are <strong>fixed</strong>: Logical Reasoning and Quantitative Aptitude. You can manage their subject tags below.</div>
+    <div class="aptitude-note">⚙️ Aptitude subsections (LR & QA) are fixed. You can manage their subjects and topics below.</div>
     <div id="apt-list" class="loading">Loading…</div>
   </div>
 
@@ -100,53 +117,103 @@ import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from
 import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const ADMIN_EMAIL = '112ce0489@gmail.com';
-
 const cfg = {
-  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
-  authDomain: "ae-exam-app.firebaseapp.com",
-  projectId: "ae-exam-app",
-  storageBucket: "ae-exam-app.firebasestorage.app",
-  messagingSenderId: "101353507688",
-  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+  apiKey:"AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",authDomain:"ae-exam-app.firebaseapp.com",
+  projectId:"ae-exam-app",storageBucket:"ae-exam-app.firebasestorage.app",
+  messagingSenderId:"101353507688",appId:"1:101353507688:web:82b31f2d6096387d7aa4dd"
 };
 const app = getApps().length ? getApp() : initializeApp(cfg);
-
-const auth = getAuth(app);
-const db   = getFirestore(app);
+const auth = getAuth(app), db = getFirestore(app);
 const NT_DOC = doc(db, 'nt_config', 'subsections');
 
-// ── Defaults (must match app.js) ──────────────────────────────────────────────
+// ── Defaults ──────────────────────────────────────────────────────────────────
 const DEFAULTS = {
   gs: [
-    { id:'polity',          icon:'⚖️',  name:'Polity',          subjects:['Constitution','Fundamental Rights','Parliament','Judiciary','DPSP','Elections','Amendments','Emergency'] },
-    { id:'history',         icon:'🏛️',  name:'History',         subjects:['Ancient India','Medieval India','Modern India','Freedom Struggle','Art & Culture'] },
-    { id:'geography',       icon:'🗺️',  name:'Geography',       subjects:['Physical Geography','Indian Geography','World Geography','Climate','Rivers','Resources'] },
-    { id:'general-science', icon:'🔬',  name:'General Science', subjects:['Physics','Chemistry','Biology','Technology','Health & Disease'] },
-    { id:'economy',         icon:'💹',  name:'Economy',         subjects:['Indian Economy','Banking','Budget','Agriculture','Trade'] },
-    { id:'current-affairs', icon:'📰',  name:'Current Affairs', subjects:['National','International','Awards','Sports','Science & Tech'] },
-    { id:'environment',     icon:'🌿',  name:'Environment',     subjects:['Ecology','Biodiversity','Climate Change','Pollution','Conservation'] },
-    { id:'reasoning',       icon:'🧩',  name:'Reasoning',       subjects:['Analogy','Series','Coding-Decoding','Blood Relations','Direction'] },
+    { id:'polity', icon:'⚖️', name:'Polity', subjects:[
+      {name:'Constitution',topics:[]},{name:'Fundamental Rights',topics:[]},{name:'Parliament',topics:[]},
+      {name:'Judiciary',topics:[]},{name:'DPSP',topics:[]},{name:'Elections',topics:[]},
+      {name:'Amendments',topics:[]},{name:'Emergency',topics:[]}
+    ]},
+    { id:'history', icon:'🏛️', name:'History', subjects:[
+      {name:'Ancient India',topics:[]},{name:'Medieval India',topics:[]},{name:'Modern India',topics:[]},
+      {name:'Freedom Struggle',topics:[]},{name:'Art & Culture',topics:[]}
+    ]},
+    { id:'geography', icon:'🗺️', name:'Geography', subjects:[
+      {name:'Physical Geography',topics:[]},{name:'Indian Geography',topics:[]},{name:'World Geography',topics:[]},
+      {name:'Climate',topics:[]},{name:'Rivers',topics:[]},{name:'Resources',topics:[]}
+    ]},
+    { id:'general-science', icon:'🔬', name:'General Science', subjects:[
+      {name:'Physics',topics:[]},{name:'Chemistry',topics:[]},{name:'Biology',topics:[]},
+      {name:'Technology',topics:[]},{name:'Health & Disease',topics:[]}
+    ]},
+    { id:'economy', icon:'💹', name:'Economy', subjects:[
+      {name:'Indian Economy',topics:[]},{name:'Banking',topics:[]},{name:'Budget',topics:[]},
+      {name:'Agriculture',topics:[]},{name:'Trade',topics:[]}
+    ]},
+    { id:'current-affairs', icon:'📰', name:'Current Affairs', subjects:[
+      {name:'National',topics:[]},{name:'International',topics:[]},{name:'Awards',topics:[]},
+      {name:'Sports',topics:[]},{name:'Science & Tech',topics:[]}
+    ]},
+    { id:'environment', icon:'🌿', name:'Environment', subjects:[
+      {name:'Ecology',topics:[]},{name:'Biodiversity',topics:[]},{name:'Climate Change',topics:[]},
+      {name:'Pollution',topics:[]},{name:'Conservation',topics:[]}
+    ]},
+    { id:'reasoning', icon:'🧩', name:'Reasoning', subjects:[
+      {name:'Analogy',topics:[]},{name:'Series',topics:[]},{name:'Coding-Decoding',topics:[]},
+      {name:'Blood Relations',topics:[]},{name:'Direction',topics:[]}
+    ]},
   ],
   stategk: [
-    { id:'mp',           icon:'🟠', name:'Madhya Pradesh', subjects:['History','Geography','Culture','Economy','Polity','Current Affairs'] },
-    { id:'chhattisgarh', icon:'🟡', name:'Chhattisgarh',  subjects:['History','Geography','Culture','Economy','Polity','Current Affairs'] },
+    { id:'mp', icon:'🟠', name:'Madhya Pradesh', subjects:[
+      {name:'History',topics:[]},{name:'Geography',topics:[]},{name:'Culture',topics:[]},
+      {name:'Economy',topics:[]},{name:'Polity',topics:[]},{name:'Current Affairs',topics:[]}
+    ]},
+    { id:'chhattisgarh', icon:'🟡', name:'Chhattisgarh', subjects:[
+      {name:'History',topics:[]},{name:'Geography',topics:[]},{name:'Culture',topics:[]},
+      {name:'Economy',topics:[]},{name:'Polity',topics:[]},{name:'Current Affairs',topics:[]}
+    ]},
   ],
   language: [
-    { id:'hindi',   icon:'📖', name:'Hindi',   subjects:['व्याकरण','संधि-समास','अलंकार','रस-छंद','साहित्य','कवि','उपन्यास'] },
-    { id:'english', icon:'🔤', name:'English', subjects:['Grammar','Vocabulary','Comprehension','Error Spotting','Sentence Improvement'] },
+    { id:'hindi', icon:'📖', name:'Hindi', subjects:[
+      {name:'व्याकरण',topics:[]},{name:'संधि-समास',topics:[]},{name:'अलंकार',topics:[]},
+      {name:'रस-छंद',topics:[]},{name:'साहित्य',topics:[]},{name:'कवि',topics:[]},{name:'उपन्यास',topics:[]}
+    ]},
+    { id:'english', icon:'🔤', name:'English', subjects:[
+      {name:'Grammar',topics:[]},{name:'Vocabulary',topics:[]},{name:'Comprehension',topics:[]},
+      {name:'Error Spotting',topics:[]},{name:'Sentence Improvement',topics:[]}
+    ]},
   ],
   aptitude: [
-    { id:'logical-reasoning',     icon:'🧠', name:'Logical Reasoning',     subjects:['Analogy','Series','Coding-Decoding','Blood Relations','Direction','Syllogism','Puzzle','Clock & Calendar'] },
-    { id:'quantitative-aptitude', icon:'🔢', name:'Quantitative Aptitude', subjects:['Number System','Percentage','Ratio','Profit & Loss','Time & Work','Time & Distance','SI & CI','Geometry','Mensuration','Data Interpretation'] },
+    { id:'logical-reasoning', icon:'🧠', name:'Logical Reasoning', subjects:[
+      {name:'Analogy',topics:[]},{name:'Series',topics:[]},{name:'Coding-Decoding',topics:[]},
+      {name:'Blood Relations',topics:[]},{name:'Direction',topics:[]},{name:'Syllogism',topics:[]},
+      {name:'Puzzle',topics:[]},{name:'Clock & Calendar',topics:[]}
+    ]},
+    { id:'quantitative-aptitude', icon:'🔢', name:'Quantitative Aptitude', subjects:[
+      {name:'Number System',topics:[]},{name:'Percentage',topics:[]},{name:'Ratio',topics:[]},
+      {name:'Profit & Loss',topics:[]},{name:'Time & Work',topics:[]},{name:'Time & Distance',topics:[]},
+      {name:'SI & CI',topics:[]},{name:'Geometry',topics:[]},{name:'Mensuration',topics:[]},
+      {name:'Data Interpretation',topics:[]}
+    ]},
   ],
 };
 
 let config = JSON.parse(JSON.stringify(DEFAULTS));
 
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 2500);
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
+
+/** Migrate old string subjects to {name,topics} format */
+function migrateSubjects(arr) {
+  if (!arr || !arr.length) return arr;
+  return arr.map(sub => {
+    if (!sub.subjects) { sub.subjects = []; return sub; }
+    sub.subjects = sub.subjects.map(s => {
+      if (typeof s === 'string') return { name: s, topics: [] };
+      if (!s.topics) s.topics = [];
+      return s;
+    });
+    return sub;
+  });
 }
 
 async function loadConfig() {
@@ -154,10 +221,10 @@ async function loadConfig() {
     const snap = await getDoc(NT_DOC);
     if (snap.exists()) {
       const d = snap.data();
-      if (d.gs)       config.gs       = d.gs;
-      if (d.stategk)  config.stategk  = d.stategk;
-      if (d.language) config.language = d.language;
-      if (d.aptitude) config.aptitude = d.aptitude;
+      if (d.gs)       config.gs       = migrateSubjects(d.gs);
+      if (d.stategk)  config.stategk  = migrateSubjects(d.stategk);
+      if (d.language) config.language = migrateSubjects(d.language);
+      if (d.aptitude) config.aptitude = migrateSubjects(d.aptitude);
     }
   } catch(e) { console.warn('loadConfig', e); }
 }
@@ -167,14 +234,16 @@ async function saveConfig() {
   toast('✅ Saved to Firestore');
 }
 
-// ── Render a section's subsection list ────────────────────────────────────────
+// ── Render ────────────────────────────────────────────────────────────────────
 function renderSection(key, listId, aptReadOnly = false) {
   const list = document.getElementById(listId);
   list.innerHTML = '';
   config[key].forEach((sub, idx) => {
     const card = document.createElement('div');
     card.className = 'card';
-    card.innerHTML = `
+
+    // Header
+    let headerHTML = `
       <div class="card-header">
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:20px">${sub.icon}</span>
@@ -183,59 +252,196 @@ function renderSection(key, listId, aptReadOnly = false) {
             <span class="card-id">${sub.id}</span>
           </div>
         </div>
-        ${!aptReadOnly ? `<button class="btn btn-danger" data-key="${key}" data-idx="${idx}" style="font-size:12px;padding:6px 10px">🗑 Delete</button>` : ''}
+        ${!aptReadOnly ? `<button class="btn btn-danger btn-sm" onclick="deleteSubsection('${key}',${idx})">🗑 Delete</button>` : ''}
       </div>
-      <div style="font-size:12px;color:#64748b;margin-bottom:6px">Subject filter chips:</div>
-      <div class="subjects-list" id="chips-${key}-${idx}"></div>
-      <div class="add-subject-row" id="addrow-${key}-${idx}">
-        <input class="auth-input" placeholder="Add subject chip…" style="flex:1" id="chipinput-${key}-${idx}"/>
-        <button class="btn btn-ghost" data-add-chip="${key}" data-idx="${idx}">+ Add chip</button>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:6px">📂 Subjects (${(sub.subjects||[]).length}) — click to expand & manage topics</div>
+    `;
+
+    // Add subject row
+    let addSubjHTML = `
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <input class="auth-input" placeholder="Add new subject…" style="flex:1;font-size:12px;padding:6px 10px" id="subjinput-${key}-${idx}"/>
+        <button class="btn btn-ghost btn-sm" onclick="addOneSubject('${key}',${idx})">+ Add Subject</button>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="font-size:10px;color:#64748b;margin-bottom:3px">📋 Bulk paste subjects (one per line or comma separated)</div>
+        <textarea id="bulksubj-${key}-${idx}" placeholder="Constitution&#10;Fundamental Rights&#10;Parliament" style="font-size:11px;padding:6px 10px;min-height:45px"></textarea>
+        <button class="btn btn-primary btn-sm" onclick="bulkAddSubjects('${key}',${idx})" style="margin-top:4px">📋 Add All Subjects</button>
       </div>
     `;
-    list.appendChild(card);
-    renderChips(key, idx);
 
-    if (!aptReadOnly) {
-      card.querySelector(`[data-key="${key}"][data-idx="${idx}"]`).onclick = () => deleteSubsection(key, idx);
-    }
-    card.querySelector(`[data-add-chip="${key}"][data-idx="${idx}"]`).onclick = () => {
-      const inp = document.getElementById(`chipinput-${key}-${idx}`);
-      const val = inp.value.trim();
-      if (!val) return;
-      if (!config[key][idx].subjects) config[key][idx].subjects = [];
-      config[key][idx].subjects.push(val);
-      inp.value = '';
-      renderChips(key, idx);
-      saveConfig();
-    };
+    // Subject cards
+    let subjHTML = '';
+    (sub.subjects || []).forEach((subj, si) => {
+      const topicCount = (subj.topics || []).length;
+      subjHTML += `
+        <div class="subj-card" id="sc-${key}-${idx}-${si}">
+          <div class="subj-header" onclick="toggleSubj('${key}',${idx},${si})">
+            <div class="subj-name">
+              <span class="arrow" id="arrow-${key}-${idx}-${si}">▶</span>
+              ${subj.name}
+              <span class="subj-badge">${topicCount} topic${topicCount !== 1 ? 's' : ''}</span>
+            </div>
+            <div class="subj-actions">
+              <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteSubject('${key}',${idx},${si})">×</button>
+            </div>
+          </div>
+          <div class="subj-body" id="body-${key}-${idx}-${si}">
+            <div class="topic-chips" id="topics-${key}-${idx}-${si}"></div>
+            <div class="add-topic-row">
+              <input class="auth-input" placeholder="Add one topic…" style="flex:1;font-size:11px;padding:5px 8px" id="topicin-${key}-${idx}-${si}"/>
+              <button class="btn btn-ghost btn-sm" onclick="addOneTopic('${key}',${idx},${si})">+</button>
+            </div>
+            <div class="bulk-area">
+              <div class="bulk-label">📋 Bulk paste topics (one per line or comma separated)</div>
+              <textarea id="bulktopic-${key}-${idx}-${si}" placeholder="Preamble&#10;Salient Features&#10;Sources&#10;Schedules" style="font-size:11px;min-height:40px"></textarea>
+              <button class="btn btn-purple btn-sm" onclick="bulkAddTopics('${key}',${idx},${si})" style="margin-top:3px">📋 Add All Topics</button>
+              <button class="btn btn-ghost btn-sm" onclick="clearTopics('${key}',${idx},${si})" style="margin-top:3px;margin-left:4px">🗑 Clear Topics</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    card.innerHTML = headerHTML + addSubjHTML + subjHTML;
+    list.appendChild(card);
+
+    // Render topic chips for each subject
+    (sub.subjects || []).forEach((subj, si) => renderTopicChips(key, idx, si));
   });
 }
 
-function renderChips(key, idx) {
-  const container = document.getElementById(`chips-${key}-${idx}`);
+function renderTopicChips(key, idx, si) {
+  const container = document.getElementById(`topics-${key}-${idx}-${si}`);
   if (!container) return;
   container.innerHTML = '';
-  (config[key][idx].subjects || []).forEach((s, si) => {
-    const chip = document.createElement('div');
-    chip.className = 'subject-chip';
-    chip.innerHTML = `${s} <span class="chip-del" data-key="${key}" data-idx="${idx}" data-si="${si}">×</span>`;
-    chip.querySelector('.chip-del').onclick = (e) => {
-      const { key, idx, si } = e.target.dataset;
-      config[key][+idx].subjects.splice(+si, 1);
-      renderChips(key, +idx);
-      saveConfig();
-    };
+  const topics = config[key][idx]?.subjects?.[si]?.topics || [];
+  if (topics.length === 0) {
+    container.innerHTML = '<span style="font-size:11px;color:#475569;font-style:italic">No topics yet — add below</span>';
+    return;
+  }
+  topics.forEach((t, ti) => {
+    const chip = document.createElement('span');
+    chip.className = 'topic-chip';
+    chip.innerHTML = `${t} <span class="tdel" onclick="deleteTopic('${key}',${idx},${si},${ti})">×</span>`;
     container.appendChild(chip);
   });
 }
 
-function deleteSubsection(key, idx) {
-  if (!confirm(`Delete "${config[key][idx].name}"? This removes it from the app.`)) return;
+// ── Subject operations ────────────────────────────────────────────────────────
+window.addOneSubject = (key, idx) => {
+  const inp = document.getElementById(`subjinput-${key}-${idx}`);
+  const val = inp.value.trim();
+  if (!val) return;
+  if (!config[key][idx].subjects) config[key][idx].subjects = [];
+  if (config[key][idx].subjects.find(s => s.name === val)) { toast('⚠️ Subject already exists'); return; }
+  config[key][idx].subjects.push({ name: val, topics: [] });
+  inp.value = '';
+  const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
+  renderSection(key, listIds[key], key === 'aptitude');
+  saveConfig();
+};
+
+window.bulkAddSubjects = (key, idx) => {
+  const ta = document.getElementById(`bulksubj-${key}-${idx}`);
+  const raw = ta.value.trim();
+  if (!raw) { toast('⚠️ Paste subjects first'); return; }
+  const items = raw.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+  if (!config[key][idx].subjects) config[key][idx].subjects = [];
+  let added = 0;
+  items.forEach(name => {
+    if (!config[key][idx].subjects.find(s => s.name === name)) {
+      config[key][idx].subjects.push({ name, topics: [] });
+      added++;
+    }
+  });
+  ta.value = '';
+  const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
+  renderSection(key, listIds[key], key === 'aptitude');
+  saveConfig();
+  toast(`✅ Added ${added} subjects` + (items.length - added > 0 ? ` (${items.length - added} skipped)` : ''));
+};
+
+window.deleteSubject = (key, idx, si) => {
+  const name = config[key][idx].subjects[si].name;
+  if (!confirm(`Delete subject "${name}" and all its topics?`)) return;
+  config[key][idx].subjects.splice(si, 1);
+  const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
+  renderSection(key, listIds[key], key === 'aptitude');
+  saveConfig();
+};
+
+// ── Topic operations ──────────────────────────────────────────────────────────
+window.toggleSubj = (key, idx, si) => {
+  const body = document.getElementById(`body-${key}-${idx}-${si}`);
+  const arrow = document.getElementById(`arrow-${key}-${idx}-${si}`);
+  const isOpen = body.classList.toggle('open');
+  arrow.classList.toggle('open', isOpen);
+};
+
+window.addOneTopic = (key, idx, si) => {
+  const inp = document.getElementById(`topicin-${key}-${idx}-${si}`);
+  const val = inp.value.trim();
+  if (!val) return;
+  if (!config[key][idx].subjects[si].topics) config[key][idx].subjects[si].topics = [];
+  if (config[key][idx].subjects[si].topics.includes(val)) { toast('⚠️ Topic already exists'); return; }
+  config[key][idx].subjects[si].topics.push(val);
+  inp.value = '';
+  renderTopicChips(key, idx, si);
+  // Update badge count
+  const badge = document.querySelector(`#sc-${key}-${idx}-${si} .subj-badge`);
+  if (badge) { const c = config[key][idx].subjects[si].topics.length; badge.textContent = `${c} topic${c !== 1 ? 's' : ''}`; }
+  saveConfig();
+};
+
+window.bulkAddTopics = (key, idx, si) => {
+  const ta = document.getElementById(`bulktopic-${key}-${idx}-${si}`);
+  const raw = ta.value.trim();
+  if (!raw) { toast('⚠️ Paste topics first'); return; }
+  const items = raw.split(/[\n,;]+/).map(s => s.trim()).filter(Boolean);
+  if (!config[key][idx].subjects[si].topics) config[key][idx].subjects[si].topics = [];
+  let added = 0;
+  items.forEach(t => {
+    if (!config[key][idx].subjects[si].topics.includes(t)) {
+      config[key][idx].subjects[si].topics.push(t);
+      added++;
+    }
+  });
+  ta.value = '';
+  renderTopicChips(key, idx, si);
+  const badge = document.querySelector(`#sc-${key}-${idx}-${si} .subj-badge`);
+  if (badge) { const c = config[key][idx].subjects[si].topics.length; badge.textContent = `${c} topic${c !== 1 ? 's' : ''}`; }
+  saveConfig();
+  toast(`✅ Added ${added} topics` + (items.length - added > 0 ? ` (${items.length - added} skipped)` : ''));
+};
+
+window.deleteTopic = (key, idx, si, ti) => {
+  config[key][idx].subjects[si].topics.splice(ti, 1);
+  renderTopicChips(key, idx, si);
+  const badge = document.querySelector(`#sc-${key}-${idx}-${si} .subj-badge`);
+  if (badge) { const c = config[key][idx].subjects[si].topics.length; badge.textContent = `${c} topic${c !== 1 ? 's' : ''}`; }
+  saveConfig();
+};
+
+window.clearTopics = (key, idx, si) => {
+  const topics = config[key][idx].subjects[si].topics || [];
+  if (topics.length === 0) { toast('Already empty'); return; }
+  if (!confirm(`Clear all ${topics.length} topics from "${config[key][idx].subjects[si].name}"?`)) return;
+  config[key][idx].subjects[si].topics = [];
+  renderTopicChips(key, idx, si);
+  const badge = document.querySelector(`#sc-${key}-${idx}-${si} .subj-badge`);
+  if (badge) badge.textContent = '0 topics';
+  saveConfig();
+};
+
+// ── Subsection operations ─────────────────────────────────────────────────────
+window.deleteSubsection = (key, idx) => {
+  if (!confirm(`Delete "${config[key][idx].name}" and all its subjects/topics?`)) return;
   config[key].splice(idx, 1);
   const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
   renderSection(key, listIds[key], key === 'aptitude');
   saveConfig();
-}
+};
 
 function addSubsection(key, iconId, nameId, idId, listId) {
   const icon = document.getElementById(iconId).value.trim() || '📘';
@@ -246,16 +452,16 @@ function addSubsection(key, iconId, nameId, idId, listId) {
   config[key].push({ id, icon, name, subjects: [] });
   document.getElementById(nameId).value = '';
   document.getElementById(idId).value   = '';
-  renderSection(key, listId);
+  renderSection(key, listId, key === 'aptitude');
   saveConfig();
 }
 
-// ── Wire up buttons ───────────────────────────────────────────────────────────
-document.getElementById('gs-add-btn').onclick  = () => addSubsection('gs',       'gs-icon',   'gs-name',   'gs-id',   'gs-list');
-document.getElementById('sgk-add-btn').onclick = () => addSubsection('stategk',  'sgk-icon',  'sgk-name',  'sgk-id',  'sgk-list');
-document.getElementById('lang-add-btn').onclick= () => addSubsection('language', 'lang-icon', 'lang-name', 'lang-id', 'lang-list');
+// ── Wire buttons ──────────────────────────────────────────────────────────────
+document.getElementById('gs-add-btn').onclick  = () => addSubsection('gs','gs-icon','gs-name','gs-id','gs-list');
+document.getElementById('sgk-add-btn').onclick = () => addSubsection('stategk','sgk-icon','sgk-name','sgk-id','sgk-list');
+document.getElementById('lang-add-btn').onclick= () => addSubsection('language','lang-icon','lang-name','lang-id','lang-list');
 
-// ── Section tabs ─────────────────────────────────────────────────────────────
+// Section tabs
 document.querySelectorAll('.sec-btn').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('.sec-btn').forEach(b => b.classList.remove('active'));
@@ -265,19 +471,14 @@ document.querySelectorAll('.sec-btn').forEach(btn => {
   };
 });
 
-// ── Auth guard ────────────────────────────────────────────────────────────────
+// Auth
 onAuthStateChanged(auth, async user => {
   if (!user) {
-    document.body.innerHTML = `
-      <div style="padding:40px;text-align:center">
-        <div style="color:#ef4444;font-size:16px;margin-bottom:20px">🔒 Admin access only.</div>
-        <button id="signInBtn" style="padding:12px 24px;border-radius:8px;border:none;background:#f59e0b;color:#000;font-weight:700;cursor:pointer;font-size:14px">Sign in with Google</button>
-      </div>`;
-    document.getElementById('signInBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
+    document.body.innerHTML = '<div style="padding:40px;text-align:center"><div style="color:#ef4444;font-size:16px;margin-bottom:16px">🔒 Sign in as admin from parent page</div></div>';
     return;
   }
   if (user.email !== ADMIN_EMAIL) {
-    document.body.innerHTML = `<div style="padding:40px;color:#ef4444;font-size:16px">🔒 Admin access only. Signed in as ${user.email} (not authorized).</div>`;
+    document.body.innerHTML = '<div style="padding:40px;color:#ef4444;font-size:14px">🔒 Not admin (' + user.email + ')</div>';
     return;
   }
   await loadConfig();
