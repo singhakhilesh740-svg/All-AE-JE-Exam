@@ -79,6 +79,24 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // ── NT Exams (separate from main exams_config) ─────────────────────────────
+    match /nt_exams/{examId} {
+      allow read:  if isLoggedIn();
+      allow write: if isAdmin();
+    }
+
+    // ── NT Questions (separate from main exams/{}/questions) ─────────────────
+    match /nt_questions/{questionId} {
+      allow read:  if isLoggedIn();
+      allow write: if isAdmin();
+    }
+
+    // ── NT Notes (separate from main notes) ──────────────────────────────────
+    match /nt_notes/{subsectionId} {
+      allow read:  if isLoggedIn();
+      allow write: if isAdmin();
+    }
+
     // ── Deny everything else ────────────────────────────────────────────────
     match /{document=**} {
       allow read, write: if false;

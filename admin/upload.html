@@ -147,7 +147,7 @@
       <div class="section-switcher">
         <button class="sec-btn civil active" id="secCivil">🏗️ AE/JE Civil</button>
         <button class="sec-btn pcb" id="secPCB">🌿 Pollution Control Board</button>
-        <button class="sec-btn nontech" id="secNonTech">📚 Non-Tech / GS</button>
+        <!-- Non-Tech removed: managed in Non-Tech Admin Hub -->
       </div>
       <div id="sectionBadgeWrap" style="font-size:12px;color:#64748b">
         Uploading to: <span id="sectionBadge" class="section-badge badge-civil">AE/JE Civil</span>
@@ -455,25 +455,24 @@ function setSection(sec) {
   $('secCivil').classList.toggle('civil', sec === 'civil');
   $('secPCB').classList.toggle('active', sec === 'pcb');
   $('secPCB').classList.toggle('pcb', sec === 'pcb');
-  $('secNonTech').classList.toggle('active', sec === 'nontech');
-  $('secNonTech').classList.toggle('nontech', sec === 'nontech');
+  // secNonTech removed — Non-Tech handled in NT Admin Hub
   // Update badge
-  const labels = { civil: 'AE/JE Civil', pcb: 'Pollution Control Board', nontech: 'Non-Tech / GS' };
-  const badges = { civil: 'badge-civil', pcb: 'badge-pcb', nontech: 'badge-nontech' };
-  $('sectionBadge').textContent    = labels[sec];
-  $('sectionBadge').className      = `section-badge ${badges[sec]}`;
-  $('refSectionBadge').textContent = labels[sec];
-  $('refSectionBadge').className   = `section-badge ${badges[sec]}`;
+  const labels = { civil: 'AE/JE Civil', pcb: 'Pollution Control Board' };
+  const badges = { civil: 'badge-civil', pcb: 'badge-pcb' };
+  $('sectionBadge').textContent    = labels[sec] || 'Civil';
+  $('sectionBadge').className      = `section-badge ${badges[sec] || 'badge-civil'}`;
+  $('refSectionBadge').textContent = labels[sec] || 'Civil';
+  $('refSectionBadge').className   = `section-badge ${badges[sec] || 'badge-civil'}`;
   // Rebuild dropdowns for this section
   rebuildExamDropdowns();
   renderSubjectRef();
   if (selectedType === 'practice') renderPracticeOpts();
-  log(`Section switched to: ${labels[sec]}`, 'info');
+  log(`Section switched to: ${labels[sec] || 'Civil'}`, 'info');
 }
 
 $('secCivil').onclick   = () => setSection('civil');
 $('secPCB').onclick     = () => setSection('pcb');
-$('secNonTech').onclick = () => setSection('nontech');
+// secNonTech removed — Non-Tech handled in NT Admin Hub
 
 // ── Init ──────────────────────────────────────────────────────────────────
 function initUI() {

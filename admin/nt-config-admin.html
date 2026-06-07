@@ -3,104 +3,86 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Non-Tech Config — Admin</title>
+  <title>Non-Tech Admin Hub</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:16px}
-    h1{font-size:18px;font-weight:800;color:#f59e0b;margin-bottom:4px}
-    .sub{color:#64748b;font-size:13px;margin-bottom:20px}
-    .section-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-    .sec-btn{padding:8px 16px;border-radius:8px;border:2px solid #334155;background:transparent;color:#64748b;font-weight:600;font-size:13px;cursor:pointer;transition:all .15s;font-family:inherit}
-    .sec-btn.active{color:#f59e0b;border-color:#f59e0b;background:rgba(245,158,11,.1)}
-    .panel{display:none}.panel.active{display:block}
-    .card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:16px;margin-bottom:12px}
-    .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .card-title{font-size:14px;font-weight:700;color:#f1f5f9}
-    .card-id{font-size:11px;color:#475569;background:#0f172a;padding:2px 6px;border-radius:4px;font-family:monospace}
-    .subjects-list{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
-    .subject-chip{background:#0f172a;border:1px solid #334155;border-radius:6px;padding:4px 10px;font-size:12px;color:#94a3b8;display:flex;align-items:center;gap:4px}
-    .chip-del{cursor:pointer;color:#ef4444;font-weight:700;font-size:14px;line-height:1}
-    .add-subject-row{display:flex;gap:8px;margin-top:8px}
-    .auth-input{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px 12px;color:#f1f5f9;font-size:13px;font-family:inherit;outline:none;transition:border-color .15s}
-    .auth-input:focus{border-color:#f59e0b}
-    .btn{padding:8px 14px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s}
-    .btn-primary{background:#f59e0b;color:#000}
-    .btn-primary:hover{background:#fbbf24}
-    .btn-danger{background:#ef4444;color:#fff}
-    .btn-danger:hover{background:#dc2626}
-    .btn-ghost{background:#1e293b;border:1px solid #334155;color:#94a3b8}
-    .btn-ghost:hover{background:#0f172a}
-    .add-subsection-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #f59e0b;color:#f59e0b;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999}
-    .loading{color:#64748b;font-size:13px;padding:20px 0}
-    .icon-input{width:60px}
-    .info{font-size:11px;color:#475569;margin-bottom:12px;line-height:1.5}
-    .aptitude-note{background:rgba(139,92,246,0.1);border:1px solid #6d28d9;border-radius:8px;padding:12px;font-size:13px;color:#a78bfa;margin-bottom:16px}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+    /* Top sub-nav */
+    .nt-topbar{background:#1e293b;border-bottom:1px solid #334155;padding:0 12px;display:flex;align-items:center;gap:8px;height:48px;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .nt-topbar::-webkit-scrollbar{height:0}
+    .nt-logo{font-weight:800;font-size:13px;color:#a78bfa;white-space:nowrap;margin-right:8px}
+    .nt-tab-btn{padding:7px 14px;border-radius:8px;border:2px solid transparent;background:transparent;color:#64748b;font-weight:600;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
+    .nt-tab-btn:hover{color:#94a3b8;background:#0f172a}
+    .nt-tab-btn.active{color:#a78bfa;border-color:#a78bfa;background:rgba(139,92,246,.08)}
+
+    /* Content frame */
+    .nt-content{flex:1;overflow:hidden;position:relative}
+    .nt-content iframe{width:100%;height:100%;border:none;background:#0f172a}
+    .nt-content .frame-wrap{position:absolute;inset:0;display:none}
+    .nt-content .frame-wrap.active{display:block}
+
+    /* Login fallback */
+    .login-overlay{position:fixed;inset:0;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;padding:20px}
+    .login-overlay.hidden{display:none}
+    .login-overlay h2{color:#a78bfa;margin-bottom:8px}
+    .login-overlay p{color:#64748b;margin-bottom:20px;text-align:center;font-size:13px}
+    .login-overlay button{padding:12px 24px;border-radius:8px;border:none;background:#a78bfa;color:#0f172a;font-weight:700;cursor:pointer;font-size:14px}
+
+    @media(max-width:640px){
+      .nt-logo{font-size:11px;margin-right:4px}
+      .nt-tab-btn{padding:6px 8px;font-size:10px}
+    }
   </style>
 </head>
 <body>
 
-  <h1>📚 Non-Tech Section Config</h1>
-  <div class="sub">Manage subsections shown under each Non-Tech category in the app</div>
-
-  <div class="section-tabs">
-    <button class="sec-btn active" data-sec="gs">🌍 General Studies</button>
-    <button class="sec-btn" data-sec="stategk">🗺️ State GK</button>
-    <button class="sec-btn" data-sec="language">🔤 Language</button>
-    <button class="sec-btn" data-sec="aptitude">🧮 Aptitude</button>
+  <!-- Login fallback -->
+  <div class="login-overlay" id="loginOverlay">
+    <h2>🔒 Admin Sign-in Required</h2>
+    <p>Please sign in with the admin Google account to manage Non-Tech section.</p>
+    <button id="signInBtn">Sign in with Google</button>
+    <p id="signInError" style="color:#ef4444;margin-top:14px;display:none"></p>
   </div>
 
-  <!-- General Studies Panel -->
-  <div class="panel active" id="panel-gs">
-    <p class="info">Subjects shown in GS (from image: Polity, History, Geography, General Science, Economy, Current Affairs, Environment, Reasoning). Hindi & English are in Language section.</p>
-    <div class="add-subsection-row">
-      <input class="auth-input icon-input" id="gs-icon" placeholder="Icon" value="📘"/>
-      <input class="auth-input" id="gs-name" placeholder="Subject name (e.g. Environment)" style="flex:1"/>
-      <input class="auth-input" id="gs-id" placeholder="ID (e.g. environment)" style="flex:1"/>
-      <button class="btn btn-primary" id="gs-add-btn">+ Add</button>
+  <!-- Sub-nav (only visible when authenticated) -->
+  <nav class="nt-topbar" id="ntTopbar" style="display:none">
+    <div class="nt-logo">📚 NT Admin</div>
+    <button class="nt-tab-btn active" data-tab="subsections">⚙️ Subsections</button>
+    <button class="nt-tab-btn" data-tab="exams">🏛️ Exams</button>
+    <button class="nt-tab-btn" data-tab="upload">📤 Upload Q's</button>
+    <button class="nt-tab-btn" data-tab="edit">✏️ Edit Q's</button>
+    <button class="nt-tab-btn" data-tab="notes-edit">📝 Notes Editor</button>
+    <button class="nt-tab-btn" data-tab="notes-upload">⬆️ Notes Upload</button>
+  </nav>
+
+  <!-- Content frames -->
+  <div class="nt-content" id="ntContent" style="display:none">
+    <div class="frame-wrap active" id="frame-subsections">
+      <iframe src="nt-subsections-admin.html" loading="eager"></iframe>
     </div>
-    <div id="gs-list" class="loading">Loading…</div>
-  </div>
-
-  <!-- State GK Panel -->
-  <div class="panel" id="panel-stategk">
-    <p class="info">States available for State GK. Initially: Madhya Pradesh, Chhattisgarh. Add more as needed.</p>
-    <div class="add-subsection-row">
-      <input class="auth-input icon-input" id="sgk-icon" placeholder="Icon" value="🗺️"/>
-      <input class="auth-input" id="sgk-name" placeholder="State name (e.g. Gujarat)" style="flex:1"/>
-      <input class="auth-input" id="sgk-id" placeholder="ID (e.g. gujarat)" style="flex:1"/>
-      <button class="btn btn-primary" id="sgk-add-btn">+ Add</button>
+    <div class="frame-wrap" id="frame-exams">
+      <iframe src="nt-exams-admin.html" loading="lazy"></iframe>
     </div>
-    <div id="sgk-list" class="loading">Loading…</div>
-  </div>
-
-  <!-- Language Panel -->
-  <div class="panel" id="panel-language">
-    <p class="info">Languages available. Initially: Hindi and English.</p>
-    <div class="add-subsection-row">
-      <input class="auth-input icon-input" id="lang-icon" placeholder="Icon" value="🔤"/>
-      <input class="auth-input" id="lang-name" placeholder="Language name (e.g. Sanskrit)" style="flex:1"/>
-      <input class="auth-input" id="lang-id" placeholder="ID (e.g. sanskrit)" style="flex:1"/>
-      <button class="btn btn-primary" id="lang-add-btn">+ Add</button>
+    <div class="frame-wrap" id="frame-upload">
+      <iframe src="nt-upload-admin.html" loading="lazy"></iframe>
     </div>
-    <div id="lang-list" class="loading">Loading…</div>
+    <div class="frame-wrap" id="frame-edit">
+      <iframe src="nt-edit-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-notes-edit">
+      <iframe src="nt-notes-edit-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-notes-upload">
+      <iframe src="nt-notes-upload-admin.html" loading="lazy"></iframe>
+    </div>
   </div>
-
-  <!-- Aptitude Panel -->
-  <div class="panel" id="panel-aptitude">
-    <div class="aptitude-note">⚙️ Aptitude subsections are <strong>fixed</strong>: Logical Reasoning and Quantitative Aptitude. You can manage their subject tags below.</div>
-    <div id="apt-list" class="loading">Loading…</div>
-  </div>
-
-  <div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const ADMIN_EMAIL = '112ce0489@gmail.com';
-
 const app = initializeApp({
   apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
   authDomain: "ae-exam-app.firebaseapp.com",
@@ -109,181 +91,38 @@ const app = initializeApp({
   messagingSenderId: "101353507688",
   appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
 });
-
 const auth = getAuth(app);
-const db   = getFirestore(app);
-const NT_DOC = doc(db, 'nt_config', 'subsections');
 
-// ── Defaults (must match app.js) ──────────────────────────────────────────────
-const DEFAULTS = {
-  gs: [
-    { id:'polity',          icon:'⚖️',  name:'Polity',          subjects:['Constitution','Fundamental Rights','Parliament','Judiciary','DPSP','Elections','Amendments','Emergency'] },
-    { id:'history',         icon:'🏛️',  name:'History',         subjects:['Ancient India','Medieval India','Modern India','Freedom Struggle','Art & Culture'] },
-    { id:'geography',       icon:'🗺️',  name:'Geography',       subjects:['Physical Geography','Indian Geography','World Geography','Climate','Rivers','Resources'] },
-    { id:'general-science', icon:'🔬',  name:'General Science', subjects:['Physics','Chemistry','Biology','Technology','Health & Disease'] },
-    { id:'economy',         icon:'💹',  name:'Economy',         subjects:['Indian Economy','Banking','Budget','Agriculture','Trade'] },
-    { id:'current-affairs', icon:'📰',  name:'Current Affairs', subjects:['National','International','Awards','Sports','Science & Tech'] },
-    { id:'environment',     icon:'🌿',  name:'Environment',     subjects:['Ecology','Biodiversity','Climate Change','Pollution','Conservation'] },
-    { id:'reasoning',       icon:'🧩',  name:'Reasoning',       subjects:['Analogy','Series','Coding-Decoding','Blood Relations','Direction'] },
-  ],
-  stategk: [
-    { id:'mp',           icon:'🟠', name:'Madhya Pradesh', subjects:['History','Geography','Culture','Economy','Polity','Current Affairs'] },
-    { id:'chhattisgarh', icon:'🟡', name:'Chhattisgarh',  subjects:['History','Geography','Culture','Economy','Polity','Current Affairs'] },
-  ],
-  language: [
-    { id:'hindi',   icon:'📖', name:'Hindi',   subjects:['व्याकरण','संधि-समास','अलंकार','रस-छंद','साहित्य','कवि','उपन्यास'] },
-    { id:'english', icon:'🔤', name:'English', subjects:['Grammar','Vocabulary','Comprehension','Error Spotting','Sentence Improvement'] },
-  ],
-  aptitude: [
-    { id:'logical-reasoning',     icon:'🧠', name:'Logical Reasoning',     subjects:['Analogy','Series','Coding-Decoding','Blood Relations','Direction','Syllogism','Puzzle','Clock & Calendar'] },
-    { id:'quantitative-aptitude', icon:'🔢', name:'Quantitative Aptitude', subjects:['Number System','Percentage','Ratio','Profit & Loss','Time & Work','Time & Distance','SI & CI','Geometry','Mensuration','Data Interpretation'] },
-  ],
+document.getElementById('signInBtn').onclick = async () => {
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+  } catch(e) {
+    const err = document.getElementById('signInError');
+    err.textContent = 'Sign-in failed: ' + e.message;
+    err.style.display = 'block';
+  }
 };
 
-let config = JSON.parse(JSON.stringify(DEFAULTS));
-
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 2500);
-}
-
-async function loadConfig() {
-  try {
-    const snap = await getDoc(NT_DOC);
-    if (snap.exists()) {
-      const d = snap.data();
-      if (d.gs)       config.gs       = d.gs;
-      if (d.stategk)  config.stategk  = d.stategk;
-      if (d.language) config.language = d.language;
-      if (d.aptitude) config.aptitude = d.aptitude;
-    }
-  } catch(e) { console.warn('loadConfig', e); }
-}
-
-async function saveConfig() {
-  await setDoc(NT_DOC, config);
-  toast('✅ Saved to Firestore');
-}
-
-// ── Render a section's subsection list ────────────────────────────────────────
-function renderSection(key, listId, aptReadOnly = false) {
-  const list = document.getElementById(listId);
-  list.innerHTML = '';
-  config[key].forEach((sub, idx) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="card-header">
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:20px">${sub.icon}</span>
-          <div>
-            <div class="card-title">${sub.name}</div>
-            <span class="card-id">${sub.id}</span>
-          </div>
-        </div>
-        ${!aptReadOnly ? `<button class="btn btn-danger" data-key="${key}" data-idx="${idx}" style="font-size:12px;padding:6px 10px">🗑 Delete</button>` : ''}
-      </div>
-      <div style="font-size:12px;color:#64748b;margin-bottom:6px">Subject filter chips:</div>
-      <div class="subjects-list" id="chips-${key}-${idx}"></div>
-      <div class="add-subject-row" id="addrow-${key}-${idx}">
-        <input class="auth-input" placeholder="Add subject chip…" style="flex:1" id="chipinput-${key}-${idx}"/>
-        <button class="btn btn-ghost" data-add-chip="${key}" data-idx="${idx}">+ Add chip</button>
-      </div>
-    `;
-    list.appendChild(card);
-    renderChips(key, idx);
-
-    if (!aptReadOnly) {
-      card.querySelector(`[data-key="${key}"][data-idx="${idx}"]`).onclick = () => deleteSubsection(key, idx);
-    }
-    card.querySelector(`[data-add-chip="${key}"][data-idx="${idx}"]`).onclick = () => {
-      const inp = document.getElementById(`chipinput-${key}-${idx}`);
-      const val = inp.value.trim();
-      if (!val) return;
-      if (!config[key][idx].subjects) config[key][idx].subjects = [];
-      config[key][idx].subjects.push(val);
-      inp.value = '';
-      renderChips(key, idx);
-      saveConfig();
-    };
-  });
-}
-
-function renderChips(key, idx) {
-  const container = document.getElementById(`chips-${key}-${idx}`);
-  if (!container) return;
-  container.innerHTML = '';
-  (config[key][idx].subjects || []).forEach((s, si) => {
-    const chip = document.createElement('div');
-    chip.className = 'subject-chip';
-    chip.innerHTML = `${s} <span class="chip-del" data-key="${key}" data-idx="${idx}" data-si="${si}">×</span>`;
-    chip.querySelector('.chip-del').onclick = (e) => {
-      const { key, idx, si } = e.target.dataset;
-      config[key][+idx].subjects.splice(+si, 1);
-      renderChips(key, +idx);
-      saveConfig();
-    };
-    container.appendChild(chip);
-  });
-}
-
-function deleteSubsection(key, idx) {
-  if (!confirm(`Delete "${config[key][idx].name}"? This removes it from the app.`)) return;
-  config[key].splice(idx, 1);
-  const listIds = { gs:'gs-list', stategk:'sgk-list', language:'lang-list', aptitude:'apt-list' };
-  renderSection(key, listIds[key], key === 'aptitude');
-  saveConfig();
-}
-
-function addSubsection(key, iconId, nameId, idId, listId) {
-  const icon = document.getElementById(iconId).value.trim() || '📘';
-  const name = document.getElementById(nameId).value.trim();
-  const id   = document.getElementById(idId).value.trim().toLowerCase().replace(/\s+/g,'-');
-  if (!name || !id) { toast('⚠️ Name and ID required'); return; }
-  if (config[key].find(s => s.id === id)) { toast('⚠️ ID already exists'); return; }
-  config[key].push({ id, icon, name, subjects: [] });
-  document.getElementById(nameId).value = '';
-  document.getElementById(idId).value   = '';
-  renderSection(key, listId);
-  saveConfig();
-}
-
-// ── Wire up buttons ───────────────────────────────────────────────────────────
-document.getElementById('gs-add-btn').onclick  = () => addSubsection('gs',       'gs-icon',   'gs-name',   'gs-id',   'gs-list');
-document.getElementById('sgk-add-btn').onclick = () => addSubsection('stategk',  'sgk-icon',  'sgk-name',  'sgk-id',  'sgk-list');
-document.getElementById('lang-add-btn').onclick= () => addSubsection('language', 'lang-icon', 'lang-name', 'lang-id', 'lang-list');
-
-// ── Section tabs ─────────────────────────────────────────────────────────────
-document.querySelectorAll('.sec-btn').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.sec-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-' + btn.dataset.sec).classList.add('active');
-  };
+onAuthStateChanged(auth, user => {
+  if (user && user.email === ADMIN_EMAIL) {
+    document.getElementById('loginOverlay').classList.add('hidden');
+    document.getElementById('ntTopbar').style.display = 'flex';
+    document.getElementById('ntContent').style.display = 'block';
+  } else if (user) {
+    const err = document.getElementById('signInError');
+    err.textContent = 'Signed in as ' + user.email + ' (not admin). Sign out and use admin email.';
+    err.style.display = 'block';
+  }
 });
 
-// ── Auth guard ────────────────────────────────────────────────────────────────
-onAuthStateChanged(auth, async user => {
-  if (!user) {
-    document.body.innerHTML = `
-      <div style="padding:40px;text-align:center">
-        <div style="color:#ef4444;font-size:16px;margin-bottom:20px">🔒 Admin access only.</div>
-        <button id="signInBtn" style="padding:12px 24px;border-radius:8px;border:none;background:#f59e0b;color:#000;font-weight:700;cursor:pointer;font-size:14px">Sign in with Google</button>
-      </div>`;
-    document.getElementById('signInBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
-    return;
-  }
-  if (user.email !== ADMIN_EMAIL) {
-    document.body.innerHTML = `<div style="padding:40px;color:#ef4444;font-size:16px">🔒 Admin access only. Signed in as ${user.email} (not authorized).</div>`;
-    return;
-  }
-  await loadConfig();
-  renderSection('gs',       'gs-list');
-  renderSection('stategk',  'sgk-list');
-  renderSection('language', 'lang-list');
-  renderSection('aptitude', 'apt-list', true);
+// Tab switching
+document.querySelectorAll('.nt-tab-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.nt-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.frame-wrap').forEach(f => f.classList.remove('active'));
+    document.getElementById('frame-' + btn.dataset.tab).classList.add('active');
+  };
 });
 </script>
 </body>

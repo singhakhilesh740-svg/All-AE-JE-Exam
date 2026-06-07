@@ -1342,19 +1342,24 @@ async function _loadNTTabContent() {
 async function _loadNTNotes(sub, section, subject, main, placeholder) {
   let notesData = null;
   try {
-    if (section === 'gs') {
+    // PRIMARY: Load from new nt_notes collection
+    const { doc, getDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    const snap = await getDoc(doc(db, 'nt_notes', sub.id));
+    if (snap.exists()) {
+      notesData = snap.data();
+    } else if (section === 'gs') {
+      // FALLBACK: try legacy GS JSON files for existing data (polity, history, etc.)
       notesData = await loadGSNotes(sub.id);
       if (notesData && subject !== 'all') {
         const sub2 = getSubSubjectData(notesData, subject.toLowerCase().replace(/\s+/g,'-'));
         if (sub2) notesData = sub2;
       }
-    } else if (section === 'language') {
-      if (sub.id === 'hindi') notesData = await loadHindiNotes('hindi-grammar');
-      else if (sub.id === 'english') notesData = null; // English notes TBD
+    } else if (section === 'language' && sub.id === 'hindi') {
+      notesData = await loadHindiNotes('hindi-grammar');
     }
   } catch(e) { console.warn('[NT] notes load err', e); }
 
-  if (notesData) {
+  if (notesData && (notesData.notes?.length > 0 || notesData.topics?.length > 0)) {
     if (placeholder) placeholder.style.display = 'none';
     const topicBar = document.createElement('div');
     topicBar.id = 'ntInlineTopicBar';
@@ -1369,20 +1374,25 @@ async function _loadNTNotes(sub, section, subject, main, placeholder) {
 
 async function _loadNTQuestions(sub, section, subject, type, main, placeholder) {
   try {
-    const { fetchQuestions, fetchPracticeQuestions } = await import('./db.js');
-    const subjectFilter = (subject !== 'all') ? subject.toLowerCase().replace(/\s+/g,'-') : sub.id;
-    const questions = type === 'pyq'
-      ? await fetchQuestions({ subject: subjectFilter })
-      : await fetchPracticeQuestions({ subject: subjectFilter });
+    // Load from nt_questions collection, filtered by subsection + type
+    const { collection, getDocs, query, where, limit } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+    const filters = [where('subsection','==', sub.id), where('type','==', type), limit(500)];
+    if (subject !== 'all') filters.splice(2, 0, where('subject','==', subject.toLowerCase().replace(/\s+/g,'-')));
+    const q = query(collection(db, 'nt_questions'), ...filters);
+    const snap = await getDocs(q);
+    const questions = [];
+    snap.forEach(d => questions.push({ id: d.id, ...d.data() }));
+
     if (placeholder) placeholder.style.display = 'none';
     const wrap = document.createElement('div');
     wrap.id = 'ntSubsectionMain-rendered';
     main.appendChild(wrap);
-    if (!questions || questions.length === 0) {
-      wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><h3>No questions yet</h3><p class="empty-sub">Questions for ${escapeHtml(sub.name)} will appear here once uploaded.</p></div>`;
+
+    if (questions.length === 0) {
+      wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">📝</div><h3>No questions yet</h3><p class="empty-sub">${type === 'pyq' ? 'PYQ' : 'Practice'} questions for ${escapeHtml(sub.name)} will appear here once admin uploads them.</p></div>`;
       return;
     }
-    wrap.innerHTML = `<div style="padding:16px"><div class="subject-card" style="flex-direction:column;align-items:flex-start;gap:8px"><div style="font-weight:700;font-size:15px;">${escapeHtml(sub.icon + ' ' + sub.name)}</div><div style="font-size:13px;color:var(--text-dim)">${questions.length} questions available</div><button class="btn-primary" id="ntStartQuiz" style="margin-top:8px;width:100%">Start Practice ▶</button></div></div>`;
+    wrap.innerHTML = `<div style="padding:16px"><div class="subject-card" style="flex-direction:column;align-items:flex-start;gap:8px"><div style="font-weight:700;font-size:15px;">${escapeHtml(sub.icon + ' ' + sub.name)}</div><div style="font-size:13px;color:var(--text-dim)">${questions.length} ${type === 'pyq' ? 'PYQ' : 'practice'} questions available</div><button class="btn-primary" id="ntStartQuiz" style="margin-top:8px;width:100%">Start ${type === 'pyq' ? 'PYQ' : 'Practice'} ▶</button></div></div>`;
     document.getElementById('ntStartQuiz').onclick = () => {
       Quiz.load(questions, { subject: sub.name, type });
       $('quizBackBtn').onclick = () => showScreen('ntSubsectionScreen');

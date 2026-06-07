@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NT Notes Upload</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:14px}
+    h1{font-size:16px;font-weight:800;color:#a78bfa;margin-bottom:4px}
+    .sub{color:#64748b;font-size:12px;margin-bottom:16px}
+    .card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:14px;margin-bottom:12px}
+    .card-title{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:10px}
+    label{display:block;font-size:11px;color:#94a3b8;font-weight:600;margin-bottom:4px;margin-top:8px;text-transform:uppercase;letter-spacing:.04em}
+    .auth-input,select,textarea{width:100%;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:8px 10px;color:#f1f5f9;font-size:13px;font-family:inherit;outline:none}
+    textarea{min-height:300px;font-family:'Courier New',monospace;font-size:11px;line-height:1.5}
+    .auth-input:focus,select:focus,textarea:focus{border-color:#a78bfa}
+    .btn{padding:8px 14px;border-radius:6px;border:none;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit;margin-top:8px}
+    .btn-primary{background:#a78bfa;color:#0f172a}
+    .btn-secondary{background:#10b981;color:#fff}
+    .btn-danger{background:#ef4444;color:#fff}
+    .btn-ghost{background:transparent;color:#94a3b8;border:1px solid #334155}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
+    .col{flex:1;min-width:140px}
+    .help{font-size:11px;color:#64748b;background:#0f172a;border:1px dashed #334155;border-radius:6px;padding:12px;margin-bottom:10px;line-height:1.6}
+    .help code{background:#1e293b;padding:1px 5px;border-radius:3px;color:#a78bfa}
+    .help pre{background:#1e293b;padding:8px;border-radius:4px;color:#a78bfa;margin-top:6px;font-size:10px;overflow-x:auto;white-space:pre}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #a78bfa;color:#a78bfa;padding:8px 16px;border-radius:8px;font-size:12px;display:none;z-index:999}
+    .log{font-family:'Courier New',monospace;font-size:11px;color:#94a3b8;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:10px;max-height:140px;overflow-y:auto;white-space:pre-wrap;margin-top:10px;display:none}
+    .log.show{display:block}
+    .log .ok{color:#10b981}.log .err{color:#ef4444}
+  </style>
+</head>
+<body>
+  <h1>⬆️ Non-Tech Notes Upload</h1>
+  <div class="sub">Bulk upload notes JSON for a Non-Tech subsection. Replaces existing notes for that subsection.</div>
+
+  <div class="card">
+    <div class="card-title">📂 Destination</div>
+    <div class="row">
+      <div class="col">
+        <label>Category</label>
+        <select id="fCategory">
+          <option value="gs">🌍 GS</option>
+          <option value="stategk">🗺️ State GK</option>
+          <option value="language">🔤 Language</option>
+          <option value="aptitude">🧮 Aptitude</option>
+        </select>
+      </div>
+      <div class="col">
+        <label>Subsection</label>
+        <select id="fSubsection"></select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Mode</label>
+        <select id="fMode">
+          <option value="replace">🔁 Replace all notes for this subsection</option>
+          <option value="append">➕ Append topics & sections to existing</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📄 Notes JSON</div>
+    <div class="help">
+      Format expected:
+      <pre>{
+  "topics": [
+    {"id":"constitution","name":"Constitution"},
+    {"id":"frs","name":"Fundamental Rights"}
+  ],
+  "notes": [
+    {
+      "topic_id":"constitution",
+      "topic_name":"Constitution",
+      "cards":[
+        {
+          "heading":"Preamble",
+          "points":["Sovereign, Socialist, Secular, Democratic, Republic","Adopted 26 Nov 1949"],
+          "color":"blue"
+        }
+      ]
+    }
+  ]
+}</pre>
+      Card colors: <code>blue</code>, <code>red</code>, <code>teal</code>, <code>yellow</code>, <code>pink</code>. Use <code>**text**</code> in points for highlighting.
+    </div>
+    <textarea id="notesJson" placeholder='{"topics":[...], "notes":[...]}'></textarea>
+    <button class="btn btn-secondary" id="validateBtn">✓ Validate JSON</button>
+    <button class="btn btn-primary" id="uploadBtn" disabled>⬆️ Upload</button>
+    <button class="btn btn-ghost" id="clearBtn">Clear</button>
+    <div class="log" id="logBox"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const ADMIN_EMAIL = '112ce0489@gmail.com';
+const cfg = {apiKey:"AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",authDomain:"ae-exam-app.firebaseapp.com",projectId:"ae-exam-app",storageBucket:"ae-exam-app.firebasestorage.app",messagingSenderId:"101353507688",appId:"1:101353507688:web:82b31f2d6096387d7aa4dd"};
+const app = getApps().length ? getApp() : initializeApp(cfg);
+const auth = getAuth(app), db = getFirestore(app);
+let ntConfig = null, validated = null;
+
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
+function log(msg, cls='') { const box = document.getElementById('logBox'); box.classList.add('show'); box.innerHTML += `<div class="${cls}">${msg}</div>`; box.scrollTop = box.scrollHeight; }
+
+async function loadConfig() {
+  try {
+    const snap = await getDoc(doc(db, 'nt_config', 'subsections'));
+    ntConfig = snap.exists() ? snap.data() : { gs:[], stategk:[], language:[], aptitude:[] };
+    refreshSubsections();
+  } catch(e) { toast('Config load error'); }
+}
+function refreshSubsections() {
+  const cat = document.getElementById('fCategory').value;
+  const sel = document.getElementById('fSubsection');
+  sel.innerHTML = '';
+  (ntConfig?.[cat] || []).forEach(sub => {
+    const o = document.createElement('option');
+    o.value = sub.id;
+    o.textContent = `${sub.icon || ''} ${sub.name}`;
+    sel.appendChild(o);
+  });
+}
+document.getElementById('fCategory').onchange = refreshSubsections;
+
+document.getElementById('validateBtn').onclick = () => {
+  document.getElementById('logBox').innerHTML = '';
+  document.getElementById('logBox').classList.remove('show');
+  let parsed;
+  try { parsed = JSON.parse(document.getElementById('notesJson').value); }
+  catch(e) { log('❌ Invalid JSON: ' + e.message, 'err'); return; }
+
+  if (typeof parsed !== 'object' || parsed === null) { log('❌ Must be a JSON object', 'err'); return; }
+  if (!Array.isArray(parsed.topics)) { log('❌ Missing or invalid "topics" array', 'err'); return; }
+  if (!Array.isArray(parsed.notes))  { log('❌ Missing or invalid "notes" array', 'err'); return; }
+
+  let warnings = 0;
+  parsed.topics.forEach((t, i) => {
+    if (!t.id || !t.name) { log(`Topic ${i+1}: missing id or name`, 'err'); warnings++; }
+  });
+  parsed.notes.forEach((s, i) => {
+    if (!s.topic_id || !s.topic_name) { log(`Section ${i+1}: missing topic_id or topic_name`, 'err'); warnings++; }
+    if (!Array.isArray(s.cards) || s.cards.length === 0) { log(`Section ${i+1}: no cards`, 'err'); warnings++; }
+  });
+
+  if (warnings > 0) { log(`${warnings} errors. Fix and re-validate.`, 'err'); validated = null; document.getElementById('uploadBtn').disabled = true; return; }
+
+  log(`✅ ${parsed.topics.length} topics, ${parsed.notes.length} sections validated`, 'ok');
+  validated = parsed;
+  document.getElementById('uploadBtn').disabled = false;
+};
+
+document.getElementById('uploadBtn').onclick = async () => {
+  if (!validated) return;
+  const subId = document.getElementById('fSubsection').value;
+  if (!subId) { toast('Pick a subsection'); return; }
+  const mode = document.getElementById('fMode').value;
+
+  document.getElementById('uploadBtn').disabled = true;
+  document.getElementById('uploadBtn').textContent = '⏳ Uploading...';
+
+  try {
+    let final = validated;
+    if (mode === 'append') {
+      const existing = await getDoc(doc(db, 'nt_notes', subId));
+      if (existing.exists()) {
+        const old = existing.data();
+        final = {
+          topics: [...(old.topics || []), ...validated.topics],
+          notes:  [...(old.notes  || []), ...validated.notes]
+        };
+      }
+    }
+    await setDoc(doc(db, 'nt_notes', subId), final);
+    log(`✅ Notes uploaded to nt_notes/${subId} (${mode})`, 'ok');
+    toast('✅ Upload complete');
+    validated = null;
+    document.getElementById('notesJson').value = '';
+  } catch(e) {
+    log('❌ Upload error: ' + e.message, 'err');
+  }
+  document.getElementById('uploadBtn').disabled = true;
+  document.getElementById('uploadBtn').textContent = '⬆️ Upload';
+};
+
+document.getElementById('clearBtn').onclick = () => {
+  document.getElementById('notesJson').value = '';
+  document.getElementById('logBox').innerHTML = '';
+  document.getElementById('logBox').classList.remove('show');
+  validated = null;
+  document.getElementById('uploadBtn').disabled = true;
+};
+
+onAuthStateChanged(auth, async user => {
+  if (user && user.email === ADMIN_EMAIL) await loadConfig();
+});
+</script>
+</body>
+</html>
