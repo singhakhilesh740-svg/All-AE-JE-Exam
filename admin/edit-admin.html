@@ -209,6 +209,29 @@
     <label>Explanation / Solution</label>
     <textarea id="editExplanation" rows="4"></textarea>
 
+    <!-- Question Image -->
+    <label>Question Image <span style="color:#64748b;font-weight:400">(optional — for diagram/figure based questions)</span></label>
+    <div id="imageUploadArea" style="margin-top:6px">
+      <div id="existingImageWrap" class="hidden" style="margin-bottom:8px;position:relative">
+        <img id="existingImagePreview" src="" alt="Question image" style="max-width:100%;max-height:200px;border-radius:8px;border:1px solid #334155;display:block"/>
+        <button id="removeImageBtn" type="button" style="position:absolute;top:6px;right:6px;background:#ef4444;color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:14px;cursor:pointer;line-height:1">✕</button>
+      </div>
+      <div id="imageInputWrap">
+        <input type="file" id="editImageFile" accept="image/*" style="display:none"/>
+        <div id="imageDropZone" style="border:2px dashed #334155;border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .15s">
+          <div style="font-size:28px;margin-bottom:6px">📷</div>
+          <div style="font-size:12px;color:#94a3b8">Click or drag image here</div>
+          <div style="font-size:11px;color:#475569;margin-top:4px">JPG, PNG, WebP · Max 2MB</div>
+        </div>
+      </div>
+      <div id="imageUploadProgress" class="hidden" style="margin-top:8px">
+        <div style="background:#0f172a;border-radius:4px;height:6px;overflow:hidden">
+          <div id="imageProgressBar" style="background:#60a5fa;height:6px;width:0%;transition:width .3s"></div>
+        </div>
+        <div id="imageUploadStatus" style="font-size:11px;color:#94a3b8;margin-top:4px">Uploading...</div>
+      </div>
+    </div>
+
     <!-- Meta Fields -->
     <div class="two-col">
       <div>
@@ -264,6 +287,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   import { getFirestore, collection, query, orderBy, where, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
   import { getAllExams, getExamsBySection, loadDynamicExams } from '../js/exams.js';
 
   const app = initializeApp({
@@ -276,6 +300,7 @@
   });
   const auth = getAuth(app);
   const db = getFirestore(app);
+  const stg = getStorage(app);
   const ADMIN = '112ce0489@gmail.com';
   const $ = id => document.getElementById(id);
 
@@ -284,6 +309,8 @@
   let editingDoc = null;
   let editedCount = 0;
   let selectedAnswer = 0;
+  let pendingImageFile = null;   // image file to upload on save
+  let pendingImageRemove = false; // flag to remove existing image on save
 
   // Auth
   $('loginBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
@@ -522,6 +549,7 @@
           ${q.type ? `<span class="q-tag" style="background:${q.type==='pyq'?'rgba(245,158,11,.15);color:#fcd34d':'rgba(16,185,129,.15);color:#6ee7b7'}">${q.type==='pyq'?'📝 PYQ':'✏️ Practice'}</span>` : ''}
           ${q.topic ? `<span class="q-tag tag-topic">${q.topic}</span>` : ''}
           ${q.year ? `<span class="q-tag tag-yr">${q.year}</span>` : ''}
+          ${q.image ? `<span class="q-tag" style="background:rgba(96,165,250,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.3)">📷 Image</span>` : ''}
         </div>
       </div>
     `).join('');
@@ -543,6 +571,8 @@
     if (!q) return;
     editingDoc = q;
     selectedAnswer = q.answer || 0;
+    pendingImageFile = null;
+    pendingImageRemove = false;
 
     $('editQNum').textContent = `#${q.q_num || '?'}`;
     $('editQuestion').value = q.question || '';
@@ -557,6 +587,18 @@
     $('editQNumInput').value = q.q_num || '';
     $('editDifficulty').value = q.difficulty || 'medium';
     $('editTier').value = q.tier || 'free';
+
+    // Image preview
+    if (q.image) {
+      $('existingImagePreview').src = q.image;
+      $('existingImageWrap').classList.remove('hidden');
+      $('imageInputWrap').style.display = 'none';
+    } else {
+      $('existingImageWrap').classList.add('hidden');
+      $('imageInputWrap').style.display = '';
+    }
+    $('imageUploadProgress').classList.add('hidden');
+    $('editImageFile').value = '';
 
     updateAnswerUI();
     $('editStatus').className = 'status-msg';
@@ -609,6 +651,46 @@
         tier: $('editTier').value,
       };
 
+      // Handle image upload
+      if (pendingImageFile) {
+        $('editSaveBtn').textContent = '📷 Uploading image...';
+        const examId = editingDoc._examId || currentExam;
+        const ext = pendingImageFile.name.split('.').pop() || 'jpg';
+        const path = `question-images/${examId}/${editingDoc._docId}.${ext}`;
+        const sRef = storageRef(stg, path);
+        const task = uploadBytesResumable(sRef, pendingImageFile);
+
+        await new Promise((resolve, reject) => {
+          task.on('state_changed',
+            snap => {
+              const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+              $('imageProgressBar').style.width = pct + '%';
+              $('imageUploadStatus').textContent = `Uploading... ${pct}%`;
+            },
+            err => reject(err),
+            () => resolve()
+          );
+        });
+
+        const url = await getDownloadURL(task.snapshot.ref);
+        updated.image = url;
+        $('editSaveBtn').textContent = '⏳ Saving...';
+      }
+
+      // Handle image removal
+      if (pendingImageRemove && editingDoc.image) {
+        updated.image = null;
+        // Try to delete from storage (best effort)
+        try {
+          const oldUrl = editingDoc.image;
+          const pathMatch = oldUrl.match(/question-images%2F(.+?)\?/);
+          if (pathMatch) {
+            const oldPath = decodeURIComponent(pathMatch[1]).replace(/%2F/g, '/');
+            await deleteObject(storageRef(stg, 'question-images/' + oldPath));
+          }
+        } catch (e) { console.warn('Could not delete old image:', e); }
+      }
+
       await updateDoc(doc(db, 'exams', editingDoc._examId || currentExam, 'questions', editingDoc._docId), updated);
 
       // Update local data
@@ -647,6 +729,52 @@
       alert('Delete error: ' + err.message);
     }
   };
+
+  // ── Image upload handlers ──────────────────────────────────────────────
+  const dropZone = $('imageDropZone');
+  const fileInput = $('editImageFile');
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor = '#60a5fa'; });
+  dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = '#334155'; });
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.style.borderColor = '#334155';
+    const file = e.dataTransfer.files[0];
+    if (file) handleImageSelect(file);
+  });
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) handleImageSelect(fileInput.files[0]);
+  });
+
+  function handleImageSelect(file) {
+    if (!file.type.startsWith('image/')) { alert('Please select an image file'); return; }
+    if (file.size > 2 * 1024 * 1024) { alert('Image must be under 2MB'); return; }
+    pendingImageFile = file;
+    pendingImageRemove = false;
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = e => {
+      $('existingImagePreview').src = e.target.result;
+      $('existingImageWrap').classList.remove('hidden');
+      $('imageInputWrap').style.display = 'none';
+      $('imageUploadProgress').classList.remove('hidden');
+      $('imageProgressBar').style.width = '0%';
+      $('imageUploadStatus').textContent = '📷 Image ready — will upload on Save';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  $('removeImageBtn').addEventListener('click', () => {
+    pendingImageFile = null;
+    pendingImageRemove = true;
+    $('existingImageWrap').classList.add('hidden');
+    $('imageInputWrap').style.display = '';
+    $('imageUploadProgress').classList.add('hidden');
+    $('editImageFile').value = '';
+  });
 
   function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 </script>

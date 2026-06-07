@@ -228,7 +228,7 @@
       <div class="panel-title">Step 2 — Paste Questions JSON</div>
       <div id="pyqFormat" style="font-size:12px;color:#64748b;margin-bottom:8px;line-height:1.8">
         Required: <code>question</code>, <code>options[]</code>, <code>answer</code> (0-based), <code>subject</code>, <code>year</code><br>
-        Optional: <code>explanation</code>, <code>topic</code>, <code>difficulty</code>
+        Optional: <code>explanation</code>, <code>topic</code>, <code>difficulty</code>, <code>image</code> (URL)
       </div>
       <div id="practiceFormat" class="hidden" style="font-size:12px;color:#64748b;margin-bottom:8px;line-height:1.8">
         Required: <code>question</code>, <code>options[]</code>, <code>answer</code> (0-based)<br>
@@ -773,6 +773,7 @@ function validateAndBuild(raw, i, opts) {
     if (raw.q_num)     q.q_num     = raw.q_num;
   }
   if (raw.difficulty) q.difficulty = raw.difficulty;
+  if (raw.image) q.image = raw.image;     // optional image URL for diagram-based questions
   if (errs.length) return { ok:false, errs, raw };
   return { ok:true, q };
 }
@@ -847,6 +848,7 @@ async function runValidate(doUpload=false) {
           <span class="preview-tag tag-ans">✅ ${escHtml(ans)}</span>
           ${result.q.year ? `<span class="preview-tag tag-topic">📅 ${result.q.year}</span>` : ''}
           ${result.q.explanation ? `<span class="preview-tag tag-ans">💡 Has explanation</span>` : ''}
+          ${result.q.image ? `<span class="preview-tag" style="background:rgba(96,165,250,.15);color:#93c5fd;border:1px solid rgba(96,165,250,.3)">📷 Has image</span>` : ''}
         </div>`;
     }
     previewList.appendChild(card);

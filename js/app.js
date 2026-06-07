@@ -1303,6 +1303,25 @@ async function renderQuiz() {
   }
 
   $('quizQuestion').textContent = q.question;
+
+  // Show question image if present
+  const imgEl = $('quizQuestionImage');
+  if (q.image) {
+    imgEl.src = q.image;
+    imgEl.classList.remove('hidden');
+    imgEl.onclick = () => {
+      // Open full-screen preview on tap
+      const overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out';
+      overlay.innerHTML = `<img src="${q.image}" style="max-width:100%;max-height:90vh;border-radius:8px;object-fit:contain"/>`;
+      overlay.onclick = () => overlay.remove();
+      document.body.appendChild(overlay);
+    };
+  } else {
+    imgEl.classList.add('hidden');
+    imgEl.src = '';
+  }
+
   $('quizExplanation').classList.add('hidden');
 
   const optsContainer = $('quizOptions');
