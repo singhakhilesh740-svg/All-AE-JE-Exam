@@ -95,9 +95,9 @@
   <div class="toast" id="toast"></div>
 
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const ADMIN_EMAIL = '112ce0489@gmail.com';
 
@@ -108,7 +108,7 @@ const app = initializeApp({
   storageBucket: "ae-exam-app.firebasestorage.app",
   messagingSenderId: "101353507688",
   appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
-}, 'nt-config-admin');
+});
 
 const auth = getAuth(app);
 const db   = getFirestore(app);
@@ -266,8 +266,17 @@ document.querySelectorAll('.sec-btn').forEach(btn => {
 
 // ── Auth guard ────────────────────────────────────────────────────────────────
 onAuthStateChanged(auth, async user => {
-  if (!user || user.email !== ADMIN_EMAIL) {
-    document.body.innerHTML = '<div style="padding:40px;color:#ef4444;font-size:16px">🔒 Admin access only. Please log in as admin.</div>';
+  if (!user) {
+    document.body.innerHTML = `
+      <div style="padding:40px;text-align:center">
+        <div style="color:#ef4444;font-size:16px;margin-bottom:20px">🔒 Admin access only.</div>
+        <button id="signInBtn" style="padding:12px 24px;border-radius:8px;border:none;background:#f59e0b;color:#000;font-weight:700;cursor:pointer;font-size:14px">Sign in with Google</button>
+      </div>`;
+    document.getElementById('signInBtn').onclick = () => signInWithPopup(auth, new GoogleAuthProvider());
+    return;
+  }
+  if (user.email !== ADMIN_EMAIL) {
+    document.body.innerHTML = `<div style="padding:40px;color:#ef4444;font-size:16px">🔒 Admin access only. Signed in as ${user.email} (not authorized).</div>`;
     return;
   }
   await loadConfig();
