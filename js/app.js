@@ -124,13 +124,21 @@ function showScreen(id) {
 //   Badges clear ONLY when user opens the drawer (marks as read)
 // ══════════════════════════════════════════════════════════════════════════
 
+let _notifPopupShown = false;  // prevents duplicate popups in same page session
 async function checkAndShowNotifications(uid) {
-  // Shows a one-time popup on login for newest unseen notification
+  // Shows a one-time popup for newest unseen notification.
+  // Guards: JS flag (per page load) + localStorage (per session) + Firestore (cross-device)
+  if (_notifPopupShown) return;
+
   try {
     const userRef  = doc(db, 'users', uid);
     const userSnap = await getDoc(userRef);
     const userData = userSnap.data() || {};
     const lastNotifSeenAt = userData.lastNotifSeenAt || 0;
+
+    // Also check localStorage for faster guard (survives page refresh)
+    const localSeen = parseInt(localStorage.getItem('lastNotifSeenAt') || '0', 10);
+    const effectiveSeenAt = Math.max(lastNotifSeenAt, localSeen);
 
     const snap = await getDocs(
       query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(5))
@@ -141,16 +149,21 @@ async function checkAndShowNotifications(uid) {
     snap.forEach(d => {
       const n  = d.data();
       const ts = n.createdAt?.toMillis ? n.createdAt.toMillis() : 0;
-      if (n.sent && ts > lastNotifSeenAt) {
+      if (n.sent && ts > effectiveSeenAt) {
         unseenCount++;
         if (!latestUnseen) latestUnseen = { title: n.title || '', body: n.body || '' };
       }
     });
 
     if (!latestUnseen) return;
+
+    // Mark as seen BEFORE showing popup — prevents race condition if auth fires twice
+    _notifPopupShown = true;
+    const nowMs = Date.now();
+    localStorage.setItem('lastNotifSeenAt', String(nowMs));
+    await setDoc(userRef, { lastNotifSeenAt: nowMs }, { merge: true }).catch(() => {});
+
     showNotifPopup(latestUnseen.title, latestUnseen.body, unseenCount);
-    // Mark popup as seen (don't clear badge — user must open drawer for that)
-    await setDoc(userRef, { lastNotifSeenAt: Date.now() }, { merge: true });
   } catch (err) { console.log('[Notif] popup error:', err.message); }
 }
 
