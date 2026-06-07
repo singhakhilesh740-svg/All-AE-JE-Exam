@@ -473,13 +473,13 @@ on('backToLoginPhone', () => showAuthStep('loginPhoneStep'));
 on('googleLoginBtn', async () => {
   authMsg('Opening Google sign-in…');
   try {
-    const user = await loginWithGoogle();
-    // user is undefined when redirect flow triggers (page navigates away)
-    if (user) authMsg('Login successful! 🎉', '#10b981');
-    // else: page is navigating to Google — no further action needed
+    await loginWithGoogle();
+    authMsg('Login successful! 🎉', '#10b981');
   } catch(e) {
-    const cancelled = e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request';
-    authMsg(cancelled ? 'Google sign-in cancelled.' : 'Google login failed: ' + (e.message || e.code), '#ef4444');
+    authMsg(e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request'
+          ? 'Google sign-in cancelled.'
+          : e.code === 'auth/popup-blocked' ? 'Popup blocked. Allow popups and retry.'
+          : 'Google login failed: ' + (e.message || e.code), '#ef4444');
   }
 });
 

@@ -6,9 +6,9 @@ import { getMessaging, isSupported } from "https://www.gstatic.com/firebasejs/10
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
-  // authDomain must match where your app is hosted so Firebase redirect returns correctly.
-  // allaejecivilexams.in must also be in Firebase Console → Auth → Authorized Domains.
-  authDomain: "allaejecivilexams.in",
+  // MUST be firebaseapp.com — that's where /__/auth/handler lives.
+  // GitHub Pages does NOT have this file, so never set this to your custom domain.
+  authDomain: "ae-exam-app.firebaseapp.com",
   projectId: "ae-exam-app",
   storageBucket: "ae-exam-app.firebasestorage.app",
   messagingSenderId: "101353507688",
@@ -25,8 +25,6 @@ googleProvider.addScope('profile');
 googleProvider.addScope('email');
 
 // Messaging — only initialise in browsers that support it.
-// Safari < 16.4 and some older Android WebViews don't support Push API.
-// isSupported() returns a Promise<boolean>, so we lazily initialise.
 let _messaging = null;
 async function getMessagingInstance() {
   if (_messaging) return _messaging;
