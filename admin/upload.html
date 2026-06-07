@@ -773,7 +773,8 @@ function validateAndBuild(raw, i, opts) {
     if (raw.q_num)     q.q_num     = raw.q_num;
   }
   if (raw.difficulty) q.difficulty = raw.difficulty;
-  if (raw.image) q.image = raw.image;     // optional image URL for diagram-based questions
+  if (raw.image) q.image = raw.image;              // optional image URL for diagram-based questions
+  if (raw.has_image) q.has_image = true;            // flag: question needs an image (set by Kimi AI)
   if (errs.length) return { ok:false, errs, raw };
   return { ok:true, q };
 }
@@ -849,6 +850,7 @@ async function runValidate(doUpload=false) {
           ${result.q.year ? `<span class="preview-tag tag-topic">📅 ${result.q.year}</span>` : ''}
           ${result.q.explanation ? `<span class="preview-tag tag-ans">💡 Has explanation</span>` : ''}
           ${result.q.image ? `<span class="preview-tag" style="background:rgba(96,165,250,.15);color:#93c5fd;border:1px solid rgba(96,165,250,.3)">📷 Has image</span>` : ''}
+          ${(result.q.has_image && !result.q.image) ? `<span class="preview-tag" style="background:rgba(251,146,60,.15);color:#fb923c;border:1px solid rgba(251,146,60,.4)">🖼️ Needs Image</span>` : ''}
         </div>`;
     }
     previewList.appendChild(card);

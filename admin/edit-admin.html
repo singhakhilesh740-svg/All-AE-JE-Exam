@@ -82,6 +82,7 @@
     .hidden{display:none!important}
     .empty{text-align:center;padding:30px;color:#475569;font-size:14px}
     .loading{text-align:center;padding:30px;color:#64748b}
+    @keyframes pulse-orange{0%,100%{opacity:1}50%{opacity:.5}}
 
     /* Two col on desktop */
     .two-col{display:flex;gap:8px;flex-wrap:wrap}
@@ -166,6 +167,14 @@
         <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Total</div></div>
         <div class="stat"><div class="stat-num" id="statShown">0</div><div class="stat-lbl">Shown</div></div>
         <div class="stat"><div class="stat-num" style="color:#10b981" id="statEdited">0</div><div class="stat-lbl">Edited</div></div>
+        <div class="stat" id="statNeedsImageWrap" style="cursor:pointer;border:1px solid rgba(251,146,60,.4);background:rgba(251,146,60,.07)" title="Click to show only questions needing image">
+          <div class="stat-num" style="color:#fb923c" id="statNeedsImage">0</div>
+          <div class="stat-lbl" style="color:#fb923c">🖼️ Need Img</div>
+        </div>
+      </div>
+      <div id="needsImageBanner" style="display:none;margin-top:10px;background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.4);border-radius:8px;padding:8px 12px;font-size:12px;color:#fb923c;align-items:center;justify-content:space-between">
+        <span>🖼️ Showing only questions that need an image</span>
+        <button id="clearNeedsImageFilter" style="background:none;border:1px solid #fb923c;color:#fb923c;border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer">✕ Clear filter</button>
       </div>
 
       <!-- Question List -->
@@ -400,6 +409,7 @@
 
   // Type filter (PYQ / Practice / All)
   let filterByType = '';
+  let filterNeedsImage = false;
   document.getElementById('editTypeFilter').addEventListener('click', e => {
     const btn = e.target.closest('[data-type]');
     if (!btn) return;
@@ -524,6 +534,7 @@
       if (subj && q.subject !== subj) return false;
       if (yr && String(q.year) !== yr) return false;
       if (filterByType && q.type !== filterByType) return false;
+      if (filterNeedsImage && !(q.has_image && !q.image)) return false;
       if (search) {
         const haystack = `${q.q_num} ${q.question} ${q.subject} ${q.topic || ''}`.toLowerCase();
         if (!haystack.includes(search)) return false;
@@ -550,9 +561,15 @@
           ${q.topic ? `<span class="q-tag tag-topic">${q.topic}</span>` : ''}
           ${q.year ? `<span class="q-tag tag-yr">${q.year}</span>` : ''}
           ${q.image ? `<span class="q-tag" style="background:rgba(96,165,250,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.3)">📷 Image</span>` : ''}
+          ${(q.has_image && !q.image) ? `<span class="q-tag" style="background:rgba(251,146,60,.15);color:#fb923c;border:1px solid rgba(251,146,60,.5);animation:pulse-orange 1.5s infinite">🖼️ Needs Image</span>` : ''}
         </div>
       </div>
     `).join('');
+
+    // Needs-image count
+    const needsCount = filtered.filter(q => q.has_image && !q.image).length;
+    $('statNeedsImage').textContent = needsCount;
+    $('statNeedsImageWrap').style.opacity = needsCount > 0 ? '1' : '0.4';
 
     // Click to edit
     document.querySelectorAll('.q-card').forEach(card => {
@@ -564,6 +581,27 @@
   $('searchInput').addEventListener('input', renderList);
   $('filterSubject').addEventListener('change', renderList);
   $('filterYear').addEventListener('change', renderList);
+
+  // Needs-image filter — click the orange stat to toggle
+  $('statNeedsImageWrap').addEventListener('click', () => {
+    filterNeedsImage = !filterNeedsImage;
+    const banner = $('needsImageBanner');
+    if (filterNeedsImage) {
+      banner.style.display = 'flex';
+      $('statNeedsImageWrap').style.outline = '2px solid #fb923c';
+    } else {
+      banner.style.display = 'none';
+      $('statNeedsImageWrap').style.outline = 'none';
+    }
+    renderList();
+  });
+
+  $('clearNeedsImageFilter').addEventListener('click', () => {
+    filterNeedsImage = false;
+    $('needsImageBanner').style.display = 'none';
+    $('statNeedsImageWrap').style.outline = 'none';
+    renderList();
+  });
 
   // Open Edit Modal
   function openEdit(docId) {
