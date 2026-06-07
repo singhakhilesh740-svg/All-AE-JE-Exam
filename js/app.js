@@ -471,15 +471,15 @@ on('loginResendOtpBtn', async () => {
 on('backToLoginPhone', () => showAuthStep('loginPhoneStep'));
 
 on('googleLoginBtn', async () => {
-  authMsg('Redirecting to Google sign-in…');
+  authMsg('Opening Google sign-in…');
   try {
-    await loginWithGoogle();
-    // On web: page redirects to Google — no code runs after this line.
-    // Result is handled in watchAuth() via getRedirectResult() on return.
-    // On native: loginWithGoogle() resolves immediately with the user.
-    authMsg('Login successful! 🎉', '#10b981');
+    const user = await loginWithGoogle();
+    // user is undefined when redirect flow triggers (page navigates away)
+    if (user) authMsg('Login successful! 🎉', '#10b981');
+    // else: page is navigating to Google — no further action needed
   } catch(e) {
-    authMsg('Google login failed: ' + (e.message || e.code), '#ef4444');
+    const cancelled = e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request';
+    authMsg(cancelled ? 'Google sign-in cancelled.' : 'Google login failed: ' + (e.message || e.code), '#ef4444');
   }
 });
 

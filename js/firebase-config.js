@@ -6,9 +6,9 @@ import { getMessaging, isSupported } from "https://www.gstatic.com/firebasejs/10
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
-  // IMPORTANT: keep authDomain as firebaseapp.com — this is the redirect handler URL
-  // Do NOT change to github.io — Firebase handles auth through its own domain
-  authDomain: "ae-exam-app.firebaseapp.com",
+  // authDomain must match where your app is hosted so Firebase redirect returns correctly.
+  // allaejecivilexams.in must also be in Firebase Console → Auth → Authorized Domains.
+  authDomain: "allaejecivilexams.in",
   projectId: "ae-exam-app",
   storageBucket: "ae-exam-app.firebasestorage.app",
   messagingSenderId: "101353507688",

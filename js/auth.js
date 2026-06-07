@@ -3,8 +3,10 @@
 // reCAPTCHA). We then bridge the credential into the Firebase JS SDK so that
 // Firestore (profiles) keeps working with the same signed-in user.
 //
-// Falls back to web methods automatically when running in a normal browser.
-// Web Google login uses signInWithRedirect (mobile-safe, no popup blocked issues).
+// Web Google login strategy:
+//   1. Try signInWithPopup (works on desktop + most mobile browsers)
+//   2. If popup is blocked → fall back to signInWithRedirect
+//   getRedirectResult is always checked on page load to catch redirect returns.
 
 import { auth, db, googleProvider, RecaptchaVerifier, signInWithPhoneNumber } from './firebase-config.js';
 import {
@@ -24,7 +26,7 @@ const FirebaseAuthentication =
 
 setPersistence(auth, browserLocalPersistence).catch(() => {});
 
-// ── Web reCAPTCHA (only used in browser fallback for OTP) ───────────────────
+// ── Web reCAPTCHA (only used in browser OTP fallback) ───────────────────────
 let recaptchaVerifier = null;
 let confirmationResult = null;
 let nativeVerificationId = null;
@@ -46,10 +48,9 @@ export function resetRecaptcha() {
 }
 
 // ── Auth state ─────────────────────────────────────────────────────────────
-// watchAuth must be called early so getRedirectResult fires before the user
-// sees a "not logged in" flash after returning from Google redirect.
 export function watchAuth(onLoggedIn, onLoggedOut) {
-  // Handle the result when Google redirects back to the page (web flow)
+  // Always check for a pending redirect result on page load.
+  // This fires when Google redirects back to the app after signInWithRedirect.
   getRedirectResult(auth).then(async result => {
     if (result && result.user) {
       await ensureProfileDoc(result.user, { email: result.user.email });
@@ -57,8 +58,9 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
       // onAuthStateChanged will fire automatically after this
     }
   }).catch(e => {
-    // auth/redirect-cancelled-by-user or auth/popup-closed-by-user — ignore silently
-    if (e.code !== 'auth/redirect-cancelled-by-user') {
+    // Ignore benign cancellation errors
+    const ignored = ['auth/redirect-cancelled-by-user', 'auth/user-cancelled'];
+    if (!ignored.includes(e.code)) {
       console.error('[Auth] getRedirectResult error:', e.code, e.message);
     }
   });
@@ -67,13 +69,13 @@ export function watchAuth(onLoggedIn, onLoggedOut) {
     if (user) {
       const profile = await getUserProfile(user.uid);
       onLoggedIn({
-        uid:     user.uid,
-        name:    profile?.name  || '',
-        email:   profile?.email || user.email || '',
-        mobile:  profile?.mobile || user.phoneNumber || '',
-        state:   profile?.state || '',
+        uid:          user.uid,
+        name:         profile?.name  || '',
+        email:        profile?.email || user.email || '',
+        mobile:       profile?.mobile || user.phoneNumber || '',
+        state:        profile?.state || '',
         preparingFor: profile?.preparingFor || '',
-        hasProfile: !!(profile && profile.name && profile.state && profile.preparingFor)
+        hasProfile:   !!(profile && profile.name && profile.state && profile.preparingFor)
       });
     } else {
       onLoggedOut();
@@ -101,7 +103,6 @@ export async function saveUserProfile({ uid, name, email, mobile, state, prepari
   await setDoc(doc(db, 'users', uid), data, { merge: true });
 }
 
-// Shared: ensure a profile doc exists right after first sign-in
 async function ensureProfileDoc(user, { email, mobile } = {}) {
   try {
     const existing = await getUserProfile(user.uid);
@@ -116,9 +117,9 @@ async function ensureProfileDoc(user, { email, mobile } = {}) {
         } catch (err) { console.error('[Auth] email lookup failed:', err); }
       }
       await setDoc(doc(db, 'users', user.uid), {
-        name:   carry?.name   || user.displayName || '',
-        email:  e,
-        mobile: carry?.mobile || mobile || user.phoneNumber || '',
+        name:      carry?.name   || user.displayName || '',
+        email:     e,
+        mobile:    carry?.mobile || mobile || user.phoneNumber || '',
         createdAt: carry?.createdAt || serverTimestamp(),
         updatedAt: serverTimestamp()
       }, { merge: true });
@@ -128,14 +129,13 @@ async function ensureProfileDoc(user, { email, mobile } = {}) {
   }
 }
 
-// ── Track login activity ────────────────────────────────────────────────
 async function trackLogin(user) {
   try {
     const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
     await setDoc(doc(db, 'users', user.uid), {
-      lastLogin: serverTimestamp(),
-      loginCount: increment(1),
-      lastDevice: isMobile ? 'mobile' : 'desktop',
+      lastLogin:   serverTimestamp(),
+      loginCount:  increment(1),
+      lastDevice:  isMobile ? 'mobile' : 'desktop',
       lastBrowser: navigator.userAgent.slice(0, 100),
     }, { merge: true });
   } catch (e) {
@@ -144,9 +144,8 @@ async function trackLogin(user) {
 }
 
 // ── Google login ─────────────────────────────────────────────────────────────
-// On web: uses signInWithRedirect (works on mobile Chrome, Safari, no popup blocking).
-// The result is handled in watchAuth() via getRedirectResult() when page reloads.
-// On native: uses the Capacitor plugin (no change).
+// Strategy: try popup first. If blocked by browser → fall back to redirect.
+// Popup works on desktop and most Android Chrome. Redirect is the safe fallback.
 export async function loginWithGoogle() {
   if (isNative) {
     if (!FirebaseAuthentication) throw new Error('Native auth plugin not available');
@@ -158,12 +157,24 @@ export async function loginWithGoogle() {
     await ensureProfileDoc(userCred.user, { email: result.user?.email });
     await trackLogin(userCred.user);
     return userCred.user;
-  } else {
-    // Use redirect (not popup) — works reliably on mobile browsers and GitHub Pages
-    await setPersistence(auth, browserLocalPersistence);
-    await signInWithRedirect(auth, googleProvider);
-    // Page will redirect to Google and come back — result handled in watchAuth()
-    // This function doesn't return a user directly; the redirect navigates away.
+  }
+
+  // Web: try popup, fall back to redirect if popup is blocked
+  await setPersistence(auth, browserLocalPersistence);
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    await ensureProfileDoc(result.user, { email: result.user.email });
+    await trackLogin(result.user);
+    return result.user;
+  } catch (e) {
+    // Popup blocked by browser → redirect flow
+    if (e.code === 'auth/popup-blocked') {
+      await signInWithRedirect(auth, googleProvider);
+      // Page navigates away; result handled by getRedirectResult in watchAuth()
+      return;
+    }
+    // User closed popup or cancelled — re-throw so UI can show a clean message
+    throw e;
   }
 }
 
