@@ -4,10 +4,12 @@
 // Firestore (profiles) keeps working with the same signed-in user.
 //
 // Falls back to web methods automatically when running in a normal browser.
+// Web Google login uses signInWithRedirect (mobile-safe, no popup blocked issues).
 
 import { auth, db, googleProvider, RecaptchaVerifier, signInWithPhoneNumber } from './firebase-config.js';
 import {
-  signInWithPopup, signInWithCredential, GoogleAuthProvider, PhoneAuthProvider,
+  signInWithPopup, signInWithRedirect, getRedirectResult,
+  signInWithCredential, GoogleAuthProvider, PhoneAuthProvider,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
@@ -15,22 +17,17 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Capacitor native plugin — accessed via the runtime GLOBAL (window.Capacitor)
-// instead of `import`. Bare-module imports like '@capacitor-firebase/...' do NOT
-// resolve in a plain WebView without a bundler, which crashes the whole script.
-// Capacitor injects these globals at runtime, so this works in the app and is
-// simply undefined (harmless) in a normal browser.
 const Capacitor = window.Capacitor || { isNativePlatform: () => false };
 const isNative = Capacitor.isNativePlatform && Capacitor.isNativePlatform();
-// The plugin is registered on window.Capacitor.Plugins.FirebaseAuthentication
 const FirebaseAuthentication =
   (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.FirebaseAuthentication) || null;
 
 setPersistence(auth, browserLocalPersistence).catch(() => {});
 
-// ── Web reCAPTCHA (only used in browser fallback) ───────────────────────────
+// ── Web reCAPTCHA (only used in browser fallback for OTP) ───────────────────
 let recaptchaVerifier = null;
-let confirmationResult = null;        // web OTP
-let nativeVerificationId = null;      // native OTP
+let confirmationResult = null;
+let nativeVerificationId = null;
 
 function setupRecaptcha() {
   if (recaptchaVerifier) { try { recaptchaVerifier.clear(); } catch(e){} recaptchaVerifier = null; }
@@ -49,9 +46,23 @@ export function resetRecaptcha() {
 }
 
 // ── Auth state ─────────────────────────────────────────────────────────────
-// On native, the JS SDK's onAuthStateChanged still fires because we bridge the
-// credential in via signInWithCredential. So one listener covers both.
+// watchAuth must be called early so getRedirectResult fires before the user
+// sees a "not logged in" flash after returning from Google redirect.
 export function watchAuth(onLoggedIn, onLoggedOut) {
+  // Handle the result when Google redirects back to the page (web flow)
+  getRedirectResult(auth).then(async result => {
+    if (result && result.user) {
+      await ensureProfileDoc(result.user, { email: result.user.email });
+      await trackLogin(result.user);
+      // onAuthStateChanged will fire automatically after this
+    }
+  }).catch(e => {
+    // auth/redirect-cancelled-by-user or auth/popup-closed-by-user — ignore silently
+    if (e.code !== 'auth/redirect-cancelled-by-user') {
+      console.error('[Auth] getRedirectResult error:', e.code, e.message);
+    }
+  });
+
   onAuthStateChanged(auth, async user => {
     if (user) {
       const profile = await getUserProfile(user.uid);
@@ -95,7 +106,6 @@ async function ensureProfileDoc(user, { email, mobile } = {}) {
   try {
     const existing = await getUserProfile(user.uid);
     if (!existing) {
-      // For Google, try to carry over an existing profile matched by email
       let carry = null;
       const e = (email || user.email || '').toLowerCase();
       if (e) {
@@ -134,10 +144,12 @@ async function trackLogin(user) {
 }
 
 // ── Google login ─────────────────────────────────────────────────────────────
+// On web: uses signInWithRedirect (works on mobile Chrome, Safari, no popup blocking).
+// The result is handled in watchAuth() via getRedirectResult() when page reloads.
+// On native: uses the Capacitor plugin (no change).
 export async function loginWithGoogle() {
   if (isNative) {
     if (!FirebaseAuthentication) throw new Error('Native auth plugin not available');
-    // Native Google sign-in → get idToken → bridge into JS SDK
     const result = await FirebaseAuthentication.signInWithGoogle();
     const idToken = result.credential?.idToken;
     if (!idToken) throw new Error('No Google idToken returned');
@@ -147,22 +159,19 @@ export async function loginWithGoogle() {
     await trackLogin(userCred.user);
     return userCred.user;
   } else {
-    // Web fallback — popup
+    // Use redirect (not popup) — works reliably on mobile browsers and GitHub Pages
     await setPersistence(auth, browserLocalPersistence);
-    const result = await signInWithPopup(auth, googleProvider);
-    await ensureProfileDoc(result.user, { email: result.user.email });
-    await trackLogin(result.user);
-    return result.user;
+    await signInWithRedirect(auth, googleProvider);
+    // Page will redirect to Google and come back — result handled in watchAuth()
+    // This function doesn't return a user directly; the redirect navigates away.
   }
 }
 
 // ── OTP: Send ────────────────────────────────────────────────────────────────
 export async function sendOTP(mobileNumber) {
   if (isNative) {
-    // Native phone auth — no reCAPTCHA needed. Returns a verificationId.
     return new Promise((resolve, reject) => {
       let settled = false;
-      // Listener fires when SMS auto-retrieved OR when code is ready to enter
       FirebaseAuthentication.addListener('phoneCodeSent', (event) => {
         nativeVerificationId = event.verificationId;
         if (!settled) { settled = true; resolve({ verificationId: event.verificationId }); }
@@ -171,7 +180,6 @@ export async function sendOTP(mobileNumber) {
         .catch(err => { if (!settled) { settled = true; reject(err); } });
     });
   } else {
-    // Web fallback — reCAPTCHA flow
     const verifier = setupRecaptcha();
     try {
       confirmationResult = await signInWithPhoneNumber(auth, mobileNumber, verifier);
@@ -187,7 +195,6 @@ export async function sendOTP(mobileNumber) {
 export async function verifyOTP(otp) {
   if (isNative) {
     if (!nativeVerificationId) throw new Error('No OTP sent. Please try again.');
-    // Build a phone credential and bridge into the JS SDK
     const credential = PhoneAuthProvider.credential(nativeVerificationId, otp);
     const userCred = await signInWithCredential(auth, credential);
     nativeVerificationId = null;
