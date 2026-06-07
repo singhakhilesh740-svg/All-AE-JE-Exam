@@ -195,7 +195,11 @@ async function loadInboxCounts(uid) {
 
     // ── Notification badge ─────────────────────────────────────────────
     // Compare each notification's createdAt vs lastNotifBadgeCleared
-    const lastNotifBadgeCleared = userData.lastNotifBadgeCleared || 0;
+    // Use max of Firestore and localStorage (localStorage is faster/more reliable)
+    const fsNotifCleared    = userData.lastNotifBadgeCleared || 0;
+    const localNotifCleared = parseInt(localStorage.getItem('lastNotifBadgeCleared') || '0', 10);
+    const lastNotifBadgeCleared = Math.max(fsNotifCleared, localNotifCleared);
+
     const notifSnap = await getDocs(
       query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(20))
     );
@@ -207,9 +211,13 @@ async function loadInboxCounts(uid) {
     });
 
     // ── Message badge ─────────────────────────────────────────────────
-    // Use arrays of seen IDs — reliable regardless of timestamps
-    const seenReportIds   = userData.seenReportIds   || [];
-    const seenFeedbackIds = userData.seenFeedbackIds  || [];
+    // Use arrays of seen IDs — merge Firestore + localStorage
+    const fsSeenRpt  = userData.seenReportIds   || [];
+    const fsSeenFb   = userData.seenFeedbackIds || [];
+    const localSeenRpt = JSON.parse(localStorage.getItem('seenReportIds') || '[]');
+    const localSeenFb  = JSON.parse(localStorage.getItem('seenFeedbackIds') || '[]');
+    const seenReportIds   = [...new Set([...fsSeenRpt, ...localSeenRpt])];
+    const seenFeedbackIds = [...new Set([...fsSeenFb, ...localSeenFb])];
 
     let msgCount = 0;
 
@@ -282,7 +290,9 @@ async function openNotifDrawer(uid) {
     });
 
     // Clear badge — store current time so future logins start fresh from here
-    await setDoc(doc(db, 'users', uid), { lastNotifBadgeCleared: Date.now() }, { merge: true });
+    const clearedAt = Date.now();
+    localStorage.setItem('lastNotifBadgeCleared', String(clearedAt));
+    await setDoc(doc(db, 'users', uid), { lastNotifBadgeCleared: clearedAt }, { merge: true });
     _setBadge('notifBadge', 0);
   } catch (err) {
     body.innerHTML = '<div class="inbox-empty">Failed to load.</div>';
@@ -358,6 +368,8 @@ async function openMsgDrawer(uid) {
     });
 
     // Mark all as seen — save IDs so badge won't reappear next login
+    localStorage.setItem('seenReportIds', JSON.stringify(newRptIds));
+    localStorage.setItem('seenFeedbackIds', JSON.stringify(newFbIds));
     await setDoc(doc(db, 'users', uid), {
       seenReportIds:   newRptIds,
       seenFeedbackIds: newFbIds,
