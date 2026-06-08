@@ -40,8 +40,16 @@
   "ancient": {
     "topics": [
       {
+        "id": "sources",
+        "name": "Sources of Ancient History"
+      },
+      {
         "id": "prehistoric",
-        "name": "Prehistoric and Stone Age"
+        "name": "Prehistoric India — Stone Ages"
+      },
+      {
+        "id": "chalcolithic",
+        "name": "Chalcolithic & Iron Age"
       },
       {
         "id": "ivc",
@@ -74,22 +82,639 @@
     ],
     "notes": [
       {
-        "topic_id": "prehistoric",
-        "topic_name": "Prehistoric India and Stone Age",
+        "topic_id": "sources",
+        "topic_name": "Sources of Ancient Indian History",
         "cards": [
           {
-            "heading": "Stone Age — Three Phases",
+            "heading": "Periodisation of Indian History",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Period",
+                "Timeframe",
+                "Key Feature"
+              ],
+              "rows": [
+                [
+                  "Ancient India",
+                  "Prehistoric → ~600 AD",
+                  "Rise of civilisations, Vedic age, Mauryas, Guptas"
+                ],
+                [
+                  "Medieval India",
+                  "~600 AD – 1707 AD",
+                  "Sultans, Mughals, Bhakti movement"
+                ],
+                [
+                  "Modern India",
+                  "1707 AD – 1947 AD",
+                  "British rule, Freedom struggle, Independence"
+                ]
+              ]
+            },
+            "alert": "⭐ Term 'Ancient India' coined by **James Mill** in 'History of British India' (1817). He divided India into Hindu/Muslim/British periods — now rejected as colonial/communal framing. NCERT uses Ancient → Medieval → Modern."
+          },
+          {
+            "heading": "Classification of Sources",
+            "color": "green",
+            "table": {
+              "headers": [
+                "Type",
+                "Category",
+                "Examples"
+              ],
+              "rows": [
+                [
+                  "Archaeological",
+                  "Inscriptions (Epigraphy)",
+                  "Ashoka's edicts, Allahabad Pillar, Aihole Inscription"
+                ],
+                [
+                  "Archaeological",
+                  "Coins (Numismatics)",
+                  "Punch-marked coins, Indo-Greek coins, Gupta Dinars"
+                ],
+                [
+                  "Archaeological",
+                  "Monuments & Excavations",
+                  "Harappan sites, Bhimbetka, Megalithic burials"
+                ],
+                [
+                  "Archaeological",
+                  "Seals & Pottery",
+                  "Harappan Pashupati seal, PGW, NBPW pottery"
+                ],
+                [
+                  "Literary",
+                  "Religious — Brahmanical",
+                  "Vedas, Upanishads, Puranas, Epics"
+                ],
+                [
+                  "Literary",
+                  "Religious — Buddhist",
+                  "Tripitaka, Jataka Tales (547)"
+                ],
+                [
+                  "Literary",
+                  "Religious — Jain",
+                  "Agamas / Angas (12 texts)"
+                ],
+                [
+                  "Literary",
+                  "Secular",
+                  "Arthashastra, Indica, Rajatarangini, Mudrarakshasa"
+                ]
+              ]
+            },
+            "alert": "⭐ Inscriptions = most reliable source (first-hand, contemporary). Oldest deciphered inscription = Ashoka's edicts (3rd c. BC) in **Brahmi** and **Kharosthi** scripts. Brahmi deciphered by **James Prinsep** (1837)."
+          },
+          {
+            "heading": "Key Inscriptions — Exam Favourites",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Inscription",
+                "King / Author",
+                "Significance"
+              ],
+              "rows": [
+                [
+                  "Allahabad Prasasti (Prayag Pillar)",
+                  "Harishena (court poet)",
+                  "Info on Samudragupta's conquests"
+                ],
+                [
+                  "Aihole Inscription (634 AD)",
+                  "Ravikirti",
+                  "Info on Chalukya king Pulakesi II"
+                ],
+                [
+                  "Hathigumpha Inscription",
+                  "King Kharavela",
+                  "Kalinga kingdom history"
+                ],
+                [
+                  "Nasik Inscription",
+                  "Gautamiputra Satakarni",
+                  "Satavahana dynasty info"
+                ],
+                [
+                  "Junagadh Rock Inscription",
+                  "Rudradaman I",
+                  "Earliest inscription in chaste Sanskrit"
+                ],
+                [
+                  "Ashoka's Edicts",
+                  "Ashoka (Maurya)",
+                  "Buddhist Dhamma; 13th Major Rock Edict — Kalinga war"
+                ]
+              ]
+            },
+            "alert": "⭐ **Kharosthi script** = written Right to Left; used in Northwest India. Study of inscriptions = **Epigraphy**. Study of coins = **Numismatics**. Founder of ASI = **Alexander Cunningham** (1861)."
+          },
+          {
+            "heading": "Coins & Dating Methods",
+            "color": "purple",
+            "points": [
+              "Oldest Indian coins: **Punch-marked coins** (6th c. BC) — silver; symbols only, no king name",
+              "First coins with king's name & portrait: **Indo-Greek rulers** (2nd c. BC)",
+              "Gold coins on large scale: **Kushana rulers** (esp. Kanishka)",
+              "Best quality gold coins (Dinars): **Gupta period** — largest variety",
+              "Coins reveal: chronology, economy, religion, titles of rulers"
+            ],
+            "table": {
+              "headers": [
+                "Dating Method",
+                "Developed By / Year",
+                "Used For"
+              ],
+              "rows": [
+                [
+                  "Carbon-14 (Radiocarbon)",
+                  "W.F. Libby, 1949",
+                  "Organic materials up to ~50,000 years"
+                ],
+                [
+                  "Thermoluminescence (TL)",
+                  "—",
+                  "Pottery and baked clay"
+                ],
+                [
+                  "Dendrochronology (Tree rings)",
+                  "—",
+                  "Annual growth rings of trees"
+                ],
+                [
+                  "Potassium-Argon",
+                  "—",
+                  "Very old geological materials (millions of years)"
+                ]
+              ]
+            },
+            "alert": "⭐ **C-14 dating** is most asked dating method in exams. Developed by W.F. Libby (Nobel Prize 1960)."
+          },
+          {
+            "heading": "Important Literary Sources",
+            "color": "teal",
+            "table": {
+              "headers": [
+                "Text",
+                "Author / Language",
+                "Historical Significance"
+              ],
+              "rows": [
+                [
+                  "Arthashastra",
+                  "Kautilya/Chanakya — Sanskrit",
+                  "Mauryan administration, economy, polity; 4th c. BC"
+                ],
+                [
+                  "Indica",
+                  "Megasthenes (Greek)",
+                  "Greek ambassador to Chandragupta Maurya; society & administration"
+                ],
+                [
+                  "Rajatarangini",
+                  "Kalhana — Sanskrit, 12th c. AD",
+                  "**Oldest historical chronicle** in India; History of Kashmir"
+                ],
+                [
+                  "Mudrarakshasa",
+                  "Vishakhadatta — Sanskrit drama",
+                  "Chandragupta Maurya's rise to power"
+                ],
+                [
+                  "Tripitaka",
+                  "Pali language — Buddhist",
+                  "**Most important Buddhist text**; Vinaya+Sutta+Abhidhamma Pitaka"
+                ],
+                [
+                  "Jataka Tales (547)",
+                  "Pali — Buddhist",
+                  "Buddha's previous lives; Mauryan-era social & economic life"
+                ],
+                [
+                  "Mahabharata",
+                  "Vyasa — Sanskrit epic",
+                  "Largest epic (~1 lakh shloka); social conditions & genealogies"
+                ],
+                [
+                  "Puranas (18)",
+                  "Various — Sanskrit",
+                  "Genealogies of kings; Gupta period history"
+                ]
+              ]
+            },
+            "alert": "⭐ Foreign travellers: **Fahien** (4th c. AD) → Chandragupta II | **Hsuan Tsang** (7th c. AD) → Harsha | **Al-Biruni** (11th c.) → wrote Kitab-ul-Hind | **Ibn Battuta** (14th c.) → Muhammad bin Tughlaq. Oldest chronicle = Rajatarangini."
+          }
+        ]
+      },
+      {
+        "topic_id": "prehistoric",
+        "topic_name": "Prehistoric India — Stone Ages",
+        "cards": [
+          {
+            "heading": "Overview — Prehistoric Ages at a Glance",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Age",
+                "Period (Approx.)",
+                "Tools",
+                "Key Feature"
+              ],
+              "rows": [
+                [
+                  "Palaeolithic (Old Stone)",
+                  "5,00,000–10,000 BC",
+                  "Unpolished stone (hand axe, chopper)",
+                  "Hunter-gatherers; no farming or pottery"
+                ],
+                [
+                  "Mesolithic (Middle Stone)",
+                  "10,000–6000 BC",
+                  "Microliths (tiny geometric blades)",
+                  "Transitional; semi-nomadic; dog domestication"
+                ],
+                [
+                  "Neolithic (New Stone)",
+                  "6000–1000 BC",
+                  "Polished stone (axe, celt)",
+                  "**Farming begins**; permanent settlements; pottery"
+                ],
+                [
+                  "Chalcolithic (Copper-Stone)",
+                  "3000–700 BC",
+                  "Copper + stone",
+                  "First metal use; planned settlements"
+                ],
+                [
+                  "Iron Age",
+                  "1500 BC onwards",
+                  "Iron tools",
+                  "Megaliths; Vedic culture; forest clearing"
+                ]
+              ]
+            },
+            "alert": "⭐ India has NO distinct Bronze Age (unlike Egypt/Mesopotamia). India went Stone Age → Chalcolithic. The Harappan Civilisation is the main bronze-using culture. **Father of Indian Prehistory** = Robert Bruce Foote."
+          },
+          {
+            "heading": "Palaeolithic Age — Old Stone Age (5,00,000–10,000 BC)",
+            "color": "orange",
+            "table": {
+              "headers": [
+                "Phase",
+                "Period",
+                "Tools",
+                "Key Sites"
+              ],
+              "rows": [
+                [
+                  "Lower Palaeolithic",
+                  "5,00,000–1,00,000 BC",
+                  "Hand axe, Chopper, Cleaver (Acheulian)",
+                  "Attirampakkam (TN), Pallavaram (TN), Soan Valley, Chirki-Pravara"
+                ],
+                [
+                  "Middle Palaeolithic",
+                  "1,00,000–40,000 BC",
+                  "Flakes, Scrapers, Borers (Levallois)",
+                  "Narmada valley, Bhimbetka, Nevasa (MH)"
+                ],
+                [
+                  "Upper Palaeolithic",
+                  "40,000–10,000 BC",
+                  "Blades, Burins (bone + antler tools)",
+                  "Bhimbetka (MP), Patne (MH), Renigunta (AP)"
+                ]
+              ]
+            },
+            "alert": "⭐ **Bhimbetka (MP)** = UNESCO World Heritage Site; rock shelters with cave paintings; discovered by **V.S. Wakankar** (1957). **Attirampakkam (TN)** = oldest Lower Palaeolithic site in South India (~1.5 million years). **Pallavaram (TN)** = first Palaeolithic site discovered in India (1863) by **Robert Bruce Foote**. Narmada Man skull = oldest human fossil in India (possibly Homo erectus)."
+          },
+          {
+            "heading": "Mesolithic Age — Middle Stone Age (10,000–6000 BC)",
+            "color": "green",
+            "points": [
+              "Characteristic tool: **Microliths** — tiny geometric blades (crescents, triangles, trapeze); made of chert, chalcedony or jasper",
+              "Semi-nomadic lifestyle; still largely hunter-gatherers; fishing evidence",
+              "**First evidence of dog domestication** in India — Adamgarh (MP) and Bagor (Rajasthan)",
+              "**First human burials** in India — Sarai Nahar Rai and Mahadaha (both in UP)",
+              "No pottery or agriculture yet in Mesolithic India",
+              "Rock paintings continued and became more artistic"
+            ],
+            "table": {
+              "headers": [
+                "Site",
+                "State",
+                "Key Discovery"
+              ],
+              "rows": [
+                [
+                  "**Bagor**",
+                  "Rajasthan (Bhilwara, Kothari river)",
+                  "**Largest Mesolithic site** in India; first animal domestication evidence"
+                ],
+                [
+                  "Adamgarh",
+                  "MP (Hoshangabad)",
+                  "Evidence of dog & cattle domestication"
+                ],
+                [
+                  "**Langhnaj**",
+                  "Gujarat (near Ahmedabad)",
+                  "Microliths + burials + animal bones; excavated by H.D. Sankalia"
+                ],
+                [
+                  "Sarai Nahar Rai",
+                  "Uttar Pradesh (Allahabad)",
+                  "Human skeletons; **first burials in India**"
+                ],
+                [
+                  "Mahadaha",
+                  "Uttar Pradesh",
+                  "Burials with ornaments; fish-hunting evidence"
+                ],
+                [
+                  "Lekhahia",
+                  "Uttar Pradesh (Mirzapur)",
+                  "Mesolithic cave paintings"
+                ]
+              ]
+            },
+            "alert": "⭐ **Langhnaj (Gujarat)** = important for GPSC; near Ahmedabad; excavated by H.D. Sankalia. Bagor = largest Mesolithic site."
+          },
+          {
+            "heading": "Neolithic Age — New Stone Age (6000–1000 BC)",
+            "color": "purple",
+            "points": [
+              "Term '**Neolithic Revolution**' coined by **V. Gordon Childe** — shift from food gathering to food production",
+              "Tools: **Ground and polished stone axes, celts, adzes**",
+              "Agriculture began — wheat & barley (NW India); **rice** (eastern India — Koldihwa, Chirand)",
+              "**Pottery appeared** — handmade first, later wheel-turned",
+              "Animal domestication widespread — cattle, sheep, goat, pig",
+              "Permanent settlements — pit dwellings, then mud-brick houses",
+              "Weaving & spinning of cloth started"
+            ],
+            "table": {
+              "headers": [
+                "Site",
+                "State",
+                "Significance"
+              ],
+              "rows": [
+                [
+                  "**Mehrgarh**",
+                  "Baluchistan (now Pakistan)",
+                  "**Oldest Neolithic site** in Indian subcontinent (~7000 BC); earliest farming & herding; excavated by Jean-François Jarrige"
+                ],
+                [
+                  "**Burzahom**",
+                  "Kashmir (near Srinagar)",
+                  "Famous for **pit dwellings**; pets buried with masters — unique Indian practice; ~3000 BC"
+                ],
+                [
+                  "Gufkral",
+                  "Kashmir",
+                  "Neolithic-Chalcolithic site; pottery & tools"
+                ],
+                [
+                  "**Koldihwa**",
+                  "UP (Allahabad region)",
+                  "**Earliest rice evidence in world** (~6000 BC)"
+                ],
+                [
+                  "**Chirand**",
+                  "Bihar (on Ganga)",
+                  "**Easternmost Neolithic site**; rice cultivation evidence"
+                ],
+                [
+                  "Piklihal & Brahmagiri",
+                  "Karnataka",
+                  "South Indian Neolithic; **ash mound** culture (cattle dung burns); cattle-herding communities"
+                ],
+                [
+                  "Hallur",
+                  "Karnataka",
+                  "Transition to Chalcolithic; **horse bones** found (earliest in India)"
+                ],
+                [
+                  "Mahagara",
+                  "UP (Allahabad)",
+                  "Cattle-keeping evidence; rice"
+                ]
+              ]
+            },
+            "alert": "⭐ PAWB = key Neolithic firsts: **P**ottery / **A**griculture / **W**eaving / **B**urial rituals. Mehrgarh (7000 BC) = oldest farming. Koldihwa (UP) = oldest rice. Burzahom = buried pets with owners. Ash mounds in Karnataka/AP = characteristic of South Indian Neolithic."
+          }
+        ]
+      },
+      {
+        "topic_id": "chalcolithic",
+        "topic_name": "Chalcolithic & Iron Age",
+        "cards": [
+          {
+            "heading": "Chalcolithic Age — Copper-Stone Age (3000–700 BC)",
             "color": "orange",
             "points": [
-              "Palaeolithic (Old Stone Age) 5,00,000–10,000 BCE: Crude unpolished tools — hand axe, chopper, cleaver, scraper; hunter-gatherer; no pottery or agriculture",
-              "Key Palaeolithic sites: Bhimbetka (MP) — rock shelters with paintings; Hunsgi-Baichbal (Karnataka); Attirampakkam (Tamil Nadu) — 1.5 million year old tools; Belan Valley (UP)",
-              "Mesolithic 10,000–6000 BCE: Microliths (tiny blades); bow and arrow invented; semi-nomadic; animal domestication started; rock paintings at Bhimbetka",
-              "Neolithic 6000–1000 BCE: Polished stone tools; agriculture + settled life; pottery; wheel invented; pit dwellings; burial of dead",
-              "Key Neolithic sites: Mehrgarh (Balochistan) — earliest farming in S. Asia 7000 BCE; Burzahom (Kashmir) — pit dwellings + dog buried with master (unique); Piklihal, Brahmagiri (Karnataka)",
-              "Chalcolithic (Copper-Stone) 2000–700 BCE: First metal use alongside stone; painted pottery; Jorwe (Maharashtra), Ahar/Banas (Rajasthan), Malwa, Kayatha",
-              "Iron Age 1500–600 BCE: Iron tools transformed agriculture and warfare; Painted Grey Ware (PGW) = later Vedic; Black and Red Ware (BRW) = pre-Mauryan"
+              "First use of **metal (copper)** alongside stone tools",
+              "Characteristic pottery: **Black and Red Ware (BRW)** and **Ochre Coloured Pottery (OCP)**",
+              "Communities in river valleys — Chambal, Tapti, Godavari, Krishna basins",
+              "Agricultural economy; grew wheat, rice, lentils, millets",
+              "**Mother Goddess worship** prevalent",
+              "Did **NOT** know the use of iron",
+              "Child burial below house floors; North-South orientation of burials"
             ],
-            "alert": "⭐ Bhimbetka (MP) = UNESCO WHS; earliest human occupation to Medieval. Mehrgarh = earliest farming in subcontinent (7000 BCE). Burzahom = only Indian site where dog was buried with its master."
+            "table": {
+              "headers": [
+                "Culture",
+                "Region",
+                "Period",
+                "Key Feature"
+              ],
+              "rows": [
+                [
+                  "**Ahar (Banas Culture)**",
+                  "Rajasthan (Banas valley)",
+                  "2600–1500 BC",
+                  "Black-and-red pottery; copper tools; rice cultivation; excavated by H.D. Sankalia"
+                ],
+                [
+                  "Kayatha Culture",
+                  "MP (near Ujjain)",
+                  "2200–1800 BC",
+                  "Copper ornaments; pre-dates Malwa culture"
+                ],
+                [
+                  "**Malwa Culture**",
+                  "MP (Navdatoli, Eran)",
+                  "1700–1200 BC",
+                  "**Finest Chalcolithic pottery** — Malwa pottery; wheat & lentil cultivation"
+                ],
+                [
+                  "**Jorwe Culture**",
+                  "Maharashtra (Inamgaon, Daimabad)",
+                  "1400–700 BC",
+                  "**Largest Chalcolithic culture**; planned settlement at Inamgaon; copper chariot at Daimabad"
+                ],
+                [
+                  "Savalda / Daimabad",
+                  "Maharashtra",
+                  "2000–1500 BC",
+                  "**Daimabad bronzes** — bull, elephant, rhinoceros, chariot rider figures"
+                ]
+              ]
+            },
+            "alert": "⭐ **Daimabad bronzes** (bull, elephant, rhino, chariot) = most asked Chalcolithic find. **Inamgaon** = most excavated Chalcolithic site. **Malwa pottery** = finest of all Chalcolithic pottery. Jorwe = most widespread Chalcolithic culture."
+          },
+          {
+            "heading": "Iron Age & Pottery Cultures (1500 BC onwards)",
+            "color": "teal",
+            "points": [
+              "First use of iron tools enabled **forest clearing → expansion into Gangetic plains**",
+              "Associated with **Painted Grey Ware (PGW)** — Later Vedic / Aryan culture",
+              "**Northern Black Polished Ware (NBPW)** — Mahajanapada & Mauryan era"
+            ],
+            "table": {
+              "headers": [
+                "Pottery",
+                "Period",
+                "Region",
+                "Association"
+              ],
+              "rows": [
+                [
+                  "**OCP** (Ochre Coloured Pottery)",
+                  "2000–1500 BC",
+                  "Upper Gangetic plains (Doab)",
+                  "Chalcolithic transition; possibly late Harappan"
+                ],
+                [
+                  "**BRW** (Black and Red Ware)",
+                  "1400–800 BC",
+                  "Rajasthan, Deccan, S. India",
+                  "Chalcolithic + early Iron Age; widespread"
+                ],
+                [
+                  "**PGW** (Painted Grey Ware)",
+                  "1200–600 BC",
+                  "NW India, Gangetic plains",
+                  "Later Vedic Aryans; Hastinapur, Atranjikhera sites"
+                ],
+                [
+                  "**NBPW** (Northern Black Polished Ware)",
+                  "700–200 BC",
+                  "Throughout N. India",
+                  "Mahajanapadas, Mauryan period; extremely lustrous/shiny"
+                ]
+              ]
+            },
+            "alert": "⭐ Pottery sequence mnemonic: **OCP → BRW → PGW → NBPW** ('Old Black Pots Never Break Properly'). NBPW = hallmark of Mauryan urban culture. PGW sites = 700+ found; Hastinapur (UP) = most important."
+          },
+          {
+            "heading": "Megaliths — South India (1500 BC – 500 AD)",
+            "color": "purple",
+            "points": [
+              "**Megaliths** = large stone structures used for burial — mainly in South India & Northeast",
+              "Types: **Dolmens** (table-like), **Cist burials** (stone box), **Menhirs** (upright stones), **Cairn circles**, **Stone circles**",
+              "Found abundantly in: Andhra Pradesh, Tamil Nadu, Karnataka, Kerala, Maharashtra",
+              "Iron tools and **Black and Red Ware** pottery found inside megaliths",
+              "Megalithic culture of South India had **no connection** with Aryan culture",
+              "**Brahmagiri (Karnataka)** — overlapping Neolithic & Megalithic layers"
+            ],
+            "alert": "⭐ Iron helped clear Gangetic forests → new agricultural land → rise of Mahajanapadas. Megalithic culture is associated with South India's non-Aryan Iron Age communities."
+          },
+          {
+            "heading": "🎯 Chapter 1 — Rapid Exam Recap",
+            "color": "blue",
+            "table": {
+              "headers": [
+                "Question Type",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "Father of Indian Prehistory",
+                  "**Robert Bruce Foote**"
+                ],
+                [
+                  "First Palaeolithic site in India (1863)",
+                  "Pallavaram, Tamil Nadu"
+                ],
+                [
+                  "Founder of ASI (1861)",
+                  "**Alexander Cunningham**"
+                ],
+                [
+                  "Brahmi deciphered by (1837)",
+                  "**James Prinsep**"
+                ],
+                [
+                  "Largest Mesolithic site",
+                  "**Bagor, Rajasthan**"
+                ],
+                [
+                  "Oldest Neolithic site in subcontinent",
+                  "**Mehrgarh** (~7000 BC)"
+                ],
+                [
+                  "Earliest rice evidence in world",
+                  "**Koldihwa, UP** (~6000 BC)"
+                ],
+                [
+                  "'Neolithic Revolution' coined by",
+                  "**V. Gordon Childe**"
+                ],
+                [
+                  "Finest Chalcolithic pottery",
+                  "**Malwa pottery** (MP)"
+                ],
+                [
+                  "Daimabad bronzes belong to",
+                  "**Jorwe culture**, Maharashtra"
+                ],
+                [
+                  "UNESCO site for cave paintings",
+                  "**Bhimbetka, MP** (V.S. Wakankar)"
+                ],
+                [
+                  "Oldest human fossil in India",
+                  "**Narmada Man** (Homo erectus)"
+                ],
+                [
+                  "C-14 dating developed by",
+                  "**W.F. Libby** (1949)"
+                ],
+                [
+                  "Kharosthi script direction",
+                  "Right to left"
+                ],
+                [
+                  "Oldest Indian coins",
+                  "**Punch-marked coins** (6th c. BC)"
+                ],
+                [
+                  "First coins with king's name",
+                  "**Indo-Greek rulers**"
+                ],
+                [
+                  "Best gold coins of ancient India",
+                  "**Gupta Dinars**"
+                ],
+                [
+                  "Oldest historical chronicle of India",
+                  "**Rajatarangini** by Kalhana — History of Kashmir"
+                ],
+                [
+                  "NBPW pottery period",
+                  "700–200 BC (Mahajanapada–Maurya)"
+                ],
+                [
+                  "Burzahom unique practice",
+                  "Buried pets (dogs) with their masters"
+                ]
+              ]
+            },
+            "alert": "⭐ Confused pairs: Harappa → Daya Ram Sahni (1921) | Mohenjo-Daro → R.D. Banerji (1922). Burzahom = Neolithic (Kashmir) vs Bagor = Mesolithic (Rajasthan). Mehrgarh = oldest farming vs Inamgaon = planned Chalcolithic town. PGW = Later Vedic Aryans vs NBPW = Mauryan urban culture."
           }
         ]
       },
