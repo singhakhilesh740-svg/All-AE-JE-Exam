@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Non-Tech Admin Hub</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+    /* Top sub-nav */
+    .nt-topbar{background:#1e293b;border-bottom:1px solid #334155;padding:0 12px;display:flex;align-items:center;gap:8px;height:48px;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .nt-topbar::-webkit-scrollbar{height:0}
+    .nt-logo{font-weight:800;font-size:13px;color:#a78bfa;white-space:nowrap;margin-right:8px}
+    .nt-tab-btn{padding:7px 14px;border-radius:8px;border:2px solid transparent;background:transparent;color:#64748b;font-weight:600;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
+    .nt-tab-btn:hover{color:#94a3b8;background:#0f172a}
+    .nt-tab-btn.active{color:#a78bfa;border-color:#a78bfa;background:rgba(139,92,246,.08)}
+
+    /* Content frame */
+    .nt-content{flex:1;overflow:hidden;position:relative}
+    .nt-content iframe{width:100%;height:100%;border:none;background:#0f172a}
+    .nt-content .frame-wrap{position:absolute;inset:0;display:none}
+    .nt-content .frame-wrap.active{display:block}
+
+    /* Login fallback */
+    .login-overlay{position:fixed;inset:0;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;padding:20px}
+    .login-overlay.hidden{display:none}
+    .login-overlay h2{color:#a78bfa;margin-bottom:8px}
+    .login-overlay p{color:#64748b;margin-bottom:20px;text-align:center;font-size:13px}
+    .login-overlay button{padding:12px 24px;border-radius:8px;border:none;background:#a78bfa;color:#0f172a;font-weight:700;cursor:pointer;font-size:14px}
+
+    @media(max-width:640px){
+      .nt-logo{font-size:11px;margin-right:4px}
+      .nt-tab-btn{padding:6px 8px;font-size:10px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login fallback -->
+  <div class="login-overlay" id="loginOverlay">
+    <h2>🔒 Admin Sign-in Required</h2>
+    <p>Please sign in with the admin Google account to manage Non-Tech section.</p>
+    <button id="signInBtn">Sign in with Google</button>
+    <p id="signInError" style="color:#ef4444;margin-top:14px;display:none"></p>
+  </div>
+
+  <!-- Sub-nav (only visible when authenticated) -->
+  <nav class="nt-topbar" id="ntTopbar" style="display:none">
+    <div class="nt-logo">📚 NT Admin</div>
+    <button class="nt-tab-btn active" data-tab="subsections">⚙️ Subsections</button>
+    <button class="nt-tab-btn" data-tab="exams">🏛️ Exams</button>
+    <button class="nt-tab-btn" data-tab="upload">📤 Upload Q's</button>
+    <button class="nt-tab-btn" data-tab="edit">✏️ Edit Q's</button>
+    <button class="nt-tab-btn" data-tab="notes-edit">📝 Notes Editor</button>
+    <button class="nt-tab-btn" data-tab="notes-upload">⬆️ Notes Upload</button>
+  </nav>
+
+  <!-- Content frames -->
+  <div class="nt-content" id="ntContent" style="display:none">
+    <div class="frame-wrap active" id="frame-subsections">
+      <iframe src="nt-subsections-admin.html" loading="eager"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-exams">
+      <iframe src="nt-exams-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-upload">
+      <iframe src="nt-upload-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-edit">
+      <iframe src="nt-edit-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-notes-edit">
+      <iframe src="nt-notes-edit-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-notes-upload">
+      <iframe src="nt-notes-upload-admin.html" loading="lazy"></iframe>
+    </div>
+  </div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+const ADMIN_EMAIL = '112ce0489@gmail.com';
+const app = initializeApp({
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+});
+const auth = getAuth(app);
+
+document.getElementById('signInBtn').onclick = async () => {
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+  } catch(e) {
+    const err = document.getElementById('signInError');
+    err.textContent = 'Sign-in failed: ' + e.message;
+    err.style.display = 'block';
+  }
+};
+
+onAuthStateChanged(auth, user => {
+  if (user && user.email === ADMIN_EMAIL) {
+    document.getElementById('loginOverlay').classList.add('hidden');
+    document.getElementById('ntTopbar').style.display = 'flex';
+    document.getElementById('ntContent').style.display = 'block';
+  } else if (user) {
+    const err = document.getElementById('signInError');
+    err.textContent = 'Signed in as ' + user.email + ' (not admin). Sign out and use admin email.';
+    err.style.display = 'block';
+  }
+});
+
+// Tab switching
+document.querySelectorAll('.nt-tab-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.nt-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.frame-wrap').forEach(f => f.classList.remove('active'));
+    document.getElementById('frame-' + btn.dataset.tab).classList.add('active');
+  };
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPPCB AEE Unit 5 - Environmental Legislation & Policy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #212121; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #1a237e; text-align: center; margin-bottom: 10px; font-size: 28px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
+        h2 { color: white; background: #283593; padding: 12px; margin: 30px 0 15px 0; border-left: 4px solid #1a237e; }
+        h3 { color: #1a237e; margin: 20px 0 10px 0; font-size: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; }
+        .content { line-height: 1.8; margin-bottom: 15px; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+        th { background: #283593; color: white; padding: 10px; text-align: left; font-weight: 600; }
+        td { border: 1px solid #ddd; padding: 10px; font-size: 14px; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .highlight { background: #fff3cd; border-left: 4px solid #ff9800; padding: 10px; margin: 10px 0; font-size: 14px; }
+        .standard { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px; margin: 10px 0; font-size: 14px; font-weight: 500; }
+        .formula { background: #f3e5f5; border-left: 4px solid #9c27b0; padding: 10px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 13px; }
+        .tip { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px; margin: 10px 0; font-size: 13px; }
+        .gate-add { background: #ede7f6; border-left: 4px solid #673ab7; padding: 10px; margin: 10px 0; font-size: 14px; }
+        ul, ol { margin-left: 20px; margin-bottom: 10px; }
+        li { margin-bottom: 5px; }
+        .section-intro { background: #f0f2f5; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd; color: #666; font-size: 12px; }
+        .key-point { color: #c62828; font-weight: 600; }
+        .exam-strategy { background: #fff8e1; border: 2px solid #fbc02d; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        @media print { body { background: white; } .container { box-shadow: none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>UNIT 5: ENVIRONMENTAL LEGISLATION &amp; POLICY</h1>
+        <div class="subtitle">UPPCB AEE 2026 | 8-10 Questions | 32-40 Marks | Comprehensive Revision Notes (+ GATE ES Additions)</div>
+
+        <h2>SECTION 1: CONSTITUTIONAL PROVISIONS</h2>
+        <div class="section-intro">
+            Indian Constitution articles &amp; schedules relevant to environment. Foundation for all environmental laws — guaranteed 1–2 Qs.
+        </div>
+
+        <h3>1.1 KEY ARTICLES</h3>
+        <table>
+            <tr><th>Article</th><th>Provision</th><th>Type</th></tr>
+            <tr><td><strong>Article 21</strong></td><td>Right to life — interpreted by SC to include <span class="key-point">right to clean &amp; healthy environment</span></td><td>Fundamental Right</td></tr>
+            <tr><td><strong>Article 32</strong></td><td>Right to constitutional remedies (Writ jurisdiction in SC)</td><td>Fundamental Right</td></tr>
+            <tr><td><strong>Article 48A</strong></td><td>"State shall endeavour to protect &amp; improve environment and to safeguard forests and wildlife"</td><td>DPSP (added by 42nd Amendment, 1976)</td></tr>
+            <tr><td><strong>Article 51A(g)</strong></td><td>"Fundamental duty of every citizen to protect &amp; improve natural environment, forests, lakes, rivers, wildlife, and have compassion for living creatures"</td><td>Fundamental Duty (42nd Amendment, 1976)</td></tr>
+            <tr><td><strong>Article 226</strong></td><td>Writ jurisdiction in High Courts</td><td>Constitutional remedy</td></tr>
+            <tr><td><strong>Article 253</strong></td><td>Parliament power to make law for implementing international treaties</td><td>Legislative power (basis for E(P) Act 1986)</td></tr>
+        </table>
+        <div class="highlight">
+            <strong>Landmark interpretation:</strong> SC in <em>Subhash Kumar v State of Bihar</em> (1991) held that right to live includes right to enjoyment of pollution-free water and air for full enjoyment of life under Art 21.
+        </div>
+
+        <h3>1.2 SEVENTH SCHEDULE — DIVISION OF SUBJECTS</h3>
+        <ul>
+            <li><strong>Union List (List I):</strong> Atomic energy, oilfields/mineral oil resources, regulation of mines</li>
+            <li><strong>State List (List II):</strong> Public health, sanitation, water supply, irrigation, fisheries, land</li>
+            <li><strong>Concurrent List (List III):</strong> Forests (transferred from State List by 42nd Amendment), protection of wild animals &amp; birds, prevention of cruelty to animals, factories</li>
+        </ul>
+
+        <h3>1.3 42ND AMENDMENT (1976) — ENVIRONMENT-RELATED CHANGES</h3>
+        <div class="content">
+            <ul>
+                <li>Added <strong>Article 48A</strong> (DPSP) and <strong>Article 51A(g)</strong> (Fundamental Duty)</li>
+                <li>Transferred "Forests" and "Protection of Wild Animals &amp; Birds" from State List to Concurrent List</li>
+                <li>This made environment a constitutional priority</li>
+            </ul>
+        </div>
+
+        <h2>SECTION 2: KEY ENVIRONMENTAL ACTS</h2>
+        <div class="section-intro">
+            Mother of legislation — Acts. Highest weightage section. Memorise year, sections, penalties.
+        </div>
+
+        <h3>2.1 WATER (PREVENTION &amp; CONTROL OF POLLUTION) ACT, 1974</h3>
+        <div class="standard">
+            <strong>First major environmental Act in India.</strong> Enacted under Article 252 (consent of states), as Water is a State Subject.
+            <ul>
+                <li><strong>Section 3:</strong> Constitution of CPCB (Central Pollution Control Board)</li>
+                <li><strong>Section 4:</strong> Constitution of SPCBs (State Pollution Control Boards)</li>
+                <li><strong>Section 16:</strong> Functions of CPCB — coordinate, advise, set standards, training, R&amp;D</li>
+                <li><strong>Section 17:</strong> Functions of SPCB — implement standards, grant consent, monitor</li>
+                <li><strong>Section 24:</strong> Prohibits use of stream/well for disposal of polluting matter</li>
+                <li><strong>Section 25:</strong> <span class="key-point">Consent to Establish (CTE)</span> &amp; <strong>Section 26 (existing units):</strong> mandatory before discharge</li>
+                <li><strong>Section 27:</strong> Refusal/withdrawal of consent</li>
+                <li><strong>Section 33A:</strong> Power of SPCB to issue directions (closure, electricity/water cut)</li>
+                <li><strong>Section 41/43/44:</strong> Penalties — imprisonment 1.5 years to 6 years + fine</li>
+                <li><strong>Section 47:</strong> Offences by companies (officers liable)</li>
+                <li><strong>Section 49:</strong> Cognisance of offences only by Board or by complaint with 60-day notice</li>
+            </ul>
+        </div>
+
+        <h3>2.2 WATER (PREVENTION &amp; CONTROL OF POLLUTION) CESS ACT, 1977</h3>
+        <div class="content">
+            <ul>
+                <li>Levies cess on water consumed by specified industries &amp; local authorities</li>
+                <li>Cess collected by State; transferred to Central Govt; reimbursed to SPCBs (up to 80%) for funding</li>
+                <li>15 categories of industries (Schedule I): pulp &amp; paper, chemicals, ferrous metals, non-ferrous, sugar, textiles, dye &amp; dye intermediates, etc.</li>
+                <li>Rebate of 25% if (a) ETP installed and (b) consumption within standard</li>
+                <li><strong>Repealed by GST Council in 2017</strong> (subsumed under GST regime)</li>
+            </ul>
+        </div>
+
+        <h3>2.3 AIR (PREVENTION &amp; CONTROL OF POLLUTION) ACT, 1981</h3>
+        <div class="standard">
+            Enacted under Article 253 (to implement Stockholm Conference 1972).
+            <ul>
+                <li><strong>Section 16:</strong> Functions of CPCB on air</li>
+                <li><strong>Section 17:</strong> Functions of SPCB on air</li>
+                <li><strong>Section 19:</strong> Power to declare <strong>Air Pollution Control Areas</strong> (APCAs)</li>
+                <li><strong>Section 20:</strong> Power to give instructions on use of fuels in APCAs</li>
+                <li><strong>Section 21:</strong> CTE/CTO for industries in APCAs</li>
+                <li><strong>Section 22:</strong> Prohibition of emission exceeding standards</li>
+                <li><strong>Section 31A:</strong> Power to issue directions (added 1987 amendment, mirrors Water Act 33A)</li>
+                <li><strong>Section 37:</strong> Penalty — imprisonment 1.5–6 years + fine</li>
+                <li><strong>1987 amendment</strong> brought Noise within Air Act ambit</li>
+            </ul>
+        </div>
+
+        <h3>2.4 ENVIRONMENT (PROTECTION) ACT, 1986 ["UMBRELLA ACT"]</h3>
+        <div class="standard">
+            Passed in aftermath of Bhopal disaster (Dec 2-3, 1984). Most powerful environmental statute.
+            <ul>
+                <li><strong>Section 3:</strong> Power of Central Govt to take ALL measures for environment protection</li>
+                <li>&nbsp;&nbsp;• 3(1) — coordinate state actions, set standards, restrict locations of industries, lay down procedures &amp; safeguards</li>
+                <li>&nbsp;&nbsp;• 3(2) — set standards for emissions/discharge</li>
+                <li>&nbsp;&nbsp;• 3(3) — constitute authorities (e.g., CRZ Authority, EPCA, CGWA)</li>
+                <li><strong>Section 5:</strong> Power to issue directions (closure, electricity/water cut)</li>
+                <li><strong>Section 6:</strong> Power to make rules</li>
+                <li><strong>Section 7:</strong> No person shall discharge pollutant in excess of standard</li>
+                <li><strong>Section 8:</strong> Procedure for handling hazardous substances</li>
+                <li><strong>Section 9:</strong> Furnishing information to authorities in case of emergency</li>
+                <li><strong>Section 15:</strong> <span class="key-point">Penalty — up to 5 years imprisonment + ₹1 lakh fine; continuing failure ₹5000/day; if &gt; 1 yr, up to 7 years</span></li>
+                <li><strong>Section 16:</strong> Offences by companies</li>
+                <li><strong>Section 19:</strong> Cognisance only on complaint by Govt OR by any person who has given 60-day notice</li>
+            </ul>
+        </div>
+        <div class="highlight">
+            <strong>Major rules under E(P) Act 1986:</strong> EIA Notification 2006; CRZ Notification 2019; Hazardous Chemicals Rules 1989; HOWM Rules 2016; SWM Rules 2016; Plastic Waste Rules 2016; E-Waste Rules 2022; BMW Rules 2016; Noise Rules 2000; Wetland Rules 2017; Eco-Sensitive Zones; Ozone Depleting Substances (Regulation) Rules 2000.
+        </div>
+
+        <h3>2.5 WILDLIFE (PROTECTION) ACT, 1972</h3>
+        <div class="content">
+            Enacted to implement CITES (1973). Amended several times — latest <strong>Wildlife (Protection) Amendment Act, 2022</strong>.<br/>
+            <strong>Schedules (post 2022 amendment — restructured to 4 from earlier 6):</strong>
+            <ul>
+                <li><strong>Schedule I:</strong> animals with highest protection (tiger, lion, elephant, rhinoceros, snow leopard, etc.); penalty for hunting: 3–7 years + fine ₹25,000+</li>
+                <li><strong>Schedule II:</strong> animals with reduced protection (some monkeys, civets)</li>
+                <li><strong>Schedule III:</strong> protected plants (orchids, kuth, etc.)</li>
+                <li><strong>Schedule IV:</strong> CITES Appendix species (added by 2022 amendment)</li>
+            </ul>
+            <strong>Protected Areas:</strong>
+            <ul>
+                <li><strong>National Park</strong> (NP): no human activity; ~106 in India</li>
+                <li><strong>Wildlife Sanctuary</strong> (WLS): some restricted activity allowed; ~573</li>
+                <li><strong>Conservation Reserve</strong> &amp; <strong>Community Reserve</strong> (added 2002 amendment)</li>
+                <li><strong>Tiger Reserves:</strong> declared under Section 38V (added 2006); ~55 tiger reserves managed by NTCA (Project Tiger 1973)</li>
+            </ul>
+            <strong>Authorities:</strong> NBWL (National Board for Wildlife) chaired by PM; State Boards; Wildlife Crime Control Bureau (WCCB).
+        </div>
+
+        <h3>2.6 FOREST (CONSERVATION) ACT, 1980</h3>
+        <div class="standard">
+            <ul>
+                <li><strong>Section 2:</strong> No State Govt shall (without prior approval of Central Govt) — (a) declare reserved forest as not reserved; (b) use forest land for non-forest purpose; (c) assign forest land to private person; (d) clear naturally grown trees for re-afforestation</li>
+                <li><strong>Compensatory Afforestation:</strong> equivalent area of non-forest land OR 2× degraded forest land, plus NPV (Net Present Value) for diversion</li>
+                <li><strong>CAMPA</strong> (Compensatory Afforestation Fund Mgmt &amp; Planning Authority) — under CAF Act 2016 — manages CA funds (~₹50,000 crore corpus)</li>
+                <li><strong>FCA Amendment 2023</strong> renamed it "Van (Sanrakshan Evam Samvardhan) Adhiniyam" — exempted forest land within 100 km of LAC, security infrastructure up to 10 ha, etc.</li>
+            </ul>
+        </div>
+
+        <h3>2.7 BIOLOGICAL DIVERSITY ACT, 2002</h3>
+        <div class="content">
+            Enacted to implement <strong>Convention on Biological Diversity (CBD), 1992 (Rio Earth Summit)</strong>.<br/>
+            <strong>Three-tier structure:</strong>
+            <ul>
+                <li><strong>National Biodiversity Authority (NBA):</strong> Chennai; foreign access &amp; IPR clearance</li>
+                <li><strong>State Biodiversity Board (SBB):</strong> domestic commercial use approvals</li>
+                <li><strong>Biodiversity Management Committee (BMC):</strong> at every panchayat / municipality; maintains <strong>People's Biodiversity Register (PBR)</strong></li>
+            </ul>
+            <strong>Key concepts:</strong>
+            <ul>
+                <li><strong>ABS (Access &amp; Benefit Sharing):</strong> equitable sharing of benefits from biological resources</li>
+                <li><strong>Section 3:</strong> Restriction on foreign nationals/companies for use of biological resources without NBA approval</li>
+                <li><strong>Biodiversity Heritage Sites</strong> declared by State Govt</li>
+                <li><strong>2023 amendment:</strong> decriminalised some offences; encouraged AYUSH research; faster approvals</li>
+            </ul>
+        </div>
+
+        <h3>2.8 NATIONAL GREEN TRIBUNAL (NGT) ACT, 2010</h3>
+        <div class="standard">
+            <ul>
+                <li><strong>Established:</strong> 18 October 2010; first sitting May 2011</li>
+                <li><strong>Composition:</strong> Chairperson (sitting/retired SC judge or HC Chief Justice) + judicial &amp; expert members (10 each, max 20 each)</li>
+                <li><strong>Principal bench:</strong> New Delhi; <strong>Zonal benches:</strong> Pune (West), Bhopal (Central), Kolkata (East), Chennai (South)</li>
+                <li><strong>Jurisdiction:</strong> civil cases related to enforcement of any of <strong>7 environmental laws</strong> in Schedule I:
+                    <ol>
+                        <li>Water Act 1974</li>
+                        <li>Water Cess Act 1977</li>
+                        <li>Forest (Conservation) Act 1980</li>
+                        <li>Air Act 1981</li>
+                        <li>Environment (Protection) Act 1986</li>
+                        <li>Public Liability Insurance Act 1991</li>
+                        <li>Biological Diversity Act 2002</li>
+                    </ol>
+                    (Note: Wildlife Protection Act 1972 is NOT under NGT jurisdiction)
+                </li>
+                <li><strong>Limitation:</strong> 6 months from cause of action (extendable by 60 days)</li>
+                <li><strong>Decision:</strong> within 6 months</li>
+                <li><strong>Appeal:</strong> directly to Supreme Court within 90 days</li>
+                <li><strong>Principles applied:</strong> Sustainable development, Polluter Pays, Precautionary Principle</li>
+                <li><strong>Penalty:</strong> non-compliance — up to 3 years jail or ₹10 crore (companies up to ₹25 crore)</li>
+            </ul>
+        </div>
+        <div class="highlight">
+            <strong>Notable NGT orders:</strong> Banned diesel vehicles &gt; 10 yr in NCR (2015); Sterlite Copper closure (2018, Tuticorin); STP discharge standards revision (Jan 2019, 1 mg/L FC for new STPs in metros); Yamuna pollution monitoring; ban on plastic flags.
+        </div>
+
+        <h3>2.9 PUBLIC LIABILITY INSURANCE (PLI) ACT, 1991</h3>
+        <div class="content">
+            Enacted post-Bhopal to provide immediate relief to victims of accidents involving hazardous substances.
+            <ul>
+                <li>Mandatory insurance by handlers of hazardous substances (listed in HC Rules 1989 — over 600 substances)</li>
+                <li><strong>No-fault liability principle:</strong> victims need not prove negligence</li>
+                <li>Maximum compensation per claim: ₹25,000 (medical), ₹25,000 (loss of wages), ₹25,000–₹1 lakh (death/permanent disability) — limited; balance through tort law</li>
+                <li><strong>Environmental Relief Fund:</strong> contribution by industry equal to insurance premium; managed by Govt</li>
+                <li>District Collector adjudicates claims</li>
+            </ul>
+        </div>
+
+        <h3>2.10 OTHER KEY LAWS (BRIEF)</h3>
+        <table>
+            <tr><th>Act</th><th>Year</th><th>Subject</th></tr>
+            <tr><td>Indian Forest Act</td><td>1927</td><td>Forest classification (Reserved, Protected, Village)</td></tr>
+            <tr><td>Atomic Energy Act</td><td>1962</td><td>Radioactive material regulation; AERB</td></tr>
+            <tr><td>Insecticides Act</td><td>1968</td><td>Registration &amp; sale of pesticides</td></tr>
+            <tr><td>Hazardous Chemicals (Manufacture, Storage &amp; Import) Rules</td><td>1989</td><td>MAH units; on-site &amp; off-site emergency plans</td></tr>
+            <tr><td>National Environment Tribunal Act</td><td>1995</td><td>(repealed by NGT Act 2010)</td></tr>
+            <tr><td>National Environment Appellate Authority Act</td><td>1997</td><td>(repealed by NGT Act 2010)</td></tr>
+            <tr><td>Compensatory Afforestation Fund (CAF) Act</td><td>2016</td><td>CAMPA fund management</td></tr>
+            <tr><td>Energy Conservation Act</td><td>2001 (amended 2022)</td><td>BEE; star rating; carbon market provisions (2022 amendment)</td></tr>
+        </table>
+
+        <h2>SECTION 3: RULES &amp; NOTIFICATIONS</h2>
+        <div class="section-intro">
+            Subordinate legislation under E(P) Act 1986 — high probability factual Qs.
+        </div>
+
+        <h3>3.1 EIA NOTIFICATION 2006</h3>
+        <div class="standard">
+            Issued under E(P) Act 1986; supersedes EIA Notification 1994.
+            <ul>
+                <li><strong>Scope:</strong> 8 sectors covering 39 categories of projects (mining, thermal power, river valley, infrastructure, etc.)</li>
+                <li><strong>Two categories:</strong>
+                    <ul>
+                        <li><strong>Category A:</strong> appraised by <strong>EAC (Expert Appraisal Committee)</strong> at central level (MoEFCC)</li>
+                        <li><strong>Category B:</strong> appraised by <strong>SEAC (State EAC)</strong> at state level (SEIAA — State Environmental Impact Assessment Authority)</li>
+                        <li>Category B further split into <strong>B1</strong> (full EIA required) &amp; <strong>B2</strong> (no EIA, only EMP)</li>
+                    </ul>
+                </li>
+                <li><strong>4-stage process:</strong> Screening → Scoping (ToR) → Public Consultation → Appraisal</li>
+                <li><strong>Public hearing:</strong> compulsory for Cat A &amp; B1 (except some exempt categories like industrial estates within notified parks)</li>
+                <li><strong>Validity of EC:</strong> 5 years (mining 50 years, river valley 13 years, area development 10 years)</li>
+                <li><strong>Form 1 + Form 1A</strong> (latter for buildings/area development) — initial application</li>
+                <li><strong>EIA Draft Notification 2020</strong> proposed major changes (post-facto clearance, reduced public hearing) — heavily criticised; not finalised</li>
+            </ul>
+        </div>
+
+        <h3>3.2 CRZ NOTIFICATION 2019</h3>
+        <div class="content">
+            Coastal Regulation Zone — 500 m landward from HTL; 50 m on tidal influenced rivers/creeks.<br/>
+            <strong>Four CRZ categories:</strong>
+            <ul>
+                <li><strong>CRZ-I:</strong> ecologically sensitive (mangroves, coral reefs, salt marshes, turtle nesting); two sub-zones IA (no construction) &amp; IB (intertidal, limited)</li>
+                <li><strong>CRZ-II:</strong> developed urban areas close to shoreline (existing built environment)</li>
+                <li><strong>CRZ-III:</strong> rural &amp; undeveloped; A &amp; B sub-zones based on density (A: density &gt; 2161/km²; B: density ≤ 2161/km²); No Development Zone reduced — A: 50 m; B: 200 m from HTL</li>
+                <li><strong>CRZ-IV:</strong> water area from LTL up to 12 nautical miles</li>
+            </ul>
+            Implementation by State CZMAs (Coastal Zone Management Authorities).
+        </div>
+
+        <h3>3.3 NOISE POLLUTION (REGULATION &amp; CONTROL) RULES, 2000</h3>
+        <table>
+            <tr><th>Area Category</th><th>Day (6 AM – 10 PM) dBA</th><th>Night (10 PM – 6 AM) dBA</th></tr>
+            <tr><td>Industrial</td><td>75</td><td>70</td></tr>
+            <tr><td>Commercial</td><td>65</td><td>55</td></tr>
+            <tr><td>Residential</td><td>55</td><td>45</td></tr>
+            <tr><td><strong>Silence Zone</strong></td><td>50</td><td>40</td></tr>
+        </table>
+        <div class="content">
+            <strong>Silence zones:</strong> 100 m around hospitals, educational institutions, courts.<br/>
+            <strong>Other key provisions:</strong>
+            <ul>
+                <li>Loudspeakers/PA systems prohibited 10 PM – 6 AM (state may permit relaxation up to 12 midnight on cultural/festive occasions, max 15 days/year)</li>
+                <li>Horns of motor vehicles prohibited in silence zones</li>
+                <li>Firecrackers banned 10 PM – 6 AM (SC order 2018: only "green crackers" allowed in NCR; 2 hr only on Diwali)</li>
+            </ul>
+        </div>
+
+        <h3>3.4 OZONE DEPLETING SUBSTANCES (ODS) RULES, 2000</h3>
+        <div class="content">
+            Implements <strong>Montreal Protocol (1987)</strong> &amp; <strong>Kigali Amendment (2016)</strong>.
+            <ul>
+                <li>Phases out CFCs (completed 2010 in India), Halons (2010), CTC, MeCl, MeBr</li>
+                <li>HCFCs phase-out: complete by 2030 (India)</li>
+                <li>HFCs (added by Kigali) — India to reduce by 80% by 2047</li>
+                <li>Mandatory labelling, registration of importers/manufacturers</li>
+                <li>Cell: Ozone Cell, MoEFCC</li>
+            </ul>
+        </div>
+
+        <h3>3.5 WETLAND (CONSERVATION &amp; MANAGEMENT) RULES, 2017</h3>
+        <div class="content">
+            <ul>
+                <li>Replace Wetland Rules 2010</li>
+                <li><strong>Wetlands Authority</strong> at state level (chaired by Environment Minister)</li>
+                <li>Brief list of "prohibited activities": conversion to non-wetland use, encroachment, setting up new industries, solid waste disposal, untreated effluent discharge, poaching</li>
+                <li>India has <strong>85 Ramsar sites</strong> (as of 2024); largest network in South Asia</li>
+                <li>Total area covered: ~13 lakh ha</li>
+                <li>Largest Ramsar site in India: <strong>Sundarbans (West Bengal)</strong></li>
+            </ul>
+        </div>
+
+        <h2>SECTION 4: INTERNATIONAL CONVENTIONS</h2>
+        <div class="section-intro">
+            International environmental treaties India is party to. High recall — multiple Qs likely.
+        </div>
+
+        <h3>4.1 MAJOR CONVENTIONS — TIMELINE</h3>
+        <table>
+            <tr><th>Year</th><th>Convention</th><th>Subject</th><th>Hosted at</th></tr>
+            <tr><td>1971</td><td><strong>Ramsar Convention</strong></td><td>Wetlands of international importance</td><td>Ramsar, Iran</td></tr>
+            <tr><td>1972</td><td><strong>Stockholm Conference</strong> (UNCHE)</td><td>First UN environment conference; UNEP born</td><td>Stockholm</td></tr>
+            <tr><td>1972</td><td>London Convention</td><td>Marine dumping</td><td>London</td></tr>
+            <tr><td>1973</td><td><strong>CITES</strong></td><td>Trade in endangered species</td><td>Washington DC</td></tr>
+            <tr><td>1979</td><td>Bonn (CMS) Convention</td><td>Migratory species</td><td>Bonn</td></tr>
+            <tr><td>1985</td><td><strong>Vienna Convention</strong></td><td>Ozone layer (framework)</td><td>Vienna</td></tr>
+            <tr><td>1987</td><td><strong>Montreal Protocol</strong></td><td>ODS phase-out (operational)</td><td>Montreal</td></tr>
+            <tr><td>1989</td><td><strong>Basel Convention</strong></td><td>Hazardous waste transboundary movement</td><td>Basel</td></tr>
+            <tr><td>1992</td><td><strong>Rio Earth Summit (UNCED)</strong></td><td>Birth of UNFCCC, CBD, UNCCD; Agenda 21; Rio Declaration</td><td>Rio de Janeiro</td></tr>
+            <tr><td>1992</td><td><strong>UNFCCC</strong></td><td>Climate change framework</td><td>Rio</td></tr>
+            <tr><td>1992</td><td><strong>CBD</strong></td><td>Biological diversity</td><td>Rio</td></tr>
+            <tr><td>1994</td><td>UNCCD</td><td>Desertification</td><td>Paris</td></tr>
+            <tr><td>1997</td><td><strong>Kyoto Protocol</strong></td><td>Binding emissions targets for Annex I (developed)</td><td>Kyoto</td></tr>
+            <tr><td>1998</td><td>Rotterdam Convention</td><td>PIC for trade in chemicals/pesticides</td><td>Rotterdam</td></tr>
+            <tr><td>2000</td><td>Cartagena Protocol</td><td>Biosafety (LMOs); under CBD</td><td>Cartagena, Colombia</td></tr>
+            <tr><td>2001</td><td><strong>Stockholm Convention</strong></td><td>Persistent Organic Pollutants (POPs)</td><td>Stockholm</td></tr>
+            <tr><td>2010</td><td>Nagoya Protocol</td><td>ABS; under CBD</td><td>Nagoya, Japan</td></tr>
+            <tr><td>2013</td><td>Minamata Convention</td><td>Mercury</td><td>Kumamoto, Japan</td></tr>
+            <tr><td>2015</td><td><strong>Paris Agreement</strong></td><td>Climate; NDCs; 1.5°C goal</td><td>Paris (COP 21)</td></tr>
+            <tr><td>2016</td><td><strong>Kigali Amendment</strong></td><td>HFC phase-down (under Montreal Protocol)</td><td>Kigali, Rwanda</td></tr>
+        </table>
+
+        <h3>4.2 STOCKHOLM CONFERENCE 1972 &amp; FOLLOW-UP</h3>
+        <div class="content">
+            <strong>UN Conference on Human Environment, Stockholm, 5–16 June 1972.</strong> Tagline: "Only One Earth". Indira Gandhi was the only Head of Government other than the host PM to attend.
+            <ul>
+                <li>Birthed <strong>UNEP</strong> (UN Environment Programme; HQ Nairobi)</li>
+                <li><strong>5 June</strong> declared <strong>World Environment Day</strong></li>
+                <li>India enacted Air Act 1981, E(P) Act 1986 in pursuance</li>
+            </ul>
+            <strong>Subsequent Earth Summits:</strong> Rio 1992; Johannesburg 2002 (Rio+10); Rio 2012 (Rio+20); Stockholm+50 in 2022.
+        </div>
+
+        <h3>4.3 CLIMATE — UNFCCC, KYOTO, PARIS</h3>
+        <div class="standard">
+            <strong>UNFCCC (1992):</strong> framework convention; objective = stabilise GHG concentrations to prevent dangerous anthropogenic interference. India ratified 1993.
+            <ul>
+                <li>Annex I: developed countries (binding obligations)</li>
+                <li>Non-Annex I: developing countries (no binding obligations, but voluntary actions)</li>
+                <li><strong>CBDR-RC</strong> = Common But Differentiated Responsibilities &amp; Respective Capabilities</li>
+            </ul>
+            <strong>Kyoto Protocol (1997, in force 2005):</strong>
+            <ul>
+                <li>Binding emission cuts for Annex I (~5.2% below 1990 levels by 2008–12; first commitment period)</li>
+                <li>3 flexibility mechanisms: <strong>CDM</strong> (Clean Dev Mechanism), <strong>JI</strong> (Joint Implementation), <strong>ET</strong> (Emissions Trading)</li>
+                <li>Doha Amendment (2012): 2nd commitment period 2013–20 (limited ratification)</li>
+            </ul>
+            <strong>Paris Agreement (2015, in force 2016):</strong>
+            <ul>
+                <li><strong>Goal:</strong> well below 2°C above pre-industrial; pursue 1.5°C</li>
+                <li><strong>NDCs</strong> (Nationally Determined Contributions): self-set, reviewed every 5 years (ratchet mechanism)</li>
+                <li><strong>India's updated NDC (Aug 2022):</strong>
+                    <ul>
+                        <li>Reduce GDP emissions intensity by 45% by 2030 (from 2005 level)</li>
+                        <li>50% cumulative installed capacity from non-fossil fuel by 2030</li>
+                        <li>Create additional carbon sink of 2.5–3 billion tonnes CO₂eq through forest cover by 2030</li>
+                        <li><strong>Net-zero by 2070</strong> (announced at COP26 Glasgow, 2021 — Panchamrit)</li>
+                    </ul>
+                </li>
+                <li>$100 billion/year climate finance pledge by developed → developing (committed; underdelivered)</li>
+                <li><strong>Article 6:</strong> carbon markets (rules finalised at COP26)</li>
+            </ul>
+        </div>
+
+        <h3>4.4 OZONE — VIENNA, MONTREAL, KIGALI</h3>
+        <div class="content">
+            <ul>
+                <li><strong>Vienna Convention 1985:</strong> framework; no binding cuts</li>
+                <li><strong>Montreal Protocol 1987:</strong> binding phase-out of CFCs, halons, CTC, methyl chloroform, HCFCs (developed by 2020, developing by 2030); methyl bromide</li>
+                <li>Universally ratified treaty (197 parties + EU); successful — Antarctic ozone hole expected to close by 2065</li>
+                <li><strong>Kigali Amendment 2016:</strong> brings HFCs (high GWP, no ODP) under Montreal; India phase-down 80% by 2047</li>
+                <li>India ratified Kigali in 2021</li>
+            </ul>
+        </div>
+
+        <h3>4.5 BIODIVERSITY — CBD, NAGOYA, CARTAGENA</h3>
+        <div class="content">
+            <strong>CBD (1992, Rio):</strong> 3 objectives:
+            <ol>
+                <li>Conservation of biological diversity</li>
+                <li>Sustainable use of components</li>
+                <li>Fair &amp; equitable sharing of benefits arising from use of genetic resources (ABS)</li>
+            </ol>
+            <strong>Cartagena Protocol on Biosafety (2000):</strong> safe transfer/handling of LMOs (living modified organisms); India ratified 2003.<br/>
+            <strong>Nagoya Protocol on ABS (2010, in force 2014):</strong> implements 3rd objective of CBD; India ratified 2014.<br/>
+            <strong>Aichi Targets (2010, Nagoya):</strong> 20 biodiversity targets for 2011–2020. <strong>Replaced by Kunming-Montreal Global Biodiversity Framework (Dec 2022):</strong> 23 action targets including <strong>30×30</strong> (protect 30% of land &amp; sea by 2030).
+        </div>
+
+        <h3>4.6 CITES (1973, in force 1975)</h3>
+        <div class="standard">
+            Convention on International Trade in Endangered Species of Wild Fauna and Flora.
+            <ul>
+                <li><strong>Appendix I:</strong> species threatened with extinction; <span class="key-point">commercial trade BANNED</span> (~1100 species — tiger, rhino, gorilla, elephant)</li>
+                <li><strong>Appendix II:</strong> species not necessarily threatened but trade controlled to avoid use incompatible with survival (~37000 species)</li>
+                <li><strong>Appendix III:</strong> species protected in at least one country, which has asked others for help (~200 species)</li>
+                <li>India ratified 1976; implemented through Wildlife (Protection) Act 1972</li>
+            </ul>
+        </div>
+
+        <h3>4.7 BASEL, ROTTERDAM, STOCKHOLM (BRS) "Chemical Conventions"</h3>
+        <ul>
+            <li><strong>Basel (1989):</strong> hazardous waste transboundary movement; PIC; ESM; Ban Amendment in force 2019</li>
+            <li><strong>Rotterdam (1998):</strong> PIC for trade in 50+ hazardous chemicals/pesticides</li>
+            <li><strong>Stockholm (2001):</strong> POPs — initial 12 ("dirty dozen": aldrin, chlordane, DDT, dieldrin, endrin, heptachlor, mirex, toxaphene, HCB, PCBs, dioxins, furans); later expanded to 30+ chemicals</li>
+        </ul>
+
+        <h3>4.8 RAMSAR &amp; OTHER</h3>
+        <div class="content">
+            <ul>
+                <li><strong>Ramsar Convention 1971</strong> (in force 1975): wetlands of international importance; India ratified 1982; <strong>85 Ramsar sites</strong> in India (2024)</li>
+                <li><strong>Bonn (CMS) 1979:</strong> migratory species; India ratified 1983</li>
+                <li><strong>Minamata Convention 2013</strong> (in force 2017): Mercury — phase-out manufacture/import/export, dental amalgam, batteries; named after Minamata mercury poisoning Japan 1956; India ratified 2018</li>
+                <li><strong>UNCCD 1994:</strong> desertification; India hosted COP14 in Sept 2019 (New Delhi Declaration)</li>
+            </ul>
+        </div>
+
+        <h3>4.9 PRINCIPLES OF INTERNATIONAL ENVIRONMENTAL LAW <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="standard">
+            <ul>
+                <li><strong>Sustainable Development:</strong> "development that meets the needs of the present without compromising the ability of future generations to meet their own needs" — Brundtland Report 1987 ("Our Common Future")</li>
+                <li><strong>Polluter Pays Principle (PPP):</strong> polluter bears cost of pollution control + damage; first articulated by OECD 1972; SC adopted in <em>Indian Council for Enviro-Legal Action v UoI</em> (1996)</li>
+                <li><strong>Precautionary Principle:</strong> lack of full scientific certainty shall not be a reason to postpone cost-effective measures to prevent environmental degradation; Rio Principle 15; SC adopted in <em>Vellore Citizens Welfare Forum v UoI</em> (1996)</li>
+                <li><strong>Public Trust Doctrine:</strong> certain resources (rivers, seashores, forests) held in trust by state for public use; SC in <em>MC Mehta v Kamal Nath</em> (1997, Span Motels)</li>
+                <li><strong>Inter-generational Equity:</strong> present generation has duty to preserve resources for future; <em>State of HP v Ganesh Wood Products</em> (1995)</li>
+                <li><strong>Common but Differentiated Responsibilities (CBDR):</strong> all states responsible but with differing capabilities (Rio 1992)</li>
+                <li><strong>Absolute Liability:</strong> stricter than strict liability; no exceptions; SC in <em>MC Mehta v UoI</em> (Oleum Gas Leak, 1986)</li>
+            </ul>
+        </div>
+
+        <h3>4.10 NATIONAL ENVIRONMENT POLICY (NEP) 2006 <span style="color:#673ab7;">(GATE ADD)</span></h3>
+        <div class="content">
+            Approved by Union Cabinet in May 2006.<br/>
+            <strong>Key principles:</strong> Human beings at centre of sustainable development; Right to development; Environmental protection integral to development; Polluter Pays; Precautionary; PPP (public participation); Decentralisation; Equity.<br/>
+            <strong>Strategic actions:</strong> conservation of biodiversity, climate change mitigation, water resource management, freshwater ecosystems, pollution control, mountain ecosystems, coastal management.<br/>
+            <strong>NEP is a policy guideline (not legally binding)</strong> — informs subsequent rules &amp; programs.
+        </div>
+
+        <h2>SECTION 5: KEY INSTITUTIONS</h2>
+
+        <h3>5.1 REGULATORY BODIES</h3>
+        <table>
+            <tr><th>Institution</th><th>Established</th><th>Role</th></tr>
+            <tr><td><strong>MoEFCC</strong> (Ministry of Environment, Forest &amp; Climate Change)</td><td>1985 (renamed 2014)</td><td>Apex policy &amp; regulation</td></tr>
+            <tr><td><strong>CPCB</strong> (Central Pollution Control Board)</td><td>1974</td><td>Standards, monitoring; advises CG</td></tr>
+            <tr><td><strong>SPCB</strong> (State Pollution Control Boards)</td><td>1974+</td><td>Implementation; consent management</td></tr>
+            <tr><td><strong>NGT</strong> (National Green Tribunal)</td><td>2010</td><td>Adjudication of environmental disputes</td></tr>
+            <tr><td><strong>CGWA</strong> (Central Ground Water Authority)</td><td>1997 (under E(P) Act)</td><td>Groundwater regulation in OE/critical areas</td></tr>
+            <tr><td><strong>NBA</strong> (National Biodiversity Authority)</td><td>2003</td><td>BD Act implementation, ABS</td></tr>
+            <tr><td><strong>NTCA</strong> (National Tiger Conservation Authority)</td><td>2006 (statutory; Project Tiger 1973)</td><td>Tiger reserves management</td></tr>
+            <tr><td><strong>NBWL</strong> (National Board for Wildlife)</td><td>2003 (chaired by PM)</td><td>Wildlife policy advice</td></tr>
+            <tr><td><strong>WCCB</strong> (Wildlife Crime Control Bureau)</td><td>2006</td><td>Combat illegal wildlife trade</td></tr>
+            <tr><td><strong>AERB</strong> (Atomic Energy Regulatory Board)</td><td>1983</td><td>Radiation safety</td></tr>
+            <tr><td><strong>BIS</strong> (Bureau of Indian Standards)</td><td>1986</td><td>Indian Standards (e.g., IS 10500 drinking water)</td></tr>
+            <tr><td><strong>FSI</strong> (Forest Survey of India)</td><td>1981 (Dehradun)</td><td>Biennial India State of Forest Report (ISFR)</td></tr>
+            <tr><td><strong>WII</strong> (Wildlife Institute of India)</td><td>1982 (Dehradun)</td><td>Research, training</td></tr>
+            <tr><td><strong>BEE</strong> (Bureau of Energy Efficiency)</td><td>2002 (under EC Act 2001)</td><td>Star ratings, PAT scheme, carbon market</td></tr>
+            <tr><td><strong>GRAP / EPCA / CAQM</strong></td><td>2017 / 2020</td><td>Air pollution mgmt in NCR; CAQM is statutory body since Aug 2021</td></tr>
+        </table>
+
+        <h2>HIGH-YIELD MCQ REVISION LIST</h2>
+        <div class="exam-strategy">
+            <h3>MUST-KNOW FACTS (High Probability Qs):</h3>
+            <ul>
+                <li>✓ <strong>Article 48A:</strong> DPSP (state duty) — protect &amp; improve environment</li>
+                <li>✓ <strong>Article 51A(g):</strong> Fundamental Duty (citizen) — protect environment</li>
+                <li>✓ <strong>Both added by 42nd Amendment (1976)</strong></li>
+                <li>✓ <strong>Article 21:</strong> Right to clean environment (judicially expanded)</li>
+                <li>✓ <strong>Water Act:</strong> 1974 (first major env Act); CPCB &amp; SPCB constituted under Sec 3 &amp; 4</li>
+                <li>✓ <strong>Air Act:</strong> 1981 (under Article 253 to implement Stockholm 1972)</li>
+                <li>✓ <strong>E(P) Act 1986:</strong> umbrella Act post-Bhopal; Section 15 penalty (5 yr + ₹1 lakh)</li>
+                <li>✓ <strong>Wildlife Protection Act:</strong> 1972; latest amendment 2022 (4 schedules now)</li>
+                <li>✓ <strong>Forest Conservation Act:</strong> 1980 (Section 2 — prior CG approval); CAMPA</li>
+                <li>✓ <strong>Biological Diversity Act:</strong> 2002 (implements CBD); NBA Chennai; SBB; BMC; PBR</li>
+                <li>✓ <strong>NGT Act:</strong> 2010; 7 laws under Schedule I; appeal to SC; benches Pune/Bhopal/Kolkata/Chennai (zonal) + Delhi (principal)</li>
+                <li>✓ <strong>Public Liability Insurance Act:</strong> 1991 (no-fault liability)</li>
+                <li>✓ <strong>EIA Notification:</strong> 2006; Cat A (EAC central) &amp; Cat B (SEAC state); 4 stages</li>
+                <li>✓ <strong>CRZ:</strong> 2019 notification; CRZ I to IV; 500 m landward from HTL</li>
+                <li>✓ <strong>Noise Rules 2000:</strong> Industrial 75/70; Commercial 65/55; Residential 55/45; Silence 50/40</li>
+                <li>✓ <strong>Wetland Rules:</strong> 2017; India 85 Ramsar sites</li>
+                <li>✓ <strong>Stockholm Conference 1972;</strong> UNEP born; June 5 World Env Day</li>
+                <li>✓ <strong>Rio Earth Summit 1992:</strong> UNFCCC, CBD, UNCCD, Agenda 21, Forest Principles</li>
+                <li>✓ <strong>Kyoto Protocol 1997:</strong> CDM, JI, ET; binding only on Annex I</li>
+                <li>✓ <strong>Paris Agreement 2015:</strong> NDCs; 1.5°C; India net-zero 2070 (Glasgow 2021)</li>
+                <li>✓ <strong>Montreal Protocol 1987:</strong> CFC phase-out; Kigali 2016 adds HFCs</li>
+                <li>✓ <strong>CITES 1973:</strong> Appendices I (banned), II (regulated), III (national)</li>
+                <li>✓ <strong>Basel 1989:</strong> hazardous waste transboundary; India ratified 1992</li>
+                <li>✓ <strong>Stockholm Conv 2001:</strong> POPs "dirty dozen"</li>
+                <li>✓ <strong>Ramsar 1971:</strong> wetlands; India ratified 1982</li>
+                <li>✓ <strong>Brundtland Report 1987:</strong> "Our Common Future" — sustainable development definition</li>
+                <li>✓ <strong>Polluter Pays Principle:</strong> SC adopted in Bichhri case (1996)</li>
+                <li>✓ <strong>Precautionary Principle:</strong> SC adopted in Vellore Citizens (1996)</li>
+                <li>✓ <strong>Absolute Liability:</strong> Oleum Gas Leak (1986)</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>MEDIUM-YIELD TOPICS:</h3>
+            <ul>
+                <li>• Section 25/26 Water Act — Consent to Establish/Operate</li>
+                <li>• Section 33A Water / 31A Air — Power of directions (added 1987)</li>
+                <li>• HC Rules 1989 — over 600 hazardous chemicals; MAH units</li>
+                <li>• Tiger Reserves under Sec 38V (added 2006); ~55 in India</li>
+                <li>• Project Tiger 1973; NTCA constituted 2006</li>
+                <li>• National Parks (~106), Wildlife Sanctuaries (~573), Conservation/Community Reserves</li>
+                <li>• CRZ-I sub-zones IA/IB; CRZ-III A/B (density-based 2161/km²)</li>
+                <li>• EIA validity: 5 yr (general); 50 yr (mining); 10 yr (area dev)</li>
+                <li>• Public hearing exemptions</li>
+                <li>• Compensatory afforestation: 2× degraded forest land + NPV</li>
+                <li>• CAF Act 2016; CAMPA fund ₹50,000 cr+</li>
+                <li>• Doha Amendment (Kyoto 2nd commitment period)</li>
+                <li>• India NDC 2022: 45% GDP intensity, 50% non-fossil capacity, 2.5–3 BT carbon sink</li>
+                <li>• Aichi → Kunming-Montreal GBF (30×30)</li>
+                <li>• UNFCCC: CBDR-RC; Annex I vs Non-Annex I</li>
+                <li>• Vienna 1985 (framework) → Montreal 1987 (operational)</li>
+                <li>• Cartagena Protocol (LMOs/biosafety); Nagoya Protocol (ABS)</li>
+                <li>• Minamata Convention 2013 — mercury</li>
+                <li>• CAQM (NCR) replaced EPCA in Aug 2021</li>
+                <li>• Energy Conservation (Amendment) Act 2022 — carbon market</li>
+            </ul>
+        </div>
+
+        <div class="exam-strategy">
+            <h3>GATE ES ADDITIONS (High Weight in GATE):</h3>
+            <ul>
+                <li>✓ <strong>National Environment Policy 2006</strong> — non-binding policy guideline</li>
+                <li>✓ <strong>Polluter Pays Principle</strong> (OECD 1972; Rio Principle 16)</li>
+                <li>✓ <strong>Precautionary Principle</strong> (Rio Principle 15)</li>
+                <li>✓ <strong>Public Trust Doctrine</strong> (Span Motels case 1997)</li>
+                <li>✓ <strong>Inter-generational Equity</strong></li>
+                <li>✓ <strong>CBDR-RC</strong> (Rio 1992)</li>
+                <li>✓ <strong>Brundtland Report 1987</strong> — sustainable development definition</li>
+                <li>✓ <strong>Absolute Liability</strong> (Oleum Gas case 1986)</li>
+                <li>✓ <strong>Article 6</strong> of Paris Agreement (carbon markets)</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <h3>CRITICAL EXAM-DAY TIPS:</h3>
+            <ul>
+                <li><strong>✓ Mnemonic for Acts &amp; Years:</strong> Wild-72, Water-74, Forest-80, Air-81, EP-86, PLI-91, NGT-10. Practice this — comes up every time.</li>
+                <li><strong>✓ 42nd Amendment:</strong> 1976; both Art 48A &amp; 51A(g) + Forest to Concurrent List.</li>
+                <li><strong>✓ E(P) Act 1986</strong> = parent for ALL major rules (EIA, CRZ, BMW, SWM, HW, Plastic, Noise, Wetland) — frame answers using this.</li>
+                <li><strong>✓ NGT 7 Acts:</strong> Water/Cess/Forest/Air/EP/PLI/BD — Wildlife Act NOT included. Common trap.</li>
+                <li><strong>✓ Convention–Year–City triplet:</strong> Always remember together: Stockholm-72, CITES-73, Vienna-85, Montreal-87, Basel-89, Rio-92, Kyoto-97, Stockholm-01 (POPs), Paris-15, Kigali-16.</li>
+                <li><strong>✓ India ratification dates:</strong> CBD 1994, UNFCCC 1993, Basel 1992, Kyoto 2002, Paris 2016, Kigali 2021, Minamata 2018.</li>
+                <li><strong>✓ NEP 2006:</strong> only POLICY (not law); doesn't have legal teeth.</li>
+                <li><strong>✓ CITES Appendices:</strong> I = banned trade (most strict); II = controlled; III = national listing.</li>
+                <li><strong>✓ Ramsar India:</strong> 85 sites; largest = Sundarbans; designated 2 February (World Wetlands Day).</li>
+                <li><strong>✓ Wildlife schedules POST-2022:</strong> 4 (was 6 earlier). Be aware of restructuring.</li>
+                <li><strong>✓ Net-zero year:</strong> India 2070, China 2060, US/EU/UK 2050, Bhutan/Suriname already.</li>
+                <li><strong>✓ Marking strategy:</strong> Unit 5 = 8–10 Qs, all FACTUAL — guaranteed if memorised. Allocate revision time accordingly. Highest yield-per-hour unit.</li>
+                <li><strong>✓ Watch out:</strong> Stockholm 1972 (Conference) vs Stockholm 2001 (POPs Convention) — same city, very different events.</li>
+            </ul>
+        </div>
+
+        <div class="standard">
+            <h3>MUST-MEMORISE SUMMARY (LAWS, CONVENTIONS &amp; PRINCIPLES):</h3>
+            <table>
+                <tr><th>Item</th><th>Year / Key Fact</th></tr>
+                <tr><td>Wildlife Protection Act</td><td>1972 (latest amendment 2022)</td></tr>
+                <tr><td>Water Act</td><td>1974</td></tr>
+                <tr><td>Water Cess Act</td><td>1977 (repealed 2017 GST)</td></tr>
+                <tr><td>Forest Conservation Act</td><td>1980 (amended 2023)</td></tr>
+                <tr><td>Air Act</td><td>1981</td></tr>
+                <tr><td>Environment (Protection) Act</td><td>1986 (umbrella; post-Bhopal)</td></tr>
+                <tr><td>Public Liability Insurance Act</td><td>1991 (no-fault)</td></tr>
+                <tr><td>Biological Diversity Act</td><td>2002 (implements CBD; amended 2023)</td></tr>
+                <tr><td>NGT Act</td><td>2010 (7 laws in Schedule I)</td></tr>
+                <tr><td>Article 48A</td><td>DPSP — env protection (42nd Amend 1976)</td></tr>
+                <tr><td>Article 51A(g)</td><td>Fundamental Duty — env (42nd Amend 1976)</td></tr>
+                <tr><td>Article 21</td><td>Right to clean environment (SC interpretation)</td></tr>
+                <tr><td>Section 15 EP Act penalty</td><td>5 yr + ₹1 lakh; continuing ₹5000/d; up to 7 yr</td></tr>
+                <tr><td>Stockholm Conference</td><td>1972 — UNEP born; June 5 WED</td></tr>
+                <tr><td>Brundtland Report</td><td>1987 — "Our Common Future"</td></tr>
+                <tr><td>Rio Earth Summit</td><td>1992 — UNFCCC, CBD, UNCCD</td></tr>
+                <tr><td>Kyoto Protocol</td><td>1997 (in force 2005); CDM/JI/ET</td></tr>
+                <tr><td>Paris Agreement</td><td>2015; NDCs; 1.5°C</td></tr>
+                <tr><td>India net-zero target</td><td>2070 (Glasgow COP26, 2021)</td></tr>
+                <tr><td>India NDC 2022</td><td>45% intensity, 50% non-fossil, 2.5–3 BT sink</td></tr>
+                <tr><td>Vienna Convention</td><td>1985 (ozone framework)</td></tr>
+                <tr><td>Montreal Protocol</td><td>1987 (CFC phase-out)</td></tr>
+                <tr><td>Kigali Amendment</td><td>2016 (HFC phase-down; India by 2047)</td></tr>
+                <tr><td>CITES</td><td>1973 (Appendices I/II/III)</td></tr>
+                <tr><td>Basel Convention</td><td>1989 (HW transboundary)</td></tr>
+                <tr><td>Rotterdam Convention</td><td>1998 (PIC chemicals)</td></tr>
+                <tr><td>Stockholm Convention</td><td>2001 (POPs — dirty dozen)</td></tr>
+                <tr><td>Ramsar Convention</td><td>1971 (wetlands); India 85 sites</td></tr>
+                <tr><td>Minamata Convention</td><td>2013 (mercury)</td></tr>
+                <tr><td>CBD</td><td>1992 (3 objectives — conserve, sustain use, ABS)</td></tr>
+                <tr><td>Cartagena Protocol</td><td>2000 (biosafety/LMOs)</td></tr>
+                <tr><td>Nagoya Protocol</td><td>2010 (ABS)</td></tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p><strong>UPPCB AEE Unit 5 Revision Notes | Environmental Legislation &amp; Policy | Generated April 2026</strong></p>
+            <p>Focus on Constitutional provisions, key Acts (Water, Air, EP, Wildlife, Forest, BD, NGT, PLI), Rules under EP Act 1986 (EIA, CRZ, Noise, Wetland), international conventions (Stockholm, Rio, Kyoto, Paris, Montreal, Basel, CITES, Ramsar), and principles of environmental law.</p>
+            <p>Sources: Bare Acts, MoEFCC notifications, CPCB website, UN treaty texts, Supreme Court judgments.</p>
+            <p>Includes GATE ES 2026 additions: NEP 2006, Polluter Pays, Precautionary Principle, Brundtland definition, Public Trust Doctrine, Absolute Liability, CBDR-RC.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NT Exams Admin</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:14px}
+    h1{font-size:16px;font-weight:800;color:#a78bfa;margin-bottom:4px}
+    .sub{color:#64748b;font-size:12px;margin-bottom:16px}
+    .card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:14px;margin-bottom:12px}
+    .card-title{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:10px}
+    label{display:block;font-size:11px;color:#94a3b8;font-weight:600;margin-bottom:4px;margin-top:8px;text-transform:uppercase;letter-spacing:.04em}
+    .auth-input,select{width:100%;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:8px 10px;color:#f1f5f9;font-size:13px;font-family:inherit;outline:none}
+    .auth-input:focus,select:focus{border-color:#a78bfa}
+    .btn{padding:8px 14px;border-radius:6px;border:none;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit;margin-top:8px}
+    .btn-primary{background:#a78bfa;color:#0f172a}
+    .btn-danger{background:#ef4444;color:#fff}
+    .btn-ghost{background:transparent;color:#94a3b8;border:1px solid #334155}
+    .row{display:flex;gap:8px;flex-wrap:wrap}
+    .col{flex:1;min-width:140px}
+    .exam-item{display:flex;align-items:center;justify-content:space-between;padding:10px;background:#0f172a;border:1px solid #334155;border-radius:6px;margin-bottom:6px}
+    .exam-info{flex:1;min-width:0}
+    .exam-name{font-size:13px;font-weight:600;color:#f1f5f9}
+    .exam-sub{font-size:11px;color:#64748b;margin-top:2px}
+    .exam-actions{display:flex;gap:6px;flex-shrink:0}
+    .badge{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600}
+    .badge-active{background:rgba(16,185,129,.15);color:#10b981}
+    .badge-inactive{background:rgba(100,116,139,.15);color:#94a3b8}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #a78bfa;color:#a78bfa;padding:8px 16px;border-radius:8px;font-size:12px;display:none;z-index:999}
+    .loading{color:#64748b;font-size:12px;padding:14px}
+    .empty{color:#64748b;font-size:12px;padding:16px;text-align:center;background:#0f172a;border:1px dashed #334155;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>🏛️ Non-Tech Exams</h1>
+  <div class="sub">Manage exams shown in PYQ section for Non-Tech (GS, State GK, Language, Aptitude). These are separate from Civil/PCB exams.</div>
+
+  <div class="card">
+    <div class="card-title" id="formTitle">➕ Add New Exam</div>
+    <div class="row">
+      <div class="col">
+        <label>Full Name</label>
+        <input class="auth-input" id="fName" placeholder="e.g. UPPSC General Studies Paper I"/>
+      </div>
+      <div class="col">
+        <label>Short Name</label>
+        <input class="auth-input" id="fShortName" placeholder="e.g. UPPSC GS"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>State / Body</label>
+        <input class="auth-input" id="fState" placeholder="e.g. Uttar Pradesh / Central"/>
+      </div>
+      <div class="col">
+        <label>Icon (emoji)</label>
+        <input class="auth-input" id="fIcon" placeholder="📚" value="📚"/>
+      </div>
+      <div class="col">
+        <label>Exam ID (slug)</label>
+        <input class="auth-input" id="fId" placeholder="e.g. uppsc-gs"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Category</label>
+        <select id="fCategory">
+          <option value="gs">🌍 General Studies</option>
+          <option value="stategk">🗺️ State GK</option>
+          <option value="language">🔤 Language</option>
+          <option value="aptitude">🧮 Aptitude</option>
+          <option value="mixed">📚 Mixed (multi-section)</option>
+        </select>
+      </div>
+      <div class="col">
+        <label>Status</label>
+        <select id="fActive">
+          <option value="true">✅ Active (visible to users)</option>
+          <option value="false">❌ Inactive (hidden)</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="saveBtn">💾 Save Exam</button>
+    <button class="btn btn-ghost" id="resetBtn" style="margin-left:6px">Reset</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Existing Non-Tech Exams</div>
+    <div id="examList" class="loading">Loading…</div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, collection, doc, getDocs, setDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const ADMIN_EMAIL = '112ce0489@gmail.com';
+const cfg = {
+  apiKey:"AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",authDomain:"ae-exam-app.firebaseapp.com",
+  projectId:"ae-exam-app",storageBucket:"ae-exam-app.firebasestorage.app",
+  messagingSenderId:"101353507688",appId:"1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+const app = getApps().length ? getApp() : initializeApp(cfg);
+const auth = getAuth(app), db = getFirestore(app);
+let currentUser = null, editingId = null, allExams = [];
+
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200);}
+
+document.getElementById('saveBtn').onclick = async () => {
+  const name      = document.getElementById('fName').value.trim();
+  const shortName = document.getElementById('fShortName').value.trim();
+  const state     = document.getElementById('fState').value.trim();
+  const icon      = document.getElementById('fIcon').value.trim() || '📚';
+  let id          = document.getElementById('fId').value.trim().toLowerCase().replace(/\s+/g,'-');
+  const category  = document.getElementById('fCategory').value;
+  const active    = document.getElementById('fActive').value === 'true';
+
+  if (!name || !shortName || !id) { toast('⚠️ Name, Short Name and ID required'); return; }
+
+  document.getElementById('saveBtn').disabled = true;
+  document.getElementById('saveBtn').textContent = '⏳ Saving...';
+
+  try {
+    await setDoc(doc(db, 'nt_exams', id), {
+      name: shortName, fullName: name, state, icon, category, active,
+      section: 'nontech',
+      updatedAt: new Date().toISOString(),
+      updatedBy: currentUser?.email || 'admin'
+    });
+    toast('✅ Saved');
+    await loadExams();
+    resetForm();
+  } catch(e) {
+    toast('❌ ' + e.message);
+  }
+  document.getElementById('saveBtn').disabled = false;
+  document.getElementById('saveBtn').textContent = '💾 Save Exam';
+};
+
+document.getElementById('resetBtn').onclick = resetForm;
+function resetForm(){
+  editingId = null;
+  document.getElementById('formTitle').textContent = '➕ Add New Exam';
+  ['fName','fShortName','fState','fId'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('fIcon').value = '📚';
+  document.getElementById('fCategory').value = 'gs';
+  document.getElementById('fActive').value = 'true';
+}
+
+window.editExam = (id) => {
+  const e = allExams.find(x => x.id === id);
+  if (!e) return;
+  editingId = id;
+  document.getElementById('formTitle').textContent = '✏️ Editing: ' + e.name;
+  document.getElementById('fName').value      = e.fullName || e.name;
+  document.getElementById('fShortName').value = e.name;
+  document.getElementById('fState').value     = e.state || '';
+  document.getElementById('fIcon').value      = e.icon || '📚';
+  document.getElementById('fId').value        = e.id;
+  document.getElementById('fCategory').value  = e.category || 'gs';
+  document.getElementById('fActive').value    = String(e.active !== false);
+  window.scrollTo(0,0);
+};
+
+window.deleteExam = async (id) => {
+  if (!confirm('Delete this exam? Its questions in nt_questions will remain but won\'t be linked. Continue?')) return;
+  try {
+    await deleteDoc(doc(db, 'nt_exams', id));
+    toast('🗑 Deleted');
+    await loadExams();
+  } catch(e) { toast('❌ ' + e.message); }
+};
+
+async function loadExams() {
+  const list = document.getElementById('examList');
+  list.innerHTML = '<div class="loading">Loading…</div>';
+  try {
+    const snap = await getDocs(collection(db, 'nt_exams'));
+    allExams = [];
+    snap.forEach(d => allExams.push({ id: d.id, ...d.data() }));
+    if (allExams.length === 0) {
+      list.innerHTML = '<div class="empty">No exams yet. Add your first Non-Tech exam above.</div>';
+      return;
+    }
+    list.innerHTML = '';
+    allExams.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+    allExams.forEach(e => {
+      const item = document.createElement('div');
+      item.className = 'exam-item';
+      item.innerHTML = `
+        <div class="exam-info">
+          <div class="exam-name">${e.icon || '📚'} ${escape(e.name)} <span class="badge ${e.active !== false ? 'badge-active':'badge-inactive'}">${e.active !== false ? 'Active':'Inactive'}</span></div>
+          <div class="exam-sub">${escape(e.fullName || '')} · ${escape(e.state || '')} · ${escape(e.category || 'gs')} · ID: ${e.id}</div>
+        </div>
+        <div class="exam-actions">
+          <button class="btn btn-ghost" onclick="editExam('${e.id}')" style="padding:5px 10px;font-size:11px;margin:0">✏️</button>
+          <button class="btn btn-danger" onclick="deleteExam('${e.id}')" style="padding:5px 10px;font-size:11px;margin:0">🗑</button>
+        </div>`;
+      list.appendChild(item);
+    });
+  } catch(e) {
+    list.innerHTML = '<div class="empty" style="color:#ef4444">Error: ' + e.message + '</div>';
+  }
+}
+function escape(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if (user && user.email === ADMIN_EMAIL) {
+    await loadExams();
+  } else {
+    document.getElementById('examList').innerHTML = '<div class="empty" style="color:#ef4444">🔒 Sign in as admin from the parent page</div>';
+  }
+});
+</script>
+</body>
+</html>
