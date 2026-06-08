@@ -9,7 +9,7 @@ const _subjectCache = {};
 
 // Subject → JSON file mapping
 const GS_SUBJECT_FILES = {
-  'history':         { file: 'data/gs-history.json',   version: 'v4-hist-1' },
+  'history':         { file: 'data/gs-history.json',   version: 'v3-hist-2' },
   'polity':          { file: 'data/gs-polity.json',    version: 'v2-pol-2'  },
   'geography':       { file: 'data/gs-geography.json', version: 'v2-geo-2'  },
   'general-science': { file: 'data/gs-science.json',   version: 'v2-sci-2'  },
