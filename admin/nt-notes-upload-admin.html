@@ -20,57 +20,75 @@
     .btn-secondary{background:#10b981;color:#fff}
     .btn-danger{background:#ef4444;color:#fff}
     .btn-ghost{background:transparent;color:#94a3b8;border:1px solid #334155}
+    .btn-amber{background:#f59e0b;color:#1f2937}
     .row{display:flex;gap:8px;flex-wrap:wrap}
     .col{flex:1;min-width:140px}
     .help{font-size:11px;color:#64748b;background:#0f172a;border:1px dashed #334155;border-radius:6px;padding:12px;margin-bottom:10px;line-height:1.6}
     .help code{background:#1e293b;padding:1px 5px;border-radius:3px;color:#a78bfa}
     .help pre{background:#1e293b;padding:8px;border-radius:4px;color:#a78bfa;margin-top:6px;font-size:10px;overflow-x:auto;white-space:pre}
     .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #a78bfa;color:#a78bfa;padding:8px 16px;border-radius:8px;font-size:12px;display:none;z-index:999}
-    .log{font-family:'Courier New',monospace;font-size:11px;color:#94a3b8;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:10px;max-height:140px;overflow-y:auto;white-space:pre-wrap;margin-top:10px;display:none}
+    .log{font-family:'Courier New',monospace;font-size:11px;color:#94a3b8;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:10px;max-height:200px;overflow-y:auto;white-space:pre-wrap;margin-top:10px;display:none}
     .log.show{display:block}
-    .log .ok{color:#10b981}.log .err{color:#ef4444}
+    .log .ok{color:#10b981}.log .err{color:#ef4444}.log .warn{color:#f59e0b}
+    /* Tabs */
+    .tab-bar{display:flex;gap:6px;margin-bottom:14px}
+    .tab{padding:8px 16px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#94a3b8;font-weight:600;font-size:13px;cursor:pointer}
+    .tab.active{border-color:#a78bfa;color:#a78bfa;background:rgba(167,139,250,.08)}
+    /* Notes list */
+    .notes-row{display:flex;align-items:center;justify-content:space-between;background:#0f172a;padding:10px 12px;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px}
+    .notes-row-info{flex:1;min-width:0}
+    .notes-row-name{font-size:13px;font-weight:600;color:#f1f5f9}
+    .notes-row-meta{font-size:11px;color:#64748b;margin-top:2px}
+    .notes-row-btns{display:flex;gap:5px;flex-shrink:0;margin-left:8px}
   </style>
 </head>
 <body>
-  <h1>⬆️ Non-Tech Notes Upload</h1>
-  <div class="sub">Bulk upload notes JSON for a Non-Tech subsection. Replaces existing notes for that subsection.</div>
+  <h1>⬆️ Non-Tech Notes Admin</h1>
+  <div class="sub">Upload · Manage · Delete notes for Non-Tech subsections</div>
 
-  <div class="card">
-    <div class="card-title">📂 Destination</div>
-    <div class="row">
-      <div class="col">
-        <label>Category</label>
-        <select id="fCategory">
-          <option value="gs">🌍 GS</option>
-          <option value="stategk">🗺️ State GK</option>
-          <option value="language">🔤 Language</option>
-          <option value="aptitude">🧮 Aptitude</option>
-        </select>
-      </div>
-      <div class="col">
-        <label>Subsection</label>
-        <select id="fSubsection"></select>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <label>Mode</label>
-        <select id="fMode">
-          <option value="replace">🔁 Replace all notes for this subsection</option>
-          <option value="append">➕ Append topics & sections to existing</option>
-        </select>
-      </div>
-    </div>
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab active" data-tab="upload">⬆️ Upload</button>
+    <button class="tab" data-tab="manage">📋 Manage & Delete</button>
   </div>
 
-  <div class="card">
-    <div class="card-title">📄 Notes JSON</div>
-    <div class="help">
-      Format expected:
-      <pre>{
+  <!-- ══════════ UPLOAD TAB ══════════ -->
+  <div id="tab-upload">
+    <div class="card">
+      <div class="card-title">📂 Destination</div>
+      <div class="row">
+        <div class="col">
+          <label>Category</label>
+          <select id="fCategory">
+            <option value="gs">🌍 GS</option>
+            <option value="stategk">🗺️ State GK</option>
+            <option value="language">🔤 Language</option>
+            <option value="aptitude">🧮 Aptitude</option>
+          </select>
+        </div>
+        <div class="col">
+          <label>Subsection</label>
+          <select id="fSubsection"></select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label>Mode</label>
+          <select id="fMode">
+            <option value="replace">🔁 Replace all notes for this subsection</option>
+            <option value="append">➕ Append topics & sections to existing</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📄 Notes JSON</div>
+      <div class="help">
+        Format expected:
+        <pre>{
   "topics": [
-    {"id":"constitution","name":"Constitution"},
-    {"id":"frs","name":"Fundamental Rights"}
+    {"id":"constitution","name":"Constitution"}
   ],
   "notes": [
     {
@@ -79,20 +97,38 @@
       "cards":[
         {
           "heading":"Preamble",
-          "points":["Sovereign, Socialist, Secular, Democratic, Republic","Adopted 26 Nov 1949"],
-          "color":"blue"
+          "points":["Point 1","Point 2"],
+          "color":"blue",
+          "table":{"headers":["A","B"],"rows":[["a1","b1"]]}
         }
       ]
     }
   ]
 }</pre>
-      Card colors: <code>blue</code>, <code>red</code>, <code>teal</code>, <code>yellow</code>, <code>pink</code>. Use <code>**text**</code> in points for highlighting.
+        Card colors: <code>blue</code>, <code>green</code>, <code>purple</code>, <code>orange</code>, <code>red</code>, <code>teal</code>, <code>exam</code>, <code>fact</code>, <code>mnemonic</code>, <code>banner</code>.
+        Use <code>**text**</code> in points for highlighting. Tables with <code>rows:[[...]]</code> are auto-converted for Firestore.
+      </div>
+      <textarea id="notesJson" placeholder='{"topics":[...], "notes":[...]}'></textarea>
+      <button class="btn btn-secondary" id="validateBtn">✓ Validate JSON</button>
+      <button class="btn btn-primary" id="uploadBtn" disabled>⬆️ Upload</button>
+      <button class="btn btn-ghost" id="clearBtn">Clear</button>
+      <div class="log" id="logBox"></div>
     </div>
-    <textarea id="notesJson" placeholder='{"topics":[...], "notes":[...]}'></textarea>
-    <button class="btn btn-secondary" id="validateBtn">✓ Validate JSON</button>
-    <button class="btn btn-primary" id="uploadBtn" disabled>⬆️ Upload</button>
-    <button class="btn btn-ghost" id="clearBtn">Clear</button>
-    <div class="log" id="logBox"></div>
+  </div>
+
+  <!-- ══════════ MANAGE TAB ══════════ -->
+  <div id="tab-manage" style="display:none">
+    <div class="card">
+      <div class="card-title">📋 All Notes in Firestore (nt_notes collection)</div>
+      <div class="row" style="margin-bottom:10px">
+        <button class="btn btn-secondary" id="refreshBtn">🔄 Refresh List</button>
+        <button class="btn btn-danger" id="deleteAllBtn">🗑️ Delete ALL Notes</button>
+      </div>
+      <div id="notesList">
+        <div style="color:#64748b;font-size:12px;padding:8px">Click Refresh to load.</div>
+      </div>
+      <div class="log" id="manageLog"></div>
+    </div>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -100,7 +136,7 @@
 <script type="module">
 import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const ADMIN_EMAIL = '112ce0489@gmail.com';
 const cfg = {apiKey:"AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",authDomain:"ae-exam-app.firebaseapp.com",projectId:"ae-exam-app",storageBucket:"ae-exam-app.firebasestorage.app",messagingSenderId:"101353507688",appId:"1:101353507688:web:82b31f2d6096387d7aa4dd"};
@@ -108,9 +144,21 @@ const app = getApps().length ? getApp() : initializeApp(cfg);
 const auth = getAuth(app), db = getFirestore(app);
 let ntConfig = null, validated = null;
 
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
 function log(msg, cls='') { const box = document.getElementById('logBox'); box.classList.add('show'); box.innerHTML += `<div class="${cls}">${msg}</div>`; box.scrollTop = box.scrollHeight; }
+function mlog(msg, cls='') { const box = document.getElementById('manageLog'); box.classList.add('show'); box.innerHTML += `<div class="${cls}">${msg}</div>`; box.scrollTop = box.scrollHeight; }
 
+// ── Tabs ──
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-upload').style.display = btn.dataset.tab === 'upload' ? '' : 'none';
+    document.getElementById('tab-manage').style.display = btn.dataset.tab === 'manage' ? '' : 'none';
+  });
+});
+
+// ── Config ──
 async function loadConfig() {
   try {
     const snap = await getDoc(doc(db, 'nt_config', 'subsections'));
@@ -131,6 +179,23 @@ function refreshSubsections() {
 }
 document.getElementById('fCategory').onchange = refreshSubsections;
 
+// ── Encode table rows for Firestore (nested arrays → {cells:[]} objects) ──
+function encodeForFirestore(data) {
+  const encoded = JSON.parse(JSON.stringify(data));
+  for (const section of (encoded.notes || [])) {
+    for (const card of (section.cards || [])) {
+      for (const key of Object.keys(card)) {
+        const v = card[key];
+        if (v && typeof v === 'object' && Array.isArray(v.rows) && v.rows.length && Array.isArray(v.rows[0])) {
+          v.rows = v.rows.map(row => ({ cells: row }));
+        }
+      }
+    }
+  }
+  return encoded;
+}
+
+// ── Validate ──
 document.getElementById('validateBtn').onclick = () => {
   document.getElementById('logBox').innerHTML = '';
   document.getElementById('logBox').classList.remove('show');
@@ -153,11 +218,13 @@ document.getElementById('validateBtn').onclick = () => {
 
   if (warnings > 0) { log(`${warnings} errors. Fix and re-validate.`, 'err'); validated = null; document.getElementById('uploadBtn').disabled = true; return; }
 
-  log(`✅ ${parsed.topics.length} topics, ${parsed.notes.length} sections validated`, 'ok');
+  const totalCards = parsed.notes.reduce((s, sec) => s + (sec.cards||[]).length, 0);
+  log(`✅ ${parsed.topics.length} topics, ${parsed.notes.length} sections, ${totalCards} cards validated`, 'ok');
   validated = parsed;
   document.getElementById('uploadBtn').disabled = false;
 };
 
+// ── Upload ──
 document.getElementById('uploadBtn').onclick = async () => {
   if (!validated) return;
   const subId = document.getElementById('fSubsection').value;
@@ -168,14 +235,14 @@ document.getElementById('uploadBtn').onclick = async () => {
   document.getElementById('uploadBtn').textContent = '⏳ Uploading...';
 
   try {
-    let final = validated;
+    let final = encodeForFirestore(validated);
     if (mode === 'append') {
       const existing = await getDoc(doc(db, 'nt_notes', subId));
       if (existing.exists()) {
         const old = existing.data();
         final = {
-          topics: [...(old.topics || []), ...validated.topics],
-          notes:  [...(old.notes  || []), ...validated.notes]
+          topics: [...(old.topics || []), ...final.topics],
+          notes:  [...(old.notes  || []), ...final.notes]
         };
       }
     }
@@ -199,6 +266,125 @@ document.getElementById('clearBtn').onclick = () => {
   document.getElementById('uploadBtn').disabled = true;
 };
 
+// ══════════════════════════════════════════════════════
+// MANAGE TAB — List, Delete Single, Delete All
+// ══════════════════════════════════════════════════════
+
+document.getElementById('refreshBtn').onclick = loadNotesList;
+
+async function loadNotesList() {
+  const list = document.getElementById('notesList');
+  list.innerHTML = '<div style="color:#64748b;font-size:12px;padding:8px">Loading...</div>';
+
+  try {
+    const snap = await getDocs(collection(db, 'nt_notes'));
+    if (snap.empty) {
+      list.innerHTML = '<div style="color:#64748b;font-size:12px;padding:8px">No notes found in nt_notes collection.</div>';
+      return;
+    }
+
+    list.innerHTML = '';
+    snap.forEach(d => {
+      const data = d.data();
+      const topicCount = (data.topics || []).length;
+      const noteCount  = (data.notes || []).length;
+      const cardCount  = (data.notes || []).reduce((s, n) => s + (n.cards || []).length, 0);
+
+      const row = document.createElement('div');
+      row.className = 'notes-row';
+      row.innerHTML = `
+        <div class="notes-row-info">
+          <div class="notes-row-name">📄 ${d.id}</div>
+          <div class="notes-row-meta">${topicCount} topics · ${noteCount} sections · ${cardCount} cards</div>
+        </div>
+        <div class="notes-row-btns">
+          <button class="btn btn-ghost" style="font-size:10px;padding:5px 8px" data-dl="${d.id}">⬇️</button>
+          <button class="btn btn-danger" style="font-size:10px;padding:5px 8px" data-del="${d.id}">🗑️</button>
+        </div>`;
+      list.appendChild(row);
+    });
+
+    // Attach delete handlers
+    list.querySelectorAll('[data-del]').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.dataset.del;
+        if (!confirm(`Delete ALL notes for "${id}"? This cannot be undone.`)) return;
+        try {
+          await deleteDoc(doc(db, 'nt_notes', id));
+          mlog(`✅ Deleted nt_notes/${id}`, 'ok');
+          toast(`Deleted: ${id}`);
+          loadNotesList();
+        } catch(e) {
+          mlog(`❌ Error deleting ${id}: ${e.message}`, 'err');
+        }
+      };
+    });
+
+    // Attach download handlers
+    list.querySelectorAll('[data-dl]').forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.dataset.dl;
+        const snap = await getDoc(doc(db, 'nt_notes', id));
+        if (!snap.exists()) { toast('Not found'); return; }
+        const data = snap.data();
+        // Decode {cells:[]} back to arrays for download
+        if (data.notes) {
+          for (const sec of data.notes) {
+            for (const card of (sec.cards || [])) {
+              for (const key of Object.keys(card)) {
+                const v = card[key];
+                if (v && typeof v === 'object' && Array.isArray(v.rows) && v.rows.length && v.rows[0]?.cells) {
+                  v.rows = v.rows.map(r => r.cells);
+                }
+              }
+            }
+          }
+        }
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `nt-notes-${id}.json`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        toast(`Downloaded: ${id}`);
+      };
+    });
+
+    mlog(`✅ Found ${snap.size} note documents`, 'ok');
+  } catch(e) {
+    list.innerHTML = `<div style="color:#ef4444;font-size:12px;padding:8px">Error: ${e.message}</div>`;
+  }
+}
+
+// ── Delete ALL ──
+document.getElementById('deleteAllBtn').onclick = async () => {
+  if (!confirm('⚠️ DELETE ALL notes from nt_notes collection? This cannot be undone!')) return;
+  if (!confirm('Are you really sure? ALL notes will be permanently deleted.')) return;
+
+  const logEl = document.getElementById('manageLog');
+  logEl.innerHTML = '';
+  logEl.classList.add('show');
+
+  try {
+    const snap = await getDocs(collection(db, 'nt_notes'));
+    mlog(`Found ${snap.size} documents to delete...`, 'warn');
+
+    let deleted = 0;
+    for (const d of snap.docs) {
+      await deleteDoc(doc(db, 'nt_notes', d.id));
+      mlog(`  🗑️ Deleted: ${d.id}`, 'ok');
+      deleted++;
+    }
+
+    mlog(`\n✅ Done! Deleted ${deleted} documents.`, 'ok');
+    toast(`Deleted ${deleted} notes`);
+    loadNotesList();
+  } catch(e) {
+    mlog(`❌ Error: ${e.message}`, 'err');
+  }
+};
+
+// ── Auth ──
 onAuthStateChanged(auth, async user => {
   if (user && user.email === ADMIN_EMAIL) await loadConfig();
 });
