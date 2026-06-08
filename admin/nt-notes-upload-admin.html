@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>NT Notes Admin</title>
+  <title>NT Notes Upload</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:14px}
@@ -12,111 +12,87 @@
     .card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:14px;margin-bottom:12px}
     .card-title{font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:10px}
     label{display:block;font-size:11px;color:#94a3b8;font-weight:600;margin-bottom:4px;margin-top:8px;text-transform:uppercase;letter-spacing:.04em}
-    select,textarea,input[type=text]{width:100%;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:8px 10px;color:#f1f5f9;font-size:13px;font-family:inherit;outline:none}
+    .auth-input,select,textarea{width:100%;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:8px 10px;color:#f1f5f9;font-size:13px;font-family:inherit;outline:none}
     textarea{min-height:300px;font-family:'Courier New',monospace;font-size:11px;line-height:1.5}
-    select:focus,textarea:focus{border-color:#a78bfa}
-    .btn{padding:8px 14px;border-radius:6px;border:none;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit;margin-top:8px;transition:opacity .15s}
-    .btn:active{opacity:.7}
+    .auth-input:focus,select:focus,textarea:focus{border-color:#a78bfa}
+    .btn{padding:8px 14px;border-radius:6px;border:none;font-weight:600;font-size:12px;cursor:pointer;font-family:inherit;margin-top:8px}
     .btn-primary{background:#a78bfa;color:#0f172a}
     .btn-secondary{background:#10b981;color:#fff}
     .btn-danger{background:#ef4444;color:#fff}
     .btn-ghost{background:transparent;color:#94a3b8;border:1px solid #334155}
-    .btn-amber{background:#f59e0b;color:#0f172a}
-    .btn-sm{font-size:10px;padding:5px 8px;margin-top:0}
     .row{display:flex;gap:8px;flex-wrap:wrap}
     .col{flex:1;min-width:140px}
     .help{font-size:11px;color:#64748b;background:#0f172a;border:1px dashed #334155;border-radius:6px;padding:12px;margin-bottom:10px;line-height:1.6}
     .help code{background:#1e293b;padding:1px 5px;border-radius:3px;color:#a78bfa}
     .help pre{background:#1e293b;padding:8px;border-radius:4px;color:#a78bfa;margin-top:6px;font-size:10px;overflow-x:auto;white-space:pre}
     .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #a78bfa;color:#a78bfa;padding:8px 16px;border-radius:8px;font-size:12px;display:none;z-index:999}
-    .log{font-family:'Courier New',monospace;font-size:11px;color:#94a3b8;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:10px;max-height:200px;overflow-y:auto;white-space:pre-wrap;margin-top:10px;display:none}
+    .log{font-family:'Courier New',monospace;font-size:11px;color:#94a3b8;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:10px;max-height:140px;overflow-y:auto;white-space:pre-wrap;margin-top:10px;display:none}
     .log.show{display:block}
-    .log .ok{color:#10b981}.log .err{color:#ef4444}.log .warn{color:#f59e0b}
-    .tab-bar{display:flex;gap:6px;margin-bottom:14px}
-    .tab{padding:8px 16px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#94a3b8;font-weight:600;font-size:13px;cursor:pointer}
-    .tab.active{border-color:#a78bfa;color:#a78bfa;background:rgba(167,139,250,.08)}
-    /* Subject row */
-    .subj-row{background:#0f172a;border:1px solid #334155;border-radius:10px;margin-bottom:10px;overflow:hidden}
-    .subj-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer}
-    .subj-header:hover{background:rgba(167,139,250,.04)}
-    .subj-name{font-size:14px;font-weight:700;color:#f1f5f9}
-    .subj-meta{font-size:11px;color:#64748b;margin-top:2px}
-    .subj-btns{display:flex;gap:5px;flex-shrink:0}
-    .subj-chapters{border-top:1px solid #334155;padding:10px 14px;display:none}
-    .subj-chapters.open{display:block}
-    .ch-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:6px;margin-bottom:4px;background:#1e293b}
-    .ch-name{font-size:12px;color:#e2e8f0;flex:1}
-    .ch-cards{font-size:10px;color:#64748b;margin-left:8px;margin-right:8px}
-    .ch-check{width:16px;height:16px;accent-color:#ef4444;margin-right:8px;cursor:pointer}
-    .danger-zone{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:12px;margin-top:10px}
-    .danger-title{font-size:11px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+    .log .ok{color:#10b981}.log .err{color:#ef4444}
   </style>
 </head>
 <body>
-  <h1>⬆️ Non-Tech Notes Admin</h1>
-  <div class="sub">Upload · Manage · Delete notes chapter-wise & subject-wise</div>
+  <h1>⬆️ Non-Tech Notes Upload</h1>
+  <div class="sub">Bulk upload notes JSON for a Non-Tech subsection. Replaces existing notes for that subsection.</div>
 
-  <div class="tab-bar">
-    <button class="tab active" data-tab="upload">⬆️ Upload</button>
-    <button class="tab" data-tab="manage">📋 Manage & Delete</button>
-  </div>
-
-  <!-- ══════════ UPLOAD TAB ══════════ -->
-  <div id="tab-upload">
-    <div class="card">
-      <div class="card-title">📂 Destination</div>
-      <div class="row">
-        <div class="col"><label>Category</label>
-          <select id="fCategory">
-            <option value="gs">🌍 GS</option><option value="stategk">🗺️ State GK</option>
-            <option value="language">🔤 Language</option><option value="aptitude">🧮 Aptitude</option>
-          </select>
-        </div>
-        <div class="col"><label>Subsection</label><select id="fSubsection"></select></div>
+  <div class="card">
+    <div class="card-title">📂 Destination</div>
+    <div class="row">
+      <div class="col">
+        <label>Category</label>
+        <select id="fCategory">
+          <option value="gs">🌍 GS</option>
+          <option value="stategk">🗺️ State GK</option>
+          <option value="language">🔤 Language</option>
+          <option value="aptitude">🧮 Aptitude</option>
+        </select>
       </div>
-      <div class="row"><div class="col"><label>Mode</label>
+      <div class="col">
+        <label>Subsection</label>
+        <select id="fSubsection"></select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Mode</label>
         <select id="fMode">
           <option value="replace">🔁 Replace all notes for this subsection</option>
           <option value="append">➕ Append topics & sections to existing</option>
         </select>
-      </div></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">📄 Notes JSON</div>
-      <div class="help">
-        Card colors: <code>blue</code> <code>green</code> <code>purple</code> <code>orange</code> <code>red</code> <code>teal</code> <code>exam</code> <code>fact</code> <code>mnemonic</code> <code>banner</code>.
-        Use <code>**text**</code> for highlighting. Tables auto-encoded for Firestore.
       </div>
-      <textarea id="notesJson" placeholder='{"topics":[...], "notes":[...]}'></textarea>
-      <button class="btn btn-secondary" id="validateBtn">✓ Validate JSON</button>
-      <button class="btn btn-primary" id="uploadBtn" disabled>⬆️ Upload</button>
-      <button class="btn btn-ghost" id="clearBtn">Clear</button>
-      <div class="log" id="logBox"></div>
     </div>
   </div>
 
-  <!-- ══════════ MANAGE TAB ══════════ -->
-  <div id="tab-manage" style="display:none">
-    <div class="card">
-      <div class="card-title">📋 Notes in Firestore</div>
-      <div class="row" style="margin-bottom:12px">
-        <button class="btn btn-secondary" id="refreshBtn">🔄 Load All Notes</button>
-      </div>
-      <div id="notesList">
-        <div style="color:#64748b;font-size:12px;padding:8px">Click "Load All Notes" to start.</div>
-      </div>
-
-      <div class="danger-zone" style="margin-top:16px">
-        <div class="danger-title">⚠️ Danger Zone</div>
-        <div class="row">
-          <button class="btn btn-danger" id="deleteSelectedBtn" disabled>🗑️ Delete Selected Chapters</button>
-          <button class="btn btn-danger" id="deleteAllBtn">💣 Delete ALL Non-Tech Notes</button>
-        </div>
-        <div style="font-size:10px;color:#64748b;margin-top:6px">Select chapters using checkboxes above, then click "Delete Selected".</div>
-      </div>
-      <div class="log" id="manageLog"></div>
+  <div class="card">
+    <div class="card-title">📄 Notes JSON</div>
+    <div class="help">
+      Format expected:
+      <pre>{
+  "topics": [
+    {"id":"constitution","name":"Constitution"},
+    {"id":"frs","name":"Fundamental Rights"}
+  ],
+  "notes": [
+    {
+      "topic_id":"constitution",
+      "topic_name":"Constitution",
+      "cards":[
+        {
+          "heading":"Preamble",
+          "points":["Sovereign, Socialist, Secular, Democratic, Republic","Adopted 26 Nov 1949"],
+          "color":"blue"
+        }
+      ]
+    }
+  ]
+}</pre>
+      Card colors: <code>blue</code>, <code>red</code>, <code>teal</code>, <code>yellow</code>, <code>pink</code>. Use <code>**text**</code> in points for highlighting.
     </div>
+    <textarea id="notesJson" placeholder='{"topics":[...], "notes":[...]}'></textarea>
+    <button class="btn btn-secondary" id="validateBtn">✓ Validate JSON</button>
+    <button class="btn btn-primary" id="uploadBtn" disabled>⬆️ Upload</button>
+    <button class="btn btn-ghost" id="clearBtn">Clear</button>
+    <div class="log" id="logBox"></div>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -124,333 +100,107 @@
 <script type="module">
 import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const ADMIN_EMAIL = '112ce0489@gmail.com';
 const cfg = {apiKey:"AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",authDomain:"ae-exam-app.firebaseapp.com",projectId:"ae-exam-app",storageBucket:"ae-exam-app.firebasestorage.app",messagingSenderId:"101353507688",appId:"1:101353507688:web:82b31f2d6096387d7aa4dd"};
 const app = getApps().length ? getApp() : initializeApp(cfg);
 const auth = getAuth(app), db = getFirestore(app);
 let ntConfig = null, validated = null;
-let allNotesData = {}; // subjectId → {topics, notes} from Firestore
 
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
-function log(msg,cls=''){const b=document.getElementById('logBox');b.classList.add('show');b.innerHTML+=`<div class="${cls}">${msg}</div>`;b.scrollTop=b.scrollHeight;}
-function mlog(msg,cls=''){const b=document.getElementById('manageLog');b.classList.add('show');b.innerHTML+=`<div class="${cls}">${msg}</div>`;b.scrollTop=b.scrollHeight;}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
+function log(msg, cls='') { const box = document.getElementById('logBox'); box.classList.add('show'); box.innerHTML += `<div class="${cls}">${msg}</div>`; box.scrollTop = box.scrollHeight; }
 
-// ── Tabs ──
-document.querySelectorAll('.tab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-upload').style.display=btn.dataset.tab==='upload'?'':'none';
-    document.getElementById('tab-manage').style.display=btn.dataset.tab==='manage'?'':'none';
-  });
-});
-
-// ── Config ──
-async function loadConfig(){
-  try{
-    const snap=await getDoc(doc(db,'nt_config','subsections'));
-    ntConfig=snap.exists()?snap.data():{gs:[],stategk:[],language:[],aptitude:[]};
+async function loadConfig() {
+  try {
+    const snap = await getDoc(doc(db, 'nt_config', 'subsections'));
+    ntConfig = snap.exists() ? snap.data() : { gs:[], stategk:[], language:[], aptitude:[] };
     refreshSubsections();
-  }catch(e){toast('Config load error');}
+  } catch(e) { toast('Config load error'); }
 }
-function refreshSubsections(){
-  const cat=document.getElementById('fCategory').value;
-  const sel=document.getElementById('fSubsection');
-  sel.innerHTML='';
-  (ntConfig?.[cat]||[]).forEach(sub=>{
-    const o=document.createElement('option');o.value=sub.id;
-    o.textContent=`${sub.icon||''} ${sub.name}`;sel.appendChild(o);
+function refreshSubsections() {
+  const cat = document.getElementById('fCategory').value;
+  const sel = document.getElementById('fSubsection');
+  sel.innerHTML = '';
+  (ntConfig?.[cat] || []).forEach(sub => {
+    const o = document.createElement('option');
+    o.value = sub.id;
+    o.textContent = `${sub.icon || ''} ${sub.name}`;
+    sel.appendChild(o);
   });
 }
-document.getElementById('fCategory').onchange=refreshSubsections;
+document.getElementById('fCategory').onchange = refreshSubsections;
 
-// ── Encode tables for Firestore ──
-function encodeForFirestore(data){
-  const e=JSON.parse(JSON.stringify(data));
-  for(const s of(e.notes||[]))for(const c of(s.cards||[]))for(const k of Object.keys(c)){
-    const v=c[k];
-    if(v&&typeof v==='object'&&Array.isArray(v.rows)&&v.rows.length&&Array.isArray(v.rows[0]))
-      v.rows=v.rows.map(r=>({cells:r}));
-  }
-  return e;
-}
-
-// ── Validate ──
-document.getElementById('validateBtn').onclick=()=>{
-  document.getElementById('logBox').innerHTML='';document.getElementById('logBox').classList.remove('show');
+document.getElementById('validateBtn').onclick = () => {
+  document.getElementById('logBox').innerHTML = '';
+  document.getElementById('logBox').classList.remove('show');
   let parsed;
-  try{parsed=JSON.parse(document.getElementById('notesJson').value);}
-  catch(e){log('❌ Invalid JSON: '+e.message,'err');return;}
-  if(!parsed||typeof parsed!=='object'){log('❌ Must be a JSON object','err');return;}
-  if(!Array.isArray(parsed.topics)){log('❌ Missing "topics" array','err');return;}
-  if(!Array.isArray(parsed.notes)){log('❌ Missing "notes" array','err');return;}
-  let w=0;
-  parsed.topics.forEach((t,i)=>{if(!t.id||!t.name){log(`Topic ${i+1}: missing id/name`,'err');w++;}});
-  parsed.notes.forEach((s,i)=>{
-    if(!s.topic_id||!s.topic_name){log(`Section ${i+1}: missing topic_id/name`,'err');w++;}
-    if(!Array.isArray(s.cards)||!s.cards.length){log(`Section ${i+1}: no cards`,'err');w++;}
+  try { parsed = JSON.parse(document.getElementById('notesJson').value); }
+  catch(e) { log('❌ Invalid JSON: ' + e.message, 'err'); return; }
+
+  if (typeof parsed !== 'object' || parsed === null) { log('❌ Must be a JSON object', 'err'); return; }
+  if (!Array.isArray(parsed.topics)) { log('❌ Missing or invalid "topics" array', 'err'); return; }
+  if (!Array.isArray(parsed.notes))  { log('❌ Missing or invalid "notes" array', 'err'); return; }
+
+  let warnings = 0;
+  parsed.topics.forEach((t, i) => {
+    if (!t.id || !t.name) { log(`Topic ${i+1}: missing id or name`, 'err'); warnings++; }
   });
-  if(w){log(`${w} errors. Fix and retry.`,'err');validated=null;document.getElementById('uploadBtn').disabled=true;return;}
-  const tc=parsed.notes.reduce((s,sec)=>s+(sec.cards||[]).length,0);
-  log(`✅ ${parsed.topics.length} topics, ${parsed.notes.length} sections, ${tc} cards`,'ok');
-  validated=parsed;document.getElementById('uploadBtn').disabled=false;
-};
-
-// ── Upload ──
-document.getElementById('uploadBtn').onclick=async()=>{
-  if(!validated)return;
-  const subId=document.getElementById('fSubsection').value;
-  if(!subId){toast('Pick a subsection');return;}
-  const mode=document.getElementById('fMode').value;
-  const btn=document.getElementById('uploadBtn');
-  btn.disabled=true;btn.textContent='⏳ Uploading...';
-  try{
-    let final=encodeForFirestore(validated);
-    if(mode==='append'){
-      const existing=await getDoc(doc(db,'nt_notes',subId));
-      if(existing.exists()){const old=existing.data();
-        final={topics:[...(old.topics||[]),...final.topics],notes:[...(old.notes||[]),...final.notes]};
-      }
-    }
-    await setDoc(doc(db,'nt_notes',subId),final);
-    log(`✅ Uploaded to nt_notes/${subId} (${mode})`,'ok');
-    toast('✅ Upload complete');validated=null;document.getElementById('notesJson').value='';
-  }catch(e){log('❌ '+e.message,'err');}
-  btn.disabled=true;btn.textContent='⬆️ Upload';
-};
-document.getElementById('clearBtn').onclick=()=>{
-  document.getElementById('notesJson').value='';document.getElementById('logBox').innerHTML='';
-  document.getElementById('logBox').classList.remove('show');validated=null;document.getElementById('uploadBtn').disabled=true;
-};
-
-// ══════════════════════════════════════════════════════
-// MANAGE TAB — Subject-wise & Chapter-wise Delete
-// ══════════════════════════════════════════════════════
-
-document.getElementById('refreshBtn').onclick=loadNotesList;
-
-async function loadNotesList(){
-  const list=document.getElementById('notesList');
-  list.innerHTML='<div style="color:#64748b;font-size:12px;padding:8px">Loading from both nt_notes & notes collections...</div>';
-  allNotesData={};
-  document.getElementById('manageLog').innerHTML='';
-  document.getElementById('manageLog').classList.remove('show');
-
-  try{
-    // Load from BOTH collections
-    const collections=['nt_notes','notes'];
-    const allDocs=[];
-    for(const col of collections){
-      const snap=await getDocs(collection(db,col));
-      snap.forEach(d=>{ if(!allNotesData[d.id]) allDocs.push({id:d.id,col,data:d.data()}); allNotesData[d.id]={...d.data(),_col:col}; });
-    }
-
-    if(!allDocs.length){
-      list.innerHTML='<div style="color:#10b981;font-size:13px;padding:12px">✅ No notes found — collections are empty.</div>';
-      return;
-    }
-
-    list.innerHTML='';
-    allDocs.forEach(({id,col,data})=>{
-      const topics=data.topics||[];
-      const notes=data.notes||[];
-      const totalCards=notes.reduce((s,n)=>s+(n.cards||[]).length,0);
-
-      const wrap=document.createElement('div');
-      wrap.className='subj-row';
-      wrap.dataset.subj=id;
-      wrap.dataset.col=col;
-
-      // Header
-      const header=document.createElement('div');
-      header.className='subj-header';
-      header.innerHTML=`
-        <div>
-          <div class="subj-name">📄 ${id} <span style="font-size:10px;color:#64748b;font-weight:400;background:#0f172a;padding:1px 6px;border-radius:3px;margin-left:6px">${col}</span></div>
-          <div class="subj-meta">${topics.length} topics · ${notes.length} sections · ${totalCards} cards</div>
-        </div>
-        <div class="subj-btns">
-          <button class="btn btn-ghost btn-sm" data-toggle="${id}">▼ Chapters</button>
-          <button class="btn btn-amber btn-sm" data-dl="${id}" data-dlcol="${col}">⬇️</button>
-          <button class="btn btn-danger btn-sm" data-delsub="${id}" data-delcol="${col}">🗑️ All</button>
-        </div>`;
-      wrap.appendChild(header);
-
-      // Chapter list
-      const chapters=document.createElement('div');
-      chapters.className='subj-chapters';
-      chapters.id='ch-'+id;
-
-      if(notes.length){
-        notes.forEach((sec,idx)=>{
-          const cardCount=(sec.cards||[]).length;
-          const chRow=document.createElement('div');
-          chRow.className='ch-row';
-          chRow.innerHTML=`
-            <input type="checkbox" class="ch-check" data-subj="${id}" data-col="${col}" data-idx="${idx}">
-            <div class="ch-name">${sec.topic_name||sec.topic_id||'Section '+idx}</div>
-            <div class="ch-cards">${cardCount} cards</div>
-            <button class="btn btn-danger btn-sm" data-delch="${id}" data-chcol="${col}" data-chidx="${idx}">🗑️</button>`;
-          chapters.appendChild(chRow);
-        });
-      } else {
-        chapters.innerHTML='<div style="color:#64748b;font-size:11px;padding:6px">No sections/chapters found.</div>';
-      }
-
-      wrap.appendChild(chapters);
-      list.appendChild(wrap);
-    });
-
-    // Toggle chapters
-    list.querySelectorAll('[data-toggle]').forEach(btn=>{
-      btn.onclick=(e)=>{e.stopPropagation();
-        const ch=document.getElementById('ch-'+btn.dataset.toggle);
-        if(ch){ch.classList.toggle('open');btn.textContent=ch.classList.contains('open')?'▲ Chapters':'▼ Chapters';}
-      };
-    });
-
-    // Delete entire subject
-    list.querySelectorAll('[data-delsub]').forEach(btn=>{
-      btn.onclick=async(e)=>{e.stopPropagation();
-        const id=btn.dataset.delsub,col=btn.dataset.delcol;
-        if(!confirm(`Delete ALL notes for "${id}" from ${col}?`))return;
-        try{await deleteDoc(doc(db,col,id));mlog(`✅ Deleted ${col}/${id}`,'ok');toast(`Deleted: ${id}`);loadNotesList();}
-        catch(e){mlog(`❌ ${e.message}`,'err');}
-      };
-    });
-
-    // Delete single chapter
-    list.querySelectorAll('[data-delch]').forEach(btn=>{
-      btn.onclick=async(e)=>{e.stopPropagation();
-        const id=btn.dataset.delch,col=btn.dataset.chcol,idx=parseInt(btn.dataset.chidx);
-        const d=allNotesData[id];if(!d)return;
-        const secName=(d.notes||[])[idx]?.topic_name||'Section '+idx;
-        if(!confirm(`Delete chapter "${secName}" from ${id}?`))return;
-        try{
-          const newNotes=[...(d.notes||[])];newNotes.splice(idx,1);
-          // Also remove topic if no more sections reference it
-          const removedTopicId=(d.notes||[])[idx]?.topic_id;
-          let newTopics=[...(d.topics||[])];
-          if(removedTopicId && !newNotes.some(n=>n.topic_id===removedTopicId)){
-            newTopics=newTopics.filter(t=>t.id!==removedTopicId);
-          }
-          if(newNotes.length===0){
-            await deleteDoc(doc(db,col,id));
-            mlog(`✅ No chapters left — deleted entire ${col}/${id}`,'ok');
-          } else {
-            await setDoc(doc(db,col,id),{...d,topics:newTopics,notes:newNotes,_col:undefined});
-            mlog(`✅ Deleted "${secName}" from ${id} (${newNotes.length} chapters remaining)`,'ok');
-          }
-          toast(`Deleted: ${secName}`);loadNotesList();
-        }catch(e){mlog(`❌ ${e.message}`,'err');}
-      };
-    });
-
-    // Download subject
-    list.querySelectorAll('[data-dl]').forEach(btn=>{
-      btn.onclick=async(e)=>{e.stopPropagation();
-        const id=btn.dataset.dl,col=btn.dataset.dlcol;
-        const snap=await getDoc(doc(db,col,id));
-        if(!snap.exists()){toast('Not found');return;}
-        const data=snap.data();
-        // Decode {cells} back to arrays
-        if(data.notes)for(const sec of data.notes)for(const card of(sec.cards||[]))for(const k of Object.keys(card)){
-          const v=card[k];if(v&&typeof v==='object'&&Array.isArray(v.rows)&&v.rows.length&&v.rows[0]?.cells)v.rows=v.rows.map(r=>r.cells);
-        }
-        const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-        const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`nt-notes-${id}.json`;a.click();
-        URL.revokeObjectURL(a.href);toast(`Downloaded: ${id}`);
-      };
-    });
-
-    // Update checkbox count for delete selected
-    updateDeleteSelectedBtn();
-    list.querySelectorAll('.ch-check').forEach(cb=>cb.onchange=updateDeleteSelectedBtn);
-
-    mlog(`✅ Found ${allDocs.length} note documents`,'ok');
-  }catch(e){
-    list.innerHTML=`<div style="color:#ef4444;font-size:12px;padding:8px">Error: ${e.message}</div>`;
-  }
-}
-
-function updateDeleteSelectedBtn(){
-  const checked=document.querySelectorAll('.ch-check:checked');
-  const btn=document.getElementById('deleteSelectedBtn');
-  btn.disabled=!checked.length;
-  btn.textContent=checked.length?`🗑️ Delete ${checked.length} Selected Chapter${checked.length>1?'s':''}`:'🗑️ Delete Selected Chapters';
-}
-
-// Delete selected chapters
-document.getElementById('deleteSelectedBtn').onclick=async()=>{
-  const checked=[...document.querySelectorAll('.ch-check:checked')];
-  if(!checked.length)return;
-  const summary=checked.map(cb=>{
-    const subj=cb.dataset.subj,idx=parseInt(cb.dataset.idx);
-    const name=(allNotesData[subj]?.notes||[])[idx]?.topic_name||'Section '+idx;
-    return `${subj} → ${name}`;
-  }).join('\n');
-  if(!confirm(`Delete these ${checked.length} chapters?\n\n${summary}`))return;
-
-  // Group by subject
-  const bySubj={};
-  checked.forEach(cb=>{
-    const subj=cb.dataset.subj,col=cb.dataset.col,idx=parseInt(cb.dataset.idx);
-    if(!bySubj[subj])bySubj[subj]={col,indices:[]};
-    bySubj[subj].indices.push(idx);
+  parsed.notes.forEach((s, i) => {
+    if (!s.topic_id || !s.topic_name) { log(`Section ${i+1}: missing topic_id or topic_name`, 'err'); warnings++; }
+    if (!Array.isArray(s.cards) || s.cards.length === 0) { log(`Section ${i+1}: no cards`, 'err'); warnings++; }
   });
 
-  for(const[subj,{col,indices}]of Object.entries(bySubj)){
-    const d=allNotesData[subj];if(!d)continue;
-    const sortedIdx=[...indices].sort((a,b)=>b-a); // delete from end
-    const newNotes=[...(d.notes||[])];
-    const removedTopicIds=[];
-    sortedIdx.forEach(i=>{
-      if(newNotes[i])removedTopicIds.push(newNotes[i].topic_id);
-      newNotes.splice(i,1);
-    });
-    // Clean orphaned topics
-    let newTopics=[...(d.topics||[])];
-    removedTopicIds.forEach(tid=>{
-      if(tid&&!newNotes.some(n=>n.topic_id===tid))newTopics=newTopics.filter(t=>t.id!==tid);
-    });
-    try{
-      if(newNotes.length===0){
-        await deleteDoc(doc(db,col,subj));
-        mlog(`✅ ${subj}: all chapters removed — deleted entire document`,'ok');
-      } else {
-        await setDoc(doc(db,col,subj),{...d,topics:newTopics,notes:newNotes,_col:undefined});
-        mlog(`✅ ${subj}: deleted ${indices.length} chapters (${newNotes.length} remaining)`,'ok');
-      }
-    }catch(e){mlog(`❌ ${subj}: ${e.message}`,'err');}
-  }
-  toast('Deleted selected chapters');
-  loadNotesList();
+  if (warnings > 0) { log(`${warnings} errors. Fix and re-validate.`, 'err'); validated = null; document.getElementById('uploadBtn').disabled = true; return; }
+
+  log(`✅ ${parsed.topics.length} topics, ${parsed.notes.length} sections validated`, 'ok');
+  validated = parsed;
+  document.getElementById('uploadBtn').disabled = false;
 };
 
-// Delete ALL
-document.getElementById('deleteAllBtn').onclick=async()=>{
-  if(!confirm('⚠️ DELETE ALL notes from nt_notes AND notes collections?\nThis cannot be undone!'))return;
-  if(!confirm('Really sure? ALL notes will be permanently deleted.'))return;
-  document.getElementById('manageLog').innerHTML='';
-  try{
-    for(const col of['nt_notes','notes']){
-      const snap=await getDocs(collection(db,col));
-      mlog(`${col}: ${snap.size} documents`,'warn');
-      for(const d of snap.docs){
-        await deleteDoc(doc(db,col,d.id));
-        mlog(`  🗑️ Deleted ${col}/${d.id}`,'ok');
+document.getElementById('uploadBtn').onclick = async () => {
+  if (!validated) return;
+  const subId = document.getElementById('fSubsection').value;
+  if (!subId) { toast('Pick a subsection'); return; }
+  const mode = document.getElementById('fMode').value;
+
+  document.getElementById('uploadBtn').disabled = true;
+  document.getElementById('uploadBtn').textContent = '⏳ Uploading...';
+
+  try {
+    let final = validated;
+    if (mode === 'append') {
+      const existing = await getDoc(doc(db, 'nt_notes', subId));
+      if (existing.exists()) {
+        const old = existing.data();
+        final = {
+          topics: [...(old.topics || []), ...validated.topics],
+          notes:  [...(old.notes  || []), ...validated.notes]
+        };
       }
     }
-    mlog('\n✅ All notes deleted!','ok');
-    toast('All notes deleted');loadNotesList();
-  }catch(e){mlog(`❌ ${e.message}`,'err');}
+    await setDoc(doc(db, 'nt_notes', subId), final);
+    log(`✅ Notes uploaded to nt_notes/${subId} (${mode})`, 'ok');
+    toast('✅ Upload complete');
+    validated = null;
+    document.getElementById('notesJson').value = '';
+  } catch(e) {
+    log('❌ Upload error: ' + e.message, 'err');
+  }
+  document.getElementById('uploadBtn').disabled = true;
+  document.getElementById('uploadBtn').textContent = '⬆️ Upload';
 };
 
-// ── Auth ──
-onAuthStateChanged(auth,async user=>{
-  if(user&&user.email===ADMIN_EMAIL)await loadConfig();
+document.getElementById('clearBtn').onclick = () => {
+  document.getElementById('notesJson').value = '';
+  document.getElementById('logBox').innerHTML = '';
+  document.getElementById('logBox').classList.remove('show');
+  validated = null;
+  document.getElementById('uploadBtn').disabled = true;
+};
+
+onAuthStateChanged(auth, async user => {
+  if (user && user.email === ADMIN_EMAIL) await loadConfig();
 });
 </script>
 </body>

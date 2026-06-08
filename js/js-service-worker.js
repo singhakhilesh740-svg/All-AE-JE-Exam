@@ -1,5 +1,5 @@
 // service-worker.js — PWA caching v20-notifications
-const CACHE_NAME = 'ae-civil-v39-needsimage';
+const CACHE_NAME = 'ae-civil-v40-needsimage';
 const STATIC_ASSETS = [
   './',
   './index.html',
