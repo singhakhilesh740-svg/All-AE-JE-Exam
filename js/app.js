@@ -1411,10 +1411,31 @@ async function _loadNTNotes(sub, section, subject, main, placeholder) {
       notesData = snap.data();
     } else if (section === 'gs') {
       // FALLBACK: try legacy GS JSON files for existing data (polity, history, etc.)
-      notesData = await loadGSNotes(sub.id);
-      if (notesData && subject !== 'all') {
-        const sub2 = getSubSubjectData(notesData, subject.toLowerCase().replace(/\s+/g,'-'));
-        if (sub2) notesData = sub2;
+      const rawData = await loadGSNotes(sub.id);
+      if (rawData) {
+        if (rawData.sub_subjects && !rawData.topics && !rawData.notes) {
+          // Sub-subject structured JSON (gs-history, gs-polity, etc.)
+          if (subject !== 'all') {
+            const subSlug = subject.toLowerCase().replace(/&/g,'and').replace(/\s+/g,'-');
+            const match = rawData.sub_subjects.find(s =>
+              s.id === subSlug || s.name.toLowerCase().replace(/&/g,'and').replace(/\s+/g,'-') === subSlug);
+            const ssData = getSubSubjectData(rawData, match ? match.id : subSlug);
+            if (ssData) notesData = ssData;
+          } else {
+            const mt = [], mn = [];
+            for (const ss of rawData.sub_subjects) {
+              const d = rawData[ss.id];
+              if (d) { if (d.topics) mt.push(...d.topics); if (d.notes) mn.push(...d.notes); }
+            }
+            if (mn.length) notesData = { topics: mt, notes: mn };
+          }
+        } else {
+          notesData = rawData;
+          if (notesData && subject !== 'all') {
+            const sub2 = getSubSubjectData(notesData, subject.toLowerCase().replace(/\s+/g,'-'));
+            if (sub2) notesData = sub2;
+          }
+        }
       }
     } else if (section === 'language' && sub.id === 'hindi') {
       notesData = await loadHindiNotes('hindi-grammar');

@@ -1,5 +1,5 @@
 // service-worker.js — PWA caching v20-notifications
-const CACHE_NAME = 'ae-civil-v39-needsimage';
+const CACHE_NAME = 'ae-civil-v43-4level';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -22,8 +22,6 @@ const NETWORK_FIRST = [
   'gs-history.json',
   'hindi-notes.json',
   '/js/app.js',
-  '/js/auth.js',
-  '/js/firebase-config.js',
   '/js/notes.js',
   '/js/gs-notes.js',
   '/js/subjects.js',
