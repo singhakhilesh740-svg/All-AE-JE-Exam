@@ -1,9 +1,10 @@
-// service-worker.js — PWA caching v20-notifications
-const CACHE_NAME = 'ae-civil-v39-needsimage';
+// service-worker.js — PWA caching v40-chapters
+const CACHE_NAME = 'ae-civil-v40-chapters';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './css/styles.css',
+  './css/chapter-notes.css',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
@@ -29,6 +30,11 @@ const NETWORK_FIRST = [
   '/js/subjects.js',
   '/js/exams.js',
   '/js/pcb-notes.js',
+  // ⭐ NEW: Chapter system files — always fresh
+  '/chapter.html',
+  '/chapters-index.html',
+  '/css/chapter-notes.css',
+  '/admin/chapters-admin.html',
   'data/pcb/unit1.html',
   'data/pcb/unit2.html',
   'data/pcb/unit3.html',
