@@ -1,5 +1,5 @@
-// service-worker.js — PWA caching v40-chapters
-const CACHE_NAME = 'ae-civil-v40-chapters';
+// service-worker.js — PWA caching v41-protected-chapters
+const CACHE_NAME = 'ae-civil-v41-protected';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -30,7 +30,7 @@ const NETWORK_FIRST = [
   '/js/subjects.js',
   '/js/exams.js',
   '/js/pcb-notes.js',
-  // ⭐ NEW: Chapter system files — always fresh
+  // ⭐ Chapter system files — always fresh
   '/chapter.html',
   '/chapters-index.html',
   '/css/chapter-notes.css',
@@ -97,8 +97,6 @@ self.addEventListener('fetch', (e) => {
 });
 
 // ── Push notification click handler ─────────────────────────────────────────
-// Handles clicks on notifications shown by THIS service worker.
-// (FCM background notifications are handled by firebase-messaging-sw.js)
 self.addEventListener('notificationclick', (e) => {
   e.notification.close();
 
