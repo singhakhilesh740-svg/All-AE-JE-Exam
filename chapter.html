@@ -68,6 +68,8 @@
   </div>
 </div>
 
+<button id="sidebar-toggle" title="Toggle sidebar">☰</button>
+
 <nav id="sidebar">
   <div id="sidebar-header">
     <div class="series" id="sb-series">Loading…</div>
@@ -233,6 +235,23 @@ function initScrollEffects() {
 
   window.print = function() { alert('🔒 Printing is disabled.'); return false; };
 })();
+</script>
+
+<script>
+// ── Sidebar toggle ────────────────────────────────────────────────────────
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
+  document.body.classList.toggle('sidebar-hidden');
+  const hidden = document.body.classList.contains('sidebar-hidden');
+  document.getElementById('sidebar-toggle').textContent = hidden ? '☰' : '✕';
+  try { localStorage.setItem('sidebar-hidden', hidden ? '1' : '0'); } catch(e) {}
+});
+// Restore last preference
+try {
+  if (localStorage.getItem('sidebar-hidden') === '1') {
+    document.body.classList.add('sidebar-hidden');
+    document.getElementById('sidebar-toggle').textContent = '☰';
+  }
+} catch(e) {}
 </script>
 
 </body>
