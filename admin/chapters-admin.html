@@ -12,15 +12,8 @@
   .sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
   .panel{background:#1e293b;padding:18px;border-radius:12px;margin-bottom:14px;border:1px solid #334155}
   .panel-title{font-size:11px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-  label{font-size:12px;color:#94a3b8;display:block;margin-bottom:4px;margin-top:10px}
-  label:first-child{margin-top:0}
-  select,input[type=text],input[type=number]{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:14px;font-family:inherit}
-  select:focus,input:focus{outline:none;border-color:#10b981}
-  textarea{width:100%;background:#0a1122;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:12px;font-family:'Courier New',monospace;font-size:12px;resize:vertical;line-height:1.5;min-height:340px}
+  textarea{width:100%;background:#0a1122;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:12px;font-family:'Courier New',monospace;font-size:12px;resize:vertical;line-height:1.5;min-height:400px}
   textarea:focus{outline:none;border-color:#10b981}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-  @media(max-width:700px){.row,.row3{grid-template-columns:1fr}}
   button{padding:9px 16px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit}
   .btn-primary{background:#10b981;color:#022c22}
   .btn-secondary{background:#334155;color:#f1f5f9}
@@ -45,15 +38,22 @@
   .login-wrap{text-align:center;padding:50px 20px}
   .login-wrap p{color:#94a3b8;margin-bottom:20px;font-size:15px}
   .preview-frame{width:100%;height:600px;border:1px solid #334155;border-radius:8px;background:#fff;margin-top:10px}
-  .help-list{padding-left:18px;font-size:12.5px;line-height:1.7;color:#cbd5e1}
-  .help-list code{font-size:12px;color:#10b981}
   .badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700;background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+  /* Extracted info card */
+  .extracted-card{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:14px 16px;margin-top:12px;display:none}
+  .extracted-card.show{display:block}
+  .extracted-row{display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:13px}
+  .extracted-label{color:#64748b;min-width:100px;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  .extracted-value{color:#f1f5f9;font-weight:600}
+  .extracted-value.mono{font-family:'Courier New',monospace;color:#10b981}
+  .extracted-ok{color:#10b981;font-size:11px;margin-left:auto}
+  .extracted-warn{color:#f59e0b;font-size:11px;margin-left:auto}
 </style>
 </head>
 <body>
 <div class="container">
   <h1>📜 Chapters Admin</h1>
-  <p class="sub">Rich HTML chapter notes · Stored in <code>chapters/{id}</code></p>
+  <p class="sub">Paste HTML → everything auto-detected → save. No manual fields needed.</p>
 
   <div id="loginPanel" class="panel login-wrap">
     <p>Sign in with admin Google account to manage chapters.</p>
@@ -64,87 +64,40 @@
     <div class="tab-bar">
       <button class="tab active" data-tab="upload">⬆️ Upload / Edit</button>
       <button class="tab" data-tab="manage">📋 Manage Chapters</button>
-      <button class="tab" data-tab="help">❓ Format Help</button>
     </div>
 
     <!-- ════════════════════════════════════════════════════════════
-         UPLOAD / EDIT TAB
+         UPLOAD TAB
     ════════════════════════════════════════════════════════════ -->
     <div id="tab-upload">
-
       <div class="panel">
-        <div class="panel-title">Step 1 — Chapter Metadata</div>
-
-        <div class="row3">
-          <div>
-            <label>Subject</label>
-            <select id="subject">
-              <option value="history">📜 History</option>
-              <option value="polity">⚖️ Polity</option>
-              <option value="geography">🌍 Geography</option>
-              <option value="general-science">🔬 General Science</option>
-              <option value="economy">💰 Economy</option>
-              <option value="current-affairs">📰 Current Affairs</option>
-              <option value="english">🔤 English</option>
-              <option value="reasoning">🧠 Reasoning</option>
-              <option value="maths">➗ Maths</option>
-            </select>
-          </div>
-          <div>
-            <label>Chapter Number</label>
-            <input type="number" id="chapterNo" min="1" value="1">
-          </div>
-          <div>
-            <label>Chapter ID (auto)</label>
-            <input type="text" id="chapterId" readonly style="background:#1e293b;color:#94a3b8;font-family:'Courier New',monospace;font-size:13px">
-          </div>
-        </div>
-
-        <label>Chapter Title</label>
-        <input type="text" id="title" placeholder="e.g., Prehistoric India & Sources of Ancient History">
-
-        <div class="row">
-          <div>
-            <label>Series Label (sidebar header)</label>
-            <input type="text" id="seriesLabel" placeholder="e.g., Ancient History · Notes Series">
-          </div>
-          <div>
-            <label>Order (for sorting, optional)</label>
-            <input type="number" id="orderNum" placeholder="1, 2, 3…">
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">Step 2 — Paste Chapter Body HTML</div>
+        <div class="panel-title">Paste Chapter HTML</div>
         <div class="info-box">
-          Paste the <strong>inner content</strong> of <code>&lt;div id="content"&gt;...&lt;/div&gt;</code> from your chapter HTML file.<br>
-          Include the banner, legend, all <code>section-wrap</code> divs — but NOT the <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;style&gt;</code>, sidebar, or <code>&lt;script&gt;</code> tags. All styling comes from the shared CSS.
+          Paste your chapter HTML below. The system automatically reads the <code>series-label</code>, <code>h1</code>, <code>chapter-id</code>, <code>data-subject</code>, and section structure directly from your HTML — no manual input needed.
         </div>
-        <div class="btn-row">
-          <button class="btn-blue" id="extractFromFullBtn">📄 Paste FULL HTML File &amp; Auto-Extract</button>
-          <button class="btn-secondary" id="loadExampleBtn">📝 Load Example Snippet</button>
-        </div>
-        <textarea id="bodyHtml" placeholder="<!-- Banner -->
-<div class=&quot;chapter-banner&quot;>
-  <div class=&quot;series-label&quot;>Ancient History · Chapter 01</div>
-  <h1>Prehistoric India</h1>
-  <div class=&quot;subtitle&quot;>...</div>
-</div>
 
-<div class=&quot;section-wrap&quot; id=&quot;sec1&quot;>
-  <h2 class=&quot;section-title&quot;><span class=&quot;sn&quot;>01</span> Section Title</h2>
-  <p>Your content here...</p>
-</div>" style="margin-top:10px"></textarea>
+        <textarea id="bodyHtml" placeholder="Paste your chapter HTML here...&#10;&#10;The system will auto-detect:&#10;  • Chapter ID  (from data-chapter-id attribute on .chapter-banner, or slugified from series-label + h1)&#10;  • Subject     (from data-subject attribute, or series-label keyword)&#10;  • Title       (from &lt;h1&gt; inside .chapter-banner)&#10;  • Series Label (from .series-label div)&#10;  • Chapter No  (from series-label e.g. 'Chapter 03')&#10;  • Order       (same as chapter number)&#10;&#10;Example banner:&#10;&lt;div class=&quot;chapter-banner&quot; data-subject=&quot;history&quot; data-chapter-id=&quot;history_ch3&quot;&gt;&#10;  &lt;div class=&quot;series-label&quot;&gt;Ancient History · Chapter 03 · GS Notes&lt;/div&gt;&#10;  &lt;h1&gt;Vedic Age&lt;/h1&gt;&#10;&lt;/div&gt;"></textarea>
+
+        <!-- Extracted info preview -->
+        <div class="extracted-card" id="extractedCard">
+          <div style="font-size:11px;color:#10b981;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">✅ Auto-Detected from HTML</div>
+          <div class="extracted-row"><span class="extracted-label">Chapter ID</span><span class="extracted-value mono" id="ex-id">—</span></div>
+          <div class="extracted-row"><span class="extracted-label">Subject</span><span class="extracted-value" id="ex-subject">—</span></div>
+          <div class="extracted-row"><span class="extracted-label">Chapter No</span><span class="extracted-value" id="ex-no">—</span></div>
+          <div class="extracted-row"><span class="extracted-label">Title</span><span class="extracted-value" id="ex-title">—</span></div>
+          <div class="extracted-row"><span class="extracted-label">Series Label</span><span class="extracted-value" id="ex-series">—</span></div>
+          <div class="extracted-row"><span class="extracted-label">Sections</span><span class="extracted-value" id="ex-sections">—</span></div>
+          <div class="extracted-row"><span class="extracted-label">HTML Size</span><span class="extracted-value" id="ex-size">—</span></div>
+        </div>
 
         <div class="btn-row">
           <button class="btn-primary" id="saveBtn">💾 Save to Firestore</button>
           <button class="btn-amber" id="previewBtn">👁️ Live Preview</button>
-          <button class="btn-secondary" id="clearBtn">🗑️ Clear Form</button>
+          <button class="btn-secondary" id="clearBtn">🗑️ Clear</button>
         </div>
         <div id="uploadLog" class="log" style="display:none"></div>
         <div id="previewWrap" style="display:none">
-          <label style="margin-top:14px">Preview (rendered with shared CSS):</label>
+          <div style="font-size:12px;color:#94a3b8;margin-top:14px;margin-bottom:6px">Preview (rendered with shared CSS):</div>
           <iframe id="previewFrame" class="preview-frame"></iframe>
         </div>
       </div>
@@ -165,40 +118,13 @@
         </div>
       </div>
     </div>
-
-    <!-- ════════════════════════════════════════════════════════════
-         HELP TAB
-    ════════════════════════════════════════════════════════════ -->
-    <div id="tab-help" class="hidden">
-      <div class="panel">
-        <div class="panel-title">Available CSS Classes (from chapter-notes.css)</div>
-        <ul class="help-list">
-          <li><strong>Banner block:</strong> <code>&lt;div class="chapter-banner"&gt;</code> with <code>.series-label</code>, <code>h1</code>, <code>.subtitle</code>, <code>.chapter-meta</code> &gt; <code>span</code></li>
-          <li><strong>Section:</strong> <code>&lt;div class="section-wrap" id="..."&gt;</code> wrapping <code>&lt;h2 class="section-title"&gt;&lt;span class="sn"&gt;01&lt;/span&gt; Title&lt;/h2&gt;</code></li>
-          <li><strong>Sub-section heading:</strong> <code>&lt;h3 class="sub-title"&gt;</code> · <strong>Mini heading:</strong> <code>&lt;h4 class="mini-title"&gt;</code></li>
-          <li><strong>Inline highlights:</strong>
-            <code>&lt;span class="date"&gt;</code>, <code>.name</code>, <code>.term</code>, <code>.fact</code>, <code>.place</code></li>
-          <li><strong>Callout boxes:</strong> <code>&lt;div class="exam-box"&gt;</code>, <code>.fact-box</code>, <code>.mnemonic-box</code> — each with a <code>&lt;div class="box-label"&gt;</code></li>
-          <li><strong>Table:</strong> wrap with <code>&lt;div class="table-wrap"&gt;&lt;table&gt;...&lt;/table&gt;&lt;/div&gt;</code> · use <code>.td-date</code>, <code>.td-exam</code> in cells</li>
-          <li><strong>Tag pill:</strong> <code>&lt;span class="tag"&gt;Label&lt;/span&gt;</code></li>
-          <li><strong>Divider:</strong> <code>&lt;hr class="divider"&gt;</code></li>
-        </ul>
-        <div class="warn-box" style="margin-top:14px">
-          <strong>⚠️ Do NOT paste:</strong> <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;script&gt;</code>, sidebar <code>&lt;nav&gt;</code>, progress bar, or print button. The viewer adds these automatically.
-        </div>
-        <div class="info-box" style="margin-top:14px">
-          <strong>💡 Tip:</strong> Use the <strong>"Paste FULL HTML File &amp; Auto-Extract"</strong> button — it strips everything outside <code>&lt;div id="content"&gt;</code> for you.
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
-<!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
@@ -212,15 +138,13 @@ const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 const gp   = new GoogleAuthProvider();
-
 const ADMIN_EMAIL = '112ce0489@gmail.com';
 
-// ── Auth ────────────────────────────────────────────────────────────────
+// ── Auth ─────────────────────────────────────────────────────────────────
 document.getElementById('loginBtn').addEventListener('click', async () => {
   try { await signInWithPopup(auth, gp); }
   catch(e) { alert('Login failed: ' + e.message); }
 });
-
 onAuthStateChanged(auth, user => {
   if (user && user.email === ADMIN_EMAIL) {
     document.getElementById('loginPanel').classList.add('hidden');
@@ -231,7 +155,7 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-// ── Tabs ────────────────────────────────────────────────────────────────
+// ── Tabs ─────────────────────────────────────────────────────────────────
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active');
@@ -240,154 +164,189 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   if (t.dataset.tab === 'manage') refreshList();
 }));
 
-// ── ID auto-build ───────────────────────────────────────────────────────
-function rebuildId() {
-  const subj = document.getElementById('subject').value;
-  const no   = document.getElementById('chapterNo').value || '1';
-  document.getElementById('chapterId').value = `${subj}_ch${no}`;
+// ── SUBJECT DETECTION from text ──────────────────────────────────────────
+const SUBJECT_KEYWORDS = {
+  'history':          ['history','ancient','medieval','modern','freedom','mughal','maurya','vedic','indus','maratha','bhakti','gupta','revolt','independence','culture'],
+  'polity':           ['polity','constitution','parliament','fundamental right','dpsp','judiciary','president','governor','amendment','emergency','election','lok sabha','rajya sabha','federalism'],
+  'geography':        ['geography','physical','climate','monsoon','river','soil','agriculture','industry','population','census','himalaya','plateau','ocean','mineral'],
+  'general-science':  ['science','physics','chemistry','biology','motion','newton','light','electricity','cell','nutrition','genetics','ecology','technology','isro','space','nuclear','biotechnology','health','disease','vaccine'],
+  'economy':          ['economy','gdp','gnp','budget','rbi','inflation','poverty','planning','niti aayog','fiscal','monetary','banking','finance commission','gst'],
+  'english':          ['english','grammar','vocabulary','comprehension','passage'],
+  'reasoning':        ['reasoning','logical','analogy','series','pattern','puzzle'],
+  'maths':            ['maths','mathematics','arithmetic','algebra','geometry','percentage','ratio'],
+};
+
+function detectSubject(text) {
+  const lower = text.toLowerCase();
+  let best = 'history', bestScore = 0;
+  for (const [subj, keywords] of Object.entries(SUBJECT_KEYWORDS)) {
+    const score = keywords.filter(k => lower.includes(k)).length;
+    if (score > bestScore) { bestScore = score; best = subj; }
+  }
+  return best;
 }
-document.getElementById('subject').addEventListener('change', rebuildId);
-document.getElementById('chapterNo').addEventListener('input', rebuildId);
-rebuildId();
 
-// ── Auto-extract from full HTML file ────────────────────────────────────
-document.getElementById('extractFromFullBtn').addEventListener('click', () => {
-  const full = prompt('Paste the ENTIRE HTML file content here. We will extract just the content inside <div id="content">...</div>:');
-  if (!full) return;
-  const m = full.match(/<div\s+id=["']content["']\s*>([\s\S]*?)<\/div>\s*<\/div>\s*(?:<button[\s\S]*?<\/button>\s*)?(?:<script|<\/body)/i)
-        || full.match(/<div\s+id=["']content["']\s*>([\s\S]*)/i);
-  if (!m) { alert('Could not find <div id="content"> in pasted HTML. Paste body manually.'); return; }
-  let body = m[1];
-  // Trim trailing wrapper div tags if any leaked
-  body = body.replace(/<\/div>\s*$/, '').trim();
-  document.getElementById('bodyHtml').value = body;
+// ── EXTRACT ALL METADATA FROM HTML ───────────────────────────────────────
+function extractFromHtml(html) {
+  const result = { id: '', subject: '', chapter_no: 1, title: '', series_label: '', order: 1, body_html: html };
 
-  // Auto-fill title from <h1> in banner
-  const titleMatch = body.match(/<div class=["']chapter-banner["'][\s\S]*?<h1[^>]*>([\s\S]*?)<\/h1>/i);
-  if (titleMatch && !document.getElementById('title').value) {
-    document.getElementById('title').value = titleMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  // 1. data-chapter-id attribute on chapter-banner (most explicit)
+  const idAttr = html.match(/<div[^>]*class=[\"'][^\"']*chapter-banner[^\"']*[\"'][^>]*data-chapter-id=[\"']([^\"']+)[\"']/i)
+               || html.match(/data-chapter-id=[\"']([^\"']+)[\"'][^>]*class=[\"'][^\"']*chapter-banner/i);
+  if (idAttr) result.id = idAttr[1].trim();
+
+  // 2. series-label → extract subject + chapter number
+  const slMatch = html.match(/<div[^>]*class=[\"'][^\"']*series-label[^\"']*[\"'][^>]*>([\s\S]*?)<\/div>/i);
+  if (slMatch) {
+    result.series_label = slMatch[1].replace(/<[^>]+>/g, '').trim();
+    // Extract chapter number e.g. "Chapter 03" or "Ch 3"
+    const noMatch = result.series_label.match(/[Cc]h(?:apter)?\s*(\d+)/);
+    if (noMatch) { result.chapter_no = parseInt(noMatch[1]); result.order = result.chapter_no; }
   }
-  // Auto-fill series label
-  const sl = body.match(/<div class=["']series-label["']>([\s\S]*?)<\/div>/i);
-  if (sl && !document.getElementById('seriesLabel').value) {
-    document.getElementById('seriesLabel').value = sl[1].replace(/<[^>]+>/g, '').trim();
+
+  // 3. data-subject attribute
+  const subjAttr = html.match(/<div[^>]*class=[\"'][^\"']*chapter-banner[^\"']*[\"'][^>]*data-subject=[\"']([^\"']+)[\"']/i)
+                 || html.match(/data-subject=[\"']([^\"']+)[\"'][^>]*class=[\"'][^\"']*chapter-banner/i);
+  if (subjAttr) {
+    result.subject = subjAttr[1].trim();
+  } else {
+    // Auto-detect from series label + first sections
+    result.subject = detectSubject((result.series_label + ' ' + html.substring(0, 2000)));
   }
-  alert('✅ Extracted! Review the body in the textarea, then click Save.');
+
+  // 4. Title from <h1> inside chapter-banner
+  const bannerMatch = html.match(/<div[^>]*class=[\"'][^\"']*chapter-banner[^\"']*[\"'][^>]*>([\s\S]*?)<\/div>\s*(?:<\/div>|<div)/i);
+  if (bannerMatch) {
+    const h1 = bannerMatch[1].match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+    if (h1) result.title = h1[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  // Fallback: any h1 in first 1500 chars
+  if (!result.title) {
+    const h1Fallback = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+    if (h1Fallback) result.title = h1Fallback[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  // 5. Build chapter ID if not set via data attribute
+  if (!result.id && result.subject && result.chapter_no) {
+    result.id = `${result.subject}_ch${String(result.chapter_no).padStart(2, '0')}`;
+  } else if (!result.id && result.title) {
+    // Slugify title as fallback
+    const slug = result.title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').substring(0, 40);
+    result.id = slug;
+  }
+
+  // 6. Count sections
+  const sectionCount = (html.match(/class=[\"'][^\"']*section-wrap[^\"']*[\"']/g) || []).length;
+  result.section_count = sectionCount;
+
+  return result;
+}
+
+// ── Live extraction as user types ────────────────────────────────────────
+const textarea = document.getElementById('bodyHtml');
+let extractDebounce;
+textarea.addEventListener('input', () => {
+  clearTimeout(extractDebounce);
+  extractDebounce = setTimeout(() => updateExtractedCard(), 400);
+});
+textarea.addEventListener('paste', () => {
+  setTimeout(() => updateExtractedCard(), 100);
 });
 
-// ── Example snippet ─────────────────────────────────────────────────────
-document.getElementById('loadExampleBtn').addEventListener('click', () => {
-  document.getElementById('bodyHtml').value = `<!-- Banner -->
-<div class="chapter-banner">
-  <div class="series-label">History · Chapter 01 · GS Notes</div>
-  <h1>Chapter Title Here</h1>
-  <div class="subtitle">Subtitle / description line</div>
-  <div class="chapter-meta">
-    <span>📚 Source: NCERT</span>
-    <span>🎯 Exam-Focused</span>
-  </div>
-</div>
+function updateExtractedCard() {
+  const html = textarea.value.trim();
+  const card = document.getElementById('extractedCard');
+  if (!html) { card.classList.remove('show'); return; }
 
-<!-- Section 1 -->
-<div class="section-wrap" id="intro">
-  <h2 class="section-title"><span class="sn">01</span> Introduction</h2>
-  <p>This is an intro paragraph. Use <span class="name">Names</span>, <span class="date">1947 AD</span>, <span class="term">terms</span> and <span class="fact">key facts</span> inline.</p>
+  const m = extractFromHtml(html);
+  card.classList.add('show');
 
-  <h3 class="sub-title">A Sub-section</h3>
-  <ul>
-    <li>Point one with a <span class="date">600 BC</span> date</li>
-    <li>Point two</li>
-  </ul>
+  document.getElementById('ex-id').textContent      = m.id       || '⚠️ Not detected';
+  document.getElementById('ex-subject').textContent  = m.subject  || '⚠️ Not detected';
+  document.getElementById('ex-no').textContent       = m.chapter_no;
+  document.getElementById('ex-title').textContent    = m.title    || '⚠️ Not detected';
+  document.getElementById('ex-series').textContent   = m.series_label || '⚠️ Not detected';
+  document.getElementById('ex-sections').textContent = (m.section_count || 0) + ' sections found';
+  document.getElementById('ex-size').textContent     = (html.length / 1024).toFixed(1) + ' KB';
+}
 
-  <div class="exam-box">
-    <div class="box-label">🎯 Exam Point</div>
-    <ul>
-      <li>Important exam-worthy fact here.</li>
-    </ul>
-  </div>
-
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Column 1</th><th>Column 2</th></tr></thead>
-      <tbody>
-        <tr><td>Row 1</td><td>Data</td></tr>
-        <tr><td>Row 2</td><td>Data</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>`;
-  if (!document.getElementById('title').value) document.getElementById('title').value = 'Chapter Title Here';
-  if (!document.getElementById('seriesLabel').value) document.getElementById('seriesLabel').value = 'History · Notes Series';
-});
-
-// ── Save ────────────────────────────────────────────────────────────────
+// ── Save ─────────────────────────────────────────────────────────────────
 document.getElementById('saveBtn').addEventListener('click', async () => {
-  const id          = document.getElementById('chapterId').value.trim();
-  const subject     = document.getElementById('subject').value;
-  const chapterNo   = parseInt(document.getElementById('chapterNo').value) || 1;
-  const title       = document.getElementById('title').value.trim();
-  const seriesLabel = document.getElementById('seriesLabel').value.trim();
-  const orderNum    = parseInt(document.getElementById('orderNum').value) || chapterNo;
-  const bodyHtml    = document.getElementById('bodyHtml').value.trim();
-
-  const log = document.getElementById('uploadLog');
+  const html = textarea.value.trim();
+  const log  = document.getElementById('uploadLog');
   log.style.display = 'block';
   log.innerHTML = '';
 
-  if (!id || !title || !bodyHtml) {
-    log.innerHTML = '<span class="err">❌ Subject, chapter number, title, and body HTML are required.</span>';
+  if (!html) {
+    log.innerHTML = '<span class="err">❌ Nothing pasted yet.</span>';
+    return;
+  }
+
+  const m = extractFromHtml(html);
+
+  if (!m.id) {
+    log.innerHTML = '<span class="err">❌ Could not detect Chapter ID from HTML. Add <code>data-chapter-id="history_ch3"</code> to your chapter-banner div.</span>';
+    return;
+  }
+  if (!m.title) {
+    log.innerHTML = '<span class="err">❌ Could not detect title. Make sure your HTML has an &lt;h1&gt; inside .chapter-banner.</span>';
     return;
   }
 
   try {
-    log.innerHTML += `<span class="info">Saving <code>chapters/${id}</code>…</span>\n`;
-    // Check for overwrite
-    const existing = await getDoc(doc(db, 'chapters', id));
+    log.innerHTML += `<span class="info">Detected: <b>${m.id}</b> · ${m.subject} · "${m.title}"</span>\n`;
+    log.innerHTML += `<span class="info">Saving to Firestore…</span>\n`;
+
+    const existing = await getDoc(doc(db, 'chapters', m.id));
     if (existing.exists()) {
-      if (!confirm(`Chapter "${id}" already exists. Overwrite?`)) {
-        log.innerHTML += '<span class="warn">⚠️ Cancelled — no changes made.</span>';
+      if (!confirm(`Chapter "${m.id}" already exists. Overwrite?`)) {
+        log.innerHTML += '<span class="warn">⚠️ Cancelled.</span>';
         return;
       }
     }
 
     const payload = {
-      id, subject, chapter_no: chapterNo, title, series_label: seriesLabel,
-      order: orderNum, body_html: bodyHtml,
-      updated_at: serverTimestamp(),
+      id:           m.id,
+      subject:      m.subject,
+      chapter_no:   m.chapter_no,
+      title:        m.title,
+      series_label: m.series_label,
+      order:        m.order,
+      body_html:    m.body_html,
+      updated_at:   serverTimestamp(),
       ...(existing.exists() ? {} : { created_at: serverTimestamp() })
     };
 
-    await setDoc(doc(db, 'chapters', id), payload, { merge: true });
-    log.innerHTML += `<span class="ok">✅ Saved! View at: <a href="../chapter.html?id=${id}" target="_blank" style="color:#10b981">chapter.html?id=${id}</a></span>\n`;
-    log.innerHTML += `<span class="info">Body size: ${(bodyHtml.length/1024).toFixed(1)} KB</span>`;
+    await setDoc(doc(db, 'chapters', m.id), payload, { merge: true });
+    log.innerHTML += `<span class="ok">✅ Saved! <a href="../chapter.html?id=${m.id}" target="_blank" style="color:#10b981">Open chapter.html?id=${m.id}</a></span>\n`;
+    log.innerHTML += `<span class="info">Size: ${(m.body_html.length / 1024).toFixed(1)} KB · ${m.section_count} sections</span>`;
   } catch(e) {
     console.error(e);
     log.innerHTML += `<span class="err">❌ Error: ${e.message}</span>`;
   }
 });
 
-// ── Preview ─────────────────────────────────────────────────────────────
+// ── Preview ───────────────────────────────────────────────────────────────
 document.getElementById('previewBtn').addEventListener('click', () => {
-  const body = document.getElementById('bodyHtml').value;
-  if (!body.trim()) { alert('Paste some HTML first.'); return; }
-  const wrap = document.getElementById('previewWrap');
+  const body = textarea.value.trim();
+  if (!body) { alert('Nothing to preview.'); return; }
+  const wrap   = document.getElementById('previewWrap');
   const iframe = document.getElementById('previewFrame');
   wrap.style.display = 'block';
   const cssUrl = new URL('../css/chapter-notes.css', window.location.href).href;
   iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="${cssUrl}"></head><body><div id="main" style="margin-left:0"><div id="content">${body}</div></div></body></html>`;
 });
 
-// ── Clear ───────────────────────────────────────────────────────────────
+// ── Clear ─────────────────────────────────────────────────────────────────
 document.getElementById('clearBtn').addEventListener('click', () => {
-  if (!confirm('Clear the form?')) return;
-  ['title','seriesLabel','orderNum','bodyHtml'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('chapterNo').value = 1;
-  rebuildId();
+  if (!confirm('Clear?')) return;
+  textarea.value = '';
+  document.getElementById('extractedCard').classList.remove('show');
   document.getElementById('uploadLog').style.display = 'none';
   document.getElementById('previewWrap').style.display = 'none';
 });
 
-// ── Manage tab: list chapters ───────────────────────────────────────────
+// ── Manage ────────────────────────────────────────────────────────────────
 document.getElementById('refreshListBtn').addEventListener('click', refreshList);
 
 async function refreshList() {
@@ -406,8 +365,8 @@ async function refreshList() {
       row.className = 'chap-row';
       row.innerHTML = `
         <div class="chap-info">
-          <div class="chap-title">${escapeHtml(c.title || c.id)} <span class="badge">${escapeHtml(c.subject || '?')}</span></div>
-          <div class="chap-meta">${escapeHtml(c.id)} · ch ${c.chapter_no ?? '?'} · ${((c.body_html||'').length/1024).toFixed(1)} KB</div>
+          <div class="chap-title">${esc(c.title || c.id)} <span class="badge">${esc(c.subject || '?')}</span></div>
+          <div class="chap-meta">${esc(c.id)} · ch ${c.chapter_no ?? '?'} · ${((c.body_html||'').length/1024).toFixed(1)} KB</div>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap">
           <button class="btn-blue" onclick="window.open('../chapter.html?id=${c.id}','_blank')">👁️ View</button>
@@ -417,7 +376,7 @@ async function refreshList() {
       wrap.appendChild(row);
     });
     wrap.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editChapter(b.dataset.edit)));
-    wrap.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => delChapter(b.dataset.del)));
+    wrap.querySelectorAll('[data-del]').forEach(b  => b.addEventListener('click', () => delChapter(b.dataset.del)));
   } catch(e) {
     wrap.innerHTML = `<div style="color:#ef4444;font-size:13px;padding:20px">❌ ${e.message}</div>`;
   }
@@ -427,28 +386,20 @@ async function editChapter(id) {
   try {
     const snap = await getDoc(doc(db, 'chapters', id));
     if (!snap.exists()) { alert('Not found'); return; }
-    const d = snap.data();
     document.querySelector('.tab[data-tab="upload"]').click();
-    document.getElementById('subject').value     = d.subject || 'history';
-    document.getElementById('chapterNo').value   = d.chapter_no || 1;
-    document.getElementById('title').value       = d.title || '';
-    document.getElementById('seriesLabel').value = d.series_label || '';
-    document.getElementById('orderNum').value    = d.order || '';
-    document.getElementById('bodyHtml').value    = d.body_html || '';
-    rebuildId();
+    textarea.value = snap.data().body_html || '';
+    updateExtractedCard();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch(e) { alert('Error: ' + e.message); }
 }
 
 async function delChapter(id) {
-  if (!confirm(`Permanently delete chapter "${id}"?`)) return;
-  try {
-    await deleteDoc(doc(db, 'chapters', id));
-    refreshList();
-  } catch(e) { alert('Error: ' + e.message); }
+  if (!confirm(`Permanently delete "${id}"?`)) return;
+  try { await deleteDoc(doc(db, 'chapters', id)); refreshList(); }
+  catch(e) { alert('Error: ' + e.message); }
 }
 
-function escapeHtml(s) {
+function esc(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 </script>
