@@ -5,10 +5,67 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Chapter Notes — All AE/JE Civil</title>
 <link rel="stylesheet" href="css/chapter-notes.css">
+<style>
+  /* ── Anti-copy protections ── */
+  body, #content, #sidebar {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+  img { -webkit-user-drag: none !important; -webkit-touch-callout: none !important; pointer-events: none; }
+  #content { caret-color: transparent; }
+  /* Hide content if DevTools detected */
+  body.devtools-open #content > * { filter: blur(8px) !important; opacity: 0.3 !important; }
+  body.devtools-open::after {
+    content: '🔒 Content hidden — please close DevTools';
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: #b71c1c; color: #fff; padding: 16px 28px; border-radius: 10px;
+    font-family: -apple-system, sans-serif; font-size: 16px; font-weight: 700;
+    z-index: 99999; box-shadow: 0 6px 28px rgba(0,0,0,.4);
+  }
+  /* Print disable */
+  @media print {
+    body * { display: none !important; }
+    body::after {
+      content: '🔒 Printing is disabled for this content.';
+      display: block !important; font-size: 24px; text-align: center; padding: 40px;
+    }
+  }
+  /* Login gate */
+  .login-gate {
+    position: fixed; inset: 0; background: linear-gradient(135deg, #1a3a5c, #2c5f8a);
+    display: flex; align-items: center; justify-content: center; z-index: 10000;
+    color: #fff; font-family: -apple-system, sans-serif;
+  }
+  .login-card {
+    background: #fff; color: #1a3a5c; padding: 32px 28px; border-radius: 14px;
+    max-width: 360px; width: 88%; text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,.3);
+  }
+  .login-card h2 { font-size: 20px; margin-bottom: 8px; }
+  .login-card p { font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.5; }
+  .login-card button {
+    background: #1a3a5c; color: #fff; border: none; padding: 12px 24px;
+    border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+    width: 100%;
+  }
+  .login-card button:hover { background: #2c5f8a; }
+</style>
 </head>
 <body>
 
 <div id="progress-bar"></div>
+
+<div id="loginGate" class="login-gate">
+  <div class="login-card">
+    <h2>🔐 Login Required</h2>
+    <p>Please sign in with your Google account to access chapter notes.</p>
+    <button id="loginBtn">Sign in with Google</button>
+  </div>
+</div>
 
 <nav id="sidebar">
   <div id="sidebar-header">
@@ -25,10 +82,9 @@
   </div>
 </div>
 
-<button id="print-btn" title="Print / Save PDF" onclick="window.print()">🖨️</button>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -40,72 +96,70 @@ const firebaseConfig = {
   appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
 };
 const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const gp   = new GoogleAuthProvider();
 
-// ── Get chapter id from URL ─────────────────────────────────────────────
 const params = new URLSearchParams(window.location.search);
 const chapterId = params.get('id');
 
-if (!chapterId) {
-  document.getElementById('content').innerHTML = '<div class="chapter-error">❌ No chapter id specified. Use <code>?id=history_ch1</code></div>';
-} else {
-  loadChapter(chapterId);
-}
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, gp); }
+  catch(e) { alert('Sign-in failed: ' + e.message); }
+});
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById('loginGate').style.display = 'none';
+    if (!chapterId) {
+      document.getElementById('content').innerHTML = '<div class="chapter-error">❌ No chapter id specified.</div>';
+    } else {
+      loadChapter(chapterId);
+    }
+  } else {
+    document.getElementById('loginGate').style.display = 'flex';
+  }
+});
 
 async function loadChapter(id) {
   try {
     const snap = await getDoc(doc(db, 'chapters', id));
     if (!snap.exists()) {
-      document.getElementById('content').innerHTML = `<div class="chapter-error">❌ Chapter <code>${id}</code> not found in Firestore.</div>`;
+      document.getElementById('content').innerHTML = `<div class="chapter-error">❌ Chapter <code>${id}</code> not found.</div>`;
       document.getElementById('sb-series').textContent = 'Not Found';
       document.getElementById('sb-title').textContent  = id;
       return;
     }
-    const data = snap.data();
-    renderChapter(data);
+    renderChapter(snap.data());
   } catch(e) {
-    console.error('[chapter] load error:', e);
     document.getElementById('content').innerHTML = `<div class="chapter-error">❌ Error loading: ${e.message}</div>`;
   }
 }
 
 function renderChapter(data) {
-  // Sidebar header
   document.title = `${data.title || 'Chapter'} — Notes`;
   document.getElementById('sb-series').textContent = data.series_label || data.subject || '';
   document.getElementById('sb-title').textContent  = data.title || 'Untitled Chapter';
-
-  // Inject body html
   document.getElementById('content').innerHTML = data.body_html || '<div class="chapter-error">Empty chapter.</div>';
-
-  // Auto-generate TOC from h2.section-title and h3.sub-title
   buildToc();
-
-  // Wire up progress bar + scroll-spy
   initScrollEffects();
 }
 
 function buildToc() {
   const toc = document.getElementById('toc');
   toc.innerHTML = '';
-
   const h2s = document.querySelectorAll('#content h2.section-title');
   if (!h2s.length) {
-    // fallback: any h2
     document.querySelectorAll('#content h2').forEach(h => makeLink(toc, h, false));
     return;
   }
-
   h2s.forEach(h2 => {
-    // Ensure h2 has an id (use parent .section-wrap id if available)
     if (!h2.id) {
       const parent = h2.closest('.section-wrap, .section, section');
       if (parent && parent.id) h2.id = parent.id;
       else h2.id = slugify(h2.textContent);
     }
     makeLink(toc, h2, false);
-
-    // Find h3.sub-title within this section
     const section = h2.closest('.section-wrap, .section, section') || h2.parentElement;
     if (section) {
       section.querySelectorAll('h3.sub-title').forEach(h3 => {
@@ -115,46 +169,69 @@ function buildToc() {
     }
   });
 }
-
 function makeLink(toc, heading, isSub) {
   const a = document.createElement('a');
   a.href = '#' + heading.id;
-  // Strip leading section number badge (e.g., "01 Title" → "Title")
   let text = heading.textContent.replace(/^\s*\d{1,3}\s+/, '').trim();
   a.textContent = isSub ? '→ ' + text : text;
   if (isSub) a.className = 'sub';
   toc.appendChild(a);
 }
-
 function slugify(s) {
-  return (s || '').toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .substring(0, 60) || 'section-' + Math.random().toString(36).slice(2,7);
+  return (s || '').toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim()
+    .replace(/\s+/g, '-').substring(0, 60) || 'section-' + Math.random().toString(36).slice(2,7);
 }
-
 function initScrollEffects() {
   const bar = document.getElementById('progress-bar');
   const links = document.querySelectorAll('#toc a');
-  const targets = Array.from(links)
-    .map(a => document.getElementById(a.getAttribute('href').slice(1)))
-    .filter(Boolean);
-
+  const targets = Array.from(links).map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
   window.addEventListener('scroll', () => {
     const h = document.documentElement;
-    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-    bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
-
-    // active TOC link
+    bar.style.width = Math.min(100, Math.max(0, (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100)) + '%';
     let active = null;
-    const offset = 100;
-    targets.forEach(t => {
-      if (t.getBoundingClientRect().top - offset <= 0) active = t.id;
-    });
+    targets.forEach(t => { if (t.getBoundingClientRect().top - 100 <= 0) active = t.id; });
     links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active));
   }, { passive: true });
 }
+</script>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     ANTI-COPY / ANTI-DOWNLOAD PROTECTION LAYER
+     ════════════════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  document.addEventListener('contextmenu', e => { e.preventDefault(); return false; }, true);
+  document.addEventListener('selectstart', e => { e.preventDefault(); return false; }, true);
+  document.addEventListener('copy',        e => { e.preventDefault(); if (e.clipboardData) e.clipboardData.setData('text/plain', '🔒 Content protected'); return false; }, true);
+  document.addEventListener('cut',         e => { e.preventDefault(); return false; }, true);
+  document.addEventListener('dragstart',   e => { e.preventDefault(); return false; }, true);
+
+  document.addEventListener('keydown', e => {
+    const key = (e.key || '').toLowerCase();
+    const ctrl = e.ctrlKey || e.metaKey;
+    if (e.key === 'F12') { e.preventDefault(); return false; }
+    if (ctrl && e.shiftKey && ['i','j','c','k'].includes(key)) { e.preventDefault(); return false; }
+    if (ctrl && ['u','s','p','a','c','x'].includes(key)) { e.preventDefault(); return false; }
+  }, true);
+
+  let devtoolsOpen = false;
+  const threshold = 170;
+  function check() {
+    const widthDiff  = window.outerWidth  - window.innerWidth;
+    const heightDiff = window.outerHeight - window.innerHeight;
+    const open = widthDiff > threshold || heightDiff > threshold;
+    if (open !== devtoolsOpen) {
+      devtoolsOpen = open;
+      document.body.classList.toggle('devtools-open', open);
+    }
+  }
+  setInterval(check, 800);
+  window.addEventListener('resize', check);
+
+  window.print = function() { alert('🔒 Printing is disabled.'); return false; };
+})();
 </script>
 
 </body>
