@@ -1484,6 +1484,12 @@ function renderGSSubjectList(containerId, subjects, onSelect) {
 let _currentGSSubject = null;
 async function openGSSubject(subj) {
   _currentGSSubject = subj;
+  // ⭐ Redirect to chapter-based notes (new chapters/{id} Firestore collection)
+  const CHAPTER_SUBJECTS = ['history', 'polity', 'geography', 'general-science', 'economy'];
+  if (CHAPTER_SUBJECTS.includes(subj.id)) {
+    window.location.href = `chapters-index.html?subject=${encodeURIComponent(subj.id)}`;
+    return;
+  }
   openNTSubsection(subj, 'gs', 'ntGsHomeScreen');
 }
 async function openGSSubSubject(parentSubj, sub, preloadedData) {

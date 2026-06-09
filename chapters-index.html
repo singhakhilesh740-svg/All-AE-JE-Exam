@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chapter Notes — All AE/JE</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
+  .container{max-width:980px;margin:0 auto}
+  .header{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .back-btn{background:#1e293b;color:#94a3b8;border:1px solid #334155;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;text-decoration:none;display:inline-block}
+  .back-btn:hover{color:#10b981;border-color:#10b981}
+  h1{color:#f59e0b;font-size:24px;display:flex;align-items:center;gap:8px}
+  .sub{color:#94a3b8;font-size:13px;margin-bottom:24px;margin-left:48px}
+  .empty{text-align:center;padding:60px 20px;color:#64748b;background:#1e293b;border-radius:12px;border:1px solid #334155}
+  .empty-icon{font-size:48px;margin-bottom:12px;opacity:.5}
+  .chapters-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .chap-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:18px;cursor:pointer;transition:all .15s;text-decoration:none;color:inherit;display:block}
+  .chap-card:hover{border-color:#10b981;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.3)}
+  .chap-num{font-size:11px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+  .chap-title{font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:6px;line-height:1.4}
+  .chap-series{font-size:12px;color:#94a3b8}
+  .loading{text-align:center;padding:60px;color:#94a3b8}
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back-btn">← Back to Home</a>
+  <div class="header" style="margin-top:14px">
+    <h1 id="subjTitle">📚 Chapters</h1>
+  </div>
+  <p class="sub" id="subjSub">Loading…</p>
+
+  <div id="content">
+    <div class="loading">⏳ Loading chapters…</div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+const SUBJECTS = {
+  history:   { icon: '🏛️', name: 'History' },
+  polity:    { icon: '⚖️', name: 'Polity' },
+  geography: { icon: '🌍', name: 'Geography' },
+  'general-science': { icon: '🔬', name: 'General Science' },
+  economy:   { icon: '💰', name: 'Economy' },
+  'current-affairs': { icon: '📰', name: 'Current Affairs' },
+  english:   { icon: '🔤', name: 'English' },
+  reasoning: { icon: '🧠', name: 'Reasoning' },
+  maths:     { icon: '➗', name: 'Maths' },
+};
+
+const params  = new URLSearchParams(window.location.search);
+const subject = params.get('subject') || 'history';
+const meta    = SUBJECTS[subject] || { icon: '📚', name: subject };
+
+document.getElementById('subjTitle').innerHTML = `${meta.icon} ${meta.name}`;
+document.getElementById('subjSub').textContent = 'Pick a chapter to start reading';
+document.title = `${meta.name} — Chapter Notes`;
+
+loadChapters();
+
+async function loadChapters() {
+  try {
+    const q = query(collection(db, 'chapters'), where('subject', '==', subject));
+    const snap = await getDocs(q);
+    const chapters = [];
+    snap.forEach(d => chapters.push({ id: d.id, ...d.data() }));
+    chapters.sort((a, b) => (a.order || a.chapter_no || 0) - (b.order || b.chapter_no || 0));
+    render(chapters);
+  } catch(e) {
+    console.error(e);
+    document.getElementById('content').innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div>Error loading: ${e.message}</div>`;
+  }
+}
+
+function render(chapters) {
+  const wrap = document.getElementById('content');
+  if (!chapters.length) {
+    wrap.innerHTML = `<div class="empty"><div class="empty-icon">📭</div><div style="font-size:16px;color:#cbd5e1;margin-bottom:6px">No chapters yet</div><div style="font-size:13px">Chapters for ${meta.name} will appear here once added.</div></div>`;
+    return;
+  }
+  wrap.innerHTML = `<div class="chapters-grid">${chapters.map(c => `
+    <a class="chap-card" href="chapter.html?id=${encodeURIComponent(c.id)}">
+      <div class="chap-num">Chapter ${c.chapter_no ?? '?'}</div>
+      <div class="chap-title">${escape(c.title || c.id)}</div>
+      ${c.series_label ? `<div class="chap-series">${escape(c.series_label)}</div>` : ''}
+    </a>`).join('')}</div>`;
+  document.getElementById('subjSub').textContent = `${chapters.length} chapter${chapters.length>1?'s':''} available`;
+}
+
+function escape(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+</script>
+</body>
+</html>
