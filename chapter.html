@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chapter Notes — All AE/JE Civil</title>
+<link rel="stylesheet" href="css/chapter-notes.css">
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="series" id="sb-series">Loading…</div>
+    <div class="title" id="sb-title">—</div>
+    <a id="sidebar-back" href="index.html">← Back to Home</a>
+  </div>
+  <div id="toc"></div>
+</nav>
+
+<div id="main">
+  <div id="content">
+    <div class="chapter-loading">⏳ Loading chapter…</div>
+  </div>
+</div>
+
+<button id="print-btn" title="Print / Save PDF" onclick="window.print()">🖨️</button>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── Get chapter id from URL ─────────────────────────────────────────────
+const params = new URLSearchParams(window.location.search);
+const chapterId = params.get('id');
+
+if (!chapterId) {
+  document.getElementById('content').innerHTML = '<div class="chapter-error">❌ No chapter id specified. Use <code>?id=history_ch1</code></div>';
+} else {
+  loadChapter(chapterId);
+}
+
+async function loadChapter(id) {
+  try {
+    const snap = await getDoc(doc(db, 'chapters', id));
+    if (!snap.exists()) {
+      document.getElementById('content').innerHTML = `<div class="chapter-error">❌ Chapter <code>${id}</code> not found in Firestore.</div>`;
+      document.getElementById('sb-series').textContent = 'Not Found';
+      document.getElementById('sb-title').textContent  = id;
+      return;
+    }
+    const data = snap.data();
+    renderChapter(data);
+  } catch(e) {
+    console.error('[chapter] load error:', e);
+    document.getElementById('content').innerHTML = `<div class="chapter-error">❌ Error loading: ${e.message}</div>`;
+  }
+}
+
+function renderChapter(data) {
+  // Sidebar header
+  document.title = `${data.title || 'Chapter'} — Notes`;
+  document.getElementById('sb-series').textContent = data.series_label || data.subject || '';
+  document.getElementById('sb-title').textContent  = data.title || 'Untitled Chapter';
+
+  // Inject body html
+  document.getElementById('content').innerHTML = data.body_html || '<div class="chapter-error">Empty chapter.</div>';
+
+  // Auto-generate TOC from h2.section-title and h3.sub-title
+  buildToc();
+
+  // Wire up progress bar + scroll-spy
+  initScrollEffects();
+}
+
+function buildToc() {
+  const toc = document.getElementById('toc');
+  toc.innerHTML = '';
+
+  const h2s = document.querySelectorAll('#content h2.section-title');
+  if (!h2s.length) {
+    // fallback: any h2
+    document.querySelectorAll('#content h2').forEach(h => makeLink(toc, h, false));
+    return;
+  }
+
+  h2s.forEach(h2 => {
+    // Ensure h2 has an id (use parent .section-wrap id if available)
+    if (!h2.id) {
+      const parent = h2.closest('.section-wrap, .section, section');
+      if (parent && parent.id) h2.id = parent.id;
+      else h2.id = slugify(h2.textContent);
+    }
+    makeLink(toc, h2, false);
+
+    // Find h3.sub-title within this section
+    const section = h2.closest('.section-wrap, .section, section') || h2.parentElement;
+    if (section) {
+      section.querySelectorAll('h3.sub-title').forEach(h3 => {
+        if (!h3.id) h3.id = slugify(h3.textContent);
+        makeLink(toc, h3, true);
+      });
+    }
+  });
+}
+
+function makeLink(toc, heading, isSub) {
+  const a = document.createElement('a');
+  a.href = '#' + heading.id;
+  // Strip leading section number badge (e.g., "01 Title" → "Title")
+  let text = heading.textContent.replace(/^\s*\d{1,3}\s+/, '').trim();
+  a.textContent = isSub ? '→ ' + text : text;
+  if (isSub) a.className = 'sub';
+  toc.appendChild(a);
+}
+
+function slugify(s) {
+  return (s || '').toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .substring(0, 60) || 'section-' + Math.random().toString(36).slice(2,7);
+}
+
+function initScrollEffects() {
+  const bar = document.getElementById('progress-bar');
+  const links = document.querySelectorAll('#toc a');
+  const targets = Array.from(links)
+    .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+    .filter(Boolean);
+
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+
+    // active TOC link
+    let active = null;
+    const offset = 100;
+    targets.forEach(t => {
+      if (t.getBoundingClientRect().top - offset <= 0) active = t.id;
+    });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active));
+  }, { passive: true });
+}
+</script>
+
+</body>
+</html>
