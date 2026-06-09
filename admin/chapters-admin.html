@@ -7,53 +7,80 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#f1f5f9;padding:16px;min-height:100vh}
-  .container{max-width:1080px;margin:0 auto}
+  .container{max-width:1100px;margin:0 auto}
   h1{color:#10b981;font-size:22px;margin-bottom:4px}
   .sub{color:#94a3b8;font-size:13px;margin-bottom:20px}
   .panel{background:#1e293b;padding:18px;border-radius:12px;margin-bottom:14px;border:1px solid #334155}
-  .panel-title{font-size:11px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-  textarea{width:100%;background:#0a1122;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:12px;font-family:'Courier New',monospace;font-size:12px;resize:vertical;line-height:1.5;min-height:400px}
+  .panel-title{font-size:11px;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+  label{font-size:12px;color:#94a3b8;display:block;margin-bottom:4px;margin-top:10px}
+  input[type=text],input[type=number],select{width:100%;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:8px 12px;font-size:13px;font-family:inherit}
+  input[type=number]{width:100px}
+  input:focus,select:focus{outline:none;border-color:#10b981}
+  textarea{width:100%;background:#0a1122;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:12px;font-family:'Courier New',monospace;font-size:12px;resize:vertical;line-height:1.5;min-height:320px}
   textarea:focus{outline:none;border-color:#10b981}
-  button{padding:9px 16px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit}
+  button{padding:8px 14px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;transition:opacity .15s}
+  button:hover{opacity:.85}
   .btn-primary{background:#10b981;color:#022c22}
   .btn-secondary{background:#334155;color:#f1f5f9}
   .btn-danger{background:#ef4444;color:#fff}
   .btn-blue{background:#1e3a5f;color:#93c5fd;border:1px solid #3b82f6}
   .btn-amber{background:#f59e0b;color:#1f2937}
+  .btn-purple{background:#5b21b6;color:#ede9fe}
   .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
   .hidden{display:none!important}
   code{background:#0f172a;padding:2px 6px;border-radius:4px;font-size:11px;color:#10b981}
-  .info-box{border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.6;margin-bottom:10px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);color:#6ee7b7}
-  .warn-box{border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.6;margin-bottom:10px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);color:#fcd34d}
-  .log{background:#0a1122;padding:12px;border-radius:8px;border:1px solid #064e3b;font-family:'Courier New',monospace;font-size:12px;max-height:200px;overflow-y:auto;white-space:pre-wrap;line-height:1.6;margin-top:10px}
+  .info-box{border-radius:8px;padding:10px 14px;font-size:12.5px;line-height:1.6;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);color:#6ee7b7;margin-bottom:10px}
+  .warn-box{border-radius:8px;padding:10px 14px;font-size:12.5px;line-height:1.6;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);color:#fcd34d;margin-bottom:10px}
+  .log{background:#0a1122;padding:12px;border-radius:8px;border:1px solid #064e3b;font-family:'Courier New',monospace;font-size:12px;max-height:260px;overflow-y:auto;white-space:pre-wrap;line-height:1.6;margin-top:10px}
   .ok{color:#10b981}.err{color:#ef4444}.warn{color:#f59e0b}.info{color:#94a3b8}
   .tab-bar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
   .tab{padding:8px 16px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#94a3b8;font-weight:600;font-size:13px;cursor:pointer}
   .tab.active{border-color:#10b981;color:#10b981;background:rgba(16,185,129,.08)}
-  .chapter-list{display:flex;flex-direction:column;gap:8px;max-height:500px;overflow-y:auto;margin-top:8px}
+  .login-wrap{text-align:center;padding:50px 20px}
+  .login-wrap p{color:#94a3b8;margin-bottom:20px;font-size:15px}
+  .preview-frame{width:100%;height:580px;border:1px solid #334155;border-radius:8px;background:#fff;margin-top:10px}
+  .badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700;background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+  /* Extracted card */
+  .extracted-card{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:14px 16px;margin-top:12px;display:none}
+  .extracted-card.show{display:block}
+  .ex-row{display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:12.5px}
+  .ex-label{color:#64748b;min-width:110px;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  .ex-value{color:#f1f5f9;font-weight:600}
+  .ex-value.mono{font-family:'Courier New',monospace;color:#10b981}
+  /* Manage list */
+  .chapter-list{display:flex;flex-direction:column;gap:8px;max-height:600px;overflow-y:auto;margin-top:8px}
   .chap-row{display:flex;align-items:center;justify-content:space-between;background:#0f172a;padding:10px 14px;border-radius:8px;border:1px solid #1e293b;gap:8px;flex-wrap:wrap}
   .chap-info{flex:1;min-width:200px}
   .chap-title{font-size:13px;font-weight:600;color:#f1f5f9}
   .chap-meta{font-size:11px;color:#64748b;margin-top:2px;font-family:'Courier New',monospace}
-  .login-wrap{text-align:center;padding:50px 20px}
-  .login-wrap p{color:#94a3b8;margin-bottom:20px;font-size:15px}
-  .preview-frame{width:100%;height:600px;border:1px solid #334155;border-radius:8px;background:#fff;margin-top:10px}
-  .badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700;background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
-  /* Extracted info card */
-  .extracted-card{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:14px 16px;margin-top:12px;display:none}
-  .extracted-card.show{display:block}
-  .extracted-row{display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:13px}
-  .extracted-label{color:#64748b;min-width:100px;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
-  .extracted-value{color:#f1f5f9;font-weight:600}
-  .extracted-value.mono{font-family:'Courier New',monospace;color:#10b981}
-  .extracted-ok{color:#10b981;font-size:11px;margin-left:auto}
-  .extracted-warn{color:#f59e0b;font-size:11px;margin-left:auto}
+  .chap-actions{display:flex;gap:6px;flex-wrap:wrap}
+  /* Bulk upload */
+  .drop-zone{border:2px dashed #334155;border-radius:12px;padding:36px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:12px}
+  .drop-zone:hover,.drop-zone.drag-over{border-color:#10b981;background:rgba(16,185,129,.04)}
+  .drop-zone-icon{font-size:36px;margin-bottom:10px}
+  .drop-zone p{color:#94a3b8;font-size:13px;line-height:1.6}
+  .drop-zone strong{color:#f1f5f9}
+  .bulk-list{display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto;margin-bottom:12px}
+  .bulk-item{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px 14px}
+  .bulk-item.ok-item{border-color:rgba(16,185,129,.3)}
+  .bulk-item.err-item{border-color:rgba(239,68,68,.3)}
+  .bulk-item-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+  .bulk-filename{font-size:12px;color:#94a3b8;font-family:'Courier New',monospace}
+  .bulk-detected{font-size:12px;color:#f1f5f9;font-weight:600}
+  .bulk-id{font-size:11px;color:#10b981;font-family:'Courier New',monospace}
+  .bulk-status{font-size:11px;margin-left:auto;white-space:nowrap}
+  .bulk-title-input{width:100%;background:#1e293b;color:#f1f5f9;border:1px solid #334155;border-radius:6px;padding:6px 10px;font-size:13px;font-family:inherit;margin-top:4px}
+  .bulk-title-input:focus{outline:none;border-color:#10b981}
+  /* Inline edit */
+  .edit-title-wrap{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px}
+  .edit-title-input{flex:1;background:#1e293b;color:#f1f5f9;border:1px solid #334155;border-radius:6px;padding:6px 10px;font-size:13px;font-family:inherit;min-width:180px}
+  .edit-title-input:focus{outline:none;border-color:#10b981}
 </style>
 </head>
 <body>
 <div class="container">
   <h1>📜 Chapters Admin</h1>
-  <p class="sub">Paste HTML → everything auto-detected → save. No manual fields needed.</p>
+  <p class="sub">Upload chapters · Auto-detect metadata · Bulk import</p>
 
   <div id="loginPanel" class="panel login-wrap">
     <p>Sign in with admin Google account to manage chapters.</p>
@@ -62,60 +89,96 @@
 
   <div id="mainPanel" class="hidden">
     <div class="tab-bar">
-      <button class="tab active" data-tab="upload">⬆️ Upload / Edit</button>
+      <button class="tab active" data-tab="single">📄 Single Upload</button>
+      <button class="tab" data-tab="bulk">📦 Bulk Upload</button>
       <button class="tab" data-tab="manage">📋 Manage Chapters</button>
     </div>
 
-    <!-- ════════════════════════════════════════════════════════════
-         UPLOAD TAB
-    ════════════════════════════════════════════════════════════ -->
-    <div id="tab-upload">
+    <!-- ═══════════════════════════════════════════════════
+         SINGLE UPLOAD TAB
+    ═══════════════════════════════════════════════════ -->
+    <div id="tab-single">
       <div class="panel">
         <div class="panel-title">Paste Chapter HTML</div>
-        <div class="info-box">
-          Paste your chapter HTML — everything is auto-detected. Only enter the chapter number manually.
-        </div>
-
+        <div class="info-box">Paste HTML below. Title, subject, series label are auto-detected. Only enter chapter number manually.</div>
         <div style="margin-bottom:12px">
-          <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Chapter Number <span style="color:#ef4444">*</span></label>
-          <input type="number" id="chapterNo" min="1" value="1" style="width:120px;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:15px;font-weight:700;font-family:inherit">
+          <label>Chapter Number <span style="color:#ef4444">*</span></label>
+          <input type="number" id="chapterNo" min="1" value="1">
         </div>
-
-        <textarea id="bodyHtml" placeholder="Paste your chapter HTML here...&#10;&#10;The system will auto-detect:&#10;  • Chapter ID  (from data-chapter-id attribute on .chapter-banner, or slugified from series-label + h1)&#10;  • Subject     (from data-subject attribute, or series-label keyword)&#10;  • Title       (from &lt;h1&gt; inside .chapter-banner)&#10;  • Series Label (from .series-label div)&#10;  • Chapter No  (from series-label e.g. 'Chapter 03')&#10;  • Order       (same as chapter number)&#10;&#10;Example banner:&#10;&lt;div class=&quot;chapter-banner&quot; data-subject=&quot;history&quot; data-chapter-id=&quot;history_ch3&quot;&gt;&#10;  &lt;div class=&quot;series-label&quot;&gt;Ancient History · Chapter 03 · GS Notes&lt;/div&gt;&#10;  &lt;h1&gt;Vedic Age&lt;/h1&gt;&#10;&lt;/div&gt;"></textarea>
-
-        <!-- Extracted info preview -->
+        <textarea id="bodyHtml" placeholder="Paste chapter HTML here…"></textarea>
         <div class="extracted-card" id="extractedCard">
-          <div style="font-size:11px;color:#10b981;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">✅ Auto-Detected from HTML</div>
-          <div class="extracted-row"><span class="extracted-label">Chapter ID</span><span class="extracted-value mono" id="ex-id">—</span></div>
-          <div class="extracted-row"><span class="extracted-label">Subject</span><span class="extracted-value" id="ex-subject">—</span></div>
-          <div class="extracted-row"><span class="extracted-label">Chapter No</span><span class="extracted-value" id="ex-no">—</span></div>
-          <div class="extracted-row"><span class="extracted-label">Title</span><span class="extracted-value" id="ex-title">—</span></div>
-          <div class="extracted-row"><span class="extracted-label">Series Label</span><span class="extracted-value" id="ex-series">—</span></div>
-          <div class="extracted-row"><span class="extracted-label">Sections</span><span class="extracted-value" id="ex-sections">—</span></div>
-          <div class="extracted-row"><span class="extracted-label">HTML Size</span><span class="extracted-value" id="ex-size">—</span></div>
+          <div style="font-size:11px;color:#10b981;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">✅ Auto-Detected</div>
+          <div class="ex-row"><span class="ex-label">Chapter ID</span><span class="ex-value mono" id="ex-id">—</span></div>
+          <div class="ex-row"><span class="ex-label">Subject</span><span class="ex-value" id="ex-subject">—</span></div>
+          <div class="ex-row"><span class="ex-label">Chapter No</span><span class="ex-value" id="ex-no">—</span></div>
+          <div class="ex-row"><span class="ex-label">Title</span><span class="ex-value" id="ex-title">—</span></div>
+          <div class="ex-row"><span class="ex-label">Series Label</span><span class="ex-value" id="ex-series">—</span></div>
+          <div class="ex-row"><span class="ex-label">Sections</span><span class="ex-value" id="ex-sections">—</span></div>
+          <div class="ex-row"><span class="ex-label">HTML Size</span><span class="ex-value" id="ex-size">—</span></div>
         </div>
-
         <div class="btn-row">
           <button class="btn-primary" id="saveBtn">💾 Save to Firestore</button>
-          <button class="btn-amber" id="previewBtn">👁️ Live Preview</button>
+          <button class="btn-amber" id="previewBtn">👁️ Preview</button>
           <button class="btn-secondary" id="clearBtn">🗑️ Clear</button>
         </div>
         <div id="uploadLog" class="log" style="display:none"></div>
         <div id="previewWrap" style="display:none">
-          <div style="font-size:12px;color:#94a3b8;margin-top:14px;margin-bottom:6px">Preview (rendered with shared CSS):</div>
+          <div style="font-size:12px;color:#94a3b8;margin-top:14px;margin-bottom:6px">Preview:</div>
           <iframe id="previewFrame" class="preview-frame"></iframe>
         </div>
       </div>
     </div>
 
-    <!-- ════════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════
+         BULK UPLOAD TAB
+    ═══════════════════════════════════════════════════ -->
+    <div id="tab-bulk" class="hidden">
+      <div class="panel">
+        <div class="panel-title">Bulk Upload — Multiple HTML Files</div>
+        <div class="info-box">
+          Drop multiple HTML files at once. Each file is auto-matched to the correct chapter name and number from the syllabus. Review the detected info, edit any title if needed, then save all.
+        </div>
+
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-zone-icon">📂</div>
+          <p><strong>Drop HTML files here</strong> or click to browse</p>
+          <p style="margin-top:4px">Multiple files supported · Auto-detects subject, chapter name, number</p>
+          <input type="file" id="fileInput" accept=".html" multiple style="display:none">
+        </div>
+
+        <div id="bulkList" class="bulk-list" style="display:none"></div>
+
+        <div id="bulkActions" class="btn-row" style="display:none">
+          <button class="btn-primary" id="saveAllBtn">💾 Save All to Firestore</button>
+          <button class="btn-secondary" id="clearBulkBtn">🗑️ Clear All</button>
+          <span id="bulkCount" style="font-size:12px;color:#94a3b8;align-self:center"></span>
+        </div>
+        <div id="bulkLog" class="log" style="display:none"></div>
+      </div>
+
+      <!-- Syllabus reference -->
+      <div class="panel">
+        <div class="panel-title">📚 Syllabus Chapter Order Reference</div>
+        <div id="syllabusRef" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px;max-height:400px;overflow-y:auto"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
          MANAGE TAB
-    ════════════════════════════════════════════════════════════ -->
+    ═══════════════════════════════════════════════════ -->
     <div id="tab-manage" class="hidden">
       <div class="panel">
         <div class="panel-title">All Chapters in Firestore</div>
         <div class="btn-row" style="margin-top:0;margin-bottom:10px">
           <button class="btn-blue" id="refreshListBtn">🔄 Refresh</button>
+          <select id="filterSubject" style="width:160px">
+            <option value="">All Subjects</option>
+            <option value="history">📜 History</option>
+            <option value="polity">⚖️ Polity</option>
+            <option value="geography">🌍 Geography</option>
+            <option value="general-science">🔬 General Science</option>
+            <option value="economy">💰 Economy</option>
+          </select>
           <span style="font-size:12px;color:#64748b;align-self:center">Total: <span id="totalCount">0</span></span>
         </div>
         <div id="chapterList" class="chapter-list">
@@ -129,7 +192,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, deleteDoc, collection, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, deleteDoc, collection, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
@@ -145,7 +208,264 @@ const db   = getFirestore(app);
 const gp   = new GoogleAuthProvider();
 const ADMIN_EMAIL = '112ce0489@gmail.com';
 
-// ── Auth ─────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════
+// SYLLABUS — ordered chapter map (from master prompt)
+// ════════════════════════════════════════════════════════
+const SYLLABUS = [
+  // HISTORY — Ancient India (ch 01-08)
+  { no:1,  subject:'history', title:'Prehistoric and Stone Age',        series:'History · Ancient India · GS Notes' },
+  { no:2,  subject:'history', title:'Indus Valley Civilization',         series:'History · Ancient India · GS Notes' },
+  { no:3,  subject:'history', title:'Vedic Period',                      series:'History · Ancient India · GS Notes' },
+  { no:4,  subject:'history', title:'Mahajanapadas and New Religions',   series:'History · Ancient India · GS Notes' },
+  { no:5,  subject:'history', title:'Maurya Empire',                     series:'History · Ancient India · GS Notes' },
+  { no:6,  subject:'history', title:'Post-Mauryan Kingdoms',             series:'History · Ancient India · GS Notes' },
+  { no:7,  subject:'history', title:'Gupta Empire — Golden Age',         series:'History · Ancient India · GS Notes' },
+  { no:8,  subject:'history', title:'Post-Gupta Period',                 series:'History · Ancient India · GS Notes' },
+  // HISTORY — Medieval India (ch 09-17)
+  { no:9,  subject:'history', title:'Arab Invasion and Early Battles',   series:'History · Medieval India · GS Notes' },
+  { no:10, subject:'history', title:'Slave Dynasty (1206–1290)',          series:'History · Medieval India · GS Notes' },
+  { no:11, subject:'history', title:'Khilji Dynasty (1290–1320)',         series:'History · Medieval India · GS Notes' },
+  { no:12, subject:'history', title:'Tughlaq Dynasty (1320–1414)',        series:'History · Medieval India · GS Notes' },
+  { no:13, subject:'history', title:'Later Sultanate and Vijayanagara',  series:'History · Medieval India · GS Notes' },
+  { no:14, subject:'history', title:'Bhakti and Sufi Movements',         series:'History · Medieval India · GS Notes' },
+  { no:15, subject:'history', title:'Mughals — Babur to Akbar',          series:'History · Medieval India · GS Notes' },
+  { no:16, subject:'history', title:'Mughals — Jahangir to Decline',     series:'History · Medieval India · GS Notes' },
+  { no:17, subject:'history', title:'Maratha Empire and Peshwas',        series:'History · Medieval India · GS Notes' },
+  // HISTORY — Modern India (ch 18-22)
+  { no:18, subject:'history', title:'European Companies in India',       series:'History · Modern India · GS Notes' },
+  { no:19, subject:'history', title:'British Expansion and Wars',        series:'History · Modern India · GS Notes' },
+  { no:20, subject:'history', title:'British Policies and Acts',         series:'History · Modern India · GS Notes' },
+  { no:21, subject:'history', title:'Social Reforms and Economic Impact',series:'History · Modern India · GS Notes' },
+  { no:22, subject:'history', title:'Revolt of 1857',                    series:'History · Modern India · GS Notes' },
+  // HISTORY — Freedom Struggle (ch 23-30)
+  { no:23, subject:'history', title:'Moderates and Early INC',           series:'History · Freedom Struggle · GS Notes' },
+  { no:24, subject:'history', title:'Extremists and Swadeshi Movement',  series:'History · Freedom Struggle · GS Notes' },
+  { no:25, subject:'history', title:'Gandhian Era — First Phase',        series:'History · Freedom Struggle · GS Notes' },
+  { no:26, subject:'history', title:'Civil Disobedience and Salt March', series:'History · Freedom Struggle · GS Notes' },
+  { no:27, subject:'history', title:'Quit India and Independence',       series:'History · Freedom Struggle · GS Notes' },
+  { no:28, subject:'history', title:'Revolutionary Nationalism',         series:'History · Freedom Struggle · GS Notes' },
+  { no:29, subject:'history', title:'Peasant and Workers Movements',     series:'History · Freedom Struggle · GS Notes' },
+  { no:30, subject:'history', title:'Women in Freedom Struggle',         series:'History · Freedom Struggle · GS Notes' },
+  // HISTORY — Post-Independence (ch 31-35)
+  { no:31, subject:'history', title:'Integration of Princely States',   series:'History · Post-Independence · GS Notes' },
+  { no:32, subject:'history', title:'Constitution and First Government', series:'History · Post-Independence · GS Notes' },
+  { no:33, subject:'history', title:'Economy and Five Year Plans',       series:'History · Post-Independence · GS Notes' },
+  { no:34, subject:'history', title:'Wars and Foreign Policy',           series:'History · Post-Independence · GS Notes' },
+  { no:35, subject:'history', title:'Political History',                 series:'History · Post-Independence · GS Notes' },
+  // HISTORY — Culture (ch 36-40)
+  { no:36, subject:'history', title:'Architecture and Temple Styles',    series:'History · Culture · GS Notes' },
+  { no:37, subject:'history', title:'Painting Traditions',               series:'History · Culture · GS Notes' },
+  { no:38, subject:'history', title:'Dance and Music',                   series:'History · Culture · GS Notes' },
+  { no:39, subject:'history', title:'Literature',                        series:'History · Culture · GS Notes' },
+  { no:40, subject:'history', title:'UNESCO Sites and GI Tags',          series:'History · Culture · GS Notes' },
+  // POLITY — Constitution (ch 01-05)
+  { no:1,  subject:'polity',  title:'Making of the Constitution',        series:'Polity · Constitution · GS Notes' },
+  { no:2,  subject:'polity',  title:'Preamble',                          series:'Polity · Constitution · GS Notes' },
+  { no:3,  subject:'polity',  title:'Salient Features',                  series:'Polity · Constitution · GS Notes' },
+  { no:4,  subject:'polity',  title:'Borrowed Features',                 series:'Polity · Constitution · GS Notes' },
+  { no:5,  subject:'polity',  title:'Schedules and Parts',               series:'Polity · Constitution · GS Notes' },
+  // POLITY — Fundamental Rights (ch 06-13)
+  { no:6,  subject:'polity',  title:'Six Fundamental Rights — Overview', series:'Polity · Fundamental Rights · GS Notes' },
+  { no:7,  subject:'polity',  title:'Right to Equality (Art. 14–18)',    series:'Polity · Fundamental Rights · GS Notes' },
+  { no:8,  subject:'polity',  title:'Right to Freedom (Art. 19–22)',     series:'Polity · Fundamental Rights · GS Notes' },
+  { no:9,  subject:'polity',  title:'Right Against Exploitation (Art. 23–24)', series:'Polity · Fundamental Rights · GS Notes' },
+  { no:10, subject:'polity',  title:'Right to Freedom of Religion (Art. 25–28)', series:'Polity · Fundamental Rights · GS Notes' },
+  { no:11, subject:'polity',  title:'Cultural and Educational Rights (Art. 29–30)', series:'Polity · Fundamental Rights · GS Notes' },
+  { no:12, subject:'polity',  title:'Right to Constitutional Remedies (Art. 32)', series:'Polity · Fundamental Rights · GS Notes' },
+  { no:13, subject:'polity',  title:'Five Constitutional Writs',         series:'Polity · Fundamental Rights · GS Notes' },
+  // POLITY — DPSP (ch 14-17)
+  { no:14, subject:'polity',  title:'Nature and Classification of DPSP', series:'Polity · DPSP · GS Notes' },
+  { no:15, subject:'polity',  title:'Key DPSP Articles',                 series:'Polity · DPSP · GS Notes' },
+  { no:16, subject:'polity',  title:'Fundamental Duties (Art. 51A)',     series:'Polity · DPSP · GS Notes' },
+  { no:17, subject:'polity',  title:'FR vs DPSP — Conflict and Harmony', series:'Polity · DPSP · GS Notes' },
+  // POLITY — Parliament (ch 18-23)
+  { no:18, subject:'polity',  title:'Composition of Parliament',         series:'Polity · Parliament · GS Notes' },
+  { no:19, subject:'polity',  title:'Lok Sabha — Key Facts',             series:'Polity · Parliament · GS Notes' },
+  { no:20, subject:'polity',  title:'Rajya Sabha — Key Facts',           series:'Polity · Parliament · GS Notes' },
+  { no:21, subject:'polity',  title:'Parliamentary Sessions and Procedures', series:'Polity · Parliament · GS Notes' },
+  { no:22, subject:'polity',  title:'Types of Bills and Legislation',    series:'Polity · Parliament · GS Notes' },
+  { no:23, subject:'polity',  title:'Special Powers and Committees',     series:'Polity · Parliament · GS Notes' },
+  // POLITY — Executive (ch 24-27)
+  { no:24, subject:'polity',  title:'President of India',                series:'Polity · Executive · GS Notes' },
+  { no:25, subject:'polity',  title:'Vice President',                    series:'Polity · Executive · GS Notes' },
+  { no:26, subject:'polity',  title:'Prime Minister and Council of Ministers', series:'Polity · Executive · GS Notes' },
+  { no:27, subject:'polity',  title:'Governor of States',                series:'Polity · Executive · GS Notes' },
+  // POLITY — Judiciary (ch 28-31)
+  { no:28, subject:'polity',  title:'Supreme Court — Structure and Jurisdiction', series:'Polity · Judiciary · GS Notes' },
+  { no:29, subject:'polity',  title:'High Courts',                       series:'Polity · Judiciary · GS Notes' },
+  { no:30, subject:'polity',  title:'Key Judicial Doctrines',            series:'Polity · Judiciary · GS Notes' },
+  { no:31, subject:'polity',  title:'PIL and Legal Reforms',             series:'Polity · Judiciary · GS Notes' },
+  // POLITY — Federalism (ch 32-35)
+  { no:32, subject:'polity',  title:'Federal Nature of India',           series:'Polity · Federalism · GS Notes' },
+  { no:33, subject:'polity',  title:'Three Lists — 7th Schedule',        series:'Polity · Federalism · GS Notes' },
+  { no:34, subject:'polity',  title:'Centre-State Relations',            series:'Polity · Federalism · GS Notes' },
+  { no:35, subject:'polity',  title:'Finance Commission and GST',        series:'Polity · Federalism · GS Notes' },
+  // POLITY — Elections (ch 36-39)
+  { no:36, subject:'polity',  title:'Election Commission of India',      series:'Polity · Elections · GS Notes' },
+  { no:37, subject:'polity',  title:'Comptroller and Auditor General (CAG)', series:'Polity · Elections · GS Notes' },
+  { no:38, subject:'polity',  title:'UPSC and State PSCs',               series:'Polity · Elections · GS Notes' },
+  { no:39, subject:'polity',  title:'Other Constitutional Bodies',       series:'Polity · Elections · GS Notes' },
+  // POLITY — Amendments (ch 40-42)
+  { no:40, subject:'polity',  title:'Amendment Procedure (Art. 368)',    series:'Polity · Amendments · GS Notes' },
+  { no:41, subject:'polity',  title:'Key Amendments — Must Know',        series:'Polity · Amendments · GS Notes' },
+  { no:42, subject:'polity',  title:'Memory Tricks for Amendments',      series:'Polity · Amendments · GS Notes' },
+  // POLITY — Emergency (ch 43-46)
+  { no:43, subject:'polity',  title:'National Emergency (Art. 352)',     series:'Polity · Emergency · GS Notes' },
+  { no:44, subject:'polity',  title:"President's Rule (Art. 356)",       series:'Polity · Emergency · GS Notes' },
+  { no:45, subject:'polity',  title:'Financial Emergency (Art. 360)',    series:'Polity · Emergency · GS Notes' },
+  { no:46, subject:'polity',  title:'Comparison of Three Emergencies',   series:'Polity · Emergency · GS Notes' },
+  // GEOGRAPHY — Physical (ch 01-04)
+  { no:1,  subject:'geography', title:'Himalayan Mountains',             series:'Geography · Physical · GS Notes' },
+  { no:2,  subject:'geography', title:'Peninsular Plateau and Deccan',   series:'Geography · Physical · GS Notes' },
+  { no:3,  subject:'geography', title:'Northern Plains and Thar Desert', series:'Geography · Physical · GS Notes' },
+  { no:4,  subject:'geography', title:'Coastal Plains and Islands',      series:'Geography · Physical · GS Notes' },
+  // GEOGRAPHY — Climate (ch 05-08)
+  { no:5,  subject:'geography', title:'Monsoon — Mechanism and Types',   series:'Geography · Climate · GS Notes' },
+  { no:6,  subject:'geography', title:'Four Seasons of India',           series:'Geography · Climate · GS Notes' },
+  { no:7,  subject:'geography', title:'Rainfall Distribution',           series:'Geography · Climate · GS Notes' },
+  { no:8,  subject:'geography', title:'Cyclones and Climate Zones',      series:'Geography · Climate · GS Notes' },
+  // GEOGRAPHY — Rivers (ch 09-12)
+  { no:9,  subject:'geography', title:'Himalayan Rivers — Indus, Ganga, Brahmaputra', series:'Geography · Rivers · GS Notes' },
+  { no:10, subject:'geography', title:'Peninsular Rivers — East and West Flowing', series:'Geography · Rivers · GS Notes' },
+  { no:11, subject:'geography', title:'Important Lakes of India',        series:'Geography · Rivers · GS Notes' },
+  { no:12, subject:'geography', title:'Waterfalls and Dams',             series:'Geography · Rivers · GS Notes' },
+  // GEOGRAPHY — Soils (ch 13-14)
+  { no:13, subject:'geography', title:'8 Types of Soils in India',       series:'Geography · Soils · GS Notes' },
+  { no:14, subject:'geography', title:'Natural Vegetation and Forest Types', series:'Geography · Soils · GS Notes' },
+  // GEOGRAPHY — Resources (ch 15-17)
+  { no:15, subject:'geography', title:'Coal and Petroleum',              series:'Geography · Resources · GS Notes' },
+  { no:16, subject:'geography', title:'Iron Ore and Key Minerals',       series:'Geography · Resources · GS Notes' },
+  { no:17, subject:'geography', title:'Power Resources — Conventional and Non-conventional', series:'Geography · Resources · GS Notes' },
+  // GEOGRAPHY — Agriculture (ch 18-20)
+  { no:18, subject:'geography', title:'Agricultural Seasons and Major Crops', series:'Geography · Agriculture · GS Notes' },
+  { no:19, subject:'geography', title:'Irrigation Systems',              series:'Geography · Agriculture · GS Notes' },
+  { no:20, subject:'geography', title:'Agricultural Revolutions in India', series:'Geography · Agriculture · GS Notes' },
+  // GEOGRAPHY — Industry (ch 21-23)
+  { no:21, subject:'geography', title:'Iron and Steel Industry',         series:'Geography · Industry · GS Notes' },
+  { no:22, subject:'geography', title:'Textile and Other Industries',    series:'Geography · Industry · GS Notes' },
+  { no:23, subject:'geography', title:'Transport — Railways, Roads, Ports', series:'Geography · Industry · GS Notes' },
+  // GEOGRAPHY — Population (ch 24-26)
+  { no:24, subject:'geography', title:'Census 2011 — Key Data',          series:'Geography · Population · GS Notes' },
+  { no:25, subject:'geography', title:'Population Trends and Distribution', series:'Geography · Population · GS Notes' },
+  { no:26, subject:'geography', title:'Literacy, Sex Ratio and Density', series:'Geography · Population · GS Notes' },
+  // GEOGRAPHY — World (ch 27-29)
+  { no:27, subject:'geography', title:'Continents, Oceans and Major Features', series:'Geography · World · GS Notes' },
+  { no:28, subject:'geography', title:'Countries, Capitals and GK',      series:'Geography · World · GS Notes' },
+  { no:29, subject:'geography', title:'World Climate Zones and Biomes',  series:'Geography · World · GS Notes' },
+  // GENERAL SCIENCE — Physics (ch 01-06)
+  { no:1,  subject:'general-science', title:'Motion and Laws of Motion', series:'General Science · Physics · GS Notes' },
+  { no:2,  subject:'general-science', title:'Work, Energy and Power',    series:'General Science · Physics · GS Notes' },
+  { no:3,  subject:'general-science', title:'Light and Optics',          series:'General Science · Physics · GS Notes' },
+  { no:4,  subject:'general-science', title:'Sound and Waves',           series:'General Science · Physics · GS Notes' },
+  { no:5,  subject:'general-science', title:'Electricity and Magnetism', series:'General Science · Physics · GS Notes' },
+  { no:6,  subject:'general-science', title:'Modern Physics — Nuclear and Radioactivity', series:'General Science · Physics · GS Notes' },
+  // GENERAL SCIENCE — Chemistry (ch 07-11)
+  { no:7,  subject:'general-science', title:'Matter, Elements and Periodic Table', series:'General Science · Chemistry · GS Notes' },
+  { no:8,  subject:'general-science', title:'Acids, Bases and Salts',    series:'General Science · Chemistry · GS Notes' },
+  { no:9,  subject:'general-science', title:'Metals, Non-metals and Metallurgy', series:'General Science · Chemistry · GS Notes' },
+  { no:10, subject:'general-science', title:'Carbon and Its Compounds',  series:'General Science · Chemistry · GS Notes' },
+  { no:11, subject:'general-science', title:'Chemical Reactions and Equations', series:'General Science · Chemistry · GS Notes' },
+  // GENERAL SCIENCE — Biology (ch 12-17)
+  { no:12, subject:'general-science', title:'Cell — Structure and Division', series:'General Science · Biology · GS Notes' },
+  { no:13, subject:'general-science', title:'Nutrition and Digestive System', series:'General Science · Biology · GS Notes' },
+  { no:14, subject:'general-science', title:'Respiration and Excretion', series:'General Science · Biology · GS Notes' },
+  { no:15, subject:'general-science', title:'Circulatory and Nervous System', series:'General Science · Biology · GS Notes' },
+  { no:16, subject:'general-science', title:'Reproduction and Genetics', series:'General Science · Biology · GS Notes' },
+  { no:17, subject:'general-science', title:'Ecology and Environment',   series:'General Science · Biology · GS Notes' },
+  // GENERAL SCIENCE — Technology (ch 18-22)
+  { no:18, subject:'general-science', title:'Defence Technology',        series:'General Science · Technology · GS Notes' },
+  { no:19, subject:'general-science', title:'Biotechnology',             series:'General Science · Technology · GS Notes' },
+  { no:20, subject:'general-science', title:'Information Technology and AI', series:'General Science · Technology · GS Notes' },
+  { no:21, subject:'general-science', title:'Nuclear Technology',        series:'General Science · Technology · GS Notes' },
+  { no:22, subject:'general-science', title:'Recent Science and Tech Developments', series:'General Science · Technology · GS Notes' },
+  // GENERAL SCIENCE — Health (ch 23-25)
+  { no:23, subject:'general-science', title:'Communicable and Non-communicable Diseases', series:'General Science · Health · GS Notes' },
+  { no:24, subject:'general-science', title:'Vaccines and Immunization', series:'General Science · Health · GS Notes' },
+  { no:25, subject:'general-science', title:'Nutrition and Public Health', series:'General Science · Health · GS Notes' },
+  // GENERAL SCIENCE — Space (ch 26-29)
+  { no:26, subject:'general-science', title:'Solar System and Universe', series:'General Science · Space · GS Notes' },
+  { no:27, subject:'general-science', title:'ISRO and Indian Space Programme', series:'General Science · Space · GS Notes' },
+  { no:28, subject:'general-science', title:'Satellites and Applications', series:'General Science · Space · GS Notes' },
+  { no:29, subject:'general-science', title:'Key Space Missions (India and World)', series:'General Science · Space · GS Notes' },
+];
+
+// ════════════════════════════════════════════════════════
+// SUBJECT KEYWORD DETECTION
+// ════════════════════════════════════════════════════════
+const SUBJECT_KEYWORDS = {
+  'history':['history','ancient','medieval','modern','mughal','maurya','vedic','indus','maratha','bhakti','gupta','revolt','freedom struggle','british','colonial','partition'],
+  'polity':['polity','constitution','parliament','fundamental right','dpsp','judiciary','president','governor','amendment','emergency','election','lok sabha','rajya sabha'],
+  'geography':['geography','physical','climate','monsoon','river','soil','agriculture','industry','population','census','himalaya','plateau','mineral','petroleum'],
+  'general-science':['science','physics','chemistry','biology','motion','newton','light','electricity','cell','nutrition','genetics','ecology','technology','isro','space','nuclear'],
+  'economy':['economy','gdp','gnp','budget','rbi','inflation','poverty','planning','niti aayog','fiscal','monetary','banking','gst'],
+};
+
+function detectSubject(text) {
+  const lower = text.toLowerCase();
+  let best = 'history', bestScore = 0;
+  for (const [subj, kws] of Object.entries(SUBJECT_KEYWORDS)) {
+    const score = kws.filter(k => lower.includes(k)).length;
+    if (score > bestScore) { bestScore = score; best = subj; }
+  }
+  return best;
+}
+
+// Match HTML to syllabus chapter using keyword similarity
+function matchToSyllabus(html, manualNo, manualSubject) {
+  const lower = html.toLowerCase().substring(0, 3000);
+  const subject = manualSubject || detectSubject(lower);
+  const candidates = SYLLABUS.filter(s => s.subject === subject);
+
+  // Score each candidate by keyword matches in HTML
+  let best = null, bestScore = -1;
+  for (const c of candidates) {
+    const words = c.title.toLowerCase().split(/[\s—–,()\.]+/).filter(w => w.length > 3);
+    const score = words.filter(w => lower.includes(w)).length;
+    if (score > bestScore) { bestScore = score; best = c; }
+  }
+
+  // If manual chapter number given, override
+  if (manualNo) {
+    const exact = candidates.find(c => c.no === manualNo);
+    if (exact) best = exact;
+  }
+
+  return best || { no: manualNo || 1, subject, title: '', series: '' };
+}
+
+// ════════════════════════════════════════════════════════
+// EXTRACT METADATA FROM HTML
+// ════════════════════════════════════════════════════════
+function extractMeta(html, manualNo) {
+  const slMatch = html.match(/<div[^>]*class=[\"'][^\"']*series-label[^\"']*[\"'][^>]*>([\s\S]*?)<\/div>/i);
+  const seriesLabel = slMatch ? slMatch[1].replace(/<[^>]+>/g, '').trim() : '';
+
+  const h1Match = html.match(/<div[^>]*class=[\"'][^\"']*chapter-banner[^\"']*[\"'][^>]*>[\s\S]*?<h1[^>]*>([\s\S]*?)<\/h1>/i)
+               || html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  const htmlTitle = h1Match ? h1Match[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+
+  const subjAttr = html.match(/data-subject=[\"']([^\"']+)[\"']/i);
+  const subjectFromAttr = subjAttr ? subjAttr[1].trim() : null;
+
+  const sectionCount = (html.match(/class=[\"'][^\"']*section-wrap[^\"']*[\"']/g) || []).length;
+
+  const syllabus = matchToSyllabus(html, manualNo, subjectFromAttr);
+
+  return {
+    id:           `${syllabus.subject}_ch${String(syllabus.no).padStart(2,'0')}`,
+    subject:      syllabus.subject,
+    chapter_no:   syllabus.no,
+    title:        syllabus.title || htmlTitle,
+    series_label: syllabus.series || seriesLabel,
+    order:        syllabus.no,
+    body_html:    html,
+    section_count: sectionCount,
+  };
+}
+
+// ════════════════════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════════════════════
 document.getElementById('loginBtn').addEventListener('click', async () => {
   try { await signInWithPopup(auth, gp); }
   catch(e) { alert('Login failed: ' + e.message); }
@@ -154,13 +474,13 @@ onAuthStateChanged(auth, user => {
   if (user && user.email === ADMIN_EMAIL) {
     document.getElementById('loginPanel').classList.add('hidden');
     document.getElementById('mainPanel').classList.remove('hidden');
-  } else if (user) {
-    alert('Not an admin account: ' + user.email);
-    auth.signOut();
-  }
+    renderSyllabusRef();
+  } else if (user) { alert('Not an admin: ' + user.email); auth.signOut(); }
 });
 
-// ── Tabs ─────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════
+// TABS
+// ════════════════════════════════════════════════════════
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active');
@@ -169,182 +489,51 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   if (t.dataset.tab === 'manage') refreshList();
 }));
 
-// ── SUBJECT DETECTION from text ──────────────────────────────────────────
-const SUBJECT_KEYWORDS = {
-  'history':          ['history','ancient','medieval','modern','freedom','mughal','maurya','vedic','indus','maratha','bhakti','gupta','revolt','independence','culture'],
-  'polity':           ['polity','constitution','parliament','fundamental right','dpsp','judiciary','president','governor','amendment','emergency','election','lok sabha','rajya sabha','federalism'],
-  'geography':        ['geography','physical','climate','monsoon','river','soil','agriculture','industry','population','census','himalaya','plateau','ocean','mineral'],
-  'general-science':  ['science','physics','chemistry','biology','motion','newton','light','electricity','cell','nutrition','genetics','ecology','technology','isro','space','nuclear','biotechnology','health','disease','vaccine'],
-  'economy':          ['economy','gdp','gnp','budget','rbi','inflation','poverty','planning','niti aayog','fiscal','monetary','banking','finance commission','gst'],
-  'english':          ['english','grammar','vocabulary','comprehension','passage'],
-  'reasoning':        ['reasoning','logical','analogy','series','pattern','puzzle'],
-  'maths':            ['maths','mathematics','arithmetic','algebra','geometry','percentage','ratio'],
-};
-
-function detectSubject(text) {
-  const lower = text.toLowerCase();
-  let best = 'history', bestScore = 0;
-  for (const [subj, keywords] of Object.entries(SUBJECT_KEYWORDS)) {
-    const score = keywords.filter(k => lower.includes(k)).length;
-    if (score > bestScore) { bestScore = score; best = subj; }
-  }
-  return best;
-}
-
-// ── EXTRACT ALL METADATA FROM HTML ───────────────────────────────────────
-function extractFromHtml(html) {
-  const manualNo = parseInt(document.getElementById('chapterNo')?.value) || 1;
-  const result = { id: '', subject: '', chapter_no: manualNo, title: '', series_label: '', order: manualNo, body_html: html };
-
-  // 1. data-chapter-id attribute on chapter-banner (most explicit)
-  const idAttr = html.match(/<div[^>]*class=[\"'][^\"']*chapter-banner[^\"']*[\"'][^>]*data-chapter-id=[\"']([^\"']+)[\"']/i)
-               || html.match(/data-chapter-id=[\"']([^\"']+)[\"'][^>]*class=[\"'][^\"']*chapter-banner/i);
-  if (idAttr) result.id = idAttr[1].trim();
-
-  // 2. series-label → extract subject + chapter number
-  const slMatch = html.match(/<div[^>]*class=[\"'][^\"']*series-label[^\"']*[\"'][^>]*>([\s\S]*?)<\/div>/i);
-  if (slMatch) {
-    result.series_label = slMatch[1].replace(/<[^>]+>/g, '').trim();
-    // Extract chapter number e.g. "Chapter 03" or "Ch 3"
-    const noMatch = result.series_label.match(/[Cc]h(?:apter)?\s*(\d+)/);
-    // series-label chapter number ignored — using manual input instead
-  }
-
-  // 3. data-subject attribute
-  const subjAttr = html.match(/<div[^>]*class=[\"'][^\"']*chapter-banner[^\"']*[\"'][^>]*data-subject=[\"']([^\"']+)[\"']/i)
-                 || html.match(/data-subject=[\"']([^\"']+)[\"'][^>]*class=[\"'][^\"']*chapter-banner/i);
-  if (subjAttr) {
-    result.subject = subjAttr[1].trim();
-  } else {
-    // Auto-detect from series label + first sections
-    result.subject = detectSubject((result.series_label + ' ' + html.substring(0, 2000)));
-  }
-
-  // 4. Title from <h1> inside chapter-banner
-  const bannerMatch = html.match(/<div[^>]*class=[\"'][^\"']*chapter-banner[^\"']*[\"'][^>]*>([\s\S]*?)<\/div>\s*(?:<\/div>|<div)/i);
-  if (bannerMatch) {
-    const h1 = bannerMatch[1].match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-    if (h1) result.title = h1[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-  }
-  // Fallback: any h1 in first 1500 chars
-  if (!result.title) {
-    const h1Fallback = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-    if (h1Fallback) result.title = h1Fallback[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-  }
-
-  // 5. Build chapter ID if not set via data attribute
-  if (!result.id && result.subject && result.chapter_no) {
-    result.id = `${result.subject}_ch${String(manualNo).padStart(2, '0')}`;
-  } else if (!result.id && result.title) {
-    // Slugify title as fallback
-    const slug = result.title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').substring(0, 40);
-    result.id = slug;
-  }
-
-  // 6. Count sections
-  const sectionCount = (html.match(/class=[\"'][^\"']*section-wrap[^\"']*[\"']/g) || []).length;
-  result.section_count = sectionCount;
-
-  return result;
-}
-
-// ── Live extraction as user types ────────────────────────────────────────
-const textarea = document.getElementById('bodyHtml');
-document.getElementById('chapterNo').addEventListener('input', () => updateExtractedCard());
+// ════════════════════════════════════════════════════════
+// SINGLE UPLOAD
+// ════════════════════════════════════════════════════════
+const textarea  = document.getElementById('bodyHtml');
+const chNoInput = document.getElementById('chapterNo');
 let extractDebounce;
-textarea.addEventListener('input', () => {
-  clearTimeout(extractDebounce);
-  extractDebounce = setTimeout(() => updateExtractedCard(), 400);
-});
-textarea.addEventListener('paste', () => {
-  setTimeout(() => updateExtractedCard(), 100);
-});
+textarea.addEventListener('input',  () => { clearTimeout(extractDebounce); extractDebounce = setTimeout(updateCard, 400); });
+textarea.addEventListener('paste',  () => setTimeout(updateCard, 100));
+chNoInput.addEventListener('input', () => updateCard());
 
-function updateExtractedCard() {
+function updateCard() {
   const html = textarea.value.trim();
   const card = document.getElementById('extractedCard');
   if (!html) { card.classList.remove('show'); return; }
-
-  const m = extractFromHtml(html);
+  const no = parseInt(chNoInput.value) || null;
+  const m = extractMeta(html, no);
   card.classList.add('show');
-
-  document.getElementById('ex-id').textContent      = m.id       || '⚠️ Not detected';
-  document.getElementById('ex-subject').textContent  = m.subject  || '⚠️ Not detected';
+  document.getElementById('ex-id').textContent      = m.id;
+  document.getElementById('ex-subject').textContent  = m.subject;
   document.getElementById('ex-no').textContent       = m.chapter_no;
-  document.getElementById('ex-title').textContent    = m.title    || '⚠️ Not detected';
+  document.getElementById('ex-title').textContent    = m.title || '⚠️ Not detected';
   document.getElementById('ex-series').textContent   = m.series_label || '⚠️ Not detected';
-  document.getElementById('ex-sections').textContent = (m.section_count || 0) + ' sections found';
+  document.getElementById('ex-sections').textContent = m.section_count + ' sections';
   document.getElementById('ex-size').textContent     = (html.length / 1024).toFixed(1) + ' KB';
 }
 
-// ── Save ─────────────────────────────────────────────────────────────────
 document.getElementById('saveBtn').addEventListener('click', async () => {
   const html = textarea.value.trim();
   const log  = document.getElementById('uploadLog');
-  log.style.display = 'block';
-  log.innerHTML = '';
-
-  if (!html) {
-    log.innerHTML = '<span class="err">❌ Nothing pasted yet.</span>';
-    return;
-  }
-
-  const m = extractFromHtml(html);
-
-  if (!m.id) {
-    log.innerHTML = '<span class="err">❌ Could not detect Chapter ID from HTML. Add <code>data-chapter-id="history_ch3"</code> to your chapter-banner div.</span>';
-    return;
-  }
-  if (!m.title) {
-    log.innerHTML = '<span class="err">❌ Could not detect title. Make sure your HTML has an &lt;h1&gt; inside .chapter-banner.</span>';
-    return;
-  }
-
-  try {
-    log.innerHTML += `<span class="info">Detected: <b>${m.id}</b> · ${m.subject} · "${m.title}"</span>\n`;
-    log.innerHTML += `<span class="info">Saving to Firestore…</span>\n`;
-
-    const existing = await getDoc(doc(db, 'chapters', m.id));
-    if (existing.exists()) {
-      if (!confirm(`Chapter "${m.id}" already exists. Overwrite?`)) {
-        log.innerHTML += '<span class="warn">⚠️ Cancelled.</span>';
-        return;
-      }
-    }
-
-    const payload = {
-      id:           m.id,
-      subject:      m.subject,
-      chapter_no:   m.chapter_no,
-      title:        m.title,
-      series_label: m.series_label,
-      order:        m.order,
-      body_html:    m.body_html,
-      updated_at:   serverTimestamp(),
-      ...(existing.exists() ? {} : { created_at: serverTimestamp() })
-    };
-
-    await setDoc(doc(db, 'chapters', m.id), payload, { merge: true });
-    log.innerHTML += `<span class="ok">✅ Saved! <a href="../chapter.html?id=${m.id}" target="_blank" style="color:#10b981">Open chapter.html?id=${m.id}</a></span>\n`;
-    log.innerHTML += `<span class="info">Size: ${(m.body_html.length / 1024).toFixed(1)} KB · ${m.section_count} sections</span>`;
-  } catch(e) {
-    console.error(e);
-    log.innerHTML += `<span class="err">❌ Error: ${e.message}</span>`;
-  }
+  log.style.display = 'block'; log.innerHTML = '';
+  if (!html) { log.innerHTML = '<span class="err">❌ Nothing pasted.</span>'; return; }
+  const no = parseInt(chNoInput.value) || null;
+  const m  = extractMeta(html, no);
+  if (!m.id) { log.innerHTML = '<span class="err">❌ Could not detect Chapter ID.</span>'; return; }
+  await saveChapter(m, log);
 });
 
-// ── Preview ───────────────────────────────────────────────────────────────
 document.getElementById('previewBtn').addEventListener('click', () => {
   const body = textarea.value.trim();
   if (!body) { alert('Nothing to preview.'); return; }
-  const wrap   = document.getElementById('previewWrap');
-  const iframe = document.getElementById('previewFrame');
-  wrap.style.display = 'block';
+  document.getElementById('previewWrap').style.display = 'block';
   const cssUrl = new URL('../css/chapter-notes.css', window.location.href).href;
-  iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="${cssUrl}"></head><body><div id="main" style="margin-left:0"><div id="content">${body}</div></div></body></html>`;
+  document.getElementById('previewFrame').srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="${cssUrl}"></head><body><div id="main" style="margin-left:0"><div id="content">${body}</div></div></body></html>`;
 });
 
-// ── Clear ─────────────────────────────────────────────────────────────────
 document.getElementById('clearBtn').addEventListener('click', () => {
   if (!confirm('Clear?')) return;
   textarea.value = '';
@@ -353,61 +542,229 @@ document.getElementById('clearBtn').addEventListener('click', () => {
   document.getElementById('previewWrap').style.display = 'none';
 });
 
-// ── Manage ────────────────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════
+// BULK UPLOAD
+// ════════════════════════════════════════════════════════
+const dropZone  = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+let bulkFiles   = []; // { meta, overriddenTitle }
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('drag-over');
+  processBulkFiles([...e.dataTransfer.files]);
+});
+fileInput.addEventListener('change', () => processBulkFiles([...fileInput.files]));
+
+async function processBulkFiles(files) {
+  const htmlFiles = files.filter(f => f.name.endsWith('.html'));
+  if (!htmlFiles.length) { alert('No HTML files found.'); return; }
+
+  bulkFiles = [];
+  const list = document.getElementById('bulkList');
+  list.style.display = 'flex';
+  list.innerHTML = '<div style="color:#94a3b8;font-size:13px;padding:10px">Reading files…</div>';
+
+  // Read all files
+  const reads = htmlFiles.map(f => new Promise(res => {
+    const r = new FileReader();
+    r.onload = e => res({ name: f.name, html: e.target.result });
+    r.readAsText(f);
+  }));
+  const results = await Promise.all(reads);
+
+  // Sort by filename (helps if they are named in order)
+  results.sort((a,b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+  // Extract meta for each
+  bulkFiles = results.map(r => ({ ...extractMeta(r.html, null), filename: r.name }));
+
+  // Render
+  renderBulkList();
+  document.getElementById('bulkActions').style.display = 'flex';
+  document.getElementById('bulkCount').textContent = `${bulkFiles.length} file${bulkFiles.length>1?'s':''} loaded`;
+}
+
+function renderBulkList() {
+  const list = document.getElementById('bulkList');
+  list.innerHTML = '';
+  bulkFiles.forEach((m, i) => {
+    const item = document.createElement('div');
+    item.className = 'bulk-item' + (m.title ? ' ok-item' : ' err-item');
+    item.innerHTML = `
+      <div class="bulk-item-header">
+        <span class="bulk-filename">${esc(m.filename)}</span>
+        <span class="bulk-id">${esc(m.id)}</span>
+        <span class="bulk-status" style="color:${m.title?'#10b981':'#f59e0b'}">${m.title?'✅ Matched':'⚠️ Review'}</span>
+      </div>
+      <div style="font-size:12px;color:#94a3b8;margin-bottom:4px">
+        <b style="color:#f1f5f9">${esc(m.subject)}</b> · Ch ${m.chapter_no} · ${m.section_count} sections · ${(m.body_html.length/1024).toFixed(1)} KB
+      </div>
+      <input class="bulk-title-input" value="${esc(m.title)}" placeholder="Chapter title (edit if wrong)" data-idx="${i}">`;
+    list.appendChild(item);
+  });
+
+  // Wire title inputs
+  list.querySelectorAll('.bulk-title-input').forEach(inp => {
+    inp.addEventListener('input', () => {
+      bulkFiles[parseInt(inp.dataset.idx)].title = inp.value;
+    });
+  });
+}
+
+document.getElementById('saveAllBtn').addEventListener('click', async () => {
+  const log = document.getElementById('bulkLog');
+  log.style.display = 'block'; log.innerHTML = '';
+  let saved = 0, failed = 0;
+  for (const m of bulkFiles) {
+    if (!m.id || !m.title) {
+      log.innerHTML += `<span class="warn">⚠️ Skipped ${esc(m.filename)} — no ID or title\n</span>`;
+      failed++;
+      continue;
+    }
+    const ok = await saveChapter(m, log, true);
+    if (ok) saved++; else failed++;
+  }
+  log.innerHTML += `\n<span class="ok">✅ Done — ${saved} saved, ${failed} failed/skipped</span>`;
+});
+
+document.getElementById('clearBulkBtn').addEventListener('click', () => {
+  bulkFiles = [];
+  document.getElementById('bulkList').innerHTML = '';
+  document.getElementById('bulkList').style.display = 'none';
+  document.getElementById('bulkActions').style.display = 'none';
+  document.getElementById('bulkLog').style.display = 'none';
+  document.getElementById('bulkCount').textContent = '';
+  fileInput.value = '';
+});
+
+// ════════════════════════════════════════════════════════
+// SAVE (shared)
+// ════════════════════════════════════════════════════════
+async function saveChapter(m, log, silent = false) {
+  try {
+    if (!silent) log.innerHTML += `<span class="info">Saving ${m.id}…\n</span>`;
+    const existing = await getDoc(doc(db, 'chapters', m.id));
+    if (existing.exists() && !silent) {
+      if (!confirm(`"${m.id}" already exists. Overwrite?`)) {
+        log.innerHTML += '<span class="warn">⚠️ Cancelled\n</span>';
+        return false;
+      }
+    }
+    await setDoc(doc(db, 'chapters', m.id), {
+      id: m.id, subject: m.subject, chapter_no: m.chapter_no,
+      title: m.title, series_label: m.series_label, order: m.order,
+      body_html: m.body_html, updated_at: serverTimestamp(),
+      ...(existing.exists() ? {} : { created_at: serverTimestamp() })
+    }, { merge: true });
+    log.innerHTML += `<span class="ok">✅ Saved: ${m.id} — "${esc(m.title)}"\n</span>`;
+    return true;
+  } catch(e) {
+    log.innerHTML += `<span class="err">❌ ${m.id}: ${e.message}\n</span>`;
+    return false;
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// MANAGE — list + inline title edit
+// ════════════════════════════════════════════════════════
 document.getElementById('refreshListBtn').addEventListener('click', refreshList);
+document.getElementById('filterSubject').addEventListener('change', refreshList);
 
 async function refreshList() {
-  const wrap = document.getElementById('chapterList');
+  const wrap   = document.getElementById('chapterList');
+  const filter = document.getElementById('filterSubject').value;
   wrap.innerHTML = '<div style="color:#64748b;font-size:13px;text-align:center;padding:20px">Loading…</div>';
   try {
-    const snap = await getDocs(collection(db, 'chapters'));
-    const chaps = [];
+    const snap  = await getDocs(collection(db, 'chapters'));
+    let chaps   = [];
     snap.forEach(d => chaps.push({ id: d.id, ...d.data() }));
-    chaps.sort((a,b) => (a.subject||'').localeCompare(b.subject||'') || (a.order||0) - (b.order||0));
+    if (filter) chaps = chaps.filter(c => c.subject === filter);
+    chaps.sort((a,b) => (a.subject||'').localeCompare(b.subject||'') || (a.order||0)-(b.order||0));
     document.getElementById('totalCount').textContent = chaps.length;
-    if (!chaps.length) { wrap.innerHTML = '<div style="color:#64748b;font-size:13px;text-align:center;padding:20px">No chapters yet.</div>'; return; }
+    if (!chaps.length) { wrap.innerHTML = '<div style="color:#64748b;font-size:13px;text-align:center;padding:20px">No chapters.</div>'; return; }
     wrap.innerHTML = '';
     chaps.forEach(c => {
       const row = document.createElement('div');
       row.className = 'chap-row';
       row.innerHTML = `
         <div class="chap-info">
-          <div class="chap-title">${esc(c.title || c.id)} <span class="badge">${esc(c.subject || '?')}</span></div>
-          <div class="chap-meta">${esc(c.id)} · ch ${c.chapter_no ?? '?'} · ${((c.body_html||'').length/1024).toFixed(1)} KB</div>
+          <div class="chap-title">${esc(c.title||c.id)} <span class="badge">${esc(c.subject||'?')}</span> <span class="badge" style="background:rgba(16,185,129,.1);color:#10b981;border-color:#10b981">ch ${c.chapter_no??'?'}</span></div>
+          <div class="chap-meta">${esc(c.id)} · ${((c.body_html||'').length/1024).toFixed(1)} KB</div>
+          <div class="edit-title-wrap" style="display:none">
+            <input class="edit-title-input" value="${esc(c.title||'')}" placeholder="New chapter title">
+            <button class="btn-primary save-title-btn" style="padding:6px 12px;font-size:12px" data-id="${c.id}">💾 Save</button>
+            <button class="btn-secondary cancel-edit-btn" style="padding:6px 10px;font-size:12px">Cancel</button>
+          </div>
         </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <div class="chap-actions">
           <button class="btn-blue" onclick="window.open('../chapter.html?id=${c.id}','_blank')">👁️ View</button>
-          <button class="btn-amber" data-edit="${c.id}">✏️ Edit</button>
+          <button class="btn-amber edit-title-toggle" data-id="${c.id}">✏️ Rename</button>
           <button class="btn-danger" data-del="${c.id}">🗑️ Delete</button>
         </div>`;
       wrap.appendChild(row);
+
+      // Rename toggle
+      row.querySelector('.edit-title-toggle').addEventListener('click', () => {
+        const editWrap = row.querySelector('.edit-title-wrap');
+        const isShowing = editWrap.style.display !== 'none';
+        editWrap.style.display = isShowing ? 'none' : 'flex';
+        if (!isShowing) row.querySelector('.edit-title-input').focus();
+      });
+      row.querySelector('.cancel-edit-btn').addEventListener('click', () => {
+        row.querySelector('.edit-title-wrap').style.display = 'none';
+      });
+      row.querySelector('.save-title-btn').addEventListener('click', async () => {
+        const newTitle = row.querySelector('.edit-title-input').value.trim();
+        if (!newTitle) { alert('Title cannot be empty.'); return; }
+        try {
+          await updateDoc(doc(db, 'chapters', c.id), { title: newTitle, updated_at: serverTimestamp() });
+          row.querySelector('.chap-title').childNodes[0].textContent = newTitle + ' ';
+          row.querySelector('.edit-title-wrap').style.display = 'none';
+          c.title = newTitle;
+        } catch(e) { alert('Error: ' + e.message); }
+      });
+      row.querySelector('[data-del]').addEventListener('click', () => delChapter(c.id, row));
     });
-    wrap.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editChapter(b.dataset.edit)));
-    wrap.querySelectorAll('[data-del]').forEach(b  => b.addEventListener('click', () => delChapter(b.dataset.del)));
   } catch(e) {
     wrap.innerHTML = `<div style="color:#ef4444;font-size:13px;padding:20px">❌ ${e.message}</div>`;
   }
 }
 
-async function editChapter(id) {
-  try {
-    const snap = await getDoc(doc(db, 'chapters', id));
-    if (!snap.exists()) { alert('Not found'); return; }
-    document.querySelector('.tab[data-tab="upload"]').click();
-    textarea.value = snap.data().body_html || '';
-    updateExtractedCard();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } catch(e) { alert('Error: ' + e.message); }
-}
-
-async function delChapter(id) {
-  if (!confirm(`Permanently delete "${id}"?`)) return;
-  try { await deleteDoc(doc(db, 'chapters', id)); refreshList(); }
+async function delChapter(id, row) {
+  if (!confirm(`Delete "${id}"?`)) return;
+  try { await deleteDoc(doc(db, 'chapters', id)); row.remove(); document.getElementById('totalCount').textContent = parseInt(document.getElementById('totalCount').textContent) - 1; }
   catch(e) { alert('Error: ' + e.message); }
 }
 
+// ════════════════════════════════════════════════════════
+// SYLLABUS REFERENCE PANEL
+// ════════════════════════════════════════════════════════
+function renderSyllabusRef() {
+  const wrap = document.getElementById('syllabusRef');
+  const grouped = {};
+  SYLLABUS.forEach(s => {
+    const key = s.subject;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(s);
+  });
+  const ICONS = { history:'📜', polity:'⚖️', geography:'🌍', 'general-science':'🔬', economy:'💰' };
+  let html = '';
+  for (const [subj, chapters] of Object.entries(grouped)) {
+    html += `<div style="background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px">
+      <div style="font-size:11px;font-weight:700;color:#10b981;margin-bottom:8px;text-transform:uppercase">${ICONS[subj]||''} ${subj}</div>`;
+    chapters.forEach(c => {
+      html += `<div style="font-size:11px;color:#94a3b8;padding:2px 0"><span style="color:#334155">Ch ${String(c.no).padStart(2,'0')} ·</span> ${esc(c.title)}</div>`;
+    });
+    html += '</div>';
+  }
+  wrap.innerHTML = html;
+}
+
 function esc(s) {
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 </script>
 </body>
