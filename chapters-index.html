@@ -22,9 +22,25 @@
   .chap-title{font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:6px;line-height:1.4}
   .chap-series{font-size:12px;color:#94a3b8}
   .loading{text-align:center;padding:60px;color:#94a3b8}
+  /* Login gate */
+  .login-gate{position:fixed;inset:0;background:linear-gradient(135deg,#1a3a5c,#2c5f8a);display:flex;align-items:center;justify-content:center;z-index:10000;color:#fff;font-family:-apple-system,sans-serif}
+  .login-card{background:#fff;color:#1a3a5c;padding:32px 28px;border-radius:14px;max-width:360px;width:88%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+  .login-card h2{font-size:20px;margin-bottom:8px}
+  .login-card p{font-size:14px;color:#555;margin-bottom:20px;line-height:1.5}
+  .login-card button{background:#1a3a5c;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+  .login-card button:hover{background:#2c5f8a}
 </style>
 </head>
 <body>
+
+<div id="loginGate" class="login-gate" style="display:none">
+  <div class="login-card">
+    <h2>🔐 Login Required</h2>
+    <p>Please sign in with your Google account to view chapter notes.</p>
+    <button id="loginBtn">Sign in with Google</button>
+  </div>
+</div>
+
 <div class="container">
   <a href="index.html" class="back-btn">← Back to Home</a>
   <div class="header" style="margin-top:14px">
@@ -39,7 +55,8 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
@@ -50,7 +67,9 @@ const firebaseConfig = {
   appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
 };
 const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const gp   = new GoogleAuthProvider();
 
 const SUBJECTS = {
   history:   { icon: '🏛️', name: 'History' },
@@ -59,9 +78,6 @@ const SUBJECTS = {
   'general-science': { icon: '🔬', name: 'General Science' },
   economy:   { icon: '💰', name: 'Economy' },
   'current-affairs': { icon: '📰', name: 'Current Affairs' },
-  english:   { icon: '🔤', name: 'English' },
-  reasoning: { icon: '🧠', name: 'Reasoning' },
-  maths:     { icon: '➗', name: 'Maths' },
 };
 
 const params  = new URLSearchParams(window.location.search);
@@ -72,7 +88,19 @@ document.getElementById('subjTitle').innerHTML = `${meta.icon} ${meta.name}`;
 document.getElementById('subjSub').textContent = 'Pick a chapter to start reading';
 document.title = `${meta.name} — Chapter Notes`;
 
-loadChapters();
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, gp); }
+  catch(e) { alert('Sign-in failed: ' + e.message); }
+});
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById('loginGate').style.display = 'none';
+    loadChapters();
+  } else {
+    document.getElementById('loginGate').style.display = 'flex';
+  }
+});
 
 async function loadChapters() {
   try {
@@ -83,7 +111,6 @@ async function loadChapters() {
     chapters.sort((a, b) => (a.order || a.chapter_no || 0) - (b.order || b.chapter_no || 0));
     render(chapters);
   } catch(e) {
-    console.error(e);
     document.getElementById('content').innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div>Error loading: ${e.message}</div>`;
   }
 }
