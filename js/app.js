@@ -1266,7 +1266,15 @@ function renderNTSubsectionList(containerId, subsections, section, backScreen) {
       </div>
       <div class="subject-arrow">›</div>
     `;
-    btn.addEventListener('click', () => openNTSubsection(sub, section, backScreen));
+    btn.addEventListener('click', () => {
+      // ⭐ Redirect to chapter-based notes for these subjects (new chapters/{id} Firestore collection)
+      const CHAPTER_SUBJECTS = ['history', 'polity', 'geography', 'general-science', 'economy'];
+      if (section === 'gs' && CHAPTER_SUBJECTS.includes(sub.id)) {
+        window.location.href = `chapters-index.html?subject=${encodeURIComponent(sub.id)}`;
+        return;
+      }
+      openNTSubsection(sub, section, backScreen);
+    });
     container.appendChild(btn);
   });
 }
