@@ -73,7 +73,12 @@
       <div class="panel">
         <div class="panel-title">Paste Chapter HTML</div>
         <div class="info-box">
-          Paste your chapter HTML below. The system automatically reads the <code>series-label</code>, <code>h1</code>, <code>chapter-id</code>, <code>data-subject</code>, and section structure directly from your HTML — no manual input needed.
+          Paste your chapter HTML — everything is auto-detected. Only enter the chapter number manually.
+        </div>
+
+        <div style="margin-bottom:12px">
+          <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:6px">Chapter Number <span style="color:#ef4444">*</span></label>
+          <input type="number" id="chapterNo" min="1" value="1" style="width:120px;background:#0f172a;color:#f1f5f9;border:1px solid #334155;border-radius:8px;padding:9px 12px;font-size:15px;font-weight:700;font-family:inherit">
         </div>
 
         <textarea id="bodyHtml" placeholder="Paste your chapter HTML here...&#10;&#10;The system will auto-detect:&#10;  • Chapter ID  (from data-chapter-id attribute on .chapter-banner, or slugified from series-label + h1)&#10;  • Subject     (from data-subject attribute, or series-label keyword)&#10;  • Title       (from &lt;h1&gt; inside .chapter-banner)&#10;  • Series Label (from .series-label div)&#10;  • Chapter No  (from series-label e.g. 'Chapter 03')&#10;  • Order       (same as chapter number)&#10;&#10;Example banner:&#10;&lt;div class=&quot;chapter-banner&quot; data-subject=&quot;history&quot; data-chapter-id=&quot;history_ch3&quot;&gt;&#10;  &lt;div class=&quot;series-label&quot;&gt;Ancient History · Chapter 03 · GS Notes&lt;/div&gt;&#10;  &lt;h1&gt;Vedic Age&lt;/h1&gt;&#10;&lt;/div&gt;"></textarea>
@@ -188,7 +193,8 @@ function detectSubject(text) {
 
 // ── EXTRACT ALL METADATA FROM HTML ───────────────────────────────────────
 function extractFromHtml(html) {
-  const result = { id: '', subject: '', chapter_no: 1, title: '', series_label: '', order: 1, body_html: html };
+  const manualNo = parseInt(document.getElementById('chapterNo')?.value) || 1;
+  const result = { id: '', subject: '', chapter_no: manualNo, title: '', series_label: '', order: manualNo, body_html: html };
 
   // 1. data-chapter-id attribute on chapter-banner (most explicit)
   const idAttr = html.match(/<div[^>]*class=[\"'][^\"']*chapter-banner[^\"']*[\"'][^>]*data-chapter-id=[\"']([^\"']+)[\"']/i)
@@ -201,7 +207,7 @@ function extractFromHtml(html) {
     result.series_label = slMatch[1].replace(/<[^>]+>/g, '').trim();
     // Extract chapter number e.g. "Chapter 03" or "Ch 3"
     const noMatch = result.series_label.match(/[Cc]h(?:apter)?\s*(\d+)/);
-    if (noMatch) { result.chapter_no = parseInt(noMatch[1]); result.order = result.chapter_no; }
+    // series-label chapter number ignored — using manual input instead
   }
 
   // 3. data-subject attribute
@@ -228,7 +234,7 @@ function extractFromHtml(html) {
 
   // 5. Build chapter ID if not set via data attribute
   if (!result.id && result.subject && result.chapter_no) {
-    result.id = `${result.subject}_ch${String(result.chapter_no).padStart(2, '0')}`;
+    result.id = `${result.subject}_ch${String(manualNo).padStart(2, '0')}`;
   } else if (!result.id && result.title) {
     // Slugify title as fallback
     const slug = result.title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').substring(0, 40);
@@ -244,6 +250,7 @@ function extractFromHtml(html) {
 
 // ── Live extraction as user types ────────────────────────────────────────
 const textarea = document.getElementById('bodyHtml');
+document.getElementById('chapterNo').addEventListener('input', () => updateExtractedCard());
 let extractDebounce;
 textarea.addEventListener('input', () => {
   clearTimeout(extractDebounce);
