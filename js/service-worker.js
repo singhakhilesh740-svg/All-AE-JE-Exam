@@ -1,5 +1,5 @@
 // service-worker.js — PWA caching v41-protected-chapters
-const CACHE_NAME = 'ae-civil-v41-protected';
+const CACHE_NAME = 'ae-civil-v42-backfix';
 const STATIC_ASSETS = [
   './',
   './index.html',
