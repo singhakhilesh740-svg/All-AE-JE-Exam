@@ -640,8 +640,13 @@ on('homePCB', () => {
 });
 
 on('homeNonTech', () => {
-  activeSection = 'nontech';
-  showScreen('nonTechHomeScreen');
+  const NONTECH_ADMIN = 'singhakhilesh740@gmail.com';
+  if (currentUser && currentUser.email === NONTECH_ADMIN) {
+    activeSection = 'nontech';
+    showScreen('nonTechHomeScreen');
+  } else {
+    showScreen('ntComingSoonScreen');
+  }
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
