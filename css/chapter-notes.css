@@ -1,7 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
-   chapter-notes.css — shared styling for ALL chapter-style notes
-   Used by chapter.html viewer. Edit here → all chapters update.
-   Fully responsive: mobile ↔ tablet ↔ desktop ↔ widescreen
+   chapter-notes.css v44 — Fully responsive chapter notes
+   Sidebar toggle | Fullscreen mode | Sticky top bar
    ═══════════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap');
@@ -46,6 +45,7 @@
   --tag-border:   #38bdf8;
 
   --sidebar-w: 270px;
+  --topbar-h: 48px;
   --content-max: 900px;
   --font-body: 'Source Serif 4', Georgia, serif;
   --font-head: 'Playfair Display', 'Times New Roman', serif;
@@ -59,12 +59,57 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   line-height: 1.75;
-  display: flex;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   STICKY TOP BAR — always visible on scroll
+   ══════════════════════════════════════════════════════════════ */
+#top-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--topbar-h);
+  background: var(--chapter-deep);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  z-index: 500;
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+#top-bar .bar-btn {
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background .15s;
+}
+#top-bar .bar-btn:hover { background: rgba(255,255,255,.22); }
+#top-bar .bar-btn.active { background: rgba(16,185,129,.5); }
+#top-bar .bar-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: .85;
+  min-width: 0;
+}
+#top-bar .bar-spacer { flex: 1; }
 
 /* ── Progress bar ── */
 #progress-bar {
-  position: fixed; top: 0; left: 0; height: 3px;
+  position: fixed; top: var(--topbar-h); left: 0; height: 3px;
   background: linear-gradient(90deg, var(--chapter-rule), var(--topic-green));
   width: 0%; z-index: 9999;
   transition: width 0.1s linear;
@@ -74,9 +119,11 @@ body {
    SIDEBAR
    ══════════════════════════════════════════════════════════════ */
 #sidebar {
-  position: fixed; top: 0; left: 0;
+  position: fixed;
+  top: var(--topbar-h);
+  left: 0;
   width: var(--sidebar-w);
-  height: 100vh;
+  height: calc(100vh - var(--topbar-h));
   overflow-y: auto;
   background: #f0f5fb;
   border-right: 1px solid var(--table-border);
@@ -87,25 +134,14 @@ body {
   transition: transform .3s ease;
 }
 #sidebar-header {
-  background: var(--chapter-deep);
+  background: #1e3a55;
   color: #fff;
-  padding: 18px 18px 14px;
+  padding: 14px 18px 12px;
   font-family: var(--font-head);
   position: sticky; top: 0; z-index: 1;
 }
 #sidebar-header .series { font-size: 0.7rem; opacity: .7; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
-#sidebar-header .title { font-size: 1rem; font-weight: 700; line-height: 1.3; }
-#sidebar-back {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 0.7rem;
-  color: rgba(255,255,255,.85);
-  text-decoration: none;
-  background: rgba(255,255,255,.12);
-  padding: 4px 10px;
-  border-radius: 12px;
-}
-#sidebar-back:hover { background: rgba(255,255,255,.22); }
+#sidebar-header .title { font-size: 0.95rem; font-weight: 700; line-height: 1.3; }
 #toc { padding: 12px 0; }
 .toc-section { padding: 6px 18px 2px; font-size: 0.68rem; font-weight: 700; color: var(--chapter-rule); text-transform: uppercase; letter-spacing: .07em; margin-top: 6px; }
 #toc a {
@@ -122,50 +158,59 @@ body {
 #toc a.sub { padding-left: 38px; font-size: 0.78rem; color: var(--ink-light); }
 #toc a.sub:hover, #toc a.sub.active { color: var(--topic-green); border-left-color: var(--topic-green); }
 
-/* ── Sidebar Toggle Button ── */
-#sidebar-toggle {
-  position: fixed;
-  top: 12px; left: 12px;
-  z-index: 500;
-  background: var(--chapter-deep);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  width: 40px; height: 40px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0,0,0,.25);
-  transition: background .2s, left .3s ease;
-  display: none;               /* hidden by default on desktop (sidebar always visible) */
-  align-items: center;
-  justify-content: center;
-}
-#sidebar-toggle:hover { background: var(--chapter-mid); }
-
-/* ── Sidebar Hidden state ── */
-.sidebar-hidden #sidebar { transform: translateX(-100%); }
-.sidebar-hidden #main    { margin-left: 0 !important; }
-.sidebar-hidden #sidebar-toggle { left: 12px; }
-
-/* ── Mobile Back Button ── */
-#mobile-back { display: none; }
+/* ── Sidebar hidden (desktop) ── */
+body.sidebar-hidden #sidebar { transform: translateX(-100%); }
+body.sidebar-hidden #main    { margin-left: 0 !important; }
 
 /* ══════════════════════════════════════════════════════════════
    MAIN CONTENT
    ══════════════════════════════════════════════════════════════ */
 #main {
   margin-left: var(--sidebar-w);
-  flex: 1;
-  min-height: 100vh;
+  margin-top: var(--topbar-h);
+  min-height: calc(100vh - var(--topbar-h));
   transition: margin-left .3s ease;
 }
 #content {
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: 48px 48px 80px;
+  padding: 36px 48px 80px;
 }
 
-/* ── Chapter banner ── */
+/* ══════════════════════════════════════════════════════════════
+   FULLSCREEN MODE
+   ══════════════════════════════════════════════════════════════ */
+body.fullscreen-mode #sidebar      { transform: translateX(-100%) !important; }
+body.fullscreen-mode #top-bar      { display: none !important; }
+body.fullscreen-mode #progress-bar { top: 0; }
+body.fullscreen-mode #main         { margin-left: 0 !important; margin-top: 0 !important; }
+body.fullscreen-mode #content      { max-width: 1100px; padding-top: 20px; }
+body.fullscreen-mode #fullscreen-exit {
+  display: flex !important;
+}
+#fullscreen-exit {
+  display: none;
+  position: fixed;
+  top: 12px; right: 12px;
+  z-index: 9999;
+  background: var(--chapter-deep);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 3px 14px rgba(0,0,0,.35);
+  align-items: center;
+  gap: 5px;
+  font-family: -apple-system, sans-serif;
+}
+#fullscreen-exit:hover { background: var(--chapter-mid); }
+
+/* ══════════════════════════════════════════════════════════════
+   CHAPTER BANNER
+   ══════════════════════════════════════════════════════════════ */
 .chapter-banner {
   background: linear-gradient(135deg, var(--chapter-deep) 0%, #2c5f8a 50%, #1e5799 100%);
   color: #fff;
@@ -318,19 +363,6 @@ td:first-child { font-weight: 600; color: var(--chapter-mid); }
 /* ── Divider ── */
 .divider { border: none; border-top: 1px dashed #c0bab0; margin: 28px 0; }
 
-/* ── Print button ── */
-#print-btn {
-  position: fixed; bottom: 28px; right: 28px;
-  background: var(--chapter-deep); color: #fff;
-  border: none; border-radius: 50%; width: 52px; height: 52px;
-  font-size: 1.3rem; cursor: pointer;
-  box-shadow: 0 4px 18px rgba(26,58,92,.35);
-  transition: background .2s, transform .15s;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 200;
-}
-#print-btn:hover { background: var(--chapter-mid); transform: scale(1.08); }
-
 /* ── Loading / error states ── */
 .chapter-loading, .chapter-error {
   padding: 60px 20px;
@@ -344,8 +376,8 @@ td:first-child { font-weight: 600; color: var(--chapter-mid); }
    PRINT
    ══════════════════════════════════════════════════════════════ */
 @media print {
-  #sidebar, #progress-bar, #print-btn, #sidebar-toggle, #mobile-back { display: none !important; }
-  #main { margin-left: 0; }
+  #sidebar, #progress-bar, #top-bar, #fullscreen-exit { display: none !important; }
+  #main { margin-left: 0; margin-top: 0; }
   #content { padding: 20px; max-width: 100%; }
   .chapter-banner { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .section-wrap { page-break-inside: avoid; }
@@ -353,12 +385,11 @@ td:first-child { font-weight: 600; color: var(--chapter-mid); }
 }
 
 /* ══════════════════════════════════════════════════════════════
-   RESPONSIVE — WIDESCREEN (1400px+)
-   Wider content area, bigger fonts, more breathing room
+   WIDESCREEN (1400px+)
    ══════════════════════════════════════════════════════════════ */
 @media (min-width: 1400px) {
   :root { --content-max: 960px; }
-  #content { padding: 56px 56px 90px; }
+  #content { padding: 44px 56px 90px; }
   .chapter-banner { padding: 42px 48px; }
   .chapter-banner h1 { font-size: 2.2rem; }
   h2.section-title { font-size: 1.65rem; }
@@ -367,51 +398,16 @@ td:first-child { font-weight: 600; color: var(--chapter-mid); }
 }
 
 /* ══════════════════════════════════════════════════════════════
-   RESPONSIVE — DESKTOP WITH TOGGLE (901px – 1100px)
-   Show sidebar toggle so user can collapse sidebar on
-   narrower desktops / landscape tablets
-   ══════════════════════════════════════════════════════════════ */
-@media (max-width: 1100px) {
-  #sidebar-toggle { display: flex; }
-  /* Push toggle right of sidebar when sidebar is open */
-  #sidebar-toggle { left: calc(var(--sidebar-w) + 10px); }
-  .sidebar-hidden #sidebar-toggle { left: 12px; }
-}
-
-/* ══════════════════════════════════════════════════════════════
-   RESPONSIVE — TABLET (601px – 900px)
-   Sidebar slides off-screen, toggle always visible,
-   content fills width
+   TABLET (601px – 900px)
    ══════════════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
   :root { --sidebar-w: 260px; }
 
-  #sidebar {
-    transform: translateX(-100%);
-    box-shadow: 4px 0 24px rgba(0,0,0,.2);
-  }
-  body:not(.sidebar-hidden) #sidebar {
-    /* On tablet, sidebar starts hidden; toggling shows it */
-  }
+  #sidebar { transform: translateX(-100%); box-shadow: 4px 0 24px rgba(0,0,0,.2); }
   body.sidebar-open #sidebar { transform: translateX(0); }
 
-  #sidebar-toggle {
-    display: flex;
-    left: 12px;
-  }
-  body.sidebar-open #sidebar-toggle { left: calc(var(--sidebar-w) + 10px); }
-
   #main { margin-left: 0; }
-  #content {
-    max-width: 100%;
-    padding: 32px 28px 60px;
-  }
-
-  #mobile-back {
-    display: block !important;
-    position: fixed; top: 12px; right: 12px; left: auto !important;
-    z-index: 500;
-  }
+  #content { max-width: 100%; padding: 28px 24px 60px; }
 
   .chapter-banner { padding: 28px 24px; border-radius: 10px; margin-bottom: 28px; }
   .chapter-banner h1 { font-size: 1.6rem; }
@@ -419,94 +415,72 @@ td:first-child { font-weight: 600; color: var(--chapter-mid); }
 
   h2.section-title { font-size: 1.35rem; }
   h3.sub-title     { font-size: 1.08rem; }
-
   .legend { padding: 10px 14px; gap: 8px; }
 }
 
+/* Sidebar overlay backdrop */
+body.sidebar-open::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: 99;
+}
+
 /* ══════════════════════════════════════════════════════════════
-   RESPONSIVE — MOBILE (≤600px)
-   Compact single-column, everything stacked, no sidebar
+   MOBILE (≤600px)
    ══════════════════════════════════════════════════════════════ */
 @media (max-width: 600px) {
   html { font-size: 15px; }
+  :root { --topbar-h: 44px; }
 
-  #sidebar { width: 80vw; max-width: 280px; }
-  body.sidebar-open #sidebar-toggle { left: calc(80vw + 10px); }
+  #sidebar { width: 82vw; max-width: 280px; }
 
-  #sidebar-toggle {
-    display: flex;
-    top: 10px; left: 10px;
-    width: 36px; height: 36px;
-    font-size: 1.1rem;
-  }
-  #mobile-back {
-    display: block !important;
-    position: fixed; top: 10px; right: 10px; left: auto !important;
-    font-size: 12px; padding: 7px 12px;
-    z-index: 500;
-  }
+  #top-bar .bar-title { font-size: 12px; }
+  #top-bar .bar-btn { padding: 5px 9px; font-size: 12px; }
 
   #main { margin-left: 0; }
-  #content {
-    max-width: 100%;
-    padding: 20px 14px 50px;
-  }
+  #content { max-width: 100%; padding: 18px 14px 50px; }
 
-  /* Banner */
-  .chapter-banner {
-    padding: 22px 16px; border-radius: 8px;
-    margin-bottom: 22px;
-  }
+  .chapter-banner { padding: 22px 16px; border-radius: 8px; margin-bottom: 22px; }
   .chapter-banner h1 { font-size: 1.3rem; }
   .chapter-banner .subtitle { font-size: 0.82rem; }
   .chapter-banner::after { font-size: 2.5rem; right: 12px; }
   .chapter-meta { gap: 8px; margin-top: 12px; }
   .chapter-meta span { font-size: 0.7rem; padding: 3px 10px; }
 
-  /* Headings */
   h2.section-title { font-size: 1.2rem; gap: 6px; flex-wrap: wrap; }
   h2.section-title .sn { font-size: 0.7rem; padding: 1px 7px; }
   h3.sub-title { font-size: 1rem; padding-left: 10px; border-left-width: 3px; }
   h4.mini-title { font-size: 0.92rem; }
 
-  /* Body text */
   p  { font-size: 0.9rem; margin-bottom: 8px; }
   li { font-size: 0.88rem; }
   ul, ol { margin-left: 18px; }
 
-  /* Legend */
   .legend { padding: 10px 12px; gap: 6px; margin-bottom: 22px; }
   .legend-item { font-size: 0.7rem; gap: 5px; }
   .legend-dot { width: 10px; height: 10px; }
 
-  /* Boxes */
   .exam-box, .fact-box, .mnemonic-box { padding: 10px 14px; margin: 12px 0; }
   .exam-box li { font-size: 0.84rem; }
 
-  /* Tables */
   .table-wrap { border-radius: 8px; margin: 14px 0; }
   table { font-size: 0.8rem; }
   thead th { padding: 8px 10px; font-size: 0.82rem; }
   td { padding: 7px 10px; }
-  td:first-child { white-space: normal; }  /* allow wrapping on mobile */
+  td:first-child { white-space: normal; }
 
-  /* Tags */
   .tag { font-size: 0.68rem; padding: 1px 7px; }
-
-  /* Sections */
   .section-wrap { margin-bottom: 36px; }
   .divider { margin: 18px 0; }
-
-  /* Print btn smaller */
-  #print-btn { width: 44px; height: 44px; font-size: 1.1rem; bottom: 18px; right: 14px; }
 }
 
 /* ══════════════════════════════════════════════════════════════
-   RESPONSIVE — VERY SMALL PHONES (≤380px)
+   VERY SMALL PHONES (≤380px)
    ══════════════════════════════════════════════════════════════ */
 @media (max-width: 380px) {
   html { font-size: 14px; }
-  #content { padding: 16px 10px 40px; }
+  #content { padding: 14px 10px 40px; }
   .chapter-banner { padding: 18px 12px; }
   .chapter-banner h1 { font-size: 1.15rem; }
   h2.section-title { font-size: 1.1rem; }

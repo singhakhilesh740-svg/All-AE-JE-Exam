@@ -57,9 +57,7 @@
 </head>
 <body>
 
-<div id="progress-bar"></div>
-<button id="mobile-back" onclick="history.length>1?history.back():location.href='index.html'" style="display:none;position:fixed;top:12px;left:12px;z-index:500;background:#1a3a5c;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3)">← Back</button>
-
+<!-- ── Login Gate ── -->
 <div id="loginGate" class="login-gate">
   <div class="login-card">
     <h2>🔐 Login Required</h2>
@@ -68,23 +66,37 @@
   </div>
 </div>
 
-<button id="sidebar-toggle" title="Toggle sidebar">☰</button>
+<!-- ── Sticky Top Bar (always visible on scroll) ── -->
+<div id="top-bar">
+  <button class="bar-btn" id="btnBack" title="Go back">← Back</button>
+  <button class="bar-btn" id="btnSidebar" title="Toggle sidebar">☰ Index</button>
+  <span class="bar-title" id="barTitle">Loading…</span>
+  <button class="bar-btn" id="btnFullscreen" title="Fullscreen mode">⛶ Focus</button>
+</div>
 
+<!-- ── Progress bar ── -->
+<div id="progress-bar"></div>
+
+<!-- ── Fullscreen exit button (hidden by default) ── -->
+<button id="fullscreen-exit">✕ Exit Focus</button>
+
+<!-- ── Sidebar ── -->
 <nav id="sidebar">
   <div id="sidebar-header">
     <div class="series" id="sb-series">Loading…</div>
     <div class="title" id="sb-title">—</div>
-    <a id="sidebar-back" href="#" onclick="history.length&gt;1?history.back():location.href='index.html';return false;">← Back</a>
   </div>
   <div id="toc"></div>
 </nav>
 
+<!-- ── Main Content ── -->
 <div id="main">
   <div id="content">
     <div class="chapter-loading">⏳ Loading chapter…</div>
   </div>
 </div>
 
+<!-- ── Firebase + Chapter Loader ── -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -131,6 +143,7 @@ async function loadChapter(id) {
       document.getElementById('content').innerHTML = `<div class="chapter-error">❌ Chapter <code>${id}</code> not found.</div>`;
       document.getElementById('sb-series').textContent = 'Not Found';
       document.getElementById('sb-title').textContent  = id;
+      document.getElementById('barTitle').textContent   = 'Not Found';
       return;
     }
     renderChapter(snap.data());
@@ -140,9 +153,11 @@ async function loadChapter(id) {
 }
 
 function renderChapter(data) {
-  document.title = `${data.title || 'Chapter'} — Notes`;
+  const title = data.title || 'Chapter';
+  document.title = `${title} — Notes`;
   document.getElementById('sb-series').textContent = data.series_label || data.subject || '';
-  document.getElementById('sb-title').textContent  = data.title || 'Untitled Chapter';
+  document.getElementById('sb-title').textContent  = title;
+  document.getElementById('barTitle').textContent   = title;
   document.getElementById('content').innerHTML = data.body_html || '<div class="chapter-error">Empty chapter.</div>';
   buildToc();
   initScrollEffects();
@@ -198,13 +213,10 @@ function initScrollEffects() {
 }
 </script>
 
-<!-- ════════════════════════════════════════════════════════════════════
-     ANTI-COPY / ANTI-DOWNLOAD PROTECTION LAYER
-     ════════════════════════════════════════════════════════════════════ -->
+<!-- ── Anti-copy / Anti-download Protection ── -->
 <script>
 (function() {
   'use strict';
-
   document.addEventListener('contextmenu', e => { e.preventDefault(); return false; }, true);
   document.addEventListener('selectstart', e => { e.preventDefault(); return false; }, true);
   document.addEventListener('copy',        e => { e.preventDefault(); if (e.clipboardData) e.clipboardData.setData('text/plain', '🔒 Content protected'); return false; }, true);
@@ -232,62 +244,119 @@ function initScrollEffects() {
   }
   setInterval(check, 800);
   window.addEventListener('resize', check);
-
   window.print = function() { alert('🔒 Printing is disabled.'); return false; };
 })();
 </script>
 
+<!-- ── Top Bar Actions: Back / Sidebar / Fullscreen ── -->
 <script>
-// ── Sidebar toggle (works for desktop collapse + mobile slide-in) ──
 (function() {
-  const toggle = document.getElementById('sidebar-toggle');
+  'use strict';
   const isMobile = () => window.innerWidth <= 900;
 
-  function applySidebar() {
+  // ── BACK BUTTON ──
+  document.getElementById('btnBack').addEventListener('click', () => {
+    if (history.length > 1) history.back();
+    else location.href = 'index.html';
+  });
+
+  // ── SIDEBAR TOGGLE ──
+  const btnSidebar = document.getElementById('btnSidebar');
+  function updateSidebarBtn() {
     if (isMobile()) {
-      // Mobile/tablet: sidebar is off-screen by default, toggle opens it
-      document.body.classList.remove('sidebar-hidden');
-      const isOpen = document.body.classList.contains('sidebar-open');
-      toggle.textContent = isOpen ? '✕' : '☰';
+      const open = document.body.classList.contains('sidebar-open');
+      btnSidebar.textContent = open ? '✕ Close' : '☰ Index';
     } else {
-      // Desktop: sidebar is visible by default, toggle hides it
-      document.body.classList.remove('sidebar-open');
-      const isHidden = document.body.classList.contains('sidebar-hidden');
-      toggle.textContent = isHidden ? '☰' : '✕';
+      const hidden = document.body.classList.contains('sidebar-hidden');
+      btnSidebar.textContent = hidden ? '☰ Show Index' : '✕ Hide Index';
     }
   }
 
-  toggle.addEventListener('click', () => {
+  btnSidebar.addEventListener('click', () => {
     if (isMobile()) {
       document.body.classList.toggle('sidebar-open');
-      const open = document.body.classList.contains('sidebar-open');
-      toggle.textContent = open ? '✕' : '☰';
     } else {
       document.body.classList.toggle('sidebar-hidden');
-      const hidden = document.body.classList.contains('sidebar-hidden');
-      toggle.textContent = hidden ? '☰' : '✕';
-      try { localStorage.setItem('sidebar-hidden', hidden ? '1' : '0'); } catch(e) {}
+      try {
+        localStorage.setItem('sidebar-hidden', document.body.classList.contains('sidebar-hidden') ? '1' : '0');
+      } catch(e) {}
+    }
+    updateSidebarBtn();
+  });
+
+  // Close sidebar when clicking overlay (mobile)
+  document.addEventListener('click', (e) => {
+    if (isMobile() && document.body.classList.contains('sidebar-open')) {
+      const sidebar = document.getElementById('sidebar');
+      const btn = document.getElementById('btnSidebar');
+      if (!sidebar.contains(e.target) && !btn.contains(e.target)) {
+        document.body.classList.remove('sidebar-open');
+        updateSidebarBtn();
+      }
     }
   });
 
-  // Close sidebar on mobile when a TOC link is clicked
+  // Close sidebar on TOC link click (mobile)
   document.getElementById('toc').addEventListener('click', (e) => {
     if (e.target.tagName === 'A' && isMobile()) {
       document.body.classList.remove('sidebar-open');
-      toggle.textContent = '☰';
+      updateSidebarBtn();
     }
   });
 
-  // Restore desktop preference
+  // ── FULLSCREEN / FOCUS MODE ──
+  const btnFS = document.getElementById('btnFullscreen');
+  const btnFSExit = document.getElementById('fullscreen-exit');
+
+  btnFS.addEventListener('click', () => {
+    document.body.classList.add('fullscreen-mode');
+    // Also request browser fullscreen if supported
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+  });
+
+  btnFSExit.addEventListener('click', () => {
+    document.body.classList.remove('fullscreen-mode');
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+  });
+
+  // Exit fullscreen mode on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('fullscreen-mode')) {
+      document.body.classList.remove('fullscreen-mode');
+    }
+  });
+  // Sync if user exits browser fullscreen via Esc
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+      document.body.classList.remove('fullscreen-mode');
+    }
+  });
+
+  // ── RESTORE PREFERENCES ──
   try {
     if (!isMobile() && localStorage.getItem('sidebar-hidden') === '1') {
       document.body.classList.add('sidebar-hidden');
     }
   } catch(e) {}
 
-  // Re-evaluate on resize
-  window.addEventListener('resize', applySidebar);
-  applySidebar();
+  // On resize re-evaluate
+  window.addEventListener('resize', () => {
+    if (!isMobile()) {
+      document.body.classList.remove('sidebar-open');
+    }
+    updateSidebarBtn();
+  });
+
+  // Init
+  if (isMobile()) {
+    // Sidebar starts hidden on mobile
+    document.body.classList.remove('sidebar-hidden');
+  }
+  updateSidebarBtn();
 })();
 </script>
 

@@ -1,5 +1,5 @@
-// service-worker.js — PWA caching v20-notifications
-const CACHE_NAME = 'ae-civil-v42-4level';
+// service-worker.js — PWA caching v44-topbar-fullscreen
+const CACHE_NAME = 'ae-civil-v44-topbar';
 const STATIC_ASSETS = [
   './',
   './index.html',
