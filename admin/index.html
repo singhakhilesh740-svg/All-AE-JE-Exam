@@ -8,94 +8,194 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;height:100vh;display:flex;flex-direction:column;overflow:hidden}
 
-    /* Top Nav */
-    .admin-topbar{background:#1e293b;border-bottom:1px solid #334155;padding:0 12px;display:flex;align-items:center;gap:8px;height:52px;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
-    .admin-topbar::-webkit-scrollbar{height:0}
-    .admin-logo{font-weight:800;font-size:15px;color:#f59e0b;white-space:nowrap;margin-right:8px}
-    .tab-btn{padding:8px 16px;border-radius:8px;border:2px solid transparent;background:transparent;color:#64748b;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
-    .tab-btn:hover{color:#94a3b8;background:#0f172a}
-    .tab-btn.active{color:#f59e0b;border-color:#f59e0b;background:rgba(245,158,11,.08)}
-    .tab-btn .tab-icon{margin-right:4px}
+    /* ── Top header ── */
+    .admin-header{
+      background:#1e293b;border-bottom:1px solid #334155;
+      padding:10px 16px 0;flex-shrink:0;
+    }
+    .admin-title-row{
+      display:flex;align-items:center;gap:10px;margin-bottom:10px;
+    }
+    .admin-logo{font-weight:800;font-size:16px;color:#f59e0b;white-space:nowrap}
+    .admin-logo span{font-size:12px;color:#64748b;font-weight:400;margin-left:6px}
 
-    /* Badge */
-    .tab-badge{display:inline-block;font-size:9px;background:#ef4444;color:#fff;border-radius:50%;width:16px;height:16px;line-height:16px;text-align:center;margin-left:4px;font-weight:700}
+    /* ── Section selector (Tech / Non-Tech / General) ── */
+    .section-tabs{
+      display:flex;gap:4px;margin-bottom:0;
+    }
+    .section-tab{
+      padding:8px 20px;border-radius:10px 10px 0 0;
+      border:1px solid #334155;border-bottom:none;
+      background:#0f172a;color:#64748b;font-weight:700;font-size:13px;
+      cursor:pointer;transition:all .15s;font-family:inherit;
+      display:flex;align-items:center;gap:6px;
+    }
+    .section-tab:hover{color:#94a3b8}
+    .section-tab.active-tech{background:#0f172a;color:#3b82f6;border-color:#3b82f6;border-bottom:2px solid #0f172a;position:relative;z-index:2}
+    .section-tab.active-nontech{background:#0f172a;color:#a78bfa;border-color:#a78bfa;border-bottom:2px solid #0f172a;position:relative;z-index:2}
+    .section-tab.active-general{background:#0f172a;color:#f59e0b;border-color:#f59e0b;border-bottom:2px solid #0f172a;position:relative;z-index:2}
 
-    /* Content Frame */
+    /* ── Sub-tabs (per section) ── */
+    .sub-tab-bar{
+      background:#0f172a;border-top:1px solid #334155;
+      padding:8px 16px;display:flex;gap:6px;flex-shrink:0;
+      overflow-x:auto;-webkit-overflow-scrolling:touch;
+    }
+    .sub-tab-bar::-webkit-scrollbar{height:0}
+    .sub-tab{
+      padding:7px 14px;border-radius:8px;border:1.5px solid transparent;
+      background:transparent;color:#64748b;font-weight:600;font-size:12px;
+      cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit;
+      display:flex;align-items:center;gap:5px;
+    }
+    .sub-tab:hover{color:#94a3b8;background:rgba(255,255,255,.04)}
+    .sub-tab.active{color:#fff;border-color:currentColor;background:rgba(255,255,255,.06)}
+
+    /* Section-specific active colors */
+    [data-section="tech"] .sub-tab.active{color:#3b82f6;border-color:#3b82f6;background:rgba(59,130,246,.1)}
+    [data-section="nontech"] .sub-tab.active{color:#a78bfa;border-color:#a78bfa;background:rgba(167,139,250,.1)}
+    [data-section="general"] .sub-tab.active{color:#f59e0b;border-color:#f59e0b;background:rgba(245,158,11,.1)}
+
+    /* ── Content Frame ── */
     .admin-content{flex:1;overflow:hidden;position:relative}
     .admin-content iframe{width:100%;height:100%;border:none;background:#0f172a}
     .admin-content .frame-wrap{position:absolute;inset:0;display:none}
     .admin-content .frame-wrap.active{display:block}
 
-    /* Mobile responsive */
+    /* ── Mobile ── */
     @media(max-width:640px){
-      .admin-logo{font-size:13px;margin-right:4px}
-      .tab-btn{padding:7px 10px;font-size:11px}
+      .admin-logo{font-size:14px}
+      .admin-logo span{display:none}
+      .section-tab{padding:6px 14px;font-size:12px}
+      .sub-tab{padding:6px 10px;font-size:11px}
+      .admin-header{padding:8px 10px 0}
+      .sub-tab-bar{padding:6px 10px}
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Tabs -->
-  <nav class="admin-topbar">
-    <div class="admin-logo">📋 Admin · Civil & PCB</div>
-    <button class="tab-btn active" data-tab="upload"><span class="tab-icon">📤</span>Upload</button>
-    <button class="tab-btn" data-tab="edit"><span class="tab-icon">✏️</span>Edit</button>
-    <button class="tab-btn" data-tab="notes-edit"><span class="tab-icon">📝</span>Notes Editor</button>
-    <button class="tab-btn" data-tab="notes"><span class="tab-icon">⬆️</span>Notes Upload</button>
-    <button class="tab-btn" data-tab="exams"><span class="tab-icon">🏛️</span>Exams</button>
-    <button class="tab-btn" data-tab="users"><span class="tab-icon">👥</span>Users</button>
-    <button class="tab-btn" data-tab="feedback"><span class="tab-icon">💬</span>Feedback</button>
-    <button class="tab-btn" data-tab="reports"><span class="tab-icon">🚩</span>Reports</button>
-    <button class="tab-btn" data-tab="notify"><span class="tab-icon">🔔</span>Notify</button>
-    <button class="tab-btn" data-tab="ntconfig" style="border-left:2px solid #a78bfa;margin-left:6px;padding-left:14px"><span class="tab-icon">📚</span>Non-Tech Hub</button>
-  </nav>
+  <!-- ═══ HEADER ═══ -->
+  <div class="admin-header">
+    <div class="admin-title-row">
+      <div class="admin-logo">📋 Admin Panel<span>All AE/JE Civil Exams</span></div>
+    </div>
+    <div class="section-tabs">
+      <button class="section-tab active-tech" data-section="tech" onclick="switchSection('tech',this)">⚙️ Tech</button>
+      <button class="section-tab" data-section="nontech" onclick="switchSection('nontech',this)">📚 Non-Tech</button>
+      <button class="section-tab" data-section="general" onclick="switchSection('general',this)">🛠️ General</button>
+    </div>
+  </div>
 
-  <!-- Content Area — each tab loads in iframe -->
+  <!-- ═══ SUB-TAB BARS (one per section) ═══ -->
+
+  <!-- TECH tabs -->
+  <div class="sub-tab-bar" id="bar-tech" data-section="tech">
+    <button class="sub-tab active" data-tab="t-upload">📤 Upload Questions</button>
+    <button class="sub-tab" data-tab="t-edit">✏️ Edit Questions</button>
+    <button class="sub-tab" data-tab="t-exams">🏛️ Exams</button>
+    <button class="sub-tab" data-tab="t-notes">📝 Upload Notes</button>
+  </div>
+
+  <!-- NON-TECH tabs -->
+  <div class="sub-tab-bar" id="bar-nontech" data-section="nontech" style="display:none">
+    <button class="sub-tab active" data-tab="nt-upload">📤 Upload Questions</button>
+    <button class="sub-tab" data-tab="nt-edit">✏️ Edit Questions</button>
+    <button class="sub-tab" data-tab="nt-exams">🏛️ Exams</button>
+    <button class="sub-tab" data-tab="nt-notes">📝 Upload Notes</button>
+  </div>
+
+  <!-- GENERAL tabs -->
+  <div class="sub-tab-bar" id="bar-general" data-section="general" style="display:none">
+    <button class="sub-tab active" data-tab="g-reports">🚩 Report Questions</button>
+    <button class="sub-tab" data-tab="g-users">👥 Users</button>
+    <button class="sub-tab" data-tab="g-feedback">💬 Feedback</button>
+    <button class="sub-tab" data-tab="g-notify">🔔 Notify</button>
+  </div>
+
+  <!-- ═══ IFRAME CONTENT ═══ -->
   <div class="admin-content">
-    <div class="frame-wrap active" id="frame-upload">
+    <!-- TECH -->
+    <div class="frame-wrap active" id="frame-t-upload">
       <iframe src="upload.html" loading="eager"></iframe>
     </div>
-    <div class="frame-wrap" id="frame-edit">
+    <div class="frame-wrap" id="frame-t-edit">
       <iframe src="edit-admin.html" loading="lazy"></iframe>
     </div>
-    <div class="frame-wrap" id="frame-notes-edit">
-      <iframe src="notes-edit-admin.html" loading="lazy"></iframe>
-    </div>
-    <div class="frame-wrap" id="frame-notes">
-      <iframe src="notes-admin.html" loading="lazy"></iframe>
-    </div>
-    <div class="frame-wrap" id="frame-exams">
+    <div class="frame-wrap" id="frame-t-exams">
       <iframe src="exams-admin.html" loading="lazy"></iframe>
     </div>
-    <div class="frame-wrap" id="frame-users">
-      <iframe src="users-admin.html" loading="lazy"></iframe>
+    <div class="frame-wrap" id="frame-t-notes">
+      <iframe src="chapters-admin.html" loading="lazy"></iframe>
     </div>
-    <div class="frame-wrap" id="frame-feedback">
-      <iframe src="feedback-admin.html" loading="lazy"></iframe>
+
+    <!-- NON-TECH -->
+    <div class="frame-wrap" id="frame-nt-upload">
+      <iframe src="nt-upload-admin.html" loading="lazy"></iframe>
     </div>
-    <div class="frame-wrap" id="frame-reports">
+    <div class="frame-wrap" id="frame-nt-edit">
+      <iframe src="nt-edit-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-nt-exams">
+      <iframe src="nt-exams-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-nt-notes">
+      <iframe src="chapters-admin.html" loading="lazy"></iframe>
+    </div>
+
+    <!-- GENERAL -->
+    <div class="frame-wrap" id="frame-g-reports">
       <iframe src="reports-admin.html" loading="lazy"></iframe>
     </div>
-    <div class="frame-wrap" id="frame-notify">
-      <iframe src="notify-admin.html" loading="lazy"></iframe>
+    <div class="frame-wrap" id="frame-g-users">
+      <iframe src="users-admin.html" loading="lazy"></iframe>
     </div>
-    <div class="frame-wrap" id="frame-ntconfig">
-      <iframe src="nt-config-admin.html" loading="lazy"></iframe>
+    <div class="frame-wrap" id="frame-g-feedback">
+      <iframe src="feedback-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-g-notify">
+      <iframe src="notify-admin.html" loading="lazy"></iframe>
     </div>
   </div>
 
   <script>
-    // Tab switching
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Remove active from all tabs
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    let activeSection = 'tech';
+    let activeTabs = { tech: 't-upload', nontech: 'nt-upload', general: 'g-reports' };
 
-        // Hide all frames, show selected
-        document.querySelectorAll('.frame-wrap').forEach(f => f.classList.remove('active'));
-        document.getElementById('frame-' + btn.dataset.tab).classList.add('active');
+    function switchSection(section, btn) {
+      activeSection = section;
+
+      // Update section tab highlights
+      document.querySelectorAll('.section-tab').forEach(t => {
+        t.className = 'section-tab';
       });
+      btn.classList.add('active-' + section);
+
+      // Show correct sub-tab bar
+      document.querySelectorAll('.sub-tab-bar').forEach(b => b.style.display = 'none');
+      document.getElementById('bar-' + section).style.display = 'flex';
+
+      // Show the last active frame for this section
+      showFrame(activeTabs[section]);
+    }
+
+    function showFrame(tabId) {
+      // Update active tab tracking
+      activeTabs[activeSection] = tabId;
+
+      // Highlight sub-tab
+      const bar = document.getElementById('bar-' + activeSection);
+      bar.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+      bar.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+
+      // Show frame
+      document.querySelectorAll('.frame-wrap').forEach(f => f.classList.remove('active'));
+      document.getElementById('frame-' + tabId).classList.add('active');
+    }
+
+    // Attach click handlers to all sub-tabs
+    document.querySelectorAll('.sub-tab').forEach(btn => {
+      btn.addEventListener('click', () => showFrame(btn.dataset.tab));
     });
   </script>
 </body>
