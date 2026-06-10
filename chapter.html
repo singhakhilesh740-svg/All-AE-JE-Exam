@@ -112,26 +112,12 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
 });
 
 onAuthStateChanged(auth, user => {
-  const NONTECH_ADMIN = 'singhakhilesh740@gmail.com';
   if (user) {
-    if (user.email === NONTECH_ADMIN) {
-      document.getElementById('loginGate').style.display = 'none';
-      if (!chapterId) {
-        document.getElementById('content').innerHTML = '<div class="chapter-error">❌ No chapter id specified.</div>';
-      } else {
-        loadChapter(chapterId);
-      }
+    document.getElementById('loginGate').style.display = 'none';
+    if (!chapterId) {
+      document.getElementById('content').innerHTML = '<div class="chapter-error">❌ No chapter id specified.</div>';
     } else {
-      // Non-admin: show coming soon
-      document.getElementById('loginGate').style.display = 'none';
-      document.getElementById('content').innerHTML = `
-        <div class="chapter-error" style="text-align:center">
-          <div style="font-size:48px;margin-bottom:12px">🚧</div>
-          <div style="font-size:18px;color:#f59e0b;margin-bottom:8px;font-weight:700">Coming Soon!</div>
-          <div style="font-size:13px;color:#94a3b8;line-height:1.6">
-            This chapter is not available yet.<br>Stay tuned!
-          </div>
-        </div>`;
+      loadChapter(chapterId);
     }
   } else {
     document.getElementById('loginGate').style.display = 'flex';
