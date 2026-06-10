@@ -238,20 +238,57 @@ function initScrollEffects() {
 </script>
 
 <script>
-// ── Sidebar toggle ────────────────────────────────────────────────────────
-document.getElementById('sidebar-toggle').addEventListener('click', () => {
-  document.body.classList.toggle('sidebar-hidden');
-  const hidden = document.body.classList.contains('sidebar-hidden');
-  document.getElementById('sidebar-toggle').textContent = hidden ? '☰' : '✕';
-  try { localStorage.setItem('sidebar-hidden', hidden ? '1' : '0'); } catch(e) {}
-});
-// Restore last preference
-try {
-  if (localStorage.getItem('sidebar-hidden') === '1') {
-    document.body.classList.add('sidebar-hidden');
-    document.getElementById('sidebar-toggle').textContent = '☰';
+// ── Sidebar toggle (works for desktop collapse + mobile slide-in) ──
+(function() {
+  const toggle = document.getElementById('sidebar-toggle');
+  const isMobile = () => window.innerWidth <= 900;
+
+  function applySidebar() {
+    if (isMobile()) {
+      // Mobile/tablet: sidebar is off-screen by default, toggle opens it
+      document.body.classList.remove('sidebar-hidden');
+      const isOpen = document.body.classList.contains('sidebar-open');
+      toggle.textContent = isOpen ? '✕' : '☰';
+    } else {
+      // Desktop: sidebar is visible by default, toggle hides it
+      document.body.classList.remove('sidebar-open');
+      const isHidden = document.body.classList.contains('sidebar-hidden');
+      toggle.textContent = isHidden ? '☰' : '✕';
+    }
   }
-} catch(e) {}
+
+  toggle.addEventListener('click', () => {
+    if (isMobile()) {
+      document.body.classList.toggle('sidebar-open');
+      const open = document.body.classList.contains('sidebar-open');
+      toggle.textContent = open ? '✕' : '☰';
+    } else {
+      document.body.classList.toggle('sidebar-hidden');
+      const hidden = document.body.classList.contains('sidebar-hidden');
+      toggle.textContent = hidden ? '☰' : '✕';
+      try { localStorage.setItem('sidebar-hidden', hidden ? '1' : '0'); } catch(e) {}
+    }
+  });
+
+  // Close sidebar on mobile when a TOC link is clicked
+  document.getElementById('toc').addEventListener('click', (e) => {
+    if (e.target.tagName === 'A' && isMobile()) {
+      document.body.classList.remove('sidebar-open');
+      toggle.textContent = '☰';
+    }
+  });
+
+  // Restore desktop preference
+  try {
+    if (!isMobile() && localStorage.getItem('sidebar-hidden') === '1') {
+      document.body.classList.add('sidebar-hidden');
+    }
+  } catch(e) {}
+
+  // Re-evaluate on resize
+  window.addEventListener('resize', applySidebar);
+  applySidebar();
+})();
 </script>
 
 </body>

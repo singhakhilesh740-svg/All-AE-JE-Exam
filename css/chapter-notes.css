@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    chapter-notes.css — shared styling for ALL chapter-style notes
    Used by chapter.html viewer. Edit here → all chapters update.
+   Fully responsive: mobile ↔ tablet ↔ desktop ↔ widescreen
    ═══════════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap');
@@ -45,7 +46,7 @@
   --tag-border:   #38bdf8;
 
   --sidebar-w: 270px;
-  --content-max: 860px;
+  --content-max: 900px;
   --font-body: 'Source Serif 4', Georgia, serif;
   --font-head: 'Playfair Display', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -61,7 +62,7 @@ body {
   display: flex;
 }
 
-/* Progress bar */
+/* ── Progress bar ── */
 #progress-bar {
   position: fixed; top: 0; left: 0; height: 3px;
   background: linear-gradient(90deg, var(--chapter-rule), var(--topic-green));
@@ -69,7 +70,9 @@ body {
   transition: width 0.1s linear;
 }
 
-/* Sidebar */
+/* ══════════════════════════════════════════════════════════════
+   SIDEBAR
+   ══════════════════════════════════════════════════════════════ */
 #sidebar {
   position: fixed; top: 0; left: 0;
   width: var(--sidebar-w);
@@ -81,6 +84,7 @@ body {
   z-index: 100;
   font-family: var(--font-body);
   font-size: 0.82rem;
+  transition: transform .3s ease;
 }
 #sidebar-header {
   background: var(--chapter-deep);
@@ -118,11 +122,42 @@ body {
 #toc a.sub { padding-left: 38px; font-size: 0.78rem; color: var(--ink-light); }
 #toc a.sub:hover, #toc a.sub.active { color: var(--topic-green); border-left-color: var(--topic-green); }
 
-/* Main content */
+/* ── Sidebar Toggle Button ── */
+#sidebar-toggle {
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 500;
+  background: var(--chapter-deep);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 40px; height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  transition: background .2s, left .3s ease;
+  display: none;               /* hidden by default on desktop (sidebar always visible) */
+  align-items: center;
+  justify-content: center;
+}
+#sidebar-toggle:hover { background: var(--chapter-mid); }
+
+/* ── Sidebar Hidden state ── */
+.sidebar-hidden #sidebar { transform: translateX(-100%); }
+.sidebar-hidden #main    { margin-left: 0 !important; }
+.sidebar-hidden #sidebar-toggle { left: 12px; }
+
+/* ── Mobile Back Button ── */
+#mobile-back { display: none; }
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN CONTENT
+   ══════════════════════════════════════════════════════════════ */
 #main {
   margin-left: var(--sidebar-w);
   flex: 1;
   min-height: 100vh;
+  transition: margin-left .3s ease;
 }
 #content {
   max-width: var(--content-max);
@@ -130,7 +165,7 @@ body {
   padding: 48px 48px 80px;
 }
 
-/* Chapter banner */
+/* ── Chapter banner ── */
 .chapter-banner {
   background: linear-gradient(135deg, var(--chapter-deep) 0%, #2c5f8a 50%, #1e5799 100%);
   color: #fff;
@@ -162,7 +197,7 @@ body {
   font-size: 0.78rem; font-family: var(--font-body);
 }
 
-/* Color legend */
+/* ── Color legend ── */
 .legend {
   display: flex; flex-wrap: wrap; gap: 10px;
   background: var(--bg-soft); border: 1px solid #e5e0d5;
@@ -174,7 +209,7 @@ body {
 }
 .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
 
-/* Headings */
+/* ── Headings ── */
 .section-wrap { margin-bottom: 52px; }
 h2.section-title {
   font-family: var(--font-head);
@@ -189,6 +224,7 @@ h2.section-title .sn {
   background: var(--chapter-deep); color: #fff;
   border-radius: 5px; padding: 2px 9px;
   font-family: var(--font-body); letter-spacing: .03em;
+  flex-shrink: 0;
 }
 h3.sub-title {
   font-family: var(--font-head);
@@ -205,20 +241,20 @@ h4.mini-title {
   margin: 16px 0 6px;
 }
 
-/* Paragraphs & Lists */
-p { margin-bottom: 10px; font-size: 0.93rem; }
+/* ── Paragraphs & Lists ── */
+p { margin-bottom: 10px; font-size: 0.95rem; }
 ul, ol { margin: 6px 0 12px 22px; }
-li { margin-bottom: 4px; font-size: 0.92rem; }
+li { margin-bottom: 4px; font-size: 0.93rem; }
 li::marker { color: var(--chapter-rule); }
 
-/* Inline highlights */
+/* ── Inline highlights ── */
 .date   { color: var(--date-red); font-weight: 600; background: var(--date-bg); border-radius: 3px; padding: 0 4px; font-size: .88em; }
 .name   { color: var(--name-purple); font-weight: 600; }
 .term   { color: var(--chapter-mid); font-weight: 600; font-style: italic; }
 .fact   { color: var(--fact-teal); font-weight: 600; }
 .place  { color: #7c5b00; font-weight: 600; }
 
-/* Special boxes */
+/* ── Special boxes ── */
 .exam-box {
   background: var(--exam-bg);
   border-left: 4px solid var(--exam-border);
@@ -256,19 +292,19 @@ li::marker { color: var(--chapter-rule); }
 }
 .mnemonic-box p { font-size: 0.88rem; font-family: var(--font-mono); color: var(--mnemonic); }
 
-/* Tables */
-.table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 10px; border: 1px solid var(--table-border); }
+/* ── Tables ── */
+.table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 10px; border: 1px solid var(--table-border); -webkit-overflow-scrolling: touch; }
 table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
 thead tr { background: var(--table-head); color: #fff; }
-thead th { padding: 10px 14px; text-align: left; font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; }
+thead th { padding: 10px 14px; text-align: left; font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; white-space: nowrap; }
 tbody tr:nth-child(even) { background: var(--table-alt); }
 tbody tr:hover { background: #dceeff55; }
 td { padding: 9px 14px; border-bottom: 1px solid var(--table-border); vertical-align: top; }
-td:first-child { font-weight: 600; color: var(--chapter-mid); white-space: nowrap; }
+td:first-child { font-weight: 600; color: var(--chapter-mid); }
 .td-date { color: var(--date-red); font-weight: 700; font-family: var(--font-mono); font-size: .85em; }
 .td-exam { color: var(--exam-amber); font-size: .8em; font-weight: 600; }
 
-/* Tags */
+/* ── Tags ── */
 .tag {
   display: inline-block;
   background: var(--tag-bg); color: var(--tag-color);
@@ -279,10 +315,10 @@ td:first-child { font-weight: 600; color: var(--chapter-mid); white-space: nowra
   margin: 0 2px;
 }
 
-/* Divider */
+/* ── Divider ── */
 .divider { border: none; border-top: 1px dashed #c0bab0; margin: 28px 0; }
 
-/* Print button */
+/* ── Print button ── */
 #print-btn {
   position: fixed; bottom: 28px; right: 28px;
   background: var(--chapter-deep); color: #fff;
@@ -295,7 +331,7 @@ td:first-child { font-weight: 600; color: var(--chapter-mid); white-space: nowra
 }
 #print-btn:hover { background: var(--chapter-mid); transform: scale(1.08); }
 
-/* Loading / error states */
+/* ── Loading / error states ── */
 .chapter-loading, .chapter-error {
   padding: 60px 20px;
   text-align: center;
@@ -304,20 +340,176 @@ td:first-child { font-weight: 600; color: var(--chapter-mid); white-space: nowra
 }
 .chapter-error { color: var(--date-red); }
 
-/* Print */
+/* ══════════════════════════════════════════════════════════════
+   PRINT
+   ══════════════════════════════════════════════════════════════ */
 @media print {
-  #sidebar, #progress-bar, #print-btn { display: none !important; }
+  #sidebar, #progress-bar, #print-btn, #sidebar-toggle, #mobile-back { display: none !important; }
   #main { margin-left: 0; }
-  #content { padding: 20px; }
+  #content { padding: 20px; max-width: 100%; }
   .chapter-banner { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .section-wrap { page-break-inside: avoid; }
   thead { display: table-header-group; }
 }
 
-/* Responsive */
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — WIDESCREEN (1400px+)
+   Wider content area, bigger fonts, more breathing room
+   ══════════════════════════════════════════════════════════════ */
+@media (min-width: 1400px) {
+  :root { --content-max: 960px; }
+  #content { padding: 56px 56px 90px; }
+  .chapter-banner { padding: 42px 48px; }
+  .chapter-banner h1 { font-size: 2.2rem; }
+  h2.section-title { font-size: 1.65rem; }
+  p  { font-size: 0.97rem; }
+  li { font-size: 0.95rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — DESKTOP WITH TOGGLE (901px – 1100px)
+   Show sidebar toggle so user can collapse sidebar on
+   narrower desktops / landscape tablets
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  #sidebar-toggle { display: flex; }
+  /* Push toggle right of sidebar when sidebar is open */
+  #sidebar-toggle { left: calc(var(--sidebar-w) + 10px); }
+  .sidebar-hidden #sidebar-toggle { left: 12px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET (601px – 900px)
+   Sidebar slides off-screen, toggle always visible,
+   content fills width
+   ══════════════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
-  :root { --sidebar-w: 0px; }
-  #sidebar { display: none; }
+  :root { --sidebar-w: 260px; }
+
+  #sidebar {
+    transform: translateX(-100%);
+    box-shadow: 4px 0 24px rgba(0,0,0,.2);
+  }
+  body:not(.sidebar-hidden) #sidebar {
+    /* On tablet, sidebar starts hidden; toggling shows it */
+  }
+  body.sidebar-open #sidebar { transform: translateX(0); }
+
+  #sidebar-toggle {
+    display: flex;
+    left: 12px;
+  }
+  body.sidebar-open #sidebar-toggle { left: calc(var(--sidebar-w) + 10px); }
+
   #main { margin-left: 0; }
-  #content { padding: 24px 18px 60px; }
+  #content {
+    max-width: 100%;
+    padding: 32px 28px 60px;
+  }
+
+  #mobile-back {
+    display: block !important;
+    position: fixed; top: 12px; right: 12px; left: auto !important;
+    z-index: 500;
+  }
+
+  .chapter-banner { padding: 28px 24px; border-radius: 10px; margin-bottom: 28px; }
+  .chapter-banner h1 { font-size: 1.6rem; }
+  .chapter-banner::after { font-size: 3rem; right: 20px; }
+
+  h2.section-title { font-size: 1.35rem; }
+  h3.sub-title     { font-size: 1.08rem; }
+
+  .legend { padding: 10px 14px; gap: 8px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤600px)
+   Compact single-column, everything stacked, no sidebar
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  html { font-size: 15px; }
+
+  #sidebar { width: 80vw; max-width: 280px; }
+  body.sidebar-open #sidebar-toggle { left: calc(80vw + 10px); }
+
+  #sidebar-toggle {
+    display: flex;
+    top: 10px; left: 10px;
+    width: 36px; height: 36px;
+    font-size: 1.1rem;
+  }
+  #mobile-back {
+    display: block !important;
+    position: fixed; top: 10px; right: 10px; left: auto !important;
+    font-size: 12px; padding: 7px 12px;
+    z-index: 500;
+  }
+
+  #main { margin-left: 0; }
+  #content {
+    max-width: 100%;
+    padding: 20px 14px 50px;
+  }
+
+  /* Banner */
+  .chapter-banner {
+    padding: 22px 16px; border-radius: 8px;
+    margin-bottom: 22px;
+  }
+  .chapter-banner h1 { font-size: 1.3rem; }
+  .chapter-banner .subtitle { font-size: 0.82rem; }
+  .chapter-banner::after { font-size: 2.5rem; right: 12px; }
+  .chapter-meta { gap: 8px; margin-top: 12px; }
+  .chapter-meta span { font-size: 0.7rem; padding: 3px 10px; }
+
+  /* Headings */
+  h2.section-title { font-size: 1.2rem; gap: 6px; flex-wrap: wrap; }
+  h2.section-title .sn { font-size: 0.7rem; padding: 1px 7px; }
+  h3.sub-title { font-size: 1rem; padding-left: 10px; border-left-width: 3px; }
+  h4.mini-title { font-size: 0.92rem; }
+
+  /* Body text */
+  p  { font-size: 0.9rem; margin-bottom: 8px; }
+  li { font-size: 0.88rem; }
+  ul, ol { margin-left: 18px; }
+
+  /* Legend */
+  .legend { padding: 10px 12px; gap: 6px; margin-bottom: 22px; }
+  .legend-item { font-size: 0.7rem; gap: 5px; }
+  .legend-dot { width: 10px; height: 10px; }
+
+  /* Boxes */
+  .exam-box, .fact-box, .mnemonic-box { padding: 10px 14px; margin: 12px 0; }
+  .exam-box li { font-size: 0.84rem; }
+
+  /* Tables */
+  .table-wrap { border-radius: 8px; margin: 14px 0; }
+  table { font-size: 0.8rem; }
+  thead th { padding: 8px 10px; font-size: 0.82rem; }
+  td { padding: 7px 10px; }
+  td:first-child { white-space: normal; }  /* allow wrapping on mobile */
+
+  /* Tags */
+  .tag { font-size: 0.68rem; padding: 1px 7px; }
+
+  /* Sections */
+  .section-wrap { margin-bottom: 36px; }
+  .divider { margin: 18px 0; }
+
+  /* Print btn smaller */
+  #print-btn { width: 44px; height: 44px; font-size: 1.1rem; bottom: 18px; right: 14px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — VERY SMALL PHONES (≤380px)
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  html { font-size: 14px; }
+  #content { padding: 16px 10px 40px; }
+  .chapter-banner { padding: 18px 12px; }
+  .chapter-banner h1 { font-size: 1.15rem; }
+  h2.section-title { font-size: 1.1rem; }
+  table { font-size: 0.76rem; }
+  td, thead th { padding: 6px 8px; }
 }
