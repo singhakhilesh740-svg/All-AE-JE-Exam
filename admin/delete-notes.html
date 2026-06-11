@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Delete Notes — Admin</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:20px}
+
+  h2{color:#ef4444;font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .sub{color:#64748b;font-size:13px;margin-bottom:24px}
+
+  /* ── Step card ── */
+  .step-card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:20px;margin-bottom:16px}
+  .step-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#64748b;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .step-label .num{background:#334155;color:#94a3b8;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+
+  /* ── Subject grid ── */
+  .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+  .subj-btn{
+    padding:10px 14px;border-radius:10px;border:1.5px solid #334155;
+    background:#0f172a;color:#94a3b8;font-size:13px;font-weight:600;
+    cursor:pointer;transition:all .15s;font-family:inherit;
+    display:flex;align-items:center;gap:6px;text-align:left;
+  }
+  .subj-btn:hover{border-color:#ef4444;color:#f1f5f9;background:rgba(239,68,68,.06)}
+  .subj-btn.active{border-color:#ef4444;color:#ef4444;background:rgba(239,68,68,.1)}
+
+  /* ── Chapter list ── */
+  .chap-list{display:flex;flex-direction:column;gap:6px;max-height:420px;overflow-y:auto}
+  .chap-list::-webkit-scrollbar{width:4px}
+  .chap-list::-webkit-scrollbar-thumb{background:#334155;border-radius:4px}
+
+  .chap-row{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 14px;background:#0f172a;border:1px solid #334155;
+    border-radius:9px;cursor:pointer;transition:all .15s;
+    user-select:none;
+  }
+  .chap-row:hover{border-color:#475569}
+  .chap-row.selected{border-color:#ef4444;background:rgba(239,68,68,.07)}
+  .chap-check{
+    width:18px;height:18px;border:2px solid #475569;border-radius:4px;
+    flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    transition:all .15s;
+  }
+  .chap-row.selected .chap-check{background:#ef4444;border-color:#ef4444;color:#fff;font-size:11px}
+  .chap-info{flex:1;min-width:0}
+  .chap-title{font-size:13px;font-weight:600;color:#f1f5f9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .chap-meta{font-size:11px;color:#64748b;margin-top:1px}
+
+  /* ── Bulk actions ── */
+  .bulk-bar{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:12px 16px;background:#0f172a;border:1px solid #334155;
+    border-radius:10px;margin-bottom:12px;
+  }
+  .bulk-count{font-size:13px;color:#94a3b8;flex:1}
+  .bulk-count span{color:#ef4444;font-weight:700}
+  .sel-all-btn{
+    padding:6px 12px;border-radius:7px;border:1px solid #475569;
+    background:transparent;color:#94a3b8;font-size:12px;font-weight:600;
+    cursor:pointer;font-family:inherit;transition:all .15s;
+  }
+  .sel-all-btn:hover{border-color:#94a3b8;color:#f1f5f9}
+  .del-btn{
+    padding:8px 18px;border-radius:8px;border:none;
+    background:#ef4444;color:#fff;font-size:13px;font-weight:700;
+    cursor:pointer;font-family:inherit;transition:all .15s;
+    display:flex;align-items:center;gap:5px;
+  }
+  .del-btn:hover{background:#dc2626}
+  .del-btn:disabled{background:#334155;color:#64748b;cursor:not-allowed}
+
+  /* ── Empty / loading ── */
+  .state-msg{text-align:center;padding:32px 20px;color:#475569;font-size:13px}
+  .state-msg .si{font-size:32px;margin-bottom:8px;opacity:.5}
+
+  /* ── Confirm modal ── */
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px}
+  .modal-bg.open{display:flex}
+  .modal-box{background:#1e293b;border-radius:14px;max-width:420px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .modal-box h3{font-size:16px;font-weight:800;color:#ef4444;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .modal-box p{font-size:13px;color:#94a3b8;margin-bottom:6px;line-height:1.5}
+  .modal-list{background:#0f172a;border-radius:8px;padding:10px 14px;margin:12px 0;max-height:160px;overflow-y:auto}
+  .modal-list li{font-size:12px;color:#f1f5f9;margin-bottom:3px;list-style:disc;margin-left:14px}
+  .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+  .modal-btn{padding:9px 20px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+  .modal-btn.cancel{background:#334155;color:#94a3b8}
+  .modal-btn.cancel:hover{background:#475569;color:#f1f5f9}
+  .modal-btn.confirm{background:#ef4444;color:#fff}
+  .modal-btn.confirm:hover{background:#dc2626}
+  .modal-btn.confirm:disabled{background:#334155;color:#64748b;cursor:not-allowed}
+
+  /* ── Progress overlay ── */
+  .del-progress{margin-top:12px;display:none}
+  .del-prog-bar-wrap{background:#0f172a;border-radius:4px;height:6px;overflow:hidden;margin-bottom:6px}
+  .del-prog-bar{height:100%;background:#ef4444;border-radius:4px;transition:width .3s}
+  .del-prog-text{font-size:12px;color:#64748b;text-align:center}
+
+  /* ── Toast ── */
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#10b981;color:#fff;padding:9px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+  #toast.show{opacity:1}
+  #toast.err{background:#ef4444}
+
+  /* Login gate */
+  .login-gate{position:fixed;inset:0;background:linear-gradient(135deg,#1a3a5c,#2c5f8a);display:flex;align-items:center;justify-content:center;z-index:10000}
+  .login-card{background:#fff;color:#1a3a5c;padding:28px;border-radius:14px;max-width:320px;width:88%;text-align:center}
+  .login-card h2{font-size:18px;margin-bottom:8px}
+  .login-card p{font-size:13px;color:#555;margin-bottom:16px;line-height:1.5}
+  .login-card button{background:#1a3a5c;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+
+  @media(max-width:500px){
+    .subject-grid{grid-template-columns:1fr 1fr}
+    .subj-btn{font-size:12px;padding:8px 10px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Login Gate -->
+<div class="login-gate" id="loginGate" style="display:none">
+  <div class="login-card">
+    <h2>🔐 Login Required</h2>
+    <p>Sign in to delete chapters.</p>
+    <button id="loginBtn">Sign in with Google</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Confirm Modal -->
+<div class="modal-bg" id="confirmModal">
+  <div class="modal-box">
+    <h3>⚠️ Delete Chapters</h3>
+    <p>You are about to permanently delete <strong id="delCount" style="color:#ef4444"></strong> chapter(s). This cannot be undone.</p>
+    <ul class="modal-list" id="delList"></ul>
+    <div class="del-progress" id="delProgress">
+      <div class="del-prog-bar-wrap"><div class="del-prog-bar" id="delProgBar" style="width:0%"></div></div>
+      <div class="del-prog-text" id="delProgText">Deleting…</div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" id="modalCancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-btn confirm" id="modalConfirm" onclick="doDelete()">🗑 Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── UI ── -->
+<h2>🗑️ Delete Notes</h2>
+<p class="sub">Select subject → select chapters → delete</p>
+
+<!-- Step 1: Subject -->
+<div class="step-card">
+  <div class="step-label"><span class="num">1</span> Select Subject</div>
+  <div class="subject-grid" id="subjectGrid"></div>
+</div>
+
+<!-- Step 2: Chapters -->
+<div class="step-card" id="step2" style="display:none">
+  <div class="step-label"><span class="num">2</span> Select Chapters to Delete</div>
+  <div class="bulk-bar">
+    <span class="bulk-count" id="bulkCount"><span>0</span> selected</span>
+    <button class="sel-all-btn" id="selAllBtn" onclick="toggleSelectAll()">Select All</button>
+    <button class="del-btn" id="deleteBtn" disabled onclick="openConfirm()">🗑 Delete Selected</button>
+  </div>
+  <div id="chapterListWrap">
+    <div class="state-msg"><div class="si">⏳</div>Loading…</div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, deleteDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const gp   = new GoogleAuthProvider();
+const ADMIN_EMAIL = '112ce0489@gmail.com';
+
+// Subjects — param controls which set to show
+// index.html passes ?section=tech or ?section=nontech
+const params  = new URLSearchParams(window.location.search);
+const section = params.get('section') || 'all';
+
+const TECH_SUBJECTS = [
+  { id:'engg-mechanics',       icon:'⚙️',  name:'Engg Mechanics' },
+  { id:'strength-of-materials',icon:'🔩',  name:'Strength of Materials' },
+  { id:'structural-analysis',  icon:'🏗️',  name:'Structural Analysis' },
+  { id:'concrete-design',      icon:'🧱',  name:'Concrete Design' },
+  { id:'steel-design',         icon:'⚔️',  name:'Steel Design' },
+  { id:'fluid-mechanics',      icon:'💧',  name:'Fluid Mechanics' },
+  { id:'hydrology',            icon:'🌊',  name:'Hydrology' },
+  { id:'environmental',        icon:'🌿',  name:'Environmental' },
+  { id:'geotech-foundation',   icon:'⛏️',  name:'Geotech' },
+  { id:'transportation',       icon:'🛣️',  name:'Transportation' },
+  { id:'surveying-geology',    icon:'📐',  name:'Surveying' },
+  { id:'building-materials',   icon:'🏠',  name:'Building Materials' },
+  { id:'construction-tech',    icon:'🔨',  name:'Construction Tech' },
+];
+const NONTECH_SUBJECTS = [
+  { id:'history',         icon:'🏛️', name:'History' },
+  { id:'polity',          icon:'⚖️', name:'Polity' },
+  { id:'geography',       icon:'🌍', name:'Geography' },
+  { id:'general-science', icon:'🔬', name:'General Science' },
+  { id:'economy',         icon:'💰', name:'Economy' },
+  { id:'current-affairs', icon:'📰', name:'Current Affairs' },
+];
+const ALL_SUBJECTS = section === 'tech' ? TECH_SUBJECTS : section === 'nontech' ? NONTECH_SUBJECTS : [...TECH_SUBJECTS, ...NONTECH_SUBJECTS];
+
+let chapters     = [];
+let selectedIds  = new Set();
+let allSelected  = false;
+let currentSubj  = null;
+
+// ── Auth ──
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, gp); }
+  catch(e) { alert('Sign-in failed: ' + e.message); }
+});
+onAuthStateChanged(auth, user => {
+  document.getElementById('loginGate').style.display = (user && user.email === ADMIN_EMAIL) ? 'none' : 'flex';
+  if (user && user.email === ADMIN_EMAIL) buildSubjectGrid();
+});
+
+// ── Build subject grid ──
+function buildSubjectGrid() {
+  const grid = document.getElementById('subjectGrid');
+  grid.innerHTML = ALL_SUBJECTS.map(s => `
+    <button class="subj-btn" data-id="${s.id}" onclick="selectSubject('${s.id}', this)">
+      <span>${s.icon}</span> ${s.name}
+    </button>`).join('');
+}
+
+// ── Select subject ──
+window.selectSubject = async function(subjId, btn) {
+  currentSubj = subjId;
+  selectedIds.clear();
+  document.querySelectorAll('.subj-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('step2').style.display = 'block';
+  document.getElementById('chapterListWrap').innerHTML = '<div class="state-msg"><div class="si">⏳</div>Loading chapters…</div>';
+  updateBulkBar();
+
+  try {
+    const q = query(collection(db,'chapters'), where('subject','==',subjId));
+    const snap = await getDocs(q);
+    chapters = [];
+    snap.forEach(d => chapters.push({ id: d.id, ...d.data() }));
+    chapters.sort((a,b) => (a.chapter_no||0)-(b.chapter_no||0));
+    renderChapterList();
+    document.getElementById('step2').scrollIntoView({ behavior:'smooth', block:'start' });
+  } catch(e) {
+    document.getElementById('chapterListWrap').innerHTML = `<div class="state-msg"><div class="si">⚠️</div>${e.message}</div>`;
+  }
+};
+
+// ── Render chapter list ──
+function renderChapterList() {
+  const wrap = document.getElementById('chapterListWrap');
+  if (!chapters.length) {
+    wrap.innerHTML = '<div class="state-msg"><div class="si">📭</div>No chapters found for this subject</div>';
+    return;
+  }
+  wrap.innerHTML = `<div class="chap-list">${chapters.map(c => `
+    <div class="chap-row" id="row_${c.id}" onclick="toggleChapter('${c.id}')">
+      <div class="chap-check" id="chk_${c.id}"></div>
+      <div class="chap-info">
+        <div class="chap-title">Ch ${c.chapter_no || '?'} — ${esc(c.title || c.id)}</div>
+        <div class="chap-meta">${esc(c.id)} · ${((c.body_html||'').length/1024).toFixed(1)} KB</div>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ── Toggle chapter selection ──
+window.toggleChapter = function(id) {
+  if (selectedIds.has(id)) {
+    selectedIds.delete(id);
+    document.getElementById('row_'+id).classList.remove('selected');
+    document.getElementById('chk_'+id).textContent = '';
+  } else {
+    selectedIds.add(id);
+    document.getElementById('row_'+id).classList.add('selected');
+    document.getElementById('chk_'+id).textContent = '✓';
+  }
+  updateBulkBar();
+};
+
+// ── Select All toggle ──
+window.toggleSelectAll = function() {
+  allSelected = !allSelected;
+  selectedIds.clear();
+  chapters.forEach(c => {
+    const row = document.getElementById('row_'+c.id);
+    const chk = document.getElementById('chk_'+c.id);
+    if (!row) return;
+    if (allSelected) {
+      selectedIds.add(c.id);
+      row.classList.add('selected');
+      chk.textContent = '✓';
+    } else {
+      row.classList.remove('selected');
+      chk.textContent = '';
+    }
+  });
+  document.getElementById('selAllBtn').textContent = allSelected ? 'Deselect All' : 'Select All';
+  updateBulkBar();
+};
+
+function updateBulkBar() {
+  const n = selectedIds.size;
+  document.getElementById('bulkCount').innerHTML = `<span>${n}</span> chapter${n!==1?'s':''} selected`;
+  document.getElementById('deleteBtn').disabled = n === 0;
+}
+
+// ── Open confirm modal ──
+window.openConfirm = function() {
+  const ids = Array.from(selectedIds);
+  document.getElementById('delCount').textContent = ids.length;
+  const list = document.getElementById('delList');
+  list.innerHTML = ids.map(id => {
+    const ch = chapters.find(c => c.id === id);
+    return `<li>${ch ? `Ch ${ch.chapter_no||'?'} — ${esc(ch.title||id)}` : esc(id)}</li>`;
+  }).join('');
+  document.getElementById('delProgress').style.display = 'none';
+  document.getElementById('delProgBar').style.width = '0%';
+  document.getElementById('delProgText').textContent = 'Deleting…';
+  document.getElementById('modalConfirm').disabled = false;
+  document.getElementById('modalCancel').disabled = false;
+  document.getElementById('confirmModal').classList.add('open');
+};
+
+window.closeModal = function() {
+  document.getElementById('confirmModal').classList.remove('open');
+};
+
+// ── Do delete ──
+window.doDelete = async function() {
+  const ids = Array.from(selectedIds);
+  if (!ids.length) return;
+
+  document.getElementById('modalConfirm').disabled = true;
+  document.getElementById('modalCancel').disabled  = true;
+  document.getElementById('delProgress').style.display = 'block';
+
+  let done = 0;
+  const total = ids.length;
+
+  for (const id of ids) {
+    try {
+      await deleteDoc(doc(db,'chapters',id));
+      done++;
+      const pct = Math.round((done/total)*100);
+      document.getElementById('delProgBar').style.width = pct + '%';
+      document.getElementById('delProgText').textContent = `Deleted ${done} of ${total}…`;
+      // Remove from local list
+      chapters = chapters.filter(c => c.id !== id);
+      const row = document.getElementById('row_'+id);
+      if (row) row.remove();
+    } catch(e) {
+      showToast(`Failed: ${id}`, true);
+    }
+  }
+
+  selectedIds.clear();
+  allSelected = false;
+  document.getElementById('selAllBtn').textContent = 'Select All';
+  updateBulkBar();
+  closeModal();
+
+  if (chapters.length === 0) {
+    document.getElementById('chapterListWrap').innerHTML = '<div class="state-msg"><div class="si">📭</div>No chapters remaining</div>';
+  }
+
+  showToast(`✅ Deleted ${done} chapter${done!==1?'s':''}`);
+};
+
+function esc(s) { return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function showToast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = isErr ? 'err show' : 'show';
+  clearTimeout(t._to);
+  t._to = setTimeout(() => t.className = '', 2800);
+}
+</script>
+</body>
+</html>
