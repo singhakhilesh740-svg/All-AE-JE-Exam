@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Image Manager — Admin</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:20px}
+
+  h2{color:#f59e0b;font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .sub{color:#64748b;font-size:13px;margin-bottom:20px}
+
+  /* ── Upload zone ── */
+  .upload-zone{
+    border:2px dashed #334155;border-radius:14px;
+    padding:32px;text-align:center;cursor:pointer;
+    transition:all .2s;margin-bottom:24px;background:#1e293b;
+    position:relative;
+  }
+  .upload-zone:hover,.upload-zone.drag-over{border-color:#f59e0b;background:rgba(245,158,11,.06)}
+  .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+  .upload-zone .uz-icon{font-size:36px;margin-bottom:10px}
+  .upload-zone .uz-text{font-size:15px;font-weight:600;color:#94a3b8;margin-bottom:4px}
+  .upload-zone .uz-sub{font-size:12px;color:#475569}
+
+  /* ── Folder selector ── */
+  .folder-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+  .folder-bar label{font-size:13px;color:#94a3b8;font-weight:600}
+  .folder-input{
+    background:#1e293b;border:1px solid #334155;color:#f1f5f9;
+    border-radius:8px;padding:6px 12px;font-size:13px;font-family:inherit;
+    outline:none;width:200px;
+  }
+  .folder-input:focus{border-color:#f59e0b}
+  .folder-chip{
+    padding:5px 12px;border-radius:20px;border:1px solid #334155;
+    background:#1e293b;color:#94a3b8;font-size:12px;cursor:pointer;
+    transition:all .15s;font-family:inherit;
+  }
+  .folder-chip:hover,.folder-chip.active{border-color:#f59e0b;color:#f59e0b;background:rgba(245,158,11,.08)}
+
+  /* ── Upload progress ── */
+  .upload-progress{
+    background:#1e293b;border:1px solid #334155;border-radius:10px;
+    padding:14px;margin-bottom:16px;display:none;
+  }
+  .progress-item{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
+  .progress-item:last-child{margin-bottom:0}
+  .progress-bar-wrap{flex:1;background:#0f172a;border-radius:4px;height:6px;overflow:hidden}
+  .progress-bar-fill{height:100%;background:#10b981;border-radius:4px;transition:width .3s}
+  .progress-status{font-size:11px;color:#64748b;white-space:nowrap}
+  .progress-status.done{color:#10b981}
+  .progress-status.err{color:#ef4444}
+
+  /* ── Filter bar ── */
+  .filter-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+  .search-input{
+    flex:1;min-width:200px;background:#1e293b;border:1px solid #334155;
+    color:#f1f5f9;border-radius:8px;padding:8px 14px;font-size:13px;
+    font-family:inherit;outline:none;
+  }
+  .search-input:focus{border-color:#f59e0b}
+  .count-badge{font-size:12px;color:#64748b;white-space:nowrap}
+
+  /* ── Image grid ── */
+  .img-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:14px;
+  }
+  .img-card{
+    background:#1e293b;border:1px solid #334155;border-radius:12px;
+    overflow:hidden;transition:all .15s;
+  }
+  .img-card:hover{border-color:#f59e0b;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.4)}
+  .img-thumb{
+    width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+    background:#0f172a;
+  }
+  .img-info{padding:10px}
+  .img-name{font-size:12px;font-weight:600;color:#f1f5f9;margin-bottom:3px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .img-folder{font-size:11px;color:#64748b;margin-bottom:8px}
+  .img-size{font-size:11px;color:#475569}
+  .img-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .img-btn{
+    flex:1;padding:5px 8px;border-radius:6px;border:1px solid #334155;
+    background:transparent;color:#94a3b8;font-size:11px;font-weight:600;
+    cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap;
+    display:flex;align-items:center;justify-content:center;gap:3px;
+  }
+  .img-btn:hover{background:#334155;color:#f1f5f9}
+  .img-btn.copy-url:hover{border-color:#3b82f6;color:#3b82f6;background:rgba(59,130,246,.1)}
+  .img-btn.copy-html:hover{border-color:#10b981;color:#10b981;background:rgba(16,185,129,.1)}
+  .img-btn.del-btn:hover{border-color:#ef4444;color:#ef4444;background:rgba(239,68,68,.1)}
+  .img-btn.copied{border-color:#10b981!important;color:#10b981!important;background:rgba(16,185,129,.1)!important}
+
+  /* ── Preview modal ── */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.8);
+    display:none;align-items:center;justify-content:center;z-index:9999;
+    padding:20px;
+  }
+  .modal-overlay.open{display:flex}
+  .modal-box{
+    background:#1e293b;border-radius:14px;max-width:700px;width:100%;
+    max-height:90vh;overflow:auto;
+  }
+  .modal-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;border-bottom:1px solid #334155;
+  }
+  .modal-header span{font-weight:700;font-size:14px;color:#f1f5f9}
+  .modal-close{background:none;border:none;color:#64748b;font-size:22px;cursor:pointer;line-height:1}
+  .modal-close:hover{color:#f1f5f9}
+  .modal-img{width:100%;display:block;max-height:400px;object-fit:contain;background:#0f172a}
+  .modal-body{padding:16px 18px}
+  .modal-url{
+    background:#0f172a;border:1px solid #334155;border-radius:8px;
+    padding:10px 14px;font-size:12px;color:#94a3b8;font-family:monospace;
+    word-break:break-all;margin-bottom:12px;
+  }
+  .modal-html{
+    background:#0f172a;border:1px solid #334155;border-radius:8px;
+    padding:10px 14px;font-size:12px;color:#86efac;font-family:monospace;
+    word-break:break-all;margin-bottom:12px;white-space:pre-wrap;
+  }
+  .modal-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .modal-btn{
+    padding:8px 18px;border-radius:8px;border:none;font-size:13px;
+    font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;
+    display:flex;align-items:center;gap:5px;
+  }
+  .modal-btn.blue{background:#3b82f6;color:#fff}
+  .modal-btn.blue:hover{background:#2563eb}
+  .modal-btn.green{background:#10b981;color:#fff}
+  .modal-btn.green:hover{background:#059669}
+  .modal-btn.red{background:#ef4444;color:#fff}
+  .modal-btn.red:hover{background:#dc2626}
+
+  /* ── Empty / loading ── */
+  .empty-state{text-align:center;padding:60px 20px;color:#475569}
+  .empty-state .ei{font-size:48px;margin-bottom:12px;opacity:.5}
+  .loading-spinner{text-align:center;padding:40px;color:#64748b;font-size:14px}
+
+  /* ── Toast ── */
+  #toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+    background:#10b981;color:#fff;padding:10px 22px;border-radius:10px;
+    font-size:13px;font-weight:600;z-index:99999;
+    opacity:0;transition:opacity .3s;pointer-events:none;
+    box-shadow:0 4px 16px rgba(0,0,0,.3);
+  }
+  #toast.show{opacity:1}
+
+  /* ── Login gate ── */
+  .login-gate{position:fixed;inset:0;background:linear-gradient(135deg,#1a3a5c,#2c5f8a);display:flex;align-items:center;justify-content:center;z-index:10000}
+  .login-card{background:#fff;color:#1a3a5c;padding:32px 28px;border-radius:14px;max-width:340px;width:88%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+  .login-card h2{font-size:18px;margin-bottom:8px}
+  .login-card p{font-size:13px;color:#555;margin-bottom:18px;line-height:1.5}
+  .login-card button{background:#1a3a5c;color:#fff;border:none;padding:11px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+
+  @media(max-width:500px){
+    .img-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+    .folder-input{width:140px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Login Gate -->
+<div id="loginGate" class="login-gate" style="display:none">
+  <div class="login-card">
+    <h2>🔐 Login Required</h2>
+    <p>Sign in to manage images.</p>
+    <button id="loginBtn">Sign in with Google</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Preview Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span id="modalName">Image</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <div class="modal-body">
+      <div style="font-size:11px;color:#64748b;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Image URL</div>
+      <div class="modal-url" id="modalUrl"></div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">HTML to paste in notes</div>
+      <div class="modal-html" id="modalHtml"></div>
+      <div class="modal-actions">
+        <button class="modal-btn blue" id="modalCopyUrl">📋 Copy URL</button>
+        <button class="modal-btn green" id="modalCopyHtml">📋 Copy HTML</button>
+        <button class="modal-btn red" id="modalDelete">🗑 Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN UI ── -->
+<h2>🖼️ Image Manager</h2>
+<p class="sub">Upload images → copy HTML → paste directly into your chapter notes</p>
+
+<!-- Upload Zone -->
+<div class="upload-zone" id="uploadZone">
+  <input type="file" id="fileInput" accept="image/*" multiple>
+  <div class="uz-icon">📁</div>
+  <div class="uz-text">Click or drag images here</div>
+  <div class="uz-sub">PNG, JPG, GIF, WebP, SVG — multiple files supported</div>
+</div>
+
+<!-- Folder / Tag selector -->
+<div class="folder-bar">
+  <label>📂 Folder:</label>
+  <input type="text" class="folder-input" id="folderInput" placeholder="e.g. civil, fluid-mechanics" value="notes-images">
+  <button class="folder-chip active" data-folder="notes-images" onclick="setFolder('notes-images',this)">notes-images</button>
+  <button class="folder-chip" data-folder="civil" onclick="setFolder('civil',this)">civil</button>
+  <button class="folder-chip" data-folder="nontech" onclick="setFolder('nontech',this)">nontech</button>
+  <button class="folder-chip" data-folder="diagrams" onclick="setFolder('diagrams',this)">diagrams</button>
+</div>
+
+<!-- Upload Progress -->
+<div class="upload-progress" id="uploadProgress">
+  <div id="progressList"></div>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search images by name…">
+  <span class="count-badge" id="countBadge">Loading…</span>
+</div>
+
+<!-- Image Grid -->
+<div class="img-grid" id="imgGrid">
+  <div class="loading-spinner">⏳ Loading images…</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll, deleteObject, getMetadata } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+const app     = initializeApp(firebaseConfig);
+const auth    = getAuth(app);
+const storage = getStorage(app);
+const gp      = new GoogleAuthProvider();
+
+let allImages = [];
+let currentFolder = 'notes-images';
+let modalData = null;
+
+// ── Auth ──
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, gp); }
+  catch(e) { alert('Sign-in failed: ' + e.message); }
+});
+
+onAuthStateChanged(auth, user => {
+  document.getElementById('loginGate').style.display = user ? 'none' : 'flex';
+  if (user) loadImages();
+});
+
+// ── Upload ──
+const fileInput = document.getElementById('fileInput');
+const uploadZone = document.getElementById('uploadZone');
+
+fileInput.addEventListener('change', () => handleFiles(Array.from(fileInput.files)));
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  handleFiles(Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')));
+});
+
+function handleFiles(files) {
+  if (!files.length) return;
+  const prog = document.getElementById('uploadProgress');
+  const list = document.getElementById('progressList');
+  prog.style.display = 'block';
+
+  files.forEach(file => {
+    const sanitized = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const path = `${currentFolder}/${Date.now()}_${sanitized}`;
+    const storageRef = ref(storage, path);
+    const task = uploadBytesResumable(storageRef, file);
+
+    // Progress item
+    const item = document.createElement('div');
+    item.className = 'progress-item';
+    item.id = 'pi_' + sanitized;
+    item.innerHTML = `
+      <span style="font-size:12px;color:#94a3b8;flex:0 0 140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${file.name}</span>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%"></div></div>
+      <span class="progress-status">0%</span>`;
+    list.appendChild(item);
+
+    const bar  = item.querySelector('.progress-bar-fill');
+    const stat = item.querySelector('.progress-status');
+
+    task.on('state_changed',
+      snap => {
+        const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+        bar.style.width = pct + '%';
+        stat.textContent = pct + '%';
+      },
+      err => { stat.textContent = '❌ Error'; stat.classList.add('err'); showToast('Upload failed: ' + err.message, true); },
+      async () => {
+        stat.textContent = '✅ Done';
+        stat.classList.add('done');
+        bar.style.width = '100%';
+        showToast('✅ Uploaded: ' + file.name);
+        await loadImages();
+        // Auto-hide progress after 3s if all done
+        const items = list.querySelectorAll('.progress-status:not(.done):not(.err)');
+        if (!items.length) setTimeout(() => { prog.style.display = 'none'; list.innerHTML = ''; }, 3000);
+      }
+    );
+  });
+}
+
+// ── Load images from Storage ──
+async function loadImages() {
+  try {
+    const folderRef = ref(storage, currentFolder);
+    const result = await listAll(folderRef);
+    const items = await Promise.all(result.items.map(async item => {
+      try {
+        const [url, meta] = await Promise.all([getDownloadURL(item), getMetadata(item)]);
+        return {
+          name: item.name,
+          path: item.fullPath,
+          url,
+          size: meta.size,
+          ref: item
+        };
+      } catch { return null; }
+    }));
+    allImages = items.filter(Boolean).sort((a,b) => b.name.localeCompare(a.name));
+    renderGrid(allImages);
+    document.getElementById('countBadge').textContent = `${allImages.length} image${allImages.length !== 1 ? 's' : ''} in /${currentFolder}`;
+  } catch(e) {
+    document.getElementById('imgGrid').innerHTML = `<div class="loading-spinner">⚠️ Error loading: ${e.message}</div>`;
+  }
+}
+
+// ── Render grid ──
+function renderGrid(images) {
+  const grid = document.getElementById('imgGrid');
+  if (!images.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="ei">🖼️</div>No images yet — upload some above</div>';
+    return;
+  }
+  grid.innerHTML = images.map((img, i) => `
+    <div class="img-card" id="card_${i}">
+      <img class="img-thumb" src="${img.url}" alt="${esc(img.name)}" loading="lazy" onerror="this.style.opacity=.3">
+      <div class="img-info">
+        <div class="img-name" title="${esc(img.name)}">${esc(img.name)}</div>
+        <div class="img-folder">📂 ${esc(img.path.split('/').slice(0,-1).join('/'))}</div>
+        <div class="img-size">${formatSize(img.size)}</div>
+        <div class="img-actions">
+          <button class="img-btn copy-url" onclick="copyUrl(${i})">📋 URL</button>
+          <button class="img-btn copy-html" onclick="copyHtml(${i})">📋 HTML</button>
+          <button class="img-btn" onclick="openModal(${i})">👁 View</button>
+          <button class="img-btn del-btn" onclick="deleteImg(${i})">🗑</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Actions ──
+window.copyUrl = function(i) {
+  copy(allImages[i].url);
+  flashBtn(i, 'copy-url', '✅ Copied!');
+};
+
+window.copyHtml = function(i) {
+  copy(makeHtml(allImages[i]));
+  flashBtn(i, 'copy-html', '✅ Copied!');
+};
+
+function makeHtml(img) {
+  const alt = img.name.replace(/\.[^.]+$/, '').replace(/[_-]/g,' ');
+  return `<figure class="note-figure">\n  <img src="${img.url}" alt="${alt}" style="max-width:100%;border-radius:8px;">\n  <figcaption>${alt}</figcaption>\n</figure>`;
+}
+
+window.openModal = function(i) {
+  const img = allImages[i];
+  modalData = img;
+  document.getElementById('modalName').textContent = img.name;
+  document.getElementById('modalImg').src = img.url;
+  document.getElementById('modalUrl').textContent = img.url;
+  document.getElementById('modalHtml').textContent = makeHtml(img);
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('modalCopyUrl').onclick = () => { copy(img.url); showToast('URL copied!'); };
+  document.getElementById('modalCopyHtml').onclick = () => { copy(makeHtml(img)); showToast('HTML copied!'); };
+  document.getElementById('modalDelete').onclick = () => { closeModal(); deleteImg(i); };
+};
+window.closeModal = () => document.getElementById('modal').classList.remove('open');
+document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+
+window.deleteImg = async function(i) {
+  const img = allImages[i];
+  if (!confirm(`Delete "${img.name}"?\nThis cannot be undone.`)) return;
+  try {
+    await deleteObject(img.ref);
+    showToast('🗑 Deleted: ' + img.name);
+    await loadImages();
+  } catch(e) { showToast('Delete failed: ' + e.message, true); }
+};
+
+// ── Search ──
+document.getElementById('searchInput').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  const filtered = q ? allImages.filter(img => img.name.toLowerCase().includes(q)) : allImages;
+  renderGrid(filtered);
+  document.getElementById('countBadge').textContent = q
+    ? `${filtered.length} of ${allImages.length} images`
+    : `${allImages.length} image${allImages.length !== 1 ? 's' : ''} in /${currentFolder}`;
+});
+
+// ── Folder switcher ──
+window.setFolder = function(folder, btn) {
+  currentFolder = folder;
+  document.getElementById('folderInput').value = folder;
+  document.querySelectorAll('.folder-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  loadImages();
+};
+document.getElementById('folderInput').addEventListener('change', function() {
+  currentFolder = this.value.trim() || 'notes-images';
+  document.querySelectorAll('.folder-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.folder === currentFolder);
+  });
+  loadImages();
+});
+
+// ── Helpers ──
+function copy(text) {
+  if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+  else fallbackCopy(text);
+}
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  document.execCommand('copy'); document.body.removeChild(ta);
+}
+function flashBtn(i, cls, label) {
+  const btn = document.querySelector(`#card_${i} .${cls}`);
+  if (!btn) return;
+  const orig = btn.textContent;
+  btn.textContent = label; btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
+  showToast('Copied to clipboard!');
+}
+function formatSize(bytes) {
+  if (!bytes) return '';
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1048576).toFixed(1) + ' MB';
+}
+function esc(s) { return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function showToast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = isErr ? '#ef4444' : '#10b981';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>

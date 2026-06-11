@@ -107,7 +107,8 @@
 
   <!-- GENERAL tabs -->
   <div class="sub-tab-bar" id="bar-general" data-section="general" style="display:none">
-    <button class="sub-tab active" data-tab="g-reports">🚩 Report Questions</button>
+    <button class="sub-tab active" data-tab="g-images">🖼️ Image Manager</button>
+    <button class="sub-tab" data-tab="g-reports">🚩 Report Questions</button>
     <button class="sub-tab" data-tab="g-users">👥 Users</button>
     <button class="sub-tab" data-tab="g-feedback">💬 Feedback</button>
     <button class="sub-tab" data-tab="g-notify">🔔 Notify</button>
@@ -126,7 +127,7 @@
       <iframe src="exams-admin.html" loading="lazy"></iframe>
     </div>
     <div class="frame-wrap" id="frame-t-notes">
-      <iframe src="chapters-admin.html" loading="lazy"></iframe>
+      <iframe src="visual-editor.html" loading="lazy"></iframe>
     </div>
 
     <!-- NON-TECH -->
@@ -140,10 +141,13 @@
       <iframe src="nt-exams-admin.html" loading="lazy"></iframe>
     </div>
     <div class="frame-wrap" id="frame-nt-notes">
-      <iframe src="chapters-admin.html" loading="lazy"></iframe>
+      <iframe src="visual-editor.html" loading="lazy"></iframe>
     </div>
 
     <!-- GENERAL -->
+    <div class="frame-wrap active" id="frame-g-images">
+      <iframe src="image-manager.html" loading="lazy"></iframe>
+    </div>
     <div class="frame-wrap" id="frame-g-reports">
       <iframe src="reports-admin.html" loading="lazy"></iframe>
     </div>
@@ -160,7 +164,7 @@
 
   <script>
     let activeSection = 'tech';
-    let activeTabs = { tech: 't-upload', nontech: 'nt-upload', general: 'g-reports' };
+    let activeTabs = { tech: 't-upload', nontech: 'nt-upload', general: 'g-images' };
 
     function switchSection(section, btn) {
       activeSection = section;

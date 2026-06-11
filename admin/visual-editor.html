@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Visual Chapter Editor — Admin</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── Top bar ── */
+.topbar{background:#1e293b;border-bottom:1px solid #334155;padding:0 16px;display:flex;align-items:center;gap:10px;height:52px;flex-shrink:0;overflow-x:auto}
+.topbar::-webkit-scrollbar{height:0}
+.t-logo{font-weight:800;font-size:14px;color:#f59e0b;white-space:nowrap;margin-right:4px}
+.t-btn{padding:7px 14px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit;display:flex;align-items:center;gap:5px}
+.t-btn:hover{background:#334155;color:#f1f5f9}
+.t-btn.primary{background:#10b981;border-color:#10b981;color:#fff}
+.t-btn.primary:hover{background:#059669}
+.t-btn.danger{border-color:#ef4444;color:#ef4444}
+.t-btn.danger:hover{background:rgba(239,68,68,.1)}
+.t-sep{width:1px;height:28px;background:#334155;flex-shrink:0}
+.t-label{font-size:12px;color:#64748b;white-space:nowrap}
+.chapter-select{background:#0f172a;border:1px solid #334155;color:#f1f5f9;border-radius:8px;padding:6px 10px;font-size:12px;font-family:inherit;outline:none;max-width:220px}
+.chapter-select:focus{border-color:#f59e0b}
+#saveStatus{font-size:12px;color:#64748b;white-space:nowrap}
+#saveStatus.saved{color:#10b981}
+#saveStatus.saving{color:#f59e0b}
+#saveStatus.err{color:#ef4444}
+
+/* ── Main layout ── */
+.editor-layout{flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;gap:0}
+.panel{display:flex;flex-direction:column;overflow:hidden}
+.panel-header{background:#1e293b;border-bottom:1px solid #334155;padding:10px 16px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.panel-title{font-size:13px;font-weight:700;color:#94a3b8}
+.panel-body{flex:1;overflow:hidden;position:relative}
+
+/* Left — source/load panel */
+.left-panel{border-right:1px solid #334155}
+.source-tabs{display:flex;gap:6px}
+.src-tab{padding:5px 12px;border-radius:6px;border:1px solid transparent;background:transparent;color:#64748b;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.src-tab.active{border-color:#3b82f6;color:#3b82f6;background:rgba(59,130,246,.1)}
+.src-pane{display:none;height:100%;flex-direction:column}
+.src-pane.active{display:flex}
+
+/* HTML textarea */
+#htmlInput{width:100%;height:100%;background:#0a0f1e;color:#86efac;border:none;outline:none;padding:16px;font-size:12px;font-family:'Fira Code','Courier New',monospace;line-height:1.6;resize:none}
+
+/* Load from Firestore */
+.load-pane{padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
+.load-pane label{font-size:12px;color:#94a3b8;font-weight:600;margin-bottom:4px;display:block}
+.load-pane select,.load-pane input{background:#0f172a;border:1px solid #334155;color:#f1f5f9;border-radius:8px;padding:8px 12px;font-size:13px;font-family:inherit;outline:none;width:100%}
+.load-pane select:focus,.load-pane input:focus{border-color:#f59e0b}
+.chapter-list{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto}
+.chap-item{padding:10px 14px;background:#1e293b;border:1px solid #334155;border-radius:8px;cursor:pointer;transition:all .15s}
+.chap-item:hover{border-color:#10b981;background:rgba(16,185,129,.06)}
+.chap-item .ci-title{font-size:13px;font-weight:600;color:#f1f5f9}
+.chap-item .ci-meta{font-size:11px;color:#64748b;margin-top:2px}
+
+/* Right — preview panel */
+.preview-wrap{width:100%;height:100%;overflow-y:auto;background:#fff;position:relative}
+.preview-empty{display:flex;align-items:center;justify-content:center;height:100%;color:#64748b;font-size:14px;text-align:center;padding:20px;background:#f8f7f4}
+
+/* Insert image button — injected between elements */
+.insert-img-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;padding:6px 0;cursor:pointer;border:none;
+  background:transparent;font-family:inherit;
+  position:relative;z-index:10;
+}
+.insert-img-btn .iib-line{flex:1;height:1px;background:transparent;transition:background .2s}
+.insert-img-btn .iib-label{
+  background:#3b82f6;color:#fff;font-size:11px;font-weight:700;
+  border-radius:20px;padding:3px 10px;opacity:0;transition:opacity .2s;
+  white-space:nowrap;box-shadow:0 2px 8px rgba(59,130,246,.4);
+}
+.insert-img-btn:hover .iib-line{background:#3b82f6}
+.insert-img-btn:hover .iib-label{opacity:1}
+/* Always visible on touch */
+@media(hover:none){
+  .insert-img-btn .iib-label{opacity:.7}
+  .insert-img-btn .iib-line{background:#e5e7eb}
+}
+
+/* Injected figure styling inside preview */
+.preview-wrap .note-figure{margin:16px 0;text-align:center}
+.preview-wrap .note-figure img{max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.preview-wrap .note-figure figcaption{font-size:12px;color:#888;margin-top:6px;font-style:italic}
+
+/* ═══ IMAGE PICKER MODAL ═══ */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal-box{background:#1e293b;border-radius:16px;width:100%;max-width:720px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.modal-head{padding:14px 18px;border-bottom:1px solid #334155;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-head span{font-size:15px;font-weight:700;color:#f1f5f9}
+.modal-close{background:none;border:none;color:#64748b;font-size:22px;cursor:pointer;line-height:1;padding:2px}
+.modal-close:hover{color:#f1f5f9}
+.modal-tabs{display:flex;gap:6px;padding:12px 16px 0;border-bottom:1px solid #334155;flex-shrink:0}
+.modal-tab{padding:7px 16px;border-radius:8px 8px 0 0;border:1px solid transparent;border-bottom:none;background:transparent;color:#64748b;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.modal-tab.active{color:#3b82f6;border-color:#334155;background:#0f172a}
+.modal-body{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.modal-pane{display:none;flex-direction:column;overflow:hidden;height:100%}
+.modal-pane.active{display:flex}
+
+/* Pick from uploaded */
+.pick-toolbar{padding:12px 16px;display:flex;gap:8px;align-items:center;flex-shrink:0;border-bottom:1px solid #334155}
+.pick-search{flex:1;background:#0f172a;border:1px solid #334155;color:#f1f5f9;border-radius:8px;padding:7px 12px;font-size:13px;font-family:inherit;outline:none}
+.pick-search:focus{border-color:#3b82f6}
+.pick-folder{background:#0f172a;border:1px solid #334155;color:#f1f5f9;border-radius:8px;padding:7px 10px;font-size:12px;font-family:inherit;outline:none}
+.pick-grid{flex:1;overflow-y:auto;padding:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.pick-item{border:2px solid #334155;border-radius:10px;overflow:hidden;cursor:pointer;transition:all .15s;background:#0f172a}
+.pick-item:hover{border-color:#3b82f6;transform:translateY(-2px)}
+.pick-item.selected{border-color:#10b981;box-shadow:0 0 0 2px rgba(16,185,129,.3)}
+.pick-thumb{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.pick-name{font-size:10px;color:#94a3b8;padding:5px 7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pick-loading{text-align:center;padding:40px;color:#64748b;font-size:13px}
+
+/* Upload new tab */
+.upload-new-pane{padding:16px;overflow-y:auto}
+.drop-zone{border:2px dashed #334155;border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:#0f172a;position:relative;margin-bottom:14px}
+.drop-zone:hover,.drop-zone.drag-over{border-color:#3b82f6;background:rgba(59,130,246,.05)}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-zone .dz-icon{font-size:32px;margin-bottom:8px}
+.drop-zone .dz-text{font-size:14px;font-weight:600;color:#94a3b8}
+.drop-zone .dz-sub{font-size:12px;color:#475569;margin-top:4px}
+.up-preview{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.up-preview-item{position:relative}
+.up-preview-item img{width:80px;height:60px;object-fit:cover;border-radius:8px;display:block}
+.up-preview-item .up-remove{position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:11px;cursor:pointer;line-height:18px;text-align:center;padding:0}
+.up-folder-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.up-folder-row label{font-size:12px;color:#94a3b8;white-space:nowrap}
+.up-folder-row input{background:#0f172a;border:1px solid #334155;color:#f1f5f9;border-radius:8px;padding:6px 10px;font-size:12px;font-family:inherit;outline:none;flex:1}
+.up-folder-row input:focus{border-color:#3b82f6}
+.prog-list{display:flex;flex-direction:column;gap:6px}
+.prog-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.prog-bar-wrap{flex:1;background:#334155;border-radius:4px;height:5px;overflow:hidden}
+.prog-bar-fill{height:100%;background:#3b82f6;transition:width .3s}
+.prog-status{font-size:11px;color:#64748b;white-space:nowrap;min-width:40px}
+.prog-status.done{color:#10b981}
+.prog-status.err{color:#ef4444}
+
+/* Caption + confirm row */
+.caption-row{padding:12px 16px;border-top:1px solid #334155;display:flex;flex-direction:column;gap:8px;flex-shrink:0;background:#0f172a}
+.caption-input{background:#1e293b;border:1px solid #334155;color:#f1f5f9;border-radius:8px;padding:8px 12px;font-size:13px;font-family:inherit;outline:none;width:100%}
+.caption-input:focus{border-color:#10b981}
+.caption-actions{display:flex;gap:8px;justify-content:flex-end}
+.cap-btn{padding:8px 20px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.cap-btn.confirm{background:#10b981;color:#fff}
+.cap-btn.confirm:hover{background:#059669}
+.cap-btn.confirm:disabled{background:#334155;color:#64748b;cursor:not-allowed}
+.cap-btn.cancel{background:#334155;color:#94a3b8}
+.cap-btn.cancel:hover{background:#475569}
+
+/* Toast */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#10b981;color:#fff;padding:9px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.3);white-space:nowrap}
+#toast.show{opacity:1}
+
+/* Login gate */
+.login-gate{position:fixed;inset:0;background:linear-gradient(135deg,#1a3a5c,#2c5f8a);display:flex;align-items:center;justify-content:center;z-index:10000}
+.login-card{background:#fff;color:#1a3a5c;padding:28px;border-radius:14px;max-width:320px;width:88%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.login-card h2{font-size:18px;margin-bottom:8px}
+.login-card p{font-size:13px;color:#555;margin-bottom:16px;line-height:1.5}
+.login-card button{background:#1a3a5c;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+
+/* Mobile stacked */
+@media(max-width:768px){
+  .editor-layout{grid-template-columns:1fr;grid-template-rows:45vh 1fr}
+  .left-panel{border-right:none;border-bottom:1px solid #334155}
+}
+</style>
+</head>
+<body>
+
+<!-- Login Gate -->
+<div class="login-gate" id="loginGate" style="display:none">
+  <div class="login-card">
+    <h2>🔐 Login Required</h2>
+    <p>Sign in to edit chapters.</p>
+    <button id="loginBtn">Sign in with Google</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ═══ IMAGE PICKER MODAL ═══ -->
+<div class="modal-bg" id="pickerModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span>🖼️ Select Image</span>
+      <button class="modal-close" onclick="closePicker()">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchPickTab('pick',this)">📂 Uploaded Images</button>
+      <button class="modal-tab" onclick="switchPickTab('upload',this)">⬆️ Upload New</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Pick from existing -->
+      <div class="modal-pane active" id="pane-pick">
+        <div class="pick-toolbar">
+          <input class="pick-search" id="pickSearch" placeholder="🔍 Search images…" oninput="filterPickGrid()">
+          <select class="pick-folder" id="pickFolder" onchange="loadPickImages()">
+            <option value="notes-images">notes-images</option>
+            <option value="civil">civil</option>
+            <option value="nontech">nontech</option>
+            <option value="diagrams">diagrams</option>
+          </select>
+        </div>
+        <div class="pick-grid" id="pickGrid">
+          <div class="pick-loading">Sign in to load images…</div>
+        </div>
+      </div>
+
+      <!-- Upload new -->
+      <div class="modal-pane" id="pane-upload">
+        <div class="upload-new-pane">
+          <div class="drop-zone" id="modalDropZone">
+            <input type="file" id="modalFileInput" accept="image/*" multiple>
+            <div class="dz-icon">📁</div>
+            <div class="dz-text">Click or drag images here</div>
+            <div class="dz-sub">PNG, JPG, WebP, SVG</div>
+          </div>
+          <div class="up-preview" id="upPreview"></div>
+          <div class="up-folder-row">
+            <label>📂 Folder:</label>
+            <input type="text" id="upFolder" value="notes-images" placeholder="folder name">
+          </div>
+          <div class="prog-list" id="progList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Caption + Confirm -->
+    <div class="caption-row">
+      <input class="caption-input" id="captionInput" placeholder="Caption (optional) — e.g. Fig 1.1 — Stress-Strain Curve">
+      <div class="caption-actions">
+        <button class="cap-btn cancel" onclick="closePicker()">Cancel</button>
+        <button class="cap-btn confirm" id="confirmInsert" disabled onclick="confirmImageInsert()">✅ Insert Image</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="topbar">
+  <div class="t-logo">📝 Chapter Editor</div>
+  <div class="t-sep"></div>
+
+  <!-- Source tabs -->
+  <button class="t-btn active" id="tabPaste" onclick="switchSrcTab('paste')">📋 Paste HTML</button>
+  <button class="t-btn" id="tabLoad" onclick="switchSrcTab('load')">☁️ Load Chapter</button>
+  <div class="t-sep"></div>
+
+  <!-- Meta quick fields -->
+  <span class="t-label">Subject:</span>
+  <select id="metaSubject" class="chapter-select" style="width:130px">
+    <option value="history">History</option>
+    <option value="polity">Polity</option>
+    <option value="geography">Geography</option>
+    <option value="general-science">General Science</option>
+    <option value="economy">Economy</option>
+    <option value="engg-mechanics">Engg Mechanics</option>
+    <option value="strength-of-materials">Strength of Materials</option>
+    <option value="fluid-mechanics">Fluid Mechanics</option>
+    <option value="concrete-design">Concrete Design</option>
+    <option value="steel-design">Steel Design</option>
+    <option value="geotech-foundation">Geotech</option>
+    <option value="transportation">Transportation</option>
+    <option value="surveying-geology">Surveying</option>
+    <option value="environmental">Environmental</option>
+    <option value="hydrology">Hydrology</option>
+  </select>
+  <span class="t-label">Ch#:</span>
+  <input id="metaChNo" type="number" min="1" style="width:54px;background:#0f172a;border:1px solid #334155;color:#f1f5f9;border-radius:8px;padding:6px 8px;font-size:12px;outline:none" placeholder="1">
+  <div class="t-sep"></div>
+
+  <button class="t-btn" onclick="renderPreview()">👁 Refresh Preview</button>
+  <button class="t-btn primary" id="saveBtn" onclick="saveChapter()">💾 Save to Firestore</button>
+  <span id="saveStatus"></span>
+</div>
+
+<!-- ═══ EDITOR LAYOUT ═══ -->
+<div class="editor-layout">
+
+  <!-- LEFT — Source -->
+  <div class="panel left-panel">
+    <div class="panel-header">
+      <span class="panel-title">📄 Source</span>
+      <div class="source-tabs">
+        <button class="src-tab active" id="stPaste" onclick="switchSrcTab('paste')">Paste HTML</button>
+        <button class="src-tab" id="stLoad" onclick="switchSrcTab('load')">Load Chapter</button>
+      </div>
+    </div>
+    <div class="panel-body">
+
+      <!-- PASTE pane -->
+      <div class="src-pane active" id="pane-paste">
+        <textarea id="htmlInput" spellcheck="false" placeholder="Paste your chapter HTML here…&#10;&#10;Then click 👁 Refresh Preview to see it on the right.&#10;&#10;Insert image buttons will appear between sections automatically."></textarea>
+      </div>
+
+      <!-- LOAD pane -->
+      <div class="src-pane" id="pane-load">
+        <div class="load-pane">
+          <div>
+            <label>Subject</label>
+            <select id="loadSubject" onchange="loadChapterList()">
+              <option value="history">History</option>
+              <option value="polity">Polity</option>
+              <option value="geography">Geography</option>
+              <option value="general-science">General Science</option>
+              <option value="economy">Economy</option>
+              <option value="engg-mechanics">Engg Mechanics</option>
+              <option value="strength-of-materials">Strength of Materials</option>
+              <option value="fluid-mechanics">Fluid Mechanics</option>
+              <option value="concrete-design">Concrete Design</option>
+              <option value="steel-design">Steel Design</option>
+              <option value="geotech-foundation">Geotech</option>
+              <option value="transportation">Transportation</option>
+              <option value="surveying-geology">Surveying</option>
+              <option value="environmental">Environmental</option>
+              <option value="hydrology">Hydrology</option>
+            </select>
+          </div>
+          <div id="chapterList">
+            <div style="text-align:center;padding:20px;color:#475569;font-size:13px">Select a subject to load chapters</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT — Preview -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">👁 Live Preview — hover between sections to insert images</span>
+    </div>
+    <div class="panel-body">
+      <div class="preview-wrap" id="previewWrap">
+        <div class="preview-empty">
+          <div>
+            <div style="font-size:48px;margin-bottom:12px">📝</div>
+            <div style="font-size:15px;font-weight:600;color:#94a3b8;margin-bottom:6px">Paste HTML on the left</div>
+            <div style="font-size:13px;color:#64748b">Then click 👁 Refresh Preview</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Chapter notes CSS (minimal subset for preview) -->
+<style id="previewStyles">
+  .preview-wrap { padding: 0; }
+  .preview-wrap > .preview-inner { padding: 24px 32px; max-width: 860px; margin: 0 auto; font-family: 'Source Serif 4', Georgia, serif; color: #1c1a16; line-height: 1.75; }
+  .preview-wrap .chapter-banner { background: linear-gradient(135deg,#1a3a5c,#1e5799); color:#fff; border-radius:12px; padding:28px 32px; margin-bottom:28px; }
+  .preview-wrap .chapter-banner h1 { font-size:1.7rem; font-weight:800; margin-bottom:8px; }
+  .preview-wrap h2.section-title { font-size:1.4rem; font-weight:800; color:#1a3a5c; border-bottom:2.5px solid #2e86c1; padding-bottom:6px; margin:28px 0 16px; }
+  .preview-wrap h3.sub-title { font-size:1.1rem; font-weight:700; color:#1a6b3c; padding-left:10px; border-left:4px solid #1a6b3c; margin:18px 0 8px; }
+  .preview-wrap p { font-size:0.93rem; margin-bottom:8px; }
+  .preview-wrap ul,ol { margin:6px 0 10px 20px; }
+  .preview-wrap li { font-size:0.92rem; margin-bottom:3px; }
+  .preview-wrap .exam-box { background:#fff8e1; border-left:4px solid #f59e0b; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; }
+  .preview-wrap .fact-box { background:#e6f7f5; border-left:4px solid #0f766e; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; }
+  .preview-wrap .mnemonic-box { background:#f5f0ff; border:1px dashed #7c3aed; border-radius:8px; padding:12px 16px; margin:14px 0; }
+  .preview-wrap .table-wrap { overflow-x:auto; margin:16px 0; border-radius:8px; border:1px solid #c5d8ec; }
+  .preview-wrap table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+  .preview-wrap thead tr { background:#1a3a5c; color:#fff; }
+  .preview-wrap thead th { padding:8px 12px; text-align:left; }
+  .preview-wrap tbody tr:nth-child(even) { background:#f0f5fb; }
+  .preview-wrap td { padding:7px 12px; border-bottom:1px solid #c5d8ec; vertical-align:top; }
+  .preview-wrap .date { color:#b71c1c; font-weight:600; background:#fce8e8; border-radius:3px; padding:0 4px; }
+  .preview-wrap .name { color:#5b21b6; font-weight:600; }
+  .preview-wrap .term { color:#1e5799; font-weight:600; font-style:italic; }
+  .preview-wrap .fact { color:#0f766e; font-weight:600; }
+  .preview-wrap .section-wrap { margin-bottom:40px; }
+  .preview-wrap .note-figure { margin:16px 0; text-align:center; }
+  .preview-wrap .note-figure img { max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,.15); }
+  .preview-wrap .note-figure figcaption { font-size:12px; color:#888; margin-top:6px; font-style:italic; }
+</style>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll, getMetadata } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+
+const app     = initializeApp(firebaseConfig);
+const auth    = getAuth(app);
+const db      = getFirestore(app);
+const storage = getStorage(app);
+const gp      = new GoogleAuthProvider();
+const ADMIN_EMAIL = '112ce0489@gmail.com';
+
+// ── State ──
+let currentHtml   = '';    // working HTML (with images inserted)
+let insertAnchor  = null;  // DOM node after which to insert
+let insertIndex   = -1;    // position index in preview inner children
+let selectedImgUrl = null;
+let uploadedImgUrl = null;
+let allPickImages  = [];
+let currentChapterId = null;
+
+// ── Auth ──
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, gp); }
+  catch(e) { alert('Sign-in failed: ' + e.message); }
+});
+
+onAuthStateChanged(auth, user => {
+  document.getElementById('loginGate').style.display = (user && user.email === ADMIN_EMAIL) ? 'none' : 'flex';
+  if (user && user.email === ADMIN_EMAIL) loadPickImages();
+});
+
+// ════════════════════════════════════════════════════════
+// PREVIEW
+// ════════════════════════════════════════════════════════
+window.renderPreview = function() {
+  const src = document.getElementById('htmlInput').value.trim();
+  if (!src) return showToast('Paste HTML first', true);
+  currentHtml = src;
+  buildPreview(currentHtml);
+};
+
+function buildPreview(html) {
+  const wrap = document.getElementById('previewWrap');
+  // Create sandboxed inner div
+  wrap.innerHTML = `<div class="preview-inner" id="previewInner">${html}</div>`;
+  injectInsertButtons();
+}
+
+function injectInsertButtons() {
+  const inner = document.getElementById('previewInner');
+  if (!inner) return;
+  const children = Array.from(inner.children);
+
+  // Insert a button after every direct child (section-wrap, p, table-wrap, figure etc.)
+  // Go reverse so indices stay valid
+  children.forEach((child, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'insert-img-btn';
+    btn.dataset.afterIdx = idx;
+    btn.innerHTML = `<span class="iib-line"></span><span class="iib-label">＋ Insert Image Here</span><span class="iib-line"></span>`;
+    btn.addEventListener('click', () => openPicker(child, idx));
+    child.after(btn);
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// IMAGE PICKER
+// ════════════════════════════════════════════════════════
+window.openPicker = function(anchorNode, idx) {
+  insertAnchor  = anchorNode;
+  insertIndex   = idx;
+  selectedImgUrl = null;
+  uploadedImgUrl = null;
+  document.getElementById('captionInput').value = '';
+  document.getElementById('confirmInsert').disabled = true;
+  document.getElementById('pickSearch').value = '';
+  document.getElementById('pickerModal').classList.add('open');
+  switchPickTab('pick', document.querySelector('.modal-tab'));
+  filterPickGrid();
+};
+
+window.closePicker = function() {
+  document.getElementById('pickerModal').classList.remove('open');
+  selectedImgUrl = null;
+  uploadedImgUrl = null;
+};
+
+window.switchPickTab = function(tab, btn) {
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  else document.querySelectorAll('.modal-tab')[tab === 'pick' ? 0 : 1].classList.add('active');
+  document.getElementById('pane-pick').classList.toggle('active', tab === 'pick');
+  document.getElementById('pane-upload').classList.toggle('active', tab === 'upload');
+};
+
+// ── Load images from storage ──
+window.loadPickImages = async function() {
+  const folder = document.getElementById('pickFolder').value;
+  const grid = document.getElementById('pickGrid');
+  grid.innerHTML = '<div class="pick-loading">⏳ Loading…</div>';
+  try {
+    const result = await listAll(ref(storage, folder));
+    const items = await Promise.all(result.items.map(async item => {
+      try {
+        const url = await getDownloadURL(item);
+        return { name: item.name, url };
+      } catch { return null; }
+    }));
+    allPickImages = items.filter(Boolean);
+    filterPickGrid();
+  } catch(e) {
+    grid.innerHTML = `<div class="pick-loading">⚠️ ${e.message}</div>`;
+  }
+};
+
+window.filterPickGrid = function() {
+  const q = (document.getElementById('pickSearch')?.value || '').toLowerCase();
+  const filtered = q ? allPickImages.filter(i => i.name.toLowerCase().includes(q)) : allPickImages;
+  const grid = document.getElementById('pickGrid');
+  if (!filtered.length) { grid.innerHTML = '<div class="pick-loading">No images found</div>'; return; }
+  grid.innerHTML = filtered.map(img => `
+    <div class="pick-item" onclick="selectPickImage('${escAttr(img.url)}', this)" title="${escAttr(img.name)}">
+      <img class="pick-thumb" src="${escAttr(img.url)}" alt="${escAttr(img.name)}" loading="lazy">
+      <div class="pick-name">${esc(img.name)}</div>
+    </div>`).join('');
+};
+
+window.selectPickImage = function(url, el) {
+  document.querySelectorAll('.pick-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedImgUrl = url;
+  uploadedImgUrl = null;
+  document.getElementById('confirmInsert').disabled = false;
+};
+
+// ── Upload new image ──
+const modalDZ  = document.getElementById('modalDropZone');
+const modalFI  = document.getElementById('modalFileInput');
+let pendingFiles = [];
+
+modalFI.addEventListener('change', () => handleNewFiles(Array.from(modalFI.files)));
+modalDZ.addEventListener('dragover', e => { e.preventDefault(); modalDZ.classList.add('drag-over'); });
+modalDZ.addEventListener('dragleave', () => modalDZ.classList.remove('drag-over'));
+modalDZ.addEventListener('drop', e => {
+  e.preventDefault(); modalDZ.classList.remove('drag-over');
+  handleNewFiles(Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')));
+});
+
+function handleNewFiles(files) {
+  if (!files.length) return;
+  pendingFiles = files;
+  const prev = document.getElementById('upPreview');
+  prev.innerHTML = '';
+  files.forEach((f, i) => {
+    const url = URL.createObjectURL(f);
+    const item = document.createElement('div');
+    item.className = 'up-preview-item';
+    item.innerHTML = `<img src="${url}" alt=""><button class="up-remove" onclick="removeFile(${i})">✕</button>`;
+    prev.appendChild(item);
+  });
+  // Auto upload
+  uploadNewImages(files);
+}
+
+window.removeFile = function(i) { pendingFiles.splice(i, 1); handleNewFiles(pendingFiles); };
+
+function uploadNewImages(files) {
+  const folder = document.getElementById('upFolder').value.trim() || 'notes-images';
+  const list = document.getElementById('progList');
+  list.innerHTML = '';
+  files.forEach(file => {
+    const path = `${folder}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+    const task = uploadBytesResumable(ref(storage, path), file);
+    const row = document.createElement('div');
+    row.className = 'prog-row';
+    row.innerHTML = `<span style="font-size:11px;color:#94a3b8;flex:0 0 120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${file.name}</span>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:0%"></div></div>
+      <span class="prog-status">0%</span>`;
+    list.appendChild(row);
+    const bar  = row.querySelector('.prog-bar-fill');
+    const stat = row.querySelector('.prog-status');
+
+    task.on('state_changed',
+      s => { const p = Math.round(s.bytesTransferred/s.totalBytes*100); bar.style.width=p+'%'; stat.textContent=p+'%'; },
+      err => { stat.textContent='❌'; stat.classList.add('err'); },
+      async () => {
+        stat.textContent = '✅'; stat.classList.add('done'); bar.style.width='100%';
+        const url = await getDownloadURL(task.snapshot.ref);
+        uploadedImgUrl = url;
+        selectedImgUrl = url;
+        document.getElementById('confirmInsert').disabled = false;
+        showToast('✅ Uploaded! Now click Insert Image.');
+        // Reload pick grid
+        await loadPickImages();
+      }
+    );
+  });
+}
+
+// ── Confirm insert ──
+window.confirmImageInsert = function() {
+  const url     = selectedImgUrl || uploadedImgUrl;
+  const caption = document.getElementById('captionInput').value.trim();
+  if (!url) return;
+
+  const figure = document.createElement('figure');
+  figure.className = 'note-figure';
+  figure.innerHTML = `<img src="${url}" alt="${esc(caption || 'Image')}" style="max-width:100%;border-radius:8px;">
+    ${caption ? `<figcaption>${esc(caption)}</figcaption>` : ''}`;
+
+  // Insert after the anchor node in preview
+  if (insertAnchor && insertAnchor.parentNode) {
+    insertAnchor.after(figure);
+    // Re-inject insert buttons after the new figure too
+    const newBtn = document.createElement('button');
+    newBtn.className = 'insert-img-btn';
+    newBtn.innerHTML = `<span class="iib-line"></span><span class="iib-label">＋ Insert Image Here</span><span class="iib-line"></span>`;
+    newBtn.addEventListener('click', () => openPicker(figure, -1));
+    figure.after(newBtn);
+  }
+
+  // Sync currentHtml from preview
+  syncHtmlFromPreview();
+  closePicker();
+  showToast('✅ Image inserted!');
+};
+
+function syncHtmlFromPreview() {
+  const inner = document.getElementById('previewInner');
+  if (!inner) return;
+  // Clone and strip insert-img-btn buttons
+  const clone = inner.cloneNode(true);
+  clone.querySelectorAll('.insert-img-btn').forEach(b => b.remove());
+  currentHtml = clone.innerHTML;
+  // Also sync back to textarea
+  document.getElementById('htmlInput').value = currentHtml;
+}
+
+// ════════════════════════════════════════════════════════
+// LOAD CHAPTER FROM FIRESTORE
+// ════════════════════════════════════════════════════════
+window.loadChapterList = async function() {
+  const subject = document.getElementById('loadSubject').value;
+  const listEl  = document.getElementById('chapterList');
+  listEl.innerHTML = '<div style="text-align:center;padding:16px;color:#64748b;font-size:13px">⏳ Loading…</div>';
+  try {
+    const q = query(collection(db,'chapters'), where('subject','==',subject));
+    const snap = await getDocs(q);
+    const chapters = [];
+    snap.forEach(d => chapters.push({ id: d.id, ...d.data() }));
+    chapters.sort((a,b) => (a.chapter_no||0)-(b.chapter_no||0));
+    if (!chapters.length) {
+      listEl.innerHTML = '<div style="text-align:center;padding:16px;color:#475569;font-size:13px">No chapters found</div>';
+      return;
+    }
+    listEl.innerHTML = `<div class="chapter-list">${chapters.map(c => `
+      <div class="chap-item" onclick="loadChapterById('${escAttr(c.id)}','${escAttr(c.subject)}',${c.chapter_no||1})">
+        <div class="ci-title">Ch ${c.chapter_no||'?'} — ${esc(c.title||c.id)}</div>
+        <div class="ci-meta">${esc(c.id)} · ${((c.body_html||'').length/1024).toFixed(1)} KB</div>
+      </div>`).join('')}
+    </div>`;
+  } catch(e) {
+    listEl.innerHTML = `<div style="padding:16px;color:#ef4444;font-size:13px">⚠️ ${e.message}</div>`;
+  }
+};
+
+window.loadChapterById = async function(id, subject, chNo) {
+  try {
+    const snap = await getDoc(doc(db,'chapters',id));
+    if (!snap.exists()) { showToast('Chapter not found', true); return; }
+    const data = snap.data();
+    currentChapterId = id;
+    document.getElementById('htmlInput').value = data.body_html || '';
+    document.getElementById('metaSubject').value = subject;
+    document.getElementById('metaChNo').value = chNo;
+    currentHtml = data.body_html || '';
+    buildPreview(currentHtml);
+    showToast(`✅ Loaded: ${data.title || id}`);
+    switchSrcTab('paste'); // Switch to paste view to show HTML
+  } catch(e) {
+    showToast('Load error: ' + e.message, true);
+  }
+};
+
+// ════════════════════════════════════════════════════════
+// SAVE TO FIRESTORE
+// ════════════════════════════════════════════════════════
+window.saveChapter = async function() {
+  syncHtmlFromPreview();
+  if (!currentHtml.trim()) { showToast('Nothing to save', true); return; }
+  const subject  = document.getElementById('metaSubject').value;
+  const chNo     = parseInt(document.getElementById('metaChNo').value) || 1;
+  const docId    = currentChapterId || `${subject}_ch${String(chNo).padStart(2,'0')}`;
+  const stat     = document.getElementById('saveStatus');
+
+  stat.textContent = '💾 Saving…'; stat.className = 'saving';
+  document.getElementById('saveBtn').disabled = true;
+  try {
+    const sectionCount = (currentHtml.match(/class=["'][^"']*section-wrap[^"']*["']/g)||[]).length;
+    await setDoc(doc(db,'chapters',docId), {
+      subject, chapter_no: chNo,
+      body_html: currentHtml,
+      section_count: sectionCount,
+      updated_at: serverTimestamp(),
+    }, { merge: true });
+    currentChapterId = docId;
+    stat.textContent = '✅ Saved'; stat.className = 'saved';
+    showToast('✅ Saved: ' + docId);
+  } catch(e) {
+    stat.textContent = '❌ Error'; stat.className = 'err';
+    showToast('Save failed: ' + e.message, true);
+  } finally {
+    document.getElementById('saveBtn').disabled = false;
+  }
+};
+
+// ════════════════════════════════════════════════════════
+// UI HELPERS
+// ════════════════════════════════════════════════════════
+window.switchSrcTab = function(tab) {
+  document.getElementById('pane-paste').classList.toggle('active', tab==='paste');
+  document.getElementById('pane-load').classList.toggle('active', tab==='load');
+  document.getElementById('tabPaste').classList.toggle('active', tab==='paste');
+  document.getElementById('tabLoad').classList.toggle('active',  tab==='load');
+  document.getElementById('stPaste').classList.toggle('active',  tab==='paste');
+  document.getElementById('stLoad').classList.toggle('active',   tab==='load');
+};
+
+function showToast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = isErr ? '#ef4444' : '#10b981';
+  t.classList.add('show');
+  clearTimeout(t._to);
+  t._to = setTimeout(() => t.classList.remove('show'), 2500);
+}
+function esc(s) { return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escAttr(s) { return String(s).replace(/["']/g,c=>c==='"'?'&quot;':'&#39;'); }
+
+// Auto-load images when modal opens
+document.getElementById('pickerModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closePicker();
+});
+</script>
+
+</body>
+</html>
