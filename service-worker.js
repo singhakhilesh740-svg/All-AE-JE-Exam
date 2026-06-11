@@ -1,5 +1,5 @@
-// service-worker.js — PWA caching v44-topbar-fullscreen
-const CACHE_NAME = 'ae-civil-v44-topbar';
+// service-worker.js — PWA caching v45-uniform-whitebg
+const CACHE_NAME = 'ae-civil-v45-uniform';
 const STATIC_ASSETS = [
   './',
   './index.html',
