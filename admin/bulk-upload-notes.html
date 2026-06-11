@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Bulk Upload Notes — Admin</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;padding:20px 20px 60px}
+
+h2{color:#10b981;font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sub{color:#64748b;font-size:13px;margin-bottom:20px}
+
+/* ── Drop zone ── */
+.drop-zone{
+  border:2px dashed #334155;border-radius:14px;
+  padding:48px 24px;text-align:center;
+  background:#1e293b;cursor:pointer;
+  transition:all .2s;position:relative;
+  margin-bottom:16px;
+}
+.drop-zone.drag-over{border-color:#10b981;background:rgba(16,185,129,.07);transform:scale(1.01)}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.dz-icon{font-size:48px;margin-bottom:12px}
+.dz-title{font-size:18px;font-weight:700;color:#f1f5f9;margin-bottom:6px}
+.dz-sub{font-size:13px;color:#64748b}
+.dz-hint{margin-top:10px;font-size:12px;color:#475569;background:#0f172a;border-radius:8px;padding:8px 16px;display:inline-block}
+
+/* ── Stats bar ── */
+.stats-bar{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  background:#1e293b;border:1px solid #334155;border-radius:10px;
+  padding:12px 16px;margin-bottom:16px;
+}
+.stat-item{display:flex;align-items:center;gap:6px;font-size:13px}
+.stat-num{font-weight:800;font-size:16px}
+.stat-num.green{color:#10b981}
+.stat-num.amber{color:#f59e0b}
+.stat-num.red{color:#ef4444}
+.stat-num.blue{color:#3b82f6}
+
+/* ── Action bar ── */
+.action-bar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  margin-bottom:16px;
+}
+.a-btn{
+  padding:9px 18px;border-radius:9px;border:1px solid #334155;
+  background:transparent;color:#94a3b8;font-size:13px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all .15s;
+  display:flex;align-items:center;gap:5px;
+}
+.a-btn:hover{background:#334155;color:#f1f5f9}
+.a-btn.primary{background:#10b981;border-color:#10b981;color:#fff}
+.a-btn.primary:hover{background:#059669}
+.a-btn.primary:disabled{background:#334155;border-color:#334155;color:#475569;cursor:not-allowed}
+.a-btn.danger{border-color:#ef4444;color:#ef4444}
+.a-btn.danger:hover{background:rgba(239,68,68,.1)}
+.filter-sel{background:#1e293b;border:1px solid #334155;color:#f1f5f9;border-radius:8px;padding:8px 12px;font-size:13px;font-family:inherit;outline:none;margin-left:auto}
+.filter-sel:focus{border-color:#10b981}
+
+/* ── File list ── */
+.file-list{display:flex;flex-direction:column;gap:8px}
+
+.file-card{
+  background:#1e293b;border:1px solid #334155;border-radius:11px;
+  padding:14px 16px;transition:border-color .15s;
+}
+.file-card.matched  {border-left:3px solid #10b981}
+.file-card.review   {border-left:3px solid #f59e0b}
+.file-card.duplicate{border-left:3px solid #3b82f6}
+.file-card.error    {border-left:3px solid #ef4444}
+.file-card.uploading{border-left:3px solid #a78bfa;opacity:.8}
+.file-card.done     {border-left:3px solid #10b981;opacity:.6}
+
+.fc-top{display:flex;align-items:flex-start;gap:10px}
+.fc-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.fc-info{flex:1;min-width:0}
+.fc-filename{font-size:12px;color:#64748b;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fc-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.fc-title{font-size:14px;font-weight:700;color:#f1f5f9}
+.fc-badge{
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;
+  text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;
+}
+.fc-badge.matched  {background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+.fc-badge.review   {background:rgba(245,158,11,.15);color:#f59e0b;border:1px solid rgba(245,158,11,.3)}
+.fc-badge.duplicate{background:rgba(59,130,246,.15);color:#3b82f6;border:1px solid rgba(59,130,246,.3)}
+.fc-badge.error    {background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.3)}
+.fc-badge.done     {background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+
+.fc-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:#64748b}
+.fc-meta span{display:flex;align-items:center;gap:3px}
+.fc-meta .hl{color:#94a3b8;font-weight:600}
+
+/* Editable fields */
+.fc-edit-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.fc-input{
+  background:#0f172a;border:1px solid #334155;color:#f1f5f9;
+  border-radius:7px;padding:6px 10px;font-size:12px;font-family:inherit;
+  outline:none;transition:border-color .15s;
+}
+.fc-input:focus{border-color:#10b981}
+.fc-input.title-input{flex:1;min-width:200px}
+.fc-input.subj-sel{width:170px}
+.fc-input.chno-input{width:60px}
+
+/* Progress bar */
+.fc-progress{margin-top:10px;display:none}
+.fc-prog-wrap{background:#0f172a;border-radius:4px;height:4px;overflow:hidden}
+.fc-prog-fill{height:100%;background:#10b981;border-radius:4px;transition:width .3s}
+.fc-prog-text{font-size:11px;color:#64748b;margin-top:4px}
+
+/* Remove btn */
+.fc-remove{background:none;border:none;color:#475569;cursor:pointer;padding:4px;font-size:16px;line-height:1;flex-shrink:0;transition:color .15s}
+.fc-remove:hover{color:#ef4444}
+
+/* ── Upload log ── */
+.upload-log{
+  background:#0a0f1e;border:1px solid #334155;border-radius:10px;
+  padding:14px 16px;font-size:12px;font-family:'Fira Code','Courier New',monospace;
+  line-height:1.7;max-height:200px;overflow-y:auto;
+  white-space:pre-wrap;display:none;margin-top:16px;
+}
+.upload-log .ok  {color:#10b981}
+.upload-log .warn{color:#f59e0b}
+.upload-log .err {color:#ef4444}
+.upload-log .info{color:#64748b}
+
+/* Overall progress */
+.overall-prog{
+  background:#1e293b;border:1px solid #334155;border-radius:10px;
+  padding:14px 16px;margin-top:16px;display:none;
+}
+.op-label{font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;display:flex;justify-content:space-between}
+.op-bar-wrap{background:#0f172a;border-radius:6px;height:8px;overflow:hidden}
+.op-bar-fill{height:100%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:6px;transition:width .3s}
+
+/* Empty state */
+.empty-state{text-align:center;padding:40px;color:#475569;font-size:13px;display:none}
+.empty-state.show{display:block}
+
+/* Toast */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#10b981;color:#fff;padding:9px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+#toast.show{opacity:1}
+#toast.err{background:#ef4444}
+
+/* Login gate */
+.login-gate{position:fixed;inset:0;background:linear-gradient(135deg,#1a3a5c,#2c5f8a);display:flex;align-items:center;justify-content:center;z-index:10000}
+.login-card{background:#fff;color:#1a3a5c;padding:28px;border-radius:14px;max-width:320px;width:88%;text-align:center}
+.login-card h2{font-size:18px;margin-bottom:8px}
+.login-card p{font-size:13px;color:#555;margin-bottom:16px;line-height:1.5}
+.login-card button{background:#1a3a5c;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%}
+
+@media(max-width:600px){
+  .fc-edit-row{flex-direction:column}
+  .fc-input.title-input,.fc-input.subj-sel{width:100%}
+  .action-bar{flex-wrap:wrap}
+  .filter-sel{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="login-gate" id="loginGate" style="display:none">
+  <div class="login-card">
+    <h2>🔐 Login Required</h2>
+    <p>Sign in to upload notes.</p>
+    <button id="loginBtn">Sign in with Google</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<h2>📦 Bulk Upload Notes</h2>
+<p class="sub" id="pageSubTitle">Drop multiple HTML chapter files — auto-detected and ready to upload</p>
+
+<!-- Drop Zone -->
+<div class="drop-zone" id="dropZone">
+  <input type="file" id="fileInput" accept=".html,.htm" multiple>
+  <div class="dz-icon">📂</div>
+  <div class="dz-title">Drop HTML files here</div>
+  <div class="dz-sub">or click to browse — multiple files supported</div>
+  <div class="dz-hint">💡 Files are auto-detected: subject, chapter number, title</div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar" id="statsBar" style="display:none">
+  <div class="stat-item"><span class="stat-num blue" id="statTotal">0</span>&nbsp;files</div>
+  <div class="stat-item">✅ <span class="stat-num green" id="statMatched">0</span>&nbsp;matched</div>
+  <div class="stat-item">⚠️ <span class="stat-num amber" id="statReview">0</span>&nbsp;need review</div>
+  <div class="stat-item">🔵 <span class="stat-num blue" id="statDuplicate">0</span>&nbsp;duplicates</div>
+  <div class="stat-item">❌ <span class="stat-num red" id="statError">0</span>&nbsp;errors</div>
+</div>
+
+<!-- Action bar -->
+<div class="action-bar" id="actionBar" style="display:none">
+  <button class="a-btn primary" id="uploadAllBtn" onclick="uploadAll()">⬆️ Upload All</button>
+  <button class="a-btn" onclick="uploadMatched()">✅ Upload Matched Only</button>
+  <button class="a-btn danger" onclick="clearAll()">🗑 Clear All</button>
+  <select class="filter-sel" id="filterSel" onchange="applyFilter()">
+    <option value="all">All Files</option>
+    <option value="matched">Matched Only</option>
+    <option value="review">Needs Review</option>
+    <option value="duplicate">Duplicates</option>
+  </select>
+</div>
+
+<!-- File list -->
+<div class="file-list" id="fileList"></div>
+<div class="empty-state" id="emptyState">No files match the filter.</div>
+
+<!-- Overall progress -->
+<div class="overall-prog" id="overallProg">
+  <div class="op-label">
+    <span id="opLabel">Uploading…</span>
+    <span id="opPct">0%</span>
+  </div>
+  <div class="op-bar-wrap"><div class="op-bar-fill" id="opBar" style="width:0%"></div></div>
+</div>
+
+<!-- Upload log -->
+<pre class="upload-log" id="uploadLog"></pre>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJi1yjBwojb1cqcTdMwa53Rsb0Yzq7rMI",
+  authDomain: "ae-exam-app.firebaseapp.com",
+  projectId: "ae-exam-app",
+  storageBucket: "ae-exam-app.firebasestorage.app",
+  messagingSenderId: "101353507688",
+  appId: "1:101353507688:web:82b31f2d6096387d7aa4dd"
+};
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const gp   = new GoogleAuthProvider();
+const ADMIN_EMAIL = '112ce0489@gmail.com';
+
+// Section filter from URL param (tech/nontech/all)
+const params  = new URLSearchParams(window.location.search);
+const section = params.get('section') || 'all';
+
+// ════ SYLLABUS (full list — copied from chapters-admin) ════
+const SYLLABUS = [
+  {no:1, subject:'history',title:'Prehistoric and Stone Age',series:'History · Ancient India · GS Notes'},
+  {no:2, subject:'history',title:'Indus Valley Civilization',series:'History · Ancient India · GS Notes'},
+  {no:3, subject:'history',title:'Vedic Period',series:'History · Ancient India · GS Notes'},
+  {no:4, subject:'history',title:'Mahajanapadas and New Religions',series:'History · Ancient India · GS Notes'},
+  {no:5, subject:'history',title:'Maurya Empire',series:'History · Ancient India · GS Notes'},
+  {no:6, subject:'history',title:'Post-Mauryan Kingdoms',series:'History · Ancient India · GS Notes'},
+  {no:7, subject:'history',title:'Gupta Empire — Golden Age',series:'History · Ancient India · GS Notes'},
+  {no:8, subject:'history',title:'Post-Gupta Period',series:'History · Ancient India · GS Notes'},
+  {no:9, subject:'history',title:'Arab Invasion and Early Battles',series:'History · Medieval India · GS Notes'},
+  {no:10,subject:'history',title:'Slave Dynasty (1206–1290)',series:'History · Medieval India · GS Notes'},
+  {no:11,subject:'history',title:'Khilji Dynasty (1290–1320)',series:'History · Medieval India · GS Notes'},
+  {no:12,subject:'history',title:'Tughlaq Dynasty (1320–1414)',series:'History · Medieval India · GS Notes'},
+  {no:13,subject:'history',title:'Later Sultanate and Vijayanagara',series:'History · Medieval India · GS Notes'},
+  {no:14,subject:'history',title:'Bhakti and Sufi Movements',series:'History · Medieval India · GS Notes'},
+  {no:15,subject:'history',title:'Mughals — Babur to Akbar',series:'History · Medieval India · GS Notes'},
+  {no:16,subject:'history',title:'Mughals — Jahangir to Decline',series:'History · Medieval India · GS Notes'},
+  {no:17,subject:'history',title:'Maratha Empire and Peshwas',series:'History · Medieval India · GS Notes'},
+  {no:18,subject:'history',title:'European Companies in India',series:'History · Modern India · GS Notes'},
+  {no:19,subject:'history',title:'British Expansion and Wars',series:'History · Modern India · GS Notes'},
+  {no:20,subject:'history',title:'British Policies and Acts',series:'History · Modern India · GS Notes'},
+  {no:21,subject:'history',title:'Social Reforms and Economic Impact',series:'History · Modern India · GS Notes'},
+  {no:22,subject:'history',title:'Revolt of 1857',series:'History · Modern India · GS Notes'},
+  {no:23,subject:'history',title:'Moderates and Early INC',series:'History · Freedom Struggle · GS Notes'},
+  {no:24,subject:'history',title:'Extremists and Swadeshi Movement',series:'History · Freedom Struggle · GS Notes'},
+  {no:25,subject:'history',title:'Gandhian Era — First Phase',series:'History · Freedom Struggle · GS Notes'},
+  {no:26,subject:'history',title:'Civil Disobedience and Salt March',series:'History · Freedom Struggle · GS Notes'},
+  {no:27,subject:'history',title:'Quit India and Independence',series:'History · Freedom Struggle · GS Notes'},
+  {no:28,subject:'history',title:'Revolutionary Nationalism',series:'History · Freedom Struggle · GS Notes'},
+  {no:29,subject:'history',title:'Peasant and Workers Movements',series:'History · Freedom Struggle · GS Notes'},
+  {no:30,subject:'history',title:'Women in Freedom Struggle',series:'History · Freedom Struggle · GS Notes'},
+  {no:31,subject:'history',title:'Integration of Princely States',series:'History · Post-Independence · GS Notes'},
+  {no:32,subject:'history',title:'Constitution and First Government',series:'History · Post-Independence · GS Notes'},
+  {no:33,subject:'history',title:'Economy and Five Year Plans',series:'History · Post-Independence · GS Notes'},
+  {no:34,subject:'history',title:'Wars and Foreign Policy',series:'History · Post-Independence · GS Notes'},
+  {no:35,subject:'history',title:'Political History',series:'History · Post-Independence · GS Notes'},
+  {no:36,subject:'history',title:'Architecture and Temple Styles',series:'History · Culture · GS Notes'},
+  {no:37,subject:'history',title:'Painting Traditions',series:'History · Culture · GS Notes'},
+  {no:38,subject:'history',title:'Dance and Music',series:'History · Culture · GS Notes'},
+  {no:39,subject:'history',title:'Literature',series:'History · Culture · GS Notes'},
+  {no:40,subject:'history',title:'UNESCO Sites and GI Tags',series:'History · Culture · GS Notes'},
+  {no:1, subject:'polity', title:'Making of the Constitution',series:'Polity · Constitution · GS Notes'},
+  {no:2, subject:'polity', title:'Preamble',series:'Polity · Constitution · GS Notes'},
+  {no:3, subject:'polity', title:'Salient Features',series:'Polity · Constitution · GS Notes'},
+  {no:4, subject:'polity', title:'Borrowed Features',series:'Polity · Constitution · GS Notes'},
+  {no:5, subject:'polity', title:'Schedules and Parts',series:'Polity · Constitution · GS Notes'},
+  {no:6, subject:'polity', title:'Six Fundamental Rights — Overview',series:'Polity · Fundamental Rights · GS Notes'},
+  {no:7, subject:'polity', title:'Right to Equality (Art. 14–18)',series:'Polity · Fundamental Rights · GS Notes'},
+  {no:8, subject:'polity', title:'Right to Freedom (Art. 19–22)',series:'Polity · Fundamental Rights · GS Notes'},
+  {no:9, subject:'polity', title:'Right Against Exploitation (Art. 23–24)',series:'Polity · Fundamental Rights · GS Notes'},
+  {no:10,subject:'polity', title:'Right to Freedom of Religion (Art. 25–28)',series:'Polity · Fundamental Rights · GS Notes'},
+  {no:11,subject:'polity', title:'Cultural and Educational Rights (Art. 29–30)',series:'Polity · Fundamental Rights · GS Notes'},
+  {no:12,subject:'polity', title:'Right to Constitutional Remedies (Art. 32)',series:'Polity · Fundamental Rights · GS Notes'},
+  {no:13,subject:'polity', title:'Five Constitutional Writs',series:'Polity · Fundamental Rights · GS Notes'},
+  {no:14,subject:'polity', title:'Nature and Classification of DPSP',series:'Polity · DPSP · GS Notes'},
+  {no:15,subject:'polity', title:'Key DPSP Articles',series:'Polity · DPSP · GS Notes'},
+  {no:16,subject:'polity', title:'Fundamental Duties (Art. 51A)',series:'Polity · DPSP · GS Notes'},
+  {no:17,subject:'polity', title:'FR vs DPSP — Conflict and Harmony',series:'Polity · DPSP · GS Notes'},
+  {no:18,subject:'polity', title:'Composition of Parliament',series:'Polity · Parliament · GS Notes'},
+  {no:19,subject:'polity', title:'Lok Sabha — Key Facts',series:'Polity · Parliament · GS Notes'},
+  {no:20,subject:'polity', title:'Rajya Sabha — Key Facts',series:'Polity · Parliament · GS Notes'},
+  {no:21,subject:'polity', title:'Parliamentary Sessions and Procedures',series:'Polity · Parliament · GS Notes'},
+  {no:22,subject:'polity', title:'Types of Bills and Legislation',series:'Polity · Parliament · GS Notes'},
+  {no:23,subject:'polity', title:'Special Powers and Committees',series:'Polity · Parliament · GS Notes'},
+  {no:24,subject:'polity', title:'President of India',series:'Polity · Executive · GS Notes'},
+  {no:25,subject:'polity', title:'Vice President',series:'Polity · Executive · GS Notes'},
+  {no:26,subject:'polity', title:'Prime Minister and Council of Ministers',series:'Polity · Executive · GS Notes'},
+  {no:27,subject:'polity', title:'Governor of States',series:'Polity · Executive · GS Notes'},
+  {no:28,subject:'polity', title:'Supreme Court — Structure and Jurisdiction',series:'Polity · Judiciary · GS Notes'},
+  {no:29,subject:'polity', title:'High Courts',series:'Polity · Judiciary · GS Notes'},
+  {no:30,subject:'polity', title:'Key Judicial Doctrines',series:'Polity · Judiciary · GS Notes'},
+  {no:31,subject:'polity', title:'PIL and Legal Reforms',series:'Polity · Judiciary · GS Notes'},
+  {no:32,subject:'polity', title:'Federal Nature of India',series:'Polity · Federalism · GS Notes'},
+  {no:33,subject:'polity', title:'Three Lists — 7th Schedule',series:'Polity · Federalism · GS Notes'},
+  {no:34,subject:'polity', title:'Centre-State Relations',series:'Polity · Federalism · GS Notes'},
+  {no:35,subject:'polity', title:'Finance Commission and GST',series:'Polity · Federalism · GS Notes'},
+  {no:36,subject:'polity', title:'Election Commission of India',series:'Polity · Elections · GS Notes'},
+  {no:37,subject:'polity', title:'Comptroller and Auditor General (CAG)',series:'Polity · Elections · GS Notes'},
+  {no:38,subject:'polity', title:'UPSC and State PSCs',series:'Polity · Elections · GS Notes'},
+  {no:39,subject:'polity', title:'Other Constitutional Bodies',series:'Polity · Elections · GS Notes'},
+  {no:40,subject:'polity', title:'Amendment Procedure (Art. 368)',series:'Polity · Amendments · GS Notes'},
+  {no:41,subject:'polity', title:'Key Amendments — Must Know',series:'Polity · Amendments · GS Notes'},
+  {no:42,subject:'polity', title:'Memory Tricks for Amendments',series:'Polity · Amendments · GS Notes'},
+  {no:43,subject:'polity', title:'National Emergency (Art. 352)',series:'Polity · Emergency · GS Notes'},
+  {no:44,subject:'polity', title:"President's Rule (Art. 356)",series:'Polity · Emergency · GS Notes'},
+  {no:45,subject:'polity', title:'Financial Emergency (Art. 360)',series:'Polity · Emergency · GS Notes'},
+  {no:46,subject:'polity', title:'Comparison of Three Emergencies',series:'Polity · Emergency · GS Notes'},
+  {no:1, subject:'geography',title:'Himalayan Mountains',series:'Geography · Physical · GS Notes'},
+  {no:2, subject:'geography',title:'Peninsular Plateau and Deccan',series:'Geography · Physical · GS Notes'},
+  {no:3, subject:'geography',title:'Northern Plains and Thar Desert',series:'Geography · Physical · GS Notes'},
+  {no:4, subject:'geography',title:'Coastal Plains and Islands',series:'Geography · Physical · GS Notes'},
+  {no:5, subject:'geography',title:'Monsoon — Mechanism and Types',series:'Geography · Climate · GS Notes'},
+  {no:6, subject:'geography',title:'Four Seasons of India',series:'Geography · Climate · GS Notes'},
+  {no:7, subject:'geography',title:'Rainfall Distribution',series:'Geography · Climate · GS Notes'},
+  {no:8, subject:'geography',title:'Cyclones and Climate Zones',series:'Geography · Climate · GS Notes'},
+  {no:9, subject:'geography',title:'Himalayan Rivers',series:'Geography · Rivers · GS Notes'},
+  {no:10,subject:'geography',title:'Peninsular Rivers',series:'Geography · Rivers · GS Notes'},
+  {no:11,subject:'geography',title:'Important Lakes of India',series:'Geography · Rivers · GS Notes'},
+  {no:12,subject:'geography',title:'Waterfalls and Dams',series:'Geography · Rivers · GS Notes'},
+  {no:13,subject:'geography',title:'8 Types of Soils in India',series:'Geography · Soils · GS Notes'},
+  {no:14,subject:'geography',title:'Natural Vegetation and Forest Types',series:'Geography · Soils · GS Notes'},
+  {no:15,subject:'geography',title:'Coal and Petroleum',series:'Geography · Resources · GS Notes'},
+  {no:16,subject:'geography',title:'Iron Ore and Key Minerals',series:'Geography · Resources · GS Notes'},
+  {no:17,subject:'geography',title:'Power Resources',series:'Geography · Resources · GS Notes'},
+  {no:18,subject:'geography',title:'Agricultural Seasons and Major Crops',series:'Geography · Agriculture · GS Notes'},
+  {no:19,subject:'geography',title:'Irrigation Systems',series:'Geography · Agriculture · GS Notes'},
+  {no:20,subject:'geography',title:'Agricultural Revolutions in India',series:'Geography · Agriculture · GS Notes'},
+  {no:21,subject:'geography',title:'Iron and Steel Industry',series:'Geography · Industry · GS Notes'},
+  {no:22,subject:'geography',title:'Textile and Other Industries',series:'Geography · Industry · GS Notes'},
+  {no:23,subject:'geography',title:'Transport — Railways, Roads, Ports',series:'Geography · Industry · GS Notes'},
+  {no:24,subject:'geography',title:'Census 2011 — Key Data',series:'Geography · Population · GS Notes'},
+  {no:25,subject:'geography',title:'Population Trends and Distribution',series:'Geography · Population · GS Notes'},
+  {no:26,subject:'geography',title:'Literacy, Sex Ratio and Density',series:'Geography · Population · GS Notes'},
+  {no:27,subject:'geography',title:'Continents, Oceans and Major Features',series:'Geography · World · GS Notes'},
+  {no:28,subject:'geography',title:'Countries, Capitals and GK',series:'Geography · World · GS Notes'},
+  {no:29,subject:'geography',title:'World Climate Zones and Biomes',series:'Geography · World · GS Notes'},
+  {no:1, subject:'general-science',title:'Motion and Laws of Motion',series:'General Science · Physics · GS Notes'},
+  {no:2, subject:'general-science',title:'Work, Energy and Power',series:'General Science · Physics · GS Notes'},
+  {no:3, subject:'general-science',title:'Light and Optics',series:'General Science · Physics · GS Notes'},
+  {no:4, subject:'general-science',title:'Sound and Waves',series:'General Science · Physics · GS Notes'},
+  {no:5, subject:'general-science',title:'Electricity and Magnetism',series:'General Science · Physics · GS Notes'},
+  {no:6, subject:'general-science',title:'Modern Physics',series:'General Science · Physics · GS Notes'},
+  {no:7, subject:'general-science',title:'Matter, Elements and Periodic Table',series:'General Science · Chemistry · GS Notes'},
+  {no:8, subject:'general-science',title:'Acids, Bases and Salts',series:'General Science · Chemistry · GS Notes'},
+  {no:9, subject:'general-science',title:'Metals, Non-metals and Metallurgy',series:'General Science · Chemistry · GS Notes'},
+  {no:10,subject:'general-science',title:'Carbon and Its Compounds',series:'General Science · Chemistry · GS Notes'},
+  {no:11,subject:'general-science',title:'Chemical Reactions and Equations',series:'General Science · Chemistry · GS Notes'},
+  {no:12,subject:'general-science',title:'Cell — Structure and Division',series:'General Science · Biology · GS Notes'},
+  {no:13,subject:'general-science',title:'Nutrition and Digestive System',series:'General Science · Biology · GS Notes'},
+  {no:14,subject:'general-science',title:'Respiration and Excretion',series:'General Science · Biology · GS Notes'},
+  {no:15,subject:'general-science',title:'Circulatory and Nervous System',series:'General Science · Biology · GS Notes'},
+  {no:16,subject:'general-science',title:'Reproduction and Genetics',series:'General Science · Biology · GS Notes'},
+  {no:17,subject:'general-science',title:'Ecology and Environment',series:'General Science · Biology · GS Notes'},
+  {no:18,subject:'general-science',title:'Defence Technology',series:'General Science · Technology · GS Notes'},
+  {no:19,subject:'general-science',title:'Biotechnology',series:'General Science · Technology · GS Notes'},
+  {no:20,subject:'general-science',title:'Information Technology and AI',series:'General Science · Technology · GS Notes'},
+  {no:21,subject:'general-science',title:'Nuclear Technology',series:'General Science · Technology · GS Notes'},
+  {no:22,subject:'general-science',title:'Recent Science and Tech Developments',series:'General Science · Technology · GS Notes'},
+  {no:23,subject:'general-science',title:'Communicable and Non-communicable Diseases',series:'General Science · Health · GS Notes'},
+  {no:24,subject:'general-science',title:'Vaccines and Immunization',series:'General Science · Health · GS Notes'},
+  {no:25,subject:'general-science',title:'Nutrition and Public Health',series:'General Science · Health · GS Notes'},
+  {no:26,subject:'general-science',title:'Solar System and Universe',series:'General Science · Space · GS Notes'},
+  {no:27,subject:'general-science',title:'ISRO and Indian Space Programme',series:'General Science · Space · GS Notes'},
+  {no:28,subject:'general-science',title:'Satellites and Applications',series:'General Science · Space · GS Notes'},
+  {no:29,subject:'general-science',title:'Key Space Missions',series:'General Science · Space · GS Notes'},
+  // TECH subjects
+  {no:1, subject:'fluid-mechanics',title:'Properties of Fluid',series:'Fluid Mechanics · Civil Notes'},
+  {no:2, subject:'fluid-mechanics',title:'Fluid Statics',series:'Fluid Mechanics · Civil Notes'},
+  {no:3, subject:'fluid-mechanics',title:'Fluid Kinematics',series:'Fluid Mechanics · Civil Notes'},
+  {no:4, subject:'fluid-mechanics',title:'Fluid Dynamics',series:'Fluid Mechanics · Civil Notes'},
+  {no:5, subject:'fluid-mechanics',title:'Flow Through Pipes',series:'Fluid Mechanics · Civil Notes'},
+  {no:1, subject:'strength-of-materials',title:'Simple Stress and Strain',series:'Strength of Materials · Civil Notes'},
+  {no:2, subject:'strength-of-materials',title:'Shear Force and Bending Moment',series:'Strength of Materials · Civil Notes'},
+  {no:3, subject:'strength-of-materials',title:'Bending Stresses',series:'Strength of Materials · Civil Notes'},
+  {no:4, subject:'strength-of-materials',title:'Shear Stresses',series:'Strength of Materials · Civil Notes'},
+  {no:5, subject:'strength-of-materials',title:'Torsion',series:'Strength of Materials · Civil Notes'},
+  {no:1, subject:'engg-mechanics',title:'Force Systems',series:'Engg Mechanics · Civil Notes'},
+  {no:2, subject:'engg-mechanics',title:'Equilibrium',series:'Engg Mechanics · Civil Notes'},
+  {no:3, subject:'engg-mechanics',title:'Friction',series:'Engg Mechanics · Civil Notes'},
+  {no:4, subject:'engg-mechanics',title:'Kinematics of Particles',series:'Engg Mechanics · Civil Notes'},
+  {no:1, subject:'structural-analysis',title:'Determinacy and Indeterminacy',series:'Structural Analysis · Civil Notes'},
+  {no:2, subject:'structural-analysis',title:'Trusses',series:'Structural Analysis · Civil Notes'},
+  {no:3, subject:'structural-analysis',title:'Slope Deflection Method',series:'Structural Analysis · Civil Notes'},
+  {no:4, subject:'structural-analysis',title:'Moment Distribution',series:'Structural Analysis · Civil Notes'},
+  {no:1, subject:'concrete-design',title:'Working Stress Method',series:'Concrete Design · Civil Notes'},
+  {no:2, subject:'concrete-design',title:'Limit State Method',series:'Concrete Design · Civil Notes'},
+  {no:3, subject:'concrete-design',title:'Beam Design',series:'Concrete Design · Civil Notes'},
+  {no:4, subject:'concrete-design',title:'Column Design',series:'Concrete Design · Civil Notes'},
+  {no:1, subject:'steel-design',title:'Tension Members',series:'Steel Design · Civil Notes'},
+  {no:2, subject:'steel-design',title:'Compression Members',series:'Steel Design · Civil Notes'},
+  {no:3, subject:'steel-design',title:'Beam Design',series:'Steel Design · Civil Notes'},
+  {no:4, subject:'steel-design',title:'Connections',series:'Steel Design · Civil Notes'},
+  {no:1, subject:'geotech-foundation',title:'Soil Classification',series:'Geotech · Civil Notes'},
+  {no:2, subject:'geotech-foundation',title:'Permeability and Seepage',series:'Geotech · Civil Notes'},
+  {no:3, subject:'geotech-foundation',title:'Shear Strength',series:'Geotech · Civil Notes'},
+  {no:4, subject:'geotech-foundation',title:'Foundation Types',series:'Geotech · Civil Notes'},
+  {no:1, subject:'transportation',title:'Highway Engineering',series:'Transportation · Civil Notes'},
+  {no:2, subject:'transportation',title:'Pavement Design',series:'Transportation · Civil Notes'},
+  {no:3, subject:'transportation',title:'Traffic Engineering',series:'Transportation · Civil Notes'},
+  {no:1, subject:'surveying-geology',title:'Chain Surveying',series:'Surveying · Civil Notes'},
+  {no:2, subject:'surveying-geology',title:'Levelling',series:'Surveying · Civil Notes'},
+  {no:3, subject:'surveying-geology',title:'Theodolite Surveying',series:'Surveying · Civil Notes'},
+  {no:1, subject:'environmental',title:'Water Supply',series:'Environmental · Civil Notes'},
+  {no:2, subject:'environmental',title:'Wastewater Treatment',series:'Environmental · Civil Notes'},
+  {no:3, subject:'environmental',title:'Solid Waste Management',series:'Environmental · Civil Notes'},
+  {no:1, subject:'hydrology',title:'Hydrological Cycle',series:'Hydrology · Civil Notes'},
+  {no:2, subject:'hydrology',title:'Runoff and Rainfall',series:'Hydrology · Civil Notes'},
+  {no:3, subject:'hydrology',title:'Flood Estimation',series:'Hydrology · Civil Notes'},
+  {no:1, subject:'building-materials',title:'Bricks and Stones',series:'Building Materials · Civil Notes'},
+  {no:2, subject:'building-materials',title:'Cement and Concrete',series:'Building Materials · Civil Notes'},
+  {no:3, subject:'building-materials',title:'Steel and Timber',series:'Building Materials · Civil Notes'},
+  {no:1, subject:'construction-tech',title:'Foundations and Substructure',series:'Construction Tech · Civil Notes'},
+  {no:2, subject:'construction-tech',title:'Masonry and Plastering',series:'Construction Tech · Civil Notes'},
+  {no:3, subject:'construction-tech',title:'Construction Equipment',series:'Construction Tech · Civil Notes'},
+];
+
+const SUBJECT_KEYWORDS = {
+  'history':['history','ancient','medieval','modern','mughal','maurya','vedic','indus','maratha','bhakti','gupta','revolt','freedom struggle','british','colonial'],
+  'polity':['polity','constitution','parliament','fundamental right','dpsp','judiciary','president','governor','amendment','emergency','lok sabha','rajya sabha'],
+  'geography':['geography','physical','climate','monsoon','river','soil','agriculture','himalaya','plateau','mineral','census','population'],
+  'general-science':['science','physics','chemistry','biology','motion','newton','light','electricity','cell','nutrition','genetics','ecology','isro','space'],
+  'economy':['economy','gdp','gnp','budget','rbi','inflation','poverty','planning','fiscal','monetary','banking','gst'],
+  'fluid-mechanics':['fluid','viscosity','bernoulli','flow','pipe','pressure','continuity','reynolds'],
+  'strength-of-materials':['stress','strain','bending moment','shear force','deflection','torsion','section modulus'],
+  'engg-mechanics':['statics','dynamics','friction','equilibrium','force','moment','truss','kinematics'],
+  'structural-analysis':['indeterminate','determinacy','slope deflection','moment distribution','influence line','frame'],
+  'concrete-design':['concrete','rcc','reinforcement','beam','column','slab','limit state','working stress'],
+  'steel-design':['steel','tension member','compression','column','weld','bolt','rivet','connection'],
+  'geotech-foundation':['soil','permeability','consolidation','shear strength','bearing capacity','foundation','pile'],
+  'transportation':['highway','pavement','traffic','road','flexible','rigid','irc','cbr'],
+  'surveying-geology':['survey','levelling','theodolite','chain','traverse','contour','geology'],
+  'environmental':['water supply','wastewater','sewage','treatment','solid waste','pollution','chlorination'],
+  'hydrology':['hydrology','runoff','rainfall','flood','unit hydrograph','evaporation','groundwater'],
+  'building-materials':['brick','stone','cement','concrete','timber','steel','mortar','aggregate'],
+  'construction-tech':['masonry','formwork','scaffolding','foundation','excavation','plastering','construction'],
+};
+
+const TECH_SUBJECTS = ['engg-mechanics','strength-of-materials','structural-analysis','steel-design','concrete-design','fluid-mechanics','hydrology','environmental','geotech-foundation','transportation','surveying-geology','building-materials','construction-tech'];
+const NONTECH_SUBJECTS = ['history','polity','geography','general-science','economy','current-affairs'];
+
+let fileData = [];
+
+// ── Auth ──
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  try { await signInWithPopup(auth, gp); } catch(e) { alert('Sign-in failed: ' + e.message); }
+});
+onAuthStateChanged(auth, user => {
+  document.getElementById('loginGate').style.display = (user && user.email === ADMIN_EMAIL) ? 'none' : 'flex';
+  if (user && user.email === ADMIN_EMAIL) {
+    const labels = { tech:'Tech Subjects', nontech:'Non-Tech Subjects', all:'All Subjects' };
+    document.getElementById('pageSubTitle').textContent =
+      `Bulk upload notes for ${labels[section]||'All'} — drag & drop HTML files`;
+  }
+});
+
+// ── File input ──
+const dz = document.getElementById('dropZone');
+const fi = document.getElementById('fileInput');
+fi.addEventListener('change', () => processFiles(Array.from(fi.files)));
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('drag-over');
+  processFiles(Array.from(e.dataTransfer.files).filter(f => f.name.match(/\.html?$/i)));
+});
+
+// ── Process dropped files ──
+async function processFiles(files) {
+  if (!files.length) return;
+  for (const file of files) {
+    if (fileData.find(f => f.filename === file.name)) continue; // skip dupe filename
+    const html = await readFile(file);
+    const meta = extractMeta(html, file.name);
+    // Check Firestore for duplicate
+    let status = meta.title ? 'matched' : 'review';
+    try {
+      const snap = await getDoc(doc(db, 'chapters', meta.id));
+      if (snap.exists()) status = 'duplicate';
+    } catch(e) {}
+    fileData.push({ ...meta, html, filename: file.name, status, uploading: false, done: false });
+  }
+  render();
+}
+
+function readFile(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = e => res(e.target.result);
+    r.onerror = () => rej(new Error('Read failed'));
+    r.readAsText(file, 'UTF-8');
+  });
+}
+
+// ── Extract metadata from HTML ──
+function extractMeta(html, filename) {
+  const lower = html.toLowerCase().substring(0, 4000);
+
+  // Detect subject
+  let subject = detectSubject(lower, filename);
+
+  // Detect chapter number from filename or data-chapter-no or h1
+  let chNo = null;
+  const fnMatch = filename.match(/(?:ch(?:apter)?[_-]?)(\d{1,3})/i);
+  if (fnMatch) chNo = parseInt(fnMatch[1]);
+  if (!chNo) { const m = html.match(/data-chapter[_-]?no=["'](\d+)["']/i); if (m) chNo = parseInt(m[1]); }
+  if (!chNo) { const m = filename.match(/(\d{1,3})/); if (m) chNo = parseInt(m[1]); }
+
+  // Match syllabus
+  const match = matchSyllabus(lower, subject, chNo);
+  const finalSubject = match?.subject || subject;
+  const finalNo = match?.no || chNo || 1;
+  const id = `${finalSubject}_ch${String(finalNo).padStart(2,'0')}`;
+
+  // Extract title from h1
+  const h1m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  const h1title = h1m ? h1m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim() : '';
+
+  return {
+    id,
+    subject: finalSubject,
+    chapter_no: finalNo,
+    title: match?.title || h1title || '',
+    series_label: match?.series || '',
+    order: finalNo,
+    section_count: (html.match(/class=["'][^"']*section-wrap[^"']*["']/g)||[]).length,
+    size_kb: (html.length/1024).toFixed(1),
+  };
+}
+
+function detectSubject(lower, filename='') {
+  const fn = filename.toLowerCase();
+  let best='history', bestScore=0;
+  for (const [subj,kws] of Object.entries(SUBJECT_KEYWORDS)) {
+    const score = kws.filter(k=>lower.includes(k)||fn.includes(k.split(' ')[0])).length;
+    if (score>bestScore){bestScore=score;best=subj;}
+  }
+  // section filter
+  if (section==='tech' && NONTECH_SUBJECTS.includes(best)) best='fluid-mechanics';
+  if (section==='nontech' && TECH_SUBJECTS.includes(best)) best='history';
+  return best;
+}
+
+function matchSyllabus(lower, subject, chNo) {
+  const cands = SYLLABUS.filter(s=>s.subject===subject);
+  if (!cands.length) return null;
+  // Exact chapter number match
+  if (chNo) { const exact=cands.find(s=>s.no===chNo); if(exact) return exact; }
+  // Keyword match
+  let best=null,bestScore=0;
+  for (const c of cands) {
+    const words = c.title.toLowerCase().split(/\W+/);
+    const score = words.filter(w=>w.length>3&&lower.includes(w)).length;
+    if (score>bestScore){bestScore=score;best=c;}
+  }
+  return best;
+}
+
+// ── Render file list ──
+function render() {
+  const filter = document.getElementById('filterSel').value;
+  const list = document.getElementById('fileList');
+  const empty = document.getElementById('emptyState');
+  const visible = fileData.filter(f => filter==='all' || f.status===filter || (f.done && filter==='all'));
+
+  document.getElementById('statsBar').style.display = fileData.length ? 'flex' : 'none';
+  document.getElementById('actionBar').style.display = fileData.length ? 'flex' : 'none';
+  document.getElementById('statTotal').textContent    = fileData.length;
+  document.getElementById('statMatched').textContent  = fileData.filter(f=>f.status==='matched').length;
+  document.getElementById('statReview').textContent   = fileData.filter(f=>f.status==='review').length;
+  document.getElementById('statDuplicate').textContent= fileData.filter(f=>f.status==='duplicate').length;
+  document.getElementById('statError').textContent    = fileData.filter(f=>f.status==='error').length;
+
+  empty.classList.toggle('show', fileData.length>0 && visible.length===0);
+  list.innerHTML = visible.map((f,visIdx) => {
+    const idx = fileData.indexOf(f);
+    const statusIcon = {matched:'✅',review:'⚠️',duplicate:'🔵',error:'❌',uploading:'⏳',done:'✅'}[f.status]||'📄';
+    return `
+    <div class="file-card ${f.done?'done':f.uploading?'uploading':f.status}" id="fc_${idx}">
+      <div class="fc-top">
+        <div class="fc-icon">${statusIcon}</div>
+        <div class="fc-info">
+          <div class="fc-filename">${esc(f.filename)}</div>
+          <div class="fc-title-row">
+            <div class="fc-title">${esc(f.title||'⚠️ Title not detected')}</div>
+            <span class="fc-badge ${f.done?'done':f.status}">${f.done?'Uploaded':f.status}</span>
+          </div>
+          <div class="fc-meta">
+            <span>📚 <span class="hl">${esc(f.subject)}</span></span>
+            <span>Ch <span class="hl">${f.chapter_no}</span></span>
+            <span>🔖 <span class="hl">${f.section_count} sections</span></span>
+            <span>💾 <span class="hl">${f.size_kb} KB</span></span>
+          </div>
+          ${!f.done ? `
+          <div class="fc-edit-row">
+            <input class="fc-input title-input" value="${esc(f.title)}" placeholder="Chapter title" data-field="title" data-idx="${idx}" onchange="updateField(${idx},'title',this.value)">
+            <select class="fc-input subj-sel" data-idx="${idx}" onchange="updateField(${idx},'subject',this.value)">
+              ${subjectOptions(f.subject)}
+            </select>
+            <input class="fc-input chno-input" type="number" min="1" value="${f.chapter_no}" placeholder="Ch#" onchange="updateField(${idx},'chapter_no',parseInt(this.value)||1)">
+          </div>` : ''}
+          <div class="fc-progress" id="prog_${idx}">
+            <div class="fc-prog-wrap"><div class="fc-prog-fill" id="progbar_${idx}" style="width:0%"></div></div>
+            <div class="fc-prog-text" id="progtxt_${idx}">Saving…</div>
+          </div>
+        </div>
+        ${!f.done?`<button class="fc-remove" onclick="removeFile(${idx})" title="Remove">✕</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function subjectOptions(current) {
+  const all = [
+    ['history','History'],['polity','Polity'],['geography','Geography'],
+    ['general-science','General Science'],['economy','Economy'],
+    ['engg-mechanics','Engg Mechanics'],['strength-of-materials','Strength of Materials'],
+    ['structural-analysis','Structural Analysis'],['concrete-design','Concrete Design'],
+    ['steel-design','Steel Design'],['fluid-mechanics','Fluid Mechanics'],
+    ['hydrology','Hydrology'],['environmental','Environmental'],
+    ['geotech-foundation','Geotech'],['transportation','Transportation'],
+    ['surveying-geology','Surveying'],['building-materials','Building Materials'],
+    ['construction-tech','Construction Tech'],
+  ];
+  return all.map(([v,l])=>`<option value="${v}"${v===current?' selected':''}>${l}</option>`).join('');
+}
+
+window.updateField = function(idx, field, val) {
+  fileData[idx][field] = val;
+  if (field==='subject'||field==='chapter_no') {
+    fileData[idx].id = `${fileData[idx].subject}_ch${String(fileData[idx].chapter_no).padStart(2,'0')}`;
+    const match = SYLLABUS.find(s=>s.subject===fileData[idx].subject&&s.no===fileData[idx].chapter_no);
+    if (match && !document.querySelector(`#fc_${idx} .title-input`)?.value) fileData[idx].title = match.title;
+  }
+  render();
+};
+
+window.removeFile = function(idx) { fileData.splice(idx,1); render(); };
+window.clearAll   = function()    { fileData=[]; render(); document.getElementById('statsBar').style.display='none'; document.getElementById('actionBar').style.display='none'; document.getElementById('uploadLog').style.display='none'; };
+window.applyFilter = render;
+
+// ── Upload ──
+window.uploadAll     = () => doUpload(fileData.filter(f=>!f.done));
+window.uploadMatched = () => doUpload(fileData.filter(f=>f.status==='matched'&&!f.done));
+
+async function doUpload(toUpload) {
+  if (!toUpload.length) { showToast('Nothing to upload', true); return; }
+  const log    = document.getElementById('uploadLog');
+  const opProg = document.getElementById('overallProg');
+  log.style.display='block'; log.innerHTML='';
+  opProg.style.display='block';
+  document.getElementById('uploadAllBtn').disabled=true;
+
+  let done=0, saved=0, failed=0;
+  const total = toUpload.length;
+
+  for (const f of toUpload) {
+    const idx = fileData.indexOf(f);
+    f.uploading=true; f.status='uploading';
+    const prog = document.getElementById(`prog_${idx}`);
+    if (prog) { prog.style.display='block'; }
+    render();
+
+    try {
+      if (!f.title) throw new Error('Title missing — edit before uploading');
+      await setDoc(doc(db,'chapters',f.id), {
+        id: f.id, subject: f.subject, chapter_no: f.chapter_no,
+        title: f.title, series_label: f.series_label, order: f.chapter_no,
+        body_html: f.html, section_count: f.section_count,
+        updated_at: serverTimestamp(),
+      }, { merge:true });
+      f.done=true; f.uploading=false; f.status='done'; saved++;
+      log.innerHTML += `<span class="ok">✅ ${f.id} — "${esc(f.title)}"\n</span>`;
+    } catch(e) {
+      f.uploading=false; f.status='error'; failed++;
+      log.innerHTML += `<span class="err">❌ ${f.id}: ${e.message}\n</span>`;
+    }
+    done++;
+    const pct = Math.round(done/total*100);
+    document.getElementById('opBar').style.width = pct+'%';
+    document.getElementById('opPct').textContent = pct+'%';
+    document.getElementById('opLabel').textContent = `Uploading ${done} of ${total}…`;
+    render();
+    log.scrollTop = log.scrollHeight;
+  }
+
+  document.getElementById('opLabel').textContent = `✅ Done — ${saved} saved, ${failed} failed`;
+  document.getElementById('uploadAllBtn').disabled=false;
+  showToast(`✅ Uploaded ${saved} of ${total} chapters`);
+}
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showToast(msg,isErr){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=isErr?'err show':'show';
+  clearTimeout(t._to); t._to=setTimeout(()=>t.className='',2800);
+}
+</script>
+</body>
+</html>

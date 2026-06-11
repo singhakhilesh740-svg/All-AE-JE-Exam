@@ -92,6 +92,7 @@
   <!-- TECH tabs -->
   <div class="sub-tab-bar" id="bar-tech" data-section="tech">
     <button class="sub-tab active" data-tab="t-upload">📤 Upload Questions</button>
+    <button class="sub-tab" data-tab="t-bulknotes">📦 Bulk Upload Notes</button>
     <button class="sub-tab" data-tab="t-edit">✏️ Edit Questions</button>
     <button class="sub-tab" data-tab="t-exams">🏛️ Exams</button>
     <button class="sub-tab" data-tab="t-notes">📝 Upload Notes</button>
@@ -101,6 +102,7 @@
   <!-- NON-TECH tabs -->
   <div class="sub-tab-bar" id="bar-nontech" data-section="nontech" style="display:none">
     <button class="sub-tab active" data-tab="nt-upload">📤 Upload Questions</button>
+    <button class="sub-tab" data-tab="nt-bulknotes">📦 Bulk Upload Notes</button>
     <button class="sub-tab" data-tab="nt-edit">✏️ Edit Questions</button>
     <button class="sub-tab" data-tab="nt-exams">🏛️ Exams</button>
     <button class="sub-tab" data-tab="nt-notes">📝 Upload Notes</button>
@@ -128,6 +130,9 @@
     <div class="frame-wrap" id="frame-t-exams">
       <iframe src="exams-admin.html" loading="lazy"></iframe>
     </div>
+    <div class="frame-wrap" id="frame-t-bulknotes">
+      <iframe src="bulk-upload-notes.html?section=tech" loading="lazy"></iframe>
+    </div>
     <div class="frame-wrap" id="frame-t-delnotes">
       <iframe src="delete-notes.html?section=tech" loading="lazy"></iframe>
     </div>
@@ -144,6 +149,9 @@
     </div>
     <div class="frame-wrap" id="frame-nt-exams">
       <iframe src="nt-exams-admin.html" loading="lazy"></iframe>
+    </div>
+    <div class="frame-wrap" id="frame-nt-bulknotes">
+      <iframe src="bulk-upload-notes.html?section=nontech" loading="lazy"></iframe>
     </div>
     <div class="frame-wrap" id="frame-nt-delnotes">
       <iframe src="delete-notes.html?section=nontech" loading="lazy"></iframe>
